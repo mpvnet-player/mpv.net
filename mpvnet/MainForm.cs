@@ -258,7 +258,7 @@ namespace mpvnet
         protected override void OnFormClosed(FormClosedEventArgs e)
         {
             base.OnFormClosed(e);
-            mpv.Terminate();
+            mpv.Command("quit");
         }
 
         bool IsMouseInOSC()
