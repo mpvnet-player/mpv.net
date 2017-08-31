@@ -29,8 +29,6 @@ using static mpvnet.libmpv;
 using static mpvnet.Native;
 using System.Drawing;
 
-using static mpvnet.MsgBox;
-
 namespace mpvnet
 {
     public delegate void MpvBoolPropChangeHandler(string propName, bool value);
@@ -48,7 +46,6 @@ namespace mpvnet
         public static IntPtr MpvWindowHandle;
         public static Addon Addon;
         public static List<Action<bool>> BoolPropChangeActions = new List<Action<bool>>();
-
         public static Size VideoSize;
 
         public static void Init()
