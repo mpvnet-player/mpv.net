@@ -167,7 +167,7 @@ namespace mpvnet
         {
             var lpBuffer = IntPtr.Zero;
             int err = mpv_get_property(MpvHandle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_STRING, ref lpBuffer);
-            var ret = Marshal.PtrToStringAnsi(lpBuffer);
+            var ret = StringFromNativeUtf8(lpBuffer);
             mpv_free(lpBuffer);
 
             if (err < 0)

@@ -47,8 +47,8 @@ namespace mpvnet
                 mpv.Init();
                 mpv.ObserveBoolProp("fullscreen", MpvChangeFullscreen);
                 mpv.AfterShutdown += Mpv_AfterShutdown;
-                mpv.FileLoaded += Mpv_FileLoaded;
                 mpv.VideoSizeChanged += Mpv_VideoSizeChanged;
+                mpv.PlaybackRestart += Mpv_PlaybackRestart;
 
                 CM = new ContextMenuEx();
                 ContextMenu = CM;
@@ -59,6 +59,11 @@ namespace mpvnet
             {
                 HandleException(e);
             }
+        }
+
+        private void Mpv_PlaybackRestart()
+        {
+            BeginInvoke(new Action(() => Text = mpv.GetStringProp("filename") + " - mpv.net"));
         }
 
         private void CM_Popup(object sender, EventArgs e)
@@ -85,11 +90,6 @@ namespace mpvnet
         private void Mpv_VideoSizeChanged()
         {
             BeginInvoke(new Action(() => SetFormPosSize()));
-        }
-
-        private void Mpv_FileLoaded()
-        {
-            BeginInvoke(new Action(() => Text = mpv.GetStringProp("filename") + " - mpv.net"));
         }
 
         private void Mpv_AfterShutdown() => Invoke(new Action(() => Close()));
