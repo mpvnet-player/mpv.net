@@ -114,6 +114,7 @@
     <Compile Include="Misc.cs" />
     <Compile Include="mpv.cs" />
     <Compile Include="Native.cs" />
+    <Compile Include="NativeHelp.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringExtensions.cs" />

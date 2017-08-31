@@ -34,7 +34,7 @@ namespace mpvnet
         private Point LastCursorPosChanged;
         private int LastCursorChangedTickCount;
 
-        public ContextMenuEx Menu;
+        public ContextMenuEx CM;
 
         public MainForm()
         {
@@ -50,14 +50,20 @@ namespace mpvnet
                 mpv.FileLoaded += Mpv_FileLoaded;
                 mpv.VideoSizeChanged += Mpv_VideoSizeChanged;
 
-                Menu = new ContextMenuEx();
-                ContextMenu = Menu;
+                CM = new ContextMenuEx();
+                ContextMenu = CM;
+                CM.Popup += CM_Popup;
                 ContextMenu.MenuItems.Add("About mpv.net", About);
             }
             catch (Exception e)
             {
                 HandleException(e);
             }
+        }
+
+        private void CM_Popup(object sender, EventArgs e)
+        {
+            CursorHelp.Show();
         }
 
         private void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
@@ -109,6 +115,7 @@ namespace mpvnet
             {
                 WindowState = FormWindowState.Normal;
                 FormBorderStyle = FormBorderStyle.Sizable;
+                SetFormPosSize();
             }
         }
 
@@ -131,14 +138,14 @@ namespace mpvnet
                 case 0x0214: // WM_SIZING
                     var rc = Marshal.PtrToStructure<Native.RECT>(m.LParam);
                     var r = rc;
-                    subtract_window_borders(Handle, ref r);
+                    NativeHelp.SubtractWindowBorders(Handle, ref r);
                     int c_w = r.Right - r.Left, c_h = r.Bottom - r.Top;
                     float aspect = mpv.VideoSize.Width / (float)mpv.VideoSize.Height;
                     int d_w = (int)(c_h * aspect - c_w);
                     int d_h = (int)(c_w / aspect - c_h);
                     int[] d_corners = { d_w, d_h, -d_w, -d_h };
                     int[] corners = { rc.Left, rc.Top, rc.Right, rc.Bottom };
-                    int corner = get_resize_border(m.WParam.ToInt32());
+                    int corner = NativeHelp.GetResizeBorder(m.WParam.ToInt32());
 
                     if (corner >= 0)
                         corners[corner] -= d_corners[corner];
@@ -151,46 +158,15 @@ namespace mpvnet
             base.WndProc(ref m);
         }
 
-        static int get_resize_border(int v)
-        {
-            switch (v)
-            {
-                case 1 /* WMSZ_LEFT */       : return 3;
-                case 3 /* WMSZ_TOP */        : return 2;
-                case 2 /* WMSZ_RIGHT */      : return 3;
-                case 6 /* WMSZ_BOTTOM */     : return 2;
-                case 4 /* WMSZ_TOPLEFT */    : return 1;
-                case 5 /* WMSZ_TOPRIGHT */   : return 1;
-                case 7 /* WMSZ_BOTTOMLEFT */ : return 3;
-                case 8 /* WMSZ_BOTTOMRIGHT */: return 3;
-                default: return -1;
-            }
-        }
-
-        static void subtract_window_borders(IntPtr hwnd, ref Native.RECT rc)
-        {
-            var b = new Native.RECT(0, 0, 0, 0);
-            add_window_borders(hwnd, ref b);
-            rc.Left -= b.Left;
-            rc.Top -= b.Top;
-            rc.Right -= b.Right;
-            rc.Bottom -= b.Bottom;
-        }
-
-        static void add_window_borders(IntPtr hwnd, ref Native.RECT rc)
-        {
-            Native.AdjustWindowRect(ref rc, (uint)Native.GetWindowLongPtrW(hwnd, -16 /* GWL_STYLE */), false);
-        }
-
         void SetFormPosSize()
         {
-            if (IsFullscreen) return;
+            if (IsFullscreen || mpv.VideoSize.Width == 0) return;
             var wa = Screen.GetWorkingArea(this);
             int h = (int)(wa.Height * 0.6);
             int w = (int)(h * mpv.VideoSize.Width / (float)mpv.VideoSize.Height);
             Point middlePos = new Point(Left + Width / 2, Top + Height / 2);
             var r = new Native.RECT(new Rectangle(0, 0, w, h));
-            add_window_borders(Handle, ref r);
+            NativeHelp.AddWindowBorders(Handle, ref r);
             int l = middlePos.X - r.Width / 2;
             int t = middlePos.Y - r.Height / 2;
             if (l < 0) l = 0;
@@ -275,7 +251,7 @@ namespace mpvnet
             }
             else if (Environment.TickCount - LastCursorChangedTickCount > 1500 &&
                 !IsMouseInOSC() && ClientRectangle.Contains(PointToClient(MousePosition)) &&
-                Form.ActiveForm == this && !Menu.Visible)
+                Form.ActiveForm == this && !CM.Visible)
             {
                 CursorHelp.Hide();
             }

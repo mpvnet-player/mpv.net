@@ -55,17 +55,17 @@ namespace mpvnet
         {
             LoadLibrary("mpv-1.dll");
             MpvHandle = mpv_create();
-            SetStringProp("hwdec", "auto");
             SetIntProp("input-ar-delay", 500);
             SetIntProp("input-ar-rate", 20);
+            SetIntProp("osd-duration", 3000);
+            SetIntProp("volume", 50);
+            SetStringProp("hwdec", "auto");
             SetStringProp("input-default-bindings", "yes");
             SetStringProp("opengl-backend", "angle");
-            SetIntProp("osd-duration", 3000);
             SetStringProp("osd-playing-msg", "'${filename}'");
             SetStringProp("profile", "opengl-hq");
             SetStringProp("screenshot-directory", "~~desktop/");
             SetStringProp("vo", "opengl");
-            SetIntProp("volume", 50);
             SetStringProp("keep-open", "always");
             SetStringProp("keep-open-pause", "no");
             SetStringProp("osc", "yes");
@@ -123,7 +123,6 @@ namespace mpvnet
                         if (eventData.format == mpv_format.MPV_FORMAT_FLAG)
                             foreach (var action in BoolPropChangeActions)
                                 action.Invoke(Marshal.PtrToStructure<int>(eventData.data) == 1);
-
                         break;
                 }
             }
@@ -171,17 +170,13 @@ namespace mpvnet
         {
             var lpBuffer = IntPtr.Zero;
             int err = mpv_get_property(MpvHandle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_STRING, ref lpBuffer);
+            var ret = Marshal.PtrToStringAnsi(lpBuffer);
+            mpv_free(lpBuffer);
 
             if (err < 0)
-            {
                 throw new Exception($"{name}: {(mpv_error)err}");
-            }
-            else
-            {
-                var ret = Marshal.PtrToStringAnsi(lpBuffer);
-                mpv_free(lpBuffer);
-                return ret;
-            }
+
+            return ret;
         }
 
         public static int GetIntProp(string name)
@@ -190,7 +185,7 @@ namespace mpvnet
             int err = mpv_get_property(MpvHandle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_INT64, ref lpBuffer);
 
             if (err < 0)
-                throw new Exception($"{(mpv_error)err}");
+                throw new Exception($"{name}: {(mpv_error)err}");
             else
                 return lpBuffer.ToInt32();
         }
@@ -201,7 +196,7 @@ namespace mpvnet
             int err = mpv_set_property(MpvHandle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_INT64, ref val);
 
             if (err < 0)
-                throw new Exception($"{(mpv_error)err}");
+                throw new Exception($"{name}: {(mpv_error)err}");
         }
 
         public static void ObserveBoolProp(string name, Action<bool> action)
@@ -210,7 +205,7 @@ namespace mpvnet
             int err = mpv_observe_property(MpvHandle, (ulong)action.GetHashCode(), name, mpv_format.MPV_FORMAT_FLAG);
 
             if (err < 0)
-                throw new Exception($"{(mpv_error)err}");
+                throw new Exception($"{name}: {(mpv_error)err}");
         }
 
         public static void UnobserveBoolProp(string name, Action<bool> action)
@@ -219,7 +214,7 @@ namespace mpvnet
             int err = mpv_unobserve_property(MpvHandle, (ulong)action.GetHashCode());
 
             if (err < 0)
-                throw new Exception($"{(mpv_error)err}");
+                throw new Exception($"{name}: {(mpv_error)err}");
         }
 
         public static void ProcessCommandLine()
@@ -269,8 +264,6 @@ namespace mpvnet
                     Command("playlist-move", "0", (index + 1).ToString());
             }
         }
-
-        public static void Terminate() => libmpv.mpv_terminate_destroy(MpvHandle);
 
         public static IntPtr AllocateUtf8IntPtrArrayWithSentinel(string[] arr, out IntPtr[] byteArrayPointers)
         {
