@@ -8,11 +8,11 @@ mpv.net is a very simple libmpv based media player, it works exactly like mpv, e
 - Dotnet added implemented with the Managed Extension Framework (MEF)
 - C# scripts implemented with CS-Script
 
-### 
+### C# Scripting
 
 A simple C# script located at: C:\Users\Frank\AppData\Roaming\mpv\scripts\test.cs
 
-´´´
+```
 using mpvnet;
 
 class Script
@@ -29,4 +29,4 @@ class Script
         mpv.Command("show-text", "fullscreen: " + val.ToString());
     }
 }
-´´´
+```
