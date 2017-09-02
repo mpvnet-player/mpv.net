@@ -139,12 +139,6 @@ namespace mpvnet
             MsgException(e);
         }
 
-        private void About()
-        {
-            mpv.Command("show-text", Application.ProductName + " v" + Application.ProductVersion.ToString() +
-                "\nCopyright (c) 2017 stax76\nGPL License", "5000");
-        }
-
         private void Mpv_VideoSizeChanged()
         {
             BeginInvoke(new Action(() => SetFormPosSize()));

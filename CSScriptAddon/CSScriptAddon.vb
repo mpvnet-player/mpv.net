@@ -29,11 +29,11 @@ Public Class CSScriptAddon
     Sub New()
         Dim scriptDir = Folder.AppDataRoaming + "mpv\scripts"
         If Not Directory.Exists(scriptDir) Then Return
-        Dim csxFiles = Directory.GetFiles(scriptDir, "*.cs")
-        If csxFiles.Count = 0 Then Return
+        Dim csFiles = Directory.GetFiles(scriptDir, "*.cs")
+        If csFiles.Count = 0 Then Return
         CSScriptLibrary.CSScript.EvaluatorConfig.Engine = EvaluatorEngine.CodeDom
 
-        For Each i In csxFiles
+        For Each i In csFiles
             Try
                 CSScriptLibrary.CSScript.Evaluator.LoadCode(File.ReadAllText(i))
             Catch ex As Exception
