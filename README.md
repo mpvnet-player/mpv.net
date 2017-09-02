@@ -8,6 +8,8 @@ mpv.net is a libmpv based media player for Windows, it looks and works exactly l
 - Addons implemented with the Managed Extension Framework (MEF)
 - C# scripts implemented with CS-Script
 
+![](https://github.com/stax76/mpvnet/blob/master/mpvnet/screenshot.jpg)
+
 ### C# Scripting
 
 A simple C# script located at: C:\Users\Frank\AppData\Roaming\mpv\scripts\test.cs
