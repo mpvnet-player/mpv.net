@@ -32,7 +32,6 @@ Public Class CSScriptAddon
         Dim csxFiles = Directory.GetFiles(scriptDir, "*.cs")
         If csxFiles.Count = 0 Then Return
         CSScriptLibrary.CSScript.EvaluatorConfig.Engine = EvaluatorEngine.CodeDom
-        CSScriptLibrary.CSScript.Evaluator.ReferenceDomainAssemblies()
 
         For Each i In csxFiles
             Try
