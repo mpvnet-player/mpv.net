@@ -13,6 +13,14 @@ https://mpv.io/manual/master/
 
 ![](https://github.com/stax76/mpvnet/blob/master/mpvnet/screenshot.jpg)
 
+### Context Menu
+
+The context menu can be customized via input.conf file located at:
+
+C:\Users\Frank\AppData\Roaming\mpv\input.conf
+
+https://github.com/stax76/mpvnet/blob/master/mpvnet/Resources/input_conf.txt
+
 ### C# Scripting
 
 A simple C# script located at: C:\Users\Frank\AppData\Roaming\mpv\scripts\test.cs
@@ -35,11 +43,3 @@ class Script
     }
 }
 ```
-
-### Context Menu
-
-The context menu can be customized via input.conf file located at:
-
-C:\Users\Frank\AppData\Roaming\mpv\input.conf
-
-https://github.com/stax76/mpvnet/blob/master/mpvnet/Resources/input_conf.txt
