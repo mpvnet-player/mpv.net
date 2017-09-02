@@ -68,7 +68,7 @@ namespace Rating
         {
             int rating;
 
-            if (args?.Length < 2 || args[0] != "Rating" || ! int.TryParse(args[1], out rating))
+            if (args?.Length != 2 || args[0] != "rate-file" || ! int.TryParse(args[1], out rating))
                 return;
 
             Dic[mpv.GetStringProp("path")] = rating;

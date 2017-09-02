@@ -19,10 +19,15 @@
 using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
+using vbnet;
+using vbnet.UI;
+using static vbnet.UI.MainModule;
 
 namespace mpvnet
 {
@@ -33,8 +38,9 @@ namespace mpvnet
 
         private Point LastCursorPosChanged;
         private int LastCursorChangedTickCount;
+        private bool IsCloseRequired = true;
 
-        public ContextMenuEx CM;
+        public ContextMenuStripEx CMS;
 
         public MainForm()
         {
@@ -50,10 +56,11 @@ namespace mpvnet
                 mpv.VideoSizeChanged += Mpv_VideoSizeChanged;
                 mpv.PlaybackRestart += Mpv_PlaybackRestart;
 
-                CM = new ContextMenuEx();
-                ContextMenu = CM;
-                CM.Popup += CM_Popup;
-                ContextMenu.MenuItems.Add("About mpv.net", About);
+                ToolStripManager.Renderer = new ToolStripRendererEx(ToolStripRenderModeEx.SystemDefault);
+                CMS = new ContextMenuStripEx(components);
+                CMS.Opened += CMS_Opened;
+                ContextMenuStrip = CMS;
+                BuildMenu();
             }
             catch (Exception e)
             {
@@ -61,9 +68,60 @@ namespace mpvnet
             }
         }
 
+        public void BuildMenu()
+        {
+            if (!File.Exists(mpv.InputConfPath))
+            {
+                var dirPath = Folder.AppDataRoaming + "mpv\\";
+
+                if (!Directory.Exists(dirPath))
+                    Directory.CreateDirectory(dirPath);
+
+                File.WriteAllText(mpv.InputConfPath, Properties.Resources.input_conf);
+            }
+
+            foreach (var i in File.ReadAllText(mpv.InputConfPath).SplitLinesNoEmpty())
+            {
+                if (!i.Contains("#menu:"))
+                    continue;
+
+                var left = i.Left("#menu:").Trim();
+
+                if (left.StartsWith("#"))
+                    continue;
+
+                var cmd = left.Right(" ").Trim();
+                var menu = i.Right("#menu:").Trim();
+                var key = menu.Left(";").Trim();
+                var path = menu.Right(";").Trim();
+
+                if (path == "" || cmd == "")
+                    continue;
+
+                var menuItem = CMS.Add(path, () => {
+                    try
+                    {
+                        mpv.CommandString(cmd);
+                    }
+                    catch (Exception e)
+                    {
+                        MsgException(e);
+                    }
+                });
+                
+                if (menuItem != null)
+                    menuItem.ShortcutKeyDisplayString = key.Replace("_","") + "   ";
+            }
+        }
+
+        private void CMS_Opened(object sender, EventArgs e)
+        {
+            CursorHelp.Show();
+        }
+
         private void Mpv_PlaybackRestart()
         {
-            BeginInvoke(new Action(() => Text = mpv.GetStringProp("filename") + " - mpv.net"));
+            BeginInvoke(new Action(() => Text = mpv.GetStringProp("filename") + " - mpv.net " + Application.ProductVersion));
         }
 
         private void CM_Popup(object sender, EventArgs e)
@@ -78,10 +136,10 @@ namespace mpvnet
 
         void HandleException(Exception e)
         {
-            MessageBox.Show(e.ToString(), "mpv.net Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MsgException(e);
         }
 
-        private void About(object sender, EventArgs e)
+        private void About()
         {
             mpv.Command("show-text", Application.ProductName + " v" + Application.ProductVersion.ToString() +
                 "\nCopyright (c) 2017 stax76\nGPL License", "5000");
@@ -92,7 +150,11 @@ namespace mpvnet
             BeginInvoke(new Action(() => SetFormPosSize()));
         }
 
-        private void Mpv_AfterShutdown() => Invoke(new Action(() => Close()));
+        private void Mpv_AfterShutdown()
+        {
+            if (IsCloseRequired)
+                Invoke(new Action(() => Close()));
+        }
 
         public bool IsFullscreen
         {
@@ -189,20 +251,7 @@ namespace mpvnet
             base.OnDragDrop(e);
 
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
-            {
-                int count = mpv.GetIntProp("playlist-count");
-                string[] files = e.Data.GetData(DataFormats.FileDrop) as String[];
-
-                foreach (string file in files)
-                    mpv.Command("loadfile", file, "append");
-
-                mpv.SetIntProp("playlist-pos", count);
-
-                for (int i = 0; i < count; i++)
-                    mpv.Command("playlist-remove", "0");         
-
-                mpv.LoadFolder();
-            }
+                mpv.LoadFiles(e.Data.GetData(DataFormats.FileDrop) as String[]);
         }
 
         protected override void OnMouseDown(MouseEventArgs e)
@@ -234,6 +283,7 @@ namespace mpvnet
         protected override void OnFormClosed(FormClosedEventArgs e)
         {
             base.OnFormClosed(e);
+            IsCloseRequired = false;
             mpv.Command("quit");
         }
 
@@ -251,7 +301,7 @@ namespace mpvnet
             }
             else if (Environment.TickCount - LastCursorChangedTickCount > 1500 &&
                 !IsMouseInOSC() && ClientRectangle.Contains(PointToClient(MousePosition)) &&
-                Form.ActiveForm == this && !CM.Visible)
+                Form.ActiveForm == this && !CMS.Visible)
             {
                 CursorHelp.Hide();
             }

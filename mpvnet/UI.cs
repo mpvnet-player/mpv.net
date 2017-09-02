@@ -51,29 +51,4 @@ namespace mpvnet
                 Math.Abs(screenPos.Y - Control.MousePosition.Y) > 10;
         }
     }
-
-    public static class MsgBox
-    {
-        public static void MsgInfo(string text)
-        {
-            MessageBox.Show(text, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-    }
-
-    public class ContextMenuEx : ContextMenu
-    {
-        public bool Visible { get ; set; }
-
-        protected override void OnCollapse(EventArgs e)
-        {
-            base.OnCollapse(e);
-            Visible = false;
-        }
-
-        protected override void OnPopup(EventArgs e)
-        {
-            base.OnPopup(e);
-            Visible = true;
-        }
-    }
 }

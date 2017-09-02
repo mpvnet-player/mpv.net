@@ -24,10 +24,13 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Drawing;
 
 using static mpvnet.libmpv;
 using static mpvnet.Native;
-using System.Drawing;
+
+using vbnet;
+using static vbnet.UI.MainModule;
 
 namespace mpvnet
 {
@@ -47,6 +50,8 @@ namespace mpvnet
         public static Addon Addon;
         public static List<Action<bool>> BoolPropChangeActions = new List<Action<bool>>();
         public static Size VideoSize;
+        public static string InputConfPath = Folder.AppDataRoaming + "mpv\\input.conf";
+        public static StringPairList BindingList = new StringPairList();
 
         public static void Init()
         {
@@ -54,7 +59,6 @@ namespace mpvnet
             MpvHandle = mpv_create();
             SetIntProp("input-ar-delay", 500);
             SetIntProp("input-ar-rate", 20);
-            SetIntProp("osd-duration", 3000);
             SetIntProp("volume", 50);
             SetStringProp("hwdec", "auto");
             SetStringProp("input-default-bindings", "yes");
@@ -110,7 +114,14 @@ namespace mpvnet
                         if (ClientMessage != null)
                         {
                             var client_messageData = (mpv_event_client_message)Marshal.PtrToStructure(evt.data, typeof(mpv_event_client_message));
-                            ClientMessage?.Invoke(NativeUtf8StrArray2ManagedStrArray(client_messageData.args, client_messageData.num_args));
+                            var args = NativeUtf8StrArray2ManagedStrArray(client_messageData.args, client_messageData.num_args);
+
+                            if (args != null && args.Length > 1 && args[0] == "mpv.net")
+                                foreach (var i in mpvnet.Command.Commands)
+                                    if (args[1] == i.Name)
+                                        i.Action(args.Skip(2).ToArray());
+
+                            ClientMessage?.Invoke(args);
                         }
 
                         break;
@@ -151,7 +162,7 @@ namespace mpvnet
             int err = mpv_command_string(MpvHandle, command);
 
             if (err < 0)
-                throw new Exception($"{(mpv_error)err}");
+                throw new Exception($"{(mpv_error)err}" + BR2 + command);
         }
 
         public static void SetStringProp(string name, string value, bool throwException = true)
@@ -240,6 +251,21 @@ namespace mpvnet
             }
 
             LoadFolder();
+        }
+
+        public static void LoadFiles(string[] files)
+        {
+            int count = mpv.GetIntProp("playlist-count");
+
+            foreach (string file in files)
+                mpv.Command("loadfile", file, "append");
+
+            mpv.SetIntProp("playlist-pos", count);
+
+            for (int i = 0; i < count; i++)
+                mpv.Command("playlist-remove", "0");
+
+            mpv.LoadFolder();
         }
 
         public static void LoadFolder()

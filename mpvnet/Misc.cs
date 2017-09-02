@@ -4,6 +4,16 @@ using System.Runtime.InteropServices;
 
 namespace mpvnet
 {
+    public class Misc
+    {
+        public static readonly string[] FileTypes = "264 265 3gp aac ac3 avc avi avs bmp divx dts dtshd dtshr dtsma eac3 evo flac flv h264 h265 hevc hvc jpg jpeg m2t m2ts m2v m4a m4v mka mkv mlp mov mp2 mp3 mp4 mpa mpeg mpg mpv mts ogg ogm opus pcm png pva raw rmvb thd thd+ac3 true-hd truehd ts vdr vob vpy w64 wav webm wmv y4m".Split(' ');
+
+        public static string GetFilter(IEnumerable<string> values)
+        {
+            return "*." + values.Join(";*.") + "|*." + values.Join(";*.") + "|All Files|*.*";
+        }
+    }
+
     public class StringLogicalComparer : IComparer, IComparer<string>
     {
         [DllImport("shlwapi.dll", CharSet = CharSet.Unicode)]

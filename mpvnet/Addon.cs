@@ -23,6 +23,8 @@ using System.ComponentModel.Composition.Hosting;
 using System.IO;
 using System.Windows.Forms;
 
+using static vbnet.UI.MainModule;
+
 // MEF (Managed Extension Framework)
 
 namespace mpvnet
@@ -36,24 +38,31 @@ namespace mpvnet
 
         public Addon()
         {
-            AggregateCatalog catalog = new AggregateCatalog();
-
-            string dir = Application.StartupPath + "\\Addons";
-
-            if (Directory.Exists(dir))
-                foreach (string i in Directory.GetDirectories(dir))
-                    catalog.Catalogs.Add(new DirectoryCatalog(i, "*Addon.dll"));
-
-            dir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\Addons";
-
-            if (Directory.Exists(dir))
-                foreach (string i in Directory.GetDirectories(dir))
-                    catalog.Catalogs.Add(new DirectoryCatalog(i, "*Addon.dll"));
-
-            if (catalog.Catalogs.Count > 0)
+            try
             {
-                CompositionContainer = new CompositionContainer(catalog);
-                CompositionContainer.ComposeParts(this);
+                AggregateCatalog catalog = new AggregateCatalog();
+
+                string dir = Application.StartupPath + "\\Addons";
+
+                if (Directory.Exists(dir))
+                    foreach (string i in Directory.GetDirectories(dir))
+                        catalog.Catalogs.Add(new DirectoryCatalog(i, "*Addon.dll"));
+
+                dir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\Addons";
+
+                if (Directory.Exists(dir))
+                    foreach (string i in Directory.GetDirectories(dir))
+                        catalog.Catalogs.Add(new DirectoryCatalog(i, "*Addon.dll"));
+
+                if (catalog.Catalogs.Count > 0)
+                {
+                    CompositionContainer = new CompositionContainer(catalog);
+                    CompositionContainer.ComposeParts(this);
+                }
+            }
+            catch (Exception e)
+            {
+                MsgException(e);
             }
         }
     }
