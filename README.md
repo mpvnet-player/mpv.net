@@ -1,11 +1,11 @@
 # mpv.net
 
-mpv.net is a very simple libmpv based media player, it works exactly like mpv, even shares the same settings.
+mpv.net is a libmpv based media player for Windows, it looks and works exactly like mpv, even shares the same settings.
 
 ### Features
 
 - Context menu which can be customized
-- Dotnet added implemented with the Managed Extension Framework (MEF)
+- Addons implemented with the Managed Extension Framework (MEF)
 - C# scripts implemented with CS-Script
 
 ### C# Scripting
