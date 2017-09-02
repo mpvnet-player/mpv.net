@@ -23,8 +23,6 @@ using System.Collections.Generic;
 using mpvnet;
 using System.IO;
 
-// MEF (Managed Extension Framework)
-
 namespace Rating
 {
     [Export(typeof(IAddon))]

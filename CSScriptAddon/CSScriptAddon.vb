@@ -20,7 +20,6 @@ Imports System.IO
 Imports vbnet
 Imports mpvnet
 Imports vbnet.UI.MainModule
-
 Imports CSScriptLibrary
 
 <Export(GetType(IAddon))>
