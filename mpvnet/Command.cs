@@ -23,6 +23,8 @@ using System.IO;
 using System.Windows.Forms;
 
 using vbnet;
+using System.Drawing;
+using static vbnet.UI.MainModule;
 
 namespace mpvnet
 {
@@ -98,6 +100,43 @@ namespace mpvnet
             }
 
             ProcessHelp.Start(OS.GetTextEditor(), '"' + filepath + '"');
+        }
+
+        public static void show_info(string[] args)
+        {
+            try
+            {
+                var fi = new FileInfo(mpv.GetStringProp("path"));
+
+                using (var mi = new MediaInfo(fi.FullName))
+                {
+                    var w = mi.GetInfo(StreamKind.Video, "Width");
+                    var h = mi.GetInfo(StreamKind.Video, "Height");
+                    var pos = TimeSpan.FromSeconds(mpv.GetIntProp("time-pos"));
+                    var dur = TimeSpan.FromSeconds(mpv.GetIntProp("duration"));
+                    var br = Convert.ToInt32(mi.GetInfo(StreamKind.Video, "BitRate")) / 1000;
+                    var vf = mpv.GetStringProp("video-format").ToUpper();
+                    var fn = fi.Name;
+
+                    if (fn.Length > 60)
+                        fn = fn.Insert(59, BR);
+
+                    var info =
+                        FormatTime(pos.TotalMinutes) + ":" +
+                        FormatTime(pos.Seconds) + " / " +
+                        FormatTime(dur.TotalMinutes) + ":" +
+                        FormatTime(dur.Seconds) + "\n" +
+                        ((int)(fi.Length / 1024 / 1024)).ToString() +
+                        $" MB - {w} x {h}\n{vf} - {br} Kbps" + "\n" + fn;
+
+                    mpv.Command("show-text", info, "5000");
+
+                    string FormatTime(double value) => ((int)(Math.Floor(value))).ToString("00");
+                }
+            }
+            catch (Exception)
+            {
+            }
         }
     }
 }

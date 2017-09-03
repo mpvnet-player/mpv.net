@@ -75,6 +75,7 @@
     <Compile Include="Extensions.vb" />
     <Compile Include="HSLColor.vb" />
     <Compile Include="MainModule.vb" />
+    <Compile Include="MediaInfo.vb" />
     <Compile Include="Menu.vb">
       <SubType>Component</SubType>
     </Compile>

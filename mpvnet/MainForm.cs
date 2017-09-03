@@ -22,7 +22,6 @@ using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using vbnet;
@@ -48,6 +47,7 @@ namespace mpvnet
             {
                 Application.ThreadException += Application_ThreadException;
                 InitializeComponent();
+                SetFormPosSize();
                 Instance = this;
                 Hwnd = Handle;
                 mpv.Init();
@@ -101,7 +101,7 @@ namespace mpvnet
                 var menuItem = CMS.Add(path, () => {
                     try
                     {
-                        mpv.CommandString(cmd);
+                        mpv.CommandString(cmd, false);
                     }
                     catch (Exception e)
                     {

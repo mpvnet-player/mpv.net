@@ -55,6 +55,7 @@
     <Reference Include="mpvnet, Version=0.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\mpvnet\bin\Debug\mpvnet.exe</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -66,6 +67,7 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="vbnet">
       <HintPath>..\vbnet\bin\Debug\vbnet.dll</HintPath>
+      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>

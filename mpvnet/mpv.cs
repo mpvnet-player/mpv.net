@@ -49,7 +49,7 @@ namespace mpvnet
         public static IntPtr MpvWindowHandle;
         public static Addon Addon;
         public static List<Action<bool>> BoolPropChangeActions = new List<Action<bool>>();
-        public static Size VideoSize;
+        public static Size VideoSize = new Size(1920, 1080);
         public static string InputConfPath = Folder.AppDataRoaming + "mpv\\input.conf";
         public static StringPairList BindingList = new StringPairList();
 
@@ -154,14 +154,14 @@ namespace mpvnet
             Marshal.FreeHGlobal(mainPtr);
         }
 
-        public static void CommandString(string command)
+        public static void CommandString(string command, bool throwException = true)
         {
             if (MpvHandle == IntPtr.Zero)
                 return;
 
             int err = mpv_command_string(MpvHandle, command);
 
-            if (err < 0)
+            if (err < 0 && throwException)
                 throw new Exception($"{(mpv_error)err}" + BR2 + command);
         }
 
@@ -187,12 +187,12 @@ namespace mpvnet
             return ret;
         }
 
-        public static int GetIntProp(string name)
+        public static int GetIntProp(string name, bool throwException = true)
         {
             var lpBuffer = IntPtr.Zero;
             int err = mpv_get_property(MpvHandle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_INT64, ref lpBuffer);
 
-            if (err < 0)
+            if (err < 0 && throwException)
                 throw new Exception($"{name}: {(mpv_error)err}");
             else
                 return lpBuffer.ToInt32();

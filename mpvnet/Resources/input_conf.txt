@@ -3,7 +3,7 @@
 
 o     script-message mpv.net open-files #menu: O; Open Files
 
-Space  pause               #menu: Space         ; Play/Pause
+Space  cycle pause         #menu: Space         ; Play/Pause
 s      stop                #menu: S             ; Stop
 
 F11    playlist-prev       #menu: F11           ; Navigate | Previous
@@ -20,18 +20,18 @@ KP8    cycle sub           #menu: Numpad 8      ; Cycle Subtitle
 -         add volume -5    #menu: -             ; Volume | Down
 Axis_Up   add volume  5    # wheel up
 Axis_Down add volume -5    # wheel down
-_ _                        #menu: _             ; Volume | -
-m mute                     #menu: M             ; Volume | Mute
+_         ignore           #menu: _             ; Volume | -
+m         cycle mute       #menu: M             ; Volume | Mute
 
-Alt++ add audio-delay  0.1 #menu: Alt++         ; Audio | Delay +0.1
-Alt+- add audio-delay -0.1 #menu: Alt+-         ; Audio | Delay -0.1
+KP6 add audio-delay  0.100 #menu: Numpad 6      ; Audio | Delay +0.1
+KP9 add audio-delay -0.100 #menu: Numpad 9      ; Audio | Delay -0.1
 
-Right      seek  10        #menu: Right         ; Seek | 10 sec forward
-Left       seek -10        #menu: Left          ; Seek | 10 sec backward
-_          _               #menu: _             ; Seek | -
+Right      seek  5         #menu: Right         ; Seek | 10 sec forward
+Left       seek -5         #menu: Left          ; Seek | 10 sec backward
+_          ignore          #menu: _             ; Seek | -
 Up         seek  60        #menu: Up            ; Seek | 1 min forward
 Down       seek -60        #menu: Down          ; Seek | 1 min backward
-_          _               #menu: _             ; Seek | -
+_          ignore          #menu: _             ; Seek | -
 Ctrl+Right seek  300       #menu: Ctrl+Right    ; Seek | 5 min forward
 Ctrl+Left  seek -300       #menu: Ctrl+Left     ; Seek | 5 min backward
 
@@ -45,5 +45,6 @@ KP5 script-message rate-file 5  #menu: Numpad 5 ; Addons | Rating | 5stars
 p script-message mpv.net show-prefs #menu: P               ; Preferences
 k script-message mpv.net show-keys	#menu: K               ; Keys
 
-F8 script-message mpv.net open-config-folder #menu: _      ; Tools | Config Folder
+i script-message mpv.net show-info           #menu: I      ; Tools | Info
+c script-message mpv.net open-config-folder  #menu: _      ; Tools | Config Folder
 Esc quit                                     #menu: Escape ; Exit
