@@ -104,6 +104,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Addon.cs" />
+    <None Include="docs\changelog.md" />
     <Compile Include="Extensions.cs" />
     <Compile Include="StringExtensions.cs" />
     <Compile Include="libmpv.cs" />

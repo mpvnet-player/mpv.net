@@ -1,23 +1,4 @@
-﻿/**
- *mpv.net
- *Copyright(C) 2017 stax76
- *
- *This program is free software: you can redistribute it and/or modify
- *it under the terms of the GNU General Public License as published by
- *the Free Software Foundation, either version 3 of the License, or
- *(at your option) any later version.
- *
- *This program is distributed in the hope that it will be useful,
- *but WITHOUT ANY WARRANTY; without even the implied warranty of
- *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.See the
- *GNU General Public License for more details.
- *
- *You should have received a copy of the GNU General Public License
- *along with this program. If not, see http://www.gnu.org/licenses/.
- */
-
-using System;
-using System.Diagnostics;
+﻿using System;
 using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -261,6 +242,13 @@ namespace mpvnet
                 Native.ReleaseCapture();
                 Native.PostMessage(Handle, 0xA1 /* WM_NCLBUTTONDOWN */, HTCAPTION, IntPtr.Zero);
             }
+
+            var sb = Screen.FromControl(this).Bounds;
+            var p1 = new Point(sb.Width, 0);
+            var p2 = PointToScreen(e.Location);
+
+            if (Math.Abs(p1.X - p2.X) < 10 && Math.Abs(p1.Y - p2.Y) < 10)
+                Close();
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
