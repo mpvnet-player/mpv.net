@@ -12,6 +12,7 @@ using static mpvnet.Native;
 
 using vbnet;
 using static vbnet.UI.MainModule;
+using System.Diagnostics;
 
 namespace mpvnet
 {
@@ -66,7 +67,7 @@ namespace mpvnet
             {
                 IntPtr ptr = mpv_wait_event(MpvHandle, -1);
                 mpv_event evt = (mpv_event)Marshal.PtrToStructure(ptr, typeof(mpv_event));
-                //Debug.WriteLine(evt.event_id);
+                Debug.WriteLine(evt.event_id);
 
                 if (MpvWindowHandle == IntPtr.Zero)
                     MpvWindowHandle = FindWindowEx(MainForm.Hwnd, IntPtr.Zero, "mpv", null);

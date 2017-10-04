@@ -47,4 +47,5 @@ k script-message mpv.net show-keys	#menu: K               ; Keys
 
 i script-message mpv.net show-info           #menu: I      ; Tools | Info
 c script-message mpv.net open-config-folder  #menu: _      ; Tools | Config Folder
+h script-message mpv.net history             #menu: H      ; Tools | History
 Esc quit                                     #menu: Escape ; Exit

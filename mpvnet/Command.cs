@@ -82,6 +82,14 @@ namespace mpvnet
             ProcessHelp.Start(OS.GetTextEditor(), '"' + filepath + '"');
         }
 
+        public static void history(string[] args)
+        {
+            var fp = Folder.AppDataRoaming + "mpv\\history.txt";
+
+            if (MsgQuestion($"Create history.txt file in config folder?{BR2}mpv.net will write the date, time and filename of opened file to it.") == DialogResult.OK)
+                File.WriteAllText(fp, "");
+        }
+
         public static void show_info(string[] args)
         {
             try
@@ -94,7 +102,7 @@ namespace mpvnet
                     var h = mi.GetInfo(StreamKind.Video, "Height");
                     var pos = TimeSpan.FromSeconds(mpv.GetIntProp("time-pos"));
                     var dur = TimeSpan.FromSeconds(mpv.GetIntProp("duration"));
-                    var br = Convert.ToInt32(mi.GetInfo(StreamKind.Video, "BitRate")) / 1000;
+                    var br = Convert.ToInt32(mi.GetInfo(StreamKind.Video, "BitRate")) / 1000.0 / 1000.0;
                     var vf = mpv.GetStringProp("video-format").ToUpper();
                     var fn = fi.Name;
 
@@ -107,7 +115,7 @@ namespace mpvnet
                         FormatTime(dur.TotalMinutes) + ":" +
                         FormatTime(dur.Seconds) + "\n" +
                         ((int)(fi.Length / 1024 / 1024)).ToString() +
-                        $" MB - {w} x {h}\n{vf} - {br} Kbps" + "\n" + fn;
+                        $" MB - {w} x {h}\n{vf} - {br.ToString("f1")} Mb/s" + "\n" + fn;
 
                     mpv.Command("show-text", info, "5000");
 

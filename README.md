@@ -43,3 +43,14 @@ class Script
     }
 }
 ```
+
+### Changes
+
+### 0.2.2
+
+- history feature added
+- mpv lib updated
+
+### 0.2.1
+
+- right-click in fullscreen in the right-left corner closes the app

@@ -35,7 +35,7 @@ namespace mpvnet
                 mpv.ObserveBoolProp("fullscreen", MpvChangeFullscreen);
                 mpv.AfterShutdown += Mpv_AfterShutdown;
                 mpv.VideoSizeChanged += Mpv_VideoSizeChanged;
-                mpv.PlaybackRestart += Mpv_PlaybackRestart;
+                mpv.PlaybackRestart += mpv_PlaybackRestart;
 
                 ToolStripManager.Renderer = new ToolStripRendererEx(ToolStripRenderModeEx.SystemDefault);
                 CMS = new ContextMenuStripEx(components);
@@ -100,9 +100,14 @@ namespace mpvnet
             CursorHelp.Show();
         }
 
-        private void Mpv_PlaybackRestart()
+        private void mpv_PlaybackRestart()
         {
-            BeginInvoke(new Action(() => Text = mpv.GetStringProp("filename") + " - mpv.net " + Application.ProductVersion));
+            var fn = mpv.GetStringProp("filename");
+            BeginInvoke(new Action(() => { Text = fn + " - mpv.net " + Application.ProductVersion; }));
+            var fp = Folder.AppDataRoaming + "mpv\\history.txt";
+
+            if (File.Exists(fp))
+                File.AppendAllText(fp, DateTime.Now.ToString() + " " + Path.GetFileNameWithoutExtension(fn) + BR);
         }
 
         private void CM_Popup(object sender, EventArgs e)
