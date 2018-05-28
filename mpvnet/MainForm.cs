@@ -100,14 +100,19 @@ namespace mpvnet
             CursorHelp.Show();
         }
 
+        private string LastHistory;
+
         private void mpv_PlaybackRestart()
         {
             var fn = mpv.GetStringProp("filename");
             BeginInvoke(new Action(() => { Text = fn + " - mpv.net " + Application.ProductVersion; }));
             var fp = Folder.AppDataRoaming + "mpv\\history.txt";
 
-            if (File.Exists(fp))
+            if (LastHistory != fn && File.Exists(fp))
+            {
                 File.AppendAllText(fp, DateTime.Now.ToString() + " " + Path.GetFileNameWithoutExtension(fn) + BR);
+                LastHistory = fn;
+            }
         }
 
         private void CM_Popup(object sender, EventArgs e)

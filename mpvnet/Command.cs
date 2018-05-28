@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 
 using vbnet;
+using vbnet.UI;
 using static vbnet.UI.MainModule;
 
 namespace mpvnet
@@ -86,8 +88,11 @@ namespace mpvnet
         {
             var fp = Folder.AppDataRoaming + "mpv\\history.txt";
 
-            if (MsgQuestion($"Create history.txt file in config folder?{BR2}mpv.net will write the date, time and filename of opened file to it.") == DialogResult.OK)
-                File.WriteAllText(fp, "");
+            if (File.Exists(fp))
+                Process.Start(fp);
+            else
+                if (MsgQuestion($"Create history.txt file in config folder?{BR2}mpv.net will write the date, time and filename of opened files to it.") == DialogResult.OK)
+                    File.WriteAllText(fp, "");
         }
 
         public static void show_info(string[] args)
@@ -102,7 +107,12 @@ namespace mpvnet
                     var h = mi.GetInfo(StreamKind.Video, "Height");
                     var pos = TimeSpan.FromSeconds(mpv.GetIntProp("time-pos"));
                     var dur = TimeSpan.FromSeconds(mpv.GetIntProp("duration"));
-                    var br = Convert.ToInt32(mi.GetInfo(StreamKind.Video, "BitRate")) / 1000.0 / 1000.0;
+                    string mibr = mi.GetInfo(StreamKind.Video, "BitRate");
+
+                    if (mibr == "")
+                        mibr = "0";
+
+                    var br = Convert.ToInt32(mibr) / 1000.0 / 1000.0;
                     var vf = mpv.GetStringProp("video-format").ToUpper();
                     var fn = fi.Name;
 
@@ -122,8 +132,9 @@ namespace mpvnet
                     string FormatTime(double value) => ((int)(Math.Floor(value))).ToString("00");
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                MsgError(ex.GetType().Name, ex.ToString());
             }
         }
     }

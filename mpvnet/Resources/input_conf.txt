@@ -26,14 +26,14 @@ m         cycle mute       #menu: M             ; Volume | Mute
 KP6 add audio-delay  0.100 #menu: Numpad 6      ; Audio | Delay +0.1
 KP9 add audio-delay -0.100 #menu: Numpad 9      ; Audio | Delay -0.1
 
-Right      seek  5         #menu: Right         ; Seek | 10 sec forward
-Left       seek -5         #menu: Left          ; Seek | 10 sec backward
-_          ignore          #menu: _             ; Seek | -
-Up         seek  60        #menu: Up            ; Seek | 1 min forward
-Down       seek -60        #menu: Down          ; Seek | 1 min backward
-_          ignore          #menu: _             ; Seek | -
-Ctrl+Right seek  300       #menu: Ctrl+Right    ; Seek | 5 min forward
-Ctrl+Left  seek -300       #menu: Ctrl+Left     ; Seek | 5 min backward
+Right no-osd seek  10        #menu: Right         ; Seek | 10 sec forward
+Left  no-osd seek -10        #menu: Left          ; Seek | 10 sec backward
+_            ignore          #menu: _             ; Seek | -
+Up    no-osd seek  40        #menu: Up            ; Seek | 1 min forward
+Down  no-osd seek -40        #menu: Down          ; Seek | 1 min backward
+_            ignore          #menu: _             ; Seek | -
+Ctrl+Right no-osd seek  300  #menu: Ctrl+Right    ; Seek | 5 min forward
+Ctrl+Left  no-osd seek -300  #menu: Ctrl+Left     ; Seek | 5 min backward
 
 KP0 script-message rate-file 0  #menu: Numpad 0 ; Addons | Rating | 0stars
 KP1 script-message rate-file 1  #menu: Numpad 1 ; Addons | Rating | 1stars
