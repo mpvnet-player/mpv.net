@@ -66,7 +66,7 @@ namespace mpvnet.Properties {
         ///
         ///o     script-message mpv.net open-files #menu: O; Open Files
         ///
-        ///Space  pause               #menu: Space         ; Play/Pause
+        ///Space  cycle pause         #menu: Space         ; Play/Pause
         ///s      stop                #menu: S             ; Stop
         ///
         ///F11    playlist-prev       #menu: F11           ; Navigate | Previous

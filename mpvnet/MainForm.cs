@@ -258,7 +258,7 @@ namespace mpvnet
             var p2 = PointToScreen(e.Location);
 
             if (Math.Abs(p1.X - p2.X) < 10 && Math.Abs(p1.Y - p2.Y) < 10)
-                Close();
+                mpv.Command("quit");
         }
 
         protected override void OnMouseMove(MouseEventArgs e)

@@ -46,6 +46,16 @@ class Script
 
 ### Changes
 
+### 0.2.3
+
+- fixed mpv.net not working with new mpv lib
+- the track name in the title bar was sometimes wrong
+- mpv lib updated to 2018-12-16
+- quit-watch-later added to context menu (Shift+Q) to exit and resume at the last position
+- ab loop added to menu
+- added the possibility to modify mpv.conf settings using the context menu
+- added link to the manual and default keys to the menu
+
 ### 0.2.2
 
 - history feature added

@@ -23,7 +23,6 @@ namespace mpvnet
         public static event Action<string[]> ClientMessage;
         public static event Action Shutdown;
         public static event Action AfterShutdown;
-        public static event Action FileLoaded;
         public static event Action PlaybackRestart;
         public static event Action VideoSizeChanged;
 
@@ -33,6 +32,7 @@ namespace mpvnet
         public static List<Action<bool>> BoolPropChangeActions = new List<Action<bool>>();
         public static Size VideoSize = new Size(1920, 1080);
         public static string InputConfPath = Folder.AppDataRoaming + "mpv\\input.conf";
+        public static string mpvConfPath = Folder.AppDataRoaming + "mpv\\mpv.conf";
         public static StringPairList BindingList = new StringPairList();
 
         public static void Init()
@@ -79,13 +79,14 @@ namespace mpvnet
                         AfterShutdown?.Invoke();
                         return;
                     case mpv_event_id.MPV_EVENT_FILE_LOADED:
-                        FileLoaded?.Invoke();
+                        LoadFolder();
                         break;
                     case mpv_event_id.MPV_EVENT_PLAYBACK_RESTART:
                         PlaybackRestart?.Invoke();
-                        var s = new Size(GetIntProp("dwidth"), GetIntProp("dheight"));
 
-                        if (VideoSize != s)
+                        Size s = new Size(GetIntProp("dwidth", false), GetIntProp("dheight", false));
+
+                        if (VideoSize != s && s != Size.Empty)
                         {
                             VideoSize = s;
                             VideoSizeChanged?.Invoke();
@@ -101,7 +102,14 @@ namespace mpvnet
                             if (args != null && args.Length > 1 && args[0] == "mpv.net")
                                 foreach (var i in mpvnet.Command.Commands)
                                     if (args[1] == i.Name)
-                                        i.Action(args.Skip(2).ToArray());
+                                        try
+                                        {
+                                            i.Action(args.Skip(2).ToArray());
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            MsgError(ex.GetType().Name, ex.ToString());
+                                        }
 
                             ClientMessage?.Invoke(args);
                         }
@@ -160,11 +168,12 @@ namespace mpvnet
         {
             var lpBuffer = IntPtr.Zero;
             int err = mpv_get_property(MpvHandle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_STRING, ref lpBuffer);
-            var ret = StringFromNativeUtf8(lpBuffer);
-            mpv_free(lpBuffer);
 
             if (err < 0)
                 throw new Exception($"{name}: {(mpv_error)err}");
+
+            var ret = StringFromNativeUtf8(lpBuffer);
+            mpv_free(lpBuffer);
 
             return ret;
         }
@@ -231,8 +240,6 @@ namespace mpvnet
                         mpv.SetStringProp(i.Substring(2), "yes");
                 }
             }
-
-            LoadFolder();
         }
 
         public static void LoadFiles(string[] files)
@@ -250,8 +257,13 @@ namespace mpvnet
             mpv.LoadFolder();
         }
 
+        private static bool WasFolderLoaded;
+
         public static void LoadFolder()
         {
+            if (WasFolderLoaded)
+                return;
+
             if (GetIntProp("playlist-count") == 1)
             {
                 string[] types = "264 265 3gp aac ac3 avc avi avs bmp divx dts dtshd dtshr dtsma eac3 evo flac flv h264 h265 hevc hvc jpg jpeg m2t m2ts m2v m4a m4v mka mkv mlp mov mp2 mp3 mp4 mpa mpeg mpg mpv mts ogg ogm opus pcm png pva raw rmvb thd thd+ac3 true-hd truehd ts vdr vob vpy w64 wav webm wmv y4m".Split(' ');
@@ -268,6 +280,8 @@ namespace mpvnet
                 if (index > 0)
                     Command("playlist-move", "0", (index + 1).ToString());
             }
+
+            WasFolderLoaded = true;
         }
 
         public static IntPtr AllocateUtf8IntPtrArrayWithSentinel(string[] arr, out IntPtr[] byteArrayPointers)
