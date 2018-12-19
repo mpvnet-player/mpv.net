@@ -48,6 +48,7 @@ class Script
 
 ### 0.2.3
 
+- changed minimum runtime to .NET 4.7.2
 - fixed mpv.net not working with new mpv lib
 - the track name in the title bar was sometimes wrong
 - mpv lib updated to 2018-12-16
