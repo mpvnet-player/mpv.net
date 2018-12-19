@@ -46,7 +46,7 @@ class Script
 
 ### Changes
 
-### 0.2.3
+### 0.2.4
 
 - changed minimum runtime to .NET 4.7.2
 - fixed mpv.net not working with new mpv lib
