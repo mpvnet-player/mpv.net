@@ -35,6 +35,29 @@ namespace mpvnet
         public static string mpvConfPath = Folder.AppDataRoaming + "mpv\\mpv.conf";
         public static StringPairList BindingList = new StringPairList();
 
+        private static Dictionary<string, string> _mpvConv;
+
+        public static Dictionary<string, string> mpvConv {
+            get {
+                if (_mpvConv == null)
+                {
+                    _mpvConv = new Dictionary<string, string>();
+
+                    if (File.Exists(mpvConfPath))
+                    {
+                        foreach (var i in File.ReadAllLines(mpvConfPath))
+                        {
+                            if (i.Contains("=") && ! i.StartsWith("#"))
+                            {
+                                _mpvConv[i.Left("=").Trim()] = i.Right("=").Trim();
+                            }
+                        }
+                    }
+                }
+                return _mpvConv;
+            }
+        }
+
         public static void Init()
         {
             LoadLibrary("mpv-1.dll");
@@ -42,14 +65,11 @@ namespace mpvnet
             SetIntProp("input-ar-delay", 500);
             SetIntProp("input-ar-rate", 20);
             SetIntProp("volume", 50);
-            SetStringProp("hwdec", "auto");
+            SetStringProp("hwdec", "yes");
             SetStringProp("input-default-bindings", "yes");
-            SetStringProp("opengl-backend", "angle");
             SetStringProp("osd-playing-msg", "'${filename}'");
-            SetStringProp("profile", "opengl-hq");
             SetStringProp("screenshot-directory", "~~desktop/");
-            SetStringProp("vo", "opengl");
-            SetStringProp("keep-open", "always");
+            SetStringProp("keep-open", "yes");
             SetStringProp("keep-open-pause", "no");
             SetStringProp("osc", "yes");
             SetStringProp("config", "yes");

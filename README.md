@@ -46,6 +46,12 @@ class Script
 
 ### Changes
 
+### 0.2.5
+
+- mpv lib updated to 2019-02-24
+- UI glitch fixed the appeared when started in fullscreen mode
+- fixed default video output mode which caused video playback to fail
+
 ### 0.2.4
 
 - changed minimum runtime to .NET 4.7.2

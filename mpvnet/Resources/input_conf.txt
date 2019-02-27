@@ -1,58 +1,59 @@
+#this file defines the shortcut keys and the context menu
 
-#key   command                    key caption     menu path/caption
+#key   command                      key caption    menu path/caption
 
 o      script-message mpv.net open-files #menu: O; Open Files
 
-Space  cycle pause         #menu: Space         ; Play/Pause
-s      stop                #menu: S             ; Stop
+Space  cycle pause           #menu: Space        ; Play/Pause
+s      stop                  #menu: S            ; Stop
 
-F11    playlist-prev       #menu: F11           ; Navigate | Previous
-F12    playlist-next       #menu: F12           ; Navigate | Next
+F11    playlist-prev         #menu: F11          ; Navigate | Previous
+F12    playlist-next         #menu: F12          ; Navigate | Next
 
-Ctrl++ add video-zoom  0.1 #menu: Ctrl++        ; Pan && Scan | Increase Size
-Ctrl+- add video-zoom -0.1 #menu: Ctrl+-        ; Pan && Scan | Decrease Size
+Ctrl++ add video-zoom  0.1   #menu: Ctrl++       ; Pan && Scan | Increase Size
+Ctrl+- add video-zoom -0.1   #menu: Ctrl+-       ; Pan && Scan | Decrease Size
 
-Enter  cycle fullscreen    #menu: Enter         ; Cycle Fullscreen
-KP7    cycle audio         #menu: Numpad 7      ; Cycle Audio
-KP8    cycle sub           #menu: Numpad 8      ; Cycle Subtitle
+Enter  cycle pause           #menu: Enter        ; Cycle Fullscreen
+KP7    cycle audio           #menu: Numpad 7     ; Cycle Audio
+KP8    cycle sub             #menu: Numpad 8     ; Cycle Subtitle
 
-+         add volume  5    #menu: +             ; Volume | Up
--         add volume -5    #menu: -             ; Volume | Down
-Axis_Up   add volume  5    # wheel up
-Axis_Down add volume -5    # wheel down
-_         ignore           #menu: _             ; Volume | -
-m         cycle mute       #menu: M             ; Volume | Mute
++         add volume  10     #menu: +            ; Volume | Up
+-         add volume -10     #menu: -            ; Volume | Down
+Axis_Up   add volume  10     #wheel up
+Axis_Down add volume -10     #wheel down
+_         ignore             #menu: _            ; Volume | -
+m         cycle mute         #menu: M            ; Volume | Mute
 
-KP6 add audio-delay  0.100 #menu: Numpad 6      ; Audio | Delay +0.1
-KP9 add audio-delay -0.100 #menu: Numpad 9      ; Audio | Delay -0.1
+KP6 add audio-delay  0.100   #menu: Numpad 6     ; Audio | Delay +0.1
+KP9 add audio-delay -0.100   #menu: Numpad 9     ; Audio | Delay -0.1
 
-Right no-osd seek  10        #menu: Right       ; Seek | 10 sec forward
-Left  no-osd seek -10        #menu: Left        ; Seek | 10 sec backward
-_            ignore          #menu: _           ; Seek | -
-Up    no-osd seek  40        #menu: Up          ; Seek | 1 min forward
-Down  no-osd seek -40        #menu: Down        ; Seek | 1 min backward
-_            ignore          #menu: _           ; Seek | -
-Ctrl+Right no-osd seek  300  #menu: Ctrl+Right  ; Seek | 5 min forward
-Ctrl+Left  no-osd seek -300  #menu: Ctrl+Left   ; Seek | 5 min backward
+Right no-osd seek  10        #menu: Right        ; Seek | 7 sec forward
+Left  no-osd seek -10        #menu: Left         ; Seek | 7 sec backward
+_            ignore          #menu: _            ; Seek | -
+Up    no-osd seek  40        #menu: Up           ; Seek | 1 min forward
+Down  no-osd seek -40        #menu: Down         ; Seek | 1 min backward
+_            ignore          #menu: _            ; Seek | -
+Ctrl+Right no-osd seek  300  #menu: Ctrl+Right   ; Seek | 5 min forward
+Ctrl+Left  no-osd seek -300  #menu: Ctrl+Left    ; Seek | 5 min backward
 
-KP0 script-message rate-file 0  #menu: Numpad 0 ; Addons | Rating | 0stars
-KP1 script-message rate-file 1  #menu: Numpad 1 ; Addons | Rating | 1stars
-KP2 script-message rate-file 2  #menu: Numpad 2 ; Addons | Rating | 2stars
-KP3 script-message rate-file 3  #menu: Numpad 3 ; Addons | Rating | 3stars
-KP4 script-message rate-file 4  #menu: Numpad 4 ; Addons | Rating | 4stars
-KP5 script-message rate-file 5  #menu: Numpad 5 ; Addons | Rating | 5stars
+KP0 script-message rate-file 0  #menu: Numpad 0  ; Addons | Rating | 0stars
+KP1 script-message rate-file 1  #menu: Numpad 1  ; Addons | Rating | 1stars
+KP2 script-message rate-file 2  #menu: Numpad 2  ; Addons | Rating | 2stars
+KP3 script-message rate-file 3  #menu: Numpad 3  ; Addons | Rating | 3stars
+KP4 script-message rate-file 4  #menu: Numpad 4  ; Addons | Rating | 4stars
+KP5 script-message rate-file 5  #menu: Numpad 5  ; Addons | Rating | 5stars
 
-_ script-message mpv.net set-setting hwdec yes #menu: _    ; Settings | Hardware Decoding | Enable Hardware Decoding
-_ script-message mpv.net set-setting hwdec no  #menu: _    ; Settings | Hardware Decoding | Disable Hardware Decoding
+_ script-message mpv.net set-setting hwdec yes #menu: _ ; Settings | Hardware Decoding | Enable Hardware Decoding
+_ script-message mpv.net set-setting hwdec no  #menu: _ ; Settings | Hardware Decoding | Disable Hardware Decoding
 
-p script-message mpv.net show-prefs #menu: P               ; Settings | Show Preferences
-k script-message mpv.net show-keys	#menu: K               ; Settings | Show Keys
+p script-message mpv.net show-prefs            #menu: P ; Settings | Show Preferences
+k script-message mpv.net show-keys             #menu: K ; Settings | Show Keys
 
-i script-message mpv.net show-info           #menu: I      ; Tools | Info
-c script-message mpv.net open-config-folder  #menu: _      ; Tools | Config Folder
-h script-message mpv.net history             #menu: H      ; Tools | History
-l ab-loop                                    #menu: L      ; Tools | AB Loop
+i script-message mpv.net show-info             #menu: I ; Tools | Info
+c script-message mpv.net open-config-folder    #menu: _ ; Tools | Config Folder
+h script-message mpv.net history               #menu: H ; Tools | History
+l ab-loop                                      #menu: L ; Tools | AB Loop
 _ script-message mpv.net shell-execute https://mpv.io/manual/stable/ #menu: _ ; Tools | mpv Manual
 _ script-message mpv.net shell-execute https://github.com/mpv-player/mpv/blob/master/etc/input.conf #menu: _ ; Tools | mpv Default Keys
-Esc quit                                     #menu: Escape ; Exit
-Q quit-watch-later                           #menu: Shift+Q; Exit Watch Later
+Esc quit                                       #menu: Escape ; Exit
+Q quit-watch-later                             #menu: Shift+Q; Exit Watch Later
