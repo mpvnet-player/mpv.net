@@ -27,8 +27,8 @@ m         cycle mute         #menu: M            ; Volume | Mute
 KP6 add audio-delay  0.100   #menu: Numpad 6     ; Audio | Delay +0.1
 KP9 add audio-delay -0.100   #menu: Numpad 9     ; Audio | Delay -0.1
 
-Right no-osd seek  10        #menu: Right        ; Seek | 7 sec forward
-Left  no-osd seek -10        #menu: Left         ; Seek | 7 sec backward
+Right no-osd seek  7         #menu: Right        ; Seek | 7 sec forward
+Left  no-osd seek -7         #menu: Left         ; Seek | 7 sec backward
 _            ignore          #menu: _            ; Seek | -
 Up    no-osd seek  40        #menu: Up           ; Seek | 1 min forward
 Down  no-osd seek -40        #menu: Down         ; Seek | 1 min backward

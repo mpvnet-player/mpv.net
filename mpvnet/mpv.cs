@@ -66,6 +66,7 @@ namespace mpvnet
             SetIntProp("input-ar-rate", 20);
             SetIntProp("volume", 50);
             SetStringProp("hwdec", "yes");
+            SetStringProp("vo", "direct3d");
             SetStringProp("input-default-bindings", "yes");
             SetStringProp("osd-playing-msg", "'${filename}'");
             SetStringProp("screenshot-directory", "~~desktop/");

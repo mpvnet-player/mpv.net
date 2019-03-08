@@ -254,14 +254,9 @@ Namespace UI
             MyBase.New(container)
         End Sub
 
-        Protected Overrides Sub OnOpening(e As CancelEventArgs)
-            MyBase.OnOpening(e)
-            MenuHelp.SetRenderer(Me)
-        End Sub
-
         Protected Overrides Sub OnHandleCreated(e As EventArgs)
             MyBase.OnHandleCreated(e)
-            Font = New Font("Segoe UI", 9)
+            MenuHelp.SetRenderer(Me)
         End Sub
 
         <DefaultValue(GetType(Form), Nothing)>

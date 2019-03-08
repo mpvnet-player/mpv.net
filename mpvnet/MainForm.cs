@@ -33,7 +33,6 @@ namespace mpvnet
                 Instance = this;
                 Hwnd = Handle;
                 ChangeFullscreen((mpv.mpvConv.ContainsKey("fullscreen") && mpv.mpvConv["fullscreen"] == "yes") || (mpv.mpvConv.ContainsKey("fs") && mpv.mpvConv["fs"] == "yes"));
-                ToolStripManager.Renderer = new ToolStripRendererEx(ToolStripRenderModeEx.SystemDefault);
                 CMS = new ContextMenuStripEx(components);
                 CMS.Opened += CMS_Opened;
                 ContextMenuStrip = CMS;
@@ -302,11 +301,6 @@ namespace mpvnet
             mpv.AfterShutdown += Mpv_AfterShutdown;
             mpv.VideoSizeChanged += Mpv_VideoSizeChanged;
             mpv.PlaybackRestart += mpv_PlaybackRestart;
-        }
-
-        private void MainForm_Activated(object sender, EventArgs ea)
-        {
-            
         }
     }
 }
