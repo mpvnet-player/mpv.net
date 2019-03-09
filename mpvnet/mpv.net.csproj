@@ -105,6 +105,10 @@
   <ItemGroup>
     <Compile Include="Addon.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="MediaInfo.cs" />
+    <Compile Include="Menu.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="StringExtensions.cs" />
     <Compile Include="libmpv.cs" />
     <Compile Include="MainForm.cs">
@@ -152,12 +156,6 @@
     <Content Include="mpv.ico" />
     <Content Include="screenshot.jpg" />
     <None Include="Resources\input_conf.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\vbnet\vbnet.vbproj">
-      <Project>{af1b21c5-28fc-4d47-ad0b-54f6a38391a6}</Project>
-      <Name>vbnet</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

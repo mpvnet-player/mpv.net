@@ -4,8 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 
-using vbnet;
-using static vbnet.UI.MainModule;
+using static mpvnet.StaticUsing;
 
 namespace mpvnet
 {
@@ -58,22 +57,20 @@ namespace mpvnet
 
         public static void open_config_folder(string[] args)
         {
-            ProcessHelp.Start(Folder.AppDataRoaming + "mpv");
+            Process.Start(mpv.mpvConfFolderPath);
         }
 
         public static void show_keys(string[] args)
         {
-            ProcessHelp.Start(OS.GetTextEditor(), '"' + mpv.InputConfPath + '"');
+            Process.Start(mpv.InputConfPath);
         }
 
         private static void CreateMpvConf()
         {
             if (!File.Exists(mpv.mpvConfPath))
             {
-                var dirPath = Folder.AppDataRoaming + "mpv\\";
-
-                if (!Directory.Exists(dirPath))
-                    Directory.CreateDirectory(dirPath);
+                if (!Directory.Exists(mpv.mpvConfFolderPath))
+                    Directory.CreateDirectory(mpv.mpvConfFolderPath);
 
                 File.WriteAllText(mpv.mpvConfPath, "# https://mpv.io/manual/master/#configuration-files");
             }
@@ -82,17 +79,17 @@ namespace mpvnet
         public static void show_prefs(string[] args)
         {
             CreateMpvConf();
-            ProcessHelp.Start(OS.GetTextEditor(), '"' + mpv.mpvConfPath + '"');
+            Process.Start(mpv.mpvConfPath);
         }
 
         public static void history(string[] args)
         {
-            var fp = Folder.AppDataRoaming + "mpv\\history.txt";
+            var fp = mpv.mpvConfFolderPath + "history.txt";
 
             if (File.Exists(fp))
                 Process.Start(fp);
             else
-                if (MsgQuestion($"Create history.txt file in config folder?{BR2}mpv.net will write the date, time and filename of opened files to it.") == DialogResult.OK)
+                if (MsgQuestion("Create history.txt file in config folder?\r\n\r\nmpv.net will write the date, time and filename of opened files to it.") == DialogResult.OK)
                     File.WriteAllText(fp, "");
         }
 
@@ -137,11 +134,11 @@ namespace mpvnet
 
             using (var mi = new MediaInfo(fi.FullName))
             {
-                var w = mi.GetInfo(StreamKind.Video, "Width");
-                var h = mi.GetInfo(StreamKind.Video, "Height");
+                var w = mi.GetInfo(MediaInfoStreamKind.Video, "Width");
+                var h = mi.GetInfo(MediaInfoStreamKind.Video, "Height");
                 var pos = TimeSpan.FromSeconds(mpv.GetIntProp("time-pos"));
                 var dur = TimeSpan.FromSeconds(mpv.GetIntProp("duration"));
-                string mibr = mi.GetInfo(StreamKind.Video, "BitRate");
+                string mibr = mi.GetInfo(MediaInfoStreamKind.Video, "BitRate");
 
                 if (mibr == "")
                     mibr = "0";
@@ -151,7 +148,7 @@ namespace mpvnet
                 var fn = fi.Name;
 
                 if (fn.Length > 60)
-                    fn = fn.Insert(59, BR);
+                    fn = fn.Insert(59, "\r\n");
 
                 var info =
                     FormatTime(pos.TotalMinutes) + ":" +

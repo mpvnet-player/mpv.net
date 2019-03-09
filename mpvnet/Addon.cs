@@ -1,6 +1,6 @@
 ﻿/**
  *mpv.net
- *Copyright(C) 2017 stax76
+ *Copyright(C) 2019 stax76
  *
  *This program is free software: you can redistribute it and/or modify
  *it under the terms of the GNU General Public License as published by
@@ -23,9 +23,7 @@ using System.ComponentModel.Composition.Hosting;
 using System.IO;
 using System.Windows.Forms;
 
-using static vbnet.UI.MainModule;
-
-// MEF (Managed Extension Framework)
+using static mpvnet.StaticUsing;
 
 namespace mpvnet
 {
@@ -48,7 +46,7 @@ namespace mpvnet
                     foreach (string i in Directory.GetDirectories(dir))
                         catalog.Catalogs.Add(new DirectoryCatalog(i, "*Addon.dll"));
 
-                dir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\Addons";
+                dir = mpv.mpvConfFolderPath + "\\Addons";
 
                 if (Directory.Exists(dir))
                     foreach (string i in Directory.GetDirectories(dir))
@@ -62,7 +60,7 @@ namespace mpvnet
             }
             catch (Exception e)
             {
-                MsgException(e);
+                MsgError(e.ToString());
             }
         }
     }

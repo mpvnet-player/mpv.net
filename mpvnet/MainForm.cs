@@ -5,9 +5,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
 
-using vbnet;
-using vbnet.UI;
-using static vbnet.UI.MainModule;
+using static mpvnet.StaticUsing;
 
 namespace mpvnet
 {
@@ -48,10 +46,8 @@ namespace mpvnet
         {
             if (!File.Exists(mpv.InputConfPath))
             {
-                var dirPath = Folder.AppDataRoaming + "mpv\\";
-
-                if (!Directory.Exists(dirPath))
-                    Directory.CreateDirectory(dirPath);
+                if (!Directory.Exists(mpv.mpvConfFolderPath))
+                    Directory.CreateDirectory(mpv.mpvConfFolderPath);
 
                 File.WriteAllText(mpv.InputConfPath, Properties.Resources.input_conf);
             }
@@ -81,7 +77,7 @@ namespace mpvnet
                     }
                     catch (Exception e)
                     {
-                        MsgException(e);
+                        MsgError(e.ToString());
                     }
                 });
                 
@@ -101,11 +97,11 @@ namespace mpvnet
         {
             var fn = mpv.GetStringProp("filename");
             BeginInvoke(new Action(() => { Text = fn + " - mpv.net " + Application.ProductVersion; }));
-            var fp = Folder.AppDataRoaming + "mpv\\history.txt";
+            var fp = mpv.mpvConfFolderPath + "history.txt";
 
             if (LastHistory != fn && File.Exists(fp))
             {
-                File.AppendAllText(fp, DateTime.Now.ToString() + " " + Path.GetFileNameWithoutExtension(fn) + BR);
+                File.AppendAllText(fp, DateTime.Now.ToString() + " " + Path.GetFileNameWithoutExtension(fn) + "\r\n");
                 LastHistory = fn;
             }
         }
@@ -122,7 +118,7 @@ namespace mpvnet
 
         void HandleException(Exception e)
         {
-            MsgException(e);
+            MsgError(e.ToString());
         }
 
         private void Mpv_VideoSizeChanged()

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.ComponentModel.Composition;
 using System.Collections.Generic;
+using System.IO;
 
 using mpvnet;
-using System.IO;
 
 namespace Rating
 {

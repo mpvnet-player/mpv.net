@@ -1,18 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.Drawing;
 
 using static mpvnet.libmpv;
 using static mpvnet.Native;
-
-using vbnet;
-using static vbnet.UI.MainModule;
-using System.Diagnostics;
+using static mpvnet.StaticUsing;
 
 namespace mpvnet
 {
@@ -31,9 +29,9 @@ namespace mpvnet
         public static Addon Addon;
         public static List<Action<bool>> BoolPropChangeActions = new List<Action<bool>>();
         public static Size VideoSize = new Size(1920, 1080);
-        public static string InputConfPath = Folder.AppDataRoaming + "mpv\\input.conf";
-        public static string mpvConfPath = Folder.AppDataRoaming + "mpv\\mpv.conf";
-        public static StringPairList BindingList = new StringPairList();
+        public static string mpvConfFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\";
+        public static string InputConfPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\input.conf";
+        public static string mpvConfPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\mpv.conf";
 
         private static Dictionary<string, string> _mpvConv;
 
@@ -129,7 +127,7 @@ namespace mpvnet
                                         }
                                         catch (Exception ex)
                                         {
-                                            MsgError(ex.GetType().Name, ex.ToString());
+                                            MsgError(ex.GetType().Name + "\r\n\r\n" + ex.ToString());
                                         }
 
                             ClientMessage?.Invoke(args);
@@ -173,7 +171,7 @@ namespace mpvnet
             int err = mpv_command_string(MpvHandle, command);
 
             if (err < 0 && throwException)
-                throw new Exception($"{(mpv_error)err}" + BR2 + command);
+                throw new Exception($"{(mpv_error)err}\r\n\r\n" + command);
         }
 
         public static void SetStringProp(string name, string value, bool throwException = true)
