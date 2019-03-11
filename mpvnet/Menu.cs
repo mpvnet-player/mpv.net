@@ -78,7 +78,7 @@ public class ActionMenuItem : MenuItemEx
 
     public static ActionMenuItem Add(ToolStripItemCollection items, string path, Action action)
     {
-        var a = path.Split(new[] { " | " }, StringSplitOptions.RemoveEmptyEntries);
+        var a = path.Split(new[] { " > " }, StringSplitOptions.RemoveEmptyEntries);
         var l = items;
 
         for (var x = 0; x <= a.Length - 1; x++)
@@ -89,7 +89,7 @@ public class ActionMenuItem : MenuItemEx
             {
                 if (x < a.Length - 1)
                 {
-                    if (i.Text == a[x])
+                    if (i.Text == a[x] + " ")
                     {
                         found = true;
                         l = i.DropDownItems;
@@ -105,7 +105,7 @@ public class ActionMenuItem : MenuItemEx
                         l.Add(new ToolStripSeparator());
                     else
                     {
-                        ActionMenuItem item = new ActionMenuItem(a[x], action);
+                        ActionMenuItem item = new ActionMenuItem(a[x] + " ", action);
                         l.Add(item);
                         l = item.DropDownItems;
                         return item;
@@ -114,7 +114,7 @@ public class ActionMenuItem : MenuItemEx
                 else
                 {
                     ActionMenuItem item = new ActionMenuItem();
-                    item.Text = a[x];
+                    item.Text = a[x] + " ";
                     l.Add(item);
                     l = item.DropDownItems;
                 }
