@@ -1,14 +1,16 @@
 # mpv.net
 
-mpv.net is a libmpv based media player for Windows, it looks and works like mpv, even shares the settings and therefore the mpv documentation applies, it can be found at:
+mpv.net is a libmpv based media player for Windows, it looks and works like mpv, even shares the settings and therefore the mpv documentation applies.
 
-https://mpv.io/manual/master/
+mpv and mpv.net have a learning curve and are only suitable for experienced users.
+
+mpv manual: https://mpv.io/manual/master/
 
 ### Features
 
 - mpv's OSC, IPC, Lua/JS, conf files and more
-- Context menu which can be customized
-- Addons implemented with the Managed Extension Framework (MEF)
+- Customizable context menu defined in the same file as the keybindings
+- Addons support for using .NET languages
 - C# scripts implemented with CS-Script
 
 ![](https://github.com/stax76/mpv.net/blob/master/mpv.net/screenshot.jpg)
@@ -18,6 +20,8 @@ https://mpv.io/manual/master/
 The context menu can be customized via input.conf file located at:
 
 C:\Users\Frank\AppData\Roaming\mpv\input.conf
+
+if it misses mpv.net generates it with the following defaults:
 
 https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input_conf.txt
 
@@ -45,6 +49,10 @@ class Script
 ```
 
 ### Changes
+
+### 1.0
+
+- much more feature packed context menu
 
 ### 0.2.5
 
