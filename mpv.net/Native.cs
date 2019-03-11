@@ -61,17 +61,17 @@ namespace mpvnet
 
             public Size Size
             {
-                get { return new Size(Right - Left, Bottom - Top); }
+                get => new Size(Right - Left, Bottom - Top);
             }
 
             public int Width
             {
-                get { return Right - Left; }
+                get => Right - Left;
             }
 
             public int Height
             {
-                get { return Bottom - Top; }
+                get => Bottom - Top;
             }
         }
     }

@@ -61,19 +61,6 @@ namespace mpvnet.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 
-        ///#key   command                    key caption     menu path/caption
-        ///
-        ///o     script-message mpv.net open-files #menu: O; Open Files
-        ///
-        ///Space  cycle pause         #menu: Space         ; Play/Pause
-        ///s      stop                #menu: S             ; Stop
-        ///
-        ///F11    playlist-prev       #menu: F11           ; Navigate | Previous
-        ///F12    playlist-next       #menu: F12           ; Navigate | Next
-        ///
-        ///Ctrl++ add video-zoom  0.1 #menu: Ctrl++        ; Pan &amp;&amp; Scan | Increase Size
-        ///Ctrl+- add video-zoom -0.1 #menu: Ct [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string input_conf {
             get {
