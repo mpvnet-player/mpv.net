@@ -8,10 +8,10 @@ mpv manual: https://mpv.io/manual/master/
 
 ### Features
 
-- mpv's OSC, IPC, Lua/JS, conf files and more
 - Customizable context menu defined in the same file as the keybindings
 - Addons support for using .NET languages
 - C# scripts implemented with CS-Script
+- mpv's OSC, IPC, Lua/JS, conf files and more
 
 ![](https://github.com/stax76/mpv.net/blob/master/mpv.net/screenshot.jpg)
 
