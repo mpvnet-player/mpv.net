@@ -13,7 +13,7 @@ mpv manual: https://mpv.io/manual/master/
 - C# scripts implemented with CS-Script
 - mpv's OSC, IPC, Lua/JS, conf files and more
 
-![](https://github.com/stax76/mpv.net/blob/master/mpv.net/screenshot.jpg)
+![](https://raw.githubusercontent.com/stax76/mpv.net/master/screenshot.png)
 
 ### Context Menu
 
