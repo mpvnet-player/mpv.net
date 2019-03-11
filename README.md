@@ -11,7 +11,7 @@ https://mpv.io/manual/master/
 - Addons implemented with the Managed Extension Framework (MEF)
 - C# scripts implemented with CS-Script
 
-![](https://github.com/stax76/mpvnet/blob/master/mpvnet/screenshot.jpg)
+![](https://github.com/stax76/mpv.net/blob/master/mpv.net/screenshot.jpg)
 
 ### Context Menu
 
@@ -19,7 +19,7 @@ The context menu can be customized via input.conf file located at:
 
 C:\Users\Frank\AppData\Roaming\mpv\input.conf
 
-https://github.com/stax76/mpvnet/blob/master/mpvnet/Resources/input_conf.txt
+https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input_conf.txt
 
 ### C# Scripting
 
