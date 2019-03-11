@@ -5,14 +5,14 @@ using System.IO;
 
 using mpvnet;
 
-namespace Rating
+namespace RatingAddon
 {
     [Export(typeof(IAddon))]
-    public class Rating : IAddon
+    public class RatingAddon : IAddon
     {
         private Dictionary<string, int> Dic = new Dictionary<string, int>();
 
-        public Rating()
+        public RatingAddon()
         {
             mpv.ClientMessage += mpv_ClientMessage;
             mpv.Shutdown += mpv_Shutdown;

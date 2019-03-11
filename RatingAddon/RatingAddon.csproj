@@ -7,7 +7,7 @@
     <ProjectGuid>{55C88710-539D-4402-84C8-31694841C731}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Rating</RootNamespace>
+    <RootNamespace>RatingAddon</RootNamespace>
     <AssemblyName>RatingAddon</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\mpvnet\bin\Debug\Addons\Rating\</OutputPath>
+    <OutputPath>..\mpv.net\bin\Debug\Addons\RatingAddon\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -68,7 +68,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="mpvnet">
-      <HintPath>..\mpvnet\bin\Debug\mpvnet.exe</HintPath>
+      <HintPath>..\mpv.net\bin\Debug\mpvnet.exe</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -82,7 +82,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Rating.cs" />
+    <Compile Include="RatingAddon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,8 +1,12 @@
-using namespace System.Diagnostics
-$exePath = "C:\Users\frank\C-Daten\Projekte\VS\CS\mpvnet\mpvnet\bin\Debug\mpvnet.exe"
-$version = [FileVersionInfo]::GetVersionInfo($exePath).FileVersion
-$targetDir = "C:\Users\Frank\Desktop\mpv.net-" + $version
-Copy-Item C:\Users\frank\C-Daten\Projekte\VS\CS\mpvnet\mpvnet\bin\Debug $targetDir -recurse
+$scriptDir = Split-Path -Path $PSCommandPath -Parent
+$exePath = $scriptDir + "\mpv.net\bin\Debug\mpvnet.exe"
+$version = [Diagnostics.FileVersionInfo]::GetVersionInfo($exePath).FileVersion
+$desktopDir = [Environment]::GetFolderPath("Desktop")
+$targetDir = $desktopDir + "\mpv.net-" + $version
+if (Test-Path $targetDir) { rd $targetDir -recurse }
+Copy-Item $scriptDir\mpv.net\bin\Debug $targetDir -recurse
 $addonDir = $targetDir + "\Addons"
-remove-item $addonDir -Recurse -Include *vbnet.pdb, *mpvnet.exe, *mpvnet.exe.config, *mpvnet.pdb, *vbnet.dll
-C:\Users\frank\C-Daten\Projekte\VS\VB\util\bin\util.exe -pack $targetDir
+remove-item $addonDir -Recurse -Include *mpvnet.exe, *mpvnet.exe.config, *mpvnet.pdb
+$7zPath = "C:\Program Files\7-Zip\7z.exe"
+$args = "a -t7z -mx9 $targetDir.7z -r $targetDir\*"
+Start-Process -FilePath $7zPath -ArgumentList $args
