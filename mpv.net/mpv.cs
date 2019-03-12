@@ -7,7 +7,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Windows.Forms;
 using static mpvnet.libmpv;
 using static mpvnet.Native;
 using static mpvnet.StaticUsing;
@@ -75,6 +75,7 @@ namespace mpvnet
             SetStringProp("wid", MainForm.Hwnd.ToString());
             SetStringProp("force-window", "yes");
             mpv_initialize(MpvHandle);
+            LoadScripts();
             ProcessCommandLine();
             Task.Run(() => { Addon = new Addon(); });
             Task.Run(() => { EventLoop(); });
@@ -343,5 +344,18 @@ namespace mpvnet
         }
 
         public static byte[] GetUtf8Bytes(string s) => Encoding.UTF8.GetBytes(s + "\0");
+
+        public static void LoadScripts()
+        {
+            foreach (var i in Directory.GetFiles(Application.StartupPath + "\\Scripts"))
+            {
+                string[] extensions = { ".lua", ".js" };
+
+                if (!extensions.Contains(Path.GetExtension(i).ToLower()))
+                    continue;
+
+                mpv.Command("load-script", $"{i}");
+            }
+        }
     }
 }
