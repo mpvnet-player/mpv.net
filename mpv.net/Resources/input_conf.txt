@@ -113,8 +113,8 @@
  L cycle-values loop-file "inf" "no"                #menu: Shift+L ; Tools > Toggle Infinite Looping
  DEL script-binding osc/visibility                  #menu: Delete  ; Tools > Toggle OSC Visibility
  Ctrl+H cycle-values hwdec "auto" "no"              #menu: Ctrl+H  ; Tools > Cycle Hardware Decoding
- F8 show_text ${playlist}                           #menu: F8      ; Tools > Show Playlist
- F9 show_text ${track-list}                         #menu: F9      ; Tools > Show Audio/Video/Subtitle List
+ F8 show-text ${playlist}   5000                    #menu: F8      ; Tools > Show Playlist
+ F9 show-text ${track-list} 5000                    #menu: F9      ; Tools > Show Audio/Video/Subtitle List
 
  _ script-message mpv.net shell-execute https://mpv.io/manual/stable/ #menu: _ ; Tools > Web > Show mpv manual
  _ script-message mpv.net shell-execute https://github.com/mpv-player/mpv/blob/master/etc/input.conf #menu: _ ; Tools > Web > Show mpv default keys

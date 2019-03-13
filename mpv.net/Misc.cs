@@ -1,7 +1,13 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+
+using IronPython.Hosting;
+using Microsoft.Scripting.Hosting;
+
+using static mpvnet.StaticUsing;
 
 namespace mpvnet
 {
@@ -41,6 +47,30 @@ namespace mpvnet
         public static DialogResult MsgQuestion(string message)
         {
             return MessageBox.Show(message, Application.ProductName, MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+        }
+    }
+
+    public class PyScript
+    {
+        ScriptEngine engine;
+        ScriptScope scope;
+
+        public PyScript(string code)
+        {
+            try
+            {
+                engine = Python.CreateEngine();
+                scope = engine.CreateScope();
+                scope.ImportModule("clr");
+                engine.Execute("import clr", scope);
+                engine.Execute("clr.AddReference(\"mpvnet\")", scope);
+                engine.Execute("from mpvnet import *", scope);
+                engine.Execute(code, scope);
+            }
+            catch (Exception ex)
+            {
+                MsgError(ex.ToString());
+            }
         }
     }
 }

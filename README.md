@@ -50,6 +50,10 @@ class Script
 
 ### Changes
 
+### 1.?
+
+- show tracks and show playlist didn't work because the duration wasn't defined in the key bindings
+
 ### 1.0
 
 - much more feature packed context menu

@@ -4,10 +4,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.26730.8
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mpv.net", "mpv.net\mpv.net.csproj", "{1751F378-8EDF-4B62-BE6D-304C7C287089}"
-	ProjectSection(ProjectDependencies) = postProject
-		{55C88710-539D-4402-84C8-31694841C731} = {55C88710-539D-4402-84C8-31694841C731}
-		{71808A87-8B1C-4DF8-957C-D79C3B164CCA} = {71808A87-8B1C-4DF8-957C-D79C3B164CCA}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RatingAddon", "RatingAddon\RatingAddon.csproj", "{55C88710-539D-4402-84C8-31694841C731}"
 EndProject

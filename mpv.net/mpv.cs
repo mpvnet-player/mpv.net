@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
 using static mpvnet.libmpv;
 using static mpvnet.Native;
 using static mpvnet.StaticUsing;
@@ -18,20 +19,40 @@ namespace mpvnet
 
     public class mpv
     {
-        public static event Action<string[]> ClientMessage;
         public static event Action Shutdown;
-        public static event Action AfterShutdown;
+        public static event Action LogMessage;
+        public static event Action GetPropertyReply;
+        public static event Action<string[]> ClientMessage;
         public static event Action PlaybackRestart;
         public static event Action VideoSizeChanged;
+        public static event Action<EndFileEventMode> EndFile;
+        public static event Action SetPropertyReply;
+        public static event Action CommandReply;
+        public static event Action StartFile;
+        public static event Action FileLoaded;
+        public static event Action TracksChanged;
+        public static event Action TrackSwitched;
+        public static event Action Idle;
+        public static event Action Pause;
+        public static event Action Unpause;
+        public static event Action Tick;
+        public static event Action ScriptInputDispatch;
+        public static event Action VideoReconfig;
+        public static event Action AudioReconfig;
+        public static event Action MetadataUpdate;
+        public static event Action Seek;
+        public static event Action ChapterChange;
+        public static event Action QueueOverflow;
 
         public static IntPtr MpvHandle;
         public static IntPtr MpvWindowHandle;
         public static Addon Addon;
-        public static List<Action<bool>> BoolPropChangeActions = new List<Action<bool>>();
+        public static List<KeyValuePair<string, Action<bool>>> BoolPropChangeActions = new List<KeyValuePair<string, Action<bool>>>();
         public static Size VideoSize = new Size(1920, 1080);
         public static string mpvConfFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\";
         public static string InputConfPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\input.conf";
         public static string mpvConfPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\mpv.conf";
+        public static List<PyScript> PyScripts { get; } = new List<PyScript>();
 
         private static Dictionary<string, string> _mpvConv;
 
@@ -75,10 +96,32 @@ namespace mpvnet
             SetStringProp("wid", MainForm.Hwnd.ToString());
             SetStringProp("force-window", "yes");
             mpv_initialize(MpvHandle);
-            LoadScripts();
             ProcessCommandLine();
+            Task.Run(() => { LoadScripts(); });
             Task.Run(() => { Addon = new Addon(); });
             Task.Run(() => { EventLoop(); });
+        }
+
+        public static void LoadScripts()
+        {
+            string[] extensions = { ".lua", ".js" };
+            string[] scripts = Directory.GetFiles(Application.StartupPath + "\\Scripts");
+
+            foreach (var scriptPath in scripts)
+            {
+                string ext = Path.GetExtension(scriptPath);
+
+                if (extensions.Contains(ext.ToLower()))
+                    mpv.Command("load-script", $"{scriptPath}");
+            }
+
+            foreach (var scriptPath in scripts)
+            {
+                string ext = Path.GetExtension(scriptPath);
+
+                if (ext == ".py")
+                    PyScripts.Add(new PyScript(File.ReadAllText(scriptPath)));
+            }
         }
 
         public static void EventLoop()
@@ -87,7 +130,7 @@ namespace mpvnet
             {
                 IntPtr ptr = mpv_wait_event(MpvHandle, -1);
                 mpv_event evt = (mpv_event)Marshal.PtrToStructure(ptr, typeof(mpv_event));
-                Debug.WriteLine(evt.event_id);
+                //Debug.WriteLine(evt.event_id);
 
                 if (MpvWindowHandle == IntPtr.Zero)
                     MpvWindowHandle = FindWindowEx(MainForm.Hwnd, IntPtr.Zero, "mpv", null);
@@ -96,22 +139,50 @@ namespace mpvnet
                 {
                     case mpv_event_id.MPV_EVENT_SHUTDOWN:
                         Shutdown?.Invoke();
-                        AfterShutdown?.Invoke();
                         return;
+                    case mpv_event_id.MPV_EVENT_LOG_MESSAGE:
+                        LogMessage?.Invoke();
+                        break;
+                    case mpv_event_id.MPV_EVENT_GET_PROPERTY_REPLY:
+                        GetPropertyReply?.Invoke();
+                        break;
+                    case mpv_event_id.MPV_EVENT_SET_PROPERTY_REPLY:
+                        SetPropertyReply?.Invoke();
+                        break;
+                    case mpv_event_id.MPV_EVENT_COMMAND_REPLY:
+                        CommandReply?.Invoke();
+                        break;
+                    case mpv_event_id.MPV_EVENT_START_FILE:
+                        StartFile?.Invoke();
+                        break;
+                    case mpv_event_id.MPV_EVENT_END_FILE:
+                        var end_fileData = (mpv_event_end_file)Marshal.PtrToStructure(evt.data, typeof(mpv_event_end_file));
+                        EndFile?.Invoke((EndFileEventMode)end_fileData.reason);
+                        break;
                     case mpv_event_id.MPV_EVENT_FILE_LOADED:
+                        FileLoaded?.Invoke();
                         LoadFolder();
                         break;
-                    case mpv_event_id.MPV_EVENT_PLAYBACK_RESTART:
-                        PlaybackRestart?.Invoke();
-
-                        Size s = new Size(GetIntProp("dwidth", false), GetIntProp("dheight", false));
-
-                        if (VideoSize != s && s != Size.Empty)
-                        {
-                            VideoSize = s;
-                            VideoSizeChanged?.Invoke();
-                        }
-
+                    case mpv_event_id.MPV_EVENT_TRACKS_CHANGED:
+                        TracksChanged?.Invoke();
+                        break;
+                    case mpv_event_id.MPV_EVENT_TRACK_SWITCHED:
+                        TrackSwitched?.Invoke();
+                        break;
+                    case mpv_event_id.MPV_EVENT_IDLE:
+                        Idle?.Invoke();
+                        break;
+                    case mpv_event_id.MPV_EVENT_PAUSE:
+                        Pause?.Invoke();
+                        break;
+                    case mpv_event_id.MPV_EVENT_UNPAUSE:
+                        Unpause?.Invoke();
+                        break;
+                    case mpv_event_id.MPV_EVENT_TICK:
+                        Tick?.Invoke();
+                        break;
+                    case mpv_event_id.MPV_EVENT_SCRIPT_INPUT_DISPATCH:
+                        ScriptInputDispatch?.Invoke();
                         break;
                     case mpv_event_id.MPV_EVENT_CLIENT_MESSAGE:
                         if (ClientMessage != null)
@@ -130,17 +201,44 @@ namespace mpvnet
                                         {
                                             MsgError(ex.GetType().Name + "\r\n\r\n" + ex.ToString());
                                         }
-
                             ClientMessage?.Invoke(args);
                         }
-
+                        break;
+                    case mpv_event_id.MPV_EVENT_VIDEO_RECONFIG:
+                        VideoReconfig?.Invoke();
+                        break;
+                    case mpv_event_id.MPV_EVENT_AUDIO_RECONFIG:
+                        AudioReconfig?.Invoke();
+                        break;
+                    case mpv_event_id.MPV_EVENT_METADATA_UPDATE:
+                        MetadataUpdate?.Invoke();
+                        break;
+                    case mpv_event_id.MPV_EVENT_SEEK:
+                        Seek?.Invoke();
                         break;
                     case mpv_event_id.MPV_EVENT_PROPERTY_CHANGE:
-                        var eventData = (mpv_event_property)Marshal.PtrToStructure(evt.data, typeof(mpv_event_property));
+                        var event_propertyData = (mpv_event_property)Marshal.PtrToStructure(evt.data, typeof(mpv_event_property));
 
-                        if (eventData.format == mpv_format.MPV_FORMAT_FLAG)
-                            foreach (var action in BoolPropChangeActions)
-                                action.Invoke(Marshal.PtrToStructure<int>(eventData.data) == 1);
+                        if (event_propertyData.format == mpv_format.MPV_FORMAT_FLAG)
+                            foreach (var i in BoolPropChangeActions)
+                                if (i.Key== event_propertyData.name)
+                                    i.Value.Invoke(Marshal.PtrToStructure<int>(event_propertyData.data) == 1);
+                        break;
+                    case mpv_event_id.MPV_EVENT_PLAYBACK_RESTART:
+                        PlaybackRestart?.Invoke();
+                        Size s = new Size(GetIntProp("dwidth", false), GetIntProp("dheight", false));
+
+                        if (VideoSize != s && s != Size.Empty)
+                        {
+                            VideoSize = s;
+                            VideoSizeChanged?.Invoke();
+                        }
+                        break;
+                    case mpv_event_id.MPV_EVENT_CHAPTER_CHANGE:
+                        ChapterChange?.Invoke();
+                        break;
+                    case mpv_event_id.MPV_EVENT_QUEUE_OVERFLOW:
+                        QueueOverflow?.Invoke();
                         break;
                 }
             }
@@ -220,16 +318,20 @@ namespace mpvnet
 
         public static void ObserveBoolProp(string name, Action<bool> action)
         {
-            BoolPropChangeActions.Add(action);
             int err = mpv_observe_property(MpvHandle, (ulong)action.GetHashCode(), name, mpv_format.MPV_FORMAT_FLAG);
 
             if (err < 0)
                 throw new Exception($"{name}: {(mpv_error)err}");
+            else
+                BoolPropChangeActions.Add(new KeyValuePair<string, Action<bool>>(name, action));
         }
 
         public static void UnobserveBoolProp(string name, Action<bool> action)
         {
-            BoolPropChangeActions.Remove(action);
+            foreach (var i in BoolPropChangeActions.ToArray())
+                if (i.Value == action)
+                    BoolPropChangeActions.Remove(i);
+
             int err = mpv_unobserve_property(MpvHandle, (ulong)action.GetHashCode());
 
             if (err < 0)
@@ -344,18 +446,15 @@ namespace mpvnet
         }
 
         public static byte[] GetUtf8Bytes(string s) => Encoding.UTF8.GetBytes(s + "\0");
+    }
 
-        public static void LoadScripts()
-        {
-            foreach (var i in Directory.GetFiles(Application.StartupPath + "\\Scripts"))
-            {
-                string[] extensions = { ".lua", ".js" };
-
-                if (!extensions.Contains(Path.GetExtension(i).ToLower()))
-                    continue;
-
-                mpv.Command("load-script", $"{i}");
-            }
-        }
+    public enum EndFileEventMode
+    {
+        Eof,
+        Stop,
+        Quit,
+        Error,
+        Redirect,
+        Unknown
     }
 }

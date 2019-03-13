@@ -294,7 +294,7 @@ namespace mpvnet
         {
             mpv.Init();
             mpv.ObserveBoolProp("fullscreen", MpvChangeFullscreen);
-            mpv.AfterShutdown += Mpv_AfterShutdown;
+            mpv.Shutdown += Mpv_AfterShutdown;
             mpv.VideoSizeChanged += Mpv_VideoSizeChanged;
             mpv.PlaybackRestart += mpv_PlaybackRestart;
         }

@@ -131,7 +131,16 @@ namespace mpvnet
             MPV_LOG_LEVEL_TRACE = 70,
         }
 
-        [StructLayout(LayoutKind.Sequential)]
+        public enum mpv_end_file_reason
+        {
+            MPV_END_FILE_REASON_EOF = 0,
+            MPV_END_FILE_REASON_STOP = 2,
+            MPV_END_FILE_REASON_QUIT = 3,
+            MPV_END_FILE_REASON_ERROR = 4,
+            MPV_END_FILE_REASON_REDIRECT = 5
+        }
+
+            [StructLayout(LayoutKind.Sequential)]
         public struct mpv_event_log_message
         {
             public string prefix;
@@ -159,9 +168,17 @@ namespace mpvnet
         [StructLayout(LayoutKind.Sequential)]
         public struct mpv_event_property
         {
-            [MarshalAs(UnmanagedType.LPUTF8Str)] public string name;
+            [MarshalAs(UnmanagedType.LPUTF8Str)]
+            public string name;
             public mpv_format format;
             public IntPtr data;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct mpv_event_end_file
+        {
+            public int reason;
+            public int error;
         }
     }
 }
