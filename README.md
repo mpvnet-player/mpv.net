@@ -50,8 +50,9 @@ class Script
 
 ### Changes
 
-### 1.?
+### 1.1
 
+- added support for Python scripting via IronPython
 - show tracks and show playlist didn't work because the duration wasn't defined in the key bindings
 
 ### 1.0

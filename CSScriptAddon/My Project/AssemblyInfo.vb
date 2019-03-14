@@ -8,11 +8,11 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("PowerShellAddon")>
+<Assembly: AssemblyTitle("CSScriptAddon")>
 <Assembly: AssemblyDescription("")>
 <Assembly: AssemblyCompany("")>
-<Assembly: AssemblyProduct("PowerShellAddon")>
-<Assembly: AssemblyCopyright("Copyright ©  2017")>
+<Assembly: AssemblyProduct("CSScriptAddon")>
+<Assembly: AssemblyCopyright("Copyright ©  2019")>
 <Assembly: AssemblyTrademark("")>
 
 <Assembly: ComVisible(False)>

@@ -14,8 +14,8 @@ namespace RatingAddon
 
         public RatingAddon()
         {
-            mpv.ClientMessage += mpv_ClientMessage;
-            mpv.Shutdown += mpv_Shutdown;
+            mp.ClientMessage += mpv_ClientMessage;
+            mp.Shutdown += mpv_Shutdown;
         }
 
         private void mpv_Shutdown()
@@ -51,8 +51,8 @@ namespace RatingAddon
             if (args?.Length != 2 || args[0] != "rate-file" || ! int.TryParse(args[1], out rating))
                 return;
 
-            Dic[mpv.GetStringProp("path")] = rating;
-            mpv.Command("show-text", $"Rating: {rating}");
+            Dic[mp.GetStringProp("path")] = rating;
+            mp.Command("show-text", $"Rating: {rating}");
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,36 +14,43 @@ using static mpvnet.libmpv;
 using static mpvnet.Native;
 using static mpvnet.StaticUsing;
 
+using PyRT = IronPython.Runtime;
+
 namespace mpvnet
 {
     public delegate void MpvBoolPropChangeHandler(string propName, bool value);
 
-    public class mpv
+    public class mp
     {
-        public static event Action Shutdown;
-        public static event Action LogMessage;
-        public static event Action GetPropertyReply;
-        public static event Action<string[]> ClientMessage;
-        public static event Action PlaybackRestart;
         public static event Action VideoSizeChanged;
-        public static event Action<EndFileEventMode> EndFile;
-        public static event Action SetPropertyReply;
-        public static event Action CommandReply;
-        public static event Action StartFile;
-        public static event Action FileLoaded;
-        public static event Action TracksChanged;
-        public static event Action TrackSwitched;
-        public static event Action Idle;
-        public static event Action Pause;
-        public static event Action Unpause;
-        public static event Action Tick;
-        public static event Action ScriptInputDispatch;
-        public static event Action VideoReconfig;
-        public static event Action AudioReconfig;
-        public static event Action MetadataUpdate;
-        public static event Action Seek;
-        public static event Action ChapterChange;
-        public static event Action QueueOverflow;
+                                                              // Lua/JS evens       libmpv events
+
+                                                              //                    MPV_EVENT_NONE
+        public static event Action Shutdown;                  // shutdown           MPV_EVENT_SHUTDOWN
+        public static event Action LogMessage;                // log-message        MPV_EVENT_LOG_MESSAGE
+        public static event Action GetPropertyReply;          // get-property-reply MPV_EVENT_GET_PROPERTY_REPLY
+        public static event Action SetPropertyReply;          // set-property-reply MPV_EVENT_SET_PROPERTY_REPLY
+        public static event Action CommandReply;              // command-reply      MPV_EVENT_COMMAND_REPLY
+        public static event Action StartFile;                 // start-file         MPV_EVENT_START_FILE
+        public static event Action<EndFileEventMode> EndFile; // end-file           MPV_EVENT_END_FILE
+        public static event Action FileLoaded;                // file-loaded        MPV_EVENT_FILE_LOADED
+        public static event Action TracksChanged;             //                    MPV_EVENT_TRACKS_CHANGED
+        public static event Action TrackSwitched;             //                    MPV_EVENT_TRACK_SWITCHED
+        public static event Action Idle;                      // idle               MPV_EVENT_IDLE
+        public static event Action Pause;                     //                    MPV_EVENT_PAUSE
+        public static event Action Unpause;                   //                    MPV_EVENT_UNPAUSE
+        public static event Action Tick;                      // tick               MPV_EVENT_TICK
+        public static event Action ScriptInputDispatch;       //                    MPV_EVENT_SCRIPT_INPUT_DISPATCH
+        public static event Action<string[]> ClientMessage;   // client-message     MPV_EVENT_CLIENT_MESSAGE
+        public static event Action VideoReconfig;             // video-reconfig     MPV_EVENT_VIDEO_RECONFIG
+        public static event Action AudioReconfig;             // audio-reconfig     MPV_EVENT_AUDIO_RECONFIG
+        public static event Action MetadataUpdate;            //                    MPV_EVENT_METADATA_UPDATE
+        public static event Action Seek;                      // seek               MPV_EVENT_SEEK
+        public static event Action PlaybackRestart;           // playback-restart   MPV_EVENT_PLAYBACK_RESTART
+                                                              //                    MPV_EVENT_PROPERTY_CHANGE
+        public static event Action ChapterChange;             //                    MPV_EVENT_CHAPTER_CHANGE
+        public static event Action QueueOverflow;             //                    MPV_EVENT_QUEUE_OVERFLOW
+        public static event Action Hook;                      //                    MPV_EVENT_HOOK
 
         public static IntPtr MpvHandle;
         public static IntPtr MpvWindowHandle;
@@ -104,24 +112,19 @@ namespace mpvnet
 
         public static void LoadScripts()
         {
-            string[] extensions = { ".lua", ".js" };
-            string[] scripts = Directory.GetFiles(Application.StartupPath + "\\Scripts");
+            string[] jsLua = { ".lua", ".js" };
+            string[] startupScripts = Directory.GetFiles(Application.StartupPath + "\\Scripts");
 
-            foreach (var scriptPath in scripts)
-            {
-                string ext = Path.GetExtension(scriptPath);
+            foreach (var scriptPath in startupScripts)
+                if (jsLua.Contains(Path.GetExtension(scriptPath).ToLower()))
+                    mp.Command("load-script", $"{scriptPath}");
 
-                if (extensions.Contains(ext.ToLower()))
-                    mpv.Command("load-script", $"{scriptPath}");
-            }
-
-            foreach (var scriptPath in scripts)
-            {
-                string ext = Path.GetExtension(scriptPath);
-
-                if (ext == ".py")
+            foreach (var scriptPath in startupScripts)
+                if (Path.GetExtension(scriptPath) == ".py")
                     PyScripts.Add(new PyScript(File.ReadAllText(scriptPath)));
-            }
+
+            foreach(var scriptPath in Directory.GetFiles(mp.mpvConfFolderPath + "scripts", "*.py"))
+                PyScripts.Add(new PyScript(File.ReadAllText(scriptPath)));
         }
 
         public static void EventLoop()
@@ -240,8 +243,81 @@ namespace mpvnet
                     case mpv_event_id.MPV_EVENT_QUEUE_OVERFLOW:
                         QueueOverflow?.Invoke();
                         break;
+                    case mpv_event_id.MPV_EVENT_HOOK:
+                        Hook?.Invoke();
+                        break;
                 }
             }
+        }
+
+        public class EventObject
+        {
+            public PyRT.PythonFunction PythonFunction { get; set; }
+            public EventInfo EventInfo { get; set; }
+            public Delegate Delegate { get; set; }
+
+            public void Invoke()
+            {
+                PyRT.Operations.PythonCalls.Call(PythonFunction);
+            }
+
+            public void InvokeEndFileEventMode(EndFileEventMode arg)
+            {
+                PyRT.Operations.PythonCalls.Call(PythonFunction, new[] { arg });
+            }
+
+            public void InvokeStrings(string[] arg)
+            {
+                PyRT.Operations.PythonCalls.Call(PythonFunction, new[] { arg });
+            }
+        }
+
+        private static List<EventObject> EventObjects = new List<EventObject>();
+
+        public static void register_event(string name, PyRT.PythonFunction pyFunc)
+        {
+            foreach (var eventInfo in typeof(mp).GetEvents())
+            {
+                if (eventInfo.Name.ToLower() == name.Replace("-", ""))
+                {
+                    EventObject eventObject = new EventObject();
+                    EventObjects.Add(eventObject);
+                    eventObject.PythonFunction = pyFunc;
+                    MethodInfo mi;
+
+                    if (eventInfo.EventHandlerType == typeof(Action))
+                    {
+                        mi = eventObject.GetType().GetMethod(nameof(EventObject.Invoke));
+                    }
+                    else if (eventInfo.EventHandlerType == typeof(Action<EndFileEventMode>))
+                    {
+                        mi = eventObject.GetType().GetMethod(nameof(EventObject.InvokeEndFileEventMode));
+                    }
+                    else if (eventInfo.EventHandlerType == typeof(Action<string[]>))
+                    {
+                        mi = eventObject.GetType().GetMethod(nameof(EventObject.InvokeStrings));
+                    }
+                    else
+                        throw new Exception();
+
+                    eventObject.EventInfo = eventInfo;
+                    Delegate handler = Delegate.CreateDelegate(eventInfo.EventHandlerType, eventObject, mi);
+                    eventObject.Delegate = handler;
+                    eventInfo.AddEventHandler(eventObject, handler);
+                }
+            }
+        }
+
+        public static void unregister_event(PyRT.PythonFunction pyFunc)
+        {
+            foreach (var eventObjects in EventObjects)
+                if (eventObjects.PythonFunction == pyFunc)
+                    eventObjects.EventInfo.RemoveEventHandler(eventObjects, eventObjects.Delegate);
+        }
+
+        public static void commandv(params string[] args)
+        {
+            Command(args);
         }
 
         public static void Command(params string[] args)
@@ -307,6 +383,22 @@ namespace mpvnet
                 return lpBuffer.ToInt32();
         }
 
+        public static double get_property_number(string name)
+        {
+            return GetDoubleProp(name);
+        }
+
+        public static double GetDoubleProp(string name, bool throwException = true)
+        {
+            double val = 0;
+            int err = mpv_get_property(MpvHandle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_DOUBLE, ref val);
+
+            if (err < 0 && throwException)
+                throw new Exception($"{name}: {(mpv_error)err}");
+            else
+                return val;
+        }
+
         public static void SetIntProp(string name, int value)
         {
             Int64 val = value;
@@ -344,9 +436,9 @@ namespace mpvnet
 
             foreach (string i in args)
                 if (!i.StartsWith("--") && File.Exists(i))
-                    mpv.Command("loadfile", i, "append");
+                    mp.Command("loadfile", i, "append");
 
-            mpv.SetStringProp("playlist-pos", "0", false);
+            mp.SetStringProp("playlist-pos", "0", false);
 
             foreach (string i in args)
             {
@@ -356,27 +448,27 @@ namespace mpvnet
                     {
                         string left = i.Substring(2, i.IndexOf("=") - 2);
                         string right = i.Substring(left.Length + 3);
-                        mpv.SetStringProp(left, right);
+                        mp.SetStringProp(left, right);
                     }
                     else
-                        mpv.SetStringProp(i.Substring(2), "yes");
+                        mp.SetStringProp(i.Substring(2), "yes");
                 }
             }
         }
 
         public static void LoadFiles(string[] files)
         {
-            int count = mpv.GetIntProp("playlist-count");
+            int count = mp.GetIntProp("playlist-count");
 
             foreach (string file in files)
-                mpv.Command("loadfile", file, "append");
+                mp.Command("loadfile", file, "append");
 
-            mpv.SetIntProp("playlist-pos", count);
+            mp.SetIntProp("playlist-pos", count);
 
             for (int i = 0; i < count; i++)
-                mpv.Command("playlist-remove", "0");
+                mp.Command("playlist-remove", "0");
 
-            mpv.LoadFolder();
+            mp.LoadFolder();
         }
 
         private static bool WasFolderLoaded;

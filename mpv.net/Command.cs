@@ -50,41 +50,41 @@ namespace mpvnet
                     d.Filter = Misc.GetFilter(Misc.FileTypes);
 
                     if (d.ShowDialog() == DialogResult.OK)
-                        mpv.LoadFiles(d.FileNames);
+                        mp.LoadFiles(d.FileNames);
                 }
             }));
         }
 
         public static void open_config_folder(string[] args)
         {
-            Process.Start(mpv.mpvConfFolderPath);
+            Process.Start(mp.mpvConfFolderPath);
         }
 
         public static void show_keys(string[] args)
         {
-            Process.Start(mpv.InputConfPath);
+            Process.Start(mp.InputConfPath);
         }
 
         private static void CreateMpvConf()
         {
-            if (!File.Exists(mpv.mpvConfPath))
+            if (!File.Exists(mp.mpvConfPath))
             {
-                if (!Directory.Exists(mpv.mpvConfFolderPath))
-                    Directory.CreateDirectory(mpv.mpvConfFolderPath);
+                if (!Directory.Exists(mp.mpvConfFolderPath))
+                    Directory.CreateDirectory(mp.mpvConfFolderPath);
 
-                File.WriteAllText(mpv.mpvConfPath, "# https://mpv.io/manual/master/#configuration-files");
+                File.WriteAllText(mp.mpvConfPath, "# https://mpv.io/manual/master/#configuration-files");
             }
         }
 
         public static void show_prefs(string[] args)
         {
             CreateMpvConf();
-            Process.Start(mpv.mpvConfPath);
+            Process.Start(mp.mpvConfPath);
         }
 
         public static void history(string[] args)
         {
-            var fp = mpv.mpvConfFolderPath + "history.txt";
+            var fp = mp.mpvConfFolderPath + "history.txt";
 
             if (File.Exists(fp))
                 Process.Start(fp);
@@ -103,7 +103,7 @@ namespace mpvnet
             CreateMpvConf();
 
             bool changed = false;
-            string fp = mpv.mpvConfPath;
+            string fp = mp.mpvConfPath;
             var confLines = File.ReadAllLines(fp);
 
             for (int i = 0; i < confLines.Length; i++)
@@ -130,21 +130,21 @@ namespace mpvnet
 
         public static void show_info(string[] args)
         {
-            var fi = new FileInfo(mpv.GetStringProp("path"));
+            var fi = new FileInfo(mp.GetStringProp("path"));
 
             using (var mi = new MediaInfo(fi.FullName))
             {
                 var w = mi.GetInfo(MediaInfoStreamKind.Video, "Width");
                 var h = mi.GetInfo(MediaInfoStreamKind.Video, "Height");
-                var pos = TimeSpan.FromSeconds(mpv.GetIntProp("time-pos"));
-                var dur = TimeSpan.FromSeconds(mpv.GetIntProp("duration"));
+                var pos = TimeSpan.FromSeconds(mp.GetIntProp("time-pos"));
+                var dur = TimeSpan.FromSeconds(mp.GetIntProp("duration"));
                 string mibr = mi.GetInfo(MediaInfoStreamKind.Video, "BitRate");
 
                 if (mibr == "")
                     mibr = "0";
 
                 var br = Convert.ToInt32(mibr) / 1000.0 / 1000.0;
-                var vf = mpv.GetStringProp("video-format").ToUpper();
+                var vf = mp.GetStringProp("video-format").ToUpper();
                 var fn = fi.Name;
 
                 if (fn.Length > 60)
@@ -158,7 +158,7 @@ namespace mpvnet
                     ((int)(fi.Length / 1024 / 1024)).ToString() +
                     $" MB - {w} x {h}\n{vf} - {br.ToString("f1")} Mb/s" + "\n" + fn;
 
-                mpv.Command("show-text", info, "5000");
+                mp.Command("show-text", info, "5000");
 
                 string FormatTime(double value) => ((int)(Math.Floor(value))).ToString("00");
             }

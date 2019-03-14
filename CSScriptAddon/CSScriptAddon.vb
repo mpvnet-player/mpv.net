@@ -11,7 +11,7 @@ Public Class CSScriptAddon
     Implements IAddon
 
     Sub New()
-        Dim scriptDir = mpv.mpvConfFolderPath + "scripts"
+        Dim scriptDir = mp.mpvConfFolderPath + "scripts"
         If Not Directory.Exists(scriptDir) Then Return
         Dim csFiles = Directory.GetFiles(scriptDir, "*.cs")
         If csFiles.Count = 0 Then Return

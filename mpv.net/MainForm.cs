@@ -30,7 +30,7 @@ namespace mpvnet
                 SetFormPosSize();
                 Instance = this;
                 Hwnd = Handle;
-                ChangeFullscreen((mpv.mpvConv.ContainsKey("fullscreen") && mpv.mpvConv["fullscreen"] == "yes") || (mpv.mpvConv.ContainsKey("fs") && mpv.mpvConv["fs"] == "yes"));
+                ChangeFullscreen((mp.mpvConv.ContainsKey("fullscreen") && mp.mpvConv["fullscreen"] == "yes") || (mp.mpvConv.ContainsKey("fs") && mp.mpvConv["fs"] == "yes"));
                 CMS = new ContextMenuStripEx(components);
                 CMS.Opened += CMS_Opened;
                 ContextMenuStrip = CMS;
@@ -44,15 +44,15 @@ namespace mpvnet
 
         public void BuildMenu()
         {
-            if (!File.Exists(mpv.InputConfPath))
+            if (!File.Exists(mp.InputConfPath))
             {
-                if (!Directory.Exists(mpv.mpvConfFolderPath))
-                    Directory.CreateDirectory(mpv.mpvConfFolderPath);
+                if (!Directory.Exists(mp.mpvConfFolderPath))
+                    Directory.CreateDirectory(mp.mpvConfFolderPath);
 
-                File.WriteAllText(mpv.InputConfPath, Properties.Resources.input_conf);
+                File.WriteAllText(mp.InputConfPath, Properties.Resources.input_conf);
             }
 
-            foreach (var i in File.ReadAllText(mpv.InputConfPath).SplitLinesNoEmpty())
+            foreach (var i in File.ReadAllText(mp.InputConfPath).SplitLinesNoEmpty())
             {
                 if (!i.Contains("#menu:"))
                     continue;
@@ -73,7 +73,7 @@ namespace mpvnet
                 var menuItem = CMS.Add(path, () => {
                     try
                     {
-                        mpv.CommandString(cmd, false);
+                        mp.CommandString(cmd, false);
                     }
                     catch (Exception e)
                     {
@@ -95,9 +95,9 @@ namespace mpvnet
 
         private void mpv_PlaybackRestart()
         {
-            var fn = mpv.GetStringProp("filename");
+            var fn = mp.GetStringProp("filename");
             BeginInvoke(new Action(() => { Text = fn + " - mpv.net " + Application.ProductVersion; }));
-            var fp = mpv.mpvConfFolderPath + "history.txt";
+            var fp = mp.mpvConfFolderPath + "history.txt";
 
             if (LastHistory != fn && File.Exists(fp))
             {
@@ -166,19 +166,19 @@ namespace mpvnet
                 case 0x0100: // WM_KEYDOWN
                 case 0x0101: // WM_KEYUP
                 case 0x020A: // WM_MOUSEWHEEL
-                    if (mpv.MpvWindowHandle != IntPtr.Zero)
-                        Native.SendMessage(mpv.MpvWindowHandle, m.Msg, m.WParam, m.LParam);
+                    if (mp.MpvWindowHandle != IntPtr.Zero)
+                        Native.SendMessage(mp.MpvWindowHandle, m.Msg, m.WParam, m.LParam);
                     break;
                 case 0x203: // Native.WM.LBUTTONDBLCLK
                     if (!IsMouseInOSC())
-                        mpv.CommandString("cycle fullscreen");
+                        mp.CommandString("cycle fullscreen");
                     break;
                 case 0x0214: // WM_SIZING
                     var rc = Marshal.PtrToStructure<Native.RECT>(m.LParam);
                     var r = rc;
                     NativeHelp.SubtractWindowBorders(Handle, ref r);
                     int c_w = r.Right - r.Left, c_h = r.Bottom - r.Top;
-                    float aspect = mpv.VideoSize.Width / (float)mpv.VideoSize.Height;
+                    float aspect = mp.VideoSize.Width / (float)mp.VideoSize.Height;
                     int d_w = (int)(c_h * aspect - c_w);
                     int d_h = (int)(c_w / aspect - c_h);
                     int[] d_corners = { d_w, d_h, -d_w, -d_h };
@@ -198,10 +198,10 @@ namespace mpvnet
 
         void SetFormPosSize()
         {
-            if (IsFullscreen || mpv.VideoSize.Width == 0) return;
+            if (IsFullscreen || mp.VideoSize.Width == 0) return;
             var wa = Screen.GetWorkingArea(this);
             int h = (int)(wa.Height * 0.6);
-            int w = (int)(h * mpv.VideoSize.Width / (float)mpv.VideoSize.Height);
+            int w = (int)(h * mp.VideoSize.Width / (float)mp.VideoSize.Height);
             Point middlePos = new Point(Left + Width / 2, Top + Height / 2);
             var r = new Native.RECT(new Rectangle(0, 0, w, h));
             NativeHelp.AddWindowBorders(Handle, ref r);
@@ -227,7 +227,7 @@ namespace mpvnet
             base.OnDragDrop(e);
 
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
-                mpv.LoadFiles(e.Data.GetData(DataFormats.FileDrop) as String[]);
+                mp.LoadFiles(e.Data.GetData(DataFormats.FileDrop) as String[]);
         }
 
         protected override void OnMouseDown(MouseEventArgs e)
@@ -249,7 +249,7 @@ namespace mpvnet
             var p2 = PointToScreen(e.Location);
 
             if (Math.Abs(p1.X - p2.X) < 10 && Math.Abs(p1.Y - p2.Y) < 10)
-                mpv.Command("quit");
+                mp.Command("quit");
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
@@ -257,7 +257,7 @@ namespace mpvnet
             base.OnMouseMove(e);
 
             // send mouse command to make OSC show
-            mpv.CommandString($"mouse {e.X} {e.Y}");
+            mp.CommandString($"mouse {e.X} {e.Y}");
 
             if (CursorHelp.IsPosDifferent(LastCursorPosChanged))
                 CursorHelp.Show();
@@ -267,7 +267,7 @@ namespace mpvnet
         {
             base.OnFormClosed(e);
             IsCloseRequired = false;
-            mpv.Command("quit");
+            mp.Command("quit");
         }
 
         bool IsMouseInOSC()
@@ -292,11 +292,11 @@ namespace mpvnet
 
         private void MainForm_Load(object sender, EventArgs ea)
         {
-            mpv.Init();
-            mpv.ObserveBoolProp("fullscreen", MpvChangeFullscreen);
-            mpv.Shutdown += Mpv_AfterShutdown;
-            mpv.VideoSizeChanged += Mpv_VideoSizeChanged;
-            mpv.PlaybackRestart += mpv_PlaybackRestart;
+            mp.Init();
+            mp.ObserveBoolProp("fullscreen", MpvChangeFullscreen);
+            mp.Shutdown += Mpv_AfterShutdown;
+            mp.VideoSizeChanged += Mpv_VideoSizeChanged;
+            mp.PlaybackRestart += mpv_PlaybackRestart;
         }
     }
 }

@@ -30,6 +30,9 @@ namespace mpvnet
         public static extern int mpv_get_property(IntPtr mpvHandle, byte[] name, mpv_format format, ref IntPtr data);
 
         [DllImport("mpv-1.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int mpv_get_property(IntPtr mpvHandle, byte[] name, mpv_format format, ref double data);
+
+        [DllImport("mpv-1.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int mpv_set_property(IntPtr mpvHandle, byte[] name, mpv_format format, ref byte[] data);
 
         [DllImport("mpv-1.dll", CallingConvention = CallingConvention.Cdecl)]
@@ -102,7 +105,8 @@ namespace mpvnet
             MPV_EVENT_PLAYBACK_RESTART = 21,
             MPV_EVENT_PROPERTY_CHANGE = 22,
             MPV_EVENT_CHAPTER_CHANGE = 23,
-            MPV_EVENT_QUEUE_OVERFLOW = 24
+            MPV_EVENT_QUEUE_OVERFLOW = 24,
+            MPV_EVENT_HOOK = 25
         }
 
         public enum mpv_format
@@ -168,7 +172,6 @@ namespace mpvnet
         [StructLayout(LayoutKind.Sequential)]
         public struct mpv_event_property
         {
-            [MarshalAs(UnmanagedType.LPUTF8Str)]
             public string name;
             public mpv_format format;
             public IntPtr data;
