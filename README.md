@@ -49,6 +49,39 @@ class Script
 }
 ```
 
+### Python Scripting
+
+A simple Python script located at: C:\Users\user\AppData\Roaming\mpv\scripts
+
+```
+# when seeking displays position and
+# duration like so: 70:00 / 80:00
+# which is different from mpv which
+# uses 01:10:00 / 01:20:00
+
+import math
+
+def seek():
+    mp.commandv('show-text',
+        format(mp.get_property_number("time-pos")) + " / " + format(mp.get_property_number("duration")))
+
+def format(f):
+    sec = round(f)
+    
+    if sec < 0:
+        sec = 0
+    
+    pos_min_floor = math.floor(sec / 60)
+    sec_rest = sec - pos_min_floor * 60
+    return add_zero(pos_min_floor) + ":" + add_zero(sec_rest)
+
+def add_zero(val):
+    val = round(val)
+    return "" + str(int(val)) if (val > 9) else "0" + str(int(val))
+
+mp.register_event("seek", seek) # or use: mp.Seek += seek
+```
+
 ### Changes
 
 ### 1.1

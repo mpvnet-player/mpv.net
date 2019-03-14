@@ -104,7 +104,7 @@
  k script-message mpv.net show-keys             #menu: K ; Settings > Show Keys
  c script-message mpv.net open-config-folder    #menu: C ; Settings > Open Config Folder
  
- i show-progress ; script-message mpv.net show-info #menu: I       ; Tools | Info
+ i script-message mpv.net show-info                 #menu: I       ; Tools | Info
  t script-binding stats/display-stats               #menu: T       ; Tools > Show Statistics
  T script-binding stats/display-stats-toggle        #menu: Shift+T ; Tools > Toggle Statistics
  _ ignore                                           #menu: _       ; Tools > -
