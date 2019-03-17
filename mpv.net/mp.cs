@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -61,6 +61,7 @@ namespace mpvnet
         public static string InputConfPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\input.conf";
         public static string mpvConfPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\mpv.conf";
         public static List<PyScript> PyScripts { get; } = new List<PyScript>();
+        public static bool IsShutdownComplete { get; set; }
 
         private static Dictionary<string, string> _mpvConv;
 
@@ -133,7 +134,6 @@ namespace mpvnet
             {
                 IntPtr ptr = mpv_wait_event(MpvHandle, -1);
                 mpv_event evt = (mpv_event)Marshal.PtrToStructure(ptr, typeof(mpv_event));
-                //Debug.WriteLine(evt.event_id);
 
                 if (MpvWindowHandle == IntPtr.Zero)
                     MpvWindowHandle = FindWindowEx(MainForm.Hwnd, IntPtr.Zero, "mpv", null);
@@ -142,6 +142,7 @@ namespace mpvnet
                 {
                     case mpv_event_id.MPV_EVENT_SHUTDOWN:
                         Shutdown?.Invoke();
+                        IsShutdownComplete = true;
                         return;
                     case mpv_event_id.MPV_EVENT_LOG_MESSAGE:
                         LogMessage?.Invoke();

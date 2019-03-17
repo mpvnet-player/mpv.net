@@ -4,7 +4,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
-
+using System.Diagnostics;
 using static mpvnet.StaticUsing;
 
 namespace mpvnet
@@ -16,7 +16,7 @@ namespace mpvnet
 
         private Point LastCursorPosChanged;
         private int LastCursorChangedTickCount;
-        private bool IsCloseRequired = true;
+        private bool IsClosed;
 
         public ContextMenuStripEx CMS;
 
@@ -93,7 +93,7 @@ namespace mpvnet
 
         private string LastHistory;
 
-        private void mpv_PlaybackRestart()
+        private void mp_PlaybackRestart()
         {
             var fn = mp.GetStringProp("filename");
             BeginInvoke(new Action(() => { Text = fn + " - mpv.net " + Application.ProductVersion; }));
@@ -121,14 +121,14 @@ namespace mpvnet
             MsgError(e.ToString());
         }
 
-        private void Mpv_VideoSizeChanged()
+        private void mp_VideoSizeChanged()
         {
             BeginInvoke(new Action(() => SetFormPosSize()));
         }
 
-        private void Mpv_AfterShutdown()
+        private void mp_Shutdown()
         {
-            if (IsCloseRequired)
+            if (!IsClosed)
                 Invoke(new Action(() => Close()));
         }
 
@@ -137,7 +137,7 @@ namespace mpvnet
             get => WindowState == FormWindowState.Maximized;
         }
 
-        void MpvChangeFullscreen(bool value)
+        void mp_ChangeFullscreen(bool value)
         {
             BeginInvoke(new Action(() => ChangeFullscreen(value)));
         }
@@ -263,13 +263,6 @@ namespace mpvnet
                 CursorHelp.Show();
         }
 
-        protected override void OnFormClosed(FormClosedEventArgs e)
-        {
-            base.OnFormClosed(e);
-            IsCloseRequired = false;
-            mp.Command("quit");
-        }
-
         bool IsMouseInOSC()
         {
             return PointToClient(Control.MousePosition).Y > ClientSize.Height * 0.9;
@@ -290,13 +283,27 @@ namespace mpvnet
             }
         }
 
-        private void MainForm_Load(object sender, EventArgs ea)
+        protected override void OnLoad(EventArgs e)
         {
+            base.OnLoad(e);
             mp.Init();
-            mp.ObserveBoolProp("fullscreen", MpvChangeFullscreen);
-            mp.Shutdown += Mpv_AfterShutdown;
-            mp.VideoSizeChanged += Mpv_VideoSizeChanged;
-            mp.PlaybackRestart += mpv_PlaybackRestart;
+            mp.ObserveBoolProp("fullscreen", mp_ChangeFullscreen);
+            mp.Shutdown += mp_Shutdown;
+            mp.VideoSizeChanged += mp_VideoSizeChanged;
+            mp.PlaybackRestart += mp_PlaybackRestart;
+        }
+
+        protected override void OnFormClosed(FormClosedEventArgs e)
+        {
+            base.OnFormClosed(e);
+            IsClosed = true;
+            mp.Command("quit");
+
+            for (int i = 0; i < 99; i++)
+            {
+                if (mp.IsShutdownComplete) break;
+                Thread.Sleep(50);
+            }
         }
     }
 }
