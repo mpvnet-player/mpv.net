@@ -84,7 +84,7 @@ mp.register_event("seek", seek) # or use: mp.Seek += seek
 
 ### Changes
 
-### 1.3
+### not yet released
 
 - certain settings that previously were set by mpv.net on every start are now written to the mpv.conf file in case the mpv.conf file is missing, these settings can be seen here:
 
