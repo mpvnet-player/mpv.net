@@ -84,6 +84,12 @@ mp.register_event("seek", seek) # or use: mp.Seek += seek
 
 ### Changes
 
+### 1.3
+
+- certain settings that previously were set by mpv.net on every start are now written to the mpv.conf file in case the mpv.conf file is missing, these settings can be seen here:
+
+https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/mpv.conf.txt
+
 ### 1.2
 
 - a thread synchonisation bug which caused the shutdown to be delayed or frozen was fixed, it also caused the Shutdown event not to fire which caused the rating plugin not to work
