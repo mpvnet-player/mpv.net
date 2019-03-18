@@ -38,7 +38,7 @@
  w           add panscan -0.1       #menu: W             ; Pan && Scan > Decrease Height
  W           add panscan +0.1       #menu: Shift+W       ; Pan && Scan > Increase Height
  _           ignore                 #menu: _             ; Pan && Scan > -
- Shift+BS    set video-zoom 0 ; set video-pan-x 0 ; set video-pan-y 0 #menu: Alt+Backspace ; Pan && Scan > Reset
+ Shift+BS    set video-zoom 0 ; set video-pan-x 0 ; set video-pan-y 0 #menu: Shift+Backspace ; Pan && Scan > Reset
  
  Ctrl+1      add contrast -1        #menu: Ctrl+1        ; Video > Decrease Contrast
  Ctrl+2      add contrast 1         #menu: Ctrl+2        ; Video > Increase Contrast
@@ -74,7 +74,6 @@
  _           ignore                 #menu: _             ; Subtitle > -
  _           add sub-scale -0.1     #menu: _             ; Subtitle > Decrease Subtitle Font Size
  _           add sub-scale +0.1     #menu: _             ; Subtitle > Increase Subtitle Font Size
- _           ignore                 #menu: _             ; Subtitle > -
 
  +           add volume  10         #menu: +             ; Volume > Up
  -           add volume -10         #menu: -             ; Volume > Down

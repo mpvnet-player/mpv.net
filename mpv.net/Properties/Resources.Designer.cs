@@ -19,7 +19,7 @@ namespace mpvnet.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -61,10 +61,36 @@ namespace mpvnet.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to  # mpv.net key bindings, mouse bindings and context menu configuration
+        /// 
+        /// o           script-message mpv.net open-files #menu: O  ; Open Files...
+        /// _           ignore                 #menu: _             ; -
+        /// Space       cycle pause            #menu: Space, Enter  ; Play/Pause
+        /// Enter       cycle pause
+        /// s           stop                   #menu: S             ; Stop
+        /// _           ignore                 #menu: _             ; -
+        /// f           cycle fullscreen       #menu: F             ; Toggle Fullscreen        /// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string input_conf {
             get {
                 return ResourceManager.GetString("input_conf", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to input-ar-delay = 500
+        ///input-ar-rate = 20
+        ///volume = 50
+        ///hwdec = yes
+        ///vo = direct3d
+        ///keep-open = yes
+        ///keep-open-pause = no
+        ///osd-playing-msg = &apos;${filename}&apos;
+        ///screenshot-directory = ~~desktop/.
+        /// </summary>
+        internal static string mpv_conf {
+            get {
+                return ResourceManager.GetString("mpv_conf", resourceCulture);
             }
         }
     }

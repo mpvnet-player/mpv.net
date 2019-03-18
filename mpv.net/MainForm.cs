@@ -31,10 +31,6 @@ namespace mpvnet
                 Instance = this;
                 Hwnd = Handle;
                 ChangeFullscreen((mp.mpvConv.ContainsKey("fullscreen") && mp.mpvConv["fullscreen"] == "yes") || (mp.mpvConv.ContainsKey("fs") && mp.mpvConv["fs"] == "yes"));
-                CMS = new ContextMenuStripEx(components);
-                CMS.Opened += CMS_Opened;
-                ContextMenuStrip = CMS;
-                BuildMenu();
             }
             catch (Exception ex)
             {
@@ -44,14 +40,6 @@ namespace mpvnet
 
         public void BuildMenu()
         {
-            if (!File.Exists(mp.InputConfPath))
-            {
-                if (!Directory.Exists(mp.mpvConfFolderPath))
-                    Directory.CreateDirectory(mp.mpvConfFolderPath);
-
-                File.WriteAllText(mp.InputConfPath, Properties.Resources.input_conf);
-            }
-
             foreach (var i in File.ReadAllText(mp.InputConfPath).SplitLinesNoEmpty())
             {
                 if (!i.Contains("#menu:"))
@@ -129,7 +117,7 @@ namespace mpvnet
         private void mp_Shutdown()
         {
             if (!IsClosed)
-                Invoke(new Action(() => Close()));
+                BeginInvoke(new Action(() => Close()));
         }
 
         public bool IsFullscreen
@@ -293,6 +281,15 @@ namespace mpvnet
             mp.PlaybackRestart += mp_PlaybackRestart;
         }
 
+        protected override void OnShown(EventArgs e)
+        {
+            base.OnShown(e);
+            CMS = new ContextMenuStripEx(components);
+            CMS.Opened += CMS_Opened;
+            ContextMenuStrip = CMS;
+            BuildMenu();
+        }
+
         protected override void OnFormClosed(FormClosedEventArgs e)
         {
             base.OnFormClosed(e);
@@ -302,7 +299,7 @@ namespace mpvnet
             for (int i = 0; i < 99; i++)
             {
                 if (mp.IsShutdownComplete) break;
-                Thread.Sleep(50);
+                Thread.Sleep(100);
             }
         }
     }

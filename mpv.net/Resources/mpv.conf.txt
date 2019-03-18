@@ -1,0 +1,11 @@
+﻿# https://mpv.io/manual/master/
+
+input-ar-delay = 500
+input-ar-rate = 20
+volume = 50
+hwdec = yes
+vo = direct3d
+keep-open = yes
+keep-open-pause = no
+osd-playing-msg = ${filename}
+screenshot-directory = ~~desktop/

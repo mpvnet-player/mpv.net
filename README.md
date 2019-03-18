@@ -84,6 +84,10 @@ mp.register_event("seek", seek) # or use: mp.Seek += seek
 
 ### Changes
 
+### 1.2
+
+- a thread synchonisation bug which caused the shutdown to be delayed or frozen was fixed, it also caused the Shutdown event not to fire which caused the rating plugin not to work
+
 ### 1.1
 
 - added support for Python scripting via IronPython

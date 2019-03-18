@@ -88,18 +88,18 @@ namespace mpvnet
 
         public static void Init()
         {
+            if (!Directory.Exists(mp.mpvConfFolderPath))
+                Directory.CreateDirectory(mp.mpvConfFolderPath);
+
+            if (!File.Exists(mp.mpvConfPath))
+                File.WriteAllText(mp.mpvConfPath, Properties.Resources.mpv_conf);
+
+            if (!File.Exists(mp.InputConfPath))
+                File.WriteAllText(mp.InputConfPath, Properties.Resources.input_conf);
+
             LoadLibrary("mpv-1.dll");
             MpvHandle = mpv_create();
-            SetIntProp("input-ar-delay", 500);
-            SetIntProp("input-ar-rate", 20);
-            SetIntProp("volume", 50);
-            SetStringProp("hwdec", "yes");
-            SetStringProp("vo", "direct3d");
             SetStringProp("input-default-bindings", "yes");
-            SetStringProp("osd-playing-msg", "'${filename}'");
-            SetStringProp("screenshot-directory", "~~desktop/");
-            SetStringProp("keep-open", "yes");
-            SetStringProp("keep-open-pause", "no");
             SetStringProp("osc", "yes");
             SetStringProp("config", "yes");
             SetStringProp("wid", MainForm.Hwnd.ToString());
