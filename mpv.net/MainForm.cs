@@ -30,6 +30,7 @@ namespace mpvnet
                 SetFormPosSize();
                 Instance = this;
                 Hwnd = Handle;
+                Text += " " + Application.ProductVersion;
                 ChangeFullscreen((mp.mpvConv.ContainsKey("fullscreen") && mp.mpvConv["fullscreen"] == "yes") || (mp.mpvConv.ContainsKey("fs") && mp.mpvConv["fs"] == "yes"));
             }
             catch (Exception ex)
