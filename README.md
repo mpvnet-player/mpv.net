@@ -11,8 +11,7 @@ mpv manual: https://mpv.io/manual/master/
 - Customizable context menu defined in the same file as the keybindings
 - Addon API for .NET languages
 - 5 different scripting languages are supported, Python scripting implemented with IronPython, C# implemented with CS-Script, Lua and JavaScript implemented in libmpv and PowerShell
-- C# scripting implemented with CS-Script
-- mpv's OSC, IPC, Lua/JS, conf files and more
+- mpv's OSC, IPC, conf files and more
 
 ![](https://raw.githubusercontent.com/stax76/mpv.net/master/screenshot.png)
 
