@@ -7,12 +7,12 @@ using static mpvnet.StaticUsing;
 
 namespace mpvnet
 {
-    public class PyScript
+    public class PythonScript
     {
         ScriptEngine engine;
         ScriptScope scope;
 
-        public PyScript(string code)
+        public PythonScript(string code)
         {
             try
             {

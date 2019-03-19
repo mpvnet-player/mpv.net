@@ -60,7 +60,7 @@ namespace mpvnet
         public static string mpvConfFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\";
         public static string InputConfPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\input.conf";
         public static string mpvConfPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\mpv.conf";
-        public static List<PyScript> PyScripts { get; } = new List<PyScript>();
+        public static List<PythonScript> PythonScripts { get; } = new List<PythonScript>();
         public static bool IsShutdownComplete { get; set; }
 
         private static Dictionary<string, string> _mpvConv;
@@ -122,10 +122,19 @@ namespace mpvnet
 
             foreach (var scriptPath in startupScripts)
                 if (Path.GetExtension(scriptPath) == ".py")
-                    PyScripts.Add(new PyScript(File.ReadAllText(scriptPath)));
+                    PythonScripts.Add(new PythonScript(File.ReadAllText(scriptPath)));
 
-            foreach(var scriptPath in Directory.GetFiles(mp.mpvConfFolderPath + "scripts", "*.py"))
-                PyScripts.Add(new PyScript(File.ReadAllText(scriptPath)));
+            foreach (var scriptPath in startupScripts)
+                if (Path.GetExtension(scriptPath) == ".ps1")
+                    PowerShellScript.Init(scriptPath);
+
+            foreach (var scriptPath in Directory.GetFiles(mp.mpvConfFolderPath + "Scripts"))
+            {
+                if (Path.GetExtension(scriptPath) == ".py")
+                    PythonScripts.Add(new PythonScript(File.ReadAllText(scriptPath)));
+                else if (Path.GetExtension(scriptPath) == ".ps1")
+                    PowerShellScript.Init(scriptPath);
+            }
         }
 
         public static void EventLoop()
@@ -251,7 +260,7 @@ namespace mpvnet
             }
         }
 
-        public class EventObject
+        public class PythonEventObject
         {
             public PyRT.PythonFunction PythonFunction { get; set; }
             public EventInfo EventInfo { get; set; }
@@ -273,7 +282,7 @@ namespace mpvnet
             }
         }
 
-        private static List<EventObject> EventObjects = new List<EventObject>();
+        private static List<PythonEventObject> PythonEventObjects = new List<PythonEventObject>();
 
         public static void register_event(string name, PyRT.PythonFunction pyFunc)
         {
@@ -281,22 +290,22 @@ namespace mpvnet
             {
                 if (eventInfo.Name.ToLower() == name.Replace("-", ""))
                 {
-                    EventObject eventObject = new EventObject();
-                    EventObjects.Add(eventObject);
+                    PythonEventObject eventObject = new PythonEventObject();
+                    PythonEventObjects.Add(eventObject);
                     eventObject.PythonFunction = pyFunc;
                     MethodInfo mi;
 
                     if (eventInfo.EventHandlerType == typeof(Action))
                     {
-                        mi = eventObject.GetType().GetMethod(nameof(EventObject.Invoke));
+                        mi = eventObject.GetType().GetMethod(nameof(PythonEventObject.Invoke));
                     }
                     else if (eventInfo.EventHandlerType == typeof(Action<EndFileEventMode>))
                     {
-                        mi = eventObject.GetType().GetMethod(nameof(EventObject.InvokeEndFileEventMode));
+                        mi = eventObject.GetType().GetMethod(nameof(PythonEventObject.InvokeEndFileEventMode));
                     }
                     else if (eventInfo.EventHandlerType == typeof(Action<string[]>))
                     {
-                        mi = eventObject.GetType().GetMethod(nameof(EventObject.InvokeStrings));
+                        mi = eventObject.GetType().GetMethod(nameof(PythonEventObject.InvokeStrings));
                     }
                     else
                         throw new Exception();
@@ -311,7 +320,7 @@ namespace mpvnet
 
         public static void unregister_event(PyRT.PythonFunction pyFunc)
         {
-            foreach (var eventObjects in EventObjects)
+            foreach (var eventObjects in PythonEventObjects)
                 if (eventObjects.PythonFunction == pyFunc)
                     eventObjects.EventInfo.RemoveEventHandler(eventObjects, eventObjects.Delegate);
         }

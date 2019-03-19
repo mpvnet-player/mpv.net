@@ -10,7 +10,7 @@ mpv manual: https://mpv.io/manual/master/
 
 - Customizable context menu defined in the same file as the keybindings
 - Addon API for .NET languages
-- Python scripting implemented with IronPython
+- 5 different scripting languages are supported, Python scripting implemented with IronPython, C# implemented with CS-Script, Lua and JavaScript implemented in libmpv and PowerShell
 - C# scripting implemented with CS-Script
 - mpv's OSC, IPC, Lua/JS, conf files and more
 
@@ -80,6 +80,17 @@ def add_zero(val):
     return "" + str(int(val)) if (val > 9) else "0" + str(int(val))
 
 mp.register_event("seek", seek) # or use: mp.Seek += seek
+```
+
+### PowerShell Scripting
+
+A simple PowerShell script located at: C:\Users\user\AppData\Roaming\mpv\scripts
+
+Please note that PowerShell don't allow assigning to events and mpv.net uses as workaround the script filename.
+
+```
+$position = [mp]::get_property_number("time-pos");
+[mp]::commandv("show-text", $position.ToString() + " seconds")
 ```
 
 ### Changes
