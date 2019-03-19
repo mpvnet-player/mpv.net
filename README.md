@@ -28,7 +28,13 @@ https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input_conf.txt
 
 ### C# Scripting
 
-A simple C# script located at: C:\Users\Frank\AppData\Roaming\mpv\scripts\test.cs
+A simple C# script located at:
+
+C:\Users\Frank\AppData\Roaming\mpv\scripts\test.cs
+
+or
+
+startup\scripts\test.cs
 
 ```
 using mpvnet;
@@ -51,7 +57,13 @@ class Script
 
 ### Python Scripting
 
-A simple Python script located at: C:\Users\user\AppData\Roaming\mpv\scripts
+A simple Python script located at:
+
+C:\Users\user\AppData\Roaming\mpv\scripts
+
+or
+
+startup\scripts
 
 ```
 # when seeking displays position and
@@ -84,7 +96,13 @@ mp.register_event("seek", seek) # or use: mp.Seek += seek
 
 ### PowerShell Scripting
 
-A simple PowerShell script located at: C:\Users\user\AppData\Roaming\mpv\scripts
+A simple PowerShell script located at:
+
+C:\Users\user\AppData\Roaming\mpv\scripts
+
+or
+
+startup\scripts
 
 Please note that PowerShell don't allow assigning to events and mpv.net uses as workaround the script filename.
 
@@ -95,7 +113,9 @@ $position = [mp]::get_property_number("time-pos");
 
 ### Changes
 
-### not yet released
+### 1.3
+
+- besides Lua/JavaScript/C#/Python there is now PowerShell supported as fifth scripting language
 
 - in case there isn't yet a mpv.conf file mpv.net creates the file with certain default settings that were previously set on every mpv.net start. This was changed to provide transparency on which settings mpv.net uses. These default settings can be seen here: https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/mpv.conf.txt
 

@@ -314,6 +314,7 @@ namespace mpvnet
                     Delegate handler = Delegate.CreateDelegate(eventInfo.EventHandlerType, eventObject, mi);
                     eventObject.Delegate = handler;
                     eventInfo.AddEventHandler(eventObject, handler);
+                    break;
                 }
             }
         }

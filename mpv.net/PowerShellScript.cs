@@ -90,8 +90,13 @@ Using namespace System;
                     Delegate handler = Delegate.CreateDelegate(eventInfo.EventHandlerType, eventObject, mi);
                     eventObject.Delegate = handler;
                     eventInfo.AddEventHandler(eventObject, handler);
+                    return;
                 }
             }
+            Task.Run(() =>
+            {
+                PowerShellScript.Execute(File.ReadAllText(filePath), new string[] {});
+            });
         }
     }
 
