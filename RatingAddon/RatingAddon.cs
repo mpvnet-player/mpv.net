@@ -51,8 +51,8 @@ namespace RatingAddon
             if (args?.Length != 2 || args[0] != "rate-file" || ! int.TryParse(args[1], out rating))
                 return;
 
-            Dic[mp.GetStringProp("path")] = rating;
-            mp.Command("show-text", $"Rating: {rating}");
+            Dic[mp.get_property_string("path")] = rating;
+            mp.commandv("show-text", $"Rating: {rating}");
         }
     }
 }

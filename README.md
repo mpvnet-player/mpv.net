@@ -21,9 +21,9 @@ The context menu can be customized via input.conf file located at:
 
 C:\Users\Frank\AppData\Roaming\mpv\input.conf
 
-if it misses mpv.net generates it with the following defaults:
+if it's missing mpv.net generates it with the following defaults:
 
-https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input_conf.txt
+https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt
 
 ### C# Scripting
 
@@ -111,6 +111,20 @@ $position = [mp]::get_property_number("time-pos");
 ```
 
 ### Changes
+
+### not yet released
+
+### 1.5
+
+- the info command supports now info for music files instead of showing an exception on music files
+- added support for WM_APPCOMMAND API to support media keyboards
+- fixed Alt key input not working
+- mpv.net API methods renamed to match the names used in the Lua/JS API
+
+### 1.4
+
+- the last thread sync fix wasn't working well, the delayed shutdown should be gone for good now
+- libmpv updated
 
 ### 1.3
 

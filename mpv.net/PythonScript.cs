@@ -1,9 +1,10 @@
 ﻿using System;
-
+using System.Reflection;
 using IronPython.Hosting;
 using Microsoft.Scripting.Hosting;
 
 using static mpvnet.StaticUsing;
+using PyRT = IronPython.Runtime;
 
 namespace mpvnet
 {
@@ -28,6 +29,28 @@ namespace mpvnet
             {
                 MsgError(ex.ToString());
             }
+        }
+    }
+
+    public class PythonEventObject
+    {
+        public PyRT.PythonFunction PythonFunction { get; set; }
+        public EventInfo EventInfo { get; set; }
+        public Delegate Delegate { get; set; }
+
+        public void Invoke()
+        {
+            PyRT.Operations.PythonCalls.Call(PythonFunction);
+        }
+
+        public void InvokeEndFileEventMode(EndFileEventMode arg)
+        {
+            PyRT.Operations.PythonCalls.Call(PythonFunction, new[] { arg });
+        }
+
+        public void InvokeStrings(string[] arg)
+        {
+            PyRT.Operations.PythonCalls.Call(PythonFunction, new[] { arg });
         }
     }
 }

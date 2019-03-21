@@ -29,16 +29,16 @@
  Ctrl++      add video-zoom  0.1    #menu: Ctrl++        ; Pan && Scan > Increase Size
  Ctrl+-      add video-zoom -0.1    #menu: Ctrl+-        ; Pan && Scan > Decrease Size
  _           ignore                 #menu: _             ; Pan && Scan > -
- Shift+Left  add video-pan-x -0.01  #menu: Shift+Left    ; Pan && Scan > Move Left
- Shift+Right add video-pan-x  0.01  #menu: Shift+Right   ; Pan && Scan > Move Right
+ Ctrl+KP4    add video-pan-x -0.01  #menu: Ctrl+Numpad 4 ; Pan && Scan > Move Left
+ Ctrl+KP6    add video-pan-x  0.01  #menu: Ctrl+Numpad 6 ; Pan && Scan > Move Right
  _           ignore                 #menu: _             ; Pan && Scan > -
- Shift+Up    add video-pan-y -0.01  #menu: Shift+Up      ; Pan && Scan > Move Up
- Shift+Down  add video-pan-y  0.01  #menu: Shift+Down    ; Pan && Scan > Move Down
+ Ctrl+KP8    add video-pan-y -0.01  #menu: Ctrl+Numpad 8 ; Pan && Scan > Move Up
+ Ctrl+KP2    add video-pan-y  0.01  #menu: Ctrl+Numpad 2 ; Pan && Scan > Move Down
  _           ignore                 #menu: _             ; Pan && Scan > -
  w           add panscan -0.1       #menu: W             ; Pan && Scan > Decrease Height
  W           add panscan +0.1       #menu: Shift+W       ; Pan && Scan > Increase Height
  _           ignore                 #menu: _             ; Pan && Scan > -
- Shift+BS    set video-zoom 0 ; set video-pan-x 0 ; set video-pan-y 0 #menu: Shift+Backspace ; Pan && Scan > Reset
+ Ctrl+BS    set video-zoom 0 ; set video-pan-x 0 ; set video-pan-y 0 #menu: Shift+Backspace ; Pan && Scan > Reset
  
  Ctrl+1      add contrast -1        #menu: Ctrl+1        ; Video > Decrease Contrast
  Ctrl+2      add contrast 1         #menu: Ctrl+2        ; Video > Increase Contrast
@@ -115,9 +115,10 @@
  F8 show-text ${playlist}   5000                    #menu: F8      ; Tools > Show Playlist
  F9 show-text ${track-list} 5000                    #menu: F9      ; Tools > Show Audio/Video/Subtitle List
 
- _ script-message mpv.net shell-execute https://mpv.io/manual/stable/ #menu: _ ; Tools > Web > Show mpv manual
- _ script-message mpv.net shell-execute https://github.com/mpv-player/mpv/blob/master/etc/input.conf #menu: _ ; Tools > Web > Show mpv default keys
- _ script-message mpv.net shell-execute https://github.com/stax76/mpvnet #menu: _ ; Tools > Web > Show mpv.net web site
+ _ script-message mpv.net shell-execute https://mpv.io/manual/stable/ #menu: _ ; Help > Show mpv manual
+ _ script-message mpv.net shell-execute https://github.com/mpv-player/mpv/blob/master/etc/input.conf #menu: _ ; Help > Show mpv default keys
+ _ script-message mpv.net shell-execute https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt #menu: _ ; Help > Show mpv.net default keys
+ _ script-message mpv.net shell-execute https://github.com/stax76/mpvnet #menu: _ ; Help > Show mpv.net web site
  _ ignore                                       #menu: _       ; -
  Esc quit                                       #menu: Escape  ; Exit
  Q quit-watch-later                             #menu: Shift+Q ; Exit Watch Later
@@ -135,5 +136,3 @@
  VOLUME_UP add volume 2
  VOLUME_DOWN add volume -2
  MUTE cycle mute
- CLOSE_WIN quit
- CLOSE_WIN {encode} quit 4

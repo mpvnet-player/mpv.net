@@ -16,7 +16,6 @@ namespace mpvnet
 
         private Point LastCursorPosChanged;
         private int LastCursorChangedTickCount;
-        private bool IsClosed;
 
         public ContextMenuStripEx CMS;
 
@@ -27,7 +26,7 @@ namespace mpvnet
             try
             {
                 Application.ThreadException += Application_ThreadException;
-                SetFormPosSize();
+                SetFormPositionAndSize();
                 Instance = this;
                 Hwnd = Handle;
                 Text += " " + Application.ProductVersion;
@@ -62,7 +61,7 @@ namespace mpvnet
                 var menuItem = CMS.Add(path, () => {
                     try
                     {
-                        mp.CommandString(cmd, false);
+                        mp.command_string(cmd);
                     }
                     catch (Exception e)
                     {
@@ -84,15 +83,21 @@ namespace mpvnet
 
         private void mp_PlaybackRestart()
         {
-            var fn = mp.GetStringProp("filename");
-            BeginInvoke(new Action(() => { Text = fn + " - mpv.net " + Application.ProductVersion; }));
-            var fp = mp.mpvConfFolderPath + "history.txt";
+            var filename = mp.get_property_string("filename");
+            BeginInvoke(new Action(() => { Text = filename + " - mpv.net " + Application.ProductVersion; }));
+            var historyFilepath = mp.mpvConfFolderPath + "history.txt";
 
-            if (LastHistory != fn && File.Exists(fp))
+            if (LastHistory != filename && File.Exists(historyFilepath))
             {
-                File.AppendAllText(fp, DateTime.Now.ToString() + " " + Path.GetFileNameWithoutExtension(fn) + "\r\n");
-                LastHistory = fn;
+                File.AppendAllText(historyFilepath, DateTime.Now.ToString() + " " +
+                    Path.GetFileNameWithoutExtension(filename) + "\r\n");
+                LastHistory = filename;
             }
+        }
+
+        private void Mp_Idle()
+        {
+            BeginInvoke(new Action(() => { Text = "mpv.net " + Application.ProductVersion; }));
         }
 
         private void CM_Popup(object sender, EventArgs e)
@@ -112,13 +117,12 @@ namespace mpvnet
 
         private void mp_VideoSizeChanged()
         {
-            BeginInvoke(new Action(() => SetFormPosSize()));
+            BeginInvoke(new Action(() => SetFormPositionAndSize()));
         }
 
         private void mp_Shutdown()
         {
-            if (!IsClosed)
-                BeginInvoke(new Action(() => Close()));
+            BeginInvoke(new Action(() => Close()));  
         }
 
         public bool IsFullscreen
@@ -142,7 +146,7 @@ namespace mpvnet
             {
                 WindowState = FormWindowState.Normal;
                 FormBorderStyle = FormBorderStyle.Sizable;
-                SetFormPosSize();
+                SetFormPositionAndSize();
             }
         }
 
@@ -158,9 +162,21 @@ namespace mpvnet
                     if (mp.MpvWindowHandle != IntPtr.Zero)
                         Native.SendMessage(mp.MpvWindowHandle, m.Msg, m.WParam, m.LParam);
                     break;
+                case 0x319: // WM_APPCOMMAND
+                    if (mp.MpvWindowHandle != IntPtr.Zero)
+                        Native.SendMessage(mp.MpvWindowHandle, m.Msg, m.WParam, m.LParam);
+                    break;
+                case 0x0104: // WM_SYSKEYDOWN:
+                    if (mp.MpvWindowHandle != IntPtr.Zero)
+                        Native.SendMessage(mp.MpvWindowHandle, m.Msg, m.WParam, m.LParam);
+                    break;
+                case 0x0105: // WM_SYSKEYUP:
+                    if (mp.MpvWindowHandle != IntPtr.Zero)
+                        Native.SendMessage(mp.MpvWindowHandle, m.Msg, m.WParam, m.LParam);
+                    break;
                 case 0x203: // Native.WM.LBUTTONDBLCLK
                     if (!IsMouseInOSC())
-                        mp.CommandString("cycle fullscreen");
+                        mp.command_string("cycle fullscreen");
                     break;
                 case 0x0214: // WM_SIZING
                     var rc = Marshal.PtrToStructure<Native.RECT>(m.LParam);
@@ -185,7 +201,7 @@ namespace mpvnet
             base.WndProc(ref m);
         }
 
-        void SetFormPosSize()
+        void SetFormPositionAndSize()
         {
             if (IsFullscreen || mp.VideoSize.Width == 0) return;
             var wa = Screen.GetWorkingArea(this);
@@ -238,7 +254,7 @@ namespace mpvnet
             var p2 = PointToScreen(e.Location);
 
             if (Math.Abs(p1.X - p2.X) < 10 && Math.Abs(p1.Y - p2.Y) < 10)
-                mp.Command("quit");
+                mp.commandv("quit");
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
@@ -246,7 +262,7 @@ namespace mpvnet
             base.OnMouseMove(e);
 
             // send mouse command to make OSC show
-            mp.CommandString($"mouse {e.X} {e.Y}");
+            mp.command_string($"mouse {e.X} {e.Y}");
 
             if (CursorHelp.IsPosDifferent(LastCursorPosChanged))
                 CursorHelp.Show();
@@ -276,10 +292,11 @@ namespace mpvnet
         {
             base.OnLoad(e);
             mp.Init();
-            mp.ObserveBoolProp("fullscreen", mp_ChangeFullscreen);
+            mp.observe_property_bool("fullscreen", mp_ChangeFullscreen);
             mp.Shutdown += mp_Shutdown;
             mp.VideoSizeChanged += mp_VideoSizeChanged;
             mp.PlaybackRestart += mp_PlaybackRestart;
+            mp.Idle += Mp_Idle;
         }
 
         protected override void OnShown(EventArgs e)
@@ -294,14 +311,8 @@ namespace mpvnet
         protected override void OnFormClosed(FormClosedEventArgs e)
         {
             base.OnFormClosed(e);
-            IsClosed = true;
-            mp.Command("quit");
-
-            for (int i = 0; i < 99; i++)
-            {
-                if (mp.IsShutdownComplete) break;
-                Thread.Sleep(100);
-            }
+            mp.commandv("quit");
+            mp.AutoResetEvent.WaitOne(3000); 
         }
     }
 }

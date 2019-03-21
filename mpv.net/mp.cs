@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -61,7 +62,7 @@ namespace mpvnet
         public static string InputConfPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\input.conf";
         public static string mpvConfPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\mpv.conf";
         public static List<PythonScript> PythonScripts { get; } = new List<PythonScript>();
-        public static bool IsShutdownComplete { get; set; }
+        public static AutoResetEvent AutoResetEvent = new AutoResetEvent(false);
 
         private static Dictionary<string, string> _mpvConv;
 
@@ -72,15 +73,9 @@ namespace mpvnet
                     _mpvConv = new Dictionary<string, string>();
 
                     if (File.Exists(mpvConfPath))
-                    {
                         foreach (var i in File.ReadAllLines(mpvConfPath))
-                        {
                             if (i.Contains("=") && ! i.StartsWith("#"))
-                            {
                                 _mpvConv[i.Left("=").Trim()] = i.Right("=").Trim();
-                            }
-                        }
-                    }
                 }
                 return _mpvConv;
             }
@@ -99,11 +94,12 @@ namespace mpvnet
 
             LoadLibrary("mpv-1.dll");
             MpvHandle = mpv_create();
-            SetStringProp("input-default-bindings", "yes");
-            SetStringProp("osc", "yes");
-            SetStringProp("config", "yes");
-            SetStringProp("wid", MainForm.Hwnd.ToString());
-            SetStringProp("force-window", "yes");
+            set_property_string("input-default-bindings", "yes");
+            set_property_string("osc", "yes");
+            set_property_string("config", "yes");
+            set_property_string("wid", MainForm.Hwnd.ToString());
+            set_property_string("force-window", "yes");
+            set_property_string("input-media-keys", "yes");
             mpv_initialize(MpvHandle);
             ProcessCommandLine();
             Task.Run(() => { LoadScripts(); });
@@ -118,7 +114,7 @@ namespace mpvnet
 
             foreach (var scriptPath in startupScripts)
                 if (jsLua.Contains(Path.GetExtension(scriptPath).ToLower()))
-                    mp.Command("load-script", $"{scriptPath}");
+                    mp.commandv("load-script", $"{scriptPath}");
 
             foreach (var scriptPath in startupScripts)
                 if (Path.GetExtension(scriptPath) == ".py")
@@ -147,11 +143,13 @@ namespace mpvnet
                 if (MpvWindowHandle == IntPtr.Zero)
                     MpvWindowHandle = FindWindowEx(MainForm.Hwnd, IntPtr.Zero, "mpv", null);
 
+                //Debug.WriteLine(evt.event_id.ToString());
+
                 switch (evt.event_id)
                 {
                     case mpv_event_id.MPV_EVENT_SHUTDOWN:
                         Shutdown?.Invoke();
-                        IsShutdownComplete = true;
+                        AutoResetEvent.Set();
                         return;
                     case mpv_event_id.MPV_EVENT_LOG_MESSAGE:
                         LogMessage?.Invoke();
@@ -239,7 +237,7 @@ namespace mpvnet
                         break;
                     case mpv_event_id.MPV_EVENT_PLAYBACK_RESTART:
                         PlaybackRestart?.Invoke();
-                        Size s = new Size(GetIntProp("dwidth", false), GetIntProp("dheight", false));
+                        Size s = new Size(get_property_int("dwidth"), get_property_int("dheight"));
 
                         if (VideoSize != s && s != Size.Empty)
                         {
@@ -257,28 +255,6 @@ namespace mpvnet
                         Hook?.Invoke();
                         break;
                 }
-            }
-        }
-
-        public class PythonEventObject
-        {
-            public PyRT.PythonFunction PythonFunction { get; set; }
-            public EventInfo EventInfo { get; set; }
-            public Delegate Delegate { get; set; }
-
-            public void Invoke()
-            {
-                PyRT.Operations.PythonCalls.Call(PythonFunction);
-            }
-
-            public void InvokeEndFileEventMode(EndFileEventMode arg)
-            {
-                PyRT.Operations.PythonCalls.Call(PythonFunction, new[] { arg });
-            }
-
-            public void InvokeStrings(string[] arg)
-            {
-                PyRT.Operations.PythonCalls.Call(PythonFunction, new[] { arg });
             }
         }
 
@@ -328,11 +304,6 @@ namespace mpvnet
 
         public static void commandv(params string[] args)
         {
-            Command(args);
-        }
-
-        public static void Command(params string[] args)
-        {
             if (MpvHandle == IntPtr.Zero)
                 return;
 
@@ -349,7 +320,7 @@ namespace mpvnet
             Marshal.FreeHGlobal(mainPtr);
         }
 
-        public static void CommandString(string command, bool throwException = true)
+        public static void command_string(string command, bool throwException = false)
         {
             if (MpvHandle == IntPtr.Zero)
                 return;
@@ -360,21 +331,21 @@ namespace mpvnet
                 throw new Exception($"{(mpv_error)err}\r\n\r\n" + command);
         }
 
-        public static void SetStringProp(string name, string value, bool throwException = true)
+        public static void set_property_string(string name, string value, bool throwOnException = false)
         {
             var bytes = GetUtf8Bytes(value);
             int err = mpv_set_property(MpvHandle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_STRING, ref bytes);
 
-            if (err < 0 && throwException)
+            if (err < 0 && throwOnException)
                 throw new Exception($"{name}: {(mpv_error)err}");
         }
 
-        public static string GetStringProp(string name)
+        public static string get_property_string(string name, bool throwOnException = false)
         {
             var lpBuffer = IntPtr.Zero;
             int err = mpv_get_property(MpvHandle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_STRING, ref lpBuffer);
 
-            if (err < 0)
+            if (err < 0 && throwOnException)
                 throw new Exception($"{name}: {(mpv_error)err}");
 
             var ret = StringFromNativeUtf8(lpBuffer);
@@ -383,43 +354,49 @@ namespace mpvnet
             return ret;
         }
 
-        public static int GetIntProp(string name, bool throwException = true)
+        public static int get_property_int(string name, bool throwOnException = false)
         {
             var lpBuffer = IntPtr.Zero;
             int err = mpv_get_property(MpvHandle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_INT64, ref lpBuffer);
 
-            if (err < 0 && throwException)
+            if (err < 0 && throwOnException)
                 throw new Exception($"{name}: {(mpv_error)err}");
             else
                 return lpBuffer.ToInt32();
         }
 
-        public static double get_property_number(string name)
-        {
-            return GetDoubleProp(name);
-        }
-
-        public static double GetDoubleProp(string name, bool throwException = true)
+        public static double get_property_number(string name, bool throwOnException = false)
         {
             double val = 0;
             int err = mpv_get_property(MpvHandle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_DOUBLE, ref val);
 
-            if (err < 0 && throwException)
+            if (err < 0 && throwOnException)
                 throw new Exception($"{name}: {(mpv_error)err}");
             else
                 return val;
         }
 
-        public static void SetIntProp(string name, int value)
+        public static bool get_property_bool(string name, bool throwOnException = false)
+        {
+            var lpBuffer = IntPtr.Zero;
+            int err = mpv_get_property(MpvHandle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_FLAG, ref lpBuffer);
+
+            if (err < 0 && throwOnException)
+                throw new Exception($"{name}: {(mpv_error)err}");
+            else
+                return lpBuffer.ToInt32() == 1;
+        }
+
+        public static void set_property_int(string name, int value, bool throwOnException = false)
         {
             Int64 val = value;
             int err = mpv_set_property(MpvHandle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_INT64, ref val);
 
-            if (err < 0)
+            if (err < 0 && throwOnException)
                 throw new Exception($"{name}: {(mpv_error)err}");
         }
 
-        public static void ObserveBoolProp(string name, Action<bool> action)
+        public static void observe_property_bool(string name, Action<bool> action)
         {
             int err = mpv_observe_property(MpvHandle, (ulong)action.GetHashCode(), name, mpv_format.MPV_FORMAT_FLAG);
 
@@ -429,7 +406,7 @@ namespace mpvnet
                 BoolPropChangeActions.Add(new KeyValuePair<string, Action<bool>>(name, action));
         }
 
-        public static void UnobserveBoolProp(string name, Action<bool> action)
+        public static void unobserve_property_bool(string name, Action<bool> action)
         {
             foreach (var i in BoolPropChangeActions.ToArray())
                 if (i.Value == action)
@@ -441,15 +418,15 @@ namespace mpvnet
                 throw new Exception($"{name}: {(mpv_error)err}");
         }
 
-        public static void ProcessCommandLine()
+        protected static void ProcessCommandLine()
         {
             var args = Environment.GetCommandLineArgs().Skip(1);
 
             foreach (string i in args)
                 if (!i.StartsWith("--") && File.Exists(i))
-                    mp.Command("loadfile", i, "append");
+                    mp.commandv("loadfile", i, "append");
 
-            mp.SetStringProp("playlist-pos", "0", false);
+            mp.set_property_string("playlist-pos", "0");
 
             foreach (string i in args)
             {
@@ -459,25 +436,25 @@ namespace mpvnet
                     {
                         string left = i.Substring(2, i.IndexOf("=") - 2);
                         string right = i.Substring(left.Length + 3);
-                        mp.SetStringProp(left, right);
+                        mp.set_property_string(left, right);
                     }
                     else
-                        mp.SetStringProp(i.Substring(2), "yes");
+                        mp.set_property_string(i.Substring(2), "yes");
                 }
             }
         }
 
         public static void LoadFiles(string[] files)
         {
-            int count = mp.GetIntProp("playlist-count");
+            int count = mp.get_property_int("playlist-count");
 
             foreach (string file in files)
-                mp.Command("loadfile", file, "append");
+                mp.commandv("loadfile", file, "append");
 
-            mp.SetIntProp("playlist-pos", count);
+            mp.set_property_int("playlist-pos", count);
 
             for (int i = 0; i < count; i++)
-                mp.Command("playlist-remove", "0");
+                mp.commandv("playlist-remove", "0");
 
             mp.LoadFolder();
         }
@@ -489,10 +466,10 @@ namespace mpvnet
             if (WasFolderLoaded)
                 return;
 
-            if (GetIntProp("playlist-count") == 1)
+            if (get_property_int("playlist-count") == 1)
             {
                 string[] types = "264 265 3gp aac ac3 avc avi avs bmp divx dts dtshd dtshr dtsma eac3 evo flac flv h264 h265 hevc hvc jpg jpeg m2t m2ts m2v m4a m4v mka mkv mlp mov mp2 mp3 mp4 mpa mpeg mpg mpv mts ogg ogm opus pcm png pva raw rmvb thd thd+ac3 true-hd truehd ts vdr vob vpy w64 wav webm wmv y4m".Split(' ');
-                string path = GetStringProp("path");
+                string path = get_property_string("path");
                 List<string> files = Directory.GetFiles(Path.GetDirectoryName(path)).ToList();
                 files = files.Where((file) => types.Contains(file.Ext())).ToList();
                 files.Sort(new StringLogicalComparer());
@@ -500,10 +477,10 @@ namespace mpvnet
                 files.Remove(path);
 
                 foreach (string i in files)
-                    Command("loadfile", i, "append");
+                    commandv("loadfile", i, "append");
 
                 if (index > 0)
-                    Command("playlist-move", "0", (index + 1).ToString());
+                    commandv("playlist-move", "0", (index + 1).ToString());
             }
 
             WasFolderLoaded = true;
