@@ -18,13 +18,13 @@ mpv manual: https://mpv.io/manual/master/
 ### Context Menu
 
 The context menu can be customized via input.conf file located at:
-
+```
 C:\Users\username\AppData\Roaming\mpv\input.conf
-
+```
 if it's missing mpv.net generates it with the following defaults:
-```
+
 https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt
-```
+
 ### Settings
 
 mpv.net shares the settings with mpv, settings have to be edited in a config file called mpv.conf located at:
@@ -32,9 +32,9 @@ mpv.net shares the settings with mpv, settings have to be edited in a config fil
 C:\Users\username\AppData\Roaming\mpv\mpv.conf
 ```
 if it's missing mpv.net generates it with the following defaults:
-```
+
 https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/mpv.conf.txt
-```
+
 ### C# Scripting
 
 A simple C# script located at:
@@ -121,8 +121,6 @@ $position = [mp]::get_property_number("time-pos");
 ```
 
 ### Changes
-
-### not yet released
 
 ### 1.6
 
