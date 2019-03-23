@@ -113,12 +113,11 @@ or
 ```
 startup\scripts\seek.ps1
 ```
-Please note that PowerShell don't allow assigning to events and mpv.net uses as workaround a matching script filename, a list of available events can be found in the mpv manual or in the file mp.cs in the mpv.net source code.
-
 ```
 $position = [mp]::get_property_number("time-pos");
 [mp]::commandv("show-text", $position.ToString() + " seconds")
 ```
+Please note that PowerShell don't allow assigning to events and mpv.net uses as workaround a matching script filename, a list of available events can be found in the mpv manual or in the file mp.cs in the mpv.net source code.
 
 ### Changes
 
