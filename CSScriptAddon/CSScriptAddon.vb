@@ -1,5 +1,6 @@
 ﻿Imports System.ComponentModel.Composition
 Imports System.IO
+Imports System.Windows.Forms
 
 Imports mpvnet
 Imports mpvnet.StaticUsing
@@ -13,7 +14,8 @@ Public Class CSScriptAddon
     Sub New()
         Dim scriptDir = mp.mpvConfFolderPath + "scripts"
         If Not Directory.Exists(scriptDir) Then Return
-        Dim csFiles = Directory.GetFiles(scriptDir, "*.cs")
+        Dim csFiles = Directory.GetFiles(scriptDir, "*.cs").ToList
+        csFiles.AddRange(Directory.GetFiles(Application.StartupPath + "\\Scripts", "*.cs"))
         If csFiles.Count = 0 Then Return
         CSScriptLibrary.CSScript.EvaluatorConfig.Engine = EvaluatorEngine.CodeDom
 

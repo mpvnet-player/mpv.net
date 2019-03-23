@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
@@ -43,4 +44,17 @@ namespace mpvnet
             return MessageBox.Show(message, Application.ProductName, MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
         }
     }
+
+    //public class OSVersion
+    //{
+    //    public static float Windows7 { get; set; } = 6.1f;
+    //    public static float Windows8 { get; set; } = 6.2f;
+    //    public static float Windows81 { get; set; } = 6.3f;
+    //    public static float Windows10 { get; set; } = 10f;
+
+    //    public static float Current
+    //    {
+    //        get => Environment.OSVersion.Version.Major + Environment.OSVersion.Version.Minor / 10f;
+    //    }
+    //}
 }

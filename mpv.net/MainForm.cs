@@ -6,6 +6,8 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Diagnostics;
 using static mpvnet.StaticUsing;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace mpvnet
 {
@@ -16,6 +18,7 @@ namespace mpvnet
 
         private Point LastCursorPosChanged;
         private int LastCursorChangedTickCount;
+        private bool IgnoreDpiChanged = true;
 
         public ContextMenuStripEx CMS;
 
@@ -26,15 +29,86 @@ namespace mpvnet
             try
             {
                 Application.ThreadException += Application_ThreadException;
-                SetFormPositionAndSize();
                 Instance = this;
                 Hwnd = Handle;
                 Text += " " + Application.ProductVersion;
-                ChangeFullscreen((mp.mpvConv.ContainsKey("fullscreen") && mp.mpvConv["fullscreen"] == "yes") || (mp.mpvConv.ContainsKey("fs") && mp.mpvConv["fs"] == "yes"));
+
+                if (mp.mpvConf.ContainsKey("screen"))
+                    SetScreen(Convert.ToInt32(mp.mpvConf["screen"]));
+                else
+                    SetScreen(Screen.PrimaryScreen);
+
+                ChangeFullscreen((mp.mpvConf.ContainsKey("fullscreen") && mp.mpvConf["fullscreen"] == "yes") ||
+                                 (mp.mpvConf.ContainsKey("fs") && mp.mpvConf["fs"] == "yes"));
+
+                ProcessCommandLineEarly();
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                HandleException(ex);
+                MsgError(e.ToString());
+            }
+        }
+
+        protected void SetScreen(int targetIndex)
+        {
+            Screen[] screens = Screen.AllScreens;
+            if (targetIndex < 0 || targetIndex > screens.Length - 1) return;
+            SetScreen(screens[Array.IndexOf(screens, screens[targetIndex])]);
+        }
+
+        protected void SetScreen(Screen screen)
+        {
+            Rectangle target = screen.Bounds;
+            Left = target.X + Convert.ToInt32((target.Width - Width) / 2.0);
+            Top = target.Y + Convert.ToInt32((target.Height - Height) / 2.0);
+            SetFormPositionAndSize();
+        }
+
+        void SetFormPositionAndSize()
+        {
+            if (IsFullscreen || mp.VideoSize.Width == 0) return;
+            Screen screen = Screen.FromControl(this);
+            int height = Convert.ToInt32(screen.Bounds.Height * 0.6);
+            int width = Convert.ToInt32(height * mp.VideoSize.Width / (double)mp.VideoSize.Height);
+            Point middlePos = new Point(Left + Width / 2, Top + Height / 2);
+            var rect = new Native.RECT(new Rectangle(screen.Bounds.X, screen.Bounds.Y, width, height));
+            NativeHelp.AddWindowBorders(Handle, ref rect);
+            int left = middlePos.X - rect.Width / 2;
+            int top = middlePos.Y - rect.Height / 2;
+            Native.SetWindowPos(Handle, IntPtr.Zero /* HWND_TOP */, left, top, rect.Width, rect.Height, 4 /* SWP_NOZORDER */);
+        }
+
+        protected void ProcessCommandLineEarly()
+        {
+            var args = Environment.GetCommandLineArgs().Skip(1);
+
+            foreach (string i in args)
+            {
+                if (i.StartsWith("--"))
+                {
+                    if (i.Contains("="))
+                    {
+                        string left = i.Substring(2, i.IndexOf("=") - 2);
+                        string right = i.Substring(left.Length + 3);
+                        
+                        if (left == "screen")
+                            SetScreen(Convert.ToInt32(right));
+
+                        ChangeFullscreen((left == "fs" || left == "fullscreen") && right == "yes");
+                    }
+                    else
+                    {
+                        string switchName = i.Substring(2);
+
+                        switch (switchName)
+                        {
+                            case "fs":
+                            case "fullscreen":
+                                ChangeFullscreen(true);
+                                break;
+                        }
+                    }
+                }
             }
         }
 
@@ -107,12 +181,7 @@ namespace mpvnet
 
         private void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
         {
-            HandleException(e.Exception);
-        }
-
-        void HandleException(Exception e)
-        {
-            MsgError(e.ToString());
+            MsgError(e.Exception.ToString());
         }
 
         private void mp_VideoSizeChanged()
@@ -125,7 +194,7 @@ namespace mpvnet
             BeginInvoke(new Action(() => Close()));  
         }
 
-        public bool IsFullscreen
+        public bool IsFullscreen 
         {
             get => WindowState == FormWindowState.Maximized;
         }
@@ -139,8 +208,11 @@ namespace mpvnet
         {
             if (value)
             {
-                FormBorderStyle = FormBorderStyle.None;
-                WindowState = FormWindowState.Maximized;
+                if (FormBorderStyle != FormBorderStyle.None)
+                {
+                    FormBorderStyle = FormBorderStyle.None;
+                    WindowState = FormWindowState.Maximized;
+                }
             }
             else
             {
@@ -164,7 +236,7 @@ namespace mpvnet
                     break;
                 case 0x319: // WM_APPCOMMAND
                     if (mp.MpvWindowHandle != IntPtr.Zero)
-                        Native.SendMessage(mp.MpvWindowHandle, m.Msg, m.WParam, m.LParam);
+                        Native.PostMessage(mp.MpvWindowHandle, m.Msg, m.WParam, m.LParam);
                     break;
                 case 0x0104: // WM_SYSKEYDOWN:
                     if (mp.MpvWindowHandle != IntPtr.Zero)
@@ -178,14 +250,19 @@ namespace mpvnet
                     if (!IsMouseInOSC())
                         mp.command_string("cycle fullscreen");
                     break;
+                case 0x02E0: // WM_DPICHANGED
+                    if (IgnoreDpiChanged) break;
+                    var r2 = Marshal.PtrToStructure<Native.RECT>(m.LParam);
+                    Native.SetWindowPos(Handle, IntPtr.Zero, r2.Left, r2.Top, r2.Width, r2.Height, 0);
+                    break;
                 case 0x0214: // WM_SIZING
                     var rc = Marshal.PtrToStructure<Native.RECT>(m.LParam);
                     var r = rc;
                     NativeHelp.SubtractWindowBorders(Handle, ref r);
                     int c_w = r.Right - r.Left, c_h = r.Bottom - r.Top;
                     float aspect = mp.VideoSize.Width / (float)mp.VideoSize.Height;
-                    int d_w = (int)(c_h * aspect - c_w);
-                    int d_h = (int)(c_w / aspect - c_h);
+                    int d_w = Convert.ToInt32(c_h * aspect - c_w);
+                    int d_h = Convert.ToInt32(c_w / aspect - c_h);
                     int[] d_corners = { d_w, d_h, -d_w, -d_h };
                     int[] corners = { rc.Left, rc.Top, rc.Right, rc.Bottom };
                     int corner = NativeHelp.GetResizeBorder(m.WParam.ToInt32());
@@ -199,24 +276,6 @@ namespace mpvnet
             }
 
             base.WndProc(ref m);
-        }
-
-        void SetFormPositionAndSize()
-        {
-            if (IsFullscreen || mp.VideoSize.Width == 0) return;
-            var wa = Screen.GetWorkingArea(this);
-            int h = (int)(wa.Height * 0.6);
-            int w = (int)(h * mp.VideoSize.Width / (float)mp.VideoSize.Height);
-            Point middlePos = new Point(Left + Width / 2, Top + Height / 2);
-            var r = new Native.RECT(new Rectangle(0, 0, w, h));
-            NativeHelp.AddWindowBorders(Handle, ref r);
-            int l = middlePos.X - r.Width / 2;
-            int t = middlePos.Y - r.Height / 2;
-            if (l < 0) l = 0;
-            if (t < 0) t = 0;
-            if (l + r.Width > wa.Width ) l = wa.Width - r.Width;
-            if (t + r.Height > wa.Height ) t = wa.Height - r.Height;
-            Native.SetWindowPos(Handle, IntPtr.Zero /* HWND_TOP */, l, t, r.Width, r.Height, 4 /* SWP_NOZORDER */);
         }
 
         protected override void OnDragEnter(DragEventArgs e)
@@ -239,7 +298,6 @@ namespace mpvnet
         {
             base.OnMouseDown(e);
 
-            // window-dragging
             if (WindowState == FormWindowState.Normal &&
                 e.Button == MouseButtons.Left &&
                 e.Y < ClientSize.Height * 0.9)
@@ -260,8 +318,6 @@ namespace mpvnet
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseMove(e);
-
-            // send mouse command to make OSC show
             mp.command_string($"mouse {e.X} {e.Y}");
 
             if (CursorHelp.IsPosDifferent(LastCursorPosChanged))
@@ -306,6 +362,7 @@ namespace mpvnet
             CMS.Opened += CMS_Opened;
             ContextMenuStrip = CMS;
             BuildMenu();
+            IgnoreDpiChanged = false;
         }
 
         protected override void OnFormClosed(FormClosedEventArgs e)

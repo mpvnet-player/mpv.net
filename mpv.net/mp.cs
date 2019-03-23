@@ -64,20 +64,20 @@ namespace mpvnet
         public static List<PythonScript> PythonScripts { get; } = new List<PythonScript>();
         public static AutoResetEvent AutoResetEvent = new AutoResetEvent(false);
 
-        private static Dictionary<string, string> _mpvConv;
+        private static Dictionary<string, string> _mpvConf;
 
-        public static Dictionary<string, string> mpvConv {
+        public static Dictionary<string, string> mpvConf {
             get {
-                if (_mpvConv == null)
+                if (_mpvConf == null)
                 {
-                    _mpvConv = new Dictionary<string, string>();
+                    _mpvConf = new Dictionary<string, string>();
 
                     if (File.Exists(mpvConfPath))
                         foreach (var i in File.ReadAllLines(mpvConfPath))
                             if (i.Contains("=") && ! i.StartsWith("#"))
-                                _mpvConv[i.Left("=").Trim()] = i.Right("=").Trim();
+                                _mpvConf[i.Left("=").Trim()] = i.Right("=").Trim();
                 }
-                return _mpvConv;
+                return _mpvConf;
             }
         }
 

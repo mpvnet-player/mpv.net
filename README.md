@@ -19,22 +19,32 @@ mpv manual: https://mpv.io/manual/master/
 
 The context menu can be customized via input.conf file located at:
 
-C:\Users\Frank\AppData\Roaming\mpv\input.conf
+C:\Users\username\AppData\Roaming\mpv\input.conf
 
 if it's missing mpv.net generates it with the following defaults:
-
+```
 https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt
+```
+### Settings
 
+mpv.net shares the settings with mpv, settings have to be edited in a config file called mpv.conf located at:
+```
+C:\Users\username\AppData\Roaming\mpv\mpv.conf
+```
+if it's missing mpv.net generates it with the following defaults:
+```
+https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/mpv.conf.txt
+```
 ### C# Scripting
 
 A simple C# script located at:
-
-C:\Users\Frank\AppData\Roaming\mpv\scripts\test.cs
-
+```
+C:\Users\username\AppData\Roaming\mpv\scripts\test.cs
+```
 or
-
+```
 startup\scripts\test.cs
-
+```
 ```
 using mpvnet;
 
@@ -42,14 +52,14 @@ class Script
 {
     public Script()
     {
-        var fs = mpv.GetStringProp("fullscreen");
-        mpv.Command("show-text", "fullscreen: " + fs);
-        mpv.ObserveBoolProp("fullscreen", FullscreenChange);
+        var fs = mp.get_property_string("fullscreen");
+        mp.commandv("show-text", "fullscreen: " + fs);
+        mp.observe_property_bool("fullscreen", FullscreenChange);
     }
 
     void FullscreenChange(bool val)
     {
-        mpv.Command("show-text", "fullscreen: " + val.ToString());
+        mp.commandv("show-text", "fullscreen: " + val.ToString());
     }
 }
 ```
@@ -57,13 +67,13 @@ class Script
 ### Python Scripting
 
 A simple Python script located at:
-
+```
 C:\Users\user\AppData\Roaming\mpv\scripts
-
+```
 or
-
+```
 startup\scripts
-
+```
 ```
 # when seeking displays position and
 # duration like so: 70:00 / 80:00
@@ -96,14 +106,14 @@ mp.register_event("seek", seek) # or use: mp.Seek += seek
 ### PowerShell Scripting
 
 A simple PowerShell script located at:
-
+```
 C:\Users\user\AppData\Roaming\mpv\scripts
-
+```
 or
-
+```
 startup\scripts
-
-Please note that PowerShell don't allow assigning to events and mpv.net uses as workaround the script filename.
+```
+Please note that PowerShell don't allow assigning to events and mpv.net uses as workaround a matching script filename.
 
 ```
 $position = [mp]::get_property_number("time-pos");
@@ -113,6 +123,12 @@ $position = [mp]::get_property_number("time-pos");
 ### Changes
 
 ### not yet released
+
+### 1.6
+
+- a crash caused by WM_APPCOMMAND (multimedia keyboards) commands was fixed
+- support for the 'screen' property was added, it should work both from mpv.conf (screen = 1) and from command line (--screen=1)
+- per monitor DPI awareness and better multi monitor support was added
 
 ### 1.5
 
