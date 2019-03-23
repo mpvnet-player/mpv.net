@@ -61,10 +61,10 @@ namespace mpvnet
             Rectangle target = screen.Bounds;
             Left = target.X + Convert.ToInt32((target.Width - Width) / 2.0);
             Top = target.Y + Convert.ToInt32((target.Height - Height) / 2.0);
-            SetFormPositionAndSize();
+            SetStartFormPositionAndSize();
         }
 
-        void SetFormPositionAndSize()
+        void SetStartFormPositionAndSize()
         {
             if (IsFullscreen || mp.VideoSize.Width == 0) return;
             Screen screen = Screen.FromControl(this);
@@ -75,6 +75,30 @@ namespace mpvnet
             NativeHelp.AddWindowBorders(Handle, ref rect);
             int left = middlePos.X - rect.Width / 2;
             int top = middlePos.Y - rect.Height / 2;
+            Native.SetWindowPos(Handle, IntPtr.Zero /* HWND_TOP */, left, top, rect.Width, rect.Height, 4 /* SWP_NOZORDER */);
+        }
+
+        void SetFormPositionAndSizeKeepHeight()
+        {
+            if (IsFullscreen || mp.VideoSize.Width == 0) return;
+            Screen screen = Screen.FromControl(this);
+            int height = ClientSize.Height;
+            int width = Convert.ToInt32(height * mp.VideoSize.Width / (double)mp.VideoSize.Height);
+            Point middlePos = new Point(Left + Width / 2, Top + Height / 2);
+            var rect = new Native.RECT(new Rectangle(screen.Bounds.X, screen.Bounds.Y, width, height));
+            NativeHelp.AddWindowBorders(Handle, ref rect);
+            int left = middlePos.X - rect.Width / 2;
+            int top = middlePos.Y - rect.Height / 2;
+            Screen[] screens = Screen.AllScreens;
+
+            if (left < screens[0].Bounds.Left)
+                left = screens[0].Bounds.Left;
+
+            int maxLeft = screens[0].Bounds.Left + screens.Select((sc) => sc.Bounds.Width).Sum() - rect.Width - SystemInformation.CaptionHeight;
+
+            if (left > maxLeft)
+                left = maxLeft;
+
             Native.SetWindowPos(Handle, IntPtr.Zero /* HWND_TOP */, left, top, rect.Width, rect.Height, 4 /* SWP_NOZORDER */);
         }
 
@@ -186,7 +210,7 @@ namespace mpvnet
 
         private void mp_VideoSizeChanged()
         {
-            BeginInvoke(new Action(() => SetFormPositionAndSize()));
+            BeginInvoke(new Action(() => SetFormPositionAndSizeKeepHeight()));
         }
 
         private void mp_Shutdown()
@@ -218,7 +242,7 @@ namespace mpvnet
             {
                 WindowState = FormWindowState.Normal;
                 FormBorderStyle = FormBorderStyle.Sizable;
-                SetFormPositionAndSize();
+                SetFormPositionAndSizeKeepHeight();
             }
         }
 

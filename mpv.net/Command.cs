@@ -62,12 +62,12 @@ namespace mpvnet
 
         public static void show_keys(string[] args)
         {
-            Process.Start(mp.InputConfPath);
+            Process.Start(NativeHelp.GetAssociatedApplication(".txt"), mp.InputConfPath);
         }
 
         public static void show_prefs(string[] args)
         {
-            Process.Start(mp.mpvConfPath);
+            Process.Start(NativeHelp.GetAssociatedApplication(".txt"), mp.mpvConfPath);
         }
 
         public static void history(string[] args)
@@ -148,7 +148,7 @@ namespace mpvnet
                         bitrate = "0";
 
                     var bitrate2 = Convert.ToDouble(bitrate) / 1000.0 / 1000.0;
-                    var format = mp.get_property_string("video-format").ToUpper();
+                    var videoCodec = mp.get_property_string("video-format").ToUpper();
                     var filename = fileInfo.Name;
 
                     var text =
@@ -157,7 +157,7 @@ namespace mpvnet
                         FormatTime(duration.TotalMinutes) + ":" +
                         FormatTime(duration.Seconds) + "\n" +
                         Convert.ToInt32(fileInfo.Length / 1024 / 1024).ToString() +
-                        $" MB - {width} x {height}\n{format} - {bitrate2.ToString("f1")} Mb/s" + "\n" + filename;
+                        $" MB - {width} x {height}\n{videoCodec} - {bitrate2.ToString("f1")} Mb/s" + "\n" + filename;
 
                     mp.commandv("show-text", text, "5000");
                 }

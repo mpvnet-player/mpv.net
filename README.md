@@ -121,6 +121,12 @@ Please note that PowerShell don't allow assigning to events and mpv.net uses as 
 
 ### Changes
 
+### 1.7
+
+- showing the conf files mpv.net uses now the app that is registered for txt files, before it just shell executed the conf file which only worked if conf files were associated with an application
+- leaving fullscreen mode the previous window size and position wasn't restored
+- when the source video aspect ratio changes the height is kept and the width is adjusted and a check is performed to assure the window is within screen bounds
+
 ### 1.6
 
 - a crash caused by WM_APPCOMMAND (multimedia keyboards) commands was fixed
@@ -157,29 +163,3 @@ Please note that PowerShell don't allow assigning to events and mpv.net uses as 
 ### 1.0
 
 - much more feature packed context menu
-
-### 0.2.5
-
-- mpv lib updated to 2019-02-24
-- UI glitch fixed the appeared when started in fullscreen mode
-- fixed default video output mode which caused video playback to fail
-
-### 0.2.4
-
-- changed minimum runtime to .NET 4.7.2
-- fixed mpv.net not working with new mpv lib
-- the track name in the title bar was sometimes wrong
-- mpv lib updated to 2018-12-16
-- quit-watch-later added to context menu (Shift+Q) to exit and resume at the last position
-- ab loop added to menu
-- added the possibility to modify mpv.conf settings using the context menu
-- added link to the manual and default keys to the menu
-
-### 0.2.2
-
-- history feature added
-- mpv lib updated
-
-### 0.2.1
-
-- right-click in fullscreen in the right-left corner closes the app
