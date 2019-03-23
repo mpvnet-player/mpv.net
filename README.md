@@ -6,6 +6,17 @@ mpv and mpv.net have a learning curve and are only suitable for experienced user
 
 mpv manual: https://mpv.io/manual/master/
 
+Table of contents
+-------
+
+- [Features](#features)
+- [Context Menu](#context-menu)
+- [Settings](#settings)
+- [C# Scripting](#cs-scripting)
+- [Python Scripting](#python-scripting)
+- [PowerShell Scripting](#powershell-scripting)
+- [Changelog](#changelog)
+
 ### Features
 
 - Customizable context menu defined in the same file as the keybindings
@@ -119,7 +130,7 @@ $position = [mp]::get_property_number("time-pos");
 ```
 Please note that PowerShell don't allow assigning to events and mpv.net uses as workaround a matching script filename, a list of available events can be found in the mpv manual or in the file mp.cs in the mpv.net source code.
 
-### Changes
+### Changelog
 
 ### 1.7
 
