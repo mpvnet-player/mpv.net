@@ -39,11 +39,11 @@ https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/mpv.conf.txt
 
 A simple C# script located at:
 ```
-C:\Users\username\AppData\Roaming\mpv\scripts\test.cs
+C:\Users\username\AppData\Roaming\mpv\scripts\fullscreen.cs
 ```
 or
 ```
-startup\scripts\test.cs
+startup\scripts\fullscreen.cs
 ```
 ```
 using mpvnet;
@@ -68,11 +68,11 @@ class Script
 
 A simple Python script located at:
 ```
-C:\Users\user\AppData\Roaming\mpv\scripts
+C:\Users\user\AppData\Roaming\mpv\scripts\seek-show-position.py
 ```
 or
 ```
-startup\scripts
+startup\scripts\seek-show-position.py
 ```
 ```
 # when seeking displays position and
@@ -107,13 +107,13 @@ mp.register_event("seek", seek) # or use: mp.Seek += seek
 
 A simple PowerShell script located at:
 ```
-C:\Users\user\AppData\Roaming\mpv\scripts
+C:\Users\user\AppData\Roaming\mpv\scripts\seek.ps1
 ```
 or
 ```
-startup\scripts
+startup\scripts\seek.ps1
 ```
-Please note that PowerShell don't allow assigning to events and mpv.net uses as workaround a matching script filename.
+Please note that PowerShell don't allow assigning to events and mpv.net uses as workaround a matching script filename, a list of available events can be found in the mpv manual or in the file mp.cs in the mpv.net source code.
 
 ```
 $position = [mp]::get_property_number("time-pos");

@@ -38,7 +38,7 @@
  w           add panscan -0.1       #menu: W             ; Pan && Scan > Decrease Height
  W           add panscan +0.1       #menu: Shift+W       ; Pan && Scan > Increase Height
  _           ignore                 #menu: _             ; Pan && Scan > -
- Ctrl+BS    set video-zoom 0 ; set video-pan-x 0 ; set video-pan-y 0 #menu: Shift+Backspace ; Pan && Scan > Reset
+ Ctrl+BS    set video-zoom 0 ; set video-pan-x 0 ; set video-pan-y 0 #menu: Ctrl+Backspace ; Pan && Scan > Reset
  
  Ctrl+1      add contrast -1        #menu: Ctrl+1        ; Video > Decrease Contrast
  Ctrl+2      add contrast 1         #menu: Ctrl+2        ; Video > Increase Contrast
