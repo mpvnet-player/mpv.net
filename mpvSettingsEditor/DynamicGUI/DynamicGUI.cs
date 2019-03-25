@@ -47,6 +47,7 @@ namespace DynamicGUI
 
                 baseSetting.Name = setting["name"];
                 if (setting.HasKey("help")) baseSetting.Help = setting["help"];
+                if (setting.HasKey("helpurl")) baseSetting.HelpURL = setting["helpurl"];
                 if (setting.HasKey("alias")) baseSetting.Alias = setting["alias"];
                 if (setting.HasKey("width")) baseSetting.Width = setting["width"];
                 settingsList.Add(baseSetting);
@@ -92,8 +93,6 @@ namespace DynamicGUI
             get => string.IsNullOrEmpty(_Text) ? Name : _Text;
             set => _Text = value;
         }
-
-        //private bool _IsChecked;
 
         public bool IsChecked
         {

@@ -5,10 +5,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
 using System.Diagnostics;
-using static mpvnet.StaticUsing;
 using System.Linq;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace mpvnet
 {
@@ -46,7 +43,7 @@ namespace mpvnet
             }
             catch (Exception e)
             {
-                MsgError(e.ToString());
+                MainForm.Instance.ShowMsgBox(e.ToString(), MessageBoxIcon.Error);
             }
         }
 
@@ -139,20 +136,15 @@ namespace mpvnet
 
         public void BuildMenu()
         {
-            foreach (var i in File.ReadAllText(mp.InputConfPath).SplitLinesNoEmpty())
+            foreach (var i in File.ReadAllText(mp.InputConfPath).Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries))
             {
-                if (!i.Contains("#menu:"))
-                    continue;
-
-                var left = i.Left("#menu:").Trim();
-
-                if (left.StartsWith("#"))
-                    continue;
-
-                var cmd = left.Right(" ").Trim();
-                var menu = i.Right("#menu:").Trim();
-                var key = menu.Left(";").Trim();
-                var path = menu.Right(";").Trim();
+                if (!i.Contains("#menu:")) continue;
+                var left = i.Substring(0, i.IndexOf("#menu:")).Trim();
+                if (left.StartsWith("#")) continue;
+                var cmd = left.Substring(left.IndexOf(" ") + 1).Trim();
+                var menu = i.Substring(i.IndexOf("#menu:") + "#menu:".Length).Trim();
+                var key = menu.Substring(0, menu.IndexOf(";")).Trim();
+                var path = menu.Substring(menu.IndexOf(";") + 1).Trim();
 
                 if (path == "" || cmd == "")
                     continue;
@@ -164,7 +156,7 @@ namespace mpvnet
                     }
                     catch (Exception e)
                     {
-                        MsgError(e.ToString());
+                        MainForm.Instance.ShowMsgBox(e.ToString(), MessageBoxIcon.Error);
                     }
                 });
                 
@@ -206,7 +198,7 @@ namespace mpvnet
 
         private void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
         {
-            MsgError(e.Exception.ToString());
+            ShowMsgBox(e.Exception.ToString(), MessageBoxIcon.Error);
         }
 
         private void mp_VideoSizeChanged()

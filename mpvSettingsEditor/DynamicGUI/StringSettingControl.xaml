@@ -9,7 +9,7 @@
              d:DesignWidth="800" >
     <Grid Margin="20,0">
         <WrapPanel Orientation="Vertical">
-            <TextBox x:Name="TitleTextBox" FontSize="20" Margin="0,0,0,10" BorderThickness="0" IsReadOnly="True"></TextBox>
+            <TextBox x:Name="TitleTextBox" FontSize="24" Margin="0,0,0,10" BorderThickness="0" IsReadOnly="True"></TextBox>
             <Grid Margin="0,0,0,10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />

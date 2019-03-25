@@ -12,8 +12,8 @@ help = "screen=<default|0-32> In multi-monitor configurations (i.e. a single des
 name = "osd-playing-msg"
 default = ""
 width = 300
-help = "osd-playing-msg=<value> Show a message on OSD when playback starts. The string is expanded for properties, e.g. --osd-playing-msg='file: ${filename}' will show the message file: followed by a space and the currently played filename."
 helpurl = "https://mpv.io/manual/master/#property-expansion"
+help = "osd-playing-msg=<value> Show a message on OSD when playback starts. The string is expanded for properties, e.g. --osd-playing-msg='file: ${filename}' will show the message file: followed by a space and the currently played filename."
 
 [[settings]]
 name = "fullscreen"
@@ -47,8 +47,8 @@ name = "vo"
 default = "gpu"
 helpurl = "https://mpv.io/manual/master/#video-output-drivers-vo"
 help = "gpu=<mode> Video output drivers to be used. Default = gpu."
-options = [{ name = "direct3d", help = "Video output driver that uses the Direct3D interface" },
-           { name = "gpu", text = "gpu (Default)", help = "General purpose, customizable, GPU-accelerated video output driver. It supports extended scaling methods, dithering, color management, custom shaders, HDR, and more. (Default)" }]
+options = [{ name = "gpu", text = "gpu (Default)", help = "General purpose, customizable, GPU-accelerated video output driver. It supports extended scaling methods, dithering, color management, custom shaders, HDR, and more. (Default)" },
+           { name = "direct3d", help = "Video output driver that uses the Direct3D interface" }]
 
 [[settings]]
 name = "keep-open-pause"
@@ -60,8 +60,8 @@ options = [{ name = "yes", text = "yes (Default)" }, { name = "no" }]
 name = "keep-open"
 default = "no"
 help = "keep-open=<yes|no|always> Do not terminate when playing or seeking beyond the end of the file, and there is not next file to be played (and --loop is not used). Instead, pause the player. When trying to seek beyond end of the file, the player will attempt to seek to the last frame.\n\nNormally, this will act like set pause yes on EOF, unless the  --keep-open-pause=no option is set."
-options = [{ name = "no", text = "no (Default)", help = "If the current file ends, go to the next file or terminate. (Default.)" },
-           { name = "yes", help = "Don't terminate if the current file is the last playlist entry. Equivalent to --keep-open without arguments."},
+options = [{ name = "yes", help = "Don't terminate if the current file is the last playlist entry. Equivalent to --keep-open without arguments."},
+           { name = "no", text = "no (Default)", help = "If the current file ends, go to the next file or terminate. (Default.)" },
 		   { name = "always", help = "Like yes, but also applies to files before the last playlist entry. This means playback will never automatically advance to the next file."}]
 
 [[settings]]
@@ -69,6 +69,12 @@ name = "loop-file"
 alias = "loop"
 default = ""
 help = "loop-file=<N|inf|no>, loop=<N|inf|no> Loop a single file N times. inf means forever, no means normal playback. For compatibility, --loop-file and --loop-file=yes are also accepted, and are the same as --loop-file=inf.\n\nThe difference to --loop-playlist is that this doesn't loop the playlist, just the file itself. If the playlist contains only a single file, the difference between the two option is that this option performs a seek on loop, instead of reloading the file.\n\n--loop is an alias for this option."
+
+[[settings]]
+name = "save-position-on-quit"
+default = "no"
+help = "Always save the current playback position on quit. When this file is played again later, the player will seek to the old playback position on start. This does not happen if playback of a file is stopped in any other way than quitting. For example, going to the next file in the playlist will not save the position, and start playback at beginning the next time the file is played.\n\nThis behavior is disabled by default, but is always available when quitting the player with Shift+Q."
+options = [{ name = "yes" }, { name = "no", text = "no (Default)" }]
 
 [[settings]]
 name = "screenshot-directory"
@@ -86,3 +92,22 @@ help = "input-ar-delay=<integer> Delay in milliseconds before we start to autore
 name = "input-ar-rate"
 default = ""
 help = "input-ar-rate=<integer> Number of key presses to generate per second on autorepeat."
+
+[[settings]]
+name = "alang"
+default = ""
+help = "alang=<languagecode[,languagecode,...]> Specify a priority list of audio languages to use. Different container formats employ different language codes. DVDs use ISO 639-1 two-letter language codes, Matroska, MPEG-TS and NUT use ISO 639-2 three-letter language codes, while OGM uses a free-form identifier. See also --aid.\n\nExamples\n\nmpv dvd://1 --alang=hu,en chooses the Hungarian language track on a DVD and falls back on English if Hungarian is not available.\n\nmpv --alang=jpn example.mkv plays a Matroska file with Japanese audio."
+
+[[settings]]
+name = "slang"
+default = ""
+help = "--slang=<languagecode[,languagecode,...]> Specify a priority list of subtitle languages to use. Different container formats employ different language codes. DVDs use ISO 639-1 two letter language codes, Matroska uses ISO 639-2 three letter language codes while OGM uses a free-form identifier. See also --sid."
+
+[[settings]]
+name = "hr-seek"
+default = "absolute"
+help = "hr-seek=<no|absolute|yes> Select when to use precise seeks that are not limited to keyframes. Such seeks require decoding video from the previous keyframe up to the target position and so can take some time depending on decoding performance. For some video formats, precise seeks are disabled. This option selects the default choice to use for seeks; it is possible to explicitly override that default in the definition of key bindings and in input commands."
+options = [{ name = "yes", help = "Use precise seeks whenever possible." },
+           { name = "no", help = "Never use precise seeks." },
+		   { name = "absolute", text = "absolute (Default)", help = "Use precise seeks if the seek is to an absolute position in the file, such as a chapter seek, but not for relative seeks like the default behavior of arrow keys (default)." },
+		   { name = "always", help = "Same as yes (for compatibility)." }]

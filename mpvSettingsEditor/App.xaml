@@ -4,6 +4,9 @@
              xmlns:local="clr-namespace:DynamicGUI"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <!--<Style x:Key="UrlTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Foreground" Value="Blue"/>
+        </Style>-->
     </Application.Resources>
 </Application>

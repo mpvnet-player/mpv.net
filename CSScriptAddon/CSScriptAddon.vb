@@ -23,7 +23,7 @@ Public Class CSScriptAddon
             Try
                 CSScriptLibrary.CSScript.Evaluator.LoadCode(File.ReadAllText(i))
             Catch ex As Exception
-                MsgError(ex.ToString)
+                MainForm.Instance.ShowMsgBox(ex.ToString(), MessageBoxIcon.Error)
             End Try
         Next
     End Sub

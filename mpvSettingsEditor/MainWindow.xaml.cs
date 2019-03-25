@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DynamicGUI;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -6,20 +7,20 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
-using DynamicGUI;
+using System.Windows.Input;
 
-namespace DynamicGUI
+namespace mpvSettingsEditor
 {
     public partial class MainWindow : Window
     {
         public string mpvConfPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\mpv.conf";
-        private List<SettingBase> mpvSettings = Settings.LoadSettings("Definitions.toml");
+        private List<SettingBase> mpvSettings = Settings.LoadSettings(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\Definitions.toml");
 
         public MainWindow()
         {
             InitializeComponent();
             Title = (Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyProductAttribute), true)[0] as AssemblyProductAttribute).Product + " " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
-
+            
             foreach (var setting in mpvSettings)
             {
                 foreach (var pair in mpvConf)
@@ -152,6 +153,11 @@ namespace DynamicGUI
                 else
                     MainWrapPanel.Children[i].Visibility = Visibility.Collapsed;
             }
+        }
+
+        private void MainWindow1_Loaded(object sender, RoutedEventArgs e)
+        {
+            FocusManager.SetFocusedElement(SearchGrid, SearchTextBox);
         }
     }
 }

@@ -5,8 +5,6 @@ using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 
-using static mpvnet.StaticUsing;
-
 namespace mpvnet
 {
     public class Command
@@ -72,12 +70,7 @@ namespace mpvnet
 
         public static void show_conf_editor(string[] args)
         {
-            using (var p = new Process())
-            {
-                p.StartInfo.FileName = Application.StartupPath + "\\mpvSettingsEditor.exe";
-                p.StartInfo.WorkingDirectory = Path.GetDirectoryName(Application.ExecutablePath);
-                p.Start();
-            }
+            Process.Start(Application.StartupPath + "\\mpvSettingsEditor.exe");
         }
 
         public static void history(string[] args)
@@ -87,7 +80,7 @@ namespace mpvnet
             if (File.Exists(fp))
                 Process.Start(fp);
             else
-                if (MsgQuestion("Create history.txt file in config folder?\n\nmpv.net will write the date, time and filename of opened files to it.") == DialogResult.OK)
+                if (MainForm.Instance.ShowMsgBox("Create history.txt file in config folder?\n\nmpv.net will write the date, time and filename of opened files to it.", MessageBoxIcon.Question) == DialogResult.OK)
                     File.WriteAllText(fp, "");
         }
 

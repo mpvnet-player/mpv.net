@@ -63,6 +63,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DynamicGUI\Controls.cs" />
     <Compile Include="DynamicGUI\DynamicGUI.cs" />
     <Compile Include="DynamicGUI\OptionSettingControl.xaml.cs">
       <DependentUpon>OptionSettingControl.xaml</DependentUpon>

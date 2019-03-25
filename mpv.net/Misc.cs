@@ -27,24 +27,6 @@ namespace mpvnet
         int IComparer<string>.Compare(string x, string y) => IComparerOfString_Compare(x, y);
     }
 
-    public class StaticUsing
-    {
-        public static void MsgInfo(string message)
-        {
-            MessageBox.Show(message, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        public static void MsgError(string message)
-        {
-            MessageBox.Show(message, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
-
-        public static DialogResult MsgQuestion(string message)
-        {
-            return MessageBox.Show(message, Application.ProductName, MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
-        }
-    }
-
     //public class OSVersion
     //{
     //    public static float Windows7 { get; set; } = 6.1f;

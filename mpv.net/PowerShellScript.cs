@@ -2,10 +2,9 @@
 using System.IO;
 using System.Threading;
 using System.Management.Automation.Runspaces;
-
-using static mpvnet.StaticUsing;
 using System.Reflection;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace mpvnet
 {
@@ -50,10 +49,10 @@ Using namespace System;
                         }
                         catch
                         {
-                            MsgError("PowerShell Setup Problem\r\n\r\nEnsure you have at least PowerShell 5.1 installed.");
+                            MainForm.Instance.ShowMsgBox("PowerShell Setup Problem\n\nEnsure you have at least PowerShell 5.1 installed.", MessageBoxIcon.Error);
                             return null;
                         }
-                        MsgError(ex.ToString());
+                        MainForm.Instance.ShowMsgBox(ex.ToString(), MessageBoxIcon.Error);
                     }
                 }
             }

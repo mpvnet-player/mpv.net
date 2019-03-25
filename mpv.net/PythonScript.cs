@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Reflection;
+using System.Windows.Forms;
 using IronPython.Hosting;
 using Microsoft.Scripting.Hosting;
 
-using static mpvnet.StaticUsing;
 using PyRT = IronPython.Runtime;
 
 namespace mpvnet
@@ -27,7 +27,7 @@ namespace mpvnet
             }
             catch (Exception ex)
             {
-                MsgError(ex.ToString());
+                MainForm.Instance.ShowMsgBox(ex.ToString(), MessageBoxIcon.Error);
             }
         }
     }

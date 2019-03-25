@@ -13,7 +13,6 @@ using System.Windows.Forms;
 
 using static mpvnet.libmpv;
 using static mpvnet.Native;
-using static mpvnet.StaticUsing;
 
 using PyRT = IronPython.Runtime;
 
@@ -75,7 +74,7 @@ namespace mpvnet
                     if (File.Exists(mpvConfPath))
                         foreach (var i in File.ReadAllLines(mpvConfPath))
                             if (i.Contains("=") && ! i.StartsWith("#"))
-                                _mpvConf[i.Left("=").Trim()] = i.Right("=").Trim();
+                                _mpvConf[i.Substring(0, i.IndexOf("=")).Trim()] = i.Substring(i.IndexOf("=") + 1).Trim();
                 }
                 return _mpvConf;
             }
@@ -208,7 +207,7 @@ namespace mpvnet
                                         }
                                         catch (Exception ex)
                                         {
-                                            MsgError(ex.GetType().Name + "\r\n\r\n" + ex.ToString());
+                                            MainForm.Instance.ShowMsgBox(ex.GetType().Name + "\n\n" + ex.ToString(), MessageBoxIcon.Error);
                                         }
                             ClientMessage?.Invoke(args);
                         }
@@ -465,7 +464,7 @@ namespace mpvnet
                 string[] types = "264 265 3gp aac ac3 avc avi avs bmp divx dts dtshd dtshr dtsma eac3 evo flac flv h264 h265 hevc hvc jpg jpeg m2t m2ts m2v m4a m4v mka mkv mlp mov mp2 mp3 mp4 mpa mpeg mpg mpv mts ogg ogm opus pcm png pva raw rmvb thd thd+ac3 true-hd truehd ts vdr vob vpy w64 wav webm wmv y4m".Split(' ');
                 string path = get_property_string("path");
                 List<string> files = Directory.GetFiles(Path.GetDirectoryName(path)).ToList();
-                files = files.Where((file) => types.Contains(file.Ext())).ToList();
+                files = files.Where((file) => types.Contains(Path.GetExtension(file).TrimStart(".".ToCharArray()).ToLower())).ToList();
                 files.Sort(new StringLogicalComparer());
                 int index = files.IndexOf(path);
                 files.Remove(path);

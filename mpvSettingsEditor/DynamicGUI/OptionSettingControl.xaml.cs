@@ -1,5 +1,4 @@
-﻿using DynamicGUI;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace DynamicGUI
 {
@@ -14,6 +13,7 @@ namespace DynamicGUI
             TitleTextBox.Text = optionSetting.Name;
             HelpTextBox.Text = optionSetting.Help;
             ItemsControl.ItemsSource = optionSetting.Options;
+            Link.SetURL(optionSetting.HelpURL);
         }
 
         private string _SearchableText;
