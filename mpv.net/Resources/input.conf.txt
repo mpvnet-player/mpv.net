@@ -53,8 +53,6 @@
  Ctrl+8      add saturation 1       #menu: Ctrl+8        ; Video > Increase Saturation
  _           ignore                 #menu: _             ; Video > -
  Ctrl+S      async screenshot       #menu: Ctrl+S        ; Video > Take Screenshot
- Ctrl+Shift+S screenshot each-frame #menu: Ctrl+Shift+S  ; Video > Take Screenshots All Frames
- _           ignore                 #menu: _             ; Video > -
  d           cycle deinterlace      #menu: D             ; Video > Toggle Deinterlace
  a           cycle-values video-aspect "16:9" "4:3" "2.35:1" "-1" #menu: A ; Video > Cycle Aspect Ratio
 
@@ -99,7 +97,8 @@
  
  _ script-message mpv.net set-setting hwdec yes #menu: _ ; Settings > Hardware Decoding > Enable
  _ script-message mpv.net set-setting hwdec no  #menu: _ ; Settings > Hardware Decoding > Disable
- p script-message mpv.net show-prefs            #menu: P ; Settings > Show Preferences
+ p script-message mpv.net show-prefs            #menu: P ; Settings > Show mpv config file
+ e script-message mpv.net show-conf-editor      #menu: E ; Settings > Show mpv config editor
  k script-message mpv.net show-keys             #menu: K ; Settings > Show Keys
  c script-message mpv.net open-config-folder    #menu: C ; Settings > Open Config Folder
  

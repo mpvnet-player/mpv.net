@@ -125,12 +125,10 @@ namespace mpvnet
                     PowerShellScript.Init(scriptPath);
 
             foreach (var scriptPath in Directory.GetFiles(mp.mpvConfFolderPath + "Scripts"))
-            {
                 if (Path.GetExtension(scriptPath) == ".py")
                     PythonScripts.Add(new PythonScript(File.ReadAllText(scriptPath)));
                 else if (Path.GetExtension(scriptPath) == ".ps1")
                     PowerShellScript.Init(scriptPath);
-            }
         }
 
         public static void EventLoop()
@@ -307,8 +305,7 @@ namespace mpvnet
             if (MpvHandle == IntPtr.Zero)
                 return;
 
-            IntPtr[] byteArrayPointers;
-            var mainPtr = AllocateUtf8IntPtrArrayWithSentinel(args, out byteArrayPointers);
+            IntPtr mainPtr = AllocateUtf8IntPtrArrayWithSentinel(args, out IntPtr[] byteArrayPointers);
             int err = mpv_command(MpvHandle, mainPtr);
 
             if (err < 0)
@@ -333,7 +330,7 @@ namespace mpvnet
 
         public static void set_property_string(string name, string value, bool throwOnException = false)
         {
-            var bytes = GetUtf8Bytes(value);
+            byte[] bytes = GetUtf8Bytes(value);
             int err = mpv_set_property(MpvHandle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_STRING, ref bytes);
 
             if (err < 0 && throwOnException)
@@ -342,8 +339,7 @@ namespace mpvnet
 
         public static string get_property_string(string name, bool throwOnException = false)
         {
-            var lpBuffer = IntPtr.Zero;
-            int err = mpv_get_property(MpvHandle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_STRING, ref lpBuffer);
+            int err = mpv_get_property(MpvHandle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_STRING, out IntPtr lpBuffer);
 
             if (err < 0 && throwOnException)
                 throw new Exception($"{name}: {(mpv_error)err}");
@@ -356,8 +352,7 @@ namespace mpvnet
 
         public static int get_property_int(string name, bool throwOnException = false)
         {
-            var lpBuffer = IntPtr.Zero;
-            int err = mpv_get_property(MpvHandle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_INT64, ref lpBuffer);
+            int err = mpv_get_property(MpvHandle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_INT64, out IntPtr lpBuffer);
 
             if (err < 0 && throwOnException)
                 throw new Exception($"{name}: {(mpv_error)err}");
@@ -378,8 +373,7 @@ namespace mpvnet
 
         public static bool get_property_bool(string name, bool throwOnException = false)
         {
-            var lpBuffer = IntPtr.Zero;
-            int err = mpv_get_property(MpvHandle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_FLAG, ref lpBuffer);
+            int err = mpv_get_property(MpvHandle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_FLAG, out IntPtr lpBuffer);
 
             if (err < 0 && throwOnException)
                 throw new Exception($"{name}: {(mpv_error)err}");

@@ -27,7 +27,7 @@ namespace mpvnet
         public static extern int mpv_set_option_string(IntPtr mpvHandle, byte[] name, byte[] value);
 
         [DllImport("mpv-1.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int mpv_get_property(IntPtr mpvHandle, byte[] name, mpv_format format, ref IntPtr data);
+        public static extern int mpv_get_property(IntPtr mpvHandle, byte[] name, mpv_format format, out IntPtr data);
 
         [DllImport("mpv-1.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int mpv_get_property(IntPtr mpvHandle, byte[] name, mpv_format format, ref double data);

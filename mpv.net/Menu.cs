@@ -214,8 +214,7 @@ public class ToolStripRendererEx : ToolStripSystemRenderer
 
         if (e.Item is ToolStripMenuItem && !(e.Item.Owner is MenuStrip))
         {
-            var r = e.TextRectangle;
-
+            Rectangle rect = e.TextRectangle;
             var dropDown = e.ToolStrip as ToolStripDropDownMenu;
 
             if (dropDown == null || dropDown.ShowImageMargin || dropDown.ShowCheckMargin)
@@ -223,7 +222,7 @@ public class ToolStripRendererEx : ToolStripSystemRenderer
             else
                 TextOffset = Convert.ToInt32(e.Item.Height * 0.2);
 
-            e.TextRectangle = new Rectangle(TextOffset, Convert.ToInt32((e.Item.Height - r.Height) / 2.0), r.Width, r.Height);
+            e.TextRectangle = new Rectangle(TextOffset, Convert.ToInt32((e.Item.Height - rect.Height) / 2.0), rect.Width, rect.Height);
         }
 
         base.OnRenderItemText(e);
@@ -279,31 +278,22 @@ public class ToolStripRendererEx : ToolStripSystemRenderer
 
     public void DrawButton(ToolStripItemRenderEventArgs e)
     {
-        var g = e.Graphics;
-        var r = new Rectangle(Point.Empty, e.Item.Size);
-        var r2 = new Rectangle(r.X, r.Y, r.Width - 1, r.Height - 1);
+        var gx = e.Graphics;
+        var rect = new Rectangle(Point.Empty, e.Item.Size);
+        var rect2 = new Rectangle(rect.X, rect.Y, rect.Width - 1, rect.Height - 1);
 
         using (Pen pen = new Pen(ColorBorder))
-        {
-            g.DrawRectangle(pen, r2);
-        }
+            gx.DrawRectangle(pen, rect2);
 
-        r2.Inflate(-1, -1);
-
+        rect2.Inflate(-1, -1);
         var tsb = e.Item as ToolStripButton;
 
-        if (!(tsb == null) && tsb.Checked)
-        {
+        if (tsb != null && tsb.Checked)
             using (SolidBrush brush = new SolidBrush(ColorChecked))
-            {
-                g.FillRectangle(brush, r2);
-            }
-        }
+                gx.FillRectangle(brush, rect2);
         else
             using (SolidBrush brush = new SolidBrush(ColorBottom))
-            {
-                g.FillRectangle(brush, r2);
-            }
+                gx.FillRectangle(brush, rect2);
     }
 
     protected override void OnRenderDropDownButtonBackground(ToolStripItemRenderEventArgs e)
@@ -332,7 +322,7 @@ public class ToolStripRendererEx : ToolStripSystemRenderer
 
     protected override void OnRenderItemCheck(ToolStripItemImageRenderEventArgs e)
     {
-        var x = Convert.ToInt32(e.ImageRectangle.Height * 0.2);
+        int x = Convert.ToInt32(e.ImageRectangle.Height * 0.2);
         e.Graphics.DrawImage(e.Image, new Point(x, x));
     }
 
@@ -341,28 +331,21 @@ public class ToolStripRendererEx : ToolStripSystemRenderer
         if (e.Item.IsOnDropDown)
         {
             e.Graphics.Clear(ColorBackground);
-            var right = e.Item.Width - Convert.ToInt32(TextOffset / 5.0);
-            var top = e.Item.Height / 2;
+            int right = e.Item.Width - Convert.ToInt32(TextOffset / 5.0);
+            int top = e.Item.Height / 2;
             top -= 1;
-            var b = e.Item.Bounds;
-
             using (Pen p = new Pen(Color.Gray))
-            {
                 e.Graphics.DrawLine(p, new Point(TextOffset, top), new Point(right, top));
-            }
         }
         else if (e.Vertical)
         {
-            var b = e.Item.Bounds;
-
+            var bounds = e.Item.Bounds;
             using (Pen p = new Pen(SystemColors.ControlDarkDark))
-            {
                 e.Graphics.DrawLine(p, 
-                    Convert.ToInt32(b.Width / 2.0),
-                    Convert.ToInt32(b.Height * 0.15), 
-                    Convert.ToInt32(b.Width / 2.0),
-                    Convert.ToInt32(b.Height * 0.85));
-            }
+                    Convert.ToInt32(bounds.Width / 2.0),
+                    Convert.ToInt32(bounds.Height * 0.15), 
+                    Convert.ToInt32(bounds.Width / 2.0),
+                    Convert.ToInt32(bounds.Height * 0.85));
         }
     }
 }
@@ -383,21 +366,24 @@ public struct HSLColor
 
     private double hue;
 
-    public int Hue {
+    public int Hue
+    {
         get => System.Convert.ToInt32(hue * 240);       
         set => hue = CheckRange(value / 240.0);
     }
 
     private double saturation;
 
-    public int Saturation {
+    public int Saturation
+    {
         get => System.Convert.ToInt32(saturation * 240);
         set => saturation = CheckRange(value / 240.0);
     }
 
     private double luminosity;
 
-    public int Luminosity {
+    public int Luminosity
+    {
         get => System.Convert.ToInt32(luminosity * 240);
         set => luminosity = CheckRange(value / 240.0);
     }
@@ -408,7 +394,6 @@ public struct HSLColor
             value = 0;
         else if (value > 1)
             value = 1;
-
         return value;
     }
 
@@ -438,9 +423,8 @@ public struct HSLColor
             }
             else
             {
-                var temp2 = GetTemp2(this);
-                var temp1 = 2.0 * luminosity - temp2;
-
+                double temp2 = GetTemp2(this);
+                double temp1 = 2.0 * luminosity - temp2;
                 r = GetColorComponent(temp1, temp2, hue + 1.0 / 3.0);
                 g = GetColorComponent(temp1, temp2, hue);
                 b = GetColorComponent(temp1, temp2, hue - 1.0 / 3.0);
@@ -473,7 +457,6 @@ public struct HSLColor
             temp3 += 1;
         else if (temp3 > 1)
             temp3 -= 1;
-
         return temp3;
     }
 
@@ -500,7 +483,7 @@ public struct HSLColor
 
     public void SetRGB(int red, int green, int blue)
     {
-        var hc = HSLColor.Convert(Color.FromArgb(red, green, blue));
+        HSLColor hc = HSLColor.Convert(Color.FromArgb(red, green, blue));
         hue = hc.hue;
         saturation = hc.saturation;
         luminosity = hc.luminosity;

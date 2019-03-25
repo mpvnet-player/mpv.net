@@ -132,6 +132,10 @@ Please note that PowerShell don't allow assigning to events and mpv.net uses as 
 
 ### Changelog
 
+### 1.8
+
+- new config editor added
+
 ### 1.7
 
 - showing the conf files mpv.net uses now the app that is registered for txt files, before it just shell executed the conf file which only worked if conf files were associated with an application

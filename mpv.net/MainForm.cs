@@ -8,6 +8,7 @@ using System.Diagnostics;
 using static mpvnet.StaticUsing;
 using System.Linq;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace mpvnet
 {
@@ -366,6 +367,17 @@ namespace mpvnet
             {
                 CursorHelp.Hide();
             }
+        }
+
+        public DialogResult ShowMsgBox(string message, MessageBoxIcon icon)
+        {
+            var buttons = MessageBoxButtons.OK;
+            if (icon == MessageBoxIcon.Question) buttons = MessageBoxButtons.OKCancel;
+
+            var fn = new Func<DialogResult>(() => MessageBox.Show(
+                message, Application.ProductName, buttons, MessageBoxIcon.Information));
+
+            return (DialogResult)Invoke(fn);
         }
 
         protected override void OnLoad(EventArgs e)

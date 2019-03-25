@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using System.Windows.Forms;
 
 using static mpvnet.StaticUsing;
@@ -22,21 +23,20 @@ namespace mpvnet
                 if (commands == null)
                 {
                     commands = new List<Command>();
-                    var type = typeof(Command);
-                    var methods = type.GetMethods(System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
+                    Type type = typeof(Command);
+                    MethodInfo[] methods = type.GetMethods(System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
 
                     foreach (var i in methods)
                     {
-                        var parameters = i.GetParameters();
+                        ParameterInfo[] parameters = i.GetParameters();
 
                         if (parameters == null || parameters.Length != 1 || parameters[0].ParameterType != typeof(string[]))
                             continue;
 
-                        var cmd = new Command() { Name = i.Name.Replace("_","-"), Action = (Action<string[]>)i.CreateDelegate(typeof(Action<string[]>)) };
+                        Command cmd = new Command() { Name = i.Name.Replace("_","-"), Action = (Action<string[]>)i.CreateDelegate(typeof(Action<string[]>)) };
                         commands.Add(cmd);
                     }
                 }
-
                 return commands;
             }
         }
@@ -70,6 +70,16 @@ namespace mpvnet
             Process.Start(NativeHelp.GetAssociatedApplication(".txt"), mp.mpvConfPath);
         }
 
+        public static void show_conf_editor(string[] args)
+        {
+            using (var p = new Process())
+            {
+                p.StartInfo.FileName = Application.StartupPath + "\\mpvSettingsEditor.exe";
+                p.StartInfo.WorkingDirectory = Path.GetDirectoryName(Application.ExecutablePath);
+                p.Start();
+            }
+        }
+
         public static void history(string[] args)
         {
             var fp = mp.mpvConfFolderPath + "history.txt";
@@ -89,24 +99,24 @@ namespace mpvnet
         public static void set_setting(string[] args)
         {
             bool changed = false;
-            string fp = mp.mpvConfPath;
-            var confLines = File.ReadAllLines(fp);
+            var lines = File.ReadAllLines(mp.mpvConfPath);
 
-            for (int i = 0; i < confLines.Length; i++)
+            for (int i = 0; i < lines.Length; i++)
             {
-                if (confLines[i].Left("=").Trim() == args[0])
+                if (lines[i].Contains("=") &&
+                    lines[i].Substring(0, lines[i].IndexOf("=")).Trim("# ".ToCharArray()) == args[0])
                 {
-                    confLines[i] = args[0] + "=" + args[1];
+                    lines[i] = args[0] + " = " + args[1];
                     changed = true;
                 }
             }
 
             if (changed)
-                File.WriteAllText(fp, String.Join(Environment.NewLine, confLines));
+                File.WriteAllText(mp.mpvConfPath, String.Join(Environment.NewLine, lines));
             else
-                File.WriteAllText(fp, File.ReadAllText(fp) + Environment.NewLine + args[0] + "=" + args[1]);
+                File.WriteAllText(mp.mpvConfPath, File.ReadAllText(mp.mpvConfPath) + Environment.NewLine + args[0] + " = " + args[1]);
 
-            MsgInfo("Please restart mpv.net");
+            MainForm.Instance.ShowMsgBox("Please restart mpv.net", MessageBoxIcon.Information);
         }
 
         public static void show_info(string[] args)

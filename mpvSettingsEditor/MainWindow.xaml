@@ -1,0 +1,22 @@
+﻿<Window xmlns:DynamicGUI="clr-namespace:DynamicGUI" x:Name="MainWindow1"  x:Class="DynamicGUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DynamicGUI"
+        mc:Ignorable="d"
+        Height="500" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid Background="White" Width="300" Margin="0,0,0,10">
+            <TextBlock Margin="5,2" MinWidth="50" Text="Search..." Foreground="LightSteelBlue" IsHitTestVisible="False" />
+            <TextBox MinWidth="50" Name="SearchTextBox" Background="Transparent" TextChanged="SearchTextBox_TextChanged" />
+        </Grid>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1">
+            <WrapPanel x:Name="MainWrapPanel"></WrapPanel>
+        </ScrollViewer>       
+    </Grid>
+</Window>
