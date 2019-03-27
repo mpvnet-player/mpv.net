@@ -146,6 +146,18 @@ Please note that PowerShell don't allow assigning to events and mpv.net uses as 
 
 ### Changelog
 
+### soon
+
+- setting track-auto-selection added to settings editor (<https://mpv.io/manual/master/#options-track-auto-selection>)
+- setting loop-playlist added to settings editor (<https://mpv.io/manual/master/#options-loop-playlist>)
+- setting audio-file-auto added to settings editor (<https://mpv.io/manual/master/#options-audio-file-auto>)
+- setting video-sync added to settings editor (<https://mpv.io/manual/master/#options-video-sync>)
+- command execute-mpv-command added to menu: Tools > Enter a mpv command for execution
+- added youtube-dl.exe, please note this will only work when a certain Visual C++ runtime is installed
+- added drag & drop support to drag & drop a youtube URL on mpv.net
+- added support to open a youtube URL from command line
+- added support for opening a URL from the menu: Open > Open URL
+
 ### 1.9
 
 - improved settings editor

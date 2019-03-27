@@ -149,7 +149,7 @@ namespace mpvSettingsEditor
             File.WriteAllText(mpvConfPath, String.Join(Environment.NewLine, lines));
 
             foreach (Process process in Process.GetProcesses())
-                if (process.ProcessName == "mpv.net")
+                if (process.ProcessName == "mpvnet")
                     MessageBox.Show("Restart mpv.net in order to apply changed settings.", Title, MessageBoxButton.OK, MessageBoxImage.Information);
                 else if (process.ProcessName == "mpv")
                     MessageBox.Show("Restart mpv in order to apply changed settings.", Title, MessageBoxButton.OK, MessageBoxImage.Information);
@@ -186,6 +186,8 @@ namespace mpvSettingsEditor
                         i.Visibility = Visibility.Visible;
                     else
                         i.Visibility = Visibility.Collapsed;
+
+            MainScrollViewer.ScrollToTop();
         }
         
         private void MainWindow1_Loaded(object sender, RoutedEventArgs e)

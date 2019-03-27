@@ -1,6 +1,7 @@
  # mpv.net key bindings, mouse bindings and context menu configuration
  
- o           script-message mpv.net open-files #menu: O  ; Open Files...
+ o           script-message mpv.net open-files #menu: O  ; Open > Open Files...
+ u           script-message mpv.net open-url   #menu: U  ; Open > Open URL...
  _           ignore                 #menu: _             ; -
  Space       cycle pause            #menu: Space, Enter  ; Play/Pause
  Enter       cycle pause
@@ -113,6 +114,7 @@
  Ctrl+H cycle-values hwdec "auto" "no"              #menu: Ctrl+H  ; Tools > Cycle Hardware Decoding
  F8 show-text ${playlist}   5000                    #menu: F8      ; Tools > Show Playlist
  F9 show-text ${track-list} 5000                    #menu: F9      ; Tools > Show Audio/Video/Subtitle List
+ _ script-message mpv.net execute-mpv-command       #menu: _       ; Tools > Enter a mpv command for execution...
 
  _ script-message mpv.net shell-execute https://mpv.io/manual/stable/ #menu: _ ; Help > Show mpv manual
  _ script-message mpv.net shell-execute https://github.com/mpv-player/mpv/blob/master/etc/input.conf #menu: _ ; Help > Show mpv default keys

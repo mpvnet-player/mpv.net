@@ -3,7 +3,7 @@ name = "hwdec"
 default = "no"
 filter = "Video"
 helpurl = "https://mpv.io/manual/master/#options-hwdec"
-help = "hwdec=<mode> Specify the hardware video decoding API that should be used if possible. Whether hardware decoding is actually done depends on the video codec. If hardware decoding is not possible, mpv will fall back on software decoding."
+help = "--hwdec=<mode> Specify the hardware video decoding API that should be used if possible. Whether hardware decoding is actually done depends on the video codec. If hardware decoding is not possible, mpv will fall back on software decoding.\n\nFor more information visit:"
 options = [{ name = "no", text = "no (Default)", help = "always use software decoding (Default)" },
            { name = "auto",         help = "enable best hw decoder (see below)" },
            { name = "yes",          help = "exactly the same as auto" },
@@ -24,7 +24,7 @@ name = "vo"
 default = "gpu"
 filter = "Video"
 helpurl = "https://mpv.io/manual/master/#video-output-drivers-vo"
-help = "gpu=<mode> Video output drivers to be used. Default = gpu."
+help = "--gpu=<mode> Video output drivers to be used. Default = gpu.\n\nFor more information visit:"
 options = [{ name = "gpu", text = "gpu (Default)", help = "General purpose, customizable, GPU-accelerated video output driver. It supports extended scaling methods, dithering, color management, custom shaders, HDR, and more. (Default)" },
            { name = "direct3d", help = "Video output driver that uses the Direct3D interface" }]
 
@@ -32,48 +32,48 @@ options = [{ name = "gpu", text = "gpu (Default)", help = "General purpose, cust
 name = "volume"
 default = ""
 filter = "Audio"
-help = "volume=<integer> Set the startup volume. 0 means silence, 100 means no volume reduction or amplification. Negative values can be passed for compatibility, but are treated as 0. Since mpv 0.18.1, this always controls the internal mixer (aka \"softvol\")."
+help = "--volume=<integer> Set the startup volume. 0 means silence, 100 means no volume reduction or amplification. Negative values can be passed for compatibility, but are treated as 0. Since mpv 0.18.1, this always controls the internal mixer (aka \"softvol\")."
 
 [[settings]]
 name = "slang"
 default = ""
-filter = "Subtitles"
+filter = "Subtitle"
 help = "--slang=<languagecode[,languagecode,...]> Specify a priority list of subtitle languages to use. Different container formats employ different language codes. DVDs use ISO 639-1 two letter language codes, Matroska uses ISO 639-2 three letter language codes while OGM uses a free-form identifier. See also --sid."
 
 [[settings]]
 name = "screen"
 default = ""
 filter = "Screen"
-help = "screen=<default|0-32> In multi-monitor configurations (i.e. a single desktop that spans across multiple displays), this option tells mpv which screen to display the video on. Default: default."
+help = "--screen=<default|0-32> In multi-monitor configurations (i.e. a single desktop that spans across multiple displays), this option tells mpv which screen to display the video on. Default: default."
 
 [[settings]]
 name = "osd-playing-msg"
 default = ""
 width = 300
 filter = "Screen"
+help = "--osd-playing-msg=<value> Show a message on OSD when playback starts. The string is expanded for properties, e.g. --osd-playing-msg='file: ${filename}' will show the message file: followed by a space and the currently played filename.\n\nFor more information visit:"
 helpurl = "https://mpv.io/manual/master/#property-expansion"
-help = "osd-playing-msg=<value> Show a message on OSD when playback starts. The string is expanded for properties, e.g. --osd-playing-msg='file: ${filename}' will show the message file: followed by a space and the currently played filename."
 
 [[settings]]
 name = "fullscreen"
 alias = "fs"
 default = "no"
 filter = "Screen"
-help = "fullscreen=<yes|no>, fs=<yes|no> Start the player in fullscreen mode. Default: no."
+help = "--fullscreen=<yes|no>, fs=<yes|no> Start the player in fullscreen mode. Default: no."
 options = [{ name = "yes" }, { name = "no", text = "no (Default)" }]
 
 [[settings]]
 name = "keep-open-pause"
 default = "yes"
 filter = "Playback"
-help = "keep-open-pause=<yes|no> If set to no, instead of pausing when --keep-open is active, just stop at end of file and continue playing forward when you seek backwards until end where it stops again. Default: yes."
+help = "--keep-open-pause=<yes|no> If set to no, instead of pausing when --keep-open is active, just stop at end of file and continue playing forward when you seek backwards until end where it stops again. Default: yes."
 options = [{ name = "yes", text = "yes (Default)" }, { name = "no" }]
 
 [[settings]]
 name = "keep-open"
 default = "no"
 filter = "Playback"
-help = "keep-open=<yes|no|always> Do not terminate when playing or seeking beyond the end of the file, and there is not next file to be played (and --loop is not used). Instead, pause the player. When trying to seek beyond end of the file, the player will attempt to seek to the last frame.\n\nNormally, this will act like set pause yes on EOF, unless the  --keep-open-pause=no option is set."
+help = "--keep-open=<yes|no|always> Do not terminate when playing or seeking beyond the end of the file, and there is not next file to be played (and --loop is not used). Instead, pause the player. When trying to seek beyond end of the file, the player will attempt to seek to the last frame.\n\nNormally, this will act like set pause yes on EOF, unless the  --keep-open-pause=no option is set."
 options = [{ name = "yes", help = "Don't terminate if the current file is the last playlist entry. Equivalent to --keep-open without arguments."},
            { name = "no", text = "no (Default)", help = "If the current file ends, go to the next file or terminate. (Default.)" },
 		   { name = "always", help = "Like yes, but also applies to files before the last playlist entry. This means playback will never automatically advance to the next file."}]
@@ -83,13 +83,13 @@ name = "loop-file"
 alias = "loop"
 default = ""
 filter = "Playback"
-help = "loop-file=<N|inf|no>, loop=<N|inf|no> Loop a single file N times. inf means forever, no means normal playback. For compatibility, --loop-file and --loop-file=yes are also accepted, and are the same as --loop-file=inf.\n\nThe difference to --loop-playlist is that this doesn't loop the playlist, just the file itself. If the playlist contains only a single file, the difference between the two option is that this option performs a seek on loop, instead of reloading the file.\n\n--loop is an alias for this option."
+help = "--loop-file=<N|inf|no>, loop=<N|inf|no> Loop a single file N times. inf means forever, no means normal playback. For compatibility, --loop-file and --loop-file=yes are also accepted, and are the same as --loop-file=inf.\n\nThe difference to --loop-playlist is that this doesn't loop the playlist, just the file itself. If the playlist contains only a single file, the difference between the two option is that this option performs a seek on loop, instead of reloading the file.\n\n--loop is an alias for this option."
 
 [[settings]]
 name = "save-position-on-quit"
 default = "no"
 filter = "Playback"
-help = "Always save the current playback position on quit. When this file is played again later, the player will seek to the old playback position on start. This does not happen if playback of a file is stopped in any other way than quitting. For example, going to the next file in the playlist will not save the position, and start playback at beginning the next time the file is played.\n\nThis behavior is disabled by default, but is always available when quitting the player with Shift+Q."
+help = "--save-position-on-quit=<yes|no> Always save the current playback position on quit. When this file is played again later, the player will seek to the old playback position on start. This does not happen if playback of a file is stopped in any other way than quitting. For example, going to the next file in the playlist will not save the position, and start playback at beginning the next time the file is played.\n\nThis behavior is disabled by default, but is always available when quitting the player with Shift+Q."
 options = [{ name = "yes" }, { name = "no", text = "no (Default)" }]
 
 [[settings]]
@@ -98,32 +98,80 @@ default = ""
 width = 500
 folder = true
 filter = "Screen"
-help = "screenshot-directory=<value> Store screenshots in this directory. This path is joined with the filename generated by --screenshot-template. If the template filename is already absolute, the directory is ignored.\n\nIf the directory does not exist, it is created on the first screenshot. If it is not a directory, an error is generated when trying to write a screenshot.\n\nThis option is not set by default, and thus will write screenshots to the directory from which mpv was started. In pseudo-gui mode (see PSEUDO GUI MODE), this is set to the desktop."
+help = "--screenshot-directory=<value> Store screenshots in this directory. This path is joined with the filename generated by --screenshot-template. If the template filename is already absolute, the directory is ignored.\n\nIf the directory does not exist, it is created on the first screenshot. If it is not a directory, an error is generated when trying to write a screenshot.\n\nThis option is not set by default, and thus will write screenshots to the directory from which mpv was started. In pseudo-gui mode (see PSEUDO GUI MODE), this is set to the desktop."
 
 [[settings]]
 name = "input-ar-delay"
 default = ""
 filter = "Input"
-help = "input-ar-delay=<integer> Delay in milliseconds before we start to autorepeat a key (0 to disable)."
+help = "--input-ar-delay=<integer> Delay in milliseconds before we start to autorepeat a key (0 to disable)."
 
 [[settings]]
 name = "input-ar-rate"
 default = ""
 filter = "Input"
-help = "input-ar-rate=<integer> Number of key presses to generate per second on autorepeat."
+help = "--input-ar-rate=<integer> Number of key presses to generate per second on autorepeat."
 
 [[settings]]
 name = "alang"
 default = ""
 filter = "Audio"
-help = "alang=<languagecode[,languagecode,...]> Specify a priority list of audio languages to use. Different container formats employ different language codes. DVDs use ISO 639-1 two-letter language codes, Matroska, MPEG-TS and NUT use ISO 639-2 three-letter language codes, while OGM uses a free-form identifier. See also --aid.\n\nExamples\n\nmpv dvd://1 --alang=hu,en chooses the Hungarian language track on a DVD and falls back on English if Hungarian is not available.\n\nmpv --alang=jpn example.mkv plays a Matroska file with Japanese audio."
+help = "--alang=<languagecode[,languagecode,...]> Specify a priority list of audio languages to use. Different container formats employ different language codes. DVDs use ISO 639-1 two-letter language codes, Matroska, MPEG-TS and NUT use ISO 639-2 three-letter language codes, while OGM uses a free-form identifier. See also --aid.\n\nExamples\n\nmpv dvd://1 --alang=hu,en chooses the Hungarian language track on a DVD and falls back on English if Hungarian is not available.\n\nmpv --alang=jpn example.mkv plays a Matroska file with Japanese audio."
 
 [[settings]]
 name = "hr-seek"
 default = "absolute"
 filter = "Playback"
-help = "hr-seek=<no|absolute|yes> Select when to use precise seeks that are not limited to keyframes. Such seeks require decoding video from the previous keyframe up to the target position and so can take some time depending on decoding performance. For some video formats, precise seeks are disabled. This option selects the default choice to use for seeks; it is possible to explicitly override that default in the definition of key bindings and in input commands."
+help = "--hr-seek=<no|absolute|yes> Select when to use precise seeks that are not limited to keyframes. Such seeks require decoding video from the previous keyframe up to the target position and so can take some time depending on decoding performance. For some video formats, precise seeks are disabled. This option selects the default choice to use for seeks; it is possible to explicitly override that default in the definition of key bindings and in input commands."
 options = [{ name = "yes", help = "Use precise seeks whenever possible." },
            { name = "no", help = "Never use precise seeks." },
 		   { name = "absolute", text = "absolute (Default)", help = "Use precise seeks if the seek is to an absolute position in the file, such as a chapter seek, but not for relative seeks like the default behavior of arrow keys (default)." },
 		   { name = "always", help = "Same as yes (for compatibility)." }]
+
+[[settings]]
+name = "track-auto-selection"
+default = "yes"
+filter = "Playback"
+help = "--track-auto-selection=<yes|no> Enable the default track auto-selection (default: yes). Enabling this will make the player select streams according to --aid, --alang, and others. If it is disabled, no tracks are selected. In addition, the player will not exit if no tracks are selected, and wait instead (this wait mode is similar to pausing, but the pause option is not set).\n\nThis is useful with --lavfi-complex: you can start playback in this mode, and then set select tracks at runtime by setting the filter graph. Note that if --lavfi-complex is set before playback is started, the referenced tracks are always selected."
+options = [{ name = "yes", text = "yes (Default)" },
+           { name = "no" }]
+
+[[settings]]
+name = "loop-playlist"
+default = ""
+filter = "Playback"
+help = "--loop-playlist=<N|inf|force|no>, --loop-playlist Loops playback N times. A value of 1 plays it one time (default), 2 two times, etc. inf means forever. no is the same as 1 and disables looping. If several files are specified on command line, the entire playlist is looped. --loop-playlist is the same as  --loop-playlist=inf.\n\nThe force mode is like inf, but does not skip playlist entries which have been marked as failing. This means the player might waste CPU time trying to loop a file that doesn't exist. But it might be useful for playing webradios under very bad network conditions."
+
+[[settings]]
+name = "video-sync"
+default = ""
+filter = "Video"
+help = "--video-sync=<audio|...> How the player synchronizes audio and video.\n\nFor more information visit:"
+helpurl = "https://mpv.io/manual/master/#options-video-sync"
+options = [{ name = "display-resample" },
+           { name = "display-resample-vdrop" },
+           { name = "display-resample-desync" },
+		   { name = "display-vdrop" },
+		   { name = "display-adrop" },
+		   { name = "display-desync" },
+		   { name = "desync" }]
+
+[[settings]]
+name = "audio-file-auto"
+default = "no"
+filter = "Audio"
+help = "--audio-file-auto=<no|exact|fuzzy|all>, --no-audio-file-auto Load additional audio files matching the video filename. The parameter specifies how external audio files are matched."
+options = [{ name = "no", text = "no (Default", help = "Don't automatically load external audio files (default)." },
+           { name = "exact", help = "Load the media filename with audio file extension." },
+		   { name = "fuzzy", help = "Load all audio files containing media filename." },
+		   { name = "all", help = "Load all audio files in the current and --audio-file-paths directories." }]
+
+[[settings]]
+name = "sub-auto"
+default = "exact"
+filter = "Subtitle"
+help = "--sub-auto=<no|exact|fuzzy|all>, --no-sub-auto Load additional subtitle files matching the video filename. The parameter specifies how external subtitle files are matched. exact is enabled by default."
+options = [{ name = "no", help = "Don't automatically load external subtitle files." },
+		   { name = "exact", text = "exact (Default)", help = "Load the media filename with subtitle file extension (Default)." },
+		   { name = "fuzzy", help = "Load all subs containing media filename." },
+		   { name = "all", help = "Load all subs in the current and --sub-file-paths directories." }]

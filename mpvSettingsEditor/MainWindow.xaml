@@ -17,9 +17,9 @@
         <Grid x:Name="SearchGrid" Background="White" Width="300" Margin="0,0,0,10" Grid.ColumnSpan="2">
             <TextBlock x:Name="SearchTextBlock" Margin="5,2" Text="Find a setting" Foreground="LightSteelBlue" VerticalAlignment="Center" />
             <TextBox Name="SearchTextBox" Padding="1,2,0,0" BorderThickness="2" Background="Transparent" TextChanged="SearchTextBox_TextChanged" Height="25" />
-            <Button x:Name="SearchClearButton" Background="Transparent" HorizontalAlignment="Right" Margin="2,0,4,0" FontSize="6" Width="16" Height="16" Visibility="Hidden" Click="SearchClearButton_Click">╳</Button>
+            <Button x:Name="SearchClearButton" Background="Transparent" HorizontalAlignment="Right" Margin="2,0,4,0" FontSize="5" Width="17" Height="17" Visibility="Hidden" Click="SearchClearButton_Click">╳</Button>
         </Grid>
-        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="1">
+        <ScrollViewer x:Name="MainScrollViewer" VerticalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="1">
             <StackPanel x:Name="MainStackPanel"></StackPanel>
         </ScrollViewer>
         <StackPanel Margin="20,0,0,0" Grid.Row="1">

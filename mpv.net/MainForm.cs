@@ -296,16 +296,17 @@ namespace mpvnet
         {
             base.OnDragEnter(e);
 
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            if (e.Data.GetDataPresent(DataFormats.FileDrop) || e.Data.GetDataPresent(DataFormats.Text))
                 e.Effect = DragDropEffects.Copy;
         }
 
         protected override void OnDragDrop(DragEventArgs e)
         {
             base.OnDragDrop(e);
-
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
                 mp.LoadFiles(e.Data.GetData(DataFormats.FileDrop) as String[]);
+            if (e.Data.GetDataPresent(DataFormats.Text))
+                mp.LoadURL(e.Data.GetData(DataFormats.Text).ToString());
         }
 
         protected override void OnMouseDown(MouseEventArgs e)

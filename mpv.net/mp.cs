@@ -418,6 +418,8 @@ namespace mpvnet
             foreach (string i in args)
                 if (!i.StartsWith("--") && File.Exists(i))
                     mp.commandv("loadfile", i, "append");
+                else if (!i.StartsWith("--") && i.StartsWith("http"))
+                    mp.LoadURL(i);
 
             mp.set_property_string("playlist-pos", "0");
 
@@ -435,6 +437,15 @@ namespace mpvnet
                         mp.set_property_string(i.Substring(2), "yes");
                 }
             }
+        }
+
+        public static void LoadURL(string url)
+        {
+            int count = mp.get_property_int("playlist-count");
+            mp.commandv("loadfile", url, "append");
+            mp.set_property_int("playlist-pos", count);
+            for (int i = 0; i < count; i++)
+                mp.commandv("playlist-remove", "0");
         }
 
         public static void LoadFiles(string[] files)

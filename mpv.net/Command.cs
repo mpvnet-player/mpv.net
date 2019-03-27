@@ -114,59 +114,83 @@ namespace mpvnet
 
         public static void show_info(string[] args)
         {
-            var fileInfo = new FileInfo(mp.get_property_string("path"));
-
-            using (var mediaInfo = new MediaInfo(fileInfo.FullName))
+            try
             {
-                string width = mediaInfo.GetInfo(MediaInfoStreamKind.Video, "Width");
+                var fileInfo = new FileInfo(mp.get_property_string("path"));
 
-                if (width == "")
+                using (var mediaInfo = new MediaInfo(fileInfo.FullName))
                 {
-                    string performer = mediaInfo.GetInfo(MediaInfoStreamKind.General, "Performer");
-                    string title = mediaInfo.GetInfo(MediaInfoStreamKind.General, "Title");
-                    string album = mediaInfo.GetInfo(MediaInfoStreamKind.General, "Album");
-                    string genre = mediaInfo.GetInfo(MediaInfoStreamKind.General, "Genre");
-                    string date = mediaInfo.GetInfo(MediaInfoStreamKind.General, "Recorded_Date");
-                    string duration = mediaInfo.GetInfo(MediaInfoStreamKind.Audio, "Duration/String");
+                    string width = mediaInfo.GetInfo(MediaInfoStreamKind.Video, "Width");
 
-                    string text = "";
+                    if (width == "")
+                    {
+                        string performer = mediaInfo.GetInfo(MediaInfoStreamKind.General, "Performer");
+                        string title = mediaInfo.GetInfo(MediaInfoStreamKind.General, "Title");
+                        string album = mediaInfo.GetInfo(MediaInfoStreamKind.General, "Album");
+                        string genre = mediaInfo.GetInfo(MediaInfoStreamKind.General, "Genre");
+                        string date = mediaInfo.GetInfo(MediaInfoStreamKind.General, "Recorded_Date");
+                        string duration = mediaInfo.GetInfo(MediaInfoStreamKind.Audio, "Duration/String");
 
-                    if (performer != "") text += "Artist: " + performer + "\n";
-                    if (title != "") text += "Title: " + title + "\n";
-                    if (album != "") text += "Album: " + album + "\n";
-                    if (genre != "") text += "Genre: " + genre + "\n";
-                    if (date != "") text += "Year: " + date + "\n";
-                    if (duration != "") text += "Length: " + duration + "\n";
+                        string text = "";
 
-                    mp.commandv("show-text", text, "5000");
+                        if (performer != "") text += "Artist: " + performer + "\n";
+                        if (title != "") text += "Title: " + title + "\n";
+                        if (album != "") text += "Album: " + album + "\n";
+                        if (genre != "") text += "Genre: " + genre + "\n";
+                        if (date != "") text += "Year: " + date + "\n";
+                        if (duration != "") text += "Length: " + duration + "\n";
+
+                        mp.commandv("show-text", text, "5000");
+                    }
+                    else
+                    {
+                        string height = mediaInfo.GetInfo(MediaInfoStreamKind.Video, "Height");
+                        TimeSpan position = TimeSpan.FromSeconds(mp.get_property_number("time-pos"));
+                        TimeSpan duration = TimeSpan.FromSeconds(mp.get_property_number("duration"));
+                        string bitrate = mediaInfo.GetInfo(MediaInfoStreamKind.Video, "BitRate");
+
+                        if (bitrate == "")
+                            bitrate = "0";
+
+                        var bitrate2 = Convert.ToDouble(bitrate) / 1000.0 / 1000.0;
+                        var videoCodec = mp.get_property_string("video-format").ToUpper();
+                        var filename = fileInfo.Name;
+
+                        var text =
+                            FormatTime(position.TotalMinutes) + ":" +
+                            FormatTime(position.Seconds) + " / " +
+                            FormatTime(duration.TotalMinutes) + ":" +
+                            FormatTime(duration.Seconds) + "\n" +
+                            Convert.ToInt32(fileInfo.Length / 1024 / 1024).ToString() +
+                            $" MB - {width} x {height}\n{videoCodec} - {bitrate2.ToString("f1")} Mb/s" + "\n" + filename;
+
+                        mp.commandv("show-text", text, "5000");
+                    }
+
+                    string FormatTime(double value) => ((int)value).ToString("00");
                 }
-                else
-                {
-                    string height = mediaInfo.GetInfo(MediaInfoStreamKind.Video, "Height");
-                    TimeSpan position = TimeSpan.FromSeconds(mp.get_property_number("time-pos"));
-                    TimeSpan duration = TimeSpan.FromSeconds(mp.get_property_number("duration"));
-                    string bitrate = mediaInfo.GetInfo(MediaInfoStreamKind.Video, "BitRate");
-
-                    if (bitrate == "")
-                        bitrate = "0";
-
-                    var bitrate2 = Convert.ToDouble(bitrate) / 1000.0 / 1000.0;
-                    var videoCodec = mp.get_property_string("video-format").ToUpper();
-                    var filename = fileInfo.Name;
-
-                    var text =
-                        FormatTime(position.TotalMinutes) + ":" +
-                        FormatTime(position.Seconds) + " / " +
-                        FormatTime(duration.TotalMinutes) + ":" +
-                        FormatTime(duration.Seconds) + "\n" +
-                        Convert.ToInt32(fileInfo.Length / 1024 / 1024).ToString() +
-                        $" MB - {width} x {height}\n{videoCodec} - {bitrate2.ToString("f1")} Mb/s" + "\n" + filename;
-
-                    mp.commandv("show-text", text, "5000");
-                }
-
-                string FormatTime(double value) => ((int)value).ToString("00");
             }
+            catch (Exception)
+            {
+            }
+        }
+
+        public static void execute_mpv_command(string[] args)
+        {
+            MainForm.Instance.Invoke(new Action(() => {
+                string command = Microsoft.VisualBasic.Interaction.InputBox("Enter a mpv command to be executed.");
+                if (string.IsNullOrEmpty(command)) return;
+                mp.command_string(command, false);
+            }));
+        }
+        
+        public static void open_url(string[] args)
+        {
+            MainForm.Instance.Invoke(new Action(() => {
+                string command = Microsoft.VisualBasic.Interaction.InputBox("Enter URL to be opened.");
+                if (string.IsNullOrEmpty(command)) return;
+                mp.LoadURL(command);
+            }));
         }
     }
 }
