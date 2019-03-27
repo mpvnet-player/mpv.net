@@ -146,7 +146,7 @@ Please note that PowerShell don't allow assigning to events and mpv.net uses as 
 
 ### Changelog
 
-### soon
+### 2.0
 
 - setting track-auto-selection added to settings editor (<https://mpv.io/manual/master/#options-track-auto-selection>)
 - setting loop-playlist added to settings editor (<https://mpv.io/manual/master/#options-loop-playlist>)

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DynamicGUI.Properties {
+namespace mpvSettingsEditor.Properties {
     using System;
     
     
