@@ -25,7 +25,9 @@ Table of contents
 - 5 different scripting languages are supported, Python scripting implemented with IronPython, C# implemented with CS-Script, Lua and JavaScript implemented in libmpv and PowerShell
 - mpv's OSC, IPC, conf files and more
 
-![](https://raw.githubusercontent.com/stax76/mpv.net/master/screenshot.png)
+![](https://raw.githubusercontent.com/stax76/mpv.net/master/screenshots/screenshot.png)
+
+![](https://raw.githubusercontent.com/stax76/mpv.net/master/screenshots/mpvSettingsEditor.png)
 
 ### Context Menu
 
