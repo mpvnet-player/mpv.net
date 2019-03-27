@@ -10,6 +10,7 @@ Table of contents
 -------
 
 - [Features](#features)
+- [Screenshots](#Screenshots)
 - [Context Menu](#context-menu)
 - [Settings](#settings)
 - [C# Scripting](#cs-scripting)
@@ -24,6 +25,8 @@ Table of contents
 - Addon API for .NET languages
 - 5 different scripting languages are supported, Python scripting implemented with IronPython, C# implemented with CS-Script, Lua and JavaScript implemented in libmpv and PowerShell
 - mpv's OSC, IPC, conf files and more
+
+### Screenshots
 
 ![](https://raw.githubusercontent.com/stax76/mpv.net/master/screenshots/screenshot.png)
 
