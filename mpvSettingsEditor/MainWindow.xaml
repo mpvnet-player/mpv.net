@@ -34,6 +34,7 @@
             </ListBox>
             <TextBlock x:Name="OpenSettingsTextBlock" Margin="0,30,0,0" Cursor="Hand" TextWrapping="WrapWithOverflow" Foreground="{x:Static SystemParameters.WindowGlassBrush}" MouseUp="OpenSettingsTextBlock_MouseUp">Open settings folder</TextBlock>
             <TextBlock x:Name="ShowManualTextBlock" Margin="0,15,0,0" Cursor="Hand" TextWrapping="WrapWithOverflow" Foreground="{x:Static SystemParameters.WindowGlassBrush}" MouseUp="ShowManualTextBlock_MouseUp">Show mpv manual</TextBlock>
+            <TextBlock x:Name="SupportTextBlock" Margin="0,15,0,0" Cursor="Hand" TextWrapping="WrapWithOverflow" Foreground="{x:Static SystemParameters.WindowGlassBrush}" MouseUp="SupportTextBlock_MouseUp">Show support forum</TextBlock>
         </StackPanel>        
     </Grid>
 </Window>

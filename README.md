@@ -141,8 +141,9 @@ Please note that PowerShell don't allow assigning to events and mpv.net uses as 
 
 ### Changelog
 
-### soon
+### 1.9
 
+- improved settings editor
 - all info and error messages are shown now on the main window thread having the main window as parent
 
 ### 1.8

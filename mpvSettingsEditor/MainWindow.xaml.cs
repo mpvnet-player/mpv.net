@@ -214,5 +214,10 @@ namespace mpvSettingsEditor
         {
             Process.Start("https://mpv.io/manual/master/");
         }
+
+        private void SupportTextBlock_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            Process.Start("https://github.com/stax76/mpv.net#Support");
+        }
     }
 }
