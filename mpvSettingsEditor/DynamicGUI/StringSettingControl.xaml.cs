@@ -3,7 +3,7 @@ using System.Windows.Controls;
 
 namespace DynamicGUI
 {
-    public partial class StringSettingControl : UserControl, ISearch
+    public partial class StringSettingControl : UserControl, ISettingControl
     {
         private StringSetting StringSetting;
         
@@ -11,7 +11,6 @@ namespace DynamicGUI
         {
             StringSetting = stringSetting;
             InitializeComponent();
-            
             TitleTextBox.Text = stringSetting.Name;
             HelpTextBox.Text = stringSetting.Help;
             ValueTextBox.Text = stringSetting.Value;
@@ -19,6 +18,10 @@ namespace DynamicGUI
                 ValueTextBox.Width = stringSetting.Width;
             if (!StringSetting.IsFolder)
                 Button.Visibility = Visibility.Hidden;
+            Link.SetURL(StringSetting.HelpURL);
+
+            if (string.IsNullOrEmpty(stringSetting.HelpURL))
+                LinkTextBlock.Visibility = Visibility.Collapsed;
         }
 
         private string _SearchableText;
@@ -33,6 +36,7 @@ namespace DynamicGUI
         }
 
         public bool Contains(string searchString) => SearchableText.Contains(searchString.ToLower());
+        public SettingBase SettingBase => StringSetting;
 
         public string Text
         {

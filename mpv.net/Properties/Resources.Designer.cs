@@ -69,7 +69,8 @@ namespace mpvnet.Properties {
         /// Enter       cycle pause
         /// s           stop                   #menu: S             ; Stop
         /// _           ignore                 #menu: _             ; -
-        /// f           cycle fullscreen       #menu: F             ; Toggle Fullscreen        /// [rest of string was truncated]&quot;;.
+        /// f           cycle fullscreen       #menu: F             ; Toggle Fullscreen
+        /// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string input_conf {
             get {

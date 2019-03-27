@@ -4,9 +4,27 @@
              xmlns:local="clr-namespace:DynamicGUI"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <!--<Style x:Key="UrlTextBoxStyle" TargetType="TextBox">
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Foreground" Value="Blue"/>
-        </Style>-->
+        <Style TargetType="TextBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                            <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Opacity" TargetName="border" Value="0.56"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="#FF7EB4EA"/>
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{x:Static SystemParameters.WindowGlassBrush}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Application.Resources>
 </Application>

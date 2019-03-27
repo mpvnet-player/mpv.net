@@ -7,8 +7,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Margin="20,0">
-        <WrapPanel Orientation="Vertical">
-            <TextBox x:Name="TitleTextBox" FontSize="24" Margin="0,10" BorderThickness="0" IsReadOnly="True"></TextBox>
+        <StackPanel>
+            <TextBox x:Name="TitleTextBox" FontSize="24" Margin="0,10" BorderThickness="0" IsReadOnly="True" Foreground="{x:Static SystemParameters.WindowGlassBrush}"></TextBox>
             <ItemsControl x:Name="ItemsControl">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
@@ -20,9 +20,9 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
             <TextBox x:Name="HelpTextBox" TextWrapping="WrapWithOverflow" BorderThickness="0" IsReadOnly="True" Margin="0,10,0,0"></TextBox>
-            <TextBlock Margin="0,10,0,0">
+            <TextBlock x:Name="LinkTextBlock" Margin="0,10">
                 <local:HyperlinkEx x:Name="Link"></local:HyperlinkEx>
             </TextBlock>
-        </WrapPanel>
+        </StackPanel>
     </Grid>
 </UserControl>

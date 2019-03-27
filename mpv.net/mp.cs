@@ -60,7 +60,7 @@ namespace mpvnet
         public static string mpvConfFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\";
         public static string InputConfPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\input.conf";
         public static string mpvConfPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\mpv.conf";
-        public static List<PythonScript> PythonScripts { get; } = new List<PythonScript>();
+        public static List<PythonScript> PythonScripts => new List<PythonScript>();
         public static AutoResetEvent AutoResetEvent = new AutoResetEvent(false);
 
         private static Dictionary<string, string> _mpvConf;

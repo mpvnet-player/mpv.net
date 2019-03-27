@@ -211,10 +211,7 @@ namespace mpvnet
             BeginInvoke(new Action(() => Close()));  
         }
 
-        public bool IsFullscreen 
-        {
-            get => WindowState == FormWindowState.Maximized;
-        }
+        public bool IsFullscreen => WindowState == FormWindowState.Maximized;
 
         void mp_ChangeFullscreen(bool value)
         {

@@ -8,8 +8,8 @@
              d:DesignHeight="450"
              d:DesignWidth="800" >
     <Grid Margin="20,0">
-        <WrapPanel Orientation="Vertical">
-            <TextBox x:Name="TitleTextBox" FontSize="24" Margin="0,0,0,10" BorderThickness="0" IsReadOnly="True"></TextBox>
+        <StackPanel>
+            <TextBox x:Name="TitleTextBox" FontSize="24" Margin="0,10" BorderThickness="0" IsReadOnly="True" Foreground="{x:Static SystemParameters.WindowGlassBrush}"></TextBox>
             <Grid Margin="0,0,0,10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -19,6 +19,9 @@
                 <Button x:Name="Button" Height="20" Grid.Column="1" Visibility="{Binding Path=Text, ElementName=StringSettingControl1}" Margin="5,0,0,0" Width="20" Click="Button_Click">...</Button>
             </Grid>
             <TextBox x:Name="HelpTextBox" TextWrapping="WrapWithOverflow" Margin="0,0,0,10" BorderThickness="0" IsReadOnly="True"></TextBox>
-        </WrapPanel>
+            <TextBlock x:Name="LinkTextBlock" Margin="0,10">
+                <local:HyperlinkEx x:Name="Link"></local:HyperlinkEx>
+            </TextBlock>
+        </StackPanel>
     </Grid>
 </UserControl>

@@ -130,6 +130,14 @@ $position = [mp]::get_property_number("time-pos");
 ```
 Please note that PowerShell don't allow assigning to events and mpv.net uses as workaround a matching script filename, a list of available events can be found in the mpv manual or in the file mp.cs in the mpv.net source code.
 
+### Support
+
+<https://forum.doom9.org/showthread.php?t=174841>
+
+<https://forum.videohelp.com/threads/392514-mpv-net-a-extendable-media-player-for-windows>
+
+<https://github.com/stax76/mpv.net/issues>
+
 ### Changelog
 
 ### soon

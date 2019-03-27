@@ -1,8 +1,9 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 
 namespace DynamicGUI
 {
-    public partial class OptionSettingControl : UserControl, ISearch
+    public partial class OptionSettingControl : UserControl, ISettingControl
     {
         private OptionSetting OptionSetting;
 
@@ -14,6 +15,9 @@ namespace DynamicGUI
             HelpTextBox.Text = optionSetting.Help;
             ItemsControl.ItemsSource = optionSetting.Options;
             Link.SetURL(optionSetting.HelpURL);
+
+            if (string.IsNullOrEmpty(optionSetting.HelpURL))
+                LinkTextBlock.Visibility = Visibility.Collapsed;
         }
 
         private string _SearchableText;
@@ -31,6 +35,7 @@ namespace DynamicGUI
             }
         }
 
+        public SettingBase SettingBase => OptionSetting;
         public bool Contains(string searchString) => SearchableText.Contains(searchString.ToLower());
     }
 }

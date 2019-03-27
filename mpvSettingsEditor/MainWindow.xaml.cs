@@ -1,6 +1,7 @@
 ﻿using DynamicGUI;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -14,15 +15,18 @@ namespace mpvSettingsEditor
     public partial class MainWindow : Window
     {
         public string mpvConfPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\mpv.conf";
-        private List<SettingBase> mpvSettings = Settings.LoadSettings(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\Definitions.toml");
+        private List<SettingBase> DynamicSettings = Settings.LoadSettings(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\Definitions.toml");
 
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = this;
             Title = (Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyProductAttribute), true)[0] as AssemblyProductAttribute).Product + " " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            
-            foreach (var setting in mpvSettings)
+
+            foreach (var setting in DynamicSettings)
             {
+                if (!FilterStrings.Contains(setting.Filter))
+                    FilterStrings.Add(setting.Filter);
                 foreach (var pair in mpvConf)
                 {
                     if (setting.Name == pair.Key || setting.Alias == pair.Key)
@@ -39,10 +43,10 @@ namespace mpvSettingsEditor
                 switch (setting)
                 {
                     case StringSetting s:
-                        MainWrapPanel.Children.Add(new StringSettingControl(s));
+                        MainStackPanel.Children.Add(new StringSettingControl(s));
                         break;
                     case OptionSetting s:
-                        MainWrapPanel.Children.Add(new OptionSettingControl(s));
+                        MainStackPanel.Children.Add(new OptionSettingControl(s));
                         break;
                 }
             }
@@ -68,11 +72,13 @@ namespace mpvSettingsEditor
             }
         }
 
+        public ObservableCollection<string> FilterStrings { get; } = new ObservableCollection<string>();
+
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
 
-            foreach (var mpvSetting in mpvSettings)
+            foreach (var mpvSetting in DynamicSettings)
             {
                 switch (mpvSetting)
                 {
@@ -96,7 +102,7 @@ namespace mpvSettingsEditor
 
             List<string> lines = File.ReadAllLines(mpvConfPath).ToList();
 
-            foreach (var mpvSetting in mpvSettings)
+            foreach (var mpvSetting in DynamicSettings)
             {
                 foreach (var line in lines.ToArray())
                 {
@@ -129,7 +135,7 @@ namespace mpvSettingsEditor
                     lines.Add(pair.Key + " = " + pair.Value);
             }
 
-            foreach (var mpvSetting in mpvSettings)
+            foreach (var mpvSetting in DynamicSettings)
             {
                 foreach (var line in lines.ToArray())
                 {
@@ -141,23 +147,72 @@ namespace mpvSettingsEditor
             }
 
             File.WriteAllText(mpvConfPath, String.Join(Environment.NewLine, lines));
-            MessageBox.Show("If running, restart mpv/mpv.net", Title, MessageBoxButton.OK, MessageBoxImage.Information);
+
+            foreach (Process process in Process.GetProcesses())
+                if (process.ProcessName == "mpv.net")
+                    MessageBox.Show("Restart mpv.net in order to apply changed settings.", Title, MessageBoxButton.OK, MessageBoxImage.Information);
+                else if (process.ProcessName == "mpv")
+                    MessageBox.Show("Restart mpv in order to apply changed settings.", Title, MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            for (int i = MainWrapPanel.Children.Count - 1; i >= 0; i--)
-            {
-                if ((MainWrapPanel.Children[i] as ISearch).Contains(SearchTextBox.Text))
-                    MainWrapPanel.Children[i].Visibility = Visibility.Visible;
-                else
-                    MainWrapPanel.Children[i].Visibility = Visibility.Collapsed;
-            }
-        }
+            SearchTextBlock.Text = SearchTextBox.Text == "" ? "Find a setting" : "";
 
+            if (SearchTextBox.Text == "")
+                SearchClearButton.Visibility = Visibility.Hidden;
+            else
+                SearchClearButton.Visibility = Visibility.Visible;
+
+            string activeFilter = "";
+
+            foreach (var i in FilterStrings)
+                if (SearchTextBox.Text == i + ":")
+                    activeFilter = i;
+
+            if (activeFilter == "")
+            {
+                foreach (UIElement i in MainStackPanel.Children)
+                    if ((i as ISettingControl).Contains(SearchTextBox.Text))
+                        i.Visibility = Visibility.Visible;
+                    else
+                        i.Visibility = Visibility.Collapsed;
+
+                FilterListBox.SelectedItem = null;
+            }
+            else
+                foreach (UIElement i in MainStackPanel.Children)
+                    if ((i as ISettingControl).SettingBase.Filter == activeFilter)
+                        i.Visibility = Visibility.Visible;
+                    else
+                        i.Visibility = Visibility.Collapsed;
+        }
+        
         private void MainWindow1_Loaded(object sender, RoutedEventArgs e)
         {
-            FocusManager.SetFocusedElement(SearchGrid, SearchTextBox);
+            Keyboard.Focus(SearchTextBox);
+        }
+
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count > 0)
+                SearchTextBox.Text = e.AddedItems[0].ToString() + ":";
+        }
+
+        private void SearchClearButton_Click(object sender, RoutedEventArgs e)
+        {
+            SearchTextBox.Text = "";
+            Keyboard.Focus(SearchTextBox);
+        }
+
+        private void OpenSettingsTextBlock_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            Process.Start(Path.GetDirectoryName(mpvConfPath));
+        }
+
+        private void ShowManualTextBlock_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            Process.Start("https://mpv.io/manual/master/");
         }
     }
 }

@@ -29,14 +29,11 @@ namespace mpvnet
 
     //public class OSVersion
     //{
-    //    public static float Windows7 { get; set; } = 6.1f;
-    //    public static float Windows8 { get; set; } = 6.2f;
-    //    public static float Windows81 { get; set; } = 6.3f;
-    //    public static float Windows10 { get; set; } = 10f;
+    //    public static float Windows7 { get; } = 6.1f;
+    //    public static float Windows8 { get; } = 6.2f;
+    //    public static float Windows81 { get; } = 6.3f;
+    //    public static float Windows10 { get; } = 10f;
 
-    //    public static float Current
-    //    {
-    //        get => Environment.OSVersion.Version.Major + Environment.OSVersion.Version.Minor / 10f;
-    //    }
+    //    public static float Current => Environment.OSVersion.Version.Major + Environment.OSVersion.Version.Minor / 10f;
     //}
 }

@@ -46,6 +46,7 @@ namespace DynamicGUI
                 }
 
                 baseSetting.Name = setting["name"];
+                baseSetting.Filter = setting["filter"];
                 if (setting.HasKey("help")) baseSetting.Help = setting["help"];
                 if (setting.HasKey("helpurl")) baseSetting.HelpURL = setting["helpurl"];
                 if (setting.HasKey("alias")) baseSetting.Alias = setting["alias"];
@@ -62,6 +63,7 @@ namespace DynamicGUI
         public string Alias { get; set; }
         public string Help { get; set; }
         public string HelpURL { get; set; }
+        public string Filter { get; set; }
         public int Width { get; set; }
     }
 

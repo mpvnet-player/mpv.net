@@ -59,25 +59,10 @@ namespace mpvnet
                 Bottom = bottom;
             }
 
-            public Rectangle ToRectangle()
-            {
-                return Rectangle.FromLTRB(Left, Top, Right, Bottom);
-            }
-
-            public Size Size
-            {
-                get => new Size(Right - Left, Bottom - Top);
-            }
-
-            public int Width
-            {
-                get => Right - Left;
-            }
-
-            public int Height
-            {
-                get => Bottom - Top;
-            }
+            public Rectangle ToRectangle() { return Rectangle.FromLTRB(Left, Top, Right, Bottom); }
+            public Size Size => new Size(Right - Left, Bottom - Top);
+            public int Width => Right - Left;
+            public int Height => Bottom - Top;
         }
     }
 }

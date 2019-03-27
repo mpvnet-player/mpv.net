@@ -1,7 +1,8 @@
 ﻿namespace DynamicGUI
 {
-    interface ISearch
+    interface ISettingControl
     {
         bool Contains(string searchString);
+        SettingBase SettingBase { get; }
     }
 }
