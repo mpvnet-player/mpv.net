@@ -15,6 +15,7 @@ Table of contents
 - [C# Scripting](#cs-scripting)
 - [Python Scripting](#python-scripting)
 - [PowerShell Scripting](#powershell-scripting)
+- [Support](#Support)
 - [Changelog](#changelog)
 
 ### Features
