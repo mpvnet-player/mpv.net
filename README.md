@@ -4,7 +4,7 @@ mpv.net is a libmpv based media player for Windows, it looks and works like mpv,
 
 mpv and mpv.net have a learning curve and are only suitable for experienced users.
 
-mpv manual: https://mpv.io/manual/master/
+mpv manual: <https://mpv.io/manual/master/>
 
 Table of contents
 -------
@@ -15,7 +15,7 @@ Table of contents
 - [Settings](#settings)
 - [Scripting](#scripting)
 - [Support](#support)
-- [Changelog](#Changelog)
+- [Changelog](#changelog)
 
 ### Features
 
@@ -48,7 +48,7 @@ C:\Users\username\AppData\Roaming\mpv\mpv.conf
 ```
 if it's missing mpv.net generates it with the following defaults:
 
-https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/mpv.conf.txt
+<https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/mpv.conf.txt>
 
 ### Scripting
 
