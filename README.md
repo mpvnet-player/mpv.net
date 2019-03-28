@@ -2,7 +2,7 @@
 
 mpv.net is a libmpv based media player for Windows, it looks and works like mpv, even shares the settings and therefore the mpv documentation applies.
 
-mpv and mpv.net have a learning curve and are only suitable for experienced users.
+mpv and mpv.net have a learning curve.
 
 mpv manual: <https://mpv.io/manual/master/>
 
