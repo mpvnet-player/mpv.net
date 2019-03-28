@@ -4,7 +4,7 @@ default = "no"
 filter = "Video"
 helpurl = "https://mpv.io/manual/master/#options-hwdec"
 help = "--hwdec=<mode> Specify the hardware video decoding API that should be used if possible. Whether hardware decoding is actually done depends on the video codec. If hardware decoding is not possible, mpv will fall back on software decoding.\n\nFor more information visit:"
-options = [{ name = "no", text = "no (Default)", help = "always use software decoding (Default)" },
+options = [{ name = "no",           help = "always use software decoding (Default)" },
            { name = "auto",         help = "enable best hw decoder (see below)" },
            { name = "yes",          help = "exactly the same as auto" },
            { name = "auto-copy",    help = "enable best hw decoder with copy-back (see below)" },
@@ -25,14 +25,14 @@ default = "gpu"
 filter = "Video"
 helpurl = "https://mpv.io/manual/master/#video-output-drivers-vo"
 help = "--gpu=<mode> Video output drivers to be used. Default = gpu.\n\nFor more information visit:"
-options = [{ name = "gpu", text = "gpu (Default)", help = "General purpose, customizable, GPU-accelerated video output driver. It supports extended scaling methods, dithering, color management, custom shaders, HDR, and more. (Default)" },
+options = [{ name = "gpu",      help = "General purpose, customizable, GPU-accelerated video output driver. It supports extended scaling methods, dithering, color management, custom shaders, HDR, and more. (Default)" },
            { name = "direct3d", help = "Video output driver that uses the Direct3D interface" }]
 
 [[settings]]
 name = "volume"
-default = ""
+default = "100"
 filter = "Audio"
-help = "--volume=<integer> Set the startup volume. 0 means silence, 100 means no volume reduction or amplification. Negative values can be passed for compatibility, but are treated as 0. Since mpv 0.18.1, this always controls the internal mixer (aka \"softvol\")."
+help = "--volume=<integer> Set the startup volume. 0 means silence, 100 means no volume reduction or amplification. Negative values can be passed for compatibility, but are treated as 0. Since mpv 0.18.1, this always controls the internal mixer (aka \"softvol\"). Default: 100"
 
 [[settings]]
 name = "slang"
@@ -60,23 +60,25 @@ alias = "fs"
 default = "no"
 filter = "Screen"
 help = "--fullscreen=<yes|no>, fs=<yes|no> Start the player in fullscreen mode. Default: no."
-options = [{ name = "yes" }, { name = "no", text = "no (Default)" }]
+options = [{ name = "yes" },
+           { name = "no" }]
 
 [[settings]]
 name = "keep-open-pause"
 default = "yes"
 filter = "Playback"
 help = "--keep-open-pause=<yes|no> If set to no, instead of pausing when --keep-open is active, just stop at end of file and continue playing forward when you seek backwards until end where it stops again. Default: yes."
-options = [{ name = "yes", text = "yes (Default)" }, { name = "no" }]
+options = [{ name = "yes" },
+           { name = "no" }]
 
 [[settings]]
 name = "keep-open"
 default = "no"
 filter = "Playback"
 help = "--keep-open=<yes|no|always> Do not terminate when playing or seeking beyond the end of the file, and there is not next file to be played (and --loop is not used). Instead, pause the player. When trying to seek beyond end of the file, the player will attempt to seek to the last frame.\n\nNormally, this will act like set pause yes on EOF, unless the  --keep-open-pause=no option is set."
-options = [{ name = "yes", help = "Don't terminate if the current file is the last playlist entry. Equivalent to --keep-open without arguments."},
-           { name = "no", text = "no (Default)", help = "If the current file ends, go to the next file or terminate. (Default.)" },
-		   { name = "always", help = "Like yes, but also applies to files before the last playlist entry. This means playback will never automatically advance to the next file."}]
+options = [{ name = "yes",    help = "Don't terminate if the current file is the last playlist entry. Equivalent to --keep-open without arguments."},
+           { name = "no",     help = "If the current file ends, go to the next file or terminate. (Default.)" },
+           { name = "always", help = "Like yes, but also applies to files before the last playlist entry. This means playback will never automatically advance to the next file."}]
 
 [[settings]]
 name = "loop-file"
@@ -90,7 +92,8 @@ name = "save-position-on-quit"
 default = "no"
 filter = "Playback"
 help = "--save-position-on-quit=<yes|no> Always save the current playback position on quit. When this file is played again later, the player will seek to the old playback position on start. This does not happen if playback of a file is stopped in any other way than quitting. For example, going to the next file in the playlist will not save the position, and start playback at beginning the next time the file is played.\n\nThis behavior is disabled by default, but is always available when quitting the player with Shift+Q."
-options = [{ name = "yes" }, { name = "no", text = "no (Default)" }]
+options = [{ name = "yes" },
+           { name = "no" }]
 
 [[settings]]
 name = "screenshot-directory"
@@ -123,17 +126,17 @@ name = "hr-seek"
 default = "absolute"
 filter = "Playback"
 help = "--hr-seek=<no|absolute|yes> Select when to use precise seeks that are not limited to keyframes. Such seeks require decoding video from the previous keyframe up to the target position and so can take some time depending on decoding performance. For some video formats, precise seeks are disabled. This option selects the default choice to use for seeks; it is possible to explicitly override that default in the definition of key bindings and in input commands."
-options = [{ name = "yes", help = "Use precise seeks whenever possible." },
-           { name = "no", help = "Never use precise seeks." },
-		   { name = "absolute", text = "absolute (Default)", help = "Use precise seeks if the seek is to an absolute position in the file, such as a chapter seek, but not for relative seeks like the default behavior of arrow keys (default)." },
-		   { name = "always", help = "Same as yes (for compatibility)." }]
+options = [{ name = "yes",      help = "Use precise seeks whenever possible." },
+           { name = "no",       help = "Never use precise seeks." },
+           { name = "absolute", help = "Use precise seeks if the seek is to an absolute position in the file, such as a chapter seek, but not for relative seeks like the default behavior of arrow keys (default)." },
+           { name = "always",   help = "Same as yes (for compatibility)." }]
 
 [[settings]]
 name = "track-auto-selection"
 default = "yes"
 filter = "Playback"
 help = "--track-auto-selection=<yes|no> Enable the default track auto-selection (default: yes). Enabling this will make the player select streams according to --aid, --alang, and others. If it is disabled, no tracks are selected. In addition, the player will not exit if no tracks are selected, and wait instead (this wait mode is similar to pausing, but the pause option is not set).\n\nThis is useful with --lavfi-complex: you can start playback in this mode, and then set select tracks at runtime by setting the filter graph. Note that if --lavfi-complex is set before playback is started, the referenced tracks are always selected."
-options = [{ name = "yes", text = "yes (Default)" },
+options = [{ name = "yes" },
            { name = "no" }]
 
 [[settings]]
@@ -144,34 +147,35 @@ help = "--loop-playlist=<N|inf|force|no>, --loop-playlist Loops playback N times
 
 [[settings]]
 name = "video-sync"
-default = ""
+default = "audio"
 filter = "Video"
 help = "--video-sync=<audio|...> How the player synchronizes audio and video.\n\nFor more information visit:"
 helpurl = "https://mpv.io/manual/master/#options-video-sync"
-options = [{ name = "display-resample" },
+options = [{ name = "audio" },
+           { name = "display-resample" },
            { name = "display-resample-vdrop" },
            { name = "display-resample-desync" },
-		   { name = "display-vdrop" },
-		   { name = "display-adrop" },
-		   { name = "display-desync" },
-		   { name = "desync" }]
+           { name = "display-vdrop" },
+           { name = "display-adrop" },
+           { name = "display-desync" },
+           { name = "desync" }]
 
 [[settings]]
 name = "audio-file-auto"
 default = "no"
 filter = "Audio"
 help = "--audio-file-auto=<no|exact|fuzzy|all>, --no-audio-file-auto Load additional audio files matching the video filename. The parameter specifies how external audio files are matched."
-options = [{ name = "no", text = "no (Default", help = "Don't automatically load external audio files (default)." },
+options = [{ name = "no",    help = "Don't automatically load external audio files (default)." },
            { name = "exact", help = "Load the media filename with audio file extension." },
-		   { name = "fuzzy", help = "Load all audio files containing media filename." },
-		   { name = "all", help = "Load all audio files in the current and --audio-file-paths directories." }]
+           { name = "fuzzy", help = "Load all audio files containing media filename." },
+           { name = "all",   help = "Load all audio files in the current and --audio-file-paths directories." }]
 
 [[settings]]
 name = "sub-auto"
 default = "exact"
 filter = "Subtitle"
 help = "--sub-auto=<no|exact|fuzzy|all>, --no-sub-auto Load additional subtitle files matching the video filename. The parameter specifies how external subtitle files are matched. exact is enabled by default."
-options = [{ name = "no", help = "Don't automatically load external subtitle files." },
-		   { name = "exact", text = "exact (Default)", help = "Load the media filename with subtitle file extension (Default)." },
-		   { name = "fuzzy", help = "Load all subs containing media filename." },
-		   { name = "all", help = "Load all subs in the current and --sub-file-paths directories." }]
+options = [{ name = "no",    help = "Don't automatically load external subtitle files." },
+           { name = "exact", help = "Load the media filename with subtitle file extension (Default)." },
+           { name = "fuzzy", help = "Load all subs containing media filename." },
+           { name = "all",   help = "Load all subs in the current and --sub-file-paths directories." }]

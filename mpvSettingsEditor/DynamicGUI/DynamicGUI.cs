@@ -33,6 +33,8 @@ namespace DynamicGUI
                             opt.Help = option["help"];
                         if (option.HasKey("text"))
                             opt.Text = option["text"];
+                        else if (opt.Name == optionSetting.Default)
+                            opt.Text = opt.Name + " (Default)";
                         opt.OptionSetting = optionSetting;
                         optionSetting.Options.Add(opt);
                     }
