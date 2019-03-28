@@ -3,7 +3,6 @@ Imports System.IO
 Imports System.Windows.Forms
 
 Imports mpvnet
-Imports mpvnet.StaticUsing
 
 Imports CSScriptLibrary
 

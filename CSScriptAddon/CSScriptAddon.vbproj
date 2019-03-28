@@ -18,7 +18,7 @@
     <DebugType>full</DebugType>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\mpv.net\bin\Debug\Addons\CSScriptAddon\</OutputPath>
+    <OutputPath>..\mpv.net\bin\Addons\CSScriptAddon\</OutputPath>
     <DocumentationFile>
     </DocumentationFile>
     <NoWarn>42105,42106,42107,42353,42354,42355</NoWarn>
@@ -29,7 +29,7 @@
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\mpv.net\bin\Addons\CSScriptAddon\</OutputPath>
     <DocumentationFile>
     </DocumentationFile>
     <NoWarn>42105,42106,42107,42353,42354,42355</NoWarn>
