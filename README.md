@@ -10,14 +10,12 @@ Table of contents
 -------
 
 - [Features](#features)
-- [Screenshots](#Screenshots)
+- [Screenshots](#screenshots)
 - [Context Menu](#context-menu)
 - [Settings](#settings)
-- [C# Scripting](#cs-scripting)
-- [Python Scripting](#python-scripting)
-- [PowerShell Scripting](#powershell-scripting)
-- [Support](#Support)
-- [Changelog](#changelog)
+- [Scripting](#scripting)
+- [Support](#support)
+- [Changelog](#Changelog)
 
 ### Features
 
@@ -52,89 +50,9 @@ if it's missing mpv.net generates it with the following defaults:
 
 https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/mpv.conf.txt
 
-### C# Scripting
+### Scripting
 
-A simple C# script located at:
-```
-C:\Users\username\AppData\Roaming\mpv\scripts\fullscreen.cs
-```
-or
-```
-startup\scripts\fullscreen.cs
-```
-```
-using mpvnet;
-
-class Script
-{
-    public Script()
-    {
-        var fs = mp.get_property_string("fullscreen");
-        mp.commandv("show-text", "fullscreen: " + fs);
-        mp.observe_property_bool("fullscreen", FullscreenChange);
-    }
-
-    void FullscreenChange(bool val)
-    {
-        mp.commandv("show-text", "fullscreen: " + val.ToString());
-    }
-}
-```
-
-### Python Scripting
-
-A simple Python script located at:
-```
-C:\Users\user\AppData\Roaming\mpv\scripts\seek-show-position.py
-```
-or
-```
-startup\scripts\seek-show-position.py
-```
-```
-# when seeking displays position and
-# duration like so: 70:00 / 80:00
-# which is different from mpv which
-# uses 01:10:00 / 01:20:00
-
-import math
-
-def seek():
-    mp.commandv('show-text',
-        format(mp.get_property_number("time-pos")) + " / " + format(mp.get_property_number("duration")))
-
-def format(f):
-    sec = round(f)
-    
-    if sec < 0:
-        sec = 0
-    
-    pos_min_floor = math.floor(sec / 60)
-    sec_rest = sec - pos_min_floor * 60
-    return add_zero(pos_min_floor) + ":" + add_zero(sec_rest)
-
-def add_zero(val):
-    val = round(val)
-    return "" + str(int(val)) if (val > 9) else "0" + str(int(val))
-
-mp.register_event("seek", seek) # or use: mp.Seek += seek
-```
-
-### PowerShell Scripting
-
-A simple PowerShell script located at:
-```
-C:\Users\user\AppData\Roaming\mpv\scripts\seek.ps1
-```
-or
-```
-startup\scripts\seek.ps1
-```
-```
-$position = [mp]::get_property_number("time-pos");
-[mp]::commandv("show-text", $position.ToString() + " seconds")
-```
-Please note that PowerShell don't allow assigning to events and mpv.net uses as workaround a matching script filename, a list of available events can be found in the mpv manual or in the file mp.cs in the mpv.net source code.
+https://github.com/stax76/mpv.net/wiki/Scripting-using-C%23,-Python,-JavaScript,-Lua-or-PowerShell
 
 ### Support
 
