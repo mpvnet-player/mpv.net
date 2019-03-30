@@ -58,19 +58,14 @@ namespace mpvnet
             Process.Start(mp.mpvConfFolderPath);
         }
 
-        public static void show_keys(string[] args)
+        public static void show_input_editor(string[] args)
         {
-            Process.Start(NativeHelp.GetAssociatedApplication(".txt"), mp.InputConfPath);
-        }
-
-        public static void show_prefs(string[] args)
-        {
-            Process.Start(NativeHelp.GetAssociatedApplication(".txt"), mp.mpvConfPath);
+            Process.Start(Application.StartupPath + "\\mpvInputEdit.exe");
         }
 
         public static void show_conf_editor(string[] args)
         {
-            Process.Start(Application.StartupPath + "\\mpvSettingsEditor.exe");
+            Process.Start(Application.StartupPath + "\\mpvConfEdit.exe");
         }
 
         public static void history(string[] args)

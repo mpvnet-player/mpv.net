@@ -1,5 +1,4 @@
-﻿using DynamicGUI;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -10,18 +9,21 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace mpvSettingsEditor
+using DynamicGUI;
+
+namespace mpvConfEdit
 {
     public partial class MainWindow : Window
     {
         public string mpvConfPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\mpv.conf";
-        private List<SettingBase> DynamicSettings = Settings.LoadSettings(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\mpvSettingsEditor.toml");
+        private List<SettingBase> DynamicSettings = Settings.LoadSettings(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\mpvConfEdit.toml");
 
         public MainWindow()
         {
             InitializeComponent();
             DataContext = this;
             Title = (Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyProductAttribute), true)[0] as AssemblyProductAttribute).Product + " " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            SearchControl.SearchTextBox.TextChanged += SearchTextBox_TextChanged;
 
             foreach (var setting in DynamicSettings)
             {
@@ -157,23 +159,16 @@ namespace mpvSettingsEditor
 
         private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            SearchTextBlock.Text = SearchTextBox.Text == "" ? "Find a setting" : "";
-
-            if (SearchTextBox.Text == "")
-                SearchClearButton.Visibility = Visibility.Hidden;
-            else
-                SearchClearButton.Visibility = Visibility.Visible;
-
             string activeFilter = "";
 
             foreach (var i in FilterStrings)
-                if (SearchTextBox.Text == i + ":")
+                if (SearchControl.Text == i + ":")
                     activeFilter = i;
 
             if (activeFilter == "")
             {
                 foreach (UIElement i in MainStackPanel.Children)
-                    if ((i as ISettingControl).Contains(SearchTextBox.Text))
+                    if ((i as ISettingControl).Contains(SearchControl.Text))
                         i.Visibility = Visibility.Visible;
                     else
                         i.Visibility = Visibility.Collapsed;
@@ -192,19 +187,13 @@ namespace mpvSettingsEditor
         
         private void MainWindow1_Loaded(object sender, RoutedEventArgs e)
         {
-            Keyboard.Focus(SearchTextBox);
+            Keyboard.Focus(SearchControl.SearchTextBox);
         }
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.AddedItems.Count > 0)
-                SearchTextBox.Text = e.AddedItems[0].ToString() + ":";
-        }
-
-        private void SearchClearButton_Click(object sender, RoutedEventArgs e)
-        {
-            SearchTextBox.Text = "";
-            Keyboard.Focus(SearchTextBox);
+                SearchControl.Text = e.AddedItems[0].ToString() + ":";
         }
 
         private void OpenSettingsTextBlock_MouseUp(object sender, MouseButtonEventArgs e)

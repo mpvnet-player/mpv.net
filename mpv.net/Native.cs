@@ -32,9 +32,6 @@ namespace mpvnet
         [DllImport("user32.dll", SetLastError = true)]
         public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, int uFlags);
 
-        [DllImport("Shlwapi.dll", SetLastError = true, CharSet = CharSet.Unicode)]
-        public static extern uint AssocQueryString(uint flags, uint str, string pszAssoc, string pszExtra, StringBuilder pszOut, ref uint pcchOut);
-
         [StructLayout(LayoutKind.Sequential)]
         public struct RECT
         {

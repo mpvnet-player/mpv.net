@@ -4,7 +4,6 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
-using System.Diagnostics;
 using System.Linq;
 
 namespace mpvnet
@@ -143,11 +142,11 @@ namespace mpvnet
                 if (left.StartsWith("#")) continue;
                 var cmd = left.Substring(left.IndexOf(" ") + 1).Trim();
                 var menu = i.Substring(i.IndexOf("#menu:") + "#menu:".Length).Trim();
-                var key = menu.Substring(0, menu.IndexOf(";")).Trim();
-                var path = menu.Substring(menu.IndexOf(";") + 1).Trim();
-
-                if (path == "" || cmd == "")
-                    continue;
+                var key = left.Substring(0, left.IndexOf(" "));
+                if (key == "_") key = "";
+                if (menu.Contains(";")) key = menu.Substring(0, menu.IndexOf(";")).Trim();
+                var path = menu.Substring(menu.IndexOf(";") + 1).Trim().Replace("&", "&&");
+                if (path == "" || cmd == "") continue;
 
                 var menuItem = CMS.Add(path, () => {
                     try
@@ -396,6 +395,12 @@ namespace mpvnet
             base.OnFormClosed(e);
             mp.commandv("quit");
             mp.AutoResetEvent.WaitOne(3000); 
+        }
+
+        protected override void OnLostFocus(EventArgs e)
+        {
+            base.OnLostFocus(e);
+            CursorHelp.Show();
         }
     }
 }

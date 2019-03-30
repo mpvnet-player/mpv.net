@@ -10,3 +10,4 @@ keep-open = yes
 keep-open-pause = no
 osd-playing-msg = ${filename}
 screenshot-directory = ~~desktop/
+input-default-bindings = no

@@ -1,4 +1,4 @@
-﻿<Window x:Name="MainWindow1"  x:Class="mpvSettingsEditor.MainWindow"
+﻿<Window xmlns:Controls="clr-namespace:Controls"  x:Name="MainWindow1"  x:Class="mpvConfEdit.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -14,11 +14,7 @@
             <ColumnDefinition Width="10*" />
             <ColumnDefinition Width="60*" />
         </Grid.ColumnDefinitions>
-        <Grid x:Name="SearchGrid" Background="White" Width="300" Margin="0,0,0,10" Grid.ColumnSpan="2">
-            <TextBlock x:Name="SearchTextBlock" Margin="5,2" Text="Find a setting" Foreground="LightSteelBlue" VerticalAlignment="Center" />
-            <TextBox Name="SearchTextBox" Padding="1,2,0,0" BorderThickness="2" Background="Transparent" TextChanged="SearchTextBox_TextChanged" Height="25" />
-            <Button x:Name="SearchClearButton" Background="Transparent" HorizontalAlignment="Right" Margin="2,0,4,0" FontSize="5" Width="17" Height="17" Visibility="Hidden" Click="SearchClearButton_Click">╳</Button>
-        </Grid>
+        <Controls:SearchTextBoxUserControl x:Name="SearchControl" Width="300" Margin="0,0,0,10" Grid.ColumnSpan="2" />
         <ScrollViewer x:Name="MainScrollViewer" VerticalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="1">
             <StackPanel x:Name="MainStackPanel"></StackPanel>
         </ScrollViewer>

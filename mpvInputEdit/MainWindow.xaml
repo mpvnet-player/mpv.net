@@ -1,0 +1,30 @@
+﻿<Window xmlns:Controls="clr-namespace:Controls"  x:Class="mpvInputEdit.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="500" Width="750" FontSize="13" Loaded="Window_Loaded" Closed="Window_Closed">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Controls:SearchTextBoxUserControl x:Name="SearchControl" Width="300" Margin="0,0,0,10" Grid.ColumnSpan="2" />
+        <DataGrid Grid.Row="1" x:Name="DataGrid" AutoGenerateColumns="False" CellStyle="{StaticResource DataGrid_Font_Centering}" CommandManager.PreviewCanExecute="Grid_PreviewCanExecute">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Context Menu"  Binding="{Binding Menu}"/>
+                <DataGridTemplateColumn Header="Input">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button MinHeight="20" Click="ButtonClick">
+                                <TextBlock Text="{Binding Key}"></TextBlock>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Command" Binding="{Binding Command}" MaxWidth="330" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>

@@ -1,139 +1,124 @@
- # mpv.net key bindings, mouse bindings and context menu configuration
+ o           script-message mpv.net open-files #menu: Open > Open Files...
+ u           script-message mpv.net open-url   #menu: Open > Open URL...
+ _           ignore                 #menu: -
+ Space       cycle pause            #menu: Play/Pause
+ s           stop                   #menu: Stop
+ _           ignore                 #menu: -
+ f           cycle fullscreen       #menu: Toggle Fullscreen
  
- o           script-message mpv.net open-files #menu: O  ; Open > Open Files...
- u           script-message mpv.net open-url   #menu: U  ; Open > Open URL...
- _           ignore                 #menu: _             ; -
- Space       cycle pause            #menu: Space, Enter  ; Play/Pause
- Enter       cycle pause
- s           stop                   #menu: S             ; Stop
- _           ignore                 #menu: _             ; -
- f           cycle fullscreen       #menu: F             ; Toggle Fullscreen
+ F11         playlist-prev          #menu: Navigate > Previous
+ F12         playlist-next          #menu: Navigate > Next
+ _           ignore                 #menu: Navigate > -
+ PGUP        add chapter  1         #menu: Navigate > Next Chapter
+ PGDWN       add chapter -1         #menu: Navigate > Previous Chapter
  
- F11         playlist-prev          #menu: F11           ; Navigate > Previous
- F12         playlist-next          #menu: F12           ; Navigate > Next
- _           ignore                 #menu: _             ; Navigate > -
- PGUP        add chapter  1         #menu: Page Up       ; Navigate > Next Chapter
- PGDWN       add chapter -1         #menu: Page Down     ; Navigate > Previous Chapter
- 
- .           frame-step             #menu: .             ; Seek > Next Frame
- ,           frame-back-step        #menu: ,             ; Seek > Previous Frame
- _           ignore                 #menu: _             ; Seek > -
- Right       no-osd seek  7         #menu: Right         ; Seek > 7 sec forward
- Left        no-osd seek -7         #menu: Left          ; Seek > 7 sec backward
- _           ignore                 #menu: _             ; Seek > -
- Up          no-osd seek  40        #menu: Up            ; Seek > 40 sec forward
- Down        no-osd seek -40        #menu: Down          ; Seek > 40 sec backward
- _           ignore                 #menu: _             ; Seek > -
- Ctrl+Right  no-osd seek  300       #menu: Ctrl+Right    ; Seek > 5 min forward
- Ctrl+Left   no-osd seek -300       #menu: Ctrl+Left     ; Seek > 5 min backward
- 
- Ctrl++      add video-zoom  0.1    #menu: Ctrl++        ; Pan && Scan > Increase Size
- Ctrl+-      add video-zoom -0.1    #menu: Ctrl+-        ; Pan && Scan > Decrease Size
- _           ignore                 #menu: _             ; Pan && Scan > -
- Ctrl+KP4    add video-pan-x -0.01  #menu: Ctrl+Numpad 4 ; Pan && Scan > Move Left
- Ctrl+KP6    add video-pan-x  0.01  #menu: Ctrl+Numpad 6 ; Pan && Scan > Move Right
- _           ignore                 #menu: _             ; Pan && Scan > -
- Ctrl+KP8    add video-pan-y -0.01  #menu: Ctrl+Numpad 8 ; Pan && Scan > Move Up
- Ctrl+KP2    add video-pan-y  0.01  #menu: Ctrl+Numpad 2 ; Pan && Scan > Move Down
- _           ignore                 #menu: _             ; Pan && Scan > -
- w           add panscan -0.1       #menu: W             ; Pan && Scan > Decrease Height
- W           add panscan +0.1       #menu: Shift+W       ; Pan && Scan > Increase Height
- _           ignore                 #menu: _             ; Pan && Scan > -
- Ctrl+BS    set video-zoom 0 ; set video-pan-x 0 ; set video-pan-y 0 #menu: Ctrl+Backspace ; Pan && Scan > Reset
- 
- Ctrl+1      add contrast -1        #menu: Ctrl+1        ; Video > Decrease Contrast
- Ctrl+2      add contrast 1         #menu: Ctrl+2        ; Video > Increase Contrast
- _           ignore                 #menu: _             ; Video > -
- Ctrl+3      add brightness -1      #menu: Ctrl+3        ; Video > Decrease Brightness
- Ctrl+4      add brightness 1       #menu: Ctrl+4        ; Video > Increase Brightness
- _           ignore                 #menu: _             ; Video > -
- Ctrl+5      add gamma -1           #menu: Ctrl+5        ; Video > Decrease Gamma
- Ctrl+6      add gamma 1            #menu: Ctrl+6        ; Video > Increase Gamma
- _           ignore                 #menu: _             ; Video > -
- Ctrl+7      add saturation -1      #menu: Ctrl+7        ; Video > Decrease Saturation
- Ctrl+8      add saturation 1       #menu: Ctrl+8        ; Video > Increase Saturation
- _           ignore                 #menu: _             ; Video > -
- Ctrl+S      async screenshot       #menu: Ctrl+S        ; Video > Take Screenshot
- d           cycle deinterlace      #menu: D             ; Video > Toggle Deinterlace
- a           cycle-values video-aspect "16:9" "4:3" "2.35:1" "-1" #menu: A ; Video > Cycle Aspect Ratio
-
- KP7         cycle audio            #menu: Keypad 7      ; Audio > Cycle/Next
- _           ignore                 #menu: _             ; Audio > -
- KP6         add audio-delay  0.100 #menu: Keypad 6      ; Audio > Delay +0.1
- KP9         add audio-delay -0.100 #menu: Keypad 9      ; Audio > Delay -0.1
- 
- KP8         cycle sub              #menu: Keypad 8      ; Subtitle > Cycle/Next
- v           cycle sub-visibility   #menu: V             ; Subtitle > Toggle Visibility
- _           ignore                 #menu: _             ; Subtitle > -
- z           add sub-delay -0.1     #menu: Z             ; Subtitle > Delay -0.1
- Z           add sub-delay +0.1     #menu: Shift+Z       ; Subtitle > Delay +0.1
- _           ignore                 #menu: _             ; Subtitle > -
- r           add sub-pos -1         #menu: R             ; Subtitle > Move Up
- R           add sub-pos +1         #menu: Shift+R       ; Subtitle > Move Down
- _           ignore                 #menu: _             ; Subtitle > -
- _           add sub-scale -0.1     #menu: _             ; Subtitle > Decrease Subtitle Font Size
- _           add sub-scale +0.1     #menu: _             ; Subtitle > Increase Subtitle Font Size
-
- +           add volume  10         #menu: +             ; Volume > Up
- -           add volume -10         #menu: -             ; Volume > Down
- WHEEL_UP    add volume  10
- WHEEL_DOWN  add volume -10
- _           ignore                 #menu: _             ; Volume > -
- m           cycle mute             #menu: M             ; Volume > Mute
- 
- [           multiply speed 0.9     #menu: [             ; Speed > -10%
- ]           multiply speed 1.1     #menu: ]             ; Speed > +10%
- _           ignore                 #menu: _             ; Speed > -
- {           multiply speed 0.5     #menu: {             ; Speed > Half
- }           multiply speed 2.0     #menu: }             ; Speed > Double
- _           ignore                 #menu: _             ; Speed > -
- BS          set speed 1            #menu: Backspace     ; Speed > Reset
- 
- KP0 script-message rate-file 0     #menu: Keypad 0      ; Addons > Rating > 0stars
- KP1 script-message rate-file 1     #menu: Keypad 1      ; Addons > Rating > 1stars
- KP2 script-message rate-file 2     #menu: Keypad 2      ; Addons > Rating > 2stars
- KP3 script-message rate-file 3     #menu: Keypad 3      ; Addons > Rating > 3stars
- KP4 script-message rate-file 4     #menu: Keypad 4      ; Addons > Rating > 4stars
- KP5 script-message rate-file 5     #menu: Keypad 5      ; Addons > Rating > 5stars
- 
- _ script-message mpv.net set-setting hwdec yes #menu: _ ; Settings > Hardware Decoding > Enable
- _ script-message mpv.net set-setting hwdec no  #menu: _ ; Settings > Hardware Decoding > Disable
- p script-message mpv.net show-prefs            #menu: P ; Settings > Show mpv config file
- e script-message mpv.net show-conf-editor      #menu: E ; Settings > Show mpv config editor
- k script-message mpv.net show-keys             #menu: K ; Settings > Show Keys
- c script-message mpv.net open-config-folder    #menu: C ; Settings > Open Config Folder
- 
- i script-message mpv.net show-info                 #menu: I       ; Tools | Info
- t script-binding stats/display-stats               #menu: T       ; Tools > Show Statistics
- T script-binding stats/display-stats-toggle        #menu: Shift+T ; Tools > Toggle Statistics
- _ ignore                                           #menu: _       ; Tools > -
- h script-message mpv.net history                   #menu: H       ; Tools > Show History
- l ab-loop                                          #menu: L       ; Tools > Set/clear A-B loop points
- L cycle-values loop-file "inf" "no"                #menu: Shift+L ; Tools > Toggle Infinite Looping
- DEL script-binding osc/visibility                  #menu: Delete  ; Tools > Toggle OSC Visibility
- Ctrl+H cycle-values hwdec "auto" "no"              #menu: Ctrl+H  ; Tools > Cycle Hardware Decoding
- F8 show-text ${playlist}   5000                    #menu: F8      ; Tools > Show Playlist
- F9 show-text ${track-list} 5000                    #menu: F9      ; Tools > Show Audio/Video/Subtitle List
- _ script-message mpv.net execute-mpv-command       #menu: _       ; Tools > Enter a mpv command for execution...
-
- _ script-message mpv.net shell-execute https://mpv.io/manual/stable/ #menu: _ ; Help > Show mpv manual
- _ script-message mpv.net shell-execute https://github.com/mpv-player/mpv/blob/master/etc/input.conf #menu: _ ; Help > Show mpv default keys
- _ script-message mpv.net shell-execute https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt #menu: _ ; Help > Show mpv.net default keys
- _ script-message mpv.net shell-execute https://github.com/stax76/mpvnet #menu: _ ; Help > Show mpv.net web site
- _ ignore                                       #menu: _       ; -
- Esc quit                                       #menu: Escape  ; Exit
- Q quit-watch-later                             #menu: Shift+Q ; Exit Watch Later
-  
+ .           frame-step             #menu: Seek > Next Frame
+ ,           frame-back-step        #menu: Seek > Previous Frame
+ _           ignore                 #menu: Seek > -
+ Right       no-osd seek  7         #menu: Seek > 7 sec forward
+ Left        no-osd seek -7         #menu: Seek > 7 sec backward
+ _           ignore                 #menu: Seek > -
+ Up          no-osd seek  40        #menu: Seek > 40 sec forward
+ Down        no-osd seek -40        #menu: Seek > 40 sec backward
+ _           ignore                 #menu: Seek > -
+ Ctrl+Right  no-osd seek  300       #menu: Seek > 5 min forward
+ Ctrl+Left   no-osd seek -300       #menu: Seek > 5 min backward
+ Ctrl++      add video-zoom  0.1    #menu: Pan & Scan > Increase Size
+ Ctrl+-      add video-zoom -0.1    #menu: Pan & Scan > Decrease Size
+ _           ignore                 #menu: Pan & Scan > -
+ Ctrl+KP4    add video-pan-x -0.01  #menu: Pan & Scan > Move Left
+ Ctrl+KP6    add video-pan-x  0.01  #menu: Pan & Scan > Move Right
+ _           ignore                 #menu: Pan & Scan > -
+ Ctrl+KP8    add video-pan-y -0.01  #menu: Pan & Scan > Move Up
+ Ctrl+KP2    add video-pan-y  0.01  #menu: Pan & Scan > Move Down
+ _           ignore                 #menu: Pan & Scan > -
+ w           add panscan -0.1       #menu: Pan & Scan > Decrease Height
+ W           add panscan +0.1       #menu: Pan & Scan > Increase Height
+ _           ignore                 #menu: Pan & Scan > -
+ Ctrl+BS     set video-zoom 0 ; set video-pan-x 0 ; set video-pan-y 0 #menu: Pan & Scan > Reset
+ Ctrl+1      add contrast -1        #menu: Video > Decrease Contrast
+ Ctrl+2      add contrast 1         #menu: Video > Increase Contrast
+ _           ignore                 #menu: Video > -
+ Ctrl+3      add brightness -1      #menu: Video > Decrease Brightness
+ Ctrl+4      add brightness 1       #menu: Video > Increase Brightness
+ _           ignore                 #menu: Video > -
+ Ctrl+5      add gamma -1           #menu: Video > Decrease Gamma
+ Ctrl+6      add gamma 1            #menu: Video > Increase Gamma
+ _           ignore                 #menu: Video > -
+ Ctrl+7      add saturation -1      #menu: Video > Decrease Saturation
+ Ctrl+8      add saturation 1       #menu: Video > Increase Saturation
+ _           ignore                 #menu: Video > -
+ Ctrl+s      async screenshot       #menu: Video > Take Screenshot
+ d           cycle deinterlace      #menu: Video > Toggle Deinterlace
+ a           cycle-values video-aspect "16:9" "4:3" "2.35:1" "-1" #menu: Video > Cycle Aspect Ratio
+ KP7         cycle audio            #menu: Audio > Cycle/Next
+ _           ignore                 #menu: Audio > -
+ KP6         add audio-delay  0.100 #menu: Audio > Delay +0.1
+ KP9         add audio-delay -0.100 #menu: Audio > Delay -0.1
+ KP8         cycle sub              #menu: Subtitle > Cycle/Next
+ v           cycle sub-visibility   #menu: Subtitle > Toggle Visibility
+ _           ignore                 #menu: Subtitle > -
+ z           add sub-delay -0.1     #menu: Subtitle > Delay -0.1
+ Z           add sub-delay +0.1     #menu: Subtitle > Delay +0.1
+ _           ignore                 #menu: Subtitle > -
+ r           add sub-pos -1         #menu: Subtitle > Move Up
+ R           add sub-pos +1         #menu: Subtitle > Move Down
+ _           ignore                 #menu: Subtitle > -
+ _           add sub-scale -0.1     #menu: Subtitle > Decrease Subtitle Font Size
+ _           add sub-scale +0.1     #menu: Subtitle > Increase Subtitle Font Size
+ +           add volume  10         #menu: Volume > Up
+ -           add volume -10         #menu: Volume > Down
+ _           ignore                 #menu: Volume > -
+ m           cycle mute             #menu: Volume > Mute
+ [           multiply speed 0.9     #menu: Speed > -10%
+ ]           multiply speed 1.1     #menu: Speed > +10%
+ _           ignore                 #menu: Speed > -
+ {           multiply speed 0.5     #menu: Speed > Half
+ }           multiply speed 2.0     #menu: Speed > Double
+ _           ignore                 #menu: Speed > -
+ BS          set speed 1            #menu: Speed > Reset
+ KP0 script-message rate-file 0     #menu: Addons > Rating > 0stars
+ KP1 script-message rate-file 1     #menu: Addons > Rating > 1stars
+ KP2 script-message rate-file 2     #menu: Addons > Rating > 2stars
+ KP3 script-message rate-file 3     #menu: Addons > Rating > 3stars
+ KP4 script-message rate-file 4     #menu: Addons > Rating > 4stars
+ KP5 script-message rate-file 5     #menu: Addons > Rating > 5stars
+ _ script-message mpv.net set-setting hwdec yes  #menu: Settings > Hardware Decoding > Enable
+ _ script-message mpv.net set-setting hwdec no   #menu: Settings > Hardware Decoding > Disable
+ e script-message mpv.net show-conf-editor       #menu: Settings > Show config editor
+ Ctrl+i script-message mpv.net show-input-editor #menu: Settings > Show input editor
+ c script-message mpv.net open-config-folder     #menu: Settings > Open Config Folder
+ i script-message mpv.net show-info              #menu: Tools > Info
+ t script-binding stats/display-stats            #menu: Tools > Show Statistics
+ T script-binding stats/display-stats-toggle     #menu: Tools > Toggle Statistics
+ _ ignore                                        #menu: Tools > -
+ h script-message mpv.net history                #menu: Tools > Show History
+ l ab-loop                                       #menu: Tools > Set/clear A-B loop points
+ L cycle-values loop-file "inf" "no"             #menu: Tools > Toggle Infinite Looping
+ Del script-binding osc/visibility               #menu: Tools > Toggle OSC Visibility
+ Ctrl+h cycle-values hwdec "auto" "no"           #menu: Tools > Cycle Hardware Decoding
+ F8 show-text ${playlist}   5000                 #menu: Tools > Show Playlist
+ F9 show-text ${track-list} 5000                 #menu: Tools > Show Audio/Video/Subtitle List
+ _ script-message mpv.net execute-mpv-command    #menu: Tools > Execute mpv command...
+ _ script-message mpv.net shell-execute https://mpv.io/manual/stable/ #menu: Help > Show mpv manual
+ _ script-message mpv.net shell-execute https://github.com/mpv-player/mpv/blob/master/etc/input.conf #menu: Help > Show mpv default keys
+ _ script-message mpv.net shell-execute https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt #menu: Help > Show mpv.net default keys
+ _ script-message mpv.net shell-execute https://github.com/stax76/mpvnet #menu: Help > Show mpv.net web site
+ _ ignore                                       #menu: -
+ Esc quit                                       #menu: Exit
+ Q quit-watch-later                             #menu: Exit Watch Later
  > playlist-next
  < playlist-prev
- 
- POWER quit
- PLAY cycle pause
- PAUSE cycle pause
- PLAYPAUSE cycle pause
- STOP quit
- FORWARD seek 60
- REWIND seek -60
- VOLUME_UP add volume 2
- VOLUME_DOWN add volume -2
- MUTE cycle mute
+ Enter       cycle pause
+ Power quit
+ Play cycle pause
+ Pause cycle pause
+ PlayPause cycle pause
+ Stop quit
+ Forward seek 60
+ Rewind seek -60
+ Mute cycle mute
+ Volume_Up add volume 10
+ Volume_Down add volume -10
+ Wheel_Up    add volume  10
+ Wheel_Down  add volume -10
