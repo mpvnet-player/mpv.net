@@ -85,8 +85,8 @@
  KP5 script-message rate-file 5     #menu: Addons > Rating > 5stars
  _ script-message mpv.net set-setting hwdec yes  #menu: Settings > Hardware Decoding > Enable
  _ script-message mpv.net set-setting hwdec no   #menu: Settings > Hardware Decoding > Disable
- e script-message mpv.net show-conf-editor       #menu: Settings > Show config editor
- Ctrl+i script-message mpv.net show-input-editor #menu: Settings > Show input editor
+ e script-message mpv.net show-conf-editor       #menu: Settings > Show Config Editor
+ Ctrl+i script-message mpv.net show-input-editor #menu: Settings > Show Input Editor
  c script-message mpv.net open-config-folder     #menu: Settings > Open Config Folder
  i script-message mpv.net show-info              #menu: Tools > Info
  t script-binding stats/display-stats            #menu: Tools > Show Statistics
