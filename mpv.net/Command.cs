@@ -68,7 +68,7 @@ namespace mpvnet
             Process.Start(Application.StartupPath + "\\mpvConfEdit.exe");
         }
 
-        public static void history(string[] args)
+        public static void show_history(string[] args)
         {
             var fp = mp.mpvConfFolderPath + "history.txt";
 

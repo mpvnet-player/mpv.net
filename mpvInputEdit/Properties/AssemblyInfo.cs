@@ -11,7 +11,7 @@ using System.Windows;
 [assembly: AssemblyDescription("mpv(.net) key bindings editor")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("mpv input edit")]
+[assembly: AssemblyProduct("mpv(.net) input edit")]
 [assembly: AssemblyCopyright("Copyright © stax76")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

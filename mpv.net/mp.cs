@@ -195,21 +195,36 @@ namespace mpvnet
                     case mpv_event_id.MPV_EVENT_CLIENT_MESSAGE:
                         if (ClientMessage != null)
                         {
-                            var client_messageData = (mpv_event_client_message)Marshal.PtrToStructure(evt.data, typeof(mpv_event_client_message));
-                            var args = NativeUtf8StrArray2ManagedStrArray(client_messageData.args, client_messageData.num_args);
+                            try
+                            {
+                                var client_messageData = (mpv_event_client_message)Marshal.PtrToStructure(evt.data, typeof(mpv_event_client_message));
+                                string[] args = NativeUtf8StrArray2ManagedStrArray(client_messageData.args, client_messageData.num_args);
 
-                            if (args != null && args.Length > 1 && args[0] == "mpv.net")
-                                foreach (var i in mpvnet.Command.Commands)
-                                    if (args[1] == i.Name)
-                                        try
+                                if (args != null && args.Length > 1 && args[0] == "mpv.net")
+                                {
+                                    bool found = false;
+
+                                    foreach (var i in mpvnet.Command.Commands)
+                                    {
+                                        if (args[1] == i.Name)
                                         {
-                                            i.Action(args.Skip(2).ToArray());
+                                            found = true;
+                                            i.Action.Invoke(args.Skip(2).ToArray());
                                         }
-                                        catch (Exception ex)
-                                        {
-                                            MainForm.Instance.ShowMsgBox(ex.GetType().Name + "\n\n" + ex.ToString(), MessageBoxIcon.Error);
-                                        }
-                            ClientMessage?.Invoke(args);
+                                    }
+                                    if (!found)
+                                    {
+                                        List<string> names = mpvnet.Command.Commands.Select((item) => item.Name).ToList();
+                                        names.Sort();
+                                        MainForm.Instance.ShowMsgBox($"No command '{args[1]}' found. Available commands are:\n\n{string.Join("\n", names)}\n\nHow to bind these commands can be seen in the default input bindings and menu definition located at:\n\nhttps://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt", MessageBoxIcon.Error);
+                                    }
+                                }
+                                ClientMessage?.Invoke(args);
+                            }
+                            catch (Exception ex)
+                            {
+                                MainForm.Instance.ShowMsgBox(ex.GetType().Name + "\n\n" + ex.ToString(), MessageBoxIcon.Error);
+                            }
                         }
                         break;
                     case mpv_event_id.MPV_EVENT_VIDEO_RECONFIG:

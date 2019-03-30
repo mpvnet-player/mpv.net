@@ -28,7 +28,9 @@ Table of contents
 
 ![](https://raw.githubusercontent.com/stax76/mpv.net/master/screenshots/screenshot.png)
 
-![](https://raw.githubusercontent.com/stax76/mpv.net/master/screenshots/mpvSettingsEditor.png)
+![](https://raw.githubusercontent.com/stax76/mpv.net/master/screenshots/mpvConfEdit.png)
+
+![](https://raw.githubusercontent.com/stax76/mpv.net/master/screenshots/mpvInputEdit.png)
 
 ### Context Menu
 
@@ -65,6 +67,16 @@ https://github.com/stax76/mpv.net/wiki/Scripting-(CSharp,-Python,-JavaScript,-Lu
 <https://github.com/stax76/mpv.net/issues>
 
 ### Changelog
+
+### soon
+
+- messages boxes had always the info icon even if a different icon (error, warning, question) was intended
+- instead of silently do nothing on unknown commands there is now a error message listing available commands and showing the location of the default bindings, this helps when commands are removed or renamed
+- there was a problem fixed that made the cursor hidden when it should be visible
+
+### 2.1 (2019-03-30)
+
+- new input editor added, default key binding is here: <https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt#L89>
 
 ### 2.0 (2019-03-28)
 

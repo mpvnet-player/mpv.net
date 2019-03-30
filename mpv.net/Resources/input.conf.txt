@@ -92,7 +92,7 @@
  t script-binding stats/display-stats            #menu: Tools > Show Statistics
  T script-binding stats/display-stats-toggle     #menu: Tools > Toggle Statistics
  _ ignore                                        #menu: Tools > -
- h script-message mpv.net history                #menu: Tools > Show History
+ h script-message mpv.net show-history                #menu: Tools > Show History
  l ab-loop                                       #menu: Tools > Set/clear A-B loop points
  L cycle-values loop-file "inf" "no"             #menu: Tools > Toggle Infinite Looping
  Del script-binding osc/visibility               #menu: Tools > Toggle OSC Visibility
@@ -109,7 +109,7 @@
  Q quit-watch-later                             #menu: Exit Watch Later
  > playlist-next
  < playlist-prev
- Enter       cycle pause
+ Enter cycle pause
  Power quit
  Play cycle pause
  Pause cycle pause
@@ -118,7 +118,7 @@
  Forward seek 60
  Rewind seek -60
  Mute cycle mute
- Volume_Up add volume 10
+ Volume_Up   add volume 10
  Volume_Down add volume -10
  Wheel_Up    add volume  10
  Wheel_Down  add volume -10

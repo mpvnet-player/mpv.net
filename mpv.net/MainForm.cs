@@ -362,10 +362,7 @@ namespace mpvnet
         {
             var buttons = MessageBoxButtons.OK;
             if (icon == MessageBoxIcon.Question) buttons = MessageBoxButtons.OKCancel;
-
-            var fn = new Func<DialogResult>(() => MessageBox.Show(
-                message, Application.ProductName, buttons, MessageBoxIcon.Information));
-
+            var fn = new Func<DialogResult>(() => MessageBox.Show(message, Application.ProductName, buttons, icon));
             return (DialogResult)Invoke(fn);
         }
 
