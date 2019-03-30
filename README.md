@@ -26,7 +26,7 @@ Table of contents
 
 ### Screenshots
 
-![](https://raw.githubusercontent.com/stax76/mpv.net/master/screenshots/screenshot.png)
+![](https://raw.githubusercontent.com/stax76/mpv.net/master/screenshots/mpvnet.png)
 
 ![](https://raw.githubusercontent.com/stax76/mpv.net/master/screenshots/mpvConfEdit.png)
 
