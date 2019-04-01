@@ -20,6 +20,8 @@ Table of contents
 ### Features
 
 - Customizable context menu defined in the same file as the keybindings
+- a searchable options dialog with modern UI
+- a searchable keyboard shortcut editor
 - Addon API for .NET languages
 - Scripting API for Python, C#, Lua, JavaScript and PowerShell
 - mpv's OSC, IPC, conf files and more
@@ -68,7 +70,7 @@ https://github.com/stax76/mpv.net/wiki/Scripting-(CSharp,-Python,-JavaScript,-Lu
 
 ### Changelog
 
-### 2.2
+### 2.2 (2019-04-01)
 
 - messages boxes had always the info icon even if a different icon (error, warning, question) was intended
 - instead of silently do nothing on unknown commands there is now a error message listing available commands and showing the location of the default bindings, this helps when commands are removed or renamed
