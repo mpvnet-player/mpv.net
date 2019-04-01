@@ -111,14 +111,16 @@
  < playlist-prev
  Enter cycle pause
  Power quit
- Play cycle pause
- Pause cycle pause
+ Play      cycle pause
+ Pause     cycle pause
  PlayPause cycle pause
- Stop quit
- Forward seek 60
- Rewind seek -60
+ Stop stop
+ Forward seek  60
+ Rewind  seek -60
  Mute cycle mute
  Volume_Up   add volume 10
  Volume_Down add volume -10
  Wheel_Up    add volume  10
  Wheel_Down  add volume -10
+ Prev playlist-prev
+ Next playlist-next

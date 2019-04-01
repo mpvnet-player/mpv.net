@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace mpvnet
 {
@@ -294,18 +295,18 @@ namespace mpvnet
         protected override void OnDragEnter(DragEventArgs e)
         {
             base.OnDragEnter(e);
-
             if (e.Data.GetDataPresent(DataFormats.FileDrop) || e.Data.GetDataPresent(DataFormats.Text))
                 e.Effect = DragDropEffects.Copy;
         }
 
         protected override void OnDragDrop(DragEventArgs e)
         {
-            base.OnDragDrop(e);
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
                 mp.LoadFiles(e.Data.GetData(DataFormats.FileDrop) as String[]);
             if (e.Data.GetDataPresent(DataFormats.Text))
                 mp.LoadURL(e.Data.GetData(DataFormats.Text).ToString());
+            
+            base.OnDragDrop(e);
         }
 
         protected override void OnMouseDown(MouseEventArgs e)

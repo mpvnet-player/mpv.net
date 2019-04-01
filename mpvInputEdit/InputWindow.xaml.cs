@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Input;
@@ -51,9 +52,6 @@ namespace mpvInputEdit
             for (int i = 0; i < 13; i++)
                 if ("D" + i.ToString() == text)
                     text = text.Substring(1);
-
-            //Debug.WriteLine((int)c);
-            //Debug.WriteLine(e.KeyCode.ToString());
 
             switch (e.KeyCode)
             {
@@ -197,48 +195,54 @@ namespace mpvInputEdit
             {
                 ke = new WF.KeyEventArgs((WF.Keys)(unchecked((int)(long)m.WParam)) | ModifierKeys);
 
-                //if (m.Msg == WM_KEYDOWN || m.Msg == WM_SYSKEYDOWN)
-                //    OnKeyDown(ke);
-
                 if (m.Msg == WM_KEYUP || m.Msg == WM_SYSKEYUP)
                     OnKeyUp(ke);
 
                 if (m.Msg == WM_APPCOMMAND)
                 {
-                    switch ((AppCommand)m.LParam.ToInt32())
+                    switch ((AppCommand)(m.LParam.ToInt32() >> 16))
                     {
                         case AppCommand.MEDIA_CHANNEL_DOWN:
-                            SetKey("CHANNEL_DOWN");
+                            SetKey("Channel_Down");
                             break;
                         case AppCommand.MEDIA_CHANNEL_UP:
-                            SetKey("CHANNEL_UP");
+                            SetKey("Channel_Up");
                             break;
                         case AppCommand.MEDIA_FAST_FORWARD:
-                            SetKey("FORWARD");
-                            break;
-                        case AppCommand.MEDIA_NEXTTRACK:
-                            SetKey("NEXT");
-                            break;
-                        case AppCommand.MEDIA_PAUSE:
-                            SetKey("PAUSE");
-                            break;
-                        case AppCommand.MEDIA_PLAY:
-                            SetKey("PLAY");
-                            break;
-                        case AppCommand.MEDIA_PLAY_PAUSE:
-                            SetKey("PLAYPAUSE");
-                            break;
-                        case AppCommand.MEDIA_PREVIOUSTRACK:
-                            SetKey("PREV");
-                            break;
-                        case AppCommand.MEDIA_RECORD:
-                            SetKey("RECORD");
+                            SetKey("Forward");
                             break;
                         case AppCommand.MEDIA_REWIND:
-                            SetKey("REWIND");
+                            SetKey("Rewind");
+                            break;
+                        case AppCommand.MEDIA_PAUSE:
+                            SetKey("Pause");
+                            break;
+                        case AppCommand.MEDIA_PLAY:
+                            SetKey("Play");
+                            break;
+                        case AppCommand.MEDIA_PLAY_PAUSE:
+                            SetKey("PlayPause");
+                            break;
+                        case AppCommand.MEDIA_NEXTTRACK:
+                            SetKey("Next");
+                            break;
+                        case AppCommand.MEDIA_PREVIOUSTRACK:
+                            SetKey("Prev");
+                            break;
+                        case AppCommand.MEDIA_RECORD:
+                            SetKey("Record");
                             break;
                         case AppCommand.MEDIA_STOP:
-                            SetKey("STOP");
+                            SetKey("Stop");
+                            break;
+                        case AppCommand.VolumeUp:
+                            SetKey("Volume_Up");
+                            break;
+                        case AppCommand.VolumeDown:
+                            SetKey("Volume_Down");
+                            break;
+                        case AppCommand.VolumeMute:
+                            SetKey("Mute");
                             break;
                     }
                 }
@@ -260,7 +264,10 @@ namespace mpvInputEdit
             MEDIA_PREVIOUSTRACK = 12,
             MEDIA_RECORD = 48,
             MEDIA_REWIND = 50,
-            MEDIA_STOP = 13
+            MEDIA_STOP = 13,
+            VolumeMute = 8,
+            VolumeDown = 9,
+            VolumeUp = 10
         }
 
         [DllImport("user32.dll", CharSet = CharSet.Auto)]

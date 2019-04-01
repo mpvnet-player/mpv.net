@@ -45,7 +45,6 @@ namespace mpvInputEdit
             {
                 return true;
             }
-
             return false;
         }
 

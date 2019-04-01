@@ -4,14 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="750" FontSize="13" Loaded="Window_Loaded" Closed="Window_Closed">
+        Title="MainWindow" Height="500" Width="750" FontSize="13"
+        Loaded="Window_Loaded" Closed="Window_Closed">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="60" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Controls:SearchTextBoxUserControl x:Name="SearchControl" Width="300" Margin="0,0,0,10" Grid.ColumnSpan="2" />
-        <DataGrid Grid.Row="1" x:Name="DataGrid" AutoGenerateColumns="False" CellStyle="{StaticResource DataGrid_Font_Centering}" CommandManager.PreviewCanExecute="Grid_PreviewCanExecute">
+        <DataGrid Grid.Row="1" x:Name="DataGrid" AutoGenerateColumns="False" CellStyle="{StaticResource DataGrid_Font_Centering}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Context Menu"  Binding="{Binding Menu}"/>
                 <DataGridTemplateColumn Header="Input">

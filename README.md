@@ -68,11 +68,14 @@ https://github.com/stax76/mpv.net/wiki/Scripting-(CSharp,-Python,-JavaScript,-Lu
 
 ### Changelog
 
-### soon
+### 2.2
 
 - messages boxes had always the info icon even if a different icon (error, warning, question) was intended
 - instead of silently do nothing on unknown commands there is now a error message listing available commands and showing the location of the default bindings, this helps when commands are removed or renamed
 - there was a problem fixed that made the cursor hidden when it should be visible
+- dragging a youtube URL on mpv.net would break certain input related features
+- there is now an installer with file extension registration (limited on Win 10) available
+- WM_APPCOMMAND media keys were not working in the input (shortcut) editor and there were no defaults for prev and next defined
 
 ### 2.1 (2019-03-30)
 
