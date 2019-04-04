@@ -22,9 +22,9 @@ Table of contents
 - Customizable context menu defined in the same file as the key bindings
 - Searchable options dialog with modern UI
 - Searchable input (key/mouse) binding editor with modern UI
-- Addon API for .NET languages
-- Scripting API for Python, C#, Lua, JavaScript and PowerShell
-- mpv's OSC (on screen controller (play control bar)), IPC, conf files and the power of countless scriptable commands and properties
+- Rich addon API for .NET languages
+- Rich scripting API for Python, C#, Lua, JavaScript and PowerShell
+- mpv's OSC (on screen controller (play control bar)), IPC, conf files
 
 ### Screenshots
 
