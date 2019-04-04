@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -33,5 +36,92 @@ namespace mpvnet
         public static float Windows10 { get; } = 10f;
 
         public static float Current => Environment.OSVersion.Version.Major + Environment.OSVersion.Version.Minor / 10f;
+    }
+
+    public class FileAssociation
+    {
+        static string ExePath = Application.ExecutablePath;
+        static string ExeFilename = Path.GetFileName(Application.ExecutablePath);
+        static string ExeFilenameNoExt = Path.GetFileNameWithoutExtension(Application.ExecutablePath);
+        static string[] Types;
+        public static string[] VideoTypes = "mpg avi vob mp4 mkv avs 264 mov wmv flv h264 asf webm mpeg mpv y4m avc hevc 265 h265 m2v m2ts vpy mts webm m4v".Split(" ".ToCharArray());
+        public static string[] AudioTypes = "mp2 mp3 ac3 wav w64 m4a dts dtsma dtshr dtshd eac3 thd thd+ac3 ogg mka aac opus flac mpa".Split(" ".ToCharArray());
+
+        public static void Register(string[] types)
+        {
+            Types = types;
+
+            RegistryHelp.SetValue(@"HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\" + ExeFilename, null, ExePath);
+            RegistryHelp.SetValue($"HKCR\\Applications\\{ExeFilename}", "FriendlyAppName", "mpv.net media player");
+            RegistryHelp.SetValue($"HKCR\\Applications\\{ExeFilename}\\shell\\open\\command", null, $"\"{ExePath}\" \"%1\"");
+            RegistryHelp.SetValue(@"HKLM\SOFTWARE\Clients\Media\mpv\Capabilities", "ApplicationDescription", "mpv.net media player");
+            RegistryHelp.SetValue(@"HKLM\SOFTWARE\Clients\Media\mpv\Capabilities", "ApplicationName", "mpv.net");
+            RegistryHelp.SetValue($"HKCR\\SystemFileAssociations\\video\\OpenWithList\\{ExeFilename}", null, "");
+            RegistryHelp.SetValue($"HKCR\\SystemFileAssociations\\audio\\OpenWithList\\{ExeFilename}", null, "");
+
+            foreach (string ext in Types)
+            {
+                RegistryHelp.SetValue($"HKCR\\Applications\\{ExeFilename}\\SupportedTypes", "." + ext, "");
+                RegistryHelp.SetValue($"HKCR\\" + "." + ext, null, ExeFilenameNoExt + "." + ext);
+                RegistryHelp.SetValue($"HKCR\\" + "." + ext + "\\OpenWithProgIDs", ExeFilenameNoExt + "." + ext, "");
+                if (VideoTypes.Contains(ext))
+                    RegistryHelp.SetValue($"HKCR\\" + "." + ext, "PerceivedType", "video");
+                if (AudioTypes.Contains(ext))
+                    RegistryHelp.SetValue($"HKCR\\" + "." + ext, "PerceivedType", "audio");
+                RegistryHelp.SetValue($"HKCR\\" + ExeFilenameNoExt + "." + ext + "\\shell\\open", null, "Play with " +  Application.ProductName);
+                RegistryHelp.SetValue($"HKCR\\" + ExeFilenameNoExt + "." + ext + "\\shell\\open\\command", null, $"\"{ExePath}\" \"%1\"");
+                RegistryHelp.SetValue(@"HKLM\SOFTWARE\Clients\Media\mpv.net\Capabilities\FileAssociations", "." + ext, ExeFilenameNoExt + "." + ext);
+            }
+        }
+
+        public static void Unregister()
+        {
+            RegistryHelp.RemoveKey(@"HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\" + ExeFilename);
+            RegistryHelp.RemoveKey($"HKCR\\Applications\\{ExeFilename}");
+            RegistryHelp.RemoveKey(@"HKLM\SOFTWARE\Clients\Media\mpv.net");
+            RegistryHelp.RemoveKey($"HKCR\\SystemFileAssociations\\video\\OpenWithList\\{ExeFilename}");
+            RegistryHelp.RemoveKey($"HKCR\\SystemFileAssociations\\audio\\OpenWithList\\{ExeFilename}");
+
+            foreach (string id in Registry.ClassesRoot.GetSubKeyNames())
+            {
+                if (id.StartsWith(ExeFilenameNoExt + "."))
+                    Registry.ClassesRoot.DeleteSubKeyTree(id);
+
+                RegistryHelp.RemoveValue($"HKCR\\Software\\Classes\\" + id + "\\OpenWithProgIDs", ExeFilenameNoExt + id);
+                RegistryHelp.RemoveValue($"HKLM\\Software\\Classes\\" + id + "\\OpenWithProgIDs", ExeFilenameNoExt + id);
+            }
+        }
+    }
+
+    public class RegistryHelp
+    {
+        public static void SetValue(string path, string name, string value)
+        {
+            using (RegistryKey rk = GetRootKey(path).CreateSubKey(path.Substring(5), RegistryKeyPermissionCheck.ReadWriteSubTree))
+                rk.SetValue(name, value);
+        }
+
+        public static void RemoveKey(string path)
+        {
+            GetRootKey(path).DeleteSubKeyTree(path.Substring(5), false);
+        }
+
+        public static void RemoveValue(string path, string name)
+        {
+            using (RegistryKey rk = GetRootKey(path).OpenSubKey(path.Substring(5), true))
+                if (!(rk is null))
+                    rk.DeleteValue(name, false);
+        }
+
+        static RegistryKey GetRootKey(string path)
+        {
+            switch (path.Substring(0, 4))
+            {
+                case "HKLM": return Registry.LocalMachine;
+                case "HKCU": return Registry.CurrentUser;
+                case "HKCR": return Registry.ClassesRoot;
+                default: throw new Exception();
+            }
+        }
     }
 }

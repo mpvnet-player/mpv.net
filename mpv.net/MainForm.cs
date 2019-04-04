@@ -5,7 +5,6 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
 using System.Linq;
-using System.Collections.Generic;
 
 namespace mpvnet
 {
@@ -26,6 +25,7 @@ namespace mpvnet
 
             try
             {
+                AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
                 Application.ThreadException += Application_ThreadException;
                 Instance = this;
                 Hwnd = Handle;
@@ -43,7 +43,7 @@ namespace mpvnet
             }
             catch (Exception e)
             {
-                MainForm.Instance.ShowMsgBox(e.ToString(), MessageBoxIcon.Error);
+                ShowMsgBox(e.ToString(), MessageBoxIcon.Error);
             }
         }
 
@@ -81,6 +81,7 @@ namespace mpvnet
             if (IsFullscreen || mp.VideoSize.Width == 0) return;
             Screen screen = Screen.FromControl(this);
             int height = ClientSize.Height;
+            if (height > screen.Bounds.Height * 0.8) height = Convert.ToInt32(screen.Bounds.Height * 0.6);
             int width = Convert.ToInt32(height * mp.VideoSize.Width / (double)mp.VideoSize.Height);
             Point middlePos = new Point(Left + Width / 2, Top + Height / 2);
             var rect = new Native.RECT(new Rectangle(screen.Bounds.X, screen.Bounds.Y, width, height));
@@ -88,15 +89,9 @@ namespace mpvnet
             int left = middlePos.X - rect.Width / 2;
             int top = middlePos.Y - rect.Height / 2;
             Screen[] screens = Screen.AllScreens;
-
-            if (left < screens[0].Bounds.Left)
-                left = screens[0].Bounds.Left;
-
+            if (left < screens[0].Bounds.Left) left = screens[0].Bounds.Left;
             int maxLeft = screens[0].Bounds.Left + screens.Select((sc) => sc.Bounds.Width).Sum() - rect.Width - SystemInformation.CaptionHeight;
-
-            if (left > maxLeft)
-                left = maxLeft;
-
+            if (left > maxLeft) left = maxLeft;
             Native.SetWindowPos(Handle, IntPtr.Zero /* HWND_TOP */, left, top, rect.Width, rect.Height, 4 /* SWP_NOZORDER */);
         }
 
@@ -156,7 +151,7 @@ namespace mpvnet
                     }
                     catch (Exception e)
                     {
-                        MainForm.Instance.ShowMsgBox(e.ToString(), MessageBoxIcon.Error);
+                        ShowMsgBox(e.ToString(), MessageBoxIcon.Error);
                     }
                 });
                 
@@ -165,10 +160,7 @@ namespace mpvnet
             }
         }
 
-        private void CMS_Opened(object sender, EventArgs e)
-        {
-            CursorHelp.Show();
-        }
+        private void CMS_Opened(object sender, EventArgs e) => CursorHelp.Show();
 
         private string LastHistory;
 
@@ -191,14 +183,16 @@ namespace mpvnet
             BeginInvoke(new Action(() => { Text = "mpv.net " + Application.ProductVersion; }));
         }
 
-        private void CM_Popup(object sender, EventArgs e)
-        {
-            CursorHelp.Show();
-        }
+        private void CM_Popup(object sender, EventArgs e) => CursorHelp.Show();
 
         private void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
         {
             ShowMsgBox(e.Exception.ToString(), MessageBoxIcon.Error);
+        }
+
+        private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            ShowMsgBox(e.ExceptionObject.ToString(), MessageBoxIcon.Error);
         }
 
         private void mp_VideoSizeChanged()
@@ -213,7 +207,7 @@ namespace mpvnet
 
         public bool IsFullscreen => WindowState == FormWindowState.Maximized;
 
-        void mp_ChangeFullscreen(bool value)
+        void mpPropChangeFullscreen(bool value)
         {
             BeginInvoke(new Action(() => ChangeFullscreen(value)));
         }
@@ -288,7 +282,6 @@ namespace mpvnet
                     m.Result = new IntPtr(1);
                     return;
             }
-
             base.WndProc(ref m);
         }
 
@@ -301,12 +294,11 @@ namespace mpvnet
 
         protected override void OnDragDrop(DragEventArgs e)
         {
+            base.OnDragDrop(e);
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
                 mp.LoadFiles(e.Data.GetData(DataFormats.FileDrop) as String[]);
             if (e.Data.GetDataPresent(DataFormats.Text))
                 mp.LoadURL(e.Data.GetData(DataFormats.Text).ToString());
-            
-            base.OnDragDrop(e);
         }
 
         protected override void OnMouseDown(MouseEventArgs e)
@@ -371,12 +363,15 @@ namespace mpvnet
         {
             base.OnLoad(e);
             mp.Init();
-            mp.observe_property_bool("fullscreen", mp_ChangeFullscreen);
+            mp.observe_property_bool("fullscreen", mpPropChangeFullscreen);
+            mp.observe_property_bool("ontop", mpPropChangeOnTop);
             mp.Shutdown += mp_Shutdown;
             mp.VideoSizeChanged += mp_VideoSizeChanged;
             mp.PlaybackRestart += mp_PlaybackRestart;
             mp.Idle += Mp_Idle;
         }
+
+        void mpPropChangeOnTop(bool value) => BeginInvoke(new Action(() => TopMost = value));
 
         protected override void OnShown(EventArgs e)
         {
@@ -386,6 +381,7 @@ namespace mpvnet
             ContextMenuStrip = CMS;
             BuildMenu();
             IgnoreDpiChanged = false;
+            CheckYouTube();
         }
 
         protected override void OnFormClosed(FormClosedEventArgs e)
@@ -399,6 +395,25 @@ namespace mpvnet
         {
             base.OnLostFocus(e);
             CursorHelp.Show();
+        }
+
+        protected override void OnActivated(EventArgs e)
+        {
+            base.OnActivated(e);
+            CheckYouTube();
+        }
+
+        private string LastURL;
+
+        void CheckYouTube()
+        {
+            string clipboard = Clipboard.GetText();
+            if (clipboard.StartsWith("https://www.youtube.com/watch?") && LastURL != clipboard && Visible)
+            {
+                LastURL = clipboard;
+                if (ShowMsgBox("Play YouTube URL?", MessageBoxIcon.Question) == DialogResult.OK)
+                    mp.LoadURL(clipboard);
+            }
         }
     }
 }

@@ -1,11 +1,12 @@
-﻿# mpv manual: https://mpv.io/manual/master/
+﻿
+# mpv manual: https://mpv.io/manual/master/
+
 # mpv.net mpv.conf defaults: https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/mpv.conf.txt
 
 input-ar-delay = 500
 input-ar-rate = 20
 volume = 50
 hwdec = yes
-vo = direct3d
 keep-open = yes
 keep-open-pause = no
 osd-playing-msg = ${filename}

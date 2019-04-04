@@ -70,6 +70,17 @@ https://github.com/stax76/mpv.net/wiki/Scripting-(CSharp,-Python,-JavaScript,-Lu
 
 ### Changelog
 
+### 2.3 (2019-04-04)
+
+- dragging a youtube URL on mpv.net would still break something, it should work now
+- when the main window gets focus/activation it will check the clibboard for a YouTube video and ask to play it
+- libmpv updated
+- changing to normal size from fullscreen resulted in a too large window in some circumstances
+- some default key bindings and menu structure have changed and the input.conf file has a description added on top <https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt>
+- the file association code was completely rewriten, it's now contained within mpvnet.exe instead of a separate application and it adds a few more keys
+- various new info added to the wiki: <https://github.com/stax76/mpv.net/wiki>
+- On Top feature was implemented using mpv's native property 'ontop', default bindings at: <https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt>
+
 ### 2.2 (2019-04-01)
 
 - messages boxes had always the info icon even if a different icon (error, warning, question) was intended
@@ -78,19 +89,3 @@ https://github.com/stax76/mpv.net/wiki/Scripting-(CSharp,-Python,-JavaScript,-Lu
 - dragging a youtube URL on mpv.net would break certain input related features
 - there is now an installer with file extension registration (limited on Win 10) available
 - WM_APPCOMMAND media keys were not working in the input (shortcut) editor and there were no defaults for prev and next defined
-
-### 2.1 (2019-03-30)
-
-- new input editor added, default key binding is here: <https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt#L89>
-
-### 2.0 (2019-03-28)
-
-- setting track-auto-selection added to settings editor (<https://mpv.io/manual/master/#options-track-auto-selection>)
-- setting loop-playlist added to settings editor (<https://mpv.io/manual/master/#options-loop-playlist>)
-- setting audio-file-auto added to settings editor (<https://mpv.io/manual/master/#options-audio-file-auto>)
-- setting video-sync added to settings editor (<https://mpv.io/manual/master/#options-video-sync>)
-- command execute-mpv-command added to menu: Tools > Enter a mpv command for execution
-- added youtube-dl.exe, please note this will only work when a certain Visual C++ runtime is installed
-- added drag & drop support to drag & drop a youtube URL on mpv.net
-- added support to open a youtube URL from command line
-- added support for opening a URL from the menu: Open > Open URL

@@ -142,130 +142,137 @@ namespace mpvnet
 
                 //Debug.WriteLine(evt.event_id.ToString());
 
-                switch (evt.event_id)
+                try
                 {
-                    case mpv_event_id.MPV_EVENT_SHUTDOWN:
-                        Shutdown?.Invoke();
-                        AutoResetEvent.Set();
-                        return;
-                    case mpv_event_id.MPV_EVENT_LOG_MESSAGE:
-                        LogMessage?.Invoke();
-                        break;
-                    case mpv_event_id.MPV_EVENT_GET_PROPERTY_REPLY:
-                        GetPropertyReply?.Invoke();
-                        break;
-                    case mpv_event_id.MPV_EVENT_SET_PROPERTY_REPLY:
-                        SetPropertyReply?.Invoke();
-                        break;
-                    case mpv_event_id.MPV_EVENT_COMMAND_REPLY:
-                        CommandReply?.Invoke();
-                        break;
-                    case mpv_event_id.MPV_EVENT_START_FILE:
-                        StartFile?.Invoke();
-                        break;
-                    case mpv_event_id.MPV_EVENT_END_FILE:
-                        var end_fileData = (mpv_event_end_file)Marshal.PtrToStructure(evt.data, typeof(mpv_event_end_file));
-                        EndFile?.Invoke((EndFileEventMode)end_fileData.reason);
-                        break;
-                    case mpv_event_id.MPV_EVENT_FILE_LOADED:
-                        FileLoaded?.Invoke();
-                        LoadFolder();
-                        break;
-                    case mpv_event_id.MPV_EVENT_TRACKS_CHANGED:
-                        TracksChanged?.Invoke();
-                        break;
-                    case mpv_event_id.MPV_EVENT_TRACK_SWITCHED:
-                        TrackSwitched?.Invoke();
-                        break;
-                    case mpv_event_id.MPV_EVENT_IDLE:
-                        Idle?.Invoke();
-                        break;
-                    case mpv_event_id.MPV_EVENT_PAUSE:
-                        Pause?.Invoke();
-                        break;
-                    case mpv_event_id.MPV_EVENT_UNPAUSE:
-                        Unpause?.Invoke();
-                        break;
-                    case mpv_event_id.MPV_EVENT_TICK:
-                        Tick?.Invoke();
-                        break;
-                    case mpv_event_id.MPV_EVENT_SCRIPT_INPUT_DISPATCH:
-                        ScriptInputDispatch?.Invoke();
-                        break;
-                    case mpv_event_id.MPV_EVENT_CLIENT_MESSAGE:
-                        if (ClientMessage != null)
-                        {
-                            try
+                    switch (evt.event_id)
+                    {
+                        case mpv_event_id.MPV_EVENT_SHUTDOWN:
+                            Shutdown?.Invoke();
+                            AutoResetEvent.Set();
+                            return;
+                        case mpv_event_id.MPV_EVENT_LOG_MESSAGE:
+                            LogMessage?.Invoke();
+                            break;
+                        case mpv_event_id.MPV_EVENT_GET_PROPERTY_REPLY:
+                            GetPropertyReply?.Invoke();
+                            break;
+                        case mpv_event_id.MPV_EVENT_SET_PROPERTY_REPLY:
+                            SetPropertyReply?.Invoke();
+                            break;
+                        case mpv_event_id.MPV_EVENT_COMMAND_REPLY:
+                            CommandReply?.Invoke();
+                            break;
+                        case mpv_event_id.MPV_EVENT_START_FILE:
+                            StartFile?.Invoke();
+                            break;
+                        case mpv_event_id.MPV_EVENT_END_FILE:
+                            var end_fileData = (mpv_event_end_file)Marshal.PtrToStructure(evt.data, typeof(mpv_event_end_file));
+                            EndFile?.Invoke((EndFileEventMode)end_fileData.reason);
+                            break;
+                        case mpv_event_id.MPV_EVENT_FILE_LOADED:
+                            FileLoaded?.Invoke();
+                            LoadFolder();
+                            break;
+                        case mpv_event_id.MPV_EVENT_TRACKS_CHANGED:
+                            TracksChanged?.Invoke();
+                            break;
+                        case mpv_event_id.MPV_EVENT_TRACK_SWITCHED:
+                            TrackSwitched?.Invoke();
+                            break;
+                        case mpv_event_id.MPV_EVENT_IDLE:
+                            Idle?.Invoke();
+                            break;
+                        case mpv_event_id.MPV_EVENT_PAUSE:
+                            Pause?.Invoke();
+                            break;
+                        case mpv_event_id.MPV_EVENT_UNPAUSE:
+                            Unpause?.Invoke();
+                            break;
+                        case mpv_event_id.MPV_EVENT_TICK:
+                            Tick?.Invoke();
+                            break;
+                        case mpv_event_id.MPV_EVENT_SCRIPT_INPUT_DISPATCH:
+                            ScriptInputDispatch?.Invoke();
+                            break;
+                        case mpv_event_id.MPV_EVENT_CLIENT_MESSAGE:
+                            if (ClientMessage != null)
                             {
-                                var client_messageData = (mpv_event_client_message)Marshal.PtrToStructure(evt.data, typeof(mpv_event_client_message));
-                                string[] args = NativeUtf8StrArray2ManagedStrArray(client_messageData.args, client_messageData.num_args);
-
-                                if (args != null && args.Length > 1 && args[0] == "mpv.net")
+                                try
                                 {
-                                    bool found = false;
+                                    var client_messageData = (mpv_event_client_message)Marshal.PtrToStructure(evt.data, typeof(mpv_event_client_message));
+                                    string[] args = NativeUtf8StrArray2ManagedStrArray(client_messageData.args, client_messageData.num_args);
 
-                                    foreach (var i in mpvnet.Command.Commands)
+                                    if (args != null && args.Length > 1 && args[0] == "mpv.net")
                                     {
-                                        if (args[1] == i.Name)
+                                        bool found = false;
+
+                                        foreach (var i in mpvnet.Command.Commands)
                                         {
-                                            found = true;
-                                            i.Action.Invoke(args.Skip(2).ToArray());
+                                            if (args[1] == i.Name)
+                                            {
+                                                found = true;
+                                                i.Action.Invoke(args.Skip(2).ToArray());
+                                            }
+                                        }
+                                        if (!found)
+                                        {
+                                            List<string> names = mpvnet.Command.Commands.Select((item) => item.Name).ToList();
+                                            names.Sort();
+                                            MainForm.Instance.ShowMsgBox($"No command '{args[1]}' found. Available commands are:\n\n{string.Join("\n", names)}\n\nHow to bind these commands can be seen in the default input bindings and menu definition located at:\n\nhttps://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt", MessageBoxIcon.Error);
                                         }
                                     }
-                                    if (!found)
-                                    {
-                                        List<string> names = mpvnet.Command.Commands.Select((item) => item.Name).ToList();
-                                        names.Sort();
-                                        MainForm.Instance.ShowMsgBox($"No command '{args[1]}' found. Available commands are:\n\n{string.Join("\n", names)}\n\nHow to bind these commands can be seen in the default input bindings and menu definition located at:\n\nhttps://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt", MessageBoxIcon.Error);
-                                    }
+                                    ClientMessage?.Invoke(args);
                                 }
-                                ClientMessage?.Invoke(args);
+                                catch (Exception ex)
+                                {
+                                    MainForm.Instance.ShowMsgBox(ex.GetType().Name + "\n\n" + ex.ToString(), MessageBoxIcon.Error);
+                                }
                             }
-                            catch (Exception ex)
+                            break;
+                        case mpv_event_id.MPV_EVENT_VIDEO_RECONFIG:
+                            VideoReconfig?.Invoke();
+                            break;
+                        case mpv_event_id.MPV_EVENT_AUDIO_RECONFIG:
+                            AudioReconfig?.Invoke();
+                            break;
+                        case mpv_event_id.MPV_EVENT_METADATA_UPDATE:
+                            MetadataUpdate?.Invoke();
+                            break;
+                        case mpv_event_id.MPV_EVENT_SEEK:
+                            Seek?.Invoke();
+                            break;
+                        case mpv_event_id.MPV_EVENT_PROPERTY_CHANGE:
+                            var event_propertyData = (mpv_event_property)Marshal.PtrToStructure(evt.data, typeof(mpv_event_property));
+
+                            if (event_propertyData.format == mpv_format.MPV_FORMAT_FLAG)
+                                foreach (var i in BoolPropChangeActions)
+                                    if (i.Key== event_propertyData.name)
+                                        i.Value.Invoke(Marshal.PtrToStructure<int>(event_propertyData.data) == 1);
+                            break;
+                        case mpv_event_id.MPV_EVENT_PLAYBACK_RESTART:
+                            PlaybackRestart?.Invoke();
+                            Size s = new Size(get_property_int("dwidth"), get_property_int("dheight"));
+
+                            if (VideoSize != s && s != Size.Empty)
                             {
-                                MainForm.Instance.ShowMsgBox(ex.GetType().Name + "\n\n" + ex.ToString(), MessageBoxIcon.Error);
+                                VideoSize = s;
+                                VideoSizeChanged?.Invoke();
                             }
-                        }
-                        break;
-                    case mpv_event_id.MPV_EVENT_VIDEO_RECONFIG:
-                        VideoReconfig?.Invoke();
-                        break;
-                    case mpv_event_id.MPV_EVENT_AUDIO_RECONFIG:
-                        AudioReconfig?.Invoke();
-                        break;
-                    case mpv_event_id.MPV_EVENT_METADATA_UPDATE:
-                        MetadataUpdate?.Invoke();
-                        break;
-                    case mpv_event_id.MPV_EVENT_SEEK:
-                        Seek?.Invoke();
-                        break;
-                    case mpv_event_id.MPV_EVENT_PROPERTY_CHANGE:
-                        var event_propertyData = (mpv_event_property)Marshal.PtrToStructure(evt.data, typeof(mpv_event_property));
-
-                        if (event_propertyData.format == mpv_format.MPV_FORMAT_FLAG)
-                            foreach (var i in BoolPropChangeActions)
-                                if (i.Key== event_propertyData.name)
-                                    i.Value.Invoke(Marshal.PtrToStructure<int>(event_propertyData.data) == 1);
-                        break;
-                    case mpv_event_id.MPV_EVENT_PLAYBACK_RESTART:
-                        PlaybackRestart?.Invoke();
-                        Size s = new Size(get_property_int("dwidth"), get_property_int("dheight"));
-
-                        if (VideoSize != s && s != Size.Empty)
-                        {
-                            VideoSize = s;
-                            VideoSizeChanged?.Invoke();
-                        }
-                        break;
-                    case mpv_event_id.MPV_EVENT_CHAPTER_CHANGE:
-                        ChapterChange?.Invoke();
-                        break;
-                    case mpv_event_id.MPV_EVENT_QUEUE_OVERFLOW:
-                        QueueOverflow?.Invoke();
-                        break;
-                    case mpv_event_id.MPV_EVENT_HOOK:
-                        Hook?.Invoke();
-                        break;
+                            break;
+                        case mpv_event_id.MPV_EVENT_CHAPTER_CHANGE:
+                            ChapterChange?.Invoke();
+                            break;
+                        case mpv_event_id.MPV_EVENT_QUEUE_OVERFLOW:
+                            QueueOverflow?.Invoke();
+                            break;
+                        case mpv_event_id.MPV_EVENT_HOOK:
+                            Hook?.Invoke();
+                            break;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MainForm.Instance.ShowMsgBox(ex.ToString(), MessageBoxIcon.Error);
                 }
             }
         }
@@ -489,6 +496,7 @@ namespace mpvnet
             {
                 string[] types = "264 265 3gp aac ac3 avc avi avs bmp divx dts dtshd dtshr dtsma eac3 evo flac flv h264 h265 hevc hvc jpg jpeg m2t m2ts m2v m4a m4v mka mkv mlp mov mp2 mp3 mp4 mpa mpeg mpg mpv mts ogg ogm opus pcm png pva raw rmvb thd thd+ac3 true-hd truehd ts vdr vob vpy w64 wav webm wmv y4m".Split(' ');
                 string path = get_property_string("path");
+                if (!Directory.Exists(Path.GetDirectoryName(path))) return;
                 List<string> files = Directory.GetFiles(Path.GetDirectoryName(path)).ToList();
                 files = files.Where((file) => types.Contains(Path.GetExtension(file).TrimStart(".".ToCharArray()).ToLower())).ToList();
                 files.Sort(new StringLogicalComparer());
