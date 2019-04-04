@@ -19,12 +19,12 @@ Table of contents
 
 ### Features
 
-- Customizable context menu defined in the same file as the keybindings
-- a searchable options dialog with modern UI
-- a searchable keyboard shortcut editor
+- Customizable context menu defined in the same file as the key bindings
+- Searchable options dialog with modern UI
+- Searchable input (key/mouse) binding editor with modern UI
 - Addon API for .NET languages
 - Scripting API for Python, C#, Lua, JavaScript and PowerShell
-- mpv's OSC, IPC, conf files and more
+- mpv's OSC (on screen controller (play control bar)), IPC, conf files and the power of countless scriptable commands and properties
 
 ### Screenshots
 
