@@ -277,18 +277,18 @@ namespace mpvInputEdit
         {
             HwndSource source = HwndSource.FromHwnd(new WindowInteropHelper(this).Handle);
             source.AddHook(new HwndSourceHook(WndProc));
-            SetKey(InputItem.Key);
+            SetKey(InputItem.Input);
         }
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            InputItem.Key = NewKey;
+            InputItem.Input = NewKey;
             Close();
         }
 
         private void ClearButton_Click(object sender, RoutedEventArgs e)
         {
-            InputItem.Key = "_";
+            InputItem.Input = "_";
             Close();
         }
 

@@ -79,7 +79,11 @@ namespace mpvConfEdit
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
+            WriteToDisk();
+        }
 
+        void WriteToDisk()
+        {
             foreach (var mpvSetting in DynamicSettings)
             {
                 switch (mpvSetting)
@@ -149,12 +153,8 @@ namespace mpvConfEdit
             }
 
             File.WriteAllText(mpvConfPath, String.Join(Environment.NewLine, lines));
-
-            foreach (Process process in Process.GetProcesses())
-                if (process.ProcessName == "mpvnet")
-                    MessageBox.Show("Restart mpv.net in order to apply changed settings.", Title, MessageBoxButton.OK, MessageBoxImage.Information);
-                else if (process.ProcessName == "mpv")
-                    MessageBox.Show("Restart mpv in order to apply changed settings.", Title, MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show("Changes will be available on next startup of mpv(.net).",
+                Title, MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -209,6 +209,11 @@ namespace mpvConfEdit
         private void SupportTextBlock_MouseUp(object sender, MouseButtonEventArgs e)
         {
             Process.Start("https://github.com/stax76/mpv.net#Support");
+        }
+
+        private void ApplyTextBlock_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            WriteToDisk();
         }
     }
 }

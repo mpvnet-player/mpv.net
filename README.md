@@ -70,6 +70,12 @@ https://github.com/stax76/mpv.net/wiki/Scripting-(CSharp,-Python,-JavaScript,-Lu
 
 ### Changelog
 
+### 2.4 (2019-0?-??)
+
+* new options added to the conf GUI editor: gpu-context, gpu-api, scale, cscale, dscale, dither-depth, correct-downscaling, sigmoid-upscaling, deband
+* the conf edit GUI has a 'Apply' feature added to write the conf to mpv.conf without the need to close the conf edit GUI
+* the input edit GUI shows a message box when a duplicate is detected and writes help on top of input.conf
+
 ### 2.3 (2019-04-04)
 
 - dragging a youtube URL on mpv.net would still break something, it should work now

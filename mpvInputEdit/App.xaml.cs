@@ -27,8 +27,8 @@ namespace mpvInputEdit
                             if (l.StartsWith("#")) continue;
                             if (!l.Contains(" ")) continue;
                             InputItem item = new InputItem();
-                            item.Key = l.Substring(0, l.IndexOf(" "));
-                            if (item.Key == "") continue;
+                            item.Input = l.Substring(0, l.IndexOf(" "));
+                            if (item.Input == "") continue;
                             l = l.Substring(l.IndexOf(" ") + 1);
 
                             if (l.Contains("#menu:"))

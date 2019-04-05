@@ -20,6 +20,28 @@ options = [{ name = "no",           help = "always use software decoding (Defaul
            { name = "rkmpp",        help = "requires --vo=gpu (some RockChip devices only)" }]
 
 [[settings]]
+name = "gpu-api"
+default = "auto"
+filter = "Video"
+help = "--gpu-api=<type> Controls which type of graphics APIs will be accepted."
+options = [{ name = "auto",   help = "Use any available API (Default)" },
+           { name = "opengl", help = "Allow only OpenGL (requires OpenGL 2.1+ or GLES 2.0+)" },
+           { name = "vulkan", help = "Allow only Vulkan (requires a valid/working --spirv-compiler)" },
+           { name = "d3d11",  help = "Allow only --gpu-context=d3d11" }]
+
+[[settings]]
+name = "gpu-context"
+default = "auto"
+filter = "Video"
+help = "--gpu-context=<sys> The value auto (the default) selects the GPU context. You can also pass help to get a complete list of compiled in backends (sorted by autoprobe order)."
+options = [{ name = "auto",      help = "auto-select (Default)" },
+           { name = "win",       help = "Win32/WGL" },
+           { name = "winvk",     help = "VK_KHR_win32_surface" },
+           { name = "angle",     help = "Direct3D11 through the OpenGL ES translation layer ANGLE. This supports almost everything the win backend does (if the ANGLE build is new enough)." },
+           { name = "dxinterop", help = "(experimental) Win32, using WGL for rendering and Direct3D 9Ex for presentation. Works on Nvidia and AMD. Newer Intel chips with the latest drivers may also work." },
+           { name = "d3d11",     help = "Win32, with native Direct3D 11 rendering." }]
+
+[[settings]]
 name = "vo"
 default = "gpu"
 filter = "Video"
@@ -27,6 +49,96 @@ helpurl = "https://mpv.io/manual/master/#video-output-drivers-vo"
 help = "--gpu=<mode> Video output drivers to be used. Default = gpu.\n\nFor more information visit:"
 options = [{ name = "gpu",      help = "General purpose, customizable, GPU-accelerated video output driver. It supports extended scaling methods, dithering, color management, custom shaders, HDR, and more. (Default)" },
            { name = "direct3d", help = "Video output driver that uses the Direct3D interface" }]
+
+[[settings]]
+name = "video-sync"
+default = "audio"
+filter = "Video"
+help = "--video-sync=<audio|...> How the player synchronizes audio and video.\n\nFor more information visit:"
+helpurl = "https://mpv.io/manual/master/#options-video-sync"
+options = [{ name = "audio" },
+           { name = "display-resample" },
+           { name = "display-resample-vdrop" },
+           { name = "display-resample-desync" },
+           { name = "display-vdrop" },
+           { name = "display-adrop" },
+           { name = "display-desync" },
+           { name = "desync" }]
+
+[[settings]]
+name = "scale"
+default = "bilinear"
+filter = "Video"
+help = "--scale=<filter> The GPU renderer filter function to use when upscaling video. There are some more filters, but most are not as useful. For a complete list, pass help as value, e.g.: mpv --scale=help"
+options = [{ name = "bilinear",         help = "Bilinear hardware texture filtering (fastest, very low quality). This is the default for compatibility reasons." },
+           { name = "spline36",         help = "Mid quality and speed. This is the default when using gpu-hq." },
+           { name = "lanczos",          help = "Lanczos scaling. Provides mid quality and speed. Generally worse than spline36, but it results in a slightly sharper image which is good for some content types. The number of taps can be controlled with  scale-radius, but is best left unchanged. (This filter is an alias for sinc-windowed sinc)" },
+           { name = "ewa_lanczos",      help = "Elliptic weighted average Lanczos scaling. Also known as Jinc. Relatively slow, but very good quality. The radius can be controlled with scale-radius. Increasing the radius makes the filter sharper but adds more ringing. (This filter is an alias for jinc-windowed jinc)" },
+           { name = "ewa_lanczossharp", help = "A slightly sharpened version of ewa_lanczos, preconfigured to use an ideal radius and parameter. If your hardware can run it, this is probably what you should use by default." },
+           { name = "mitchell",         help = "Mitchell-Netravali. The B and C parameters can be set with  --scale-param1 and --scale-param2. This filter is very good at downscaling (see --dscale)." },
+           { name = "oversample",       help = "A version of nearest neighbour that (naively) oversamples pixels, so that pixels overlapping edges get linearly interpolated instead of rounded. This essentially removes the small imperfections and judder artifacts caused by nearest-neighbour interpolation, in exchange for adding some blur. This filter is good at temporal interpolation, and also known as \"smoothmotion\" (see --tscale)." },
+           { name = "linear",           help = "A --tscale filter." }]
+
+[[settings]]
+name = "cscale"
+default = "bilinear"
+filter = "Video"
+help = "--cscale=<filter> As --scale, but for interpolating chroma information. If the image is not subsampled, this option is ignored entirely."
+options = [{ name = "bilinear",         help = "Bilinear hardware texture filtering (fastest, very low quality). This is the default for compatibility reasons." },
+           { name = "spline36",         help = "Mid quality and speed. This is the default when using gpu-hq." },
+           { name = "lanczos",          help = "Lanczos scaling. Provides mid quality and speed. Generally worse than spline36, but it results in a slightly sharper image which is good for some content types. The number of taps can be controlled with  scale-radius, but is best left unchanged. (This filter is an alias for sinc-windowed sinc)" },
+           { name = "ewa_lanczos",      help = "Elliptic weighted average Lanczos scaling. Also known as Jinc. Relatively slow, but very good quality. The radius can be controlled with scale-radius. Increasing the radius makes the filter sharper but adds more ringing. (This filter is an alias for jinc-windowed jinc)" },
+           { name = "ewa_lanczossharp", help = "A slightly sharpened version of ewa_lanczos, preconfigured to use an ideal radius and parameter. If your hardware can run it, this is probably what you should use by default." },
+           { name = "mitchell",         help = "Mitchell-Netravali. The B and C parameters can be set with  --scale-param1 and --scale-param2. This filter is very good at downscaling (see --dscale)." },
+           { name = "oversample",       help = "A version of nearest neighbour that (naively) oversamples pixels, so that pixels overlapping edges get linearly interpolated instead of rounded. This essentially removes the small imperfections and judder artifacts caused by nearest-neighbour interpolation, in exchange for adding some blur. This filter is good at temporal interpolation, and also known as \"smoothmotion\" (see --tscale)." },
+           { name = "linear",           help = "A --tscale filter." }]
+
+[[settings]]
+name = "dscale"
+default = "bilinear"
+filter = "Video"
+help = "--dscale=<filter> Like --scale, but apply these filters on downscaling instead. If this option is unset, the filter implied by --scale will be applied."
+options = [{ name = "bilinear",         help = "Bilinear hardware texture filtering (fastest, very low quality). This is the default for compatibility reasons." },
+           { name = "spline36",         help = "Mid quality and speed. This is the default when using gpu-hq." },
+           { name = "lanczos",          help = "Lanczos scaling. Provides mid quality and speed. Generally worse than spline36, but it results in a slightly sharper image which is good for some content types. The number of taps can be controlled with  scale-radius, but is best left unchanged. (This filter is an alias for sinc-windowed sinc)" },
+           { name = "ewa_lanczos",      help = "Elliptic weighted average Lanczos scaling. Also known as Jinc. Relatively slow, but very good quality. The radius can be controlled with scale-radius. Increasing the radius makes the filter sharper but adds more ringing. (This filter is an alias for jinc-windowed jinc)" },
+           { name = "ewa_lanczossharp", help = "A slightly sharpened version of ewa_lanczos, preconfigured to use an ideal radius and parameter. If your hardware can run it, this is probably what you should use by default." },
+           { name = "mitchell",         help = "Mitchell-Netravali. The B and C parameters can be set with  --scale-param1 and --scale-param2. This filter is very good at downscaling (see --dscale)." },
+           { name = "oversample",       help = "A version of nearest neighbour that (naively) oversamples pixels, so that pixels overlapping edges get linearly interpolated instead of rounded. This essentially removes the small imperfections and judder artifacts caused by nearest-neighbour interpolation, in exchange for adding some blur. This filter is good at temporal interpolation, and also known as \"smoothmotion\" (see --tscale)." },
+           { name = "linear",           help = "A --tscale filter." }]
+
+[[settings]]
+name = "dither-depth"
+default = "no"
+filter = "Video"
+help = "--dither-depth=<N|no|auto> Set dither target depth to N. Default: no. Note that the depth of the connected video display device cannot be detected. Often, LCD panels will do dithering on their own, which conflicts with this option and leads to ugly output."
+options = [{ name = "no",   help = "Disable any dithering done by mpv." },
+           { name = "auto", help = "Automatic selection. If output bit depth cannot be detected, 8 bits per component are assumed." },
+           { name = "8",    help = "Dither to 8 bit output." }]
+
+[[settings]]
+name = "correct-downscaling"
+default = "no"
+filter = "Video"
+help = "--correct-downscaling When using convolution based filters, extend the filter size when downscaling. Increases quality, but reduces performance while downscaling.\n\nThis will perform slightly sub-optimally for anamorphic video (but still better than without it) since it will extend the size to match only the milder of the scale factors between the axes."
+options = [{ name = "yes" },
+           { name = "no" }]
+
+[[settings]]
+name = "sigmoid-upscaling"
+default = "no"
+filter = "Video"
+help = "--sigmoid-upscaling When upscaling, use a sigmoidal color transform to avoid emphasizing ringing artifacts. This also implies --linear-scaling."
+options = [{ name = "yes" },
+           { name = "no" }]
+
+[[settings]]
+name = "deband"
+default = "no"
+filter = "Video"
+help = "--deband Enable the debanding algorithm. This greatly reduces the amount of visible banding, blocking and other quantization artifacts, at the expense of very slightly blurring some of the finest details. In practice, it's virtually always an improvement - the only reason to disable it would be for performance."
+options = [{ name = "yes" },
+           { name = "no" }]
 
 [[settings]]
 name = "volume"
@@ -144,21 +256,6 @@ name = "loop-playlist"
 default = ""
 filter = "Playback"
 help = "--loop-playlist=<N|inf|force|no>, --loop-playlist Loops playback N times. A value of 1 plays it one time (default), 2 two times, etc. inf means forever. no is the same as 1 and disables looping. If several files are specified on command line, the entire playlist is looped. --loop-playlist is the same as  --loop-playlist=inf.\n\nThe force mode is like inf, but does not skip playlist entries which have been marked as failing. This means the player might waste CPU time trying to loop a file that doesn't exist. But it might be useful for playing webradios under very bad network conditions."
-
-[[settings]]
-name = "video-sync"
-default = "audio"
-filter = "Video"
-help = "--video-sync=<audio|...> How the player synchronizes audio and video.\n\nFor more information visit:"
-helpurl = "https://mpv.io/manual/master/#options-video-sync"
-options = [{ name = "audio" },
-           { name = "display-resample" },
-           { name = "display-resample-vdrop" },
-           { name = "display-resample-desync" },
-           { name = "display-vdrop" },
-           { name = "display-adrop" },
-           { name = "display-desync" },
-           { name = "desync" }]
 
 [[settings]]
 name = "audio-file-auto"

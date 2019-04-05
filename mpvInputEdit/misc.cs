@@ -21,14 +21,12 @@ namespace mpvInputEdit
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private string _Key = "";
+        private string _Input = "";
 
-        public string Key {
-            get {
-                return _Key;
-            }
+        public string Input {
+            get => _Input;
             set {
-                _Key = value;
+                _Input = value;
                 NotifyPropertyChanged();
             }
         }

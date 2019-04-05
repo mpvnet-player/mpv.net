@@ -8,20 +8,53 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace mpvInputEdit.Properties
-{
-
-
+namespace mpvInputEdit.Properties {
+    
+    
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "11.0.0.0")]
-    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase
-    {
-
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.0.0.0")]
+    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+        
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
-
+        
         public static Settings Default {
             get {
                 return defaultInstance;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(@" # This file defines the input (keys and mouse) bindings of mpv and mpv.net
+ # and it also defines the context menu of mpv.net. mpv.net has a input
+ # editor and a conf editor as alternatives to editing this file via texteditor.
+ # The input and conf editors can be found in mpv.net's context menu at:
+
+ # Settings > Show Config Editor
+ # Settings > Show Input Editor
+
+ # The defaults of this file can be found at:
+
+ # https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt
+
+ # the defaults of mpv can be found at:
+
+ # https://github.com/mpv-player/mpv/blob/master/etc/input.conf
+
+ # mpv.net's defaults of mpv.conf contain: 'input-default-bindings = no'
+ # which disables mpv's input defaults. Every line in this file begins with a
+ # space character to make it easier to do a text search, so if you want to know
+ # if 'o' has already a binding you can make a text search on ' o '.
+
+ # mpv input commands: https://github.com/stax76/mpv.net/wiki/mpv-input-commands
+
+ # mpv input keys:     https://github.com/stax76/mpv.net/wiki/mpv-input-keys")]
+        public string input_conf_help {
+            get {
+                return ((string)(this["input_conf_help"]));
+            }
+            set {
+                this["input_conf_help"] = value;
             }
         }
     }
