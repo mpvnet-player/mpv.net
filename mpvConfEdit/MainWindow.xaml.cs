@@ -91,14 +91,10 @@ namespace mpvConfEdit
                     case StringSetting s:
                         if ((s.Value ?? "") != s.Default)
                             mpvConf[s.Name] = s.Value;
-                        else
-                            mpvConf.Remove(s.Name);
                         break;
                     case OptionSetting s:
                         if ((s.Value ?? "") != s.Default)
                             mpvConf[s.Name] = s.Value;
-                        else
-                            mpvConf.Remove(s.Name);
                         break;
                 }
             }

@@ -360,15 +360,23 @@ namespace mpvnet
 
         public static string get_property_string(string name, bool throwOnException = false)
         {
-            int err = mpv_get_property(MpvHandle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_STRING, out IntPtr lpBuffer);
+            try
+            {
+                int err = mpv_get_property(MpvHandle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_STRING, out IntPtr lpBuffer);
 
-            if (err < 0 && throwOnException)
-                throw new Exception($"{name}: {(mpv_error)err}");
+                if (err < 0 && throwOnException)
+                    throw new Exception($"{name}: {(mpv_error)err}");
 
-            var ret = StringFromNativeUtf8(lpBuffer);
-            mpv_free(lpBuffer);
+                var ret = StringFromNativeUtf8(lpBuffer);
+                mpv_free(lpBuffer);
 
-            return ret;
+                return ret;
+            }
+            catch (Exception ex)
+            {
+                if (throwOnException) throw ex;
+                return "";
+            }
         }
 
         public static int get_property_int(string name, bool throwOnException = false)

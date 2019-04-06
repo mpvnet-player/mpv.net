@@ -37,7 +37,7 @@ namespace mpvInputEdit
             string searchText = SearchControl.SearchTextBox.Text.ToLower();
             if (searchText == "") return true;
 
-            if (searchText.StartsWith("i "))
+            if (searchText.StartsWith("i ") || searchText.StartsWith("i:"))
             {
                 searchText = searchText.Substring(2).Trim();
 
@@ -45,9 +45,9 @@ namespace mpvInputEdit
                     return item.Input.ToLower().Replace("ctrl+", "").Replace("shift+", "").Replace("alt+", "").Contains(searchText);
                 else
                     return item.Input.ToLower().Contains(searchText);
-            } else if (searchText.StartsWith("m "))
+            } else if (searchText.StartsWith("m ") || searchText.StartsWith("m:"))
                 return item.Menu.ToLower().Contains(searchText.Substring(2).Trim());
-            else if (searchText.StartsWith("c "))
+            else if (searchText.StartsWith("c ") || searchText.StartsWith("c:"))
                 return item.Command.ToLower().Contains(searchText.Substring(2).Trim());
             else if (item.Command.ToLower().Contains(searchText) ||
                 item.Menu.ToLower().Contains(searchText) ||

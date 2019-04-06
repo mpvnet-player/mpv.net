@@ -14,8 +14,11 @@ namespace mpvnet
         public static IntPtr Hwnd;
 
         private Point LastCursorPosChanged;
-        private int LastCursorChangedTickCount;
-        private bool IgnoreDpiChanged = true;
+        private int   LastCursorChangedTickCount;
+        private bool  IgnoreDpiChanged = true;
+        private float mpvAutofit = 0.42f;
+        private bool  mpvFullscreen;
+        private int   mpvScreen = -1;
 
         public ContextMenuStripEx CMS;
 
@@ -32,15 +35,15 @@ namespace mpvnet
                 MinimumSize = new Size(FontHeight * 16, FontHeight * 9);
                 Text += " " + Application.ProductVersion;
 
-                if (mp.mpvConf.ContainsKey("screen"))
-                    SetScreen(Convert.ToInt32(mp.mpvConf["screen"]));
-                else
-                    SetScreen(Screen.PrimaryScreen);
-
-                ChangeFullscreen((mp.mpvConf.ContainsKey("fullscreen") && mp.mpvConf["fullscreen"] == "yes") ||
-                                 (mp.mpvConf.ContainsKey("fs") && mp.mpvConf["fs"] == "yes"));
+                foreach (var i in mp.mpvConf)
+                    ProcessMpvProperty(i.Key, i.Value);
 
                 ProcessCommandLineEarly();
+
+                if (mpvScreen == -1) mpvScreen = Array.IndexOf(Screen.AllScreens, Screen.PrimaryScreen);
+                SetScreen(mpvScreen);
+
+                ChangeFullscreen(mpvFullscreen);
             }
             catch (Exception e)
             {
@@ -51,7 +54,8 @@ namespace mpvnet
         protected void SetScreen(int targetIndex)
         {
             Screen[] screens = Screen.AllScreens;
-            if (targetIndex < 0 || targetIndex > screens.Length - 1) return;
+            if (targetIndex < 0) targetIndex = 0;
+            if (targetIndex > screens.Length - 1) targetIndex = screens.Length - 1;
             SetScreen(screens[Array.IndexOf(screens, screens[targetIndex])]);
         }
 
@@ -67,7 +71,7 @@ namespace mpvnet
         {
             if (IsFullscreen || mp.VideoSize.Width == 0) return;
             Screen screen = Screen.FromControl(this);
-            int height = Convert.ToInt32(screen.Bounds.Height * 0.6);
+            int height = Convert.ToInt32(screen.Bounds.Height * mpvAutofit);
             int width = Convert.ToInt32(height * mp.VideoSize.Width / (double)mp.VideoSize.Height);
             Point middlePos = new Point(Left + Width / 2, Top + Height / 2);
             var rect = new Native.RECT(new Rectangle(screen.Bounds.X, screen.Bounds.Y, width, height));
@@ -82,7 +86,7 @@ namespace mpvnet
             if (IsFullscreen || mp.VideoSize.Width == 0) return;
             Screen screen = Screen.FromControl(this);
             int height = ClientSize.Height;
-            if (height > screen.Bounds.Height * 0.8) height = Convert.ToInt32(screen.Bounds.Height * 0.6);
+            if (height > screen.Bounds.Height * 0.9) height = Convert.ToInt32(screen.Bounds.Height * mpvAutofit);
             int width = Convert.ToInt32(height * mp.VideoSize.Width / (double)mp.VideoSize.Height);
             Point middlePos = new Point(Left + Width / 2, Top + Height / 2);
             var rect = new Native.RECT(new Rectangle(screen.Bounds.X, screen.Bounds.Y, width, height));
@@ -108,11 +112,7 @@ namespace mpvnet
                     {
                         string left = i.Substring(2, i.IndexOf("=") - 2);
                         string right = i.Substring(left.Length + 3);
-                        
-                        if (left == "screen")
-                            SetScreen(Convert.ToInt32(right));
-
-                        ChangeFullscreen((left == "fs" || left == "fullscreen") && right == "yes");
+                        ProcessMpvProperty(left, right);
                     }
                     else
                     {
@@ -122,11 +122,30 @@ namespace mpvnet
                         {
                             case "fs":
                             case "fullscreen":
-                                ChangeFullscreen(true);
+                                mpvFullscreen = true;
                                 break;
                         }
                     }
                 }
+            }
+        }
+
+        void ProcessMpvProperty(string name, string value)
+        {
+            switch (name)
+            {
+                case "autofit":
+                    if (value.Length == 3 && value.EndsWith("%"))
+                        if (int.TryParse(value.Substring(0, 2), out int result))
+                            mpvAutofit = result / 100f;
+                    break;
+                case "fs":
+                case "fullscreen":
+                    mpvFullscreen = value == "yes";
+                    break;
+                case "screen":
+                    mpvScreen = Convert.ToInt32(value);
+                    break;
             }
         }
 

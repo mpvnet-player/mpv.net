@@ -14,7 +14,7 @@
         <Controls:SearchTextBoxUserControl x:Name="SearchControl" Width="300" Margin="0,20,0,20" Grid.ColumnSpan="2" />
         <DataGrid Grid.Row="1" x:Name="DataGrid" CommandManager.PreviewCanExecute="DataGrid_PreviewCanExecute" AutoGenerateColumns="False" CellStyle="{StaticResource DataGrid_Font_Centering}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Context Menu"  Binding="{Binding Menu}"/>
+                <DataGridTextColumn Header="Menu"  Binding="{Binding Menu}"/>
                 <DataGridTemplateColumn Header="Input">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

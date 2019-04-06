@@ -70,12 +70,16 @@ https://github.com/stax76/mpv.net/wiki/Scripting-(CSharp,-Python,-JavaScript,-Lu
 
 ### Changelog
 
-### 2.4 (2019-0?-??)
+### 2.4 (2019-04-06)
 
 - new options added to the conf GUI editor: gpu-context, gpu-api, scale, cscale, dscale, dither-depth, correct-downscaling, sigmoid-upscaling, deband
 - the conf edit GUI has a 'Apply' feature added to write the conf to mpv.conf without the need to close the conf edit GUI
-- the input edit GUI shows a message box when a duplicate is detected and it has a new feature to narrow the filter scope to eather of input, menu or command and the editor writes always the same help on top of input.conf as it is found in the defaults 
+- the input edit GUI shows a message box when a duplicate is detected and it has a new feature to reduce the filter scope to eather of input, menu or command and the editor writes always the same help on top of input.conf as it is found in the defaults 
 - the conf edit GUI was often starting out of working area bounds and is now starting with center screen
+- the startup size was reduced and a issue was fixed that when the screen property was defined for a screen that isn't connected the startup size wasn't applied
+- added feature to load external audio and subtitle files in the menu under: Open > Load external audio|subtitle files (default binding at: [input.conf](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt))
+- previously the conf edit GUI removed settings from the conf file if the setting was set to the default, the new behavior is not to remove anything
+- the autofit mpv property was partly implemented, you can use 'autofit = 50%' in mpv.conf or '--autofit=50%' on the command line, WxH isn't implemented and only percent values are accepted. There is a new wiki page explaining limitations compared to the original mpv: <https://github.com/stax76/mpv.net/wiki/Limitations>
 
 ### 2.3 (2019-04-04)
 

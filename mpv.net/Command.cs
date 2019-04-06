@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace mpvnet
@@ -185,6 +186,36 @@ namespace mpvnet
                 string command = Microsoft.VisualBasic.Interaction.InputBox("Enter URL to be opened.");
                 if (string.IsNullOrEmpty(command)) return;
                 mp.LoadURL(command);
+            }));
+        }
+
+        public static void load_sub(string[] args)
+        {
+            MainForm.Instance.BeginInvoke(new Action(() => {
+                using (var d = new OpenFileDialog())
+                {
+                    d.InitialDirectory = Path.GetDirectoryName(mp.get_property_string("path", false));
+                    d.Multiselect = true;
+
+                    if (d.ShowDialog() == DialogResult.OK)
+                        foreach (string i in d.FileNames)
+                            mp.commandv("sub-add", i);
+                }
+            }));
+        }
+
+        public static void load_audio(string[] args)
+        {
+            MainForm.Instance.BeginInvoke(new Action(() => {
+                using (var d = new OpenFileDialog())
+                {
+                    d.InitialDirectory = Path.GetDirectoryName(mp.get_property_string("path", false));
+                    d.Multiselect = true;
+
+                    if (d.ShowDialog() == DialogResult.OK)
+                        foreach (string i in d.FileNames)
+                            mp.commandv("audio-add", i);
+                }
             }));
         }
     }
