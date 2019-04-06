@@ -79,7 +79,7 @@ https://github.com/stax76/mpv.net/wiki/Scripting-(CSharp,-Python,-JavaScript,-Lu
 - the startup size was reduced and a issue was fixed that when the screen property was defined for a screen that isn't connected the startup size wasn't applied
 - added feature to load external audio and subtitle files in the menu under: Open > Load external audio|subtitle files (default binding at: [input.conf](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt))
 - previously the conf edit GUI removed settings from the conf file if the setting was set to the default, the new behavior is not to remove anything
-- the autofit mpv property was partly implemented, you can use 'autofit = 50%' in mpv.conf or '--autofit=50%' on the command line, WxH isn't implemented and only percent values are accepted. There is a new wiki page explaining limitations compared to the original mpv: <https://github.com/stax76/mpv.net/wiki/Limitations>
+- the autofit mpv property was partly implemented, you can use 'autofit = 50%' in mpv.conf or '--autofit=50%' on the command line, WxH isn't implemented and only percent values are accepted. There is a new wiki page explaining the mpv.net limitations compared to the original mpv: [Limitations](https://github.com/stax76/mpv.net/wiki/Limitations)
 
 ### 2.3 (2019-04-04)
 

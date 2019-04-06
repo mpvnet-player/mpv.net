@@ -61,16 +61,20 @@ namespace mpvnet.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to  # mpv.net key bindings, mouse bindings and context menu configuration
-        /// 
-        /// o           script-message mpv.net open-files #menu: O  ; Open Files...
-        /// _           ignore                 #menu: _             ; -
-        /// Space       cycle pause            #menu: Space, Enter  ; Play/Pause
-        /// Enter       cycle pause
-        /// s           stop                   #menu: S             ; Stop
-        /// _           ignore                 #menu: _             ; -
-        /// f           cycle fullscreen       #menu: F             ; Toggle Fullscreen
-        /// [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to 
+        /// # This file defines the input (keys and mouse) bindings of mpv and mpv.net
+        /// # and it also defines the context menu of mpv.net. mpv.net has an input
+        /// # editor and an conf editor as alternatives to editing conf text files.
+        /// # The input and conf editors can be found in mpv.net&apos;s context menu at:
+        ///
+        /// # Settings &gt; Show Config Editor
+        /// # Settings &gt; Show Input Editor
+        ///
+        /// # The defaults of this file can be found at:
+        ///
+        /// # https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt
+        ///
+        /// # the [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string input_conf {
             get {
@@ -79,15 +83,20 @@ namespace mpvnet.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to input-ar-delay = 500
+        ///   Looks up a localized string similar to 
+        ///# mpv manual: https://mpv.io/manual/master/
+        ///
+        ///# mpv.net mpv.conf defaults: https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/mpv.conf.txt
+        ///
+        ///input-ar-delay = 500
         ///input-ar-rate = 20
         ///volume = 50
         ///hwdec = yes
-        ///vo = direct3d
         ///keep-open = yes
         ///keep-open-pause = no
-        ///osd-playing-msg = &apos;${filename}&apos;
-        ///screenshot-directory = ~~desktop/.
+        ///osd-playing-msg = ${filename}
+        ///screenshot-directory = ~~desktop/
+        ///input-default-bindings = no.
         /// </summary>
         internal static string mpv_conf {
             get {
