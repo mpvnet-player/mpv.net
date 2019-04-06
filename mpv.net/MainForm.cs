@@ -29,6 +29,7 @@ namespace mpvnet
                 Application.ThreadException += Application_ThreadException;
                 Instance = this;
                 Hwnd = Handle;
+                MinimumSize = new Size(FontHeight * 16, FontHeight * 9);
                 Text += " " + Application.ProductVersion;
 
                 if (mp.mpvConf.ContainsKey("screen"))

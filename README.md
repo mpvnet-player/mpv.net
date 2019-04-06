@@ -72,9 +72,10 @@ https://github.com/stax76/mpv.net/wiki/Scripting-(CSharp,-Python,-JavaScript,-Lu
 
 ### 2.4 (2019-0?-??)
 
-* new options added to the conf GUI editor: gpu-context, gpu-api, scale, cscale, dscale, dither-depth, correct-downscaling, sigmoid-upscaling, deband
-* the conf edit GUI has a 'Apply' feature added to write the conf to mpv.conf without the need to close the conf edit GUI
-* the input edit GUI shows a message box when a duplicate is detected and writes help on top of input.conf
+- new options added to the conf GUI editor: gpu-context, gpu-api, scale, cscale, dscale, dither-depth, correct-downscaling, sigmoid-upscaling, deband
+- the conf edit GUI has a 'Apply' feature added to write the conf to mpv.conf without the need to close the conf edit GUI
+- the input edit GUI shows a message box when a duplicate is detected and it has a new feature to narrow the filter scope to eather of input, menu or command and the editor writes always the same help on top of input.conf as it is found in the defaults 
+- the conf edit GUI was often starting out of working area bounds and is now starting with center screen
 
 ### 2.3 (2019-04-04)
 

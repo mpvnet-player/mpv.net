@@ -59,20 +59,20 @@
  Ctrl+KP2    add video-pan-y  0.01  #menu: Pan & Scan > Move Down
  _           ignore                 #menu: Pan & Scan > -
  w           add panscan -0.1       #menu: Pan & Scan > Decrease Height
- W           add panscan +0.1       #menu: Pan & Scan > Increase Height
+ W           add panscan  0.1       #menu: Pan & Scan > Increase Height
  _           ignore                 #menu: Pan & Scan > -
- Ctrl+BS     set video-zoom 0 ; set video-pan-x 0 ; set video-pan-y 0 #menu: Pan & Scan > Reset
+ Ctrl+BS     set video-zoom 0; set video-pan-x 0; set video-pan-y 0 #menu: Pan & Scan > Reset
  Ctrl+1      add contrast -1        #menu: Video > Decrease Contrast
- Ctrl+2      add contrast 1         #menu: Video > Increase Contrast
+ Ctrl+2      add contrast           #menu: Video > Increase Contrast
  _           ignore                 #menu: Video > -
  Ctrl+3      add brightness -1      #menu: Video > Decrease Brightness
- Ctrl+4      add brightness 1       #menu: Video > Increase Brightness
+ Ctrl+4      add brightness  1      #menu: Video > Increase Brightness
  _           ignore                 #menu: Video > -
  Ctrl+5      add gamma -1           #menu: Video > Decrease Gamma
- Ctrl+6      add gamma 1            #menu: Video > Increase Gamma
+ Ctrl+6      add gamma  1           #menu: Video > Increase Gamma
  _           ignore                 #menu: Video > -
  Ctrl+7      add saturation -1      #menu: Video > Decrease Saturation
- Ctrl+8      add saturation 1       #menu: Video > Increase Saturation
+ Ctrl+8      add saturation  1      #menu: Video > Increase Saturation
  _           ignore                 #menu: Video > -
  Ctrl+s      async screenshot       #menu: Video > Take Screenshot
  d           cycle deinterlace      #menu: Video > Toggle Deinterlace
@@ -85,13 +85,13 @@
  v           cycle sub-visibility   #menu: Subtitle > Toggle Visibility
  _           ignore                 #menu: Subtitle > -
  z           add sub-delay -0.1     #menu: Subtitle > Delay -0.1
- Z           add sub-delay +0.1     #menu: Subtitle > Delay +0.1
+ Z           add sub-delay  0.1     #menu: Subtitle > Delay +0.1
  _           ignore                 #menu: Subtitle > -
  r           add sub-pos -1         #menu: Subtitle > Move Up
  R           add sub-pos +1         #menu: Subtitle > Move Down
  _           ignore                 #menu: Subtitle > -
  _           add sub-scale -0.1     #menu: Subtitle > Decrease Subtitle Font Size
- _           add sub-scale +0.1     #menu: Subtitle > Increase Subtitle Font Size
+ _           add sub-scale  0.1     #menu: Subtitle > Increase Subtitle Font Size
  +           add volume  10         #menu: Volume > Up
  -           add volume -10         #menu: Volume > Down
  _           ignore                 #menu: Volume > -
@@ -150,7 +150,7 @@
  Forward seek  60
  Rewind  seek -60
  Mute cycle mute
- Volume_Up   add volume 10
+ Volume_Up   add volume  10
  Volume_Down add volume -10
  Wheel_Up    add volume  10
  Wheel_Down  add volume -10

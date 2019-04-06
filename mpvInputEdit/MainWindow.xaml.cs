@@ -34,10 +34,22 @@ namespace mpvInputEdit
 
         bool Filter(InputItem item)
         {
-            string searchText = SearchControl.SearchTextBox.Text.ToLowerInvariant();
+            string searchText = SearchControl.SearchTextBox.Text.ToLower();
             if (searchText == "") return true;
 
-            if (item.Command.ToLower().Contains(searchText) ||
+            if (searchText.StartsWith("i "))
+            {
+                searchText = searchText.Substring(2).Trim();
+
+                if (searchText.Length < 3)
+                    return item.Input.ToLower().Replace("ctrl+", "").Replace("shift+", "").Replace("alt+", "").Contains(searchText);
+                else
+                    return item.Input.ToLower().Contains(searchText);
+            } else if (searchText.StartsWith("m "))
+                return item.Menu.ToLower().Contains(searchText.Substring(2).Trim());
+            else if (searchText.StartsWith("c "))
+                return item.Command.ToLower().Contains(searchText.Substring(2).Trim());
+            else if (item.Command.ToLower().Contains(searchText) ||
                 item.Menu.ToLower().Contains(searchText) ||
                 item.Input.ToLower().Contains(searchText))
             {
