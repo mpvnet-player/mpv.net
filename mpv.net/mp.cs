@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using VBNET;
 using static mpvnet.libmpv;
 using static mpvnet.Native;
 
@@ -216,7 +216,7 @@ namespace mpvnet
                                     {
                                         List<string> names = mpvnet.Command.Commands.Select((item) => item.Name).ToList();
                                         names.Sort();
-                                        MainForm.Instance.ShowMsgBox($"No command '{args[1]}' found. Available commands are:\n\n{string.Join("\n", names)}\n\nHow to bind these commands can be seen in the default input bindings and menu definition located at:\n\nhttps://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt", MessageBoxIcon.Error);
+                                        Msg.ShowError($"No command '{args[1]}' found.", $"Available commands are:\n\n{string.Join("\n", names)}\n\nHow to bind these commands can be seen in the [https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt default input bindings and menu definition].");
                                     }
                                 }
                                 ClientMessage?.Invoke(args);
@@ -265,7 +265,7 @@ namespace mpvnet
                 }
                 catch (Exception ex)
                 {
-                    MainForm.Instance.ShowMsgBox(ex.ToString(), MessageBoxIcon.Error);
+                    Msg.ShowException(ex);
                 }
             }
         }

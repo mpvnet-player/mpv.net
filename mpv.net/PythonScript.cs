@@ -3,7 +3,7 @@ using System.Reflection;
 using System.Windows.Forms;
 using IronPython.Hosting;
 using Microsoft.Scripting.Hosting;
-
+using VBNET;
 using PyRT = IronPython.Runtime;
 
 namespace mpvnet
@@ -27,7 +27,7 @@ namespace mpvnet
             }
             catch (Exception ex)
             {
-                MainForm.Instance.ShowMsgBox(ex.ToString(), MessageBoxIcon.Error);
+                Msg.ShowException(ex);
             }
         }
     }

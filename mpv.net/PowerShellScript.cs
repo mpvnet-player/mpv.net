@@ -5,6 +5,7 @@ using System.Management.Automation.Runspaces;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using VBNET;
 
 namespace mpvnet
 {
@@ -47,12 +48,12 @@ Using namespace System;
                                     throw new Exception();
                             }
                         }
-                        catch
+                        catch (Exception ex2)
                         {
-                            MainForm.Instance.ShowMsgBox("PowerShell Setup Problem\n\nEnsure you have at least PowerShell 5.1 installed.", MessageBoxIcon.Error);
+                            Msg.ShowError("PowerShell Setup Problem\n\nEnsure you have at least PowerShell 5.1 installed.", ex2.ToString());
                             return null;
                         }
-                        MainForm.Instance.ShowMsgBox(ex.ToString(), MessageBoxIcon.Error);
+                        Msg.ShowException(ex);
                     }
                 }
             }

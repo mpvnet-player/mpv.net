@@ -53,6 +53,7 @@
  _           ignore                 #menu: Seek > -
  Ctrl+Right  no-osd seek  300       #menu: Seek > 5 min forward
  Ctrl+Left   no-osd seek -300       #menu: Seek > 5 min backward
+
  Ctrl++      add video-zoom  0.1    #menu: Pan & Scan > Increase Size
  Ctrl+-      add video-zoom -0.1    #menu: Pan & Scan > Decrease Size
  _           ignore                 #menu: Pan & Scan > -
@@ -66,6 +67,7 @@
  W           add panscan  0.1       #menu: Pan & Scan > Increase Height
  _           ignore                 #menu: Pan & Scan > -
  Ctrl+BS     set video-zoom 0; set video-pan-x 0; set video-pan-y 0 #menu: Pan & Scan > Reset
+
  Ctrl+1      add contrast -1        #menu: Video > Decrease Contrast
  Ctrl+2      add contrast           #menu: Video > Increase Contrast
  _           ignore                 #menu: Video > -
@@ -81,10 +83,12 @@
  Ctrl+s      async screenshot       #menu: Video > Take Screenshot
  d           cycle deinterlace      #menu: Video > Toggle Deinterlace
  a           cycle-values video-aspect "16:9" "4:3" "2.35:1" "-1" #menu: Video > Cycle Aspect Ratio
+
  KP7         cycle audio            #menu: Audio > Cycle/Next
  _           ignore                 #menu: Audio > -
  KP6         add audio-delay  0.100 #menu: Audio > Delay +0.1
  KP9         add audio-delay -0.100 #menu: Audio > Delay -0.1
+
  KP8         cycle sub              #menu: Subtitle > Cycle/Next
  v           cycle sub-visibility   #menu: Subtitle > Toggle Visibility
  _           ignore                 #menu: Subtitle > -
@@ -96,10 +100,12 @@
  _           ignore                 #menu: Subtitle > -
  _           add sub-scale -0.1     #menu: Subtitle > Decrease Subtitle Font Size
  _           add sub-scale  0.1     #menu: Subtitle > Increase Subtitle Font Size
+
  +           add volume  10         #menu: Volume > Up
  -           add volume -10         #menu: Volume > Down
  _           ignore                 #menu: Volume > -
  m           cycle mute             #menu: Volume > Mute
+
  [           multiply speed 0.9     #menu: Speed > -10%
  ]           multiply speed 1.1     #menu: Speed > +10%
  _           ignore                 #menu: Speed > -
@@ -107,6 +113,7 @@
  }           multiply speed 2.0     #menu: Speed > Double
  _           ignore                 #menu: Speed > -
  BS          set speed 1            #menu: Speed > Reset
+
  KP0 script-message rate-file 0     #menu: Addons > Rating > 0stars
  KP1 script-message rate-file 1     #menu: Addons > Rating > 1stars
  KP2 script-message rate-file 2     #menu: Addons > Rating > 2stars
@@ -124,7 +131,7 @@
  _ script-message mpv.net set-setting hwdec no    #menu: Settings > Hardware Decoding > Disable
  Ctrl+c script-message mpv.net show-conf-editor   #menu: Settings > Show Config Editor
  Ctrl+i script-message mpv.net show-input-editor  #menu: Settings > Show Input Editor
- Ctrl+f script-message mpv.net open-config-folder #menu: Settings > Open Config Folder
+ Ctrl+f script-message mpv.net open-conf-folder   #menu: Settings > Open Config Folder
 
  h script-message mpv.net show-history            #menu: Tools > Show History
  l ab-loop                                        #menu: Tools > Set/clear A-B loop points

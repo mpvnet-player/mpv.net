@@ -193,7 +193,12 @@
     <Content Include="screenshot.jpg" />
     <Content Include="Resources\input.conf.txt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\VBNET\VBNET.vbproj">
+      <Project>{a1d11294-05bf-4d77-b008-aecf1aa93c9f}</Project>
+      <Name>VBNET</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

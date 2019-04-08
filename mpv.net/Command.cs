@@ -6,6 +6,8 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using VBNET;
+
 namespace mpvnet
 {
     public class Command
@@ -54,7 +56,7 @@ namespace mpvnet
             }));
         }
 
-        public static void open_config_folder(string[] args)
+        public static void open_conf_folder(string[] args)
         {
             Process.Start(mp.mpvConfFolderPath);
         }
@@ -76,7 +78,8 @@ namespace mpvnet
             if (File.Exists(fp))
                 Process.Start(fp);
             else
-                if (MainForm.Instance.ShowMsgBox("Create history.txt file in config folder?\n\nmpv.net will write the date, time and filename of opened files to it.", MessageBoxIcon.Question) == DialogResult.OK)
+                if (Msg.ShowQuestion("Create history.txt file in config folder?",
+                    "mpv.net will write the date, time and filename of opened files to it.") == MsgResult.OK)
                     File.WriteAllText(fp, "");
         }
 
@@ -105,7 +108,7 @@ namespace mpvnet
             else
                 File.WriteAllText(mp.mpvConfPath, File.ReadAllText(mp.mpvConfPath) + Environment.NewLine + args[0] + " = " + args[1]);
 
-            MainForm.Instance.ShowMsgBox("Please restart mpv.net", MessageBoxIcon.Information);
+            Msg.Show("Changed settings are available on next startup.");
         }
 
         public static void show_info(string[] args)

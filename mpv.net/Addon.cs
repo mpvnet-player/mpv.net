@@ -5,6 +5,8 @@ using System.ComponentModel.Composition.Hosting;
 using System.IO;
 using System.Windows.Forms;
 
+using VBNET;
+
 namespace mpvnet
 {
     public class Addon
@@ -38,9 +40,9 @@ namespace mpvnet
                     CompositionContainer.ComposeParts(this);
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                MainForm.Instance.ShowMsgBox(e.ToString(), MessageBoxIcon.Error);
+                Msg.ShowException(ex);
             }
         }
     }

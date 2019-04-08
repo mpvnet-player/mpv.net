@@ -5,6 +5,9 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
 using System.Linq;
+using System.Collections.Generic;
+
+using VBNET;
 
 namespace mpvnet
 {
@@ -30,6 +33,8 @@ namespace mpvnet
             {
                 AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
                 Application.ThreadException += Application_ThreadException;
+                Msg.SupportURL = "https://github.com/stax76/mpv.net#support";
+
                 Instance = this;
                 Hwnd = Handle;
                 MinimumSize = new Size(FontHeight * 16, FontHeight * 9);
@@ -45,9 +50,9 @@ namespace mpvnet
 
                 ChangeFullscreen(mpvFullscreen);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                ShowMsgBox(e.ToString(), MessageBoxIcon.Error);
+                Msg.ShowException(ex);
             }
         }
 
@@ -151,32 +156,56 @@ namespace mpvnet
 
         public void BuildMenu()
         {
-            foreach (var i in File.ReadAllText(mp.InputConfPath).Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries))
+            string content = File.ReadAllText(mp.InputConfPath);
+            List<string> lines = null;
+            Dictionary<string, string> commandInputDic = new Dictionary<string, string>();
+
+            if (content.Contains("#menu:"))
+                lines = content.Split("\r\n".ToCharArray()).ToList();
+            else
+            {
+                lines = Properties.Resources.input_conf.Split("\r\n".ToCharArray()).ToList();
+                
+                foreach (string i in content.Split("\r\n".ToCharArray()))
+                {
+                    string line = i.Trim();
+                    if (line.StartsWith("#") || !line.Contains(" ")) continue;
+                    string input = line.Substring(0, line.IndexOf(" ")).Trim();
+                    string command = line.Substring(line.IndexOf(" ") + 1).Trim();
+                    commandInputDic[command] = input;
+                }
+            }
+
+            foreach (string i in lines)
             {
                 if (!i.Contains("#menu:")) continue;
-                var left = i.Substring(0, i.IndexOf("#menu:")).Trim();
+                string left = i.Substring(0, i.IndexOf("#menu:")).Trim();
                 if (left.StartsWith("#")) continue;
-                var cmd = left.Substring(left.IndexOf(" ") + 1).Trim();
-                var menu = i.Substring(i.IndexOf("#menu:") + "#menu:".Length).Trim();
-                var key = left.Substring(0, left.IndexOf(" "));
-                if (key == "_") key = "";
-                if (menu.Contains(";")) key = menu.Substring(0, menu.IndexOf(";")).Trim();
-                var path = menu.Substring(menu.IndexOf(";") + 1).Trim().Replace("&", "&&");
-                if (path == "" || cmd == "") continue;
+                string command = left.Substring(left.IndexOf(" ") + 1).Trim();
+                string menu = i.Substring(i.IndexOf("#menu:") + "#menu:".Length).Trim();
+                string input = left.Substring(0, left.IndexOf(" "));
+                if (input == "_") input = "";
+                if (menu.Contains(";")) input = menu.Substring(0, menu.IndexOf(";")).Trim();
+                string path = menu.Substring(menu.IndexOf(";") + 1).Trim().Replace("&", "&&");
+                if (path == "" || command == "") continue;
+
+                if (commandInputDic.Count > 0)
+                    if (commandInputDic.ContainsKey(command))
+                        input = commandInputDic[command];
+                    else
+                        input = "";
 
                 var menuItem = CMS.Add(path, () => {
-                    try
-                    {
-                        mp.command_string(cmd);
+                    try {
+                        mp.command_string(command);
                     }
-                    catch (Exception e)
-                    {
-                        ShowMsgBox(e.ToString(), MessageBoxIcon.Error);
+                    catch (Exception ex) {
+                        Msg.ShowException(ex);
                     }
                 });
                 
                 if (menuItem != null)
-                    menuItem.ShortcutKeyDisplayString = key.Replace("_","") + "   ";
+                    menuItem.ShortcutKeyDisplayString = input.Replace("_","") + "   ";
             }
         }
 
@@ -207,12 +236,12 @@ namespace mpvnet
 
         private void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
         {
-            ShowMsgBox(e.Exception.ToString(), MessageBoxIcon.Error);
+            Msg.ShowException(e.Exception);
         }
 
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            ShowMsgBox(e.ExceptionObject.ToString(), MessageBoxIcon.Error);
+           Msg.ShowError(e.ExceptionObject.ToString());
         }
 
         private void mp_VideoSizeChanged()
@@ -431,7 +460,7 @@ namespace mpvnet
             if (clipboard.StartsWith("https://www.youtube.com/watch?") && LastURL != clipboard && Visible)
             {
                 LastURL = clipboard;
-                if (ShowMsgBox("Play YouTube URL?", MessageBoxIcon.Question) == DialogResult.OK)
+                if (Msg.ShowQuestion("Play YouTube URL?") == MsgResult.OK)
                     mp.LoadURL(clipboard);
             }
         }

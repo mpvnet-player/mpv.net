@@ -89,11 +89,11 @@ namespace mpvConfEdit
                 switch (mpvSetting)
                 {
                     case StringSetting s:
-                        if ((s.Value ?? "") != s.Default)
+                        if ((s.Value ?? "") != s.Default || mpvConf.ContainsKey(s.Name) || mpvConf.ContainsKey(s.Alias ?? ""))
                             mpvConf[s.Name] = s.Value;
                         break;
                     case OptionSetting s:
-                        if ((s.Value ?? "") != s.Default)
+                        if ((s.Value ?? "") != s.Default || mpvConf.ContainsKey(s.Name) || mpvConf.ContainsKey(s.Alias ?? ""))
                             mpvConf[s.Name] = s.Value;
                         break;
                 }
