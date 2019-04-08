@@ -77,6 +77,8 @@ https://github.com/stax76/mpv.net/wiki/Scripting-(CSharp,-Python,-JavaScript,-Lu
 - an improvement in the previous release unfortunately introduced a bug
   causing the conf editor not to save settings
 
+[go to download page](https://github.com/stax76/mpv.net/releases)
+
 ### 2.4 (2019-04-06)
 
 - new options added to the conf GUI editor: gpu-context, gpu-api, scale, cscale,
@@ -98,5 +100,3 @@ https://github.com/stax76/mpv.net/wiki/Scripting-(CSharp,-Python,-JavaScript,-Lu
   '--autofit=50%' on the command line, WxH isn't implemented and only percent values are accepted.
   There is a new wiki page explaining the mpv.net limitations compared to the original mpv:
   [Limitations](https://github.com/stax76/mpv.net/wiki/Limitations)
-
-[go to download page](https://github.com/stax76/mpv.net/releases)
