@@ -34,7 +34,7 @@
  Space       cycle pause            #menu: Play/Pause
  s           stop                   #menu: Stop
  _           ignore                 #menu: -
- f           cycle fullscreen       #menu: Toggle Fullscreen
+ Enter       cycle fullscreen       #menu: Toggle Fullscreen
  
  F11         playlist-prev          #menu: Navigate > Previous
  F12         playlist-next          #menu: Navigate > Next
@@ -152,7 +152,6 @@
  Q quit-watch-later #menu: Exit Watch Later
  > playlist-next
  < playlist-prev
- Enter cycle pause
  Power quit
  Play      cycle pause
  Pause     cycle pause

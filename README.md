@@ -70,6 +70,11 @@ https://github.com/stax76/mpv.net/wiki/Scripting-(CSharp,-Python,-JavaScript,-Lu
 
 ### Changelog
 
+### 2.6 (2019-04-09)
+
+- on Win 7 controls in the conf editor were using a difficult too read too light color
+- context menu renderer changed to look like Win 10 design, except colors are still system theme colors
+
 ### 2.5 (2019-04-08)
 
 - in case the input conf don't contain a menu definition mpv.net creates the default menu instead no menu like before

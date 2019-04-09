@@ -19,7 +19,6 @@ namespace DynamicGUI
             if (!StringSetting.IsFolder)
                 Button.Visibility = Visibility.Hidden;
             Link.SetURL(StringSetting.HelpURL);
-
             if (string.IsNullOrEmpty(stringSetting.HelpURL))
                 LinkTextBlock.Visibility = Visibility.Collapsed;
         }

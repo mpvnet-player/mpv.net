@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace DynamicGUI
+namespace mpvConfEdit
 {
     public partial class App : Application
     {

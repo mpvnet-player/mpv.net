@@ -244,7 +244,6 @@ public class ToolStripRendererEx : ToolStripSystemRenderer
     protected override void OnRenderMenuItemBackground(ToolStripItemRenderEventArgs e)
     {
         e.Item.ForeColor = Color.Black;
-
         var r = new Rectangle(Point.Empty, e.Item.Size);
         var g = e.Graphics;
 
@@ -258,20 +257,10 @@ public class ToolStripRendererEx : ToolStripSystemRenderer
             else
             {
                 g.SmoothingMode = SmoothingMode.AntiAlias;
-
                 var r2 = new Rectangle(r.X + 2, r.Y, r.Width - 4, r.Height - 1);
-
-                using (Pen pen = new Pen(ColorBorder))
-                {
-                    g.DrawRectangle(pen, r2);
-                }
-
                 r2.Inflate(-1, -1);
-
-                using (SolidBrush b = new SolidBrush(ColorBottom))
-                {
+                using (SolidBrush b = new SolidBrush(ColorChecked))
                     g.FillRectangle(b, r2);
-                }
             }
         }
     }
@@ -311,13 +300,20 @@ public class ToolStripRendererEx : ToolStripSystemRenderer
 
     protected override void OnRenderArrow(ToolStripArrowRenderEventArgs e)
     {
-        var value = e.Direction == ArrowDirection.Down ? 0x36 : 0x34;
-        var s = Convert.ToChar(value).ToString();
-        var font = new Font("Marlett", e.Item.Font.Size - 2);
-        var size = e.Graphics.MeasureString(s, font);
-        var x = Convert.ToInt32(e.Item.Width - size.Width);
-        var y = Convert.ToInt32((e.Item.Height - size.Height) / 2.0) + 1;
-        e.Graphics.DrawString(s, font, Brushes.Black, x, y);
+        if (e.Direction == ArrowDirection.Down) throw new NotImplementedException();
+        float x1 = e.Item.Width - e.Item.Height * 0.6f;
+        float y1 = e.Item.Height * 0.25f;
+        float x2 = x1 + e.Item.Height * 0.25f;
+        float y2 = e.Item.Height / 2f;
+        float x3 = x1;
+        float y3 = e.Item.Height * 0.75f;
+        e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
+
+        using (Pen p = new Pen(Brushes.Black, Control.DefaultFont.Height / 20f))
+        {
+            e.Graphics.DrawLine(p, x1, y1, x2, y2);
+            e.Graphics.DrawLine(p, x2, y2, x3, y3);
+        }
     }
 
     protected override void OnRenderItemCheck(ToolStripItemImageRenderEventArgs e)

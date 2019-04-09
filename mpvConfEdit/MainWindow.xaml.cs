@@ -8,7 +8,6 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-
 using DynamicGUI;
 
 namespace mpvConfEdit
@@ -45,10 +44,14 @@ namespace mpvConfEdit
                 switch (setting)
                 {
                     case StringSetting s:
-                        MainStackPanel.Children.Add(new StringSettingControl(s));
+                        var sc = new StringSettingControl(s);
+                        sc.TitleTextBox.Foreground = Controls.Controls.ThemeBrush;
+                        MainStackPanel.Children.Add(sc);
                         break;
                     case OptionSetting s:
-                        MainStackPanel.Children.Add(new OptionSettingControl(s));
+                        var oc = new OptionSettingControl(s);
+                        oc.TitleTextBox.Foreground = Controls.Controls.ThemeBrush;
+                        MainStackPanel.Children.Add(oc);
                         break;
                 }
             }

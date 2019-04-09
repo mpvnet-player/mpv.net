@@ -19,7 +19,7 @@
             <StackPanel x:Name="MainStackPanel"></StackPanel>
         </ScrollViewer>
         <StackPanel Margin="20,0,0,0" Grid.Row="1">
-            <ListBox x:Name="FilterListBox" ItemsSource="{Binding FilterStrings}" BorderThickness="0" SelectionChanged="ListBox_SelectionChanged" Foreground="{x:Static SystemParameters.WindowGlassBrush}">
+            <ListBox x:Name="FilterListBox" ItemsSource="{Binding FilterStrings}" BorderThickness="0" SelectionChanged="ListBox_SelectionChanged" Foreground="{x:Static Controls:Controls.ThemeBrush}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
@@ -28,10 +28,10 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <TextBlock x:Name="OpenSettingsTextBlock" Margin="0,30,0,0" Cursor="Hand" TextWrapping="WrapWithOverflow" Foreground="{x:Static SystemParameters.WindowGlassBrush}" MouseUp="OpenSettingsTextBlock_MouseUp">Open settings folder</TextBlock>
-            <TextBlock x:Name="ShowManualTextBlock" Margin="0,15,0,0" Cursor="Hand" TextWrapping="WrapWithOverflow" Foreground="{x:Static SystemParameters.WindowGlassBrush}" MouseUp="ShowManualTextBlock_MouseUp">Show mpv manual</TextBlock>
-            <TextBlock x:Name="SupportTextBlock" Margin="0,15,0,0" Cursor="Hand" TextWrapping="WrapWithOverflow" Foreground="{x:Static SystemParameters.WindowGlassBrush}" MouseUp="SupportTextBlock_MouseUp">Show support forum</TextBlock>
-            <TextBlock x:Name="ApplyTextBlock" Margin="0,15,0,0" Cursor="Hand" TextWrapping="WrapWithOverflow" Foreground="{x:Static SystemParameters.WindowGlassBrush}" MouseUp="ApplyTextBlock_MouseUp">Write config to mpv.conf</TextBlock>
+            <TextBlock x:Name="OpenSettingsTextBlock" Margin="0,30,0,0" Cursor="Hand" TextWrapping="WrapWithOverflow" Foreground="{x:Static Controls:Controls.ThemeBrush}" MouseUp="OpenSettingsTextBlock_MouseUp">Open config folder</TextBlock>
+            <TextBlock x:Name="ShowManualTextBlock" Margin="0,15,0,0" Cursor="Hand" TextWrapping="WrapWithOverflow" Foreground="{x:Static Controls:Controls.ThemeBrush}" MouseUp="ShowManualTextBlock_MouseUp">Show mpv manual</TextBlock>
+            <TextBlock x:Name="SupportTextBlock" Margin="0,15,0,0" Cursor="Hand" TextWrapping="WrapWithOverflow" Foreground="{x:Static Controls:Controls.ThemeBrush}" MouseUp="SupportTextBlock_MouseUp">Show support forum</TextBlock>
+            <TextBlock x:Name="ApplyTextBlock" Margin="0,15,0,0" Cursor="Hand" TextWrapping="WrapWithOverflow" Foreground="{x:Static Controls:Controls.ThemeBrush}" MouseUp="ApplyTextBlock_MouseUp">Write config to mpv.conf</TextBlock>
         </StackPanel>        
     </Grid>
 </Window>

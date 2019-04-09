@@ -45,7 +45,8 @@ namespace mpvInputEdit
                     return item.Input.ToLower().Replace("ctrl+", "").Replace("shift+", "").Replace("alt+", "").Contains(searchText);
                 else
                     return item.Input.ToLower().Contains(searchText);
-            } else if (searchText.StartsWith("m ") || searchText.StartsWith("m:"))
+            }
+            else if (searchText.StartsWith("m ") || searchText.StartsWith("m:"))
                 return item.Menu.ToLower().Contains(searchText.Substring(2).Trim());
             else if (searchText.StartsWith("c ") || searchText.StartsWith("c:"))
                 return item.Command.ToLower().Contains(searchText.Substring(2).Trim());
@@ -86,7 +87,7 @@ namespace mpvInputEdit
                 Directory.CreateDirectory(backupDir);
 
             if (File.Exists(App.InputConfPath))
-                File.Copy(App.InputConfPath, backupDir + "input conf " + DateTime.Now.ToString("yyyy-MM-dd HH-mm") + ".conf");
+                File.Copy(App.InputConfPath, backupDir + "input conf " + DateTime.Now.ToString("yyyy-MM-dd HH-mm") + ".conf", true);
 
             string text = "\r\n" + Properties.Settings.Default.input_conf_help + "\r\n\r\n";
 
