@@ -70,6 +70,10 @@ https://github.com/stax76/mpv.net/wiki/Scripting-(CSharp,-Python,-JavaScript,-Lu
 
 ### Changelog
 
+### 2.8 (2019-04-12)
+
+- Win 7 dark-mode render issue fix
+
 ### 2.7 (2019-04-12)
 
 - the autofit mpv property was added to the conf editor

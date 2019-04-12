@@ -9,7 +9,7 @@ namespace Controls
         public static Brush ThemeBrush {
             get {
                 if (Environment.OSVersion.Version.Major < 10)
-                    return new SolidColorBrush(SystemColors.WindowTextColor);
+                    return new SolidColorBrush(Colors.DimGray);
                 else
                     return SystemParameters.WindowGlassBrush;
             }
