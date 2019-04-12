@@ -6,6 +6,7 @@ using System.Drawing.Text;
 using Microsoft.Win32;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Diagnostics;
 
 public class ContextMenuStripEx : ContextMenuStrip
 {
@@ -168,10 +169,12 @@ public class MenuItemEx : ToolStripMenuItem
 
 public class ToolStripRendererEx : ToolStripSystemRenderer
 {
+    public static Color ColorForeground { get; set; } = Color.Black;
+    public static Color ColorTheme { get; set; } = Color.Empty;
     public static Color ColorChecked { get; set; }
     public static Color ColorBorder { get; set; }
     public static Color ColorTop { get; set; }
-    public static Color ColorBottom { get; set; }
+    public static Color ColorSelection { get; set; }
     public static Color ColorBackground { get; set; }
 
     public static Color ColorToolStrip1 { get; set; }
@@ -186,16 +189,27 @@ public class ToolStripRendererEx : ToolStripSystemRenderer
         var argb = Convert.ToInt32(Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", 0));
         if (argb == 0)
             argb = Color.LightBlue.ToArgb();
-        InitColors(Color.FromArgb(argb));
+        if (ColorTheme == Color.Empty)
+            InitColors(Color.FromArgb(argb));
+        else
+            InitColors(ColorTheme);
     }
 
     public static void InitColors(Color c)
     {
         ColorBorder = HSLColor.Convert(c).ToColorSetLuminosity(100);
         ColorChecked = HSLColor.Convert(c).ToColorSetLuminosity(200);
-        ColorBottom = HSLColor.Convert(c).ToColorSetLuminosity(220);
-        ColorBackground = HSLColor.Convert(c).ToColorSetLuminosity(230);
+        ColorSelection = HSLColor.Convert(c).ToColorSetLuminosity(180);
+        ColorBackground = HSLColor.Convert(c).ToColorSetLuminosity(210);
         ColorTop = HSLColor.Convert(c).ToColorSetLuminosity(240);
+
+        if (ColorTheme == Color.Black)
+        {
+            ColorBorder = Color.White;
+            ColorBackground = Color.FromArgb(50, 50, 50);
+            ColorSelection = Color.FromArgb(80, 80, 80);
+            ColorForeground = Color.White;
+        }
 
         ColorToolStrip1 = ControlPaint.LightLight(ControlPaint.LightLight(ControlPaint.Light(ColorBorder, 1)));
         ColorToolStrip2 = ControlPaint.LightLight(ControlPaint.LightLight(ControlPaint.Light(ColorBorder, 0.7f)));
@@ -205,7 +219,10 @@ public class ToolStripRendererEx : ToolStripSystemRenderer
 
     protected override void OnRenderToolStripBorder(ToolStripRenderEventArgs e)
     {
-        ControlPaint.DrawBorder(e.Graphics, e.AffectedBounds, Color.FromArgb(160, 175, 195), ButtonBorderStyle.Solid);
+        Rectangle r = e.AffectedBounds;
+        r.Inflate(-1, -1);
+        ControlPaint.DrawBorder(e.Graphics, r, ColorBackground, ButtonBorderStyle.Solid);
+        ControlPaint.DrawBorder(e.Graphics, e.AffectedBounds, ColorBorder, ButtonBorderStyle.Solid);
     }
 
     protected override void OnRenderItemText(ToolStripItemTextRenderEventArgs e)
@@ -222,6 +239,7 @@ public class ToolStripRendererEx : ToolStripSystemRenderer
             else
                 TextOffset = Convert.ToInt32(e.Item.Height * 0.2);
 
+            e.TextColor = ColorForeground;
             e.TextRectangle = new Rectangle(TextOffset, Convert.ToInt32((e.Item.Height - rect.Height) / 2.0), rect.Width, rect.Height);
         }
 
@@ -235,9 +253,7 @@ public class ToolStripRendererEx : ToolStripSystemRenderer
             Rectangle r = new Rectangle(-1, -1, e.AffectedBounds.Width, e.AffectedBounds.Height);
 
             using (SolidBrush b = new SolidBrush(ColorToolStrip2))
-            {
                 e.Graphics.FillRectangle(b, r);
-            }
         }
     }
 
@@ -252,50 +268,12 @@ public class ToolStripRendererEx : ToolStripSystemRenderer
 
         if (e.Item.Selected && e.Item.Enabled)
         {
-            if (e.Item.Owner is MenuStrip)
-                DrawButton(e);
-            else
-            {
-                g.SmoothingMode = SmoothingMode.AntiAlias;
-                var r2 = new Rectangle(r.X + 2, r.Y, r.Width - 4, r.Height - 1);
-                r2.Inflate(-1, -1);
-                using (SolidBrush b = new SolidBrush(ColorChecked))
-                    g.FillRectangle(b, r2);
-            }
+            g.SmoothingMode = SmoothingMode.AntiAlias;
+            var r2 = new Rectangle(r.X + 2, r.Y, r.Width - 4, r.Height - 1);
+            r2.Inflate(-1, -1);
+            using (SolidBrush b = new SolidBrush(ColorSelection))
+                g.FillRectangle(b, r2);
         }
-    }
-
-    public void DrawButton(ToolStripItemRenderEventArgs e)
-    {
-        var gx = e.Graphics;
-        var rect = new Rectangle(Point.Empty, e.Item.Size);
-        var rect2 = new Rectangle(rect.X, rect.Y, rect.Width - 1, rect.Height - 1);
-
-        using (Pen pen = new Pen(ColorBorder))
-            gx.DrawRectangle(pen, rect2);
-
-        rect2.Inflate(-1, -1);
-        var tsb = e.Item as ToolStripButton;
-
-        if (tsb != null && tsb.Checked)
-            using (SolidBrush brush = new SolidBrush(ColorChecked))
-                gx.FillRectangle(brush, rect2);
-        else
-            using (SolidBrush brush = new SolidBrush(ColorBottom))
-                gx.FillRectangle(brush, rect2);
-    }
-
-    protected override void OnRenderDropDownButtonBackground(ToolStripItemRenderEventArgs e)
-    {
-        if (e.Item.Selected)
-            DrawButton(e);
-    }
-
-    protected override void OnRenderButtonBackground(ToolStripItemRenderEventArgs e)
-    {
-        var button = (ToolStripButton)e.Item;
-        if (e.Item.Selected || button.Checked)
-            DrawButton(e);
     }
 
     protected override void OnRenderArrow(ToolStripArrowRenderEventArgs e)
@@ -309,10 +287,13 @@ public class ToolStripRendererEx : ToolStripSystemRenderer
         float y3 = e.Item.Height * 0.75f;
         e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
 
-        using (Pen p = new Pen(Brushes.Black, Control.DefaultFont.Height / 20f))
+        using (Brush b = new SolidBrush(ColorForeground))
         {
-            e.Graphics.DrawLine(p, x1, y1, x2, y2);
-            e.Graphics.DrawLine(p, x2, y2, x3, y3);
+            using (Pen p = new Pen(b, Control.DefaultFont.Height / 20f))
+            {
+                e.Graphics.DrawLine(p, x1, y1, x2, y2);
+                e.Graphics.DrawLine(p, x2, y2, x3, y3);
+            }
         }
     }
 
@@ -324,25 +305,14 @@ public class ToolStripRendererEx : ToolStripSystemRenderer
 
     protected override void OnRenderSeparator(ToolStripSeparatorRenderEventArgs e)
     {
-        if (e.Item.IsOnDropDown)
-        {
-            e.Graphics.Clear(ColorBackground);
-            int right = e.Item.Width - Convert.ToInt32(TextOffset / 5.0);
-            int top = e.Item.Height / 2;
-            top -= 1;
-            using (Pen p = new Pen(Color.Gray))
-                e.Graphics.DrawLine(p, new Point(TextOffset, top), new Point(right, top));
-        }
-        else if (e.Vertical)
-        {
-            var bounds = e.Item.Bounds;
-            using (Pen p = new Pen(SystemColors.ControlDarkDark))
-                e.Graphics.DrawLine(p, 
-                    Convert.ToInt32(bounds.Width / 2.0),
-                    Convert.ToInt32(bounds.Height * 0.15), 
-                    Convert.ToInt32(bounds.Width / 2.0),
-                    Convert.ToInt32(bounds.Height * 0.85));
-        }
+        e.Graphics.Clear(ColorBackground);
+        int top = e.Item.Height / 2;
+        top -= 1;
+        int offset = Convert.ToInt32(e.Item.Font.Height * 0.7);
+        using (Pen p = new Pen(ColorBorder))
+            e.Graphics.DrawLine(p,
+                new Point(offset, top),
+                new Point(e.Item.Width - offset, top));
     }
 }
 

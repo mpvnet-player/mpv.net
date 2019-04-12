@@ -8,14 +8,20 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using DynamicGUI;
+using Microsoft.Win32;
 
 namespace mpvConfEdit
 {
     public partial class MainWindow : Window
     {
-        public string mpvConfPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\mpv.conf";
-        private List<SettingBase> DynamicSettings = Settings.LoadSettings(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\mpvConfEdit.toml");
+        public string MpvConfPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\mpv.conf";
+        public string MpvNetConfPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\mpvnet.conf";
+        private List<SettingBase> MpvSettingsDefinitions = Settings.LoadSettings(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\mpvConf.toml");
+        private List<SettingBase> MpvNetSettingsDefinitions = Settings.LoadSettings(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\mpvNetConf.toml");
+        public ObservableCollection<string> FilterStrings { get; } = new ObservableCollection<string>();
+        private Dictionary<string, Dictionary<string, string>> Comments = new Dictionary<string, Dictionary<string, string>>();
 
         public MainWindow()
         {
@@ -23,24 +29,66 @@ namespace mpvConfEdit
             DataContext = this;
             Title = (Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyProductAttribute), true)[0] as AssemblyProductAttribute).Product + " " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
             SearchControl.SearchTextBox.TextChanged += SearchTextBox_TextChanged;
+            LoadSettings(MpvSettingsDefinitions, MpvConf);
+            LoadSettings(MpvNetSettingsDefinitions, MpvNetConf);
+            SearchControl.Text = (string)Registry.GetValue(@"HKEY_CURRENT_USER\Software\mpv.net", "conf editor search", "");
+            SetDarkTheme();
+        }
 
-            foreach (var setting in DynamicSettings)
+        public Brush Foreground2 {
+            get { return (Brush)GetValue(Foreground2Property); }
+            set { SetValue(Foreground2Property, value); }
+        }
+
+        public static readonly DependencyProperty Foreground2Property =
+            DependencyProperty.Register("Foreground2", typeof(Brush), typeof(MainWindow), new PropertyMetadata(Brushes.DarkSlateGray));
+
+        void SetDarkTheme()
+        {
+            string darkMode = MpvNetSettingsDefinitions.Where(item => item.Name == "dark-mode").First().Value;
+
+            object value = Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", 1);
+            if (value is null) value = 1;
+            bool isDarkTheme = (int)value == 0;
+
+            if (!((darkMode == "system" && isDarkTheme) || darkMode == "always"))
+                return;
+
+            //Background = new SolidColorBrush(Colors.Black);
+
+            Foreground = Brushes.White;
+            Foreground2 = Brushes.Silver;
+            Background = Brushes.Black;
+
+            //foreach (var i in MainStackPanel.Children)
+            //{
+            //    switch (i)
+            //    {
+            //        case OptionSettingControl c:
+            //            c.Foreground = Brushes.White;
+            //            c.Background = Brushes.Black;
+            //            break;
+            //    }
+            //}
+        }
+
+        private void LoadSettings(List<SettingBase> settingsDefinitions,
+                                  Dictionary<string, string> confSettings)
+        {
+            foreach (var setting in settingsDefinitions)
             {
                 if (!FilterStrings.Contains(setting.Filter))
                     FilterStrings.Add(setting.Filter);
-                foreach (var pair in mpvConf)
+
+                foreach (var pair in confSettings)
                 {
-                    if (setting.Name == pair.Key || setting.Alias == pair.Key)
-                        switch (setting)
-                        {
-                            case StringSetting s:
-                                s.Value = pair.Value;
-                                continue;
-                            case OptionSetting s:
-                                s.Value = pair.Value;
-                                break;
-                        }
+                    if (setting.Name == pair.Key)
+                    {
+                        setting.Value = pair.Value;
+                        continue;
+                    }
                 }
+
                 switch (setting)
                 {
                     case StringSetting s:
@@ -59,101 +107,94 @@ namespace mpvConfEdit
 
         private Dictionary<string, string> _mpvConf;
 
-        public Dictionary<string, string> mpvConf {
+        public Dictionary<string, string> MpvConf {
             get {
-                if (_mpvConf == null)
-                {
-                    _mpvConf = new Dictionary<string, string>();
-
-                    if (File.Exists(mpvConfPath))
-                        foreach (var i in File.ReadAllLines(mpvConfPath))
-                            if (i.Contains("=") && !i.Trim().StartsWith("#"))
-                            {
-                                int pos = i.IndexOf("=");
-                                _mpvConf[i.Substring(0, pos).Trim()] = i.Substring(pos + 1).Trim();
-                            }
-                }
+                if (_mpvConf == null) _mpvConf = LoadConf(MpvConfPath);
                 return _mpvConf;
             }
         }
 
-        public ObservableCollection<string> FilterStrings { get; } = new ObservableCollection<string>();
+        private Dictionary<string, string> _mpvNetConf;
+
+        public Dictionary<string, string> MpvNetConf {
+            get {
+                if (_mpvNetConf == null) _mpvNetConf = LoadConf(MpvNetConfPath);
+                return _mpvNetConf;
+            }
+        }
+
+        private Dictionary<string, string> LoadConf(string filePath)
+        {
+            Dictionary<string, string> conf = new Dictionary<string, string>();
+            Comments[filePath] = new Dictionary<string, string>();
+
+            if (File.Exists(filePath))
+            {
+                foreach (string i in File.ReadAllLines(filePath))
+                {
+                    if (i.Contains("="))
+                    {
+                        int pos = i.IndexOf("=");
+                        string left = i.Substring(0, pos).Replace(" ", "").ToLower();
+                        string right = i.Substring(pos + 1).Trim();
+
+                        if (left.StartsWith("#"))
+                        {
+                            Comments[filePath][left.TrimStart("#".ToCharArray())] = right;
+                            continue;
+                        }
+
+                        if (left == "fs") left = "fullscreen";
+                        if (left == "loop") left = "loop-file";
+                        conf[left] = right;
+                    }
+                }
+            }
+            return conf;
+        }
 
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
             WriteToDisk();
+            Registry.SetValue(@"HKEY_CURRENT_USER\Software\mpv.net", "conf editor search", SearchControl.Text);
         }
 
         void WriteToDisk()
         {
-            foreach (var mpvSetting in DynamicSettings)
-            {
-                switch (mpvSetting)
-                {
-                    case StringSetting s:
-                        if ((s.Value ?? "") != s.Default || mpvConf.ContainsKey(s.Name) || mpvConf.ContainsKey(s.Alias ?? ""))
-                            mpvConf[s.Name] = s.Value;
-                        break;
-                    case OptionSetting s:
-                        if ((s.Value ?? "") != s.Default || mpvConf.ContainsKey(s.Name) || mpvConf.ContainsKey(s.Alias ?? ""))
-                            mpvConf[s.Name] = s.Value;
-                        break;
-                }
-            }
+            WriteToDisk(MpvConfPath, MpvConf, MpvSettingsDefinitions);
+            WriteToDisk(MpvNetConfPath, MpvNetConf, MpvNetSettingsDefinitions);
 
-            if (!File.Exists(mpvConfPath))
-                File.WriteAllText(mpvConfPath, "");
-
-            List<string> lines = File.ReadAllLines(mpvConfPath).ToList();
-
-            foreach (var mpvSetting in DynamicSettings)
-            {
-                foreach (var line in lines.ToArray())
-                {
-                    string test = line.Replace("#", "").Replace(" ", "");
-                    if (test.StartsWith(mpvSetting.Alias + "="))
-                    {
-                        lines.Remove(line);
-                        foreach (var pair in mpvConf.ToArray())
-                            if (test.StartsWith(pair.Key + "="))
-                                mpvConf.Remove(pair.Key);
-                    }
-                }
-            }
-
-            foreach (var pair in mpvConf)
-            {
-                bool changed = false;
-
-                for (int i = 0; i < lines.Count; i++)
-                {
-                    if (lines[i].Contains("=") &&
-                        lines[i].Substring(0, lines[i].IndexOf("=")).Trim("# ".ToCharArray()) == pair.Key)
-                    {
-                        lines[i] = pair.Key + " = " + pair.Value;
-                        changed = true;
-                    }
-                }
-
-                if (!changed)
-                    lines.Add(pair.Key + " = " + pair.Value);
-            }
-
-            foreach (var mpvSetting in DynamicSettings)
-            {
-                foreach (var line in lines.ToArray())
-                {
-                    string test = line.Replace("#", "").Replace(" ", "");
-
-                    if (test.StartsWith(mpvSetting.Name + "=") && !mpvConf.ContainsKey(mpvSetting.Name))
-                        lines.Remove(line);
-                }
-            }
-
-            File.WriteAllText(mpvConfPath, String.Join(Environment.NewLine, lines));
             MessageBox.Show("Changes will be available on next startup of mpv(.net).",
                 Title, MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        void WriteToDisk(string filePath,
+                         Dictionary<string, string> confSettings,
+                         List<SettingBase> settings)
+        {
+            string content = "";
+
+            foreach (var i in Comments[filePath])
+                content += $"#{i.Key} = {i.Value}\r\n";
+
+            foreach (var setting in settings)
+            {
+                if ((setting.Value ?? "") != setting.Default)
+                    confSettings[setting.Name] = setting.Value;
+
+                if (confSettings.ContainsKey(setting.Name) &&
+                    (setting.Value ?? "") == setting.Default ||
+                    (setting.Value ?? "") == "")
+                {
+                    confSettings.Remove(setting.Name);
+                }
+            }
+
+            foreach (var i in confSettings)
+                content = content + $"{i.Key} = {i.Value}\r\n";
+
+            File.WriteAllText(filePath, content);
         }
 
         private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -197,7 +238,7 @@ namespace mpvConfEdit
 
         private void OpenSettingsTextBlock_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            Process.Start(Path.GetDirectoryName(mpvConfPath));
+            Process.Start(Path.GetDirectoryName(MpvConfPath));
         }
 
         private void ShowManualTextBlock_MouseUp(object sender, MouseButtonEventArgs e)

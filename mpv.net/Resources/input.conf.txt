@@ -123,23 +123,21 @@
 
  Ctrl+t set ontop yes                             #menu: View > On Top > Enable
  Ctrl+T set ontop no                              #menu: View > On Top > Disable
- i script-message mpv.net show-info               #menu: View > File Info
- t script-binding stats/display-stats             #menu: View > Show Statistics
- T script-binding stats/display-stats-toggle      #menu: View > Toggle Statistics
+ i      script-message mpv.net show-info          #menu: View > File Info
+ t      script-binding stats/display-stats        #menu: View > Show Statistics
+ T      script-binding stats/display-stats-toggle #menu: View > Toggle Statistics
+ Del    script-binding osc/visibility             #menu: View > Toggle OSC Visibility
+ F8     show-text ${playlist}   5000              #menu: View > Show Playlist
+ F9     show-text ${track-list} 5000              #menu: View > Show Audio/Video/Subtitle List
 
- _ script-message mpv.net set-setting hwdec yes   #menu: Settings > Hardware Decoding > Enable
- _ script-message mpv.net set-setting hwdec no    #menu: Settings > Hardware Decoding > Disable
  Ctrl+c script-message mpv.net show-conf-editor   #menu: Settings > Show Config Editor
  Ctrl+i script-message mpv.net show-input-editor  #menu: Settings > Show Input Editor
  Ctrl+f script-message mpv.net open-conf-folder   #menu: Settings > Open Config Folder
 
- h script-message mpv.net show-history            #menu: Tools > Show History
- l ab-loop                                        #menu: Tools > Set/clear A-B loop points
- L cycle-values loop-file "inf" "no"              #menu: Tools > Toggle Infinite Looping
- Del script-binding osc/visibility                #menu: Tools > Toggle OSC Visibility
+ h      script-message mpv.net show-history       #menu: Tools > Show History
+ l      ab-loop                                   #menu: Tools > Set/clear A-B loop points
+ L      cycle-values loop-file "inf" "no"         #menu: Tools > Toggle infinite file looping
  Ctrl+h cycle-values hwdec "auto" "no"            #menu: Tools > Cycle Hardware Decoding
- F8 show-text ${playlist}   5000                  #menu: Tools > Show Playlist
- F9 show-text ${track-list} 5000                  #menu: Tools > Show Audio/Video/Subtitle List
  _ script-message mpv.net execute-mpv-command     #menu: Tools > Execute mpv command...
 
  _ script-message mpv.net shell-execute https://mpv.io/manual/stable/ #menu: Help > Show mpv manual

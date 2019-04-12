@@ -15,6 +15,14 @@ namespace mpvnet
 
         public static string GetFilter(IEnumerable<string> values) => "*." + 
             String.Join(";*.", values) + "|*." + String.Join(";*.", values) + "|All Files|*.*";
+
+        public static bool IsDarkTheme {
+            get {
+                object value = Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", 1);
+                if (value is null) value = 1;
+                return (int)value == 0;
+            }
+        }
     }
 
     public class StringLogicalComparer : IComparer, IComparer<string>

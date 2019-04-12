@@ -16,12 +16,13 @@ namespace mpvnet
         public static MainForm Instance { get; set; }
         public static IntPtr Hwnd;
 
-        private Point LastCursorPosChanged;
-        private int   LastCursorChangedTickCount;
-        private bool  IgnoreDpiChanged = true;
-        private float mpvAutofit = 0.42f;
-        private bool  mpvFullscreen;
-        private int   mpvScreen = -1;
+        private Point  LastCursorPosChanged;
+        private int    LastCursorChangedTickCount;
+        private bool   IgnoreDpiChanged = true;
+        private float  MpvAutofit = 0.50f;
+        private bool   MpvFullscreen;
+        private int    MpvScreen = -1;
+        private string MpvNetDarkMode = "system";
 
         public ContextMenuStripEx CMS;
 
@@ -43,12 +44,15 @@ namespace mpvnet
                 foreach (var i in mp.mpvConf)
                     ProcessMpvProperty(i.Key, i.Value);
 
+                foreach (var i in mp.mpvNetConf)
+                    ProcessMpvNetProperty(i.Key, i.Value);
+
                 ProcessCommandLineEarly();
 
-                if (mpvScreen == -1) mpvScreen = Array.IndexOf(Screen.AllScreens, Screen.PrimaryScreen);
-                SetScreen(mpvScreen);
+                if (MpvScreen == -1) MpvScreen = Array.IndexOf(Screen.AllScreens, Screen.PrimaryScreen);
+                SetScreen(MpvScreen);
 
-                ChangeFullscreen(mpvFullscreen);
+                ChangeFullscreen(MpvFullscreen);
             }
             catch (Exception ex)
             {
@@ -76,7 +80,7 @@ namespace mpvnet
         {
             if (IsFullscreen || mp.VideoSize.Width == 0) return;
             Screen screen = Screen.FromControl(this);
-            int height = Convert.ToInt32(screen.Bounds.Height * mpvAutofit);
+            int height = Convert.ToInt32(screen.Bounds.Height * MpvAutofit);
             int width = Convert.ToInt32(height * mp.VideoSize.Width / (double)mp.VideoSize.Height);
             Point middlePos = new Point(Left + Width / 2, Top + Height / 2);
             var rect = new Native.RECT(new Rectangle(screen.Bounds.X, screen.Bounds.Y, width, height));
@@ -91,7 +95,7 @@ namespace mpvnet
             if (IsFullscreen || mp.VideoSize.Width == 0) return;
             Screen screen = Screen.FromControl(this);
             int height = ClientSize.Height;
-            if (height > screen.Bounds.Height * 0.9) height = Convert.ToInt32(screen.Bounds.Height * mpvAutofit);
+            if (height > screen.Bounds.Height * 0.9) height = Convert.ToInt32(screen.Bounds.Height * MpvAutofit);
             int width = Convert.ToInt32(height * mp.VideoSize.Width / (double)mp.VideoSize.Height);
             Point middlePos = new Point(Left + Width / 2, Top + Height / 2);
             var rect = new Native.RECT(new Rectangle(screen.Bounds.X, screen.Bounds.Y, width, height));
@@ -118,6 +122,7 @@ namespace mpvnet
                         string left = i.Substring(2, i.IndexOf("=") - 2);
                         string right = i.Substring(left.Length + 3);
                         ProcessMpvProperty(left, right);
+                        ProcessMpvNetProperty(left, right);
                     }
                     else
                     {
@@ -127,7 +132,7 @@ namespace mpvnet
                         {
                             case "fs":
                             case "fullscreen":
-                                mpvFullscreen = true;
+                                MpvFullscreen = true;
                                 break;
                         }
                     }
@@ -142,14 +147,24 @@ namespace mpvnet
                 case "autofit":
                     if (value.Length == 3 && value.EndsWith("%"))
                         if (int.TryParse(value.Substring(0, 2), out int result))
-                            mpvAutofit = result / 100f;
+                            MpvAutofit = result / 100f;
                     break;
                 case "fs":
                 case "fullscreen":
-                    mpvFullscreen = value == "yes";
+                    MpvFullscreen = value == "yes";
                     break;
                 case "screen":
-                    mpvScreen = Convert.ToInt32(value);
+                    MpvScreen = Convert.ToInt32(value);
+                    break;
+            }
+        }
+
+        void ProcessMpvNetProperty(string name, string value)
+        {
+            switch (name)
+            {
+                case "dark-mode":
+                    MpvNetDarkMode = value;
                     break;
             }
         }
@@ -425,6 +440,8 @@ namespace mpvnet
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
+            if ((MpvNetDarkMode == "system" && Misc.IsDarkTheme) || MpvNetDarkMode == "always")
+                ToolStripRendererEx.ColorTheme = Color.Black;
             CMS = new ContextMenuStripEx(components);
             CMS.Opened += CMS_Opened;
             ContextMenuStrip = CMS;

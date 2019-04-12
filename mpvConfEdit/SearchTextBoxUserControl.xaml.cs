@@ -21,7 +21,7 @@ namespace Controls
 
         private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            SearchTextBlock.Text = SearchTextBox.Text == "" ? "Find a setting" : "";
+            HintTextBlock.Text = SearchTextBox.Text == "" ? "Find a setting" : "";
 
             if (SearchTextBox.Text == "")
                 SearchClearButton.Visibility = Visibility.Hidden;

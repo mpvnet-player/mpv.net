@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Height="600" Width="800" Loaded="MainWindow1_Loaded" WindowStartupLocation="CenterScreen">
+        Height="500" Width="700" Loaded="MainWindow1_Loaded" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -14,12 +14,12 @@
             <ColumnDefinition Width="10*" />
             <ColumnDefinition Width="60*" />
         </Grid.ColumnDefinitions>
-        <Controls:SearchTextBoxUserControl x:Name="SearchControl" Width="300" Margin="0,20,0,10" Grid.ColumnSpan="2" />
+        <Controls:SearchTextBoxUserControl x:Name="SearchControl" Width="250" Margin="0,20,0,10" Grid.ColumnSpan="2" />
         <ScrollViewer x:Name="MainScrollViewer" VerticalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="1" Margin="0,0,0,10">
             <StackPanel x:Name="MainStackPanel"></StackPanel>
         </ScrollViewer>
         <StackPanel Margin="20,0,0,0" Grid.Row="1">
-            <ListBox x:Name="FilterListBox" ItemsSource="{Binding FilterStrings}" BorderThickness="0" SelectionChanged="ListBox_SelectionChanged" Foreground="{x:Static Controls:Controls.ThemeBrush}">
+            <ListBox x:Name="FilterListBox" ItemsSource="{Binding FilterStrings}" BorderThickness="0" SelectionChanged="ListBox_SelectionChanged" Foreground="{x:Static Controls:Controls.ThemeBrush}" Background="{Binding Path=Background, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
@@ -31,7 +31,7 @@
             <TextBlock x:Name="OpenSettingsTextBlock" Margin="0,30,0,0" Cursor="Hand" TextWrapping="WrapWithOverflow" Foreground="{x:Static Controls:Controls.ThemeBrush}" MouseUp="OpenSettingsTextBlock_MouseUp">Open config folder</TextBlock>
             <TextBlock x:Name="ShowManualTextBlock" Margin="0,15,0,0" Cursor="Hand" TextWrapping="WrapWithOverflow" Foreground="{x:Static Controls:Controls.ThemeBrush}" MouseUp="ShowManualTextBlock_MouseUp">Show mpv manual</TextBlock>
             <TextBlock x:Name="SupportTextBlock" Margin="0,15,0,0" Cursor="Hand" TextWrapping="WrapWithOverflow" Foreground="{x:Static Controls:Controls.ThemeBrush}" MouseUp="SupportTextBlock_MouseUp">Show support forum</TextBlock>
-            <TextBlock x:Name="ApplyTextBlock" Margin="0,15,0,0" Cursor="Hand" TextWrapping="WrapWithOverflow" Foreground="{x:Static Controls:Controls.ThemeBrush}" MouseUp="ApplyTextBlock_MouseUp">Write config to mpv.conf</TextBlock>
-        </StackPanel>        
+            <TextBlock x:Name="ApplyTextBlock" Margin="0,15,0,0" Cursor="Hand" TextWrapping="WrapWithOverflow" Foreground="{x:Static Controls:Controls.ThemeBrush}" MouseUp="ApplyTextBlock_MouseUp">Write config to disk</TextBlock>
+        </StackPanel>
     </Grid>
 </Window>

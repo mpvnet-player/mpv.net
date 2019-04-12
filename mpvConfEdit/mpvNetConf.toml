@@ -1,0 +1,8 @@
+﻿[[settings]]
+name = "dark-mode"
+default = "system"
+filter = "mpv.net"
+help = "Enables a dark theme."
+options = [{ name = "always" },
+           { name = "system" , help = "Windows 10+" },
+		   { name = "never" }]

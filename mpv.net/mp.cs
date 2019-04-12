@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
 using VBNET;
 using static mpvnet.libmpv;
 using static mpvnet.Native;
@@ -60,6 +61,7 @@ namespace mpvnet
         public static string mpvConfFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\";
         public static string InputConfPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\input.conf";
         public static string mpvConfPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\mpv.conf";
+        public static string mpvNetConfPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\mpvnet.conf";
         public static List<PythonScript> PythonScripts => new List<PythonScript>();
         public static AutoResetEvent AutoResetEvent = new AutoResetEvent(false);
 
@@ -77,6 +79,23 @@ namespace mpvnet
                                 _mpvConf[i.Substring(0, i.IndexOf("=")).Trim()] = i.Substring(i.IndexOf("=") + 1).Trim();
                 }
                 return _mpvConf;
+            }
+        }
+
+        private static Dictionary<string, string> _mpvNetConf;
+
+        public static Dictionary<string, string> mpvNetConf {
+            get {
+                if (_mpvNetConf == null)
+                {
+                    _mpvNetConf = new Dictionary<string, string>();
+
+                    if (File.Exists(mpvNetConfPath))
+                        foreach (string i in File.ReadAllLines(mpvNetConfPath))
+                            if (i.Contains("=") && !i.StartsWith("#"))
+                                _mpvNetConf[i.Substring(0, i.IndexOf("=")).Trim()] = i.Substring(i.IndexOf("=") + 1).Trim();
+                }
+                return _mpvNetConf;
             }
         }
 

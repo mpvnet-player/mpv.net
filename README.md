@@ -70,12 +70,21 @@ https://github.com/stax76/mpv.net/wiki/Scripting-(CSharp,-Python,-JavaScript,-Lu
 
 ### Changelog
 
+### 2.7 (2019-04-12)
+
+- the autofit mpv property was added to the conf editor
+- the routine that writes the mpv.conf file in the conf editor was completely rewritten
+- the conf editor has a dedicated page for mpv.net specific settings,
+  these settings are saved in the same folder as mpv.conf using mpvnet.conf as filename,
+  the first setting there is dark-mode
+- new optional dark theme 
+
+[go to download page](https://github.com/stax76/mpv.net/releases)
+
 ### 2.6 (2019-04-09)
 
 - on Win 7 controls in the conf editor were using a difficult too read too light color
 - context menu renderer changed to look like Win 10 design, except colors are still system theme colors
-
-[go to download page](https://github.com/stax76/mpv.net/releases)
 
 ### 2.5 (2019-04-08)
 

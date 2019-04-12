@@ -83,33 +83,7 @@ namespace mpvnet
                     File.WriteAllText(fp, "");
         }
 
-        public static void shell_execute(string[] args)
-        {
-            Process.Start(args[0]);
-        }
-
-        public static void set_setting(string[] args)
-        {
-            bool changed = false;
-            var lines = File.ReadAllLines(mp.mpvConfPath);
-
-            for (int i = 0; i < lines.Length; i++)
-            {
-                if (lines[i].Contains("=") &&
-                    lines[i].Substring(0, lines[i].IndexOf("=")).Trim("# ".ToCharArray()) == args[0])
-                {
-                    lines[i] = args[0] + " = " + args[1];
-                    changed = true;
-                }
-            }
-
-            if (changed)
-                File.WriteAllText(mp.mpvConfPath, String.Join(Environment.NewLine, lines));
-            else
-                File.WriteAllText(mp.mpvConfPath, File.ReadAllText(mp.mpvConfPath) + Environment.NewLine + args[0] + " = " + args[1]);
-
-            Msg.Show("Changed settings are available on next startup.");
-        }
+        public static void shell_execute(string[] args) => Process.Start(args[0]);
 
         public static void show_info(string[] args)
         {

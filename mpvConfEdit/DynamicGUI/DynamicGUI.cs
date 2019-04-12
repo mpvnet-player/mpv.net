@@ -54,7 +54,6 @@ namespace DynamicGUI
                 baseSetting.Filter = setting["filter"];
                 if (setting.HasKey("help")) baseSetting.Help = setting["help"];
                 if (setting.HasKey("helpurl")) baseSetting.HelpURL = setting["helpurl"];
-                if (setting.HasKey("alias")) baseSetting.Alias = setting["alias"];
                 if (setting.HasKey("width")) baseSetting.Width = setting["width"];
                 settingsList.Add(baseSetting);
             }
@@ -65,8 +64,9 @@ namespace DynamicGUI
     public abstract class SettingBase
     {
         public string Name { get; set; }
-        public string Alias { get; set; }
+        public string Value { get; set; }
         public string Help { get; set; }
+        public string Default { get; set; }
         public string HelpURL { get; set; }
         public string Filter { get; set; }
         public int Width { get; set; }
@@ -74,15 +74,11 @@ namespace DynamicGUI
 
     public class StringSetting : SettingBase
     {
-        public string Default { get; set; }
-        public string Value { get; set; }
         public bool IsFolder { get; set; }
     }
 
     public class OptionSetting : SettingBase
     {
-        public string Default { get; set; }
-        public string Value { get; set; }
         public List<OptionSettingOption> Options = new List<OptionSettingOption>();
     }
 
