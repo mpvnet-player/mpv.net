@@ -378,11 +378,7 @@ namespace mpvnet
                 Native.PostMessage(Handle, 0xA1 /* WM_NCLBUTTONDOWN */, HTCAPTION, IntPtr.Zero);
             }
 
-            var sb = Screen.FromControl(this).Bounds;
-            var p1 = new Point(sb.Width, 0);
-            var p2 = PointToScreen(e.Location);
-
-            if (Math.Abs(p1.X - p2.X) < 10 && Math.Abs(p1.Y - p2.Y) < 10)
+            if (Width - e.Location.X < 10 && e.Location.Y < 10)
                 mp.commandv("quit");
         }
 

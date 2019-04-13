@@ -70,6 +70,10 @@ https://github.com/stax76/mpv.net/wiki/Scripting-(CSharp,-Python,-JavaScript,-Lu
 
 ### Changelog
 
+### 2.9 (2019-
+
+- clicking the right top corner in fullscreen mode closes the player but it did not work on all displays
+
 ### 2.8 (2019-04-12)
 
 - Win 7 dark-mode render issue fix
