@@ -70,9 +70,11 @@ https://github.com/stax76/mpv.net/wiki/Scripting-(CSharp,-Python,-JavaScript,-Lu
 
 ### Changelog
 
-### 2.9 (2019-
+### 2.9 (2019- soon
 
 - clicking the right top corner in fullscreen mode closes the player but it did not work on all displays
+
+[go to download page](https://github.com/stax76/mpv.net/releases)
 
 ### 2.8 (2019-04-12)
 
@@ -86,8 +88,6 @@ https://github.com/stax76/mpv.net/wiki/Scripting-(CSharp,-Python,-JavaScript,-Lu
   these settings are saved in the same folder as mpv.conf using mpvnet.conf as filename,
   the first setting there is dark-mode
 - new optional dark theme 
-
-[go to download page](https://github.com/stax76/mpv.net/releases)
 
 ### 2.6 (2019-04-09)
 
