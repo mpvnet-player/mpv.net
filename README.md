@@ -30,6 +30,8 @@ Table of contents
 
 ![](https://raw.githubusercontent.com/stax76/mpv.net/master/screenshots/mpvnet.png)
 
+![](https://raw.githubusercontent.com/stax76/mpv.net/master/screenshots/mpvnetContextMenu.png)
+
 ![](https://raw.githubusercontent.com/stax76/mpv.net/master/screenshots/mpvConfEdit.png)
 
 ![](https://raw.githubusercontent.com/stax76/mpv.net/master/screenshots/mpvInputEdit.png)
@@ -70,7 +72,7 @@ https://github.com/stax76/mpv.net/wiki/Scripting-(CSharp,-Python,-JavaScript,-Lu
 
 ### Changelog
 
-### 2.9 (2019-??-??)
+### 2.9 (2019-04-16)
 
 - clicking the right top corner in fullscreen mode
   closes the player but it did not work on all displays
@@ -92,7 +94,7 @@ https://github.com/stax76/mpv.net/wiki/Scripting-(CSharp,-Python,-JavaScript,-Lu
   wasn't necessary (it took a huge amount of time to implement)
 - the context menu has a new track menu where the active track
   can be seen and selected, it shows video, audio and subtitle
-  tracks with various meta data
+  tracks with various meta data. [Menu default definition](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt#L104).
 
 [go to download page](https://github.com/stax76/mpv.net/releases)
 
