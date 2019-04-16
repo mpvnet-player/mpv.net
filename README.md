@@ -22,7 +22,8 @@ Table of contents
 - Customizable context menu defined in the same file as the key bindings
 - Searchable options dialog with modern UI as mpv compatible standalone application
 - Searchable input (key/mouse) binding editor with modern UI as mpv compatible standalone application
-- Rich addon API for .NET languages
+- Modern UI using the OS theme color and dark mode
+- Rich addon API for .NET languages, over 700 available mpv properties
 - Rich scripting API for Python, C#, Lua, JavaScript and PowerShell
 - mpv's OSC (on screen controller (play control bar)), IPC, conf files
 
@@ -74,10 +75,10 @@ https://github.com/stax76/mpv.net/wiki/Scripting-(CSharp,-Python,-JavaScript,-Lu
 
 ### 2.9 (2019-04-16)
 
-- clicking the right top corner in fullscreen mode
+- clicking the right top corner in full screen mode
   closes the player but it did not work on all displays
 - the info display was changed to display the filename on top
-  so it's not diplayed in the middle of the screen
+  so it's not displayed in the middle of the screen
 - on start up of the conf editor all text is now selected in the
   search text box so it's ready for a new search to be typed
 - the conf editor was changed to write the settings to disk
@@ -94,31 +95,7 @@ https://github.com/stax76/mpv.net/wiki/Scripting-(CSharp,-Python,-JavaScript,-Lu
   wasn't necessary (it took a huge amount of time to implement)
 - the context menu has a new track menu where the active track
   can be seen and selected, it shows video, audio and subtitle
-  tracks with various meta data. [Menu default definition](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt#L104).
+  tracks with various metadata. [Menu default definition](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt#L104).
+  The screenshots were updated showing the [new track menu](https://github.com/stax76/mpv.net#screenshots).
 
 [go to download page](https://github.com/stax76/mpv.net/releases)
-
-### 2.8 (2019-04-12)
-
-- Win 7 dark-mode render issue fix
-
-### 2.7 (2019-04-12)
-
-- the autofit mpv property was added to the conf editor
-- the routine that writes the mpv.conf file in the conf editor was completely rewritten
-- the conf editor has a dedicated page for mpv.net specific settings,
-  these settings are saved in the same folder as mpv.conf using mpvnet.conf as filename,
-  the first setting there is dark-mode
-- new optional dark theme 
-
-### 2.6 (2019-04-09)
-
-- on Win 7 controls in the conf editor were using a difficult too read too light color
-- context menu renderer changed to look like Win 10 design, except colors are still system theme colors
-
-### 2.5 (2019-04-08)
-
-- in case the input conf don't contain a menu definition mpv.net creates the default menu instead no menu like before
-- all message boxes were migrated to use the TaskDialog API
-- an improvement in the previous release unfortunately introduced a bug
-  causing the conf editor not to save settings
