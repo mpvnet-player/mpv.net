@@ -6,7 +6,6 @@ using System.Drawing.Text;
 using Microsoft.Win32;
 using System.Windows.Forms;
 using System.Drawing;
-using System.Diagnostics;
 
 public class ContextMenuStripEx : ContextMenuStrip
 {
@@ -24,110 +23,23 @@ public class ContextMenuStripEx : ContextMenuStrip
         Renderer = new ToolStripRendererEx();
     }
 
-    public ActionMenuItem Add(string path)
+    public MenuItemEx Add(string path)
     {
         return Add(path, null);
     }
 
-    public ActionMenuItem Add(string path, Action action)
+    public MenuItemEx Add(string path, Action action, bool enabled = true)
     {
-        return Add(path, action, true);
-    }
-
-    public ActionMenuItem Add(string path, Action action, bool enabled)
-    {
-        var ret = ActionMenuItem.Add(Items, path, action);
-        if (ret == null)
-            return null;
+        MenuItemEx ret = MenuItemEx.Add(Items, path, action);
+        if (ret == null) return null;
         ret.Enabled = enabled;
         return ret;
-    }
-
-    public ActionMenuItem Add(string path, Action action, Func<bool> enabledFunc)
-    {
-        var ret = ActionMenuItem.Add(Items, path, action);
-        return ret;
-    }
-}
-
-public class ActionMenuItem : MenuItemEx
-{
-    private Action Action;
-
-    public ActionMenuItem()
-    {
-    }
-
-    public ActionMenuItem(string text, Action action)
-    {
-        this.Text = text;
-        this.Action = action;
-    }
-
-    protected override void OnClick(EventArgs e)
-    {
-        Application.DoEvents();
-        if (Action != null)
-            Action();
-        base.OnClick(e);
-    }
-
-    public static ActionMenuItem Add<T>(ToolStripItemCollection items, string path, Action<T> action, T value)
-    {
-        return Add(items, path, () => action(value));
-    }
-
-    public static ActionMenuItem Add(ToolStripItemCollection items, string path, Action action)
-    {
-        var a = path.Split(new[] { " > ", " | " }, StringSplitOptions.RemoveEmptyEntries);
-        var l = items;
-
-        for (var x = 0; x <= a.Length - 1; x++)
-        {
-            var found = false;
-
-            foreach (var i in l.OfType<ToolStripMenuItem>())
-            {
-                if (x < a.Length - 1)
-                {
-                    if (i.Text == a[x] + " ")
-                    {
-                        found = true;
-                        l = i.DropDownItems;
-                    }
-                }
-            }
-
-            if (!found)
-            {
-                if (x == a.Length - 1)
-                {
-                    if (a[x] == "-")
-                        l.Add(new ToolStripSeparator());
-                    else
-                    {
-                        ActionMenuItem item = new ActionMenuItem(a[x] + " ", action);
-                        l.Add(item);
-                        l = item.DropDownItems;
-                        return item;
-                    }
-                }
-                else
-                {
-                    ActionMenuItem item = new ActionMenuItem();
-                    item.Text = a[x] + " ";
-                    l.Add(item);
-                    l = item.DropDownItems;
-                }
-            }
-        }
-        return null;
     }
 }
 
 public class MenuItemEx : ToolStripMenuItem
 {
-    public static bool UseTooltips { get; set; }
+    public Action Action { get; set; }
 
     public MenuItemEx()
     {
@@ -137,20 +49,81 @@ public class MenuItemEx : ToolStripMenuItem
     {
     }
 
+    public MenuItemEx(string text, Action action) : base(text)
+    {
+        Action = action;
+    }
+
+    protected override void OnClick(EventArgs e)
+    {
+        Application.DoEvents();
+        Action?.Invoke();
+        base.OnClick(e);
+    }
+
+    public static MenuItemEx Add<T>(ToolStripItemCollection items, string path, Action<T> action, T value)
+    {
+        return Add(items, path, () => action(value));
+    }
+
+    public static MenuItemEx Add(ToolStripItemCollection items, string path, Action action)
+    {
+        string[] a = path.Split(new[] { " > ", " | " }, StringSplitOptions.RemoveEmptyEntries);
+        var itemsCollection = items;
+
+        for (int x = 0; x < a.Length; x++)
+        {
+            bool found = false;
+
+            foreach (var i in itemsCollection.OfType<ToolStripMenuItem>())
+            {
+                if (x < a.Length - 1)
+                {
+                    if (i.Text == a[x] + "    ")
+                    {
+                        found = true;
+                        itemsCollection = i.DropDownItems;
+                    }
+                }
+            }
+
+            if (!found)
+            {
+                if (x == a.Length - 1)
+                {
+                    if (a[x] == "-")
+                        itemsCollection.Add(new ToolStripSeparator());
+                    else
+                    {
+                        MenuItemEx item = new MenuItemEx(a[x] + "    ", action);
+                        itemsCollection.Add(item);
+                        itemsCollection = item.DropDownItems;
+                        return item;
+                    }
+                }
+                else
+                {
+                    MenuItemEx item = new MenuItemEx();
+                    item.Text = a[x] + "    ";
+                    itemsCollection.Add(item);
+                    itemsCollection = item.DropDownItems;
+                }
+            }
+        }
+        return null;
+    }
+
     public override Size GetPreferredSize(Size constrainingSize)
     {
-        var ret = base.GetPreferredSize(constrainingSize);
-        ret.Height = Convert.ToInt32(Font.Height * 1.4);
-        return ret;
+        Size size = base.GetPreferredSize(constrainingSize);
+        size.Height = Convert.ToInt32(Font.Height * 1.4);
+        return size;
     }
 
     public void CloseAll(object item)
     {
         if (item is ToolStripItem)
-        {
-            var d = (ToolStripItem)item;
-            CloseAll(d.Owner);
-        }
+            CloseAll(((ToolStripItem)item).Owner);
 
         if (item is ToolStripDropDown)
         {
@@ -158,12 +131,6 @@ public class MenuItemEx : ToolStripMenuItem
             d.Close();
             CloseAll(d.OwnerItem);
         }
-    }
-
-    protected override void OnClick(EventArgs e)
-    {
-        Application.DoEvents();
-        base.OnClick(e);
     }
 }
 
@@ -187,6 +154,7 @@ public class ToolStripRendererEx : ToolStripSystemRenderer
     public ToolStripRendererEx()
     {
         var argb = Convert.ToInt32(Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", 0));
+
         if (argb == 0)
             argb = Color.LightBlue.ToArgb();
         if (ColorTheme == Color.Empty)
@@ -198,7 +166,7 @@ public class ToolStripRendererEx : ToolStripSystemRenderer
     public static void InitColors(Color c)
     {
         ColorBorder = HSLColor.Convert(c).ToColorSetLuminosity(100);
-        ColorChecked = HSLColor.Convert(c).ToColorSetLuminosity(200);
+        ColorChecked = HSLColor.Convert(c).ToColorSetLuminosity(160);
         ColorSelection = HSLColor.Convert(c).ToColorSetLuminosity(180);
         ColorBackground = HSLColor.Convert(c).ToColorSetLuminosity(210);
         ColorTop = HSLColor.Convert(c).ToColorSetLuminosity(240);
@@ -209,6 +177,7 @@ public class ToolStripRendererEx : ToolStripSystemRenderer
             ColorBackground = Color.FromArgb(50, 50, 50);
             ColorSelection = Color.FromArgb(80, 80, 80);
             ColorForeground = Color.White;
+            ColorChecked = Color.FromArgb(90, 90, 90);
         }
 
         ColorToolStrip1 = ControlPaint.LightLight(ControlPaint.LightLight(ControlPaint.Light(ColorBorder, 1)));
@@ -259,20 +228,18 @@ public class ToolStripRendererEx : ToolStripSystemRenderer
 
     protected override void OnRenderMenuItemBackground(ToolStripItemRenderEventArgs e)
     {
-        e.Item.ForeColor = Color.Black;
-        var r = new Rectangle(Point.Empty, e.Item.Size);
-        var g = e.Graphics;
+        Rectangle rect = new Rectangle(Point.Empty, e.Item.Size);
 
         if (!(e.Item.Owner is MenuStrip))
-            g.Clear(ColorBackground);
+            e.Graphics.Clear(ColorBackground);
 
         if (e.Item.Selected && e.Item.Enabled)
         {
-            g.SmoothingMode = SmoothingMode.AntiAlias;
-            var r2 = new Rectangle(r.X + 2, r.Y, r.Width - 4, r.Height - 1);
-            r2.Inflate(-1, -1);
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            rect = new Rectangle(rect.X + 2, rect.Y, rect.Width - 4, rect.Height - 1);
+            rect.Inflate(-1, -1);
             using (SolidBrush b = new SolidBrush(ColorSelection))
-                g.FillRectangle(b, r2);
+                e.Graphics.FillRectangle(b, rect);
         }
     }
 
@@ -299,8 +266,32 @@ public class ToolStripRendererEx : ToolStripSystemRenderer
 
     protected override void OnRenderItemCheck(ToolStripItemImageRenderEventArgs e)
     {
-        int x = Convert.ToInt32(e.ImageRectangle.Height * 0.2);
-        e.Graphics.DrawImage(e.Image, new Point(x, x));
+        if (e.Item.GetType() != typeof(MenuItemEx))
+            return;
+
+        MenuItemEx item = e.Item as MenuItemEx;
+
+        e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+
+        if (!item.Checked)
+            return;
+
+        Rectangle rect = new Rectangle(Point.Empty, e.Item.Size);
+        rect = new Rectangle(rect.X + 2, rect.Y, rect.Height - 1, rect.Height - 1);
+        rect.Inflate(-1, -1);
+
+        using (Brush brush = new SolidBrush(ColorChecked))
+            e.Graphics.FillRectangle(brush, rect);
+
+        float ellipseWidth = rect.Height / 3f;
+
+        RectangleF rectF = new RectangleF(rect.X + rect.Height / 2f - ellipseWidth / 2f,
+                                          rect.Y + rect.Height / 2f - ellipseWidth / 2f,
+                                          ellipseWidth,
+                                          ellipseWidth);
+
+        using (Brush brush = new SolidBrush(ColorForeground))
+            e.Graphics.FillEllipse(brush, rectF);
     }
 
     protected override void OnRenderSeparator(ToolStripSeparatorRenderEventArgs e)
@@ -332,24 +323,21 @@ public struct HSLColor
 
     private double hue;
 
-    public int Hue
-    {
-        get => System.Convert.ToInt32(hue * 240);       
+    public int Hue {
+        get => System.Convert.ToInt32(hue * 240);
         set => hue = CheckRange(value / 240.0);
     }
 
     private double saturation;
 
-    public int Saturation
-    {
+    public int Saturation {
         get => System.Convert.ToInt32(saturation * 240);
         set => saturation = CheckRange(value / 240.0);
     }
 
     private double luminosity;
 
-    public int Luminosity
-    {
+    public int Luminosity {
         get => System.Convert.ToInt32(luminosity * 240);
         set => luminosity = CheckRange(value / 240.0);
     }
@@ -399,7 +387,7 @@ public struct HSLColor
 
         return Color.FromArgb(
             System.Convert.ToInt32(255 * r),
-            System.Convert.ToInt32(255 * g), 
+            System.Convert.ToInt32(255 * g),
             System.Convert.ToInt32(255 * b));
     }
 

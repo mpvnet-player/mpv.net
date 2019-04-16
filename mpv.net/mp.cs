@@ -57,6 +57,7 @@ namespace mpvnet
         public static IntPtr MpvWindowHandle;
         public static Addon Addon;
         public static List<KeyValuePair<string, Action<bool>>> BoolPropChangeActions = new List<KeyValuePair<string, Action<bool>>>();
+        public static List<KeyValuePair<string, Action<string>>> StringPropChangeActions = new List<KeyValuePair<string, Action<string>>>();
         public static Size VideoSize = new Size(1920, 1080);
         public static string mpvConfFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\";
         public static string InputConfPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\input.conf";
@@ -254,12 +255,17 @@ namespace mpvnet
                             Seek?.Invoke();
                             break;
                         case mpv_event_id.MPV_EVENT_PROPERTY_CHANGE:
-                            var event_propertyData = (mpv_event_property)Marshal.PtrToStructure(evt.data, typeof(mpv_event_property));
+                            var propData = (mpv_event_property)Marshal.PtrToStructure(evt.data, typeof(mpv_event_property));
 
-                            if (event_propertyData.format == mpv_format.MPV_FORMAT_FLAG)
+                            if (propData.format == mpv_format.MPV_FORMAT_FLAG)
                                 foreach (var i in BoolPropChangeActions)
-                                    if (i.Key== event_propertyData.name)
-                                        i.Value.Invoke(Marshal.PtrToStructure<int>(event_propertyData.data) == 1);
+                                    if (i.Key== propData.name)
+                                        i.Value.Invoke(Marshal.PtrToStructure<int>(propData.data) == 1);
+
+                            if (propData.format == mpv_format.MPV_FORMAT_STRING)
+                                foreach (var i in StringPropChangeActions)
+                                    if (i.Key == propData.name)
+                                        i.Value.Invoke(StringFromNativeUtf8(Marshal.PtrToStructure<IntPtr>(propData.data)));
                             break;
                         case mpv_event_id.MPV_EVENT_PLAYBACK_RESTART:
                             PlaybackRestart?.Invoke();
@@ -379,7 +385,7 @@ namespace mpvnet
                 if (err < 0 && throwOnException)
                     throw new Exception($"{name}: {(mpv_error)err}");
 
-                var ret = StringFromNativeUtf8(lpBuffer);
+                string ret = StringFromNativeUtf8(lpBuffer);
                 mpv_free(lpBuffer);
 
                 return ret;
@@ -446,6 +452,28 @@ namespace mpvnet
             foreach (var i in BoolPropChangeActions.ToArray())
                 if (i.Value == action)
                     BoolPropChangeActions.Remove(i);
+
+            int err = mpv_unobserve_property(MpvHandle, (ulong)action.GetHashCode());
+
+            if (err < 0)
+                throw new Exception($"{name}: {(mpv_error)err}");
+        }
+
+        public static void observe_property_string(string name, Action<string> action)
+        {
+            int err = mpv_observe_property(MpvHandle, (ulong)action.GetHashCode(), name, mpv_format.MPV_FORMAT_STRING);
+
+            if (err < 0)
+                throw new Exception($"{name}: {(mpv_error)err}");
+            else
+                StringPropChangeActions.Add(new KeyValuePair<string, Action<string>>(name, action));
+        }
+
+        public static void unobserve_property_string(string name, Action<string> action)
+        {
+            foreach (var i in StringPropChangeActions.ToArray())
+                if (i.Value == action)
+                    StringPropChangeActions.Remove(i);
 
             int err = mpv_unobserve_property(MpvHandle, (ulong)action.GetHashCode());
 

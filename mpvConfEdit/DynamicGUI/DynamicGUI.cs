@@ -27,6 +27,7 @@ namespace DynamicGUI
                     baseSetting = optionSetting;
                     optionSetting.Default = setting["default"];
                     optionSetting.Value = optionSetting.Default;
+                    optionSetting.StartValue = optionSetting.Default;
 
                     foreach (TomlTable option in setting["options"])
                     {
@@ -65,6 +66,7 @@ namespace DynamicGUI
     {
         public string Name { get; set; }
         public string Value { get; set; }
+        public string StartValue { get; set; }
         public string Help { get; set; }
         public string Default { get; set; }
         public string HelpURL { get; set; }

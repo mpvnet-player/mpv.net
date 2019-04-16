@@ -89,9 +89,9 @@ namespace mpvnet
         {
             try
             {
-                var fileInfo = new FileInfo(mp.get_property_string("path"));
+                FileInfo fileInfo = new FileInfo(mp.get_property_string("path"));
 
-                using (var mediaInfo = new MediaInfo(fileInfo.FullName))
+                using (MediaInfo mediaInfo = new MediaInfo(fileInfo.FullName))
                 {
                     string width = mediaInfo.GetInfo(MediaInfoStreamKind.Video, "Width");
 
@@ -107,11 +107,11 @@ namespace mpvnet
                         string text = "";
 
                         if (performer != "") text += "Artist: " + performer + "\n";
-                        if (title != "") text += "Title: " + title + "\n";
-                        if (album != "") text += "Album: " + album + "\n";
-                        if (genre != "") text += "Genre: " + genre + "\n";
-                        if (date != "") text += "Year: " + date + "\n";
-                        if (duration != "") text += "Length: " + duration + "\n";
+                        if (title != "")     text += "Title: "  + title + "\n";
+                        if (album != "")     text += "Album: "  + album + "\n";
+                        if (genre != "")     text += "Genre: "  + genre + "\n";
+                        if (date != "")      text += "Year: "   + date + "\n";
+                        if (duration != "")  text += "Length: " + duration + "\n";
 
                         mp.commandv("show-text", text, "5000");
                     }
@@ -125,17 +125,19 @@ namespace mpvnet
                         if (bitrate == "")
                             bitrate = "0";
 
-                        var bitrate2 = Convert.ToDouble(bitrate) / 1000.0 / 1000.0;
-                        var videoCodec = mp.get_property_string("video-format").ToUpper();
-                        var filename = fileInfo.Name;
+                        double bitrate2 = Convert.ToDouble(bitrate) / 1000.0 / 1000.0;
+                        string videoCodec = mp.get_property_string("video-format").ToUpper();
+                        string filename = fileInfo.Name;
 
-                        var text =
+                        string text = filename + "\n" +
                             FormatTime(position.TotalMinutes) + ":" +
                             FormatTime(position.Seconds) + " / " +
                             FormatTime(duration.TotalMinutes) + ":" +
                             FormatTime(duration.Seconds) + "\n" +
-                            Convert.ToInt32(fileInfo.Length / 1024 / 1024).ToString() +
-                            $" MB - {width} x {height}\n{videoCodec} - {bitrate2.ToString("f1")} Mb/s" + "\n" + filename;
+                            $"{width} x {height}\n" +
+                            $"{bitrate2.ToString("f1")} Mb/s\n" +
+                            Convert.ToInt32(fileInfo.Length / 1024 / 1024).ToString() + " MB\n" +
+                            $"{videoCodec}\n";
 
                         mp.commandv("show-text", text, "5000");
                     }

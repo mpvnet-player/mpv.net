@@ -37,9 +37,10 @@ namespace mpvInputEdit
             string searchText = SearchControl.SearchTextBox.Text.ToLower();
             if (searchText == "") return true;
 
-            if (searchText.StartsWith("i ") || searchText.StartsWith("i:"))
+            if (searchText.StartsWith("i ") || searchText.StartsWith("i:") || searchText.Length == 1)
             {
-                searchText = searchText.Substring(2).Trim();
+                if (searchText.Length > 1)
+                    searchText = searchText.Substring(2).Trim();
 
                 if (searchText.Length < 3)
                     return item.Input.ToLower().Replace("ctrl+", "").Replace("shift+", "").Replace("alt+", "").Contains(searchText);

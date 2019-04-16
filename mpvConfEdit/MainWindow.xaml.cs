@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+
 using DynamicGUI;
 using Microsoft.Win32;
 
@@ -54,22 +55,9 @@ namespace mpvConfEdit
             if (!((darkMode == "system" && isDarkTheme) || darkMode == "always"))
                 return;
 
-            //Background = new SolidColorBrush(Colors.Black);
-
             Foreground = Brushes.White;
             Foreground2 = Brushes.Silver;
             Background = Brushes.Black;
-
-            //foreach (var i in MainStackPanel.Children)
-            //{
-            //    switch (i)
-            //    {
-            //        case OptionSettingControl c:
-            //            c.Foreground = Brushes.White;
-            //            c.Background = Brushes.Black;
-            //            break;
-            //    }
-            //}
         }
 
         private void LoadSettings(List<SettingBase> settingsDefinitions,
@@ -85,6 +73,7 @@ namespace mpvConfEdit
                     if (setting.Name == pair.Key)
                     {
                         setting.Value = pair.Value;
+                        setting.StartValue = pair.Value;
                         continue;
                     }
                 }
@@ -162,6 +151,19 @@ namespace mpvConfEdit
 
         void WriteToDisk()
         {
+            bool isDirty = false;
+
+            foreach (SettingBase i in MpvSettingsDefinitions)
+                if (i.StartValue != i.Value)
+                    isDirty = true;
+
+            foreach (SettingBase i in MpvNetSettingsDefinitions)
+                if (i.StartValue != i.Value)
+                    isDirty = true;
+
+            if (!isDirty)
+                return;
+
             WriteToDisk(MpvConfPath, MpvConf, MpvSettingsDefinitions);
             WriteToDisk(MpvNetConfPath, MpvNetConf, MpvNetSettingsDefinitions);
 
@@ -227,6 +229,7 @@ namespace mpvConfEdit
         
         private void MainWindow1_Loaded(object sender, RoutedEventArgs e)
         {
+            SearchControl.SearchTextBox.SelectAll();
             Keyboard.Focus(SearchControl.SearchTextBox);
         }
 

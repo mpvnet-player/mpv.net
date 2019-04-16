@@ -29,7 +29,7 @@ namespace Controls
                 SearchClearButton.Visibility = Visibility.Visible;
 
             if (SearchTextBox.Text == "?")
-                MessageBox.Show("Filtering works by searching in the Input, Menu and Command but it's possible to reduce the filter scope to either of Input, Menu or Command by prefixing as follows:\n\ni <input search>\ni: <input search>\n\nm <menu search>\nm: <menu search>\n\nc <command search>\nc: <command search>", "Filtering", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Filtering works by searching in the Input, Menu and Command but it's possible to reduce the filter scope to either of Input, Menu or Command by prefixing as follows:\n\ni <input search>\ni: <input search>\n\nm <menu search>\nm: <menu search>\n\nc <command search>\nc: <command search>\n\nIf only one character is entered the search will be performed only in the input.", "Filtering", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }

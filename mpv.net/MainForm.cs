@@ -8,6 +8,8 @@ using System.Linq;
 using System.Collections.Generic;
 
 using VBNET;
+using System.Threading.Tasks;
+using System.ComponentModel;
 
 namespace mpvnet
 {
@@ -19,12 +21,17 @@ namespace mpvnet
         private Point  LastCursorPosChanged;
         private int    LastCursorChangedTickCount;
         private bool   IgnoreDpiChanged = true;
+        private MenuItemEx TracksMenu;
+        private List<MediaTrack> MediaTracks = new List<MediaTrack>();
+        public new ContextMenuStripEx ContextMenu;
+
         private float  MpvAutofit = 0.50f;
         private bool   MpvFullscreen;
         private int    MpvScreen = -1;
         private string MpvNetDarkMode = "system";
-
-        public ContextMenuStripEx CMS;
+        private string MpvSid = "";
+        private string MpvAid = "";
+        private string MpvVid = "";
 
         public MainForm()
         {
@@ -57,6 +64,52 @@ namespace mpvnet
             catch (Exception ex)
             {
                 Msg.ShowException(ex);
+            }
+        }
+
+        private void ContextMenu_Opening(object sender, CancelEventArgs e)
+        {
+            lock (MediaTracks)
+            {
+                TracksMenu.DropDownItems.Clear();
+
+                MediaTrack[] audTracks = MediaTracks.Where(track => track.Type == "a").ToArray();
+                MediaTrack[] subTracks = MediaTracks.Where(track => track.Type == "s").ToArray();
+                MediaTrack[] vidTracks = MediaTracks.Where(track => track.Type == "v").ToArray();
+
+                foreach (MediaTrack track in vidTracks)
+                {
+                    var mi = ContextMenu.Add("Track > " + track.Text);
+                    mi.Action = () => { mp.commandv("set", "vid", track.ID.ToString()); };
+                    mi.Checked = MpvVid == track.ID.ToString();
+                }
+
+                if (vidTracks.Length > 0)
+                    ContextMenu.Add("Track > -");
+
+                foreach (MediaTrack track in audTracks)
+                {
+                    var mi = ContextMenu.Add("Track > " + track.Text);
+                    mi.Action = () => { mp.commandv("set", "aid", track.ID.ToString()); };
+                    mi.Checked = MpvAid == track.ID.ToString();
+                }
+
+                if (subTracks.Length > 0)
+                    ContextMenu.Add("Track > -");
+
+                foreach (MediaTrack track in subTracks)
+                {
+                    var mi = ContextMenu.Add("Track > " + track.Text);
+                    mi.Action = () => { mp.commandv("set", "sid", track.ID.ToString()); };
+                    mi.Checked = MpvSid == track.ID.ToString();
+                }
+
+                if (subTracks.Length > 0)
+                {
+                    var mi = ContextMenu.Add("Track > S: No subtitles");
+                    mi.Action = () => { mp.commandv("set", "sid", "no"); };
+                    mi.Checked = MpvSid == "no";
+                }
             }
         }
 
@@ -210,7 +263,7 @@ namespace mpvnet
                     else
                         input = "";
 
-                var menuItem = CMS.Add(path, () => {
+                MenuItemEx menuItem = ContextMenu.Add(path, () => {
                     try {
                         mp.command_string(command);
                     }
@@ -220,26 +273,113 @@ namespace mpvnet
                 });
                 
                 if (menuItem != null)
-                    menuItem.ShortcutKeyDisplayString = input.Replace("_","") + "   ";
+                {
+                    menuItem.ShortcutKeyDisplayString = input.Replace("_", "") + "    ";
+
+                    if (TracksMenu == null && menuItem.Text.StartsWith("Track ") &&
+                        menuItem.Text.Trim() == "Track")
+
+                        TracksMenu = menuItem;
+                }
             }
         }
 
-        private void CMS_Opened(object sender, EventArgs e) => CursorHelp.Show();
+        private void ContextMenu_Opened(object sender, EventArgs e) => CursorHelp.Show();
 
         private string LastHistory;
 
         private void mp_PlaybackRestart()
         {
-            var filename = mp.get_property_string("filename");
-            BeginInvoke(new Action(() => { Text = filename + " - mpv.net " + Application.ProductVersion; }));
-            var historyFilepath = mp.mpvConfFolderPath + "history.txt";
+            string filePath = mp.get_property_string("path");
+            BeginInvoke(new Action(() => { Text = Path.GetFileName(filePath) + " - mpv.net " + Application.ProductVersion; }));
 
-            if (LastHistory != filename && File.Exists(historyFilepath))
-            {
-                File.AppendAllText(historyFilepath, DateTime.Now.ToString() + " " +
-                    Path.GetFileNameWithoutExtension(filename) + "\r\n");
-                LastHistory = filename;
-            }
+            Task.Run(new Action(() => {
+                string historyFilepath = mp.mpvConfFolderPath + "history.txt";
+
+                if (LastHistory != filePath && File.Exists(historyFilepath))
+                {
+                    File.AppendAllText(historyFilepath, DateTime.Now.ToString() + " " +
+                        Path.GetFileNameWithoutExtension(filePath) + "\r\n");
+                    LastHistory = filePath;
+                }
+
+                lock (MediaTracks)
+                {
+                    MediaTracks.Clear();
+
+                    using (MediaInfo mi = new MediaInfo(filePath))
+                    {
+                        int count = mi.GetCount(MediaInfoStreamKind.Video);
+
+                        for (int i = 0; i < count; i++)
+                        {
+                            MediaTrack track = new MediaTrack();
+                            Add(track, mi.GetVideo(i, "Format"));
+                            Add(track, mi.GetVideo(i, "Format_Profile"));
+                            Add(track, mi.GetVideo(i, "Width") + "x" + mi.GetVideo(i, "Height"));
+                            Add(track, mi.GetVideo(i, "FrameRate") + " FPS");
+                            Add(track, mi.GetVideo(i, "Language/String"));
+                            Add(track, mi.GetVideo(i, "Forced") == "Yes" ? "Forced" : "");
+                            Add(track, mi.GetVideo(i, "Default") == "Yes" ? "Default" : "");
+                            Add(track, mi.GetVideo(i, "Title"));
+                            track.Text = "V: " + track.Text.Trim(" ,".ToCharArray());
+                            track.Type = "v";
+                            track.ID = i + 1;
+                            MediaTracks.Add(track);
+                        }
+
+                        count = mi.GetCount(MediaInfoStreamKind.Audio);
+
+                        for (int i = 0; i < count; i++)
+                        {
+                            MediaTrack track = new MediaTrack();
+                            Add(track, mi.GetAudio(i, "Language/String"));
+                            Add(track, mi.GetAudio(i, "Format"));
+                            Add(track, mi.GetAudio(i, "Format_Profile"));
+                            Add(track, mi.GetAudio(i, "BitRate/String"));
+                            Add(track, mi.GetAudio(i, "Channel(s)/String"));
+                            Add(track, mi.GetAudio(i, "SamplingRate/String"));
+                            Add(track, mi.GetAudio(i, "Forced") == "Yes" ? "Forced" : "");
+                            Add(track, mi.GetAudio(i, "Default") == "Yes" ? "Default" : "");
+                            Add(track, mi.GetAudio(i, "Title"));
+                            track.Text = "A: " + track.Text.Trim(" ,".ToCharArray());
+                            track.Type = "a";
+                            track.ID = i + 1;
+                            MediaTracks.Add(track);
+                        }
+
+                        count = mi.GetCount(MediaInfoStreamKind.Text);
+
+                        for (int i = 0; i < count; i++)
+                        {
+                            MediaTrack track = new MediaTrack();
+                            Add(track, mi.GetText(i, "Language/String"));
+                            Add(track, mi.GetText(i, "Format"));
+                            Add(track, mi.GetText(i, "Format_Profile"));
+                            Add(track, mi.GetText(i, "Forced") == "Yes" ? "Forced" : "");
+                            Add(track, mi.GetText(i, "Default") == "Yes" ? "Default" : "");
+                            Add(track, mi.GetText(i, "Title"));
+                            track.Text = "S: " + track.Text.Trim(" ,".ToCharArray());
+                            track.Type = "s";
+                            track.ID = i + 1;
+                            MediaTracks.Add(track);
+                        }
+
+                        void Add(MediaTrack track, string val)
+                        {
+                            if (!string.IsNullOrEmpty(val) && !(track.Text != null && track.Text.Contains(val)))
+                                track.Text += " " + val + ",";
+                        }                        
+                    }
+                }
+            }));
+        }
+
+        class MediaTrack
+        {
+            public string Text { get; set; }
+            public string Type { get; set; }
+            public int    ID   { get; set; }
         }
 
         private void Mp_Idle()
@@ -405,7 +545,7 @@ namespace mpvnet
             }
             else if (Environment.TickCount - LastCursorChangedTickCount > 1500 &&
                 !IsMouseInOSC() && ClientRectangle.Contains(PointToClient(MousePosition)) &&
-                Form.ActiveForm == this && !CMS.Visible)
+                Form.ActiveForm == this && !ContextMenu.Visible)
             {
                 CursorHelp.Hide();
             }
@@ -425,6 +565,9 @@ namespace mpvnet
             mp.Init();
             mp.observe_property_bool("fullscreen", mpPropChangeFullscreen);
             mp.observe_property_bool("ontop", mpPropChangeOnTop);
+            mp.observe_property_string("sid", mpPropChangeSid);
+            mp.observe_property_string("aid", mpPropChangeAid);
+            mp.observe_property_string("vid", mpPropChangeVid);
             mp.Shutdown += mp_Shutdown;
             mp.VideoSizeChanged += mp_VideoSizeChanged;
             mp.PlaybackRestart += mp_PlaybackRestart;
@@ -433,15 +576,22 @@ namespace mpvnet
 
         void mpPropChangeOnTop(bool value) => BeginInvoke(new Action(() => TopMost = value));
 
+        void mpPropChangeAid(string value) => MpvAid = value;
+
+        void mpPropChangeSid(string value) => MpvSid = value;
+
+        void mpPropChangeVid(string value) => MpvVid = value;
+
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
             if ((MpvNetDarkMode == "system" && Misc.IsDarkTheme) || MpvNetDarkMode == "always")
                 ToolStripRendererEx.ColorTheme = Color.Black;
-            CMS = new ContextMenuStripEx(components);
-            CMS.Opened += CMS_Opened;
-            ContextMenuStrip = CMS;
+            ContextMenu = new ContextMenuStripEx(components);
+            ContextMenu.Opened += ContextMenu_Opened;
+            ContextMenu.Opening += ContextMenu_Opening;
             BuildMenu();
+            ContextMenuStrip = ContextMenu;
             IgnoreDpiChanged = false;
             CheckYouTube();
         }

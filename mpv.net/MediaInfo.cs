@@ -25,6 +25,23 @@ public class MediaInfo : IDisposable
         return Marshal.PtrToStringUni(MediaInfo_Get(Handle, streamKind, 0, parameter, MediaInfoInfoKind.Text, MediaInfoInfoKind.Name));
     }
 
+    public int GetCount(MediaInfoStreamKind streamKind) => MediaInfo_Count_Get(Handle, streamKind, -1);
+
+    public string GetVideo(int streamNumber, string parameter)
+    {
+        return Marshal.PtrToStringUni(MediaInfo_Get(Handle, MediaInfoStreamKind.Video, streamNumber, parameter, MediaInfoInfoKind.Text, MediaInfoInfoKind.Name));
+    }
+
+    public string GetAudio(int streamNumber, string parameter)
+    {
+        return Marshal.PtrToStringUni(MediaInfo_Get(Handle, MediaInfoStreamKind.Audio, streamNumber, parameter, MediaInfoInfoKind.Text, MediaInfoInfoKind.Name));
+    }
+
+    public string GetText(int streamNumber, string parameter)
+    {
+        return Marshal.PtrToStringUni(MediaInfo_Get(Handle, MediaInfoStreamKind.Text, streamNumber, parameter, MediaInfoInfoKind.Text, MediaInfoInfoKind.Name));
+    }
+
     private bool Disposed;
 
     public void Dispose()
@@ -37,10 +54,7 @@ public class MediaInfo : IDisposable
         }
     }
 
-    ~MediaInfo()
-    {
-        Dispose();
-    }
+    ~MediaInfo() { Dispose(); }
 
     [DllImport("kernel32.dll", CharSet = CharSet.Unicode)]
     private static extern IntPtr LoadLibrary(string path);
@@ -49,16 +63,26 @@ public class MediaInfo : IDisposable
     private static extern IntPtr MediaInfo_New();
 
     [DllImport("MediaInfo.dll")]
-    private static extern void MediaInfo_Delete(IntPtr Handle);
+    private static extern void MediaInfo_Delete(IntPtr handle);
 
     [DllImport("MediaInfo.dll", CharSet = CharSet.Unicode)]
-    private static extern int MediaInfo_Open(IntPtr Handle, string FileName);
+    private static extern int MediaInfo_Open(IntPtr handle, string fileName);
 
     [DllImport("MediaInfo.dll")]
-    private static extern int MediaInfo_Close(IntPtr Handle);
+    private static extern int MediaInfo_Close(IntPtr handle);
 
     [DllImport("MediaInfo.dll", CharSet = CharSet.Unicode)]
-    private static extern IntPtr MediaInfo_Get(IntPtr Handle, MediaInfoStreamKind StreamKind, int StreamNumber, string Parameter, MediaInfoInfoKind KindOfInfo, MediaInfoInfoKind KindOfSearch);
+    private static extern IntPtr MediaInfo_Get(IntPtr handle,
+                                               MediaInfoStreamKind streamKind,
+                                               int streamNumber,
+                                               string parameter,
+                                               MediaInfoInfoKind kindOfInfo,
+                                               MediaInfoInfoKind kindOfSearch);
+
+    [DllImport("MediaInfo.dll", CharSet = CharSet.Unicode)]
+    private static extern int MediaInfo_Count_Get(IntPtr handle,
+                                                  MediaInfoStreamKind streamKind,
+                                                  int streamNumber);
 }
 
 public enum MediaInfoStreamKind
@@ -67,8 +91,10 @@ public enum MediaInfoStreamKind
     Video,
     Audio,
     Text,
-    Chapters,
-    Image
+    Other,
+    Image,
+    Menu,
+    Max,
 }
 
 public enum MediaInfoInfoKind

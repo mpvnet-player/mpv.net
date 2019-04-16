@@ -41,18 +41,18 @@
  _           ignore                 #menu: Navigate > -
  PGUP        add chapter  1         #menu: Navigate > Next Chapter
  PGDWN       add chapter -1         #menu: Navigate > Previous Chapter
- 
- .           frame-step             #menu: Seek > Next Frame
- ,           frame-back-step        #menu: Seek > Previous Frame
- _           ignore                 #menu: Seek > -
- Right       no-osd seek  7         #menu: Seek > 7 sec forward
- Left        no-osd seek -7         #menu: Seek > 7 sec backward
- _           ignore                 #menu: Seek > -
- Up          no-osd seek  40        #menu: Seek > 40 sec forward
- Down        no-osd seek -40        #menu: Seek > 40 sec backward
- _           ignore                 #menu: Seek > -
- Ctrl+Right  no-osd seek  300       #menu: Seek > 5 min forward
- Ctrl+Left   no-osd seek -300       #menu: Seek > 5 min backward
+ _           ignore                 #menu: Navigate > -
+ .           frame-step             #menu: Navigate > Jump Next Frame
+ ,           frame-back-step        #menu: Navigate > Jump Previous Frame
+ _           ignore                 #menu: Navigate > -
+ Right       no-osd seek  7         #menu: Navigate > Jump 7 sec forward
+ Left        no-osd seek -7         #menu: Navigate > Jump 7 sec backward
+ _           ignore                 #menu: Navigate > -
+ Up          no-osd seek  40        #menu: Navigate > Jump 40 sec forward
+ Down        no-osd seek -40        #menu: Navigate > Jump 40 sec backward
+ _           ignore                 #menu: Navigate > -
+ Ctrl+Right  no-osd seek  300       #menu: Navigate > Jump 5 min forward
+ Ctrl+Left   no-osd seek -300       #menu: Navigate > Jump 5 min backward
 
  Ctrl++      add video-zoom  0.1    #menu: Pan & Scan > Increase Size
  Ctrl+-      add video-zoom -0.1    #menu: Pan & Scan > Decrease Size
@@ -100,6 +100,8 @@
  _           ignore                 #menu: Subtitle > -
  _           add sub-scale -0.1     #menu: Subtitle > Decrease Subtitle Font Size
  _           add sub-scale  0.1     #menu: Subtitle > Increase Subtitle Font Size
+
+ _           ignore                 #menu: Track
 
  +           add volume  10         #menu: Volume > Up
  -           add volume -10         #menu: Volume > Down

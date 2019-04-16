@@ -56,7 +56,7 @@ if it's missing mpv.net generates it with the following defaults:
 
 ### Scripting
 
-Scripting is supported for Python, C#, Lua, JavaScript and PowerShell
+Scripting is supported via Python, C#, Lua, JavaScript and PowerShell
 
 https://github.com/stax76/mpv.net/wiki/Scripting-(CSharp,-Python,-JavaScript,-Lua,-PowerShell)
 
@@ -70,9 +70,29 @@ https://github.com/stax76/mpv.net/wiki/Scripting-(CSharp,-Python,-JavaScript,-Lu
 
 ### Changelog
 
-### 2.9 (2019- soon
+### 2.9 (2019-??-??)
 
-- clicking the right top corner in fullscreen mode closes the player but it did not work on all displays
+- clicking the right top corner in fullscreen mode
+  closes the player but it did not work on all displays
+- the info display was changed to display the filename on top
+  so it's not diplayed in the middle of the screen
+- on start up of the conf editor all text is now selected in the
+  search text box so it's ready for a new search to be typed
+- the conf editor was changed to write the settings to disk
+  only if the settings were actually modified, also the message
+  that says that the settings will be available on next start
+  is now only shown if the settings were actually modified.
+- there was an instance in the context menu where the sub menu
+  arrow was overlapping with the text
+- in the input editor when only one character is entered in the
+  search text box the search is performed only in the input and
+  not in the command or menu
+- in the input editor the routine that generates the input string
+  was completely rewritten because it was adding Shift where it
+  wasn't necessary (it took a huge amount of time to implement)
+- the context menu has a new track menu where the active track
+  can be seen and selected, it shows video, audio and subtitle
+  tracks with various meta data
 
 [go to download page](https://github.com/stax76/mpv.net/releases)
 
@@ -100,25 +120,3 @@ https://github.com/stax76/mpv.net/wiki/Scripting-(CSharp,-Python,-JavaScript,-Lu
 - all message boxes were migrated to use the TaskDialog API
 - an improvement in the previous release unfortunately introduced a bug
   causing the conf editor not to save settings
-
-### 2.4 (2019-04-06)
-
-- new options added to the conf GUI editor: gpu-context, gpu-api, scale, cscale,
-  dscale, dither-depth, correct-downscaling, sigmoid-upscaling, deband
-- the conf edit GUI has a 'Apply' feature added to write the conf to mpv.conf
-  without the need to close the conf edit GUI
-- the input edit GUI shows a message box when a duplicate is detected and it has
-  a new feature to reduce the filter scope to eather of input, menu or command and
-  the editor writes always the same help on top of input.conf as it is found in the defaults
-- the conf edit GUI was often starting out of working area bounds and is now starting with center screen
-- the startup size was reduced and a issue was fixed that when the screen property
-  was defined for a screen that isn't connected the startup size wasn't applied
-- added feature to load external audio and subtitle files in the menu under:
-  Open > Load external audio|subtitle files (default binding at:
-  [input.conf](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt))
-- previously the conf edit GUI removed settings from the conf file if the setting
-  was set to the default, the new behavior is not to remove anything
-- the autofit mpv property was partly implemented, you can use 'autofit = 50%' in mpv.conf or
-  '--autofit=50%' on the command line, WxH isn't implemented and only percent values are accepted.
-  There is a new wiki page explaining the mpv.net limitations compared to the original mpv:
-  [Limitations](https://github.com/stax76/mpv.net/wiki/Limitations)
