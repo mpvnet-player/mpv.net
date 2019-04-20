@@ -152,6 +152,7 @@
  _ ignore           #menu: -
  Esc quit           #menu: Exit
  Q quit-watch-later #menu: Exit Watch Later
+
  > playlist-next
  < playlist-prev
  Power quit
