@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using VBNET;
@@ -15,7 +15,7 @@ namespace mpvnet
         public string Name { get; set; }
         public Action<string[]> Action { get; set; }
 
-        private static List<Command> commands;
+        static List<Command> commands;
 
         public static List<Command> Commands
         {
@@ -58,7 +58,7 @@ namespace mpvnet
 
         public static void open_conf_folder(string[] args)
         {
-            Process.Start(mp.mpvConfFolderPath);
+            Process.Start(mp.MpvConfFolderPath);
         }
 
         public static void show_input_editor(string[] args)
@@ -73,7 +73,7 @@ namespace mpvnet
 
         public static void show_history(string[] args)
         {
-            var fp = mp.mpvConfFolderPath + "history.txt";
+            var fp = mp.MpvConfFolderPath + "history.txt";
 
             if (File.Exists(fp))
                 Process.Start(fp);
@@ -196,6 +196,23 @@ namespace mpvnet
                             mp.commandv("audio-add", i);
                 }
             }));
+        }
+
+        public static void cycle_audio(string[] args)
+        {
+            string filePath = mp.get_property_string("path", false);
+            if (!File.Exists(filePath)) return;
+
+            using (MediaInfo mi = new MediaInfo(filePath))
+            {
+                MediaTrack[] audTracks = mp.MediaTracks.Where(track => track.Type == "a").ToArray();
+                if (audTracks.Length < 2) return;
+                int aid = mp.get_property_int("aid");
+                aid += 1;
+                if (aid > audTracks.Length) aid = 1;
+                mp.commandv("set", "aid", aid.ToString());
+                mp.commandv("show-text", audTracks[aid - 1].Text.Substring(3), "5000");
+            }
         }
     }
 }

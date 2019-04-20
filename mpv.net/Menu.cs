@@ -149,7 +149,7 @@ public class ToolStripRendererEx : ToolStripSystemRenderer
     public static Color ColorToolStrip3 { get; set; }
     public static Color ColorToolStrip4 { get; set; }
 
-    private int TextOffset;
+    int TextOffset;
 
     public ToolStripRendererEx()
     {
@@ -321,28 +321,28 @@ public struct HSLColor
         Luminosity = l;
     }
 
-    private double hue;
+    double _Hue;
 
     public int Hue {
-        get => System.Convert.ToInt32(hue * 240);
-        set => hue = CheckRange(value / 240.0);
+        get => System.Convert.ToInt32(_Hue * 240);
+        set => _Hue = CheckRange(value / 240.0);
     }
 
-    private double saturation;
+    double _Saturation;
 
     public int Saturation {
-        get => System.Convert.ToInt32(saturation * 240);
-        set => saturation = CheckRange(value / 240.0);
+        get => System.Convert.ToInt32(_Saturation * 240);
+        set => _Saturation = CheckRange(value / 240.0);
     }
 
-    private double luminosity;
+    double _Luminosity;
 
     public int Luminosity {
-        get => System.Convert.ToInt32(luminosity * 240);
-        set => luminosity = CheckRange(value / 240.0);
+        get => System.Convert.ToInt32(_Luminosity * 240);
+        set => _Luminosity = CheckRange(value / 240.0);
     }
 
-    private double CheckRange(double value)
+    double CheckRange(double value)
     {
         if (value < 0)
             value = 0;
@@ -367,21 +367,21 @@ public struct HSLColor
     {
         double r = 0, g = 0, b = 0;
 
-        if (luminosity != 0)
+        if (_Luminosity != 0)
         {
-            if (saturation == 0)
+            if (_Saturation == 0)
             {
-                b = luminosity;
-                g = luminosity;
-                r = luminosity;
+                b = _Luminosity;
+                g = _Luminosity;
+                r = _Luminosity;
             }
             else
             {
                 double temp2 = GetTemp2(this);
-                double temp1 = 2.0 * luminosity - temp2;
-                r = GetColorComponent(temp1, temp2, hue + 1.0 / 3.0);
-                g = GetColorComponent(temp1, temp2, hue);
-                b = GetColorComponent(temp1, temp2, hue - 1.0 / 3.0);
+                double temp1 = 2.0 * _Luminosity - temp2;
+                r = GetColorComponent(temp1, temp2, _Hue + 1.0 / 3.0);
+                g = GetColorComponent(temp1, temp2, _Hue);
+                b = GetColorComponent(temp1, temp2, _Hue - 1.0 / 3.0);
             }
         }
 
@@ -391,7 +391,7 @@ public struct HSLColor
             System.Convert.ToInt32(255 * b));
     }
 
-    private static double GetColorComponent(double temp1, double temp2, double temp3)
+    static double GetColorComponent(double temp1, double temp2, double temp3)
     {
         temp3 = MoveIntoRange(temp3);
 
@@ -405,7 +405,7 @@ public struct HSLColor
             return temp1;
     }
 
-    private static double MoveIntoRange(double temp3)
+    static double MoveIntoRange(double temp3)
     {
         if (temp3 < 0)
             temp3 += 1;
@@ -414,14 +414,14 @@ public struct HSLColor
         return temp3;
     }
 
-    private static double GetTemp2(HSLColor hslColor)
+    static double GetTemp2(HSLColor hslColor)
     {
         double temp2;
 
-        if (hslColor.luminosity < 0.5)
-            temp2 = hslColor.luminosity * (1.0 + hslColor.saturation);
+        if (hslColor._Luminosity < 0.5)
+            temp2 = hslColor._Luminosity * (1.0 + hslColor._Saturation);
         else
-            temp2 = hslColor.luminosity + hslColor.saturation - (hslColor.luminosity * hslColor.saturation);
+            temp2 = hslColor._Luminosity + hslColor._Saturation - (hslColor._Luminosity * hslColor._Saturation);
 
         return temp2;
     }
@@ -429,17 +429,17 @@ public struct HSLColor
     public static HSLColor Convert(Color c)
     {
         HSLColor r = new HSLColor();
-        r.hue = c.GetHue() / 360.0;
-        r.luminosity = c.GetBrightness();
-        r.saturation = c.GetSaturation();
+        r._Hue = c.GetHue() / 360.0;
+        r._Luminosity = c.GetBrightness();
+        r._Saturation = c.GetSaturation();
         return r;
     }
 
     public void SetRGB(int red, int green, int blue)
     {
         HSLColor hc = HSLColor.Convert(Color.FromArgb(red, green, blue));
-        hue = hc.hue;
-        saturation = hc.saturation;
-        luminosity = hc.luminosity;
+        _Hue = hc._Hue;
+        _Saturation = hc._Saturation;
+        _Luminosity = hc._Luminosity;
     }
 }

@@ -53,20 +53,21 @@ namespace mpvnet
         public static event Action QueueOverflow;             //                    MPV_EVENT_QUEUE_OVERFLOW
         public static event Action Hook;                      //                    MPV_EVENT_HOOK
 
-        public static IntPtr MpvHandle;
-        public static IntPtr MpvWindowHandle;
-        public static Addon Addon;
-        public static List<KeyValuePair<string, Action<bool>>> BoolPropChangeActions = new List<KeyValuePair<string, Action<bool>>>();
-        public static List<KeyValuePair<string, Action<string>>> StringPropChangeActions = new List<KeyValuePair<string, Action<string>>>();
-        public static Size VideoSize = new Size(1920, 1080);
-        public static string mpvConfFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\";
-        public static string InputConfPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\input.conf";
-        public static string mpvConfPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\mpv.conf";
-        public static string mpvNetConfPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\mpvnet.conf";
-        public static List<PythonScript> PythonScripts => new List<PythonScript>();
-        public static AutoResetEvent AutoResetEvent = new AutoResetEvent(false);
+        public static IntPtr MpvHandle { get; set; }
+        public static IntPtr MpvWindowHandle { get; set; }
+        public static Addon Addon { get; set; }
+        public static List<KeyValuePair<string, Action<bool>>> BoolPropChangeActions { get; set; } = new List<KeyValuePair<string, Action<bool>>>();
+        public static List<KeyValuePair<string, Action<string>>> StringPropChangeActions { get; set; } = new List<KeyValuePair<string, Action<string>>>();
+        public static Size VideoSize { get; set; } = new Size(1920, 1080);
+        public static string MpvConfFolderPath { get; set; } = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\";
+        public static string InputConfPath { get; set; } = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\input.conf";
+        public static string MpvConfPath { get; set; } = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\mpv.conf";
+        public static string MpvNetConfPath { get; set; } = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\mpvnet.conf";
+        public static List<PythonScript> PythonScripts { get; set; } = new List<PythonScript>();
+        public static AutoResetEvent AutoResetEvent { get; set; } = new AutoResetEvent(false);
+        public static List<MediaTrack> MediaTracks { get; set; } = new List<MediaTrack>();
 
-        private static Dictionary<string, string> _mpvConf;
+        static Dictionary<string, string> _mpvConf;
 
         public static Dictionary<string, string> mpvConf {
             get {
@@ -74,8 +75,8 @@ namespace mpvnet
                 {
                     _mpvConf = new Dictionary<string, string>();
 
-                    if (File.Exists(mpvConfPath))
-                        foreach (var i in File.ReadAllLines(mpvConfPath))
+                    if (File.Exists(MpvConfPath))
+                        foreach (var i in File.ReadAllLines(MpvConfPath))
                             if (i.Contains("=") && ! i.StartsWith("#"))
                                 _mpvConf[i.Substring(0, i.IndexOf("=")).Trim()] = i.Substring(i.IndexOf("=") + 1).Trim();
                 }
@@ -83,7 +84,7 @@ namespace mpvnet
             }
         }
 
-        private static Dictionary<string, string> _mpvNetConf;
+        static Dictionary<string, string> _mpvNetConf;
 
         public static Dictionary<string, string> mpvNetConf {
             get {
@@ -91,8 +92,8 @@ namespace mpvnet
                 {
                     _mpvNetConf = new Dictionary<string, string>();
 
-                    if (File.Exists(mpvNetConfPath))
-                        foreach (string i in File.ReadAllLines(mpvNetConfPath))
+                    if (File.Exists(MpvNetConfPath))
+                        foreach (string i in File.ReadAllLines(MpvNetConfPath))
                             if (i.Contains("=") && !i.StartsWith("#"))
                                 _mpvNetConf[i.Substring(0, i.IndexOf("=")).Trim()] = i.Substring(i.IndexOf("=") + 1).Trim();
                 }
@@ -102,11 +103,11 @@ namespace mpvnet
 
         public static void Init()
         {
-            if (!Directory.Exists(mp.mpvConfFolderPath))
-                Directory.CreateDirectory(mp.mpvConfFolderPath);
+            if (!Directory.Exists(mp.MpvConfFolderPath))
+                Directory.CreateDirectory(mp.MpvConfFolderPath);
 
-            if (!File.Exists(mp.mpvConfPath))
-                File.WriteAllText(mp.mpvConfPath, Properties.Resources.mpv_conf);
+            if (!File.Exists(mp.MpvConfPath))
+                File.WriteAllText(mp.MpvConfPath, Properties.Resources.mpv_conf);
 
             if (!File.Exists(mp.InputConfPath))
                 File.WriteAllText(mp.InputConfPath, Properties.Resources.input_conf);
@@ -143,7 +144,7 @@ namespace mpvnet
                 if (Path.GetExtension(scriptPath) == ".ps1")
                     PowerShellScript.Init(scriptPath);
 
-            foreach (var scriptPath in Directory.GetFiles(mp.mpvConfFolderPath + "Scripts"))
+            foreach (var scriptPath in Directory.GetFiles(mp.MpvConfFolderPath + "Scripts"))
                 if (Path.GetExtension(scriptPath) == ".py")
                     PythonScripts.Add(new PythonScript(File.ReadAllText(scriptPath)));
                 else if (Path.GetExtension(scriptPath) == ".ps1")
@@ -168,6 +169,7 @@ namespace mpvnet
                     {
                         case mpv_event_id.MPV_EVENT_SHUTDOWN:
                             Shutdown?.Invoke();
+                            WriteHistory(null);
                             AutoResetEvent.Set();
                             return;
                         case mpv_event_id.MPV_EVENT_LOG_MESSAGE:
@@ -275,7 +277,12 @@ namespace mpvnet
                             {
                                 VideoSize = s;
                                 VideoSizeChanged?.Invoke();
-                            }
+                            }                    
+
+                            Task.Run(new Action(() => {
+                                WriteHistory(mp.get_property_string("path"));
+                                SetMediaTracks();
+                            }));
                             break;
                         case mpv_event_id.MPV_EVENT_CHAPTER_CHANGE:
                             ChapterChange?.Invoke();
@@ -295,7 +302,7 @@ namespace mpvnet
             }
         }
 
-        private static List<PythonEventObject> PythonEventObjects = new List<PythonEventObject>();
+        static List<PythonEventObject> PythonEventObjects = new List<PythonEventObject>();
 
         public static void register_event(string name, PyRT.PythonFunction pyFunc)
         {
@@ -533,9 +540,9 @@ namespace mpvnet
             mp.LoadFolder();
         }
 
-        private static bool WasFolderLoaded;
+        static bool WasFolderLoaded;
 
-        public static void LoadFolder()
+        static void LoadFolder()
         {
             if (WasFolderLoaded)
                 return;
@@ -561,7 +568,7 @@ namespace mpvnet
             WasFolderLoaded = true;
         }
 
-        public static IntPtr AllocateUtf8IntPtrArrayWithSentinel(string[] arr, out IntPtr[] byteArrayPointers)
+        static IntPtr AllocateUtf8IntPtrArrayWithSentinel(string[] arr, out IntPtr[] byteArrayPointers)
         {
             int numberOfStrings = arr.Length + 1; // add extra element for extra null pointer last (sentinel)
             byteArrayPointers = new IntPtr[numberOfStrings];
@@ -579,7 +586,7 @@ namespace mpvnet
             return rootPointer;
         }
 
-        public static string[] NativeUtf8StrArray2ManagedStrArray(IntPtr pUnmanagedStringArray, int StringCount)
+        static string[] NativeUtf8StrArray2ManagedStrArray(IntPtr pUnmanagedStringArray, int StringCount)
         {
             IntPtr[] pIntPtrArray = new IntPtr[StringCount];
             string[] ManagedStringArray = new string[StringCount];
@@ -591,7 +598,7 @@ namespace mpvnet
             return ManagedStringArray;
         }
 
-        public static string StringFromNativeUtf8(IntPtr nativeUtf8)
+        static string StringFromNativeUtf8(IntPtr nativeUtf8)
         {
             int len = 0;
             while (Marshal.ReadByte(nativeUtf8, len) != 0) ++len;
@@ -600,7 +607,100 @@ namespace mpvnet
             return Encoding.UTF8.GetString(buffer);
         }
 
-        public static byte[] GetUtf8Bytes(string s) => Encoding.UTF8.GetBytes(s + "\0");
+        static byte[] GetUtf8Bytes(string s) => Encoding.UTF8.GetBytes(s + "\0");
+
+        static string LastHistoryPath;
+        static DateTime LastHistoryStartDateTime;
+
+        static void WriteHistory(string filePath)
+        {
+            int totalMinutes = Convert.ToInt32((DateTime.Now - LastHistoryStartDateTime).TotalMinutes);
+
+            if (File.Exists(LastHistoryPath) && totalMinutes > 1)
+            {
+                string historyFilepath = mp.MpvConfFolderPath + "history.txt";
+
+                File.AppendAllText(historyFilepath, DateTime.Now.ToString().Substring(0, 16) +
+                    " " + totalMinutes.ToString().PadLeft(3) + " " +
+                    Path.GetFileNameWithoutExtension(LastHistoryPath) + "\r\n");
+            }
+
+            LastHistoryPath = filePath;
+            LastHistoryStartDateTime = DateTime.Now;
+        }
+
+        static void SetMediaTracks()
+        {
+            lock (MediaTracks)
+            {
+                MediaTracks.Clear();
+
+                using (MediaInfo mi = new MediaInfo(mp.get_property_string("path")))
+                {
+                    int count = mi.GetCount(MediaInfoStreamKind.Video);
+
+                    for (int i = 0; i < count; i++)
+                    {
+                        MediaTrack track = new MediaTrack();
+                        Add(track, mi.GetVideo(i, "Format"));
+                        Add(track, mi.GetVideo(i, "Format_Profile"));
+                        Add(track, mi.GetVideo(i, "Width") + "x" + mi.GetVideo(i, "Height"));
+                        Add(track, mi.GetVideo(i, "FrameRate") + " FPS");
+                        Add(track, mi.GetVideo(i, "Language/String"));
+                        Add(track, mi.GetVideo(i, "Forced") == "Yes" ? "Forced" : "");
+                        Add(track, mi.GetVideo(i, "Default") == "Yes" ? "Default" : "");
+                        Add(track, mi.GetVideo(i, "Title"));
+                        track.Text = "V: " + track.Text.Trim(" ,".ToCharArray());
+                        track.Type = "v";
+                        track.ID = i + 1;
+                        MediaTracks.Add(track);
+                    }
+
+                    count = mi.GetCount(MediaInfoStreamKind.Audio);
+
+                    for (int i = 0; i < count; i++)
+                    {
+                        MediaTrack track = new MediaTrack();
+                        Add(track, mi.GetAudio(i, "Language/String"));
+                        Add(track, mi.GetAudio(i, "Format"));
+                        Add(track, mi.GetAudio(i, "Format_Profile"));
+                        Add(track, mi.GetAudio(i, "BitRate/String"));
+                        Add(track, mi.GetAudio(i, "Channel(s)/String"));
+                        Add(track, mi.GetAudio(i, "SamplingRate/String"));
+                        Add(track, mi.GetAudio(i, "Forced") == "Yes" ? "Forced" : "");
+                        Add(track, mi.GetAudio(i, "Default") == "Yes" ? "Default" : "");
+                        Add(track, mi.GetAudio(i, "Title"));
+                        track.Text = "A: " + track.Text.Trim(" ,".ToCharArray());
+                        track.Type = "a";
+                        track.ID = i + 1;
+                        MediaTracks.Add(track);
+                    }
+
+                    count = mi.GetCount(MediaInfoStreamKind.Text);
+
+                    for (int i = 0; i < count; i++)
+                    {
+                        MediaTrack track = new MediaTrack();
+                        Add(track, mi.GetText(i, "Language/String"));
+                        Add(track, mi.GetText(i, "Format"));
+                        Add(track, mi.GetText(i, "Format_Profile"));
+                        Add(track, mi.GetText(i, "Forced") == "Yes" ? "Forced" : "");
+                        Add(track, mi.GetText(i, "Default") == "Yes" ? "Default" : "");
+                        Add(track, mi.GetText(i, "Title"));
+                        track.Text = "S: " + track.Text.Trim(" ,".ToCharArray());
+                        track.Type = "s";
+                        track.ID = i + 1;
+                        MediaTracks.Add(track);
+                    }
+
+                    void Add(MediaTrack track, string val)
+                    {
+                        if (!string.IsNullOrEmpty(val) && !(track.Text != null && track.Text.Contains(val)))
+                            track.Text += " " + val + ",";
+                    }
+                }
+            }
+        }
     }
 
     public enum EndFileEventMode

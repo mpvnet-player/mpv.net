@@ -14,7 +14,7 @@ namespace mpvnet
         [ImportMany]
         public IEnumerable<IAddon> Addons = null;
 
-        private readonly CompositionContainer CompositionContainer;
+        readonly CompositionContainer CompositionContainer;
 
         public Addon()
         {
@@ -28,7 +28,7 @@ namespace mpvnet
                     foreach (string i in Directory.GetDirectories(dir))
                         catalog.Catalogs.Add(new DirectoryCatalog(i, "*Addon.dll"));
 
-                dir = mp.mpvConfFolderPath + "\\Addons";
+                dir = mp.MpvConfFolderPath + "\\Addons";
 
                 if (Directory.Exists(dir))
                     foreach (string i in Directory.GetDirectories(dir))

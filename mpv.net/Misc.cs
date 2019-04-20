@@ -99,6 +99,15 @@ namespace mpvnet
                 rk.SetValue(name, value);
         }
 
+        public static string GetValue(string path, string name)
+        {
+            using (RegistryKey rk = GetRootKey(path).OpenSubKey(path.Substring(5)))
+                if (rk != null)
+                    return rk.GetValue(name, "").ToString();
+                else
+                    return "";
+        }
+
         public static void RemoveKey(string path)
         {
             GetRootKey(path).DeleteSubKeyTree(path.Substring(5), false);
@@ -121,5 +130,12 @@ namespace mpvnet
                 default: throw new Exception();
             }
         }
+    }
+
+    public class MediaTrack
+    {
+        public string Text { get; set; }
+        public string Type { get; set; }
+        public int ID { get; set; }
     }
 }

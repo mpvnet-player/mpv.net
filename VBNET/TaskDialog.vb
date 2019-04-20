@@ -58,7 +58,7 @@ Public Class Msg
         End Try
     End Sub
 
-    Private Shared ShownMessages As String
+    Shared ShownMessages As String
 
     Public Shared Sub ShowWarning(mainInstruction As String,
                                   Optional content As String = Nothing,
@@ -421,11 +421,11 @@ Public Class TaskDialog(Of T)
 
     Private ExitTickCount As Integer
 
-    Private Function DialogProc(hwnd As IntPtr,
-                                msg As UInteger,
-                                wParam As IntPtr,
-                                lParam As IntPtr,
-                                lpRefData As IntPtr) As Integer
+    Function DialogProc(hwnd As IntPtr,
+                        msg As UInteger,
+                        wParam As IntPtr,
+                        lParam As IntPtr,
+                        lpRefData As IntPtr) As Integer
         Select Case msg
             Case TDN_BUTTON_CLICKED, TDN_RADIO_BUTTON_CLICKED
                 If TypeOf SelectedValue Is MsgResult Then
@@ -464,7 +464,7 @@ Public Class TaskDialog(Of T)
         End Select
     End Function
 
-    Private Sub MarshalDialogControlStructs()
+    Sub MarshalDialogControlStructs()
         If Not Buttons Is Nothing AndAlso Buttons.Count > 0 Then
             ButtonArray = AllocateAndMarshalButtons(Buttons)
             Config.pButtons = ButtonArray
@@ -478,7 +478,7 @@ Public Class TaskDialog(Of T)
         End If
     End Sub
 
-    Private Shared Function AllocateAndMarshalButtons(structs As List(Of TASKDIALOG_BUTTON)) As IntPtr
+    Shared Function AllocateAndMarshalButtons(structs As List(Of TASKDIALOG_BUTTON)) As IntPtr
         Dim initialPtr = Marshal.AllocHGlobal(Marshal.SizeOf(GetType(TASKDIALOG_BUTTON)) * structs.Count)
         Dim currentPtr = initialPtr
 

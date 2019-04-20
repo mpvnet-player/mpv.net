@@ -3,8 +3,8 @@ using System.Runtime.InteropServices;
 
 public class MediaInfo : IDisposable
 {
-    private IntPtr Handle;
-    private static bool Loaded;
+    IntPtr Handle;
+    static bool Loaded;
 
     public MediaInfo(string sourcepath)
     {
@@ -42,7 +42,7 @@ public class MediaInfo : IDisposable
         return Marshal.PtrToStringUni(MediaInfo_Get(Handle, MediaInfoStreamKind.Text, streamNumber, parameter, MediaInfoInfoKind.Text, MediaInfoInfoKind.Name));
     }
 
-    private bool Disposed;
+    bool Disposed;
 
     public void Dispose()
     {
@@ -57,32 +57,32 @@ public class MediaInfo : IDisposable
     ~MediaInfo() { Dispose(); }
 
     [DllImport("kernel32.dll", CharSet = CharSet.Unicode)]
-    private static extern IntPtr LoadLibrary(string path);
+    static extern IntPtr LoadLibrary(string path);
 
     [DllImport("MediaInfo.dll")]
-    private static extern IntPtr MediaInfo_New();
+    static extern IntPtr MediaInfo_New();
 
     [DllImport("MediaInfo.dll")]
-    private static extern void MediaInfo_Delete(IntPtr handle);
+    static extern void MediaInfo_Delete(IntPtr handle);
 
     [DllImport("MediaInfo.dll", CharSet = CharSet.Unicode)]
-    private static extern int MediaInfo_Open(IntPtr handle, string fileName);
+    static extern int MediaInfo_Open(IntPtr handle, string fileName);
 
     [DllImport("MediaInfo.dll")]
-    private static extern int MediaInfo_Close(IntPtr handle);
+    static extern int MediaInfo_Close(IntPtr handle);
 
     [DllImport("MediaInfo.dll", CharSet = CharSet.Unicode)]
-    private static extern IntPtr MediaInfo_Get(IntPtr handle,
-                                               MediaInfoStreamKind streamKind,
-                                               int streamNumber,
-                                               string parameter,
-                                               MediaInfoInfoKind kindOfInfo,
-                                               MediaInfoInfoKind kindOfSearch);
+    static extern IntPtr MediaInfo_Get(IntPtr handle,
+                                       MediaInfoStreamKind streamKind,
+                                       int streamNumber,
+                                       string parameter,
+                                       MediaInfoInfoKind kindOfInfo,
+                                       MediaInfoInfoKind kindOfSearch);
 
     [DllImport("MediaInfo.dll", CharSet = CharSet.Unicode)]
-    private static extern int MediaInfo_Count_Get(IntPtr handle,
-                                                  MediaInfoStreamKind streamKind,
-                                                  int streamNumber);
+    static extern int MediaInfo_Count_Get(IntPtr handle,
+                                          MediaInfoStreamKind streamKind,
+                                          int streamNumber);
 }
 
 public enum MediaInfoStreamKind

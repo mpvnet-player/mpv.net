@@ -16,22 +16,21 @@ namespace mpvnet
     public partial class MainForm : Form
     {
         public static MainForm Instance { get; set; }
-        public static IntPtr Hwnd;
+        public static IntPtr Hwnd { get; set; }
 
-        private Point  LastCursorPosChanged;
-        private int    LastCursorChangedTickCount;
-        private bool   IgnoreDpiChanged = true;
-        private MenuItemEx TracksMenu;
-        private List<MediaTrack> MediaTracks = new List<MediaTrack>();
         public new ContextMenuStripEx ContextMenu;
+        MenuItemEx TracksMenu;
 
-        private float  MpvAutofit = 0.50f;
-        private bool   MpvFullscreen;
-        private int    MpvScreen = -1;
-        private string MpvNetDarkMode = "system";
-        private string MpvSid = "";
-        private string MpvAid = "";
-        private string MpvVid = "";
+        Point  LastCursorPosChanged;
+        int    LastCursorChangedTickCount;
+        bool   IgnoreDpiChanged = true;
+        float  MpvAutofit = 0.50f;
+        bool   MpvFullscreen;
+        int    MpvScreen = -1;
+        string MpvNetDarkMode = "system";
+        string MpvSid = "";
+        string MpvAid = "";
+        string MpvVid = "";
 
         public MainForm()
         {
@@ -67,15 +66,15 @@ namespace mpvnet
             }
         }
 
-        private void ContextMenu_Opening(object sender, CancelEventArgs e)
+        void ContextMenu_Opening(object sender, CancelEventArgs e)
         {
-            lock (MediaTracks)
+            lock (mp.MediaTracks)
             {
                 TracksMenu.DropDownItems.Clear();
 
-                MediaTrack[] audTracks = MediaTracks.Where(track => track.Type == "a").ToArray();
-                MediaTrack[] subTracks = MediaTracks.Where(track => track.Type == "s").ToArray();
-                MediaTrack[] vidTracks = MediaTracks.Where(track => track.Type == "v").ToArray();
+                MediaTrack[] audTracks = mp.MediaTracks.Where(track => track.Type == "a").ToArray();
+                MediaTrack[] subTracks = mp.MediaTracks.Where(track => track.Type == "s").ToArray();
+                MediaTrack[] vidTracks = mp.MediaTracks.Where(track => track.Type == "v").ToArray();
 
                 foreach (MediaTrack track in vidTracks)
                 {
@@ -284,127 +283,30 @@ namespace mpvnet
             }
         }
 
-        private void ContextMenu_Opened(object sender, EventArgs e) => CursorHelp.Show();
+        void ContextMenu_Opened(object sender, EventArgs e) => CursorHelp.Show();
 
-        private string LastHistory;
+        void mp_PlaybackRestart() => BeginInvoke(new Action(() => { Text = Path.GetFileName(mp.get_property_string("path")) + " - mpv.net " + Application.ProductVersion; }));
 
-        private void mp_PlaybackRestart()
-        {
-            string filePath = mp.get_property_string("path");
-            BeginInvoke(new Action(() => { Text = Path.GetFileName(filePath) + " - mpv.net " + Application.ProductVersion; }));
+        void Mp_Idle() => BeginInvoke(new Action(() => { Text = "mpv.net " + Application.ProductVersion; }));
 
-            Task.Run(new Action(() => {
-                string historyFilepath = mp.mpvConfFolderPath + "history.txt";
+        void CM_Popup(object sender, EventArgs e) => CursorHelp.Show();
 
-                if (LastHistory != filePath && File.Exists(historyFilepath))
-                {
-                    File.AppendAllText(historyFilepath, DateTime.Now.ToString() + " " +
-                        Path.GetFileNameWithoutExtension(filePath) + "\r\n");
-                    LastHistory = filePath;
-                }
-
-                lock (MediaTracks)
-                {
-                    MediaTracks.Clear();
-
-                    using (MediaInfo mi = new MediaInfo(filePath))
-                    {
-                        int count = mi.GetCount(MediaInfoStreamKind.Video);
-
-                        for (int i = 0; i < count; i++)
-                        {
-                            MediaTrack track = new MediaTrack();
-                            Add(track, mi.GetVideo(i, "Format"));
-                            Add(track, mi.GetVideo(i, "Format_Profile"));
-                            Add(track, mi.GetVideo(i, "Width") + "x" + mi.GetVideo(i, "Height"));
-                            Add(track, mi.GetVideo(i, "FrameRate") + " FPS");
-                            Add(track, mi.GetVideo(i, "Language/String"));
-                            Add(track, mi.GetVideo(i, "Forced") == "Yes" ? "Forced" : "");
-                            Add(track, mi.GetVideo(i, "Default") == "Yes" ? "Default" : "");
-                            Add(track, mi.GetVideo(i, "Title"));
-                            track.Text = "V: " + track.Text.Trim(" ,".ToCharArray());
-                            track.Type = "v";
-                            track.ID = i + 1;
-                            MediaTracks.Add(track);
-                        }
-
-                        count = mi.GetCount(MediaInfoStreamKind.Audio);
-
-                        for (int i = 0; i < count; i++)
-                        {
-                            MediaTrack track = new MediaTrack();
-                            Add(track, mi.GetAudio(i, "Language/String"));
-                            Add(track, mi.GetAudio(i, "Format"));
-                            Add(track, mi.GetAudio(i, "Format_Profile"));
-                            Add(track, mi.GetAudio(i, "BitRate/String"));
-                            Add(track, mi.GetAudio(i, "Channel(s)/String"));
-                            Add(track, mi.GetAudio(i, "SamplingRate/String"));
-                            Add(track, mi.GetAudio(i, "Forced") == "Yes" ? "Forced" : "");
-                            Add(track, mi.GetAudio(i, "Default") == "Yes" ? "Default" : "");
-                            Add(track, mi.GetAudio(i, "Title"));
-                            track.Text = "A: " + track.Text.Trim(" ,".ToCharArray());
-                            track.Type = "a";
-                            track.ID = i + 1;
-                            MediaTracks.Add(track);
-                        }
-
-                        count = mi.GetCount(MediaInfoStreamKind.Text);
-
-                        for (int i = 0; i < count; i++)
-                        {
-                            MediaTrack track = new MediaTrack();
-                            Add(track, mi.GetText(i, "Language/String"));
-                            Add(track, mi.GetText(i, "Format"));
-                            Add(track, mi.GetText(i, "Format_Profile"));
-                            Add(track, mi.GetText(i, "Forced") == "Yes" ? "Forced" : "");
-                            Add(track, mi.GetText(i, "Default") == "Yes" ? "Default" : "");
-                            Add(track, mi.GetText(i, "Title"));
-                            track.Text = "S: " + track.Text.Trim(" ,".ToCharArray());
-                            track.Type = "s";
-                            track.ID = i + 1;
-                            MediaTracks.Add(track);
-                        }
-
-                        void Add(MediaTrack track, string val)
-                        {
-                            if (!string.IsNullOrEmpty(val) && !(track.Text != null && track.Text.Contains(val)))
-                                track.Text += " " + val + ",";
-                        }                        
-                    }
-                }
-            }));
-        }
-
-        class MediaTrack
-        {
-            public string Text { get; set; }
-            public string Type { get; set; }
-            public int    ID   { get; set; }
-        }
-
-        private void Mp_Idle()
-        {
-            BeginInvoke(new Action(() => { Text = "mpv.net " + Application.ProductVersion; }));
-        }
-
-        private void CM_Popup(object sender, EventArgs e) => CursorHelp.Show();
-
-        private void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
+        void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
         {
             Msg.ShowException(e.Exception);
         }
 
-        private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
            Msg.ShowError(e.ExceptionObject.ToString());
         }
 
-        private void mp_VideoSizeChanged()
+        void mp_VideoSizeChanged()
         {
             BeginInvoke(new Action(() => SetFormPositionAndSizeKeepHeight()));
         }
 
-        private void mp_Shutdown()
+        void mp_Shutdown()
         {
             BeginInvoke(new Action(() => Close()));  
         }
@@ -531,12 +433,9 @@ namespace mpvnet
                 CursorHelp.Show();
         }
 
-        bool IsMouseInOSC()
-        {
-            return PointToClient(Control.MousePosition).Y > ClientSize.Height * 0.9;
-        }
+        bool IsMouseInOSC() => PointToClient(Control.MousePosition).Y > ClientSize.Height * 0.9;
 
-        private void Timer_Tick(object sender, EventArgs e)
+        void Timer_Tick(object sender, EventArgs e)
         {
             if (CursorHelp.IsPosDifferent(LastCursorPosChanged))
             {
@@ -600,7 +499,7 @@ namespace mpvnet
         {
             base.OnFormClosed(e);
             mp.commandv("quit");
-            mp.AutoResetEvent.WaitOne(3000); 
+            mp.AutoResetEvent.WaitOne(3000);
         }
 
         protected override void OnLostFocus(EventArgs e)
@@ -615,14 +514,14 @@ namespace mpvnet
             CheckYouTube();
         }
 
-        private string LastURL;
-
         void CheckYouTube()
         {
             string clipboard = Clipboard.GetText();
-            if (clipboard.StartsWith("https://www.youtube.com/watch?") && LastURL != clipboard && Visible)
+
+            if (clipboard.StartsWith("https://www.youtube.com/watch?") && RegistryHelp.GetValue("HKCU\\Software\\" + Application.ProductName, "LastYouTubeURL") != clipboard && Visible)
             {
-                LastURL = clipboard;
+                RegistryHelp.SetValue("HKCU\\Software\\" + Application.ProductName, "LastYouTubeURL", clipboard);
+
                 if (Msg.ShowQuestion("Play YouTube URL?") == MsgResult.OK)
                     mp.LoadURL(clipboard);
             }

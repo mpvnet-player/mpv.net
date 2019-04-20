@@ -23,7 +23,7 @@ Table of contents
 - Searchable options dialog with modern UI as mpv compatible standalone application
 - Searchable input (key/mouse) binding editor with modern UI as mpv compatible standalone application
 - Modern UI using the OS theme color and dark mode
-- Rich addon API for .NET languages, over 700 available mpv properties
+- Rich addon/extension API for .NET languages, over 700 available mpv properties
 - Rich scripting API for Python, C#, Lua, JavaScript and PowerShell
 - mpv's OSC (on screen controller (play control bar)), IPC, conf files
 
@@ -73,6 +73,14 @@ https://github.com/stax76/mpv.net/wiki/Scripting-(CSharp,-Python,-JavaScript,-Lu
 
 ### Changelog
 
+### 3.0 (20??-??-??)
+
+- the history feature logs only files that were opened longer than 90 seconds
+- the default input command for cycling the audio tracks was replaced with an
+  mpv.net command that shows detailed track info and has no 'no audio' track
+
+[go to download page](https://github.com/stax76/mpv.net/releases)
+
 ### 2.9 (2019-04-16)
 
 - clicking the right top corner in full screen mode
@@ -97,5 +105,3 @@ https://github.com/stax76/mpv.net/wiki/Scripting-(CSharp,-Python,-JavaScript,-Lu
   can be seen and selected, it shows video, audio and subtitle
   tracks with various metadata. [Menu default definition](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt#L104).
   The screenshots were updated showing the [new track menu](https://github.com/stax76/mpv.net#screenshots).
-
-[go to download page](https://github.com/stax76/mpv.net/releases)

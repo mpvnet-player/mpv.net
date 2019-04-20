@@ -10,7 +10,7 @@ namespace RatingAddon
     [Export(typeof(IAddon))]
     public class RatingAddon : IAddon
     {
-        private Dictionary<string, int> Dic = new Dictionary<string, int>();
+        Dictionary<string, int> Dic = new Dictionary<string, int>();
 
         public RatingAddon()
         {
@@ -18,7 +18,7 @@ namespace RatingAddon
             mp.Shutdown += mpv_Shutdown;
         }
 
-        private void mpv_Shutdown()
+        void mpv_Shutdown()
         {
             foreach (var i in Dic)
             {
@@ -44,7 +44,7 @@ namespace RatingAddon
             }            
         }
 
-        private void mpv_ClientMessage(string[] args)
+        void mpv_ClientMessage(string[] args)
         {
             int rating;
 
