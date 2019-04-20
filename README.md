@@ -65,11 +65,11 @@ https://github.com/stax76/mpv.net/wiki/Scripting-(CSharp,-Python,-JavaScript,-Lu
 
 ### Support
 
-<https://forum.doom9.org/showthread.php?t=174841>
+[Support thread in Doom9 forum](https://forum.doom9.org/showthread.php?t=174841)
 
-<https://forum.videohelp.com/threads/392514-mpv-net-a-extendable-media-player-for-windows>
+[Support thread in VideoHelp forum](https://forum.videohelp.com/threads/392514-mpv-net-a-extendable-media-player-for-windows)
 
-<https://github.com/stax76/mpv.net/issues>
+[Issue tracker to report bugs and request features](https://github.com/stax76/mpv.net/issues)
 
 ### Changelog
 
