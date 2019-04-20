@@ -135,7 +135,7 @@ namespace mpvnet
                 foreach (var i in mp.Chapters)
                 {
                     MenuItemEx mi = ContextMenu.Add("Navigate > Chapters > " + i.Key);
-                    mi.ShortcutKeyDisplayString = TimeSpan.FromSeconds(i.Value).ToString() + "     ";
+                    mi.ShortcutKeyDisplayString = TimeSpan.FromSeconds(i.Value).ToString().Substring(0, 8) + "     ";
                     mi.Action = () => { mp.commandv("seek", i.Value.ToString(CultureInfo.InvariantCulture), "absolute"); };
                 }
             }
