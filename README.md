@@ -78,7 +78,7 @@ Scripting is supported via Python, C#, Lua, JavaScript and PowerShell
 - the history feature logs now only files that were opened longer than 90 seconds
 - the default input command for cycling the audio tracks was replaced with an
   mpv.net command that shows detailed track info and has no 'no audio' track
-- new website for mpv.net <https://mpv-net.github.io/mpv.net-web-site/>
+- new website at <https://mpv-net.github.io/mpv.net-web-site/>
 - the Tracks menu supports now MKV edition selection. [Default binding](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt#L106).
 - the Navigate menu supports now chapter selection. [Default binding](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt#L57).
 - opening the context menu was crashing if the default binding for Tracks was missing
