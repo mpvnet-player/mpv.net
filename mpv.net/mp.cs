@@ -57,6 +57,7 @@ namespace mpvnet
         public static IntPtr MpvWindowHandle { get; set; }
         public static Addon Addon { get; set; }
         public static List<KeyValuePair<string, Action<bool>>> BoolPropChangeActions { get; set; } = new List<KeyValuePair<string, Action<bool>>>();
+        public static List<KeyValuePair<string, Action<int>>> IntPropChangeActions { get; set; } = new List<KeyValuePair<string, Action<int>>>();
         public static List<KeyValuePair<string, Action<string>>> StringPropChangeActions { get; set; } = new List<KeyValuePair<string, Action<string>>>();
         public static Size VideoSize { get; set; } = new Size(1920, 1080);
         public static string MpvConfFolderPath { get; set; } = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\";
@@ -66,6 +67,7 @@ namespace mpvnet
         public static List<PythonScript> PythonScripts { get; set; } = new List<PythonScript>();
         public static AutoResetEvent AutoResetEvent { get; set; } = new AutoResetEvent(false);
         public static List<MediaTrack> MediaTracks { get; set; } = new List<MediaTrack>();
+        public static List<KeyValuePair<string, double>> Chapters { get; set; } = new List<KeyValuePair<string, double>>();
 
         static Dictionary<string, string> _mpvConf;
 
@@ -268,6 +270,11 @@ namespace mpvnet
                                 foreach (var i in StringPropChangeActions)
                                     if (i.Key == propData.name)
                                         i.Value.Invoke(StringFromNativeUtf8(Marshal.PtrToStructure<IntPtr>(propData.data)));
+
+                            if (propData.format == mpv_format.MPV_FORMAT_INT64)
+                                foreach (var i in IntPropChangeActions)
+                                    if (i.Key == propData.name)
+                                        i.Value.Invoke(Marshal.PtrToStructure<int>(propData.data));
                             break;
                         case mpv_event_id.MPV_EVENT_PLAYBACK_RESTART:
                             PlaybackRestart?.Invoke();
@@ -281,7 +288,7 @@ namespace mpvnet
 
                             Task.Run(new Action(() => {
                                 WriteHistory(mp.get_property_string("path"));
-                                SetMediaTracks();
+                                ReadMetaData();
                             }));
                             break;
                         case mpv_event_id.MPV_EVENT_CHAPTER_CHANGE:
@@ -444,6 +451,16 @@ namespace mpvnet
                 throw new Exception($"{name}: {(mpv_error)err}");
         }
 
+        public static void observe_property_int(string name, Action<int> action)
+        {
+            int err = mpv_observe_property(MpvHandle, (ulong)action.GetHashCode(), name, mpv_format.MPV_FORMAT_INT64);
+
+            if (err < 0)
+                throw new Exception($"{name}: {(mpv_error)err}");
+            else
+                IntPropChangeActions.Add(new KeyValuePair<string, Action<int>>(name, action));
+        }
+
         public static void observe_property_bool(string name, Action<bool> action)
         {
             int err = mpv_observe_property(MpvHandle, (ulong)action.GetHashCode(), name, mpv_format.MPV_FORMAT_FLAG);
@@ -454,18 +471,6 @@ namespace mpvnet
                 BoolPropChangeActions.Add(new KeyValuePair<string, Action<bool>>(name, action));
         }
 
-        public static void unobserve_property_bool(string name, Action<bool> action)
-        {
-            foreach (var i in BoolPropChangeActions.ToArray())
-                if (i.Value == action)
-                    BoolPropChangeActions.Remove(i);
-
-            int err = mpv_unobserve_property(MpvHandle, (ulong)action.GetHashCode());
-
-            if (err < 0)
-                throw new Exception($"{name}: {(mpv_error)err}");
-        }
-
         public static void observe_property_string(string name, Action<string> action)
         {
             int err = mpv_observe_property(MpvHandle, (ulong)action.GetHashCode(), name, mpv_format.MPV_FORMAT_STRING);
@@ -474,18 +479,6 @@ namespace mpvnet
                 throw new Exception($"{name}: {(mpv_error)err}");
             else
                 StringPropChangeActions.Add(new KeyValuePair<string, Action<string>>(name, action));
-        }
-
-        public static void unobserve_property_string(string name, Action<string> action)
-        {
-            foreach (var i in StringPropChangeActions.ToArray())
-                if (i.Value == action)
-                    StringPropChangeActions.Remove(i);
-
-            int err = mpv_unobserve_property(MpvHandle, (ulong)action.GetHashCode());
-
-            if (err < 0)
-                throw new Exception($"{name}: {(mpv_error)err}");
         }
 
         protected static void ProcessCommandLine()
@@ -629,7 +622,7 @@ namespace mpvnet
             LastHistoryStartDateTime = DateTime.Now;
         }
 
-        static void SetMediaTracks()
+        static void ReadMetaData()
         {
             lock (MediaTracks)
             {
@@ -693,11 +686,35 @@ namespace mpvnet
                         MediaTracks.Add(track);
                     }
 
+                    count = get_property_int("edition-list/count");
+
+                    for (int i = 0; i < count; i++)
+                    {
+                        MediaTrack track = new MediaTrack();
+                        track.Text = "E: " + get_property_string($"edition-list/{i}/title");
+                        track.Type = "e";
+                        track.ID = i;
+                        MediaTracks.Add(track);
+                    }
+
                     void Add(MediaTrack track, string val)
                     {
                         if (!string.IsNullOrEmpty(val) && !(track.Text != null && track.Text.Contains(val)))
                             track.Text += " " + val + ",";
                     }
+                }
+            }
+
+            lock (Chapters)
+            {
+                Chapters.Clear();
+                int count = get_property_int("chapter-list/count");
+
+                for (int x = 0; x < count; x++)
+                {
+                    string text = get_property_string($"chapter-list/{x}/title");
+                    double time = get_property_number($"chapter-list/{x}/time");
+                    Chapters.Add(new KeyValuePair<string, double>(text, time));
                 }
             }
         }

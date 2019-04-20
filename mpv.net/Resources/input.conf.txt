@@ -53,6 +53,8 @@
  _           ignore                 #menu: Navigate > -
  Ctrl+Right  no-osd seek  300       #menu: Navigate > Jump 5 min forward
  Ctrl+Left   no-osd seek -300       #menu: Navigate > Jump 5 min backward
+ _           ignore                 #menu: Navigate > -
+ _           ignore                 #menu: Navigate > Chapters
 
  Ctrl++      add video-zoom  0.1    #menu: Pan & Scan > Increase Size
  Ctrl+-      add video-zoom -0.1    #menu: Pan & Scan > Decrease Size

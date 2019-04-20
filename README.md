@@ -73,11 +73,14 @@ Scripting is supported via Python, C#, Lua, JavaScript and PowerShell
 
 ### Changelog
 
-### 3.0 (20??-??-??)
+### 3.0 (2019-04-20)
 
-- the history feature logs only files that were opened longer than 90 seconds
+- the history feature logs now only files that were opened longer than 90 seconds
 - the default input command for cycling the audio tracks was replaced with an
   mpv.net command that shows detailed track info and has no 'no audio' track
+- new web site for mpv.net <https://mpv-net.github.io/mpv.net-web-site/>
+- the tracks menu supports now mkv edition selection
+- the Navigate menu supports now chapter selection
 
 [go to download page](https://github.com/stax76/mpv.net/releases)
 
