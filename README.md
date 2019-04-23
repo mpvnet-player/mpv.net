@@ -71,11 +71,11 @@ Scripting is supported via Python, C#, Lua, JavaScript and PowerShell
 
 Add-ons have to located at:
 
-C:\Users\<user>\AppData\Roaming\mpv\Addons\*Addon.dll
+C:\Users\\<user\>\AppData\Roaming\mpv\Addons\*Addon.dll
 
-<startup>\Addons\*Addon.dll
+\<startup\>\Addons\*Addon.dll
 
-<startup>\portable_config\Addons\*Addon.dll
+\<startup\>\portable_config\Addons\*Addon.dll
 
 The add-on filename must end with 'Addon.dll'
 
@@ -94,7 +94,7 @@ The add-on filename must end with 'Addon.dll'
 - the Tracks and Chapters menu are now only added if default bindings exist and
   it's now possible to move the chapters menu to the top level by editing input.conf
 - mpvnet supports now like mpv a portable settings directory. If a directory named portable_config
-  next to the mpvnet.exe exists, all config will be loaded or written in this directory.
+  next to the mpvnet.exe exists, all config will be loaded and written in this directory.
 - there is now a portable download in 7zip format.
 
 ### 3.0 (2019-04-20)
