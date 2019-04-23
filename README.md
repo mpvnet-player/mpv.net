@@ -71,11 +71,11 @@ Scripting is supported via Python, C#, Lua, JavaScript and PowerShell
 
 Add-ons have to be located at:
 
-C:\Users\\<user\>\AppData\Roaming\mpv\Addons\\*Addon.dll
+C:\Users\\<user\>\AppData\Roaming\mpv\Addons\ExampleAddon\ExampleAddon.dll
 
-\<startup\>\Addons\\*Addon.dll
+\<startup\>\Addons\ExampleAddon\ExampleAddon.dll
 
-\<startup\>\portable_config\Addons\\*Addon.dll
+\<startup\>\portable_config\Addons\ExampleAddon\ExampleAddon.dll
 
 The add-on filename must end with 'Addon.dll'
 
