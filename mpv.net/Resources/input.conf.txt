@@ -36,8 +36,8 @@
  _           ignore                 #menu: -
  Enter       cycle fullscreen       #menu: Toggle Fullscreen
  
- F11         playlist-prev          #menu: Navigate > Previous
- F12         playlist-next          #menu: Navigate > Next
+ F11         playlist-prev          #menu: Navigate > Previous File
+ F12         playlist-next          #menu: Navigate > Next File
  _           ignore                 #menu: Navigate > -
  PGUP        add chapter  1         #menu: Navigate > Next Chapter
  PGDWN       add chapter -1         #menu: Navigate > Previous Chapter
@@ -147,7 +147,7 @@
  _ script-message mpv.net shell-execute https://mpv.io/manual/stable/ #menu: Help > Show mpv manual
  _ script-message mpv.net shell-execute https://github.com/mpv-player/mpv/blob/master/etc/input.conf #menu: Help > Show mpv default keys
  _ script-message mpv.net shell-execute https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt #menu: Help > Show mpv.net default keys
- _ script-message mpv.net shell-execute https://github.com/stax76/mpvnet #menu: Help > Show mpv.net web site
+ _ script-message mpv.net shell-execute https://mpv-net.github.io/mpv.net-web-site/ #menu: Help > Show mpv.net web site
 
  _ ignore           #menu: -
  Esc quit           #menu: Exit

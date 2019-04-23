@@ -28,7 +28,7 @@ namespace mpvnet
                     foreach (string i in Directory.GetDirectories(dir))
                         catalog.Catalogs.Add(new DirectoryCatalog(i, "*Addon.dll"));
 
-                dir = mp.MpvConfFolderPath + "\\Addons";
+                dir = mp.MpvConfFolder + "\\Addons";
 
                 if (Directory.Exists(dir))
                     foreach (string i in Directory.GetDirectories(dir))

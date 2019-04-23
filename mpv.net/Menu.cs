@@ -23,33 +23,33 @@ public class ContextMenuStripEx : ContextMenuStrip
         Renderer = new ToolStripRendererEx();
     }
 
-    public MenuItemEx Add(string path)
+    public MenuItem Add(string path)
     {
         return Add(path, null);
     }
 
-    public MenuItemEx Add(string path, Action action, bool enabled = true)
+    public MenuItem Add(string path, Action action, bool enabled = true)
     {
-        MenuItemEx ret = MenuItemEx.Add(Items, path, action);
+        MenuItem ret = MenuItem.Add(Items, path, action);
         if (ret == null) return null;
         ret.Enabled = enabled;
         return ret;
     }
 }
 
-public class MenuItemEx : ToolStripMenuItem
+public class MenuItem : ToolStripMenuItem
 {
     public Action Action { get; set; }
 
-    public MenuItemEx()
+    public MenuItem()
     {
     }
 
-    public MenuItemEx(string text) : base(text)
+    public MenuItem(string text) : base(text)
     {
     }
 
-    public MenuItemEx(string text, Action action) : base(text)
+    public MenuItem(string text, Action action) : base(text)
     {
         Action = action;
     }
@@ -61,12 +61,12 @@ public class MenuItemEx : ToolStripMenuItem
         base.OnClick(e);
     }
 
-    public static MenuItemEx Add<T>(ToolStripItemCollection items, string path, Action<T> action, T value)
+    public static MenuItem Add<T>(ToolStripItemCollection items, string path, Action<T> action, T value)
     {
         return Add(items, path, () => action(value));
     }
 
-    public static MenuItemEx Add(ToolStripItemCollection items, string path, Action action)
+    public static MenuItem Add(ToolStripItemCollection items, string path, Action action)
     {
         string[] a = path.Split(new[] { " > ", " | " }, StringSplitOptions.RemoveEmptyEntries);
         var itemsCollection = items;
@@ -95,7 +95,7 @@ public class MenuItemEx : ToolStripMenuItem
                         itemsCollection.Add(new ToolStripSeparator());
                     else
                     {
-                        MenuItemEx item = new MenuItemEx(a[x] + "    ", action);
+                        MenuItem item = new MenuItem(a[x] + "    ", action);
                         itemsCollection.Add(item);
                         itemsCollection = item.DropDownItems;
                         return item;
@@ -103,7 +103,7 @@ public class MenuItemEx : ToolStripMenuItem
                 }
                 else
                 {
-                    MenuItemEx item = new MenuItemEx();
+                    MenuItem item = new MenuItem();
                     item.Text = a[x] + "    ";
                     itemsCollection.Add(item);
                     itemsCollection = item.DropDownItems;
@@ -266,10 +266,10 @@ public class ToolStripRendererEx : ToolStripSystemRenderer
 
     protected override void OnRenderItemCheck(ToolStripItemImageRenderEventArgs e)
     {
-        if (e.Item.GetType() != typeof(MenuItemEx))
+        if (e.Item.GetType() != typeof(MenuItem))
             return;
 
-        MenuItemEx item = e.Item as MenuItemEx;
+        MenuItem item = e.Item as MenuItem;
 
         e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
 

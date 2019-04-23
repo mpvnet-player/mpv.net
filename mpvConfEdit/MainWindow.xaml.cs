@@ -17,12 +17,13 @@ namespace mpvConfEdit
 {
     public partial class MainWindow : Window
     {
-        public string MpvConfPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\mpv.conf";
-        public string MpvNetConfPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\mpvnet.conf";
         private List<SettingBase> MpvSettingsDefinitions = Settings.LoadSettings(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\mpvConf.toml");
         private List<SettingBase> MpvNetSettingsDefinitions = Settings.LoadSettings(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\mpvNetConf.toml");
-        public ObservableCollection<string> FilterStrings { get; } = new ObservableCollection<string>();
         private Dictionary<string, Dictionary<string, string>> Comments = new Dictionary<string, Dictionary<string, string>>();
+
+        public ObservableCollection<string> FilterStrings { get; } = new ObservableCollection<string>();
+        public string MpvConfPath    { get; } = MpvConfFolder + "mpv.conf";
+        public string MpvNetConfPath { get; } = MpvConfFolder + "mpvnet.conf";
 
         public MainWindow()
         {
@@ -34,6 +35,24 @@ namespace mpvConfEdit
             LoadSettings(MpvNetSettingsDefinitions, MpvNetConf);
             SearchControl.Text = (string)Registry.GetValue(@"HKEY_CURRENT_USER\Software\mpv.net", "conf editor search", "");
             SetDarkTheme();
+        }
+
+        static string StartupFolder { get; } = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\";
+
+        static string _MpvConfFolder;
+
+        public static string MpvConfFolder {
+            get {
+                if (_MpvConfFolder == null)
+                {
+                    if (Directory.Exists(StartupFolder + "portable_config"))
+                        _MpvConfFolder = StartupFolder + "portable_config\\";
+                    else
+                        _MpvConfFolder = Environment.GetFolderPath(
+                            Environment.SpecialFolder.ApplicationData) + "\\mpv\\";
+                }
+                return _MpvConfFolder;
+            }
         }
 
         public Brush Foreground2 {

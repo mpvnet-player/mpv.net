@@ -58,7 +58,7 @@ namespace mpvnet
 
         public static void open_conf_folder(string[] args)
         {
-            Process.Start(mp.MpvConfFolderPath);
+            Process.Start(mp.MpvConfFolder);
         }
 
         public static void show_input_editor(string[] args)
@@ -73,7 +73,7 @@ namespace mpvnet
 
         public static void show_history(string[] args)
         {
-            var fp = mp.MpvConfFolderPath + "history.txt";
+            var fp = mp.MpvConfFolder + "history.txt";
 
             if (File.Exists(fp))
                 Process.Start(fp);

@@ -18,23 +18,20 @@ namespace mpvnet
         public static MainForm Instance { get; set; }
         public static IntPtr Hwnd { get; set; }
 
-        public new ContextMenuStripEx ContextMenu;
-
-        MenuItemEx TracksMenu;
-        MenuItemEx ChaptersMenu;
+        public new ContextMenuStripEx ContextMenu { get; set; }
 
         Point  LastCursorPosChanged;
         int    LastCursorChangedTickCount;
         bool   IgnoreDpiChanged = true;
 
-        float  MpvAutofit = 0.50f;
-        bool   MpvFullscreen;
-        int    MpvScreen = -1;
-        string MpvNetDarkMode = "system";
-        string MpvSid = "";
-        string MpvAid = "";
-        string MpvVid = "";
-        int    MpvEdition;
+        public string MpvNetDarkMode { get; set; } = "system";
+        public bool   MpvFullscreen  { get; set; }
+        public float  MpvAutofit { get; set; } = 0.50f;
+        public int    MpvScreen  { get; set; } = -1;
+        public string MpvSid     { get; set; } = "";
+        public string MpvAid     { get; set; } = "";
+        public string MpvVid     { get; set; } = "";
+        public int    MpvEdition { get; set; }
 
         public MainForm()
         {
@@ -74,71 +71,105 @@ namespace mpvnet
         {
             lock (mp.MediaTracks)
             {
-                if (TracksMenu != null)
-                    TracksMenu.DropDownItems.Clear();
+                MenuItem trackMenuItem = FindMenuItem("Track");
 
-                MediaTrack[] audTracks = mp.MediaTracks.Where(track => track.Type == "a").ToArray();
-                MediaTrack[] subTracks = mp.MediaTracks.Where(track => track.Type == "s").ToArray();
-                MediaTrack[] vidTracks = mp.MediaTracks.Where(track => track.Type == "v").ToArray();
-                MediaTrack[] ediTracks = mp.MediaTracks.Where(track => track.Type == "e").ToArray();
-
-                foreach (MediaTrack track in vidTracks)
+                if (trackMenuItem != null)
                 {
-                    MenuItemEx mi = ContextMenu.Add("Track > " + track.Text);
-                    mi.Action = () => { mp.commandv("set", "vid", track.ID.ToString()); };
-                    mi.Checked = MpvVid == track.ID.ToString();
-                }
+                    trackMenuItem.DropDownItems.Clear();
 
-                if (vidTracks.Length > 0)
-                    ContextMenu.Add("Track > -");
+                    MediaTrack[] audTracks = mp.MediaTracks.Where(track => track.Type == "a").ToArray();
+                    MediaTrack[] subTracks = mp.MediaTracks.Where(track => track.Type == "s").ToArray();
+                    MediaTrack[] vidTracks = mp.MediaTracks.Where(track => track.Type == "v").ToArray();
+                    MediaTrack[] ediTracks = mp.MediaTracks.Where(track => track.Type == "e").ToArray();
 
-                foreach (MediaTrack track in audTracks)
-                {
-                    MenuItemEx mi = ContextMenu.Add("Track > " + track.Text);
-                    mi.Action = () => { mp.commandv("set", "aid", track.ID.ToString()); };
-                    mi.Checked = MpvAid == track.ID.ToString();
-                }
+                    foreach (MediaTrack track in vidTracks)
+                    {
+                        MenuItem mi = new MenuItem(track.Text);
+                        mi.Action = () => { mp.commandv("set", "vid", track.ID.ToString()); };
+                        mi.Checked = MpvVid == track.ID.ToString();
+                        trackMenuItem.DropDownItems.Add(mi);
+                    }
 
-                if (subTracks.Length > 0)
-                    ContextMenu.Add("Track > -");
+                    if (vidTracks.Length > 0)
+                        trackMenuItem.DropDownItems.Add(new ToolStripSeparator());
 
-                foreach (MediaTrack track in subTracks)
-                {
-                    MenuItemEx mi = ContextMenu.Add("Track > " + track.Text);
-                    mi.Action = () => { mp.commandv("set", "sid", track.ID.ToString()); };
-                    mi.Checked = MpvSid == track.ID.ToString();
-                }
+                    foreach (MediaTrack track in audTracks)
+                    {
+                        MenuItem mi = new MenuItem(track.Text);
+                        mi.Action = () => { mp.commandv("set", "aid", track.ID.ToString()); };
+                        mi.Checked = MpvAid == track.ID.ToString();
+                        trackMenuItem.DropDownItems.Add(mi);
+                    }
 
-                if (subTracks.Length > 0)
-                {
-                    MenuItemEx mi = ContextMenu.Add("Track > S: No subtitles");
-                    mi.Action = () => { mp.commandv("set", "sid", "no"); };
-                    mi.Checked = MpvSid == "no";
-                }
+                    if (subTracks.Length > 0)
+                        trackMenuItem.DropDownItems.Add(new ToolStripSeparator());
 
-                if (ediTracks.Length > 0)
-                    ContextMenu.Add("Track > -");
+                    foreach (MediaTrack track in subTracks)
+                    {
+                        MenuItem mi = new MenuItem(track.Text);
+                        mi.Action = () => { mp.commandv("set", "sid", track.ID.ToString()); };
+                        mi.Checked = MpvSid == track.ID.ToString();
+                        trackMenuItem.DropDownItems.Add(mi);
+                    }
 
-                foreach (MediaTrack track in ediTracks)
-                {
-                    MenuItemEx mi = ContextMenu.Add("Track > " + track.Text);
-                    mi.Action = () => { mp.commandv("set", "edition", track.ID.ToString()); };
-                    mi.Checked = MpvEdition == track.ID;
+                    if (subTracks.Length > 0)
+                    {
+                        MenuItem mi = new MenuItem("S: No subtitles");
+                        mi.Action = () => { mp.commandv("set", "sid", "no"); };
+                        mi.Checked = MpvSid == "no";
+                        trackMenuItem.DropDownItems.Add(mi);
+                    }
+
+                    if (ediTracks.Length > 0)
+                        trackMenuItem.DropDownItems.Add(new ToolStripSeparator());
+
+                    foreach (MediaTrack track in ediTracks)
+                    {
+                        MenuItem mi = new MenuItem(track.Text);
+                        mi.Action = () => { mp.commandv("set", "edition", track.ID.ToString()); };
+                        mi.Checked = MpvEdition == track.ID;
+                        trackMenuItem.DropDownItems.Add(mi);
+                    }
                 }
             }
 
             lock (mp.Chapters)
             {
-                if (ChaptersMenu != null)
-                    ChaptersMenu.DropDownItems.Clear();
+                MenuItem chaptersMenuItem = FindMenuItem("Chapters");
 
-                foreach (var i in mp.Chapters)
+                if (chaptersMenuItem != null)
                 {
-                    MenuItemEx mi = ContextMenu.Add("Navigate > Chapters > " + i.Key);
-                    mi.ShortcutKeyDisplayString = TimeSpan.FromSeconds(i.Value).ToString().Substring(0, 8) + "     ";
-                    mi.Action = () => { mp.commandv("seek", i.Value.ToString(CultureInfo.InvariantCulture), "absolute"); };
+                    chaptersMenuItem.DropDownItems.Clear();
+
+                    foreach (var i in mp.Chapters)
+                    {
+                        MenuItem mi = new MenuItem(i.Key);
+                        mi.ShortcutKeyDisplayString = TimeSpan.FromSeconds(i.Value).ToString().Substring(0, 8) + "     ";
+                        mi.Action = () => { mp.commandv("seek", i.Value.ToString(CultureInfo.InvariantCulture), "absolute"); };
+                        chaptersMenuItem.DropDownItems.Add(mi);
+                    }
                 }
             }
+        }
+
+        public MenuItem FindMenuItem(string text) => FindMenuItem(text, ContextMenu.Items);
+
+        MenuItem FindMenuItem(string text, ToolStripItemCollection items)
+        {
+            foreach (var item in items)
+            {
+                if (item is MenuItem mi)
+                {
+                    if (mi.Text.StartsWith(text) && mi.Text.Trim() == text)
+                        return mi;
+                    if (mi.DropDownItems.Count > 0)
+                    {
+                        MenuItem val = FindMenuItem(text, mi.DropDownItems);
+                        if (val != null) return val;
+                    }
+                }
+            }
+            return null;
         }
 
         protected void SetScreen(int targetIndex)
@@ -291,7 +322,7 @@ namespace mpvnet
                     else
                         input = "";
 
-                MenuItemEx menuItem = ContextMenu.Add(path, () => {
+                MenuItem menuItem = ContextMenu.Add(path, () => {
                     try {
                         mp.command_string(command);
                     }
@@ -301,19 +332,7 @@ namespace mpvnet
                 });
                 
                 if (menuItem != null)
-                {
-                    menuItem.ShortcutKeyDisplayString = input.Replace("_", "") + "    ";
-
-                    if (TracksMenu == null && menuItem.Text.StartsWith("Track ") &&
-                        menuItem.Text.Trim() == "Track")
-
-                        TracksMenu = menuItem;
-
-                    if (ChaptersMenu == null && menuItem.Text.StartsWith("Chapters ") &&
-                        menuItem.Text.Trim() == "Chapters")
-
-                        ChaptersMenu = menuItem;
-                }
+                    menuItem.ShortcutKeyDisplayString = input + "    ";
             }
         }
 

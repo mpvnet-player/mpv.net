@@ -7,7 +7,25 @@ namespace mpvInputEdit
 {
     public partial class App : Application
     {
-        public static string InputConfPath { get; } = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\input.conf";
+        public static string InputConfPath { get; } = MpvConfFolder + "input.conf";
+
+        static string StartupFolder { get; } = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\";
+
+        static string _MpvConfFolder;
+
+        public static string MpvConfFolder {
+            get {
+                if (_MpvConfFolder == null)
+                {
+                    if (Directory.Exists(StartupFolder + "portable_config"))
+                        _MpvConfFolder = StartupFolder + "portable_config\\";
+                    else
+                        _MpvConfFolder = Environment.GetFolderPath(
+                            Environment.SpecialFolder.ApplicationData) + "\\mpv\\";
+                }
+                return _MpvConfFolder;
+            }
+        }
 
         private static ObservableCollection<InputItem> _InputItems;
 

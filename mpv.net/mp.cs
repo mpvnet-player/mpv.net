@@ -60,14 +60,30 @@ namespace mpvnet
         public static List<KeyValuePair<string, Action<int>>> IntPropChangeActions { get; set; } = new List<KeyValuePair<string, Action<int>>>();
         public static List<KeyValuePair<string, Action<string>>> StringPropChangeActions { get; set; } = new List<KeyValuePair<string, Action<string>>>();
         public static Size VideoSize { get; set; } = new Size(1920, 1080);
-        public static string MpvConfFolderPath { get; set; } = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\";
-        public static string InputConfPath { get; set; } = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\input.conf";
-        public static string MpvConfPath { get; set; } = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\mpv.conf";
-        public static string MpvNetConfPath { get; set; } = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\mpvnet.conf";
         public static List<PythonScript> PythonScripts { get; set; } = new List<PythonScript>();
         public static AutoResetEvent AutoResetEvent { get; set; } = new AutoResetEvent(false);
         public static List<MediaTrack> MediaTracks { get; set; } = new List<MediaTrack>();
         public static List<KeyValuePair<string, double>> Chapters { get; set; } = new List<KeyValuePair<string, double>>();
+
+        public static string InputConfPath  { get; } = MpvConfFolder + "\\input.conf";
+        public static string MpvConfPath    { get; } = MpvConfFolder + "\\mpv.conf";
+        public static string MpvNetConfPath { get; } = MpvConfFolder + "\\mpvnet.conf";
+
+        static string _MpvConfFolder;
+
+        public static string MpvConfFolder {
+            get {
+                if (_MpvConfFolder == null)
+                {
+                    if (Directory.Exists(Application.StartupPath + "\\portable_config"))
+                        _MpvConfFolder = Application.StartupPath + "\\portable_config\\";
+                    else
+                        _MpvConfFolder = Environment.GetFolderPath(
+                            Environment.SpecialFolder.ApplicationData) + "\\mpv\\";
+                }
+                return _MpvConfFolder;
+            }
+        }
 
         static Dictionary<string, string> _mpvConf;
 
@@ -105,8 +121,8 @@ namespace mpvnet
 
         public static void Init()
         {
-            if (!Directory.Exists(mp.MpvConfFolderPath))
-                Directory.CreateDirectory(mp.MpvConfFolderPath);
+            if (!Directory.Exists(mp.MpvConfFolder))
+                Directory.CreateDirectory(mp.MpvConfFolder);
 
             if (!File.Exists(mp.MpvConfPath))
                 File.WriteAllText(mp.MpvConfPath, Properties.Resources.mpv_conf);
@@ -146,7 +162,7 @@ namespace mpvnet
                 if (Path.GetExtension(scriptPath) == ".ps1")
                     PowerShellScript.Init(scriptPath);
 
-            foreach (var scriptPath in Directory.GetFiles(mp.MpvConfFolderPath + "Scripts"))
+            foreach (var scriptPath in Directory.GetFiles(mp.MpvConfFolder + "Scripts"))
                 if (Path.GetExtension(scriptPath) == ".py")
                     PythonScripts.Add(new PythonScript(File.ReadAllText(scriptPath)));
                 else if (Path.GetExtension(scriptPath) == ".ps1")
@@ -611,7 +627,7 @@ namespace mpvnet
 
             if (File.Exists(LastHistoryPath) && totalMinutes > 1)
             {
-                string historyFilepath = mp.MpvConfFolderPath + "history.txt";
+                string historyFilepath = mp.MpvConfFolder + "history.txt";
 
                 File.AppendAllText(historyFilepath, DateTime.Now.ToString().Substring(0, 16) +
                     " " + totalMinutes.ToString().PadLeft(3) + " " +

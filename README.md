@@ -53,6 +53,10 @@ mpv.net shares the settings with mpv, settings can be edited in a settings dialo
 ```
 C:\Users\user\AppData\Roaming\mpv\mpv.conf
 ```
+or alternativly at:
+```
+<startup>\portable_config\mpv.conf
+```
 if it's missing mpv.net generates it with the following defaults:
 
 <https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/mpv.conf.txt>
@@ -61,7 +65,19 @@ if it's missing mpv.net generates it with the following defaults:
 
 Scripting is supported via Python, C#, Lua, JavaScript and PowerShell
 
-[Scripting wiki page](https://github.com/stax76/mpv.net/wiki/Scripting-(CSharp,-Python,-JavaScript,-Lua,-PowerShell))
+[Scripting wiki page](https://github.com/stax76/mpv.net/wiki/Scripting)
+
+### Add-ons
+
+Add-ons have to located at:
+
+C:\Users\<user>\AppData\Roaming\mpv\Addons\*Addon.dll
+
+<startup>\Addons\*Addon.dll
+
+<startup>\portable_config\Addons\*Addon.dll
+
+The add-on filename must end with 'Addon.dll'
 
 ### Support
 
@@ -72,6 +88,14 @@ Scripting is supported via Python, C#, Lua, JavaScript and PowerShell
 [Issue tracker to report bugs and request features](https://github.com/stax76/mpv.net/issues)
 
 ### Changelog
+
+### 3.1 (2019-04-23)
+
+- the Tracks and Chapters menu are now only added if default bindings exist and
+  it's now possible to move the chapters menu to the top level by editing input.conf
+- mpvnet supports now like mpv a portable settings directory. If a directory named portable_config
+  next to the mpvnet.exe exists, all config will be loaded or written in this directory.
+- there is now a portable download in 7zip format.
 
 ### 3.0 (2019-04-20)
 
