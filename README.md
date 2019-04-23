@@ -69,7 +69,7 @@ Scripting is supported via Python, C#, Lua, JavaScript and PowerShell
 
 ### Add-ons
 
-Add-ons have to located at:
+Add-ons have to be located at:
 
 C:\Users\\<user\>\AppData\Roaming\mpv\Addons\*Addon.dll
 
