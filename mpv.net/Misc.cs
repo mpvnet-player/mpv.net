@@ -20,13 +20,30 @@ namespace mpvnet
 
         public static string GetFilter(IEnumerable<string> values) => "*." + 
             String.Join(";*.", values) + "|*." + String.Join(";*.", values) + "|All Files|*.*";
+    }
 
+    public class Sys
+    {
         public static bool IsDarkTheme {
             get {
                 object value = Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", 1);
                 if (value is null) value = 1;
                 return (int)value == 0;
             }
+        }
+
+        public static bool IsDirectoryWritable(string dirPath)
+        {
+            try
+            {
+                using (FileStream fs = File.Create(Path.Combine(dirPath,
+                    Path.GetRandomFileName()), 1, FileOptions.DeleteOnClose))
+                { }
+                return true;
+            }
+            catch
+            { }
+            return false;
         }
     }
 

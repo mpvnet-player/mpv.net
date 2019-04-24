@@ -536,7 +536,7 @@ namespace mpvnet
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
-            if ((MpvNetDarkMode == "system" && Misc.IsDarkTheme) || MpvNetDarkMode == "always")
+            if ((MpvNetDarkMode == "system" && Sys.IsDarkTheme) || MpvNetDarkMode == "always")
                 ToolStripRendererEx.ColorTheme = Color.Black;
             ContextMenu = new ContextMenuStripEx(components);
             ContextMenu.Opened += ContextMenu_Opened;
@@ -574,7 +574,7 @@ namespace mpvnet
             {
                 RegistryHelp.SetValue("HKCU\\Software\\" + Application.ProductName, "LastYouTubeURL", clipboard);
 
-                if (Msg.ShowQuestion("Play YouTube URL?") == MsgResult.OK)
+                if (Msg.ShowQuestion("Play YouTube URL?", clipboard) == MsgResult.OK)
                     mp.LoadURL(clipboard);
             }
         }

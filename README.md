@@ -97,12 +97,15 @@ Examples:
 
 ### 3.2 (2019-0?-??)
 
-- mpvInputEdit and mpvConfEdit were discontinued and merged into mpvnet
-- portable mode: in case no config folder exists mpvnet will ask where the config folder
-  should be created (portable or appdata)
+- mpvInputEdit and mpvConfEdit were discontinued and merged into
+  mpvnet because separate apps were to difficult to work with
+- portable mode: in case no config folder exists and the
+  startup folder has write access mpvnet will ask where
+  the config folder should be created (portable or appdata)
 - there was an issue causing keys not working after a modal window was shown
 - there was a crash when no script folder existed in the conf folder
-- MediaInfo and libmpv were updated
+- MediaInfo, youtube-dl and libmpv were updated
+- a new JavaScript example script was added. [OSC always on for audio files](https://github.com/stax76/mpv.net/wiki/Scripting#osc-always-on-for-audio-files).
 
 ### 3.1 (2019-04-23)
 

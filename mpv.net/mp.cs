@@ -78,7 +78,8 @@ namespace mpvnet
                     string portableFolder = Application.StartupPath + "\\portable_config\\";
                     string appdataFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\";
 
-                    if (!Directory.Exists(portableFolder) && !Directory.Exists(appdataFolder))
+                    if (!Directory.Exists(appdataFolder) && !Directory.Exists(portableFolder) &&
+                        Sys.IsDirectoryWritable(Application.StartupPath))
                     {
                         using (TaskDialog<string> td = new TaskDialog<string>())
                         {
@@ -312,11 +313,11 @@ namespace mpvnet
                             break;
                         case mpv_event_id.MPV_EVENT_PLAYBACK_RESTART:
                             PlaybackRestart?.Invoke();
-                            Size s = new Size(get_property_int("dwidth"), get_property_int("dheight"));
+                            Size vidSize = new Size(get_property_int("dwidth"), get_property_int("dheight"));
 
-                            if (VideoSize != s && s != Size.Empty)
+                            if (VideoSize != vidSize && vidSize != Size.Empty)
                             {
-                                VideoSize = s;
+                                VideoSize = vidSize;
                                 VideoSizeChanged?.Invoke();
                             }                    
 

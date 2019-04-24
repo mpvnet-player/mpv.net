@@ -83,14 +83,6 @@ namespace mpvnet
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            string backupDir = Path.GetDirectoryName(mp.InputConfPath) + "\\backup\\";
-
-            if (!Directory.Exists(backupDir))
-                Directory.CreateDirectory(backupDir);
-
-            if (File.Exists(mp.InputConfPath))
-                File.Copy(mp.InputConfPath, backupDir + "input conf " + DateTime.Now.ToString("yyyy-MM-dd HH-mm") + ".conf", true);
-
             string text = Properties.Resources.inputConfHeader + "\r\n";
 
             foreach (InputItem item in InputItem.InputItems)
