@@ -105,7 +105,8 @@ Examples:
 - there was an issue causing keys not working after a modal window was shown
 - there was a crash when no script folder existed in the conf folder
 - MediaInfo, youtube-dl and libmpv were updated
-- a new JavaScript example script was added. [OSC always on for audio files](https://github.com/stax76/mpv.net/wiki/Scripting#osc-always-on-for-audio-files).
+- a new JavaScript example script was added to the wiki and the
+  script descriptions were improved. [Scripting Page](https://github.com/stax76/mpv.net/wiki/Scripting).
 
 ### 3.1 (2019-04-23)
 
