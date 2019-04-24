@@ -79,6 +79,12 @@ C:\Users\\<user\>\AppData\Roaming\mpv\Addons\ExampleAddon\ExampleAddon.dll
 
 The add-on filename must end with 'Addon.dll'
 
+Examples:
+
+[RatingAddon.cs](https://github.com/stax76/mpv.net/blob/master/RatingAddon/RatingAddon.cs)
+
+[CSScriptAddon.vb](https://github.com/stax76/mpv.net/blob/master/CSScriptAddon/CSScriptAddon.vb)
+
 ### Support
 
 [Support thread in Doom9 forum](https://forum.doom9.org/showthread.php?t=174841)
