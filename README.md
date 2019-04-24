@@ -2,7 +2,7 @@
 
 mpv.net is a libmpv based media player for Windows, it looks and works like mpv and also shares the same settings as mpv and therefore the mpv documentation applies.
 
-mpv and mpv.net have a learning curve.
+mpv.net might currently be the only open source desktop video player for Windows that is extendable with a mainstream programming language.
 
 mpv manual: <https://mpv.io/manual/master/>
 
@@ -22,7 +22,7 @@ Table of contents
 - Customizable context menu defined in the same file as the key bindings
 - Searchable config dialog
 - Searchable input (key/mouse) binding editor
-- Dark mode
+- Modern UI with dark mode
 - Addon/extension API for .NET languages
 - Scripting API for Python, C#, Lua, JavaScript and PowerShell
 - mpv's OSC (on screen controller (play control bar)), IPC, conf files
@@ -77,7 +77,7 @@ C:\Users\\<user\>\AppData\Roaming\mpv\Addons\ExampleAddon\ExampleAddon.dll
 
 \<startup\>\portable_config\Addons\ExampleAddon\ExampleAddon.dll
 
-The add-on filename must end with 'Addon.dll'
+The add-on filename must end with 'Addon.dll'.
 
 Examples:
 
