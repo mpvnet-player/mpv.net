@@ -25,7 +25,7 @@ namespace mpvnet
         int    LastCursorChangedTickCount;
         bool   IgnoreDpiChanged = true;
 
-        public string MpvNetDarkMode { get; set; } = "system";
+        public string MpvNetDarkMode { get; set; } = "always";
         public bool   MpvFullscreen  { get; set; }
         public float  MpvAutofit { get; set; } = 0.50f;
         public int    MpvScreen  { get; set; } = -1;

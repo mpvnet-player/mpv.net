@@ -20,11 +20,11 @@ Table of contents
 ### Features
 
 - Customizable context menu defined in the same file as the key bindings
-- Searchable config dialog with modern UI
-- Searchable input (key/mouse) binding editor with modern UI
-- Modern UI using the OS theme color and dark mode
-- Rich addon/extension API for .NET languages, over 700 available mpv properties
-- Rich scripting API for Python, C#, Lua, JavaScript and PowerShell
+- Searchable config dialog
+- Searchable input (key/mouse) binding editor
+- Dark mode
+- Addon/extension API for .NET languages
+- Scripting API for Python, C#, Lua, JavaScript and PowerShell
 - mpv's OSC (on screen controller (play control bar)), IPC, conf files
 
 ### Screenshots
@@ -96,6 +96,7 @@ The add-on filename must end with 'Addon.dll'
   should be created (portable or appdata)
 - there was an issue causing keys not working after a modal window was shown
 - there was a crash when no script folder existed in the conf folder
+- MediaInfo and libmpv were updated
 
 ### 3.1 (2019-04-23)
 

@@ -145,7 +145,7 @@
  _ script-message mpv.net execute-mpv-command     #menu: Tools > Execute mpv command...
 
  _ script-message mpv.net shell-execute https://mpv.io/manual/stable/ #menu: Help > Show mpv manual
- _ script-message mpv.net shell-execute https://github.com/mpv-player/mpv/blob/master/etc/inputConf #menu: Help > Show mpv default keys
+ _ script-message mpv.net shell-execute https://github.com/mpv-player/mpv/blob/master/etc/input.conf #menu: Help > Show mpv default keys
  _ script-message mpv.net shell-execute https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt #menu: Help > Show mpv.net default keys
  _ script-message mpv.net shell-execute https://mpv-net.github.io/mpv.net-web-site/ #menu: Help > Show mpv.net web site
 
