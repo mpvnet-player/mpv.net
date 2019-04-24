@@ -120,6 +120,8 @@
       <HintPath>IronPython\Microsoft.Scripting.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
@@ -129,20 +131,41 @@
       <HintPath>..\packages\Microsoft.PowerShell.5.ReferenceAssemblies.1.1.0\lib\net4\System.Management.Automation.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Addon.cs" />
+    <Page Include="Controls\SearchTextBoxUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="WPF\Resources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Compile Include="Controls\SearchTextBoxUserControl.xaml.cs">
+      <DependentUpon>SearchTextBoxUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DynamicGUI\DynamicGUI.cs" />
+    <Compile Include="DynamicGUI\OptionSettingControl.xaml.cs">
+      <DependentUpon>OptionSettingControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DynamicGUI\StringSettingControl.xaml.cs">
+      <DependentUpon>StringSettingControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DynamicGUI\Tommy.cs" />
     <Compile Include="MediaInfo.cs" />
     <Compile Include="Menu.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="PowerShellScript.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="PowerShellScript.cs" />
     <Compile Include="PythonScript.cs" />
     <Compile Include="libmpv.cs" />
     <Compile Include="MainForm.cs">
@@ -158,8 +181,18 @@
     <Compile Include="NativeHelp.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Windows\ConfWindow.xaml.cs">
+      <DependentUpon>ConfWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\LearnWindow.xaml.cs">
+      <DependentUpon>LearnWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\InputWindow.xaml.cs">
+      <DependentUpon>InputWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="trash.cs" />
     <Compile Include="UI.cs" />
+    <Compile Include="WPF\WPF.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -183,21 +216,46 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Content Include="Resources\mpv.conf.txt" />
+    <Content Include="Resources\mpvConf.txt" />
+    <Content Include="Resources\mpvConfToml.txt" />
+    <Content Include="Resources\mpvNetConfToml.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="mpv.ico" />
+    <Content Include="Resources\inputConfHeader.txt" />
     <Content Include="screenshot.jpg" />
-    <Content Include="Resources\input.conf.txt" />
+    <Content Include="Resources\inputConf.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VBNET\VBNET.vbproj">
       <Project>{a1d11294-05bf-4d77-b008-aecf1aa93c9f}</Project>
       <Name>VBNET</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="DynamicGUI\OptionSettingControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DynamicGUI\StringSettingControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\ConfWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\LearnWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\InputWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

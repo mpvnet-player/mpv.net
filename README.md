@@ -20,8 +20,8 @@ Table of contents
 ### Features
 
 - Customizable context menu defined in the same file as the key bindings
-- Searchable options dialog with modern UI as mpv compatible standalone application
-- Searchable input (key/mouse) binding editor with modern UI as mpv compatible standalone application
+- Searchable config dialog with modern UI
+- Searchable input (key/mouse) binding editor with modern UI
 - Modern UI using the OS theme color and dark mode
 - Rich addon/extension API for .NET languages, over 700 available mpv properties
 - Rich scripting API for Python, C#, Lua, JavaScript and PowerShell
@@ -39,13 +39,13 @@ Table of contents
 
 ### Context Menu
 
-The context menu can be customized via input.conf file located at:
+The context menu can be customized via inputConf file located at:
 ```
 C:\Users\username\AppData\Roaming\mpv\input.conf
 ```
 if it's missing mpv.net generates it with the following defaults:
 
-<https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt>
+<https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt>
 
 ### Settings
 
@@ -89,6 +89,14 @@ The add-on filename must end with 'Addon.dll'
 
 ### Changelog
 
+### 3.2 (2019-0?-??)
+
+- mpvInputEdit and mpvConfEdit were discontinued and merged into mpvnet
+- portable mode: in case no config folder exists mpvnet will ask where the config folder
+  should be created (portable or appdata)
+- there was an issue causing keys not working after a modal window was shown
+- there was a crash when no script folder existed in the conf folder
+
 ### 3.1 (2019-04-23)
 
 - the Tracks and Chapters menu are now only added if default bindings exist and
@@ -101,10 +109,10 @@ The add-on filename must end with 'Addon.dll'
 
 - the history feature logs now only files that were opened longer than 90 seconds
 - the default input command for cycling the audio tracks was replaced with an
-  mpv.net command that shows detailed track info and has no 'no audio' track. [Default binding](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt#L89).
+  mpv.net command that shows detailed track info and has no 'no audio' track. [Default binding](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt#L89).
 - new website at <https://mpv-net.github.io/mpv.net-web-site/>
-- the Tracks menu supports now MKV edition selection. [Default binding](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt#L106).
-- the Navigate menu supports now chapter selection. [Default binding](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt#L57).
+- the Tracks menu supports now MKV edition selection. [Default binding](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt#L106).
+- the Navigate menu supports now chapter selection. [Default binding](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt#L57).
 - opening the context menu was crashing if the default binding for Tracks was missing
 
 ### 2.9 (2019-04-16)
@@ -129,5 +137,5 @@ The add-on filename must end with 'Addon.dll'
   wasn't necessary (it took a huge amount of time to implement)
 - the context menu has a new track menu where the active track
   can be seen and selected, it shows video, audio and subtitle
-  tracks with various metadata. [Menu default definition](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt#L104).
+  tracks with various metadata. [Menu default definition](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt#L104).
   The screenshots were updated showing the [new track menu](https://github.com/stax76/mpv.net#screenshots).

@@ -13,6 +13,16 @@ namespace Controls
 
         public string Text { get => SearchTextBox.Text; set => SearchTextBox.Text = value; }
 
+        private string _HintText;
+
+        public string HintText {
+            get => _HintText;
+            set {
+                _HintText = value;
+                UpdateControls();
+            }
+        }
+
         private void SearchClearButton_Click(object sender, RoutedEventArgs e)
         {
             SearchTextBox.Text = "";
@@ -21,7 +31,12 @@ namespace Controls
 
         private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            HintTextBlock.Text = SearchTextBox.Text == "" ? "Find a setting" : "";
+            UpdateControls();
+        }
+
+        void UpdateControls()
+        {
+            HintTextBlock.Text = SearchTextBox.Text == "" ? HintText : "";
 
             if (SearchTextBox.Text == "")
                 SearchClearButton.Visibility = Visibility.Hidden;

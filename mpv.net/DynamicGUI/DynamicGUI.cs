@@ -4,16 +4,17 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows.Documents;
 using System.Windows.Navigation;
+
 using Tommy;
 
 namespace DynamicGUI
 {
     public class Settings
     {
-        public static List<SettingBase> LoadSettings(string filepath)
+        public static List<SettingBase> LoadSettings(string content)
         {
             TomlTable table;
-            using (StreamReader reader = new StreamReader(File.OpenRead(filepath)))
+            using (StringReader reader = new StringReader(content))
                 table = TOML.Parse(reader);
             List<SettingBase> settingsList = new List<SettingBase>(); 
 

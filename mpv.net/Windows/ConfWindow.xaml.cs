@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -13,46 +12,25 @@ using System.Windows.Media;
 using DynamicGUI;
 using Microsoft.Win32;
 
-namespace mpvConfEdit
+namespace mpvnet
 {
-    public partial class MainWindow : Window
+    public partial class ConfWindow : Window
     {
-        private List<SettingBase> MpvSettingsDefinitions = Settings.LoadSettings(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\mpvConf.toml");
-        private List<SettingBase> MpvNetSettingsDefinitions = Settings.LoadSettings(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\mpvNetConf.toml");
+        private List<SettingBase> MpvSettingsDefinitions = Settings.LoadSettings(Properties.Resources.mpvConfToml);
+        private List<SettingBase> MpvNetSettingsDefinitions = Settings.LoadSettings(Properties.Resources.mpvNetConfToml);
         private Dictionary<string, Dictionary<string, string>> Comments = new Dictionary<string, Dictionary<string, string>>();
 
         public ObservableCollection<string> FilterStrings { get; } = new ObservableCollection<string>();
-        public string MpvConfPath    { get; } = MpvConfFolder + "mpv.conf";
-        public string MpvNetConfPath { get; } = MpvConfFolder + "mpvnet.conf";
 
-        public MainWindow()
+        public ConfWindow()
         {
             InitializeComponent();
             DataContext = this;
-            Title = (Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyProductAttribute), true)[0] as AssemblyProductAttribute).Product + " " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
             SearchControl.SearchTextBox.TextChanged += SearchTextBox_TextChanged;
             LoadSettings(MpvSettingsDefinitions, MpvConf);
             LoadSettings(MpvNetSettingsDefinitions, MpvNetConf);
             SearchControl.Text = (string)Registry.GetValue(@"HKEY_CURRENT_USER\Software\mpv.net", "conf editor search", "");
             SetDarkTheme();
-        }
-
-        static string StartupFolder { get; } = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\";
-
-        static string _MpvConfFolder;
-
-        public static string MpvConfFolder {
-            get {
-                if (_MpvConfFolder == null)
-                {
-                    if (Directory.Exists(StartupFolder + "portable_config"))
-                        _MpvConfFolder = StartupFolder + "portable_config\\";
-                    else
-                        _MpvConfFolder = Environment.GetFolderPath(
-                            Environment.SpecialFolder.ApplicationData) + "\\mpv\\";
-                }
-                return _MpvConfFolder;
-            }
         }
 
         public Brush Foreground2 {
@@ -61,7 +39,7 @@ namespace mpvConfEdit
         }
 
         public static readonly DependencyProperty Foreground2Property =
-            DependencyProperty.Register("Foreground2", typeof(Brush), typeof(MainWindow), new PropertyMetadata(Brushes.DarkSlateGray));
+            DependencyProperty.Register("Foreground2", typeof(Brush), typeof(ConfWindow), new PropertyMetadata(Brushes.DarkSlateGray));
 
         void SetDarkTheme()
         {
@@ -101,12 +79,12 @@ namespace mpvConfEdit
                 {
                     case StringSetting s:
                         var sc = new StringSettingControl(s);
-                        sc.TitleTextBox.Foreground = Controls.Controls.ThemeBrush;
+                        sc.TitleTextBox.Foreground = WPF.WPF.ThemeBrush;
                         MainStackPanel.Children.Add(sc);
                         break;
                     case OptionSetting s:
                         var oc = new OptionSettingControl(s);
-                        oc.TitleTextBox.Foreground = Controls.Controls.ThemeBrush;
+                        oc.TitleTextBox.Foreground = WPF.WPF.ThemeBrush;
                         MainStackPanel.Children.Add(oc);
                         break;
                 }
@@ -117,7 +95,7 @@ namespace mpvConfEdit
 
         public Dictionary<string, string> MpvConf {
             get {
-                if (_mpvConf == null) _mpvConf = LoadConf(MpvConfPath);
+                if (_mpvConf == null) _mpvConf = LoadConf(mp.MpvConfPath);
                 return _mpvConf;
             }
         }
@@ -126,7 +104,7 @@ namespace mpvConfEdit
 
         public Dictionary<string, string> MpvNetConf {
             get {
-                if (_mpvNetConf == null) _mpvNetConf = LoadConf(MpvNetConfPath);
+                if (_mpvNetConf == null) _mpvNetConf = LoadConf(mp.MpvNetConfPath);
                 return _mpvNetConf;
             }
         }
@@ -183,10 +161,10 @@ namespace mpvConfEdit
             if (!isDirty)
                 return;
 
-            WriteToDisk(MpvConfPath, MpvConf, MpvSettingsDefinitions);
-            WriteToDisk(MpvNetConfPath, MpvNetConf, MpvNetSettingsDefinitions);
+            WriteToDisk(mp.MpvConfPath, MpvConf, MpvSettingsDefinitions);
+            WriteToDisk(mp.MpvNetConfPath, MpvNetConf, MpvNetSettingsDefinitions);
 
-            MessageBox.Show("Changes will be available on next startup of mpv(.net).",
+            MessageBox.Show("Changes will be available on next startup of mpv.net.",
                 Title, MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
@@ -246,7 +224,7 @@ namespace mpvConfEdit
             MainScrollViewer.ScrollToTop();
         }
         
-        private void MainWindow1_Loaded(object sender, RoutedEventArgs e)
+        private void ConfWindow1_Loaded(object sender, RoutedEventArgs e)
         {
             SearchControl.SearchTextBox.SelectAll();
             Keyboard.Focus(SearchControl.SearchTextBox);
@@ -260,7 +238,7 @@ namespace mpvConfEdit
 
         private void OpenSettingsTextBlock_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            Process.Start(Path.GetDirectoryName(MpvConfPath));
+            Process.Start(Path.GetDirectoryName(mp.MpvConfPath));
         }
 
         private void ShowManualTextBlock_MouseUp(object sender, MouseButtonEventArgs e)

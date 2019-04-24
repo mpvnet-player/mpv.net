@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
-
+using System.Windows.Interop;
 using VBNET;
 
 namespace mpvnet
@@ -63,12 +63,20 @@ namespace mpvnet
 
         public static void show_input_editor(string[] args)
         {
-            Process.Start(Application.StartupPath + "\\mpvInputEdit.exe");
+            MainForm.Instance.Invoke(new Action(() => {
+                InputWindow w = new InputWindow();
+                new WindowInteropHelper(w).Owner = MainForm.Instance.Handle;
+                w.ShowDialog();
+            }));
         }
 
         public static void show_conf_editor(string[] args)
         {
-            Process.Start(Application.StartupPath + "\\mpvConfEdit.exe");
+            MainForm.Instance.Invoke(new Action(() => {
+                ConfWindow w = new ConfWindow();
+                new WindowInteropHelper(w).Owner = MainForm.Instance.Handle;
+                w.ShowDialog();
+            }));
         }
 
         public static void show_history(string[] args)
@@ -170,7 +178,7 @@ namespace mpvnet
 
         public static void load_sub(string[] args)
         {
-            MainForm.Instance.BeginInvoke(new Action(() => {
+            MainForm.Instance.Invoke(new Action(() => {
                 using (var d = new OpenFileDialog())
                 {
                     d.InitialDirectory = Path.GetDirectoryName(mp.get_property_string("path", false));
@@ -185,7 +193,7 @@ namespace mpvnet
 
         public static void load_audio(string[] args)
         {
-            MainForm.Instance.BeginInvoke(new Action(() => {
+            MainForm.Instance.Invoke(new Action(() => {
                 using (var d = new OpenFileDialog())
                 {
                     d.InitialDirectory = Path.GetDirectoryName(mp.get_property_string("path", false));

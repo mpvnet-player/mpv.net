@@ -5,14 +5,14 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using WF = System.Windows.Forms;
 
-namespace mpvInputEdit
+namespace mpvnet
 {
-    public partial class InputWindow : Window
+    public partial class LearnWindow : Window
     {
         public InputItem InputItem { get; set; }
         public string NewKey { get; set; } = "";
 
-        public InputWindow()
+        public LearnWindow()
         {
             InitializeComponent();
         }

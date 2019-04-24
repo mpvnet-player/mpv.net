@@ -75,11 +75,34 @@ namespace mpvnet
             get {
                 if (_MpvConfFolder == null)
                 {
-                    if (Directory.Exists(Application.StartupPath + "\\portable_config"))
-                        _MpvConfFolder = Application.StartupPath + "\\portable_config\\";
+                    string portableFolder = Application.StartupPath + "\\portable_config\\";
+                    string appdataFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\";
+
+                    if (!Directory.Exists(portableFolder) && !Directory.Exists(appdataFolder))
+                    {
+                        using (TaskDialog<string> td = new TaskDialog<string>())
+                        {
+                            td.MainInstruction = "Choose a settings folder.";
+                            td.Content = "[https://mpv.io/manual/master/#files-on-windows MPV documentation about files on Windows.]";
+                            td.AddCommandLink("appdata", appdataFolder);
+                            td.AddCommandLink("portable", portableFolder);
+                            _MpvConfFolder = td.Show();
+                        }
+                    }
                     else
-                        _MpvConfFolder = Environment.GetFolderPath(
-                            Environment.SpecialFolder.ApplicationData) + "\\mpv\\";
+                        if (Directory.Exists(portableFolder))
+                            _MpvConfFolder = portableFolder;
+                        else
+                            _MpvConfFolder = appdataFolder;
+
+                    if (string.IsNullOrEmpty(_MpvConfFolder)) _MpvConfFolder = appdataFolder;
+                    if (!Directory.Exists(_MpvConfFolder)) Directory.CreateDirectory(_MpvConfFolder);
+
+                    if (!File.Exists(_MpvConfFolder + "\\input.conf"))
+                        File.WriteAllText(_MpvConfFolder + "\\input.conf", Properties.Resources.inputConf);
+
+                    if (!File.Exists(_MpvConfFolder + "\\mpv.conf"))
+                        File.WriteAllText(_MpvConfFolder + "\\mpv.conf", Properties.Resources.mpvConf);
                 }
                 return _MpvConfFolder;
             }
@@ -121,15 +144,7 @@ namespace mpvnet
 
         public static void Init()
         {
-            if (!Directory.Exists(mp.MpvConfFolder))
-                Directory.CreateDirectory(mp.MpvConfFolder);
-
-            if (!File.Exists(mp.MpvConfPath))
-                File.WriteAllText(mp.MpvConfPath, Properties.Resources.mpv_conf);
-
-            if (!File.Exists(mp.InputConfPath))
-                File.WriteAllText(mp.InputConfPath, Properties.Resources.input_conf);
-
+            string dummy = MpvConfFolder;
             LoadLibrary("mpv-1.dll");
             MpvHandle = mpv_create();
             set_property_string("input-default-bindings", "yes");
@@ -162,11 +177,12 @@ namespace mpvnet
                 if (Path.GetExtension(scriptPath) == ".ps1")
                     PowerShellScript.Init(scriptPath);
 
-            foreach (var scriptPath in Directory.GetFiles(mp.MpvConfFolder + "Scripts"))
-                if (Path.GetExtension(scriptPath) == ".py")
-                    PythonScripts.Add(new PythonScript(File.ReadAllText(scriptPath)));
-                else if (Path.GetExtension(scriptPath) == ".ps1")
-                    PowerShellScript.Init(scriptPath);
+            if (Directory.Exists(mp.MpvConfFolder + "Scripts"))
+                foreach (var scriptPath in Directory.GetFiles(mp.MpvConfFolder + "Scripts"))
+                    if (Path.GetExtension(scriptPath) == ".py")
+                        PythonScripts.Add(new PythonScript(File.ReadAllText(scriptPath)));
+                    else if (Path.GetExtension(scriptPath) == ".ps1")
+                        PowerShellScript.Init(scriptPath);
         }
 
         public static void EventLoop()
@@ -235,32 +251,34 @@ namespace mpvnet
                             ScriptInputDispatch?.Invoke();
                             break;
                         case mpv_event_id.MPV_EVENT_CLIENT_MESSAGE:
-                            if (ClientMessage != null)
+                            var client_messageData = (mpv_event_client_message)Marshal.PtrToStructure(evt.data, typeof(mpv_event_client_message));
+                            string[] args = NativeUtf8StrArray2ManagedStrArray(client_messageData.args, client_messageData.num_args);
+
+                            if (args != null && args.Length > 1 && args[0] == "mpv.net")
                             {
-                                var client_messageData = (mpv_event_client_message)Marshal.PtrToStructure(evt.data, typeof(mpv_event_client_message));
-                                string[] args = NativeUtf8StrArray2ManagedStrArray(client_messageData.args, client_messageData.num_args);
+                                bool found = false;
 
-                                if (args != null && args.Length > 1 && args[0] == "mpv.net")
+                                foreach (var i in mpvnet.Command.Commands)
                                 {
-                                    bool found = false;
+                                    if (args[1] == i.Name)
+                                    {
+                                        found = true;
+                                        i.Action.Invoke(args.Skip(2).ToArray());
+                                        MainForm.Instance.BeginInvoke(new Action(() => {
+                                            Message m = new Message() { Msg = 0x0202 }; // WM_LBUTTONUP
+                                            Native.SendMessage(MainForm.Instance.Handle, m.Msg, m.WParam, m.LParam);
+                                        }));
 
-                                    foreach (var i in mpvnet.Command.Commands)
-                                    {
-                                        if (args[1] == i.Name)
-                                        {
-                                            found = true;
-                                            i.Action.Invoke(args.Skip(2).ToArray());
-                                        }
-                                    }
-                                    if (!found)
-                                    {
-                                        List<string> names = mpvnet.Command.Commands.Select((item) => item.Name).ToList();
-                                        names.Sort();
-                                        Msg.ShowError($"No command '{args[1]}' found.", $"Available commands are:\n\n{string.Join("\n", names)}\n\nHow to bind these commands can be seen in the [https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt default input bindings and menu definition].");
                                     }
                                 }
-                                ClientMessage?.Invoke(args);
+                                if (!found)
+                                {
+                                    List<string> names = mpvnet.Command.Commands.Select((item) => item.Name).ToList();
+                                    names.Sort();
+                                    Msg.ShowError($"No command '{args[1]}' found.", $"Available commands are:\n\n{string.Join("\n", names)}\n\nHow to bind these commands can be seen in the [https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt default input bindings and menu definition].");
+                                }
                             }
+                            ClientMessage?.Invoke(args);
                             break;
                         case mpv_event_id.MPV_EVENT_VIDEO_RECONFIG:
                             VideoReconfig?.Invoke();

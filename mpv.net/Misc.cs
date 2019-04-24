@@ -1,11 +1,16 @@
-﻿using Microsoft.Win32;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Runtime.Serialization;
 using System.Windows.Forms;
+
+using Microsoft.Win32;
 
 namespace mpvnet
 {
@@ -137,5 +142,74 @@ namespace mpvnet
         public string Text { get; set; }
         public string Type { get; set; }
         public int    ID   { get; set; }
+    }
+
+    [Serializable]
+    public class InputItem : INotifyPropertyChanged
+    {
+        public event PropertyChangedEventHandler PropertyChanged;
+        public string Menu { get; set; } = "";
+        public string Command { get; set; } = "";
+
+        public InputItem() { }
+
+        public InputItem(SerializationInfo info, StreamingContext context) { }
+
+        private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private string _Input = "";
+
+        public string Input {
+            get => _Input;
+            set {
+                _Input = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        private static ObservableCollection<InputItem> _InputItems;
+
+        public static ObservableCollection<InputItem> InputItems {
+            get {
+                if (_InputItems is null)
+                {
+                    _InputItems = new ObservableCollection<InputItem>();
+
+                    if (File.Exists(mp.InputConfPath))
+                    {
+                        foreach (string line in File.ReadAllLines(mp.InputConfPath))
+                        {
+                            string l = line.Trim();
+                            if (l.StartsWith("#")) continue;
+                            if (!l.Contains(" ")) continue;
+                            InputItem item = new InputItem();
+                            item.Input = l.Substring(0, l.IndexOf(" "));
+                            if (item.Input == "") continue;
+                            l = l.Substring(l.IndexOf(" ") + 1);
+
+                            if (l.Contains("#menu:"))
+                            {
+                                item.Menu = l.Substring(l.IndexOf("#menu:") + 6).Trim();
+                                l = l.Substring(0, l.IndexOf("#menu:"));
+
+                                if (item.Menu.Contains(";"))
+                                    item.Menu = item.Menu.Substring(item.Menu.IndexOf(";") + 1).Trim();
+                            }
+
+                            item.Command = l.Trim();
+                            if (item.Command == "")
+                                continue;
+                            if (item.Command.ToLower() == "ignore")
+                                item.Command = "";
+                            _InputItems.Add(item);
+                        }
+                    }
+                }
+                return _InputItems;
+            }
+        }
     }
 }

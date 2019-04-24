@@ -10,6 +10,7 @@ using System.ComponentModel;
 
 using VBNET;
 using System.Globalization;
+using System.Diagnostics;
 
 namespace mpvnet
 {
@@ -42,8 +43,9 @@ namespace mpvnet
                 AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
                 Application.ThreadException += Application_ThreadException;
                 Msg.SupportURL = "https://github.com/stax76/mpv.net#support";
-
                 Instance = this;
+                WPF.WPF.Init();
+                System.Windows.Application.Current.ShutdownMode = System.Windows.ShutdownMode.OnExplicitShutdown;
                 Hwnd = Handle;
                 MinimumSize = new Size(FontHeight * 16, FontHeight * 9);
                 Text += " " + Application.ProductVersion;
@@ -291,7 +293,7 @@ namespace mpvnet
                 lines = content.Split("\r\n".ToCharArray()).ToList();
             else
             {
-                lines = Properties.Resources.input_conf.Split("\r\n".ToCharArray()).ToList();
+                lines = Properties.Resources.inputConf.Split("\r\n".ToCharArray()).ToList();
                 
                 foreach (string i in content.Split("\r\n".ToCharArray()))
                 {
@@ -397,6 +399,8 @@ namespace mpvnet
                 case 0x0202: // WM_LBUTTONUP
                 case 0x0100: // WM_KEYDOWN
                 case 0x0101: // WM_KEYUP
+                case 0x0104: // WM_SYSKEYDOWN
+                case 0x0105: // WM_SYSKEYUP
                 case 0x020A: // WM_MOUSEWHEEL
                     if (mp.MpvWindowHandle != IntPtr.Zero)
                         Native.SendMessage(mp.MpvWindowHandle, m.Msg, m.WParam, m.LParam);
@@ -404,14 +408,6 @@ namespace mpvnet
                 case 0x319: // WM_APPCOMMAND
                     if (mp.MpvWindowHandle != IntPtr.Zero)
                         Native.PostMessage(mp.MpvWindowHandle, m.Msg, m.WParam, m.LParam);
-                    break;
-                case 0x0104: // WM_SYSKEYDOWN:
-                    if (mp.MpvWindowHandle != IntPtr.Zero)
-                        Native.SendMessage(mp.MpvWindowHandle, m.Msg, m.WParam, m.LParam);
-                    break;
-                case 0x0105: // WM_SYSKEYUP:
-                    if (mp.MpvWindowHandle != IntPtr.Zero)
-                        Native.SendMessage(mp.MpvWindowHandle, m.Msg, m.WParam, m.LParam);
                     break;
                 case 0x203: // Native.WM.LBUTTONDBLCLK
                     if (!IsMouseInOSC())
