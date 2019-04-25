@@ -1,10 +1,32 @@
 # mpv.net
 
-mpv.net is a libmpv based media player for Windows, it looks and works like mpv and also shares the same settings as mpv and therefore the mpv documentation applies.
-
-mpv.net might currently be the only open source desktop video player for Windows that is extendable with a mainstream programming language.
+mpv.net is a libmpv based media player for Windows, it looks and works like mpv and shares the same settings as mpv and therefore the mpv manual applies.
 
 mpv manual: <https://mpv.io/manual/master/>
+
+#### CLI options
+
+mpv.net has a basic CLI parser to support mpv's [CLI options](https://mpv.io/manual/master/#options).
+
+#### High quality video output
+
+mpv has an OpenGL based video output that is capable of many features loved by videophiles, such as video scaling with popular high quality algorithms, color management, frame timing, interpolation, HDR, and more.
+
+#### Based on libmpv
+
+mpv.net is based on libmpv which offers a straightforward C API that was designed from the ground up to make mpv usable as a library and facilitate easy integration into other applications.
+
+#### On Screen Controller
+
+mpv.net uses mpv's OSC offering play controls and a modern design.
+
+#### GPU video decoding
+
+libmpv leverages the FFmpeg hwaccel APIs to support DXVA2 video decoding acceleration.
+
+#### Active development
+
+mpv.net is under active development, focusing on user feedback. Want a feature? Post a [patch](https://github.com/stax76/mpv.net/pulls) or [request it](https://github.com/stax76/mpv.net/issues)!
 
 Table of contents
 -----------------
@@ -137,6 +159,7 @@ mpv.net bugs and requests: <https://github.com/stax76/mpv.net/issues>
 - MediaInfo, youtube-dl and libmpv were updated
 - a new JavaScript example script was added to the wiki and the
   script descriptions were improved. [Scripting Page](https://github.com/stax76/mpv.net/wiki/Scripting).
+- improved README.md file and github startpage
 
 ### 3.1 (2019-04-23)
 
