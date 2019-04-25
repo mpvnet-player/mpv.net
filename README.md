@@ -18,7 +18,7 @@ mpv.net is based on libmpv which offers a straightforward C API that was designe
 
 #### On Screen Controller
 
-mpv.net uses mpv's OSC offering play controls and a modern design.
+mpv.net uses mpv's OSC offering play controls with a modern flat design.
 
 #### GPU video decoding
 
