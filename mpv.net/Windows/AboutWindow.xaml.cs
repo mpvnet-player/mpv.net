@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Input;
 
 namespace mpvnet
 {
@@ -7,7 +8,8 @@ namespace mpvnet
         public AboutWindow()
         {
             InitializeComponent();
-            TextBlock.Text = $"mpv.net\nVersion {System.Windows.Forms.Application.ProductVersion}\nCopyright (c) 2017-2019 Frank Skare (stax76)\nMIT License";
+            Version.Text = $"Version {System.Windows.Forms.Application.ProductVersion}";
+            Foreground = WPF.WPF.ThemeBrush;
         }
     }
 }
