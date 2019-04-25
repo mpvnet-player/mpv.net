@@ -16,6 +16,7 @@ Table of contents
 - [Scripting](#scripting)
 - [Support](#support)
 - [Links](#links)
+- [Download](#download)
 - [Changelog](#changelog)
 
 ### Features
@@ -117,6 +118,10 @@ mpv.net download: <https://github.com/stax76/mpv.net/releases>
 mpv bugs and requests: <https://mpv.io/bug-reports/>
 
 mpv.net bugs and requests: <https://github.com/stax76/mpv.net/issues>
+
+### Download
+
+<https://github.com/stax76/mpv.net/releases>
 
 ### Changelog
 
