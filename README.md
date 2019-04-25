@@ -49,7 +49,7 @@ Table of contents
 - Modern UI with dark mode
 - Addon/extension API for .NET languages
 - Scripting API for Python, C#, Lua, JavaScript and PowerShell
-- mpv's OSC (on screen controller (play control bar)), IPC, conf files
+- mpv's OSC, CLI, IPC and conf files
 
 ### Screenshots
 
