@@ -12,10 +12,12 @@ namespace mpvnet
     public partial class InputWindow : Window
     {
         ICollectionView CollectionView;
+        string InitialInputConfContent;
 
         public InputWindow()
         {
             InitializeComponent();
+            InitialInputConfContent = GetInputConfContent();
             SearchControl.SearchTextBox.TextChanged += SearchTextBox_TextChanged;
             DataGrid.SelectionMode = DataGridSelectionMode.Single;
             CollectionViewSource collectionViewSource = new CollectionViewSource() { Source = InputItem.InputItems };
@@ -81,7 +83,7 @@ namespace mpvnet
 
         private void Window_Loaded(object sender, RoutedEventArgs e) => Keyboard.Focus(SearchControl.SearchTextBox);
 
-        private void Window_Closed(object sender, EventArgs e)
+        string GetInputConfContent()
         {
             string text = Properties.Resources.inputConfHeader + "\r\n";
 
@@ -99,9 +101,13 @@ namespace mpvnet
 
                 text += line + "\r\n";
             }
+            return text;
+        }
 
-            File.WriteAllText(mp.InputConfPath, text);
-
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            if (InitialInputConfContent == GetInputConfContent()) return;
+            File.WriteAllText(mp.InputConfPath, GetInputConfContent());
             MessageBox.Show("Changes will be available on next mpv.net startup.",
                 Title, MessageBoxButton.OK, MessageBoxImage.Information);
         }

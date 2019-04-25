@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -227,6 +228,36 @@ namespace mpvnet
                 }
                 return _InputItems;
             }
+        }
+    }
+
+    public class CursorHelp
+    {
+        static bool IsVisible = true;
+
+        public static void Show()
+        {
+            if (!IsVisible)
+            {
+                Cursor.Show();
+                IsVisible = true;
+            }
+        }
+
+        public static void Hide()
+        {
+            if (IsVisible)
+            {
+                Cursor.Hide();
+                IsVisible = false;
+            }
+        }
+
+        public static bool IsPosDifferent(Point screenPos)
+        {
+            return
+                Math.Abs(screenPos.X - Control.MousePosition.X) > 10 ||
+                Math.Abs(screenPos.Y - Control.MousePosition.Y) > 10;
         }
     }
 }

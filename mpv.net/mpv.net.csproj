@@ -198,7 +198,6 @@
       <DependentUpon>InputWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="trash.cs" />
-    <Compile Include="UI.cs" />
     <Compile Include="WPF\WPF.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

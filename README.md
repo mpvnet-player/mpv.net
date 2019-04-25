@@ -36,6 +36,8 @@ Table of contents
 - [Context Menu](#context-menu)
 - [Settings](#settings)
 - [Scripting](#scripting)
+- [Add-ons](#add-ons)
+- [Architecture](#architecture)
 - [Support](#support)
 - [Links](#links)
 - [Download](#download)
@@ -111,6 +113,18 @@ Examples:
 
 [CSScriptAddon.vb](https://github.com/stax76/mpv.net/blob/master/CSScriptAddon/CSScriptAddon.vb)
 
+### Architecture
+
+mpv.net is mostly written in C# 7.0 and runs on the .NET framework 4.7 or higher.
+Few parts are written in VB.NET and Python.
+
+The Add-on implementation is based on the Managed Extensibility Framework,
+the entire application code is accessible for add-ons and Python scripts.
+
+Python scripting is implemented with IronPython which uses Python 2.7.
+
+The main/video window is WinForms based, other windows are WPF based.
+
 ### Support
 
 [Support thread in Doom9 forum](https://forum.doom9.org/showthread.php?t=174841)
@@ -163,6 +177,7 @@ mpv.net bugs and requests: <https://github.com/stax76/mpv.net/issues>
   script descriptions were improved. [Scripting Page](https://github.com/stax76/mpv.net/wiki/Scripting).
 - greatly improved README.md file and github startpage
 - About dialog added
+- the input editor shows only a closing message if actually a change was made
 
 ### 3.1 (2019-04-23)
 

@@ -164,7 +164,7 @@ namespace mpvnet
             WriteToDisk(mp.MpvConfPath, MpvConf, MpvSettingsDefinitions);
             WriteToDisk(mp.MpvNetConfPath, MpvNetConf, MpvNetSettingsDefinitions);
 
-            MessageBox.Show("Changes will be available on next startup of mpv.net.",
+            MessageBox.Show("Changes will be available on next mpv.net startup.",
                 Title, MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
