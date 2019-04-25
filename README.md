@@ -132,10 +132,10 @@ mpv.net was started 2017 and consists of about 9000 lines of code.
 
 Third party components are:
 
-libmpv
-MediaInfo
-Tommy (TOML parser)
-IronPython
+- libmpv
+- MediaInfo
+- Tommy (TOML parser)
+- IronPython
 
 ### Support
 
