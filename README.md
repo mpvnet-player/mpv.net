@@ -65,7 +65,7 @@ Table of contents
 
 The context menu can be customized via inputConf file located at:
 ```
-C:\Users\username\AppData\Roaming\mpv\input.conf
+C:\Users\<user>\AppData\Roaming\mpv\input.conf
 ```
 if it's missing mpv.net generates it with the following defaults:
 
@@ -75,7 +75,7 @@ if it's missing mpv.net generates it with the following defaults:
 
 mpv.net shares the settings with mpv, settings can be edited in a settings dialog or in a config file called mpv.conf located at:
 ```
-C:\Users\user\AppData\Roaming\mpv\mpv.conf
+C:\Users\<user>\AppData\Roaming\mpv\mpv.conf
 ```
 or alternativly at:
 ```
