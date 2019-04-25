@@ -63,19 +63,21 @@ Table of contents
 
 ### Context Menu
 
-The context menu can be customized via inputConf file located at:
+The context menu can be customized via input.conf file located at:
 ```
-C:\Users\<user>\AppData\Roaming\mpv\input.conf
+C:\Users\%username%\AppData\Roaming\mpv\input.conf
 ```
 if it's missing mpv.net generates it with the following defaults:
 
 <https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt>
 
+input.conf defines mpv's key and mouse bindings and mpv.net uses comments to define the context menu.
+
 ### Settings
 
 mpv.net shares the settings with mpv, settings can be edited in a settings dialog or in a config file called mpv.conf located at:
 ```
-C:\Users\<user>\AppData\Roaming\mpv\mpv.conf
+C:\Users\%username%\AppData\Roaming\mpv\mpv.conf
 ```
 or alternativly at:
 ```
@@ -159,7 +161,7 @@ mpv.net bugs and requests: <https://github.com/stax76/mpv.net/issues>
 - MediaInfo, youtube-dl and libmpv were updated
 - a new JavaScript example script was added to the wiki and the
   script descriptions were improved. [Scripting Page](https://github.com/stax76/mpv.net/wiki/Scripting).
-- improved README.md file and github startpage
+- greatly improved README.md file and github startpage
 
 ### 3.1 (2019-04-23)
 
