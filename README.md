@@ -125,6 +125,18 @@ Python scripting is implemented with IronPython which uses Python 2.7.
 
 The main/video window is WinForms based, other windows are WPF based.
 
+The config editor adds it's controls dynamically and uses TOML to define it's
+content, there are only two simple types, StringSetting and OptionSetting.
+
+mpv.net was started 2017 and consists of about 9000 lines of code.
+
+Third party components are:
+
+libmpv
+MediaInfo
+Tommy (TOML parser)
+IronPython
+
 ### Support
 
 [Support thread in Doom9 forum](https://forum.doom9.org/showthread.php?t=174841)
