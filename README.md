@@ -1,6 +1,6 @@
 # mpv.net
 
-mpv.net is a libmpv based media player for Windows, it looks and works like mpv and shares the same settings as mpv and therefore the mpv manual applies.
+mpv.net is a libmpv based media player for Windows, it looks and works like mpv and shares the settings with mpv and therefore the mpv manual applies.
 
 mpv manual: <https://mpv.io/manual/master/>
 

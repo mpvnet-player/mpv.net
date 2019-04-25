@@ -13,7 +13,7 @@
 
  # the defaults of mpv can be found at:
 
- # https://github.com/mpv-player/mpv/blob/master/etc/inputConf
+ # https://github.com/mpv-player/mpv/blob/master/etc/input.conf
 
  # mpv.net's defaults of mpv.conf contain: 'input-default-bindings = no'
  # which disables mpv's input defaults. Every line in this file begins with a
