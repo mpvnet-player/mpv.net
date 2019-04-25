@@ -162,6 +162,7 @@ mpv.net bugs and requests: <https://github.com/stax76/mpv.net/issues>
 - a new JavaScript example script was added to the wiki and the
   script descriptions were improved. [Scripting Page](https://github.com/stax76/mpv.net/wiki/Scripting).
 - greatly improved README.md file and github startpage
+- About dialog added
 
 ### 3.1 (2019-04-23)
 

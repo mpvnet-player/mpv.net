@@ -141,6 +141,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Windows\AboutWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="WPF\Resources.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -184,6 +188,9 @@
     <Compile Include="Windows\ConfWindow.xaml.cs">
       <DependentUpon>ConfWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\AboutWindow.xaml.cs">
+      <DependentUpon>AboutWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\LearnWindow.xaml.cs">
       <DependentUpon>LearnWindow.xaml</DependentUpon>
     </Compile>
@@ -204,6 +211,7 @@
     </EmbeddedResource>
     <None Include="..\README.md">
       <Link>README.md</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="app.manifest" />
     <None Include="packages.config" />
@@ -216,6 +224,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Content Include="..\LICENSE.txt">
+      <Link>LICENSE.txt</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\mpvConf.txt" />
     <Content Include="Resources\mpvConfToml.txt" />
     <Content Include="Resources\mpvNetConfToml.txt" />

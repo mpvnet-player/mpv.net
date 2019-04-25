@@ -148,6 +148,8 @@
  _ script-message mpv.net shell-execute https://github.com/mpv-player/mpv/blob/master/etc/input.conf #menu: Help > Show mpv default keys
  _ script-message mpv.net shell-execute https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt #menu: Help > Show mpv.net default keys
  _ script-message mpv.net shell-execute https://mpv-net.github.io/mpv.net-web-site/ #menu: Help > Show mpv.net web site
+ _ ignore                                         #menu: Help > -
+ _ script-message mpv.net show-about              #menu: Help > About mpv.net
 
  _ ignore           #menu: -
  Esc quit           #menu: Exit
