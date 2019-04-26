@@ -48,7 +48,7 @@ Table of contents
 - Customizable context menu defined in the same file as the key bindings
 - Searchable config dialog
 - Searchable input (key/mouse) binding editor
-- Modern UI with dark mode
+- Modern UI with dark mode [Screenshot](#screenshots)
 - Addon/extension API for .NET languages
 - Scripting API for Python, C#, Lua, JavaScript and PowerShell
 - mpv's OSC, CLI, IPC and conf files
@@ -202,7 +202,7 @@ mpv.net bugs and requests: <https://github.com/stax76/mpv.net/issues>
 - About dialog added
 - the input editor shows only a closing message if actually a change was made
 - the input editor don't show menu separators any longer
-- new Command Palette feature added
+- new Command Palette feature added. [Screenshot](https://github.com/stax76/mpv.net#command-palette), [Default input binding](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt#L141)
 - the history feature had a bug causing files to be logged more than once
 
 ### 3.1 (2019-04-23)
