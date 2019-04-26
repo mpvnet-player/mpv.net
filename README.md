@@ -229,9 +229,9 @@ mpv.net bugs and requests: <https://github.com/stax76/mpv.net/issues>
   closes the player but it did not work on all displays
 - the info display was changed to display the filename on top
   so it's not displayed in the middle of the screen
-- on start up of the conf editor all text is now selected in the
+- on start up of the config editor all text is now selected in the
   search text box so it's ready for a new search to be typed
-- the conf editor was changed to write the settings to disk
+- the config editor was changed to write the settings to disk
   only if the settings were actually modified, also the message
   that says that the settings will be available on next start
   is now only shown if the settings were actually modified.

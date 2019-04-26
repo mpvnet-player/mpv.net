@@ -6,7 +6,7 @@
         xmlns:WPF="clr-namespace:WPF"
         mc:Ignorable="d"
         Height="500" Width="700" Loaded="ConfWindow1_Loaded" ShowInTaskbar="False"
-        WindowStartupLocation="CenterScreen" Title="Conf Editor">
+        WindowStartupLocation="CenterScreen" Title="Config Editor">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
