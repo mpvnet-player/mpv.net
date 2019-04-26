@@ -46,11 +46,11 @@ Table of contents
 ### Features
 
 - Customizable context menu defined in the same file as the key bindings ([Screenshot](#context-menu))
-- Searchable config dialog [Screenshot](#config-editor)
-- Searchable input (key/mouse) binding editor [Screenshot](#input-editor)
-- Modern UI with dark mode [Screenshot](#config-editor)
+- Searchable config dialog ([Screenshot](#config-editor))
+- Searchable input (key/mouse) binding editor ([Screenshot](#input-editor))
+- Modern UI with dark mode ([Screenshot](#config-editor))
 - Addon/extension API for .NET languages
-- Scripting API for Python, C#, Lua, JavaScript and PowerShell [wiki](https://github.com/stax76/mpv.net/wiki/Scripting)
+- Scripting API for Python, C#, Lua, JavaScript and PowerShell ([wiki](https://github.com/stax76/mpv.net/wiki/Scripting))
 - mpv's OSC, CLI, IPC and conf files
 
 ### Screenshots
