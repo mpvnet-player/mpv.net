@@ -163,15 +163,16 @@ namespace mpvnet
     }
 
     [Serializable]
-    public class InputItem : INotifyPropertyChanged
+    public class CommandItem : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        public string Menu { get; set; } = "";
+
+        public string Path { get; set; } = "";
         public string Command { get; set; } = "";
 
-        public InputItem() { }
+        public CommandItem() { }
 
-        public InputItem(SerializationInfo info, StreamingContext context) { }
+        public CommandItem(SerializationInfo info, StreamingContext context) { }
 
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
@@ -188,45 +189,44 @@ namespace mpvnet
             }
         }
 
-        private static ObservableCollection<InputItem> _InputItems;
+        private static ObservableCollection<CommandItem> _Items;
 
-        public static ObservableCollection<InputItem> InputItems {
+        public static ObservableCollection<CommandItem> Items {
             get {
-                if (_InputItems is null)
+                if (_Items is null)
                 {
-                    _InputItems = new ObservableCollection<InputItem>();
+                    _Items = new ObservableCollection<CommandItem>();
 
                     if (File.Exists(mp.InputConfPath))
                     {
                         foreach (string line in File.ReadAllLines(mp.InputConfPath))
                         {
-                            string l = line.Trim();
-                            if (l.StartsWith("#")) continue;
-                            if (!l.Contains(" ")) continue;
-                            InputItem item = new InputItem();
-                            item.Input = l.Substring(0, l.IndexOf(" "));
-                            if (item.Input == "") continue;
-                            l = l.Substring(l.IndexOf(" ") + 1);
+                            string val = line.Trim();
+                            if (val.StartsWith("#")) continue;
+                            if (!val.Contains(" ")) continue;
+                            CommandItem item = new CommandItem();
+                            item.Input = val.Substring(0, val.IndexOf(" ")).Replace("_", "");
+                            val = val.Substring(val.IndexOf(" ") + 1);
 
-                            if (l.Contains("#menu:"))
+                            if (val.Contains("#menu:"))
                             {
-                                item.Menu = l.Substring(l.IndexOf("#menu:") + 6).Trim();
-                                l = l.Substring(0, l.IndexOf("#menu:"));
+                                item.Path = val.Substring(val.IndexOf("#menu:") + 6).Trim();
+                                val = val.Substring(0, val.IndexOf("#menu:"));
 
-                                if (item.Menu.Contains(";"))
-                                    item.Menu = item.Menu.Substring(item.Menu.IndexOf(";") + 1).Trim();
+                                if (item.Path.Contains(";"))
+                                    item.Path = item.Path.Substring(item.Path.IndexOf(";") + 1).Trim();
                             }
 
-                            item.Command = l.Trim();
+                            item.Command = val.Trim();
                             if (item.Command == "")
                                 continue;
                             if (item.Command.ToLower() == "ignore")
                                 item.Command = "";
-                            _InputItems.Add(item);
+                            _Items.Add(item);
                         }
                     }
                 }
-                return _InputItems;
+                return _Items;
             }
         }
     }

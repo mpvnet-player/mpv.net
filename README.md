@@ -55,13 +55,25 @@ Table of contents
 
 ### Screenshots
 
-![](https://raw.githubusercontent.com/stax76/mpv.net/master/screenshots/mpvnet.png)
+#### Main Window
 
-![](https://raw.githubusercontent.com/stax76/mpv.net/master/screenshots/mpvnetContextMenu.png)
+![](https://raw.githubusercontent.com/stax76/mpv.net/master/screenshots/Main.png)
 
-![](https://raw.githubusercontent.com/stax76/mpv.net/master/screenshots/mpvConfEdit.png)
+#### Context Menu
 
-![](https://raw.githubusercontent.com/stax76/mpv.net/master/screenshots/mpvInputEdit.png)
+![](https://raw.githubusercontent.com/stax76/mpv.net/master/screenshots/Menu.png)
+
+#### Config Editor
+
+![](https://raw.githubusercontent.com/stax76/mpv.net/master/screenshots/ConfEditor.png)
+
+#### Input Editor
+
+![](https://raw.githubusercontent.com/stax76/mpv.net/master/screenshots/InputEditor.png)
+
+#### Command Palette
+
+![](https://raw.githubusercontent.com/stax76/mpv.net/master/screenshots/CommandPalette.png)
 
 ### Context Menu
 
@@ -183,12 +195,15 @@ mpv.net bugs and requests: <https://github.com/stax76/mpv.net/issues>
   the config folder should be created (portable or appdata)
 - there was an issue causing keys not working after a modal window was shown
 - there was a crash when no script folder existed in the conf folder
-- MediaInfo, youtube-dl and libmpv were updated
+- MediaInfo and youtube-dl were updated
 - a new JavaScript example script was added to the wiki and the
   script descriptions were improved. [Scripting Page](https://github.com/stax76/mpv.net/wiki/Scripting).
 - greatly improved README.md file and github startpage
 - About dialog added
 - the input editor shows only a closing message if actually a change was made
+- the input editor don't show menu separators any longer
+- new Command Palette feature added
+- the history feature had a bug causing files to be logged more than once
 
 ### 3.1 (2019-04-23)
 

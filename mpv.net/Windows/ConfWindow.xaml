@@ -10,11 +10,11 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="4*" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="10*" />
-            <ColumnDefinition Width="60*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="6*" />
         </Grid.ColumnDefinitions>
         <Controls:SearchTextBoxUserControl HintText="Find a setting" x:Name="SearchControl" Width="250" Margin="0,20,0,10" Grid.ColumnSpan="2" />
         <ScrollViewer x:Name="MainScrollViewer" VerticalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="1" Margin="0,0,0,10">
@@ -24,9 +24,7 @@
             <ListBox x:Name="FilterListBox" ItemsSource="{Binding FilterStrings}" BorderThickness="0" SelectionChanged="ListBox_SelectionChanged" Foreground="{x:Static WPF:WPF.ThemeBrush}" Background="{Binding Path=Background, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding}" FontSize="16" />
-                        </StackPanel>
+                        <TextBlock Text="{Binding}" FontSize="16" />
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>

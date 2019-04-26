@@ -305,13 +305,13 @@ namespace mpvnet
                 }
             }
 
-            foreach (string i in lines)
+            foreach (string line in lines)
             {
-                if (!i.Contains("#menu:")) continue;
-                string left = i.Substring(0, i.IndexOf("#menu:")).Trim();
+                if (!line.Contains("#menu:")) continue;
+                string left = line.Substring(0, line.IndexOf("#menu:")).Trim();
                 if (left.StartsWith("#")) continue;
                 string command = left.Substring(left.IndexOf(" ") + 1).Trim();
-                string menu = i.Substring(i.IndexOf("#menu:") + "#menu:".Length).Trim();
+                string menu = line.Substring(line.IndexOf("#menu:") + "#menu:".Length).Trim();
                 string input = left.Substring(0, left.IndexOf(" "));
                 if (input == "_") input = "";
                 if (menu.Contains(";")) input = menu.Substring(0, menu.IndexOf(";")).Trim();
@@ -393,6 +393,8 @@ namespace mpvnet
 
         protected override void WndProc(ref Message m)
         {
+            //Debug.WriteLine(m);
+
             switch (m.Msg)
             {
                 case 0x0201: // WM_LBUTTONDOWN

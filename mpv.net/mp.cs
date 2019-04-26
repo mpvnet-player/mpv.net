@@ -231,6 +231,7 @@ namespace mpvnet
                         case mpv_event_id.MPV_EVENT_FILE_LOADED:
                             FileLoaded?.Invoke();
                             LoadFolder();
+                            WriteHistory(mp.get_property_string("path"));
                             break;
                         case mpv_event_id.MPV_EVENT_TRACKS_CHANGED:
                             TracksChanged?.Invoke();
@@ -322,10 +323,7 @@ namespace mpvnet
                                 VideoSizeChanged?.Invoke();
                             }                    
 
-                            Task.Run(new Action(() => {
-                                WriteHistory(mp.get_property_string("path"));
-                                ReadMetaData();
-                            }));
+                            Task.Run(new Action(() => ReadMetaData()));
                             break;
                         case mpv_event_id.MPV_EVENT_CHAPTER_CHANGE:
                             ChapterChange?.Invoke();

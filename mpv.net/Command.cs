@@ -89,6 +89,15 @@ namespace mpvnet
             }));
         }
 
+        public static void show_command_palette(string[] args)
+        {
+            MainForm.Instance.Invoke(new Action(() => {
+                var w = new CommandPaletteWindow();
+                new WindowInteropHelper(w).Owner = MainForm.Instance.Handle;
+                w.ShowDialog();
+            }));
+        }
+
         public static void show_history(string[] args)
         {
             var fp = mp.MpvConfFolder + "history.txt";

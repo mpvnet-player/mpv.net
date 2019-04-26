@@ -11,5 +11,10 @@ namespace mpvnet
             Version.Text = $"Version {System.Windows.Forms.Application.ProductVersion}";
             Foreground = WPF.WPF.ThemeBrush;
         }
+
+        private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            Close();
+        }
     }
 }

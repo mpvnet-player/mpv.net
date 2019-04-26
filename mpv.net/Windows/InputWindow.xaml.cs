@@ -20,9 +20,9 @@ namespace mpvnet
             InitialInputConfContent = GetInputConfContent();
             SearchControl.SearchTextBox.TextChanged += SearchTextBox_TextChanged;
             DataGrid.SelectionMode = DataGridSelectionMode.Single;
-            CollectionViewSource collectionViewSource = new CollectionViewSource() { Source = InputItem.InputItems };
+            CollectionViewSource collectionViewSource = new CollectionViewSource() { Source = CommandItem.Items };
             CollectionView = collectionViewSource.View;
-            var yourCostumFilter = new Predicate<object>(item => Filter((InputItem)item));
+            var yourCostumFilter = new Predicate<object>(item => Filter((CommandItem)item));
             CollectionView.Filter = yourCostumFilter;
             DataGrid.ItemsSource = CollectionView;
         }
@@ -35,8 +35,9 @@ namespace mpvnet
                 MessageBox.Show("Filtering works by searching in the Input, Menu and Command but it's possible to reduce the filter scope to either of Input, Menu or Command by prefixing as follows:\n\ni <input search>\ni: <input search>\n\nm <menu search>\nm: <menu search>\n\nc <command search>\nc: <command search>\n\nIf only one character is entered the search will be performed only in the input.", "Filtering", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
-        bool Filter(InputItem item)
+        bool Filter(CommandItem item)
         {
+            if (item.Command == "") return false;
             string searchText = SearchControl.SearchTextBox.Text.ToLower();
             if (searchText == "") return true;
 
@@ -51,11 +52,11 @@ namespace mpvnet
                     return item.Input.ToLower().Contains(searchText);
             }
             else if (searchText.StartsWith("m ") || searchText.StartsWith("m:"))
-                return item.Menu.ToLower().Contains(searchText.Substring(2).Trim());
+                return item.Path.ToLower().Contains(searchText.Substring(2).Trim());
             else if (searchText.StartsWith("c ") || searchText.StartsWith("c:"))
                 return item.Command.ToLower().Contains(searchText.Substring(2).Trim());
             else if (item.Command.ToLower().Contains(searchText) ||
-                item.Menu.ToLower().Contains(searchText) ||
+                item.Path.ToLower().Contains(searchText) ||
                 item.Input.ToLower().Contains(searchText))
             {
                 return true;
@@ -65,18 +66,18 @@ namespace mpvnet
 
         private void ButtonClick(object sender, RoutedEventArgs e)
         {
-            InputItem item = ((Button)e.Source).DataContext as InputItem;
+            CommandItem item = ((Button)e.Source).DataContext as CommandItem;
             if (item is null) return;
             LearnWindow w = new LearnWindow();
             w.Owner = this;
             w.InputItem = item;
             w.ShowDialog();
 
-            var items = new Dictionary<string, InputItem>();
+            var items = new Dictionary<string, CommandItem>();
 
-            foreach (InputItem i in InputItem.InputItems)
-                if (items.ContainsKey(i.Input) && i.Input != "_")
-                    MessageBox.Show($"Duplicate found:\n\n{i.Input}: {i.Menu}\n\n{items[i.Input].Input}: {items[i.Input].Menu}\n\nPlease note that you can chain multiple commands in the same line by using a semicolon as separator.", "Duplicate Found", MessageBoxButton.OK, MessageBoxImage.Warning);
+            foreach (CommandItem i in CommandItem.Items)
+                if (items.ContainsKey(i.Input) && i.Input != "")
+                    MessageBox.Show($"Duplicate found:\n\n{i.Input}: {i.Path}\n\n{items[i.Input].Input}: {items[i.Input].Path}\n\nPlease note that you can chain multiple commands in the same line by using a semicolon as separator.", "Duplicate Found", MessageBoxButton.OK, MessageBoxImage.Warning);
                 else
                     items[i.Input] = i;
         }
@@ -87,17 +88,18 @@ namespace mpvnet
         {
             string text = Properties.Resources.inputConfHeader + "\r\n";
 
-            foreach (InputItem item in InputItem.InputItems)
+            foreach (CommandItem item in CommandItem.Items)
             {
-                string line = " " + item.Input.PadRight(10);
+                string input = item.Input == "" ? "_" : item.Input;
+                string line = " " + input.PadRight(10);
 
                 if (item.Command.Trim() == "")
                     line += " ignore";
                 else
                     line += " " + item.Command.Trim();
 
-                if (item.Menu.Trim() != "")
-                    line = line.PadRight(40) + " #menu: " + item.Menu;
+                if (item.Path.Trim() != "")
+                    line = line.PadRight(40) + " #menu: " + item.Path;
 
                 text += line + "\r\n";
             }
@@ -117,7 +119,7 @@ namespace mpvnet
             DataGrid grid = (DataGrid)sender;
 
             if (e.Command == DataGrid.DeleteCommand)
-                if (MessageBox.Show($"Confirm to delete: {(grid.SelectedItem as InputItem).Input} ({(grid.SelectedItem as InputItem).Menu})", "Confirm Delete", MessageBoxButton.OKCancel, MessageBoxImage.Question) != MessageBoxResult.OK)
+                if (MessageBox.Show($"Confirm to delete: {(grid.SelectedItem as CommandItem).Input} ({(grid.SelectedItem as CommandItem).Path})", "Confirm Delete", MessageBoxButton.OKCancel, MessageBoxImage.Question) != MessageBoxResult.OK)
                     e.Handled = true;
         }
     }

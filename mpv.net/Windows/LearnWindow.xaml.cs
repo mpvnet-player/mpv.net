@@ -9,7 +9,7 @@ namespace mpvnet
 {
     public partial class LearnWindow : Window
     {
-        public InputItem InputItem { get; set; }
+        public CommandItem InputItem { get; set; }
         public string NewKey { get; set; } = "";
 
         public LearnWindow()
@@ -144,7 +144,7 @@ namespace mpvnet
         void SetKey(string key)
         {
             NewKey = key;
-            MenuLabel.Content = InputItem.Menu;
+            MenuLabel.Content = InputItem.Path;
             KeyLabel.Content = key;
         }
 
