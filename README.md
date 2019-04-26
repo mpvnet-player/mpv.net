@@ -45,7 +45,7 @@ Table of contents
 
 ### Features
 
-- Customizable context menu defined in the same file as the key bindings [Screenshot](#context-menu)
+- Customizable context menu defined in the same file as the key bindings ([Screenshot](#context-menu))
 - Searchable config dialog [Screenshot](#config-editor)
 - Searchable input (key/mouse) binding editor [Screenshot](#input-editor)
 - Modern UI with dark mode [Screenshot](#config-editor)
