@@ -61,17 +61,26 @@ Table of contents
 
 #### Context Menu
 
+Context menu defined in the input.conf file with dark mode support.
+
 ![](https://raw.githubusercontent.com/stax76/mpv.net/master/screenshots/Menu.png)
 
 #### Config Editor
+
+A searchable config editor as alternative to edit the mpv.conf file manually.
 
 ![](https://raw.githubusercontent.com/stax76/mpv.net/master/screenshots/ConfEditor.png)
 
 #### Input Editor
 
+A searchable key and mouse binding editor.
+
 ![](https://raw.githubusercontent.com/stax76/mpv.net/master/screenshots/InputEditor.png)
 
 #### Command Palette
+
+Forgot where a command in the menu is located or what shortcut key it has?
+Just press Ctrl+Shift+P and find it easily in the command palette.
 
 ![](https://raw.githubusercontent.com/stax76/mpv.net/master/screenshots/CommandPalette.png)
 
