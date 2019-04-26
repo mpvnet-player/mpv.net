@@ -115,8 +115,7 @@ Examples:
 
 ### Architecture
 
-mpv.net is mostly written in C# 7.0 and runs on the .NET framework 4.7 or higher.
-Few parts are written in VB.NET and Python.
+mpv.net is written in C# 7.0 and runs on the .NET framework 4.7 or higher.
 
 The Add-on implementation is based on the Managed Extensibility Framework,
 the entire application code is accessible for add-ons and Python scripts.

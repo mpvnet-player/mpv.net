@@ -7,10 +7,10 @@ using System.Windows.Forms;
 using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel;
-
-using VBNET;
 using System.Globalization;
 using System.Diagnostics;
+
+using Sys;
 
 namespace mpvnet
 {

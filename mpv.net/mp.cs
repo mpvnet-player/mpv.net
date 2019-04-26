@@ -11,7 +11,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-using VBNET;
+using Sys;
+
 using static mpvnet.libmpv;
 using static mpvnet.Native;
 
@@ -85,8 +86,9 @@ namespace mpvnet
                         {
                             td.MainInstruction = "Choose a settings folder.";
                             td.Content = "[https://mpv.io/manual/master/#files-on-windows MPV documentation about files on Windows.]";
-                            td.AddCommandLink("appdata", appdataFolder);
-                            td.AddCommandLink("portable", portableFolder);
+                            td.AddCommandLink("appdata", appdataFolder, appdataFolder);
+                            td.AddCommandLink("portable", portableFolder, portableFolder);
+                            td.AllowCancel = false;
                             _MpvConfFolder = td.Show();
                         }
                     }
@@ -269,7 +271,6 @@ namespace mpvnet
                                             Message m = new Message() { Msg = 0x0202 }; // WM_LBUTTONUP
                                             Native.SendMessage(MainForm.Instance.Handle, m.Msg, m.WParam, m.LParam);
                                         }));
-
                                     }
                                 }
                                 if (!found)

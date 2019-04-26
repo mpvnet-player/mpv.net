@@ -185,6 +185,7 @@
     <Compile Include="NativeHelp.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sys\TaskDialog.cs" />
     <Compile Include="Windows\ConfWindow.xaml.cs">
       <DependentUpon>ConfWindow.xaml</DependentUpon>
     </Compile>
@@ -239,12 +240,6 @@
     <Content Include="Resources\inputConfHeader.txt" />
     <Content Include="screenshot.jpg" />
     <Content Include="Resources\inputConf.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\VBNET\VBNET.vbproj">
-      <Project>{a1d11294-05bf-4d77-b008-aecf1aa93c9f}</Project>
-      <Name>VBNET</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Page Include="DynamicGUI\OptionSettingControl.xaml">

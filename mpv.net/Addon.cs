@@ -5,7 +5,7 @@ using System.ComponentModel.Composition.Hosting;
 using System.IO;
 using System.Windows.Forms;
 
-using VBNET;
+using Sys;
 
 namespace mpvnet
 {

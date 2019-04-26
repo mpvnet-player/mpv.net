@@ -4,8 +4,8 @@ using System.Threading;
 using System.Management.Automation.Runspaces;
 using System.Reflection;
 using System.Threading.Tasks;
-using System.Windows.Forms;
-using VBNET;
+
+using Sys;
 
 namespace mpvnet
 {

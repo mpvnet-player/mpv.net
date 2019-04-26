@@ -6,7 +6,8 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 using System.Windows.Interop;
-using VBNET;
+
+using Sys;
 
 namespace mpvnet
 {
