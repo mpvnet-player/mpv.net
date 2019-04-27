@@ -151,10 +151,10 @@ mpv.net was started 2017 and consists of about 9000 lines of code.
 
 Third party components are:
 
-- libmpv
-- MediaInfo
-- Tommy (TOML parser)
-- IronPython
+- [libmpv](https://mpv.io/)
+- [MediaInfo](https://mediaarea.net/en/MediaInfo)
+- [Tommy (TOML parser)](https://github.com/dezhidki/Tommy)
+- [IronPython](https://ironpython.net/)
 
 ### Support
 
@@ -194,7 +194,7 @@ mpv.net bugs and requests: <https://github.com/stax76/mpv.net/issues>
 
 ### Changelog
 
-### 3.2 (2019-0?-??)
+### 3.2 (2019-04-27)
 
 - mpvInputEdit and mpvConfEdit were discontinued and merged into
   mpvnet because separate apps were to difficult to work with
@@ -206,10 +206,10 @@ mpv.net bugs and requests: <https://github.com/stax76/mpv.net/issues>
 - MediaInfo and youtube-dl were updated
 - a new JavaScript example script was added to the wiki and the
   script descriptions were improved. [Scripting Page](https://github.com/stax76/mpv.net/wiki/Scripting).
-- greatly improved README.md file and github startpage
+- greatly improved README.md file and [github startpage](https://github.com/stax76/mpv.net)
 - About dialog added
 - the input editor shows only a closing message if actually a change was made
-- the input editor don't show menu separators any longer
+- the input editor don't show confusing menu separators any longer. [Screenshot](https://github.com/stax76/mpv.net#input-editor)
 - new Command Palette feature added. [Screenshot](https://github.com/stax76/mpv.net#command-palette), [Default input binding](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt#L141)
 - the history feature had a bug causing files to be logged more than once
 

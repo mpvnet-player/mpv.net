@@ -11,7 +11,7 @@ AppPublisher=stax76
 ArchitecturesInstallIn64BitMode=x64
 Compression=lzma2
 DefaultDirName={pf}\{#MyAppName}
-OutputBaseFilename=mpvnet-{#MyAppVersion}
+OutputBaseFilename=mpvnet-setup-x64-{#MyAppVersion}
 OutputDir=C:\Users\frank\Desktop
 DefaultGroupName={#MyAppName}
 
