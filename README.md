@@ -8,7 +8,7 @@ mpv.net is based on libmpv which offers a straightforward C API that was designe
 
 #### CLI options
 
-mpv.net has a CLI parser to support the [CLI options](https://mpv.io/manual/master/#options) of mpv/libmpv.
+mpv.net has the same [CLI options](https://mpv.io/manual/master/#options) as mpv.
 
 #### High quality video output
 
@@ -50,7 +50,10 @@ Table of contents
 - Modern UI with dark mode ([Screenshot](#config-editor))
 - Addon/extension API for .NET languages
 - Scripting API for Python, C#, Lua, JavaScript and PowerShell ([wiki](https://github.com/stax76/mpv.net/wiki/Scripting))
-- mpv's OSC, CLI, IPC and conf files
+- mpv's OSC, IPC and conf files
+- Support of the same [CLI options](https://mpv.io/manual/master/#options) as mpv
+- DXVA2 video decoding acceleration
+- OpenGL based video output capable of features loved by videophiles, such as video scaling with popular high quality algorithms, color management, frame timing, interpolation, HDR, and more
 
 ### Screenshots
 

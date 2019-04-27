@@ -7,7 +7,7 @@
 AppId={{9AA2B100-BEF3-44D0-B819-D8FC3C4D557D}}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
-AppPublisher=stax76
+AppPublisher=Frank Skare (stax76)
 ArchitecturesInstallIn64BitMode=x64
 Compression=lzma2
 DefaultDirName={pf}\{#MyAppName}
@@ -15,6 +15,7 @@ OutputBaseFilename=mpvnet-setup-x64-{#MyAppVersion}
 OutputDir=C:\Users\frank\Desktop
 DefaultGroupName={#MyAppName}
 SetupIconFile=mpv.net\mpvnet.ico
+UninstallDisplayIcon={app}\{#MyAppExeName}
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
