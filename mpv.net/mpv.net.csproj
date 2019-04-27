@@ -90,7 +90,7 @@
   <PropertyGroup />
   <PropertyGroup />
   <PropertyGroup>
-    <ApplicationIcon>mpv.ico</ApplicationIcon>
+    <ApplicationIcon>mpvnet.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
@@ -235,6 +235,7 @@
       <Link>LICENSE.txt</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="mpvnet.ico" />
     <Content Include="Resources\mpvConf.txt" />
     <Content Include="Resources\mpvConfToml.txt" />
     <Content Include="Resources\mpvNetConfToml.txt" />

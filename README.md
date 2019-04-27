@@ -8,23 +8,23 @@ mpv.net is based on libmpv which offers a straightforward C API that was designe
 
 #### CLI options
 
-mpv.net has a basic CLI parser to support mpv's [CLI options](https://mpv.io/manual/master/#options).
+mpv.net has a basic CLI parser to support the CLI options of mpv/libmpv [CLI options](https://mpv.io/manual/master/#options).
 
 #### High quality video output
 
-libmpv has an OpenGL based video output that is capable of many features loved by videophiles, such as video scaling with popular high quality algorithms, color management, frame timing, interpolation, HDR, and more.
+mpv/libmpv has an OpenGL based video output that is capable of many features loved by videophiles, such as video scaling with popular high quality algorithms, color management, frame timing, interpolation, HDR, and more.
 
 #### On Screen Controller
 
-mpv.net uses mpv's OSC offering play controls with a modern flat design.
+mpv.net uses the OSC of mpv/libmpv offering play controls with a modern flat design.
 
 #### GPU video decoding
 
-libmpv leverages the FFmpeg hwaccel APIs to support DXVA2 video decoding acceleration.
+mpv/libmpv leverages the FFmpeg hwaccel APIs to support DXVA2 video decoding acceleration.
 
 #### Active development
 
-mpv.net is under active development, focusing on user feedback. Want a feature? Post a [patch](https://github.com/stax76/mpv.net/pulls) or [request it](https://github.com/stax76/mpv.net/issues)!
+mpv.net is under active development. Want a feature? Post a [patch](https://github.com/stax76/mpv.net/pulls) or [request it](https://github.com/stax76/mpv.net/issues)!
 
 Table of contents
 -----------------

@@ -240,10 +240,5 @@ namespace mpvnet
         {
             Process.Start("https://github.com/stax76/mpv.net#Support");
         }
-
-        private void ApplyTextBlock_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            WriteToDisk();
-        }
     }
 }
