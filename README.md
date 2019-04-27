@@ -48,6 +48,7 @@ Table of contents
 - Customizable context menu defined in the same file as the key bindings ([Screenshot](#context-menu))
 - Searchable config dialog ([Screenshot](#config-editor))
 - Searchable input (key/mouse) binding editor ([Screenshot](#input-editor))
+- Searchable command palette to quickly launch commands and look for keys ([Screenshot](#command-palette))
 - Modern UI with dark mode ([Screenshot](#config-editor))
 - Addon/extension API for .NET languages
 - Scripting API for Python, C#, Lua, JavaScript and PowerShell ([wiki](https://github.com/stax76/mpv.net/wiki/Scripting))
@@ -80,7 +81,7 @@ A searchable key and mouse binding editor.
 #### Command Palette
 
 Forgot where a command in the menu is located or what shortcut key it has?
-Just press Ctrl+Shift+P and find it easily in the command palette.
+Just press Ctrl+Shift+P and find it easily in the searchable command palette.
 
 ![](https://raw.githubusercontent.com/stax76/mpv.net/master/screenshots/CommandPalette.png)
 
