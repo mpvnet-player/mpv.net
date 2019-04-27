@@ -8,7 +8,7 @@ mpv.net is based on libmpv which offers a straightforward C API that was designe
 
 #### CLI options
 
-mpv.net has a CLI parser to support the CLI options of mpv/libmpv ([CLI options](https://mpv.io/manual/master/#options)).
+mpv.net has a CLI parser to support the [CLI options](https://mpv.io/manual/master/#options) of mpv/libmpv.
 
 #### High quality video output
 
