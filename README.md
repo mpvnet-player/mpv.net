@@ -8,7 +8,7 @@ mpv.net is based on libmpv which offers a straightforward C API that was designe
 
 #### CLI options
 
-mpv.net has a CLI parser to support the CLI options of mpv/libmpv [CLI options](https://mpv.io/manual/master/#options).
+mpv.net has a CLI parser to support the CLI options of mpv/libmpv ([CLI options](https://mpv.io/manual/master/#options)).
 
 #### High quality video output
 
@@ -196,7 +196,8 @@ mpv.net bugs and requests: <https://github.com/stax76/mpv.net/issues>
 
 ### 3.3 (2019-??-??)
 
-- dark mode support added to the command palette
+- dark mode support was added to the command palette
+- a new icon was designed. [Website](https://mpv-net.github.io/mpv.net-web-site/)
 
 ### 3.2 (2019-04-27)
 

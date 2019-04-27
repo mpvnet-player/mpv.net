@@ -14,6 +14,7 @@ DefaultDirName={pf}\{#MyAppName}
 OutputBaseFilename=mpvnet-setup-x64-{#MyAppVersion}
 OutputDir=C:\Users\frank\Desktop
 DefaultGroupName={#MyAppName}
+SetupIconFile=mpv.net\mpvnet.ico
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
