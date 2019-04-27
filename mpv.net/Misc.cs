@@ -15,12 +15,17 @@ using Microsoft.Win32;
 
 namespace mpvnet
 {
-    public class Misc
+    public class App
     {
-        public static readonly string[] FileTypes = "264 265 3gp aac ac3 avc avi avs bmp divx dts dtshd dtshr dtsma eac3 evo flac flv h264 h265 hevc hvc jpg jpeg m2t m2ts m2v m4a m4v mka mkv mlp mov mp2 mp3 mp4 mpa mpeg mpg mpv mts ogg ogm opus pcm png pva raw rmvb thd thd+ac3 true-hd truehd ts vdr vob vpy w64 wav webm wmv y4m".Split(' ');
-
-        public static string GetFilter(IEnumerable<string> values) => "*." + 
-            String.Join(";*.", values) + "|*." + String.Join(";*.", values) + "|All Files|*.*";
+        public static bool IsDarkMode { 
+            get {
+                string darkMode = MainForm.Instance.MpvNetDarkMode;
+                object value = Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", 1);
+                if (value is null) value = 1;
+                bool isDarkTheme = (int)value == 0;
+                return (darkMode == "system" && isDarkTheme) || darkMode == "always";
+            }
+        }
     }
 
     public class Sys
@@ -45,6 +50,12 @@ namespace mpvnet
             catch
             { }
             return false;
+        }
+
+        public static string GetFilter()
+        {
+            string[] fileTypes = "264 265 3gp aac ac3 avc avi avs bmp divx dts dtshd dtshr dtsma eac3 evo flac flv h264 h265 hevc hvc jpg jpeg m2t m2ts m2v m4a m4v mka mkv mlp mov mp2 mp3 mp4 mpa mpeg mpg mpv mts ogg ogm opus pcm png pva raw rmvb thd thd+ac3 true-hd truehd ts vdr vob vpy w64 wav webm wmv y4m".Split(' ');
+            return "*." + String.Join(";*.", fileTypes) + "|*." + String.Join(";*.", fileTypes) + "|All Files|*.*";
         }
     }
 

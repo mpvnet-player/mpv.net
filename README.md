@@ -194,6 +194,10 @@ mpv.net bugs and requests: <https://github.com/stax76/mpv.net/issues>
 
 ### Changelog
 
+### 3.3 (2019-??-??)
+
+- dark mode support added to the command palette
+
 ### 3.2 (2019-04-27)
 
 - mpvInputEdit and mpvConfEdit were discontinued and merged into

@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Interop;
+using System.Windows.Media;
 
 namespace mpvnet
 {
@@ -19,6 +21,14 @@ namespace mpvnet
             var yourCostumFilter = new Predicate<object>(item => Filter((CommandItem)item));
             CollectionView.Filter = yourCostumFilter;
             ListView.ItemsSource = CollectionView;
+
+            if (App.IsDarkMode)
+            {
+                ListView.Foreground = Brushes.White;
+                ListView.Background = Brushes.Black;
+                FilterTextBox.Foreground = Brushes.White;
+                FilterTextBox.Background = Brushes.Black;
+            }
         }
 
         bool Filter(CommandItem item)

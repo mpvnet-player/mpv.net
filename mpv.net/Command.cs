@@ -49,7 +49,7 @@ namespace mpvnet
                 using (var d = new OpenFileDialog())
                 {
                     d.Multiselect = true;
-                    d.Filter = Misc.GetFilter(Misc.FileTypes);
+                    d.Filter = Sys.GetFilter();
 
                     if (d.ShowDialog() == DialogResult.OK)
                         mp.LoadFiles(d.FileNames);

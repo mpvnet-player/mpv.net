@@ -30,7 +30,13 @@ namespace mpvnet
             LoadSettings(MpvSettingsDefinitions, MpvConf);
             LoadSettings(MpvNetSettingsDefinitions, MpvNetConf);
             SearchControl.Text = (string)Registry.GetValue(@"HKEY_CURRENT_USER\Software\mpv.net", "conf editor search", "");
-            SetDarkTheme();
+            
+            if (App.IsDarkMode)
+            {
+                Foreground = Brushes.White;
+                Foreground2 = Brushes.Silver;
+                Background = Brushes.Black;
+            }
         }
 
         public Brush Foreground2 {
@@ -40,22 +46,6 @@ namespace mpvnet
 
         public static readonly DependencyProperty Foreground2Property =
             DependencyProperty.Register("Foreground2", typeof(Brush), typeof(ConfWindow), new PropertyMetadata(Brushes.DarkSlateGray));
-
-        void SetDarkTheme()
-        {
-            string darkMode = MpvNetSettingsDefinitions.Where(item => item.Name == "dark-mode").First().Value;
-
-            object value = Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", 1);
-            if (value is null) value = 1;
-            bool isDarkTheme = (int)value == 0;
-
-            if (!((darkMode == "system" && isDarkTheme) || darkMode == "always"))
-                return;
-
-            Foreground = Brushes.White;
-            Foreground2 = Brushes.Silver;
-            Background = Brushes.Black;
-        }
 
         private void LoadSettings(List<SettingBase> settingsDefinitions,
                                   Dictionary<string, string> confSettings)
