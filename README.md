@@ -107,7 +107,7 @@ or alternativly at:
 ```
 if it's missing mpv.net generates it with the following defaults:
 
-<https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/mpv.conf.txt>
+<https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/mpvConf.txt>
 
 ### Scripting
 
