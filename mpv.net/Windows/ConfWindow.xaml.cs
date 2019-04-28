@@ -29,7 +29,7 @@ namespace mpvnet
             SearchControl.SearchTextBox.TextChanged += SearchTextBox_TextChanged;
             LoadSettings(MpvSettingsDefinitions, MpvConf);
             LoadSettings(MpvNetSettingsDefinitions, MpvNetConf);
-            SearchControl.Text = (string)Registry.GetValue(@"HKEY_CURRENT_USER\Software\mpv.net", "conf editor search", "");
+            SearchControl.Text = RegistryHelp.GetString(@"HKCU\Software\mpv.net", "config editor search");
             
             if (App.IsDarkMode)
             {
@@ -133,7 +133,7 @@ namespace mpvnet
         {
             base.OnClosed(e);
             WriteToDisk();
-            Registry.SetValue(@"HKEY_CURRENT_USER\Software\mpv.net", "conf editor search", SearchControl.Text);
+            RegistryHelp.SetObject(@"HKCU\Software\mpv.net", "config editor search", SearchControl.Text);
         }
 
         void WriteToDisk()

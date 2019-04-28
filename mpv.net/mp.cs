@@ -522,8 +522,6 @@ namespace mpvnet
             foreach (string i in args)
                 if (!i.StartsWith("--") && File.Exists(i))
                     mp.commandv("loadfile", i, "append");
-                else if (!i.StartsWith("--") && i.StartsWith("http"))
-                    mp.LoadURL(i);
 
             mp.set_property_string("playlist-pos", "0");
 
@@ -543,16 +541,7 @@ namespace mpvnet
             }
         }
 
-        public static void LoadURL(string url)
-        {
-            int count = mp.get_property_int("playlist-count");
-            mp.commandv("loadfile", url, "append");
-            mp.set_property_int("playlist-pos", count);
-            for (int i = 0; i < count; i++)
-                mp.commandv("playlist-remove", "0");
-        }
-
-        public static void LoadFiles(string[] files)
+        public static void LoadFiles(params string[] files)
         {
             int count = mp.get_property_int("playlist-count");
 
@@ -571,14 +560,13 @@ namespace mpvnet
 
         static void LoadFolder()
         {
-            if (WasFolderLoaded)
-                return;
+            if (WasFolderLoaded) return;
 
             if (get_property_int("playlist-count") == 1)
             {
-                string[] types = "264 265 3gp aac ac3 avc avi avs bmp divx dts dtshd dtshr dtsma eac3 evo flac flv h264 h265 hevc hvc jpg jpeg m2t m2ts m2v m4a m4v mka mkv mlp mov mp2 mp3 mp4 mpa mpeg mpg mpv mts ogg ogm opus pcm png pva raw rmvb thd thd+ac3 true-hd truehd ts vdr vob vpy w64 wav webm wmv y4m".Split(' ');
                 string path = get_property_string("path");
                 if (!Directory.Exists(Path.GetDirectoryName(path))) return;
+                string[] types = "264 265 3gp aac ac3 avc avi avs bmp divx dts dtshd dtshr dtsma eac3 evo flac flv h264 h265 hevc hvc jpg jpeg m2t m2ts m2v m4a m4v mka mkv mlp mov mp2 mp3 mp4 mpa mpeg mpg mpv mts ogg ogm opus pcm png pva raw rmvb thd thd+ac3 true-hd truehd ts vdr vob vpy w64 wav webm wmv y4m".Split(' ');
                 List<string> files = Directory.GetFiles(Path.GetDirectoryName(path)).ToList();
                 files = files.Where((file) => types.Contains(Path.GetExtension(file).TrimStart(".".ToCharArray()).ToLower())).ToList();
                 files.Sort(new StringLogicalComparer());

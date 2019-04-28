@@ -24,6 +24,7 @@ namespace mpvnet
         Point  LastCursorPosChanged;
         int    LastCursorChangedTickCount;
         bool   IgnoreDpiChanged = true;
+        List<string> RecentFiles;
 
         public string MpvNetDarkMode { get; set; } = "always";
         public bool   MpvFullscreen  { get; set; }
@@ -49,6 +50,12 @@ namespace mpvnet
                 Hwnd = Handle;
                 MinimumSize = new Size(FontHeight * 16, FontHeight * 9);
                 Text += " " + Application.ProductVersion;
+                object recent = RegistryHelp.GetObject("HKCU\\Software\\" + Application.ProductName, "Recent");
+
+                if (recent is string[])
+                    RecentFiles = new List<string>((string[])recent);
+                else
+                    RecentFiles = new List<string>();
 
                 foreach (var i in mp.mpvConf)
                     ProcessMpvProperty(i.Key, i.Value);
@@ -151,6 +158,21 @@ namespace mpvnet
                         chaptersMenuItem.DropDownItems.Add(mi);
                     }
                 }
+            }
+
+            MenuItem recent = FindMenuItem("Recent");
+
+            if (recent != null)
+            {
+                recent.DropDownItems.Clear();
+
+                foreach (string path in RecentFiles)
+                    MenuItem.Add(recent.DropDownItems, path, () => mp.LoadFiles(path));
+
+                recent.DropDownItems.Add(new ToolStripSeparator());
+                MenuItem mi = new MenuItem("Clear List");
+                mi.Action = () => RecentFiles.Clear();
+                recent.DropDownItems.Add(mi);
             }
         }
 
@@ -340,7 +362,14 @@ namespace mpvnet
 
         void ContextMenu_Opened(object sender, EventArgs e) => CursorHelp.Show();
 
-        void mp_PlaybackRestart() => BeginInvoke(new Action(() => { Text = Path.GetFileName(mp.get_property_string("path")) + " - mpv.net " + Application.ProductVersion; }));
+        private void Mp_FileLoaded()
+        {
+            string path = mp.get_property_string("path");
+            BeginInvoke(new Action(() => { Text = Path.GetFileName(path) + " - mpv.net " + Application.ProductVersion; }));
+            if (RecentFiles.Contains(path)) RecentFiles.Remove(path);
+            RecentFiles.Insert(0, path);
+            if (RecentFiles.Count > 15) RecentFiles.RemoveAt(15);
+        }
 
         void Mp_Idle() => BeginInvoke(new Action(() => { Text = "mpv.net " + Application.ProductVersion; }));
 
@@ -455,7 +484,7 @@ namespace mpvnet
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
                 mp.LoadFiles(e.Data.GetData(DataFormats.FileDrop) as String[]);
             if (e.Data.GetDataPresent(DataFormats.Text))
-                mp.LoadURL(e.Data.GetData(DataFormats.Text).ToString());
+                mp.LoadFiles(e.Data.GetData(DataFormats.Text).ToString());
         }
 
         protected override void OnMouseDown(MouseEventArgs e)
@@ -521,7 +550,7 @@ namespace mpvnet
             mp.observe_property_int("edition", mpPropChangeEdition);
             mp.Shutdown += mp_Shutdown;
             mp.VideoSizeChanged += mp_VideoSizeChanged;
-            mp.PlaybackRestart += mp_PlaybackRestart;
+            mp.FileLoaded += Mp_FileLoaded;
             mp.Idle += Mp_Idle;
         }
 
@@ -552,6 +581,7 @@ namespace mpvnet
         protected override void OnFormClosed(FormClosedEventArgs e)
         {
             base.OnFormClosed(e);
+            RegistryHelp.SetObject("HKCU\\Software\\" + Application.ProductName, "Recent", RecentFiles.ToArray());
             mp.commandv("quit");
             mp.AutoResetEvent.WaitOne(3000);
         }
@@ -572,12 +602,12 @@ namespace mpvnet
         {
             string clipboard = Clipboard.GetText();
 
-            if (clipboard.StartsWith("https://www.youtube.com/watch?") && RegistryHelp.GetValue("HKCU\\Software\\" + Application.ProductName, "LastYouTubeURL") != clipboard && Visible)
+            if (clipboard.StartsWith("https://www.youtube.com/watch?") && RegistryHelp.GetString("HKCU\\Software\\" + Application.ProductName, "LastYouTubeURL") != clipboard && Visible)
             {
-                RegistryHelp.SetValue("HKCU\\Software\\" + Application.ProductName, "LastYouTubeURL", clipboard);
+                RegistryHelp.SetObject("HKCU\\Software\\" + Application.ProductName, "LastYouTubeURL", clipboard);
 
                 if (Msg.ShowQuestion("Play YouTube URL?", clipboard) == MsgResult.OK)
-                    mp.LoadURL(clipboard);
+                    mp.LoadFiles(clipboard);
             }
         }
     }

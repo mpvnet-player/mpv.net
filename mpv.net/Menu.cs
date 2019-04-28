@@ -61,11 +61,6 @@ public class MenuItem : ToolStripMenuItem
         base.OnClick(e);
     }
 
-    public static MenuItem Add<T>(ToolStripItemCollection items, string path, Action<T> action, T value)
-    {
-        return Add(items, path, () => action(value));
-    }
-
     public static MenuItem Add(ToolStripItemCollection items, string path, Action action)
     {
         string[] a = path.Split(new[] { " > ", " | " }, StringSplitOptions.RemoveEmptyEntries);

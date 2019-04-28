@@ -191,7 +191,7 @@ namespace mpvnet
             MainForm.Instance.Invoke(new Action(() => {
                 string command = Microsoft.VisualBasic.Interaction.InputBox("Enter URL to be opened.");
                 if (string.IsNullOrEmpty(command)) return;
-                mp.LoadURL(command);
+                mp.LoadFiles(command);
             }));
         }
 

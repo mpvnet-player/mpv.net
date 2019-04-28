@@ -29,6 +29,8 @@
  _           ignore                            #menu: Open > -
  Alt+a       script-message mpv.net load-audio #menu: Open > Load external audio files...
  Alt+s       script-message mpv.net load-sub   #menu: Open > Load external subtitle files...
+ _           ignore                            #menu: Open > -
+ _           ignore                            #menu: Open > Recent
 
  _           ignore                 #menu: -
  Space       cycle pause            #menu: Play/Pause
