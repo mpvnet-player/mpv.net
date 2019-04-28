@@ -203,7 +203,7 @@ mpv.net bugs and requests: <https://github.com/stax76/mpv.net/issues>
 - a new icon was designed. [Website](https://mpv-net.github.io/mpv.net-web-site/)
 - all windows (main, conf, input, about, command palette) can now be closed
   by just pressing the Escape key
-- new feature added to open recent files with the context menu. [Default Binding](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt#L33)
+- new feature added to open recent files and URLs with the context menu. [Default Binding](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt#L33)
 
 ### 3.2 (2019-04-27)
 
