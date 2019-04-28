@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="About mpv.net" Height="230" Width="420" FontSize="16" ShowInTaskbar="False"
-        WindowStartupLocation="CenterOwner" ResizeMode="NoResize" PreviewKeyDown="Window_PreviewKeyDown">
+        WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
     <Grid>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock FontSize="48" HorizontalAlignment="Center" Margin="0,0,0,10">mpv.net</TextBlock>

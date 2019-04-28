@@ -240,5 +240,12 @@ namespace mpvnet
         {
             Process.Start("https://github.com/stax76/mpv.net#Support");
         }
+
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            base.OnKeyDown(e);
+            if (e.Key == Key.Escape)
+                Close();
+        }
     }
 }

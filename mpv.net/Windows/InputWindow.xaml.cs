@@ -122,5 +122,12 @@ namespace mpvnet
                 if (MessageBox.Show($"Confirm to delete: {(grid.SelectedItem as CommandItem).Input} ({(grid.SelectedItem as CommandItem).Path})", "Confirm Delete", MessageBoxButton.OKCancel, MessageBoxImage.Question) != MessageBoxResult.OK)
                     e.Handled = true;
         }
+
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            base.OnKeyDown(e);
+            if (e.Key == Key.Escape)
+                Close();
+        }
     }
 }

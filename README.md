@@ -201,6 +201,8 @@ mpv.net bugs and requests: <https://github.com/stax76/mpv.net/issues>
 
 - dark mode support was added to the command palette
 - a new icon was designed. [Website](https://mpv-net.github.io/mpv.net-web-site/)
+- all windows (main, conf, input, about, command palette) can now be closed
+  by just pressing the Escape key
 
 ### 3.2 (2019-04-27)
 

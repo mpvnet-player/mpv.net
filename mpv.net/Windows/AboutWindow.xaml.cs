@@ -12,9 +12,7 @@ namespace mpvnet
             Foreground = WPF.WPF.ThemeBrush;
         }
 
-        private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            Close();
-        }
+        protected override void OnPreviewKeyDown(KeyEventArgs e) => Close();
+        protected override void OnMouseDown(MouseButtonEventArgs e) => Close();
     }
 }
