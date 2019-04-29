@@ -11,18 +11,24 @@ Public Class CSScriptAddon
     Implements IAddon
 
     Sub New()
-        Dim scriptDir = mp.MpvConfFolder + "scripts"
-        If Not Directory.Exists(scriptDir) Then Return
-        Dim csFiles = Directory.GetFiles(scriptDir, "*.cs").ToList
-        csFiles.AddRange(Directory.GetFiles(Application.StartupPath + "\\Scripts", "*.cs"))
-        If csFiles.Count = 0 Then Return
+        Dim scriptFiles As New List(Of String)
+
+        If Directory.Exists(mp.MpvConfFolder + "scripts") Then
+            scriptFiles.AddRange(Directory.GetFiles(mp.MpvConfFolder + "scripts", "*.cs"))
+        End If
+
+        If Directory.Exists(Application.StartupPath + "\scripts") Then
+            scriptFiles.AddRange(Directory.GetFiles(Application.StartupPath + "\scripts", "*.cs"))
+        End If
+
+        If scriptFiles.Count = 0 Then Return
         CSScriptLibrary.CSScript.EvaluatorConfig.Engine = EvaluatorEngine.CodeDom
 
-        For Each i In csFiles
+        For Each i In scriptFiles
             Try
                 CSScriptLibrary.CSScript.Evaluator.LoadCode(File.ReadAllText(i))
             Catch ex As Exception
-                MainForm.Instance.ShowMsgBox(ex.ToString(), MessageBoxIcon.Error)
+                Sys.Msg.ShowException(ex)
             End Try
         Next
     End Sub

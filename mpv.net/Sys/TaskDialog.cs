@@ -9,8 +9,6 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
 
-using Microsoft.VisualBasic.CompilerServices;
-
 namespace Sys
 {
     public class Msg
@@ -44,10 +42,10 @@ namespace Sys
                 }
 
                 td.MainIcon = MsgIcon.Error;
-                td.Footer = "[copymsg Copy Message]";
+                td.Footer = "[Copy Message](copymsg)";
 
                 if (!string.IsNullOrEmpty(Msg.SupportURL))
-                    td.Footer += $"   [{SupportURL} Contact Support]";
+                    td.Footer += $"   [Contact Support]({SupportURL})";
 
                 td.Show();
             }
@@ -63,10 +61,10 @@ namespace Sys
                     td.Content = e.Message;
                     td.MainIcon = MsgIcon.Error;
                     td.ExpandedInformation = e.ToString();
-                    td.Footer = "[copymsg Copy Message]";
+                    td.Footer = "[Copy Message](copymsg)";
 
                     if (!string.IsNullOrEmpty(Msg.SupportURL))
-                        td.Footer += $"   [{SupportURL} Contact Support]";
+                        td.Footer += $"   [Contact Support]({SupportURL})";
 
                     td.Show();
                 }
@@ -244,12 +242,12 @@ namespace Sys
 
         public string Content {
             get => Config.pszContent;
-            set => Config.pszContent = ExpandWikiMarkup(value);
+            set => Config.pszContent = ExpandMarkdownMarkup(value);
         }
 
         public string ExpandedInformation {
             get => Config.pszExpandedInformation;
-            set => Config.pszExpandedInformation = ExpandWikiMarkup(value);
+            set => Config.pszExpandedInformation = ExpandMarkdownMarkup(value);
         }
 
         public string VerificationText {
@@ -264,7 +262,7 @@ namespace Sys
 
         public string Footer {
             get => Config.pszFooter;
-            set => Config.pszFooter = ExpandWikiMarkup(value);
+            set => Config.pszFooter = ExpandMarkdownMarkup(value);
         }
 
         public MsgIcon MainIcon {
@@ -329,16 +327,16 @@ namespace Sys
             Buttons.Add(new TaskDialogNative.TASKDIALOG_BUTTON(n, text));
         }
 
-        public string ExpandWikiMarkup(string value)
+        public string ExpandMarkdownMarkup(string value)
         {
             if (value.Contains("["))
             {
-                Regex regex = new Regex("\\[(.*?) (.+?)\\]");
+                Regex regex = new Regex(@"\[(.+)\]\((.+)\)");
 
                 if (regex.Match(value).Success)
                 {
                     Config.dwFlags |= TaskDialogNative.TASKDIALOG_FLAGS.TDF_ENABLE_HYPERLINKS;
-                    value = regex.Replace(value, "<a href=\"$1\">$2</a>");
+                    value = regex.Replace(value, "<a href=\"$2\">$1</a>");
                 }
             }
             return value;
@@ -398,10 +396,9 @@ namespace Sys
                     break;
                 case 3: //TDN_HYPERLINK_CLICKED
                     string stringUni = Marshal.PtrToStringUni(lParam);
-
                     if (stringUni.StartsWith("mailto") || stringUni.StartsWith("http"))
                         Process.Start(stringUni);
-                    if (Operators.CompareString(stringUni, "copymsg", false) == 0)
+                    if (stringUni == "copymsg")
                     {
                         Thread thread = new Thread((ThreadStart)(() => {
                             Clipboard.SetText(MainInstruction + "\r\n\r\n" + Content + "\r\n\r\n" + ExpandedInformation);

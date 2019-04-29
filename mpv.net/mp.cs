@@ -85,7 +85,7 @@ namespace mpvnet
                         using (TaskDialog<string> td = new TaskDialog<string>())
                         {
                             td.MainInstruction = "Choose a settings folder.";
-                            td.Content = "[https://mpv.io/manual/master/#files-on-windows MPV documentation about files on Windows.]";
+                            td.Content = "[MPV documentation about files on Windows.](https://mpv.io/manual/master/#files-on-windows)";
                             td.AddCommandLink("appdata", appdataFolder, appdataFolder);
                             td.AddCommandLink("portable", portableFolder, portableFolder);
                             td.AllowCancel = false;
@@ -278,7 +278,7 @@ namespace mpvnet
                                 {
                                     List<string> names = mpvnet.Command.Commands.Select((item) => item.Name).ToList();
                                     names.Sort();
-                                    Msg.ShowError($"No command '{args[1]}' found.", $"Available commands are:\n\n{string.Join("\n", names)}\n\nHow to bind these commands can be seen in the [https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt default input bindings and menu definition].");
+                                    Msg.ShowError($"No command '{args[1]}' found.", $"Available commands are:\n\n{string.Join("\n", names)}\n\nHow to bind these commands can be seen in the [default input bindings and menu definition](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt).");
                                 }
                             }
                             ClientMessage?.Invoke(args);

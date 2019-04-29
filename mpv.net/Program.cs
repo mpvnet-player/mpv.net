@@ -19,16 +19,15 @@ namespace mpvnet
                     if (args[2] == "unregister") FileAssociation.Unregister();
                     return;
                 }
+
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                Application.Run(new MainForm());
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString(), Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
             }
-
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
         }
     }
 }

@@ -204,6 +204,8 @@ mpv.net bugs and requests: <https://github.com/stax76/mpv.net/issues>
 - all windows (main, conf, input, about, command palette) can now be closed
   by just pressing the Escape key
 - new feature added to open recent files and URLs with the context menu. [Default Binding](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt#L33)
+- the info command now works also for URLs
+- fix for folder \<startup\>\\scripts not loading C# scripts
 
 ### 3.2 (2019-04-27)
 
