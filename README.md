@@ -122,9 +122,7 @@ Scripting is supported via Python, C#, Lua, JavaScript and PowerShell
 
 Add-ons have to be located at:
 
-C:\Users\\<user\>\AppData\Roaming\mpv\Addons\ExampleAddon\ExampleAddon.dll
-
-\<startup\>\Addons\ExampleAddon\ExampleAddon.dll
+C:\Users\%username%\AppData\Roaming\mpv\Addons\ExampleAddon\ExampleAddon.dll
 
 \<startup\>\portable_config\Addons\ExampleAddon\ExampleAddon.dll
 
@@ -204,8 +202,8 @@ mpv.net bugs and requests: <https://github.com/stax76/mpv.net/issues>
 - all windows (main, conf, input, about, command palette) can now be closed
   by just pressing the Escape key
 - new feature added to open recent files and URLs with the context menu. [Default Binding](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt#L33)
-- the info command now works also for URLs
-- fix for folder \<startup\>\\scripts not loading C# scripts
+- the info command (i key) now works also for URLs
+- CSScriptAddon add-on didn't load cs scripts from \<startup\>\\scripts and it didn't use the task dialog api to show errors
 
 ### 3.2 (2019-04-27)
 

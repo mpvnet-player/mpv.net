@@ -24,30 +24,38 @@ namespace Sys
 
         public static void ShowError(string mainInstruction, string content = null)
         {
-            using (TaskDialog<string> td = new TaskDialog<string>())
+            try
             {
-                td.AllowCancel = false;
-
-                if (string.IsNullOrEmpty(content))
+                using (TaskDialog<string> td = new TaskDialog<string>())
                 {
-                    if (mainInstruction.Length < 80)
-                        td.MainInstruction = mainInstruction;
+                    td.AllowCancel = false;
+
+                    if (string.IsNullOrEmpty(content))
+                    {
+                        if (mainInstruction.Length < 80)
+                            td.MainInstruction = mainInstruction;
+                        else
+                            td.Content = mainInstruction;
+                    }
                     else
-                        td.Content = mainInstruction;
+                    {
+                        td.MainInstruction = mainInstruction;
+                        td.Content = content;
+                    }
+
+                    td.MainIcon = MsgIcon.Error;
+                    td.Footer = "[Copy Message](copymsg)";
+
+                    if (!string.IsNullOrEmpty(Msg.SupportURL))
+                        td.Footer += $"   [Contact Support]({SupportURL})";
+
+                    td.Show();
                 }
-                else
-                {
-                    td.MainInstruction = mainInstruction;
-                    td.Content = content;
-                }
-
-                td.MainIcon = MsgIcon.Error;
-                td.Footer = "[Copy Message](copymsg)";
-
-                if (!string.IsNullOrEmpty(Msg.SupportURL))
-                    td.Footer += $"   [Contact Support]({SupportURL})";
-
-                td.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.GetType().Name + "\n\n" + ex.Message + "\n\n" + ex.ToString(),
+                    Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -71,7 +79,7 @@ namespace Sys
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.GetType().Name + "\n\n" + e.Message + "\n\n" + e.ToString(),
+                MessageBox.Show(ex.GetType().Name + "\n\n" + ex.Message + "\n\n" + ex.ToString(),
                     Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -108,32 +116,40 @@ namespace Sys
                                      MsgButtons buttons,
                                      MsgResult defaultButton = MsgResult.None)
         {
-            using (TaskDialog<MsgResult> td = new TaskDialog<MsgResult>())
+            try
             {
-                td.AllowCancel = false;
-                td.DefaultButton = defaultButton;
-                td.MainIcon = icon;
+                using (TaskDialog<MsgResult> td = new TaskDialog<MsgResult>())
+                {
+                    td.AllowCancel = false;
+                    td.DefaultButton = defaultButton;
+                    td.MainIcon = icon;
 
-                if (content == null)
-                {
-                    if (mainInstruction.Length < 80)
-                        td.MainInstruction = mainInstruction;
+                    if (content == null)
+                    {
+                        if (mainInstruction.Length < 80)
+                            td.MainInstruction = mainInstruction;
+                        else
+                            td.Content = mainInstruction;
+                    }
                     else
-                        td.Content = mainInstruction;
+                    {
+                        td.MainInstruction = mainInstruction;
+                        td.Content = content;
+                    }
+                    if (buttons == MsgButtons.OkCancel)
+                    {
+                        td.AddButton("OK", MsgResult.OK);
+                        td.AddButton("Cancel", MsgResult.Cancel);
+                    }
+                    else
+                        td.CommonButtons = buttons;
+                    return td.Show();
                 }
-                else
-                {
-                    td.MainInstruction = mainInstruction;
-                    td.Content = content;
-                }
-                if (buttons == MsgButtons.OkCancel)
-                {
-                    td.AddButton("OK", MsgResult.OK);
-                    td.AddButton("Cancel", MsgResult.Cancel);
-                }
-                else
-                    td.CommonButtons = buttons;
-                return td.Show();
+            }
+            catch (Exception ex)
+            {
+                return (MsgResult)MessageBox.Show(ex.GetType().Name + "\n\n" + ex.Message + "\n\n" + ex.ToString(),
+                    Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

@@ -117,14 +117,14 @@ namespace mpvnet
             try
             {
                 string performer, title, album, genre, date, duration, text = "";
-                int fileSize = 0;
+                long fileSize = 0;
                 string path = mp.get_property_string("path");
                 int width = mp.get_property_int("video-params/w");
                 int height = mp.get_property_int("video-params/h");
 
                 if (File.Exists(path))
                 {
-                    fileSize = (int)(new FileInfo(path).Length);
+                    fileSize = new FileInfo(path).Length;
 
                     if (FileAssociation.AudioTypes.Contains(Path.GetExtension(path).ToLower().TrimStart('.')))
                     {
@@ -162,7 +162,7 @@ namespace mpvnet
                     $"{width} x {height}\n";
 
                 if (fileSize > 0)
-                    text += Convert.ToInt32(fileSize / 1024 / 1024).ToString() + " MB\n";
+                    text += Convert.ToInt32(fileSize / 1024.0 / 1024.0).ToString() + " MB\n";
 
                 text += $"{videoCodec}\n";
 

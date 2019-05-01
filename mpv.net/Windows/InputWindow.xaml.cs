@@ -7,6 +7,8 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 
+using Sys;
+
 namespace mpvnet
 {
     public partial class InputWindow : Window
@@ -32,7 +34,7 @@ namespace mpvnet
             CollectionView.Refresh();
 
             if (SearchControl.SearchTextBox.Text == "?")
-                MessageBox.Show("Filtering works by searching in the Input, Menu and Command but it's possible to reduce the filter scope to either of Input, Menu or Command by prefixing as follows:\n\ni <input search>\ni: <input search>\n\nm <menu search>\nm: <menu search>\n\nc <command search>\nc: <command search>\n\nIf only one character is entered the search will be performed only in the input.", "Filtering", MessageBoxButton.OK, MessageBoxImage.Information);
+                Msg.Show("Filtering works by searching in the Input, Menu and Command but it's possible to reduce the filter scope to either of Input, Menu or Command by prefixing as follows:\n\ni <input search>\ni: <input search>\n\nm <menu search>\nm: <menu search>\n\nc <command search>\nc: <command search>\n\nIf only one character is entered the search will be performed only in the input.", "Filtering");
         }
 
         bool Filter(CommandItem item)
@@ -77,7 +79,7 @@ namespace mpvnet
 
             foreach (CommandItem i in CommandItem.Items)
                 if (items.ContainsKey(i.Input) && i.Input != "")
-                    MessageBox.Show($"Duplicate found:\n\n{i.Input}: {i.Path}\n\n{items[i.Input].Input}: {items[i.Input].Path}\n\nPlease note that you can chain multiple commands in the same line by using a semicolon as separator.", "Duplicate Found", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    Msg.Show($"Duplicate found:\n\n{i.Input}: {i.Path}\n\n{items[i.Input].Input}: {items[i.Input].Path}\n\nPlease note that you can chain multiple commands in the same line by using a semicolon as separator.", "Duplicate Found");
                 else
                     items[i.Input] = i;
         }
@@ -110,8 +112,7 @@ namespace mpvnet
         {
             if (InitialInputConfContent == GetInputConfContent()) return;
             File.WriteAllText(mp.InputConfPath, GetInputConfContent());
-            MessageBox.Show("Changes will be available on next mpv.net startup.",
-                Title, MessageBoxButton.OK, MessageBoxImage.Information);
+            Msg.Show("Changes will be available on next mpv.net startup.");
         }
 
         private void DataGrid_PreviewCanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -119,7 +120,7 @@ namespace mpvnet
             DataGrid grid = (DataGrid)sender;
 
             if (e.Command == DataGrid.DeleteCommand)
-                if (MessageBox.Show($"Confirm to delete: {(grid.SelectedItem as CommandItem).Input} ({(grid.SelectedItem as CommandItem).Path})", "Confirm Delete", MessageBoxButton.OKCancel, MessageBoxImage.Question) != MessageBoxResult.OK)
+                if (Msg.ShowQuestion($"Confirm to delete: {(grid.SelectedItem as CommandItem).Input} ({(grid.SelectedItem as CommandItem).Path})") != MsgResult.OK)
                     e.Handled = true;
         }
 

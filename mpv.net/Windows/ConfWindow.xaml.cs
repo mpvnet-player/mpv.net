@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 
 using DynamicGUI;
-using Microsoft.Win32;
+using Sys;
 
 namespace mpvnet
 {
@@ -154,8 +153,7 @@ namespace mpvnet
             WriteToDisk(mp.MpvConfPath, MpvConf, MpvSettingsDefinitions);
             WriteToDisk(mp.MpvNetConfPath, MpvNetConf, MpvNetSettingsDefinitions);
 
-            MessageBox.Show("Changes will be available on next mpv.net startup.",
-                Title, MessageBoxButton.OK, MessageBoxImage.Information);
+            Msg.Show("Changes will be available on next mpv.net startup.");
         }
 
         void WriteToDisk(string filePath,

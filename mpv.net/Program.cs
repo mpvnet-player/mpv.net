@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
 
+using Sys;
+
 namespace mpvnet
 {
     static class Program
@@ -26,7 +28,7 @@ namespace mpvnet
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString(), Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Msg.ShowException(ex);
             }
         }
     }
