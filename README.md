@@ -126,16 +126,10 @@ Scripting is supported via Python, C#, Lua, JavaScript and PowerShell
 
 ### Add-ons
 
-Add-ons have to be located at:
+Add-ons are located in the config directory:
 
 ```Text
 C:\Users\%username%\AppData\Roaming\mpv\Addons\ExampleAddon\ExampleAddon.dll
-```
-
-or in a portable setup at:
-
-```Text
-<startup>\portable_config\Addons\ExampleAddon\ExampleAddon.dll
 ```
 
 The add-on filename must end with 'Addon.dll'.

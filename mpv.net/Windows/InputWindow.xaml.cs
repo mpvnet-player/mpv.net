@@ -6,7 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-
+using System.Windows.Media;
 using Sys;
 
 namespace mpvnet
@@ -27,6 +27,12 @@ namespace mpvnet
             var yourCostumFilter = new Predicate<object>(item => Filter((CommandItem)item));
             CollectionView.Filter = yourCostumFilter;
             DataGrid.ItemsSource = CollectionView;
+
+            if (App.IsDarkMode)
+            {
+                Foreground = Brushes.White;
+                Background = Brushes.Black;
+            }
         }
 
         private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
