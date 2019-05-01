@@ -88,7 +88,7 @@ Just press Ctrl+Shift+P and find it easily in the searchable command palette.
 
 ### Context Menu
 
-The context menu can be customized via input.conf file located at:
+The context menu can be customized via input.conf file located in the config directory:
 
 ```Text
 C:\Users\%username%\AppData\Roaming\mpv\input.conf
