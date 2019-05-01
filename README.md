@@ -2,27 +2,27 @@
 
 mpv.net is a modern media player for Windows that looks and works just like [mpv](https://mpv.io).
 
-#### Based on libmpv
+## Based on libmpv
 
 mpv.net is based on libmpv which offers a straightforward C API that was designed from the ground up to make mpv usable as a library and facilitate easy integration into other applications.
 
-#### CLI options
+## CLI options
 
 mpv.net has the same [CLI options](https://mpv.io/manual/master/#options) as mpv.
 
-#### High quality video output
+## High quality video output
 
 mpv/libmpv has an OpenGL based video output that is capable of many features loved by videophiles, such as video scaling with popular high quality algorithms, color management, frame timing, interpolation, HDR, and more.
 
-#### On Screen Controller
+## On Screen Controller
 
 mpv.net uses the OSC of mpv/libmpv offering play controls with a modern flat design.
 
-#### GPU video decoding
+## GPU video decoding
 
 mpv/libmpv leverages the FFmpeg hwaccel APIs to support DXVA2 video decoding acceleration.
 
-#### Active development
+## Active development
 
 mpv.net is under active development. Want a feature? Post a [patch](https://github.com/stax76/mpv.net/pulls) or [request it](https://github.com/stax76/mpv.net/issues)!
 
@@ -57,41 +57,43 @@ Table of contents
 
 ### Screenshots
 
-#### Main Window
+#### Main Window Screenshot
 
-![](https://raw.githubusercontent.com/stax76/mpv.net/master/img/Main.png)
+![Main Window](https://raw.githubusercontent.com/stax76/mpv.net/master/img/Main.png)
 
-#### Context Menu
+#### Context Menu Screenshot
 
 Context menu defined in the input.conf file with dark mode support.
 
-![](https://raw.githubusercontent.com/stax76/mpv.net/master/img/Menu.png)
+![Context Menu](https://raw.githubusercontent.com/stax76/mpv.net/master/img/Menu.png)
 
-#### Config Editor
+#### Config Editor Screenshot
 
 A searchable config editor as alternative to edit the mpv.conf file manually.
 
 ![](https://raw.githubusercontent.com/stax76/mpv.net/master/img/ConfEditor.png)
 
-#### Input Editor
+#### Input Editor Screenshot
 
 A searchable key and mouse binding editor.
 
-![](https://raw.githubusercontent.com/stax76/mpv.net/master/img/InputEditor.png)
+![Input Editor](https://raw.githubusercontent.com/stax76/mpv.net/master/img/InputEditor.png)
 
-#### Command Palette
+#### Command Palette Screenshot
 
 Forgot where a command in the menu is located or what shortcut key it has?
 Just press Ctrl+Shift+P and find it easily in the searchable command palette.
 
-![](https://raw.githubusercontent.com/stax76/mpv.net/master/img/CommandPalette.png)
+![Command Palette](https://raw.githubusercontent.com/stax76/mpv.net/master/img/CommandPalette.png)
 
 ### Context Menu
 
 The context menu can be customized via input.conf file located at:
-```
+
+```Text
 C:\Users\%username%\AppData\Roaming\mpv\input.conf
 ```
+
 if it's missing mpv.net generates it with the following defaults:
 
 <https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt>
@@ -101,13 +103,17 @@ input.conf defines mpv's key and mouse bindings and mpv.net uses comments to def
 ### Settings
 
 mpv.net shares the settings with mpv, settings can be edited in a settings dialog or in a config file called mpv.conf located at:
-```
+
+```Text
 C:\Users\%username%\AppData\Roaming\mpv\mpv.conf
 ```
-or alternativly at:
-```
+
+or in a portable setup at:
+
+```Text
 <startup>\portable_config\mpv.conf
 ```
+
 if it's missing mpv.net generates it with the following defaults:
 
 <https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/mpvConf.txt>
@@ -122,9 +128,15 @@ Scripting is supported via Python, C#, Lua, JavaScript and PowerShell
 
 Add-ons have to be located at:
 
+```Text
 C:\Users\%username%\AppData\Roaming\mpv\Addons\ExampleAddon\ExampleAddon.dll
+```
 
-\<startup\>\portable_config\Addons\ExampleAddon\ExampleAddon.dll
+or in a portable setup at:
+
+```Text
+<startup>\portable_config\Addons\ExampleAddon\ExampleAddon.dll
+```
 
 The add-on filename must end with 'Addon.dll'.
 

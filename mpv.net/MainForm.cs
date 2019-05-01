@@ -41,13 +41,6 @@ namespace mpvnet
 
             try
             {
-                object recent = RegistryHelp.GetObject("HKCU\\Software\\" + Application.ProductName, "Recent");
-
-                if (recent is string[])
-                    RecentFiles = new List<string>((string[])recent);
-                else
-                    RecentFiles = new List<string>();
-
                 AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
                 Application.ThreadException += Application_ThreadException;
                 Msg.SupportURL = "https://github.com/stax76/mpv.net#support";
@@ -58,6 +51,12 @@ namespace mpvnet
                 MinimumSize = new Size(FontHeight * 16, FontHeight * 9);
                 Text += " " + Application.ProductVersion;
 
+                object recent = RegistryHelp.GetObject("HKCU\\Software\\" + Application.ProductName, "Recent");
+
+                if (recent is string[] r)
+                    RecentFiles = new List<string>(r);
+                else
+                    RecentFiles = new List<string>();
 
                 foreach (var i in mp.mpvConf)
                     ProcessMpvProperty(i.Key, i.Value);
