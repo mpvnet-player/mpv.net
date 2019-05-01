@@ -2,27 +2,27 @@
 
 mpv.net is a modern media player for Windows that looks and works just like [mpv](https://mpv.io).
 
-## Based on libmpv
+#### Based on libmpv
 
 mpv.net is based on libmpv which offers a straightforward C API that was designed from the ground up to make mpv usable as a library and facilitate easy integration into other applications.
 
-## CLI options
+#### CLI options
 
 mpv.net has the same [CLI options](https://mpv.io/manual/master/#options) as mpv.
 
-## High quality video output
+#### High quality video output
 
 mpv/libmpv has an OpenGL based video output that is capable of many features loved by videophiles, such as video scaling with popular high quality algorithms, color management, frame timing, interpolation, HDR, and more.
 
-## On Screen Controller
+#### On Screen Controller
 
 mpv.net uses the OSC of mpv/libmpv offering play controls with a modern flat design.
 
-## GPU video decoding
+#### GPU video decoding
 
 mpv/libmpv leverages the FFmpeg hwaccel APIs to support DXVA2 video decoding acceleration.
 
-## Active development
+#### Active development
 
 mpv.net is under active development. Want a feature? Post a [patch](https://github.com/stax76/mpv.net/pulls) or [request it](https://github.com/stax76/mpv.net/issues)!
 
