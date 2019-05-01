@@ -102,7 +102,7 @@ input.conf defines mpv's key and mouse bindings and mpv.net uses comments to def
 
 ### Settings
 
-mpv.net shares the settings with mpv, settings can be edited in a settings dialog or in a config file called mpv.conf located at:
+mpv.net shares the settings with mpv, settings can be edited in a settings dialog or in a config file called mpv.conf located in the config directory:
 
 ```Text
 C:\Users\%username%\AppData\Roaming\mpv\mpv.conf
