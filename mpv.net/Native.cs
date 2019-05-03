@@ -24,11 +24,22 @@ namespace mpvnet
         [DllImport("user32.dll")]
         public static extern bool AdjustWindowRect(ref RECT lpRect, uint dwStyle, bool bMenu);
 
-        [DllImport("user32.dll")]
-        public static extern IntPtr GetWindowLongPtrW(IntPtr hWnd, int nIndex);
-
         [DllImport("user32.dll", SetLastError = true)]
         public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, int uFlags);
+
+        [DllImport("user32.dll", EntryPoint = "GetWindowLong")]
+        private static extern IntPtr GetWindowLong32(IntPtr hWnd, int nIndex);
+
+        [DllImport("user32.dll", EntryPoint = "GetWindowLongPtr")]
+        private static extern IntPtr GetWindowLong64(IntPtr hWnd, int nIndex);
+
+        public static IntPtr GetWindowLongPtr(IntPtr hWnd, int nIndex)
+        {
+            if (IntPtr.Size == 8)
+                return GetWindowLong64(hWnd, nIndex);
+            else
+                return GetWindowLong32(hWnd, nIndex);
+        }
 
         [StructLayout(LayoutKind.Sequential)]
         public struct RECT

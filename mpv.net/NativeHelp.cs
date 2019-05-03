@@ -32,7 +32,7 @@ namespace mpvnet
 
         public static void AddWindowBorders(IntPtr hwnd, ref Native.RECT rc)
         {
-            Native.AdjustWindowRect(ref rc, (uint)Native.GetWindowLongPtrW(hwnd, -16 /* GWL_STYLE */), false);
+            Native.AdjustWindowRect(ref rc, (uint)Native.GetWindowLongPtr(hwnd, -16 /* GWL_STYLE */), false);
         }
     }
 }

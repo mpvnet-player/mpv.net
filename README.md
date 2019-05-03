@@ -201,9 +201,11 @@ mpv.net bugs and requests: <https://github.com/stax76/mpv.net/issues>
 
 ### Changelog
 
-### 3.4 (2019-??-??)
+### 3.4 (2019-05-03)
 
-- new feature added to manage file associations, can be found in the menu at: Tools > Manage...
+- new feature added to manage file associations from within the app. It can be found in the menu at: Tools > Manage... [Default Binding](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt#L149)
+- new zip download option added
+- new x86 download option added
 
 ### 3.3 (2019-05-01)
 
@@ -235,46 +237,3 @@ mpv.net bugs and requests: <https://github.com/stax76/mpv.net/issues>
 - the input editor don't show confusing menu separators any longer. [Screenshot](https://github.com/stax76/mpv.net#input-editor)
 - new Command Palette feature added. [Screenshot](https://github.com/stax76/mpv.net#command-palette), [Default input binding](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt#L141)
 - the history feature had a bug causing files to be logged more than once
-
-### 3.1 (2019-04-23)
-
-- the Tracks and Chapters menu are now only added if default bindings exist and
-  it's now possible to move the chapters menu to the top level by editing input.conf
-- mpvnet supports now like mpv a portable settings directory. If a directory named portable_config
-  next to the mpvnet.exe exists, all config will be loaded and written in this directory.
-- there is now a portable download in 7zip format.
-
-### 3.0 (2019-04-20)
-
-- the history feature logs now only files that were opened longer than 90 seconds
-- the default input command for cycling the audio tracks was replaced with an
-  mpv.net command that shows detailed track info and has no 'no audio' track. [Default binding](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt#L89).
-- new website at <https://mpv-net.github.io/mpv.net-web-site/>
-- the Tracks menu supports now MKV edition selection. [Default binding](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt#L106).
-- the Navigate menu supports now chapter selection. [Default binding](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt#L57).
-- opening the context menu was crashing if the default binding for Tracks was missing
-
-### 2.9 (2019-04-16)
-
-- clicking the right top corner in full screen mode
-  closes the player but it did not work on all displays
-- the info display was changed to display the filename on top
-  so it's not displayed in the middle of the screen
-- on start up of the config editor all text is now selected in the
-  search text box so it's ready for a new search to be typed
-- the config editor was changed to write the settings to disk
-  only if the settings were actually modified, also the message
-  that says that the settings will be available on next start
-  is now only shown if the settings were actually modified.
-- there was an instance in the context menu where the sub menu
-  arrow was overlapping with the text
-- in the input editor when only one character is entered in the
-  search text box the search is performed only in the input and
-  not in the command or menu
-- in the input editor the routine that generates the input string
-  was completely rewritten because it was adding Shift where it
-  wasn't necessary (it took a huge amount of time to implement)
-- the context menu has a new track menu where the active track
-  can be seen and selected, it shows video, audio and subtitle
-  tracks with various metadata. [Menu default definition](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt#L104).
-  The screenshots were updated showing the [new track menu](https://github.com/stax76/mpv.net#screenshots).

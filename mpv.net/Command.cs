@@ -46,14 +46,9 @@ namespace mpvnet
         public static void open_files(string[] args)
         {
             MainForm.Instance.Invoke(new Action(() => {
-                using (var d = new OpenFileDialog())
-                {
-                    d.Multiselect = true;
-                    d.Filter = Sys.GetFilter();
-
+                using (var d = new OpenFileDialog() { Multiselect = true })
                     if (d.ShowDialog() == DialogResult.OK)
                         mp.LoadFiles(d.FileNames);
-                }
             }));
         }
 
@@ -126,7 +121,7 @@ namespace mpvnet
                 {
                     fileSize = new FileInfo(path).Length;
 
-                    if (FileAssociation.AudioTypes.Contains(Path.GetExtension(path).ToLower().TrimStart('.')))
+                    if (App.AudioTypes.Contains(Path.GetExtension(path).ToLower().TrimStart('.')))
                     {
                         using (MediaInfo mediaInfo = new MediaInfo(path))
                         {
@@ -245,17 +240,27 @@ namespace mpvnet
             using (var td = new TaskDialog<string>())
             {
                 td.MainInstruction = "Choose an option.";
+                td.MainIcon = MsgIcon.Shield;
 
                 td.AddCommandLink("Register video file extensions", "video");
                 td.AddCommandLink("Register audio file extensions", "audio");
                 td.AddCommandLink("Unregister file extensions",     "unreg");
 
-                using (var p = new Process())
+                string result = td.Show();
+
+                if (!string.IsNullOrEmpty(result))
                 {
-                    p.StartInfo.FileName = Application.ExecutablePath;
-                    p.StartInfo.Arguments = "--reg-file-assoc " + td.Show();
-                    p.StartInfo.Verb = "runas";
-                    p.Start();
+                    using (var proc = new Process())
+                    {
+                        proc.StartInfo.FileName = Application.ExecutablePath;
+                        proc.StartInfo.Arguments = "--reg-file-assoc " + result;
+                        proc.StartInfo.Verb = "runas";
+                        try {
+                            proc.Start();
+                        }
+                        catch (Exception)
+                        { }
+                    }
                 }
             }
         }

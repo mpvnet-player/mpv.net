@@ -1,18 +1,30 @@
 #define MyAppName "mpv.net"
-#define MyAppVersion GetFileVersion("mpv.net\bin\mpvnet.exe")
 #define MyAppExeName "mpvnet.exe"
-#define MyAppSourceDir "mpv.net\bin"
+
+#ifndef arch
+  #define arch "x64"
+#endif
+
+#if arch == "x64"
+  #define MyAppSourceDir "mpv.net\bin\x64"
+  #define MyAppVersion GetFileVersion("mpv.net\bin\x64\mpvnet.exe")
+#else
+  #define MyAppSourceDir "mpv.net\bin\x86"
+  #define MyAppVersion GetFileVersion("mpv.net\bin\x86\mpvnet.exe")
+#endif
 
 [Setup]
 AppId={{9AA2B100-BEF3-44D0-B819-D8FC3C4D557D}}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 AppPublisher=Frank Skare (stax76)
-ArchitecturesInstallIn64BitMode=x64
+#if arch == "x64"
+  ArchitecturesInstallIn64BitMode=x64
+#endif
 Compression=lzma2
-DefaultDirName={pf}\{#MyAppName}
-OutputBaseFilename=mpvnet-setup-x64-{#MyAppVersion}
-OutputDir=C:\Users\frank\Desktop
+DefaultDirName={commonpf}\{#MyAppName}
+OutputBaseFilename=mpvnet-setup-{#arch}-{#MyAppVersion}
+OutputDir={#GetEnv('USERPROFILE')}\Desktop
 DefaultGroupName={#MyAppName}
 SetupIconFile=mpv.net\mpvnet.ico
 UninstallDisplayIcon={app}\{#MyAppExeName}

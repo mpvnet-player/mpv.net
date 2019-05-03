@@ -17,6 +17,9 @@ namespace mpvnet
 {
     public class App
     {
+        public static string[] VideoTypes { get; } = "mpg avi vob mp4 mkv avs 264 mov wmv flv h264 asf webm mpeg mpv y4m avc hevc 265 h265 m2v m2ts vpy mts webm m4v".Split(" ".ToCharArray());
+        public static string[] AudioTypes { get; } = "mp2 mp3 ac3 wav w64 m4a dts dtsma dtshr dtshd eac3 thd thd+ac3 ogg mka aac opus flac mpa".Split(" ".ToCharArray());
+
         public static bool IsDarkMode { 
             get {
                 string darkMode = MainForm.Instance.MpvNetDarkMode;
@@ -51,12 +54,6 @@ namespace mpvnet
             { }
             return false;
         }
-
-        public static string GetFilter()
-        {
-            string[] fileTypes = "264 265 3gp aac ac3 avc avi avs bmp divx dts dtshd dtshr dtsma eac3 evo flac flv h264 h265 hevc hvc jpg jpeg m2t m2ts m2v m4a m4v mka mkv mlp mov mp2 mp3 mp4 mpa mpeg mpg mpv mts ogg ogm opus pcm png pva raw rmvb thd thd+ac3 true-hd truehd ts vdr vob vpy w64 wav webm wmv y4m".Split(' ');
-            return "*." + String.Join(";*.", fileTypes) + "|*." + String.Join(";*.", fileTypes) + "|All Files|*.*";
-        }
     }
 
     public class StringLogicalComparer : IComparer, IComparer<string>
@@ -76,8 +73,6 @@ namespace mpvnet
         static string ExeFilename = Path.GetFileName(Application.ExecutablePath);
         static string ExeFilenameNoExt = Path.GetFileNameWithoutExtension(Application.ExecutablePath);
         static string[] Types;
-        public static string[] VideoTypes = "mpg avi vob mp4 mkv avs 264 mov wmv flv h264 asf webm mpeg mpv y4m avc hevc 265 h265 m2v m2ts vpy mts webm m4v".Split(" ".ToCharArray());
-        public static string[] AudioTypes = "mp2 mp3 ac3 wav w64 m4a dts dtsma dtshr dtshd eac3 thd thd+ac3 ogg mka aac opus flac mpa".Split(" ".ToCharArray());
 
         public static void Register(string[] types)
         {
@@ -96,9 +91,9 @@ namespace mpvnet
                 RegistryHelp.SetObject($"HKCR\\Applications\\{ExeFilename}\\SupportedTypes", "." + ext, "");
                 RegistryHelp.SetObject($"HKCR\\" + "." + ext, null, ExeFilenameNoExt + "." + ext);
                 RegistryHelp.SetObject($"HKCR\\" + "." + ext + "\\OpenWithProgIDs", ExeFilenameNoExt + "." + ext, "");
-                if (VideoTypes.Contains(ext))
+                if (App.VideoTypes.Contains(ext))
                     RegistryHelp.SetObject($"HKCR\\" + "." + ext, "PerceivedType", "video");
-                if (AudioTypes.Contains(ext))
+                if (App.AudioTypes.Contains(ext))
                     RegistryHelp.SetObject($"HKCR\\" + "." + ext, "PerceivedType", "audio");
                 RegistryHelp.SetObject($"HKCR\\" + ExeFilenameNoExt + "." + ext + "\\shell\\open", null, "Play with " +  Application.ProductName);
                 RegistryHelp.SetObject($"HKCR\\" + ExeFilenameNoExt + "." + ext + "\\shell\\open\\command", null, $"\"{ExePath}\" \"%1\"");
