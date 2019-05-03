@@ -201,6 +201,10 @@ mpv.net bugs and requests: <https://github.com/stax76/mpv.net/issues>
 
 ### Changelog
 
+### 3.4 (2019-??-??)
+
+- new feature added to manage file associations, can be found in the menu at: Tools > Manage...
+
 ### 3.3 (2019-05-01)
 
 - dark mode support was added to the command palette and partly to the input editor

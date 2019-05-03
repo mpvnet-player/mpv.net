@@ -146,6 +146,7 @@
  L      cycle-values loop-file "inf" "no"           #menu: Tools > Toggle infinite file looping
  Ctrl+h cycle-values hwdec "auto" "no"              #menu: Tools > Cycle Hardware Decoding
  _ script-message mpv.net execute-mpv-command       #menu: Tools > Execute mpv command...
+ _ script-message mpv.net manage-file-associations  #menu: Tools > Manage File Associations...
 
  _ script-message mpv.net shell-execute https://mpv.io/manual/stable/ #menu: Help > Show mpv manual
  _ script-message mpv.net shell-execute https://github.com/mpv-player/mpv/blob/master/etc/input.conf #menu: Help > Show mpv default keys

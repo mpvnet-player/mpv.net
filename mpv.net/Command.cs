@@ -239,5 +239,25 @@ namespace mpvnet
                 mp.commandv("show-text", audTracks[aid - 1].Text.Substring(3), "5000");
             }
         }
+
+        public static void manage_file_associations(string[] args)
+        {
+            using (var td = new TaskDialog<string>())
+            {
+                td.MainInstruction = "Choose an option.";
+
+                td.AddCommandLink("Register video file extensions", "video");
+                td.AddCommandLink("Register audio file extensions", "audio");
+                td.AddCommandLink("Unregister file extensions",     "unreg");
+
+                using (var p = new Process())
+                {
+                    p.StartInfo.FileName = Application.ExecutablePath;
+                    p.StartInfo.Arguments = "--reg-file-assoc " + td.Show();
+                    p.StartInfo.Verb = "runas";
+                    p.Start();
+                }
+            }
+        }
     }
 }

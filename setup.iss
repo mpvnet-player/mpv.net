@@ -29,4 +29,4 @@ Filename: "{app}\{#MyAppExeName}"; Description: "Associate video file extensions
 Filename: "{app}\{#MyAppExeName}"; Description: "Associate audio file extensions?"; Flags: postinstall unchecked runascurrentuser runhidden nowait; Parameters: "--reg-file-assoc audio"
 
 [UninstallRun]
-Filename: "{app}\{#MyAppExeName}"; Flags: runascurrentuser runhidden; Parameters: "--reg-file-assoc unregister"
+Filename: "{app}\{#MyAppExeName}"; Flags: runascurrentuser runhidden; Parameters: "--reg-file-assoc unreg"

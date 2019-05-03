@@ -18,7 +18,7 @@ namespace mpvnet
                 {
                     if (args[2] == "audio") FileAssociation.Register(FileAssociation.AudioTypes);
                     if (args[2] == "video") FileAssociation.Register(FileAssociation.VideoTypes);
-                    if (args[2] == "unregister") FileAssociation.Unregister();
+                    if (args[2] == "unreg") FileAssociation.Unregister();
                     return;
                 }
 
