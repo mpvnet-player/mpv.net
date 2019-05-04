@@ -1,6 +1,5 @@
 function CheckExitCode {
-    if ($LastExitCode -gt 0)
-    {
+    if ($LastExitCode -gt 0) {
         Write-Host "`nExit code $LastExitCode was returned.`n" -ForegroundColor Red
         exit
     }

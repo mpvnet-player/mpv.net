@@ -201,6 +201,11 @@ mpv.net bugs and requests: <https://github.com/stax76/mpv.net/issues>
 
 ### Changelog
 
+### 3.5 (2019-??-??)
+
+- when the main windows gets activated and the clipboard content starts with http
+  mpv.net will ask to play the URL, previously this was restricted to YouTube URLs
+
 ### 3.4 (2019-05-03)
 
 - new feature added to manage file associations from within the app. It can be found in the menu at: Tools > Manage... [Default Binding](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt#L149)

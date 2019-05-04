@@ -568,7 +568,7 @@ namespace mpvnet
             BuildMenu();
             ContextMenuStrip = ContextMenu;
             IgnoreDpiChanged = false;
-            CheckYouTube();
+            CheckURL();
         }
 
         protected override void OnFormClosed(FormClosedEventArgs e)
@@ -588,18 +588,18 @@ namespace mpvnet
         protected override void OnActivated(EventArgs e)
         {
             base.OnActivated(e);
-            CheckYouTube();
+            CheckURL();
         }
 
-        void CheckYouTube()
+        void CheckURL()
         {
             string clipboard = Clipboard.GetText();
 
-            if (clipboard.StartsWith("https://www.youtube.com/watch?") && RegistryHelp.GetString("HKCU\\Software\\" + Application.ProductName, "LastYouTubeURL") != clipboard && Visible)
+            if (clipboard.StartsWith("http") && RegistryHelp.GetString("HKCU\\Software\\" + Application.ProductName, "LastURL") != clipboard && Visible)
             {
-                RegistryHelp.SetObject("HKCU\\Software\\" + Application.ProductName, "LastYouTubeURL", clipboard);
+                RegistryHelp.SetObject("HKCU\\Software\\" + Application.ProductName, "LastURL", clipboard);
 
-                if (Msg.ShowQuestion("Play YouTube URL?", clipboard) == MsgResult.OK)
+                if (Msg.ShowQuestion("Play URL?", clipboard) == MsgResult.OK)
                     mp.LoadFiles(clipboard);
             }
         }

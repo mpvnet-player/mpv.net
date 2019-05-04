@@ -23,7 +23,7 @@ AppPublisher=Frank Skare (stax76)
 #endif
 Compression=lzma2
 DefaultDirName={commonpf}\{#MyAppName}
-OutputBaseFilename=mpvnet-setup-{#arch}-{#MyAppVersion}
+OutputBaseFilename=mpv.net-setup-{#arch}-{#MyAppVersion}
 OutputDir={#GetEnv('USERPROFILE')}\Desktop
 DefaultGroupName={#MyAppName}
 SetupIconFile=mpv.net\mpvnet.ico
