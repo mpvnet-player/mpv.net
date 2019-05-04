@@ -120,25 +120,11 @@ if it's missing mpv.net generates it with the following defaults:
 
 ### Scripting
 
-Scripting is supported via Python, C#, Lua, JavaScript and PowerShell
-
 [Scripting wiki page](https://github.com/stax76/mpv.net/wiki/Scripting)
 
 ### Add-ons
 
-Add-ons are located in the config directory:
-
-```Text
-C:\Users\%username%\AppData\Roaming\mpv\Addons\ExampleAddon\ExampleAddon.dll
-```
-
-The add-on filename must end with 'Addon.dll'.
-
-Examples:
-
-[RatingAddon.cs](https://github.com/stax76/mpv.net/blob/master/RatingAddon/RatingAddon.cs)
-
-[CSScriptAddon.vb](https://github.com/stax76/mpv.net/blob/master/CSScriptAddon/CSScriptAddon.vb)
+[Add-on wiki page](https://github.com/stax76/mpv.net/wiki/Add-ons)
 
 ### Architecture
 
