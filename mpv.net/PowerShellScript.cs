@@ -5,8 +5,6 @@ using System.Management.Automation.Runspaces;
 using System.Reflection;
 using System.Threading.Tasks;
 
-using Sys;
-
 namespace mpvnet
 {
     public class PowerShellScript

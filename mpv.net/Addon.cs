@@ -5,8 +5,6 @@ using System.ComponentModel.Composition.Hosting;
 using System.IO;
 using System.Windows.Forms;
 
-using Sys;
-
 namespace mpvnet
 {
     public class Addon

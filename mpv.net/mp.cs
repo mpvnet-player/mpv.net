@@ -11,12 +11,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-using Sys;
-
 using static mpvnet.libmpv;
 using static mpvnet.Native;
-
-using PyRT = IronPython.Runtime;
 
 namespace mpvnet
 {
@@ -345,7 +341,7 @@ namespace mpvnet
 
         static List<PythonEventObject> PythonEventObjects = new List<PythonEventObject>();
 
-        public static void register_event(string name, PyRT.PythonFunction pyFunc)
+        public static void register_event(string name, IronPython.Runtime.PythonFunction pyFunc)
         {
             foreach (var eventInfo in typeof(mp).GetEvents())
             {
@@ -380,7 +376,7 @@ namespace mpvnet
             }
         }
 
-        public static void unregister_event(PyRT.PythonFunction pyFunc)
+        public static void unregister_event(IronPython.Runtime.PythonFunction pyFunc)
         {
             foreach (var eventObjects in PythonEventObjects)
                 if (eventObjects.PythonFunction == pyFunc)

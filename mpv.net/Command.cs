@@ -7,8 +7,6 @@ using System.Reflection;
 using System.Windows.Forms;
 using System.Windows.Interop;
 
-using Sys;
-
 namespace mpvnet
 {
     public class Command

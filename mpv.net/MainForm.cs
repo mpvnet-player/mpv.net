@@ -10,8 +10,6 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Diagnostics;
 
-using Sys;
-
 namespace mpvnet
 {
     public partial class MainForm : Form

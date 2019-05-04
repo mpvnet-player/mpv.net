@@ -28,7 +28,7 @@ Public Class CSScriptAddon
             Try
                 CSScriptLibrary.CSScript.Evaluator.LoadCode(File.ReadAllText(i))
             Catch ex As Exception
-                Sys.Msg.ShowException(ex)
+                Msg.ShowException(ex)
             End Try
         Next
     End Sub

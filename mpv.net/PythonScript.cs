@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Reflection;
 
+using Microsoft.Scripting;
 using Microsoft.Scripting.Hosting;
+
 using IronPython.Hosting;
-using Sys;
-using PyRT = IronPython.Runtime;
+using IronPython.Runtime;
+using IronPython.Runtime.Operations;
 
 namespace mpvnet
 {
@@ -22,35 +24,36 @@ namespace mpvnet
                 scope.ImportModule("clr");
                 engine.Execute("import clr", scope);
                 engine.Execute("clr.AddReference(\"mpvnet\")", scope);
+                engine.Execute("import mpvnet", scope);
                 engine.Execute("from mpvnet import *", scope);
                 engine.Execute(code, scope);
             }
             catch (Exception ex)
             {
-                Msg.ShowException(ex);
+                if (ex is SyntaxErrorException e)
+                    Msg.ShowError($"{e.Line}, {e.Column}: " + ex.Message);
+                else
+                    Msg.ShowException(ex);
             }
         }
     }
 
     public class PythonEventObject
     {
-        public PyRT.PythonFunction PythonFunction { get; set; }
+        public PythonFunction PythonFunction { get; set; }
         public EventInfo EventInfo { get; set; }
         public Delegate Delegate { get; set; }
 
-        public void Invoke()
-        {
-            PyRT.Operations.PythonCalls.Call(PythonFunction);
-        }
+        public void Invoke() => PythonCalls.Call(PythonFunction);
 
         public void InvokeEndFileEventMode(EndFileEventMode arg)
         {
-            PyRT.Operations.PythonCalls.Call(PythonFunction, new[] { arg });
+            PythonCalls.Call(PythonFunction, new[] { arg });
         }
 
         public void InvokeStrings(string[] arg)
         {
-            PyRT.Operations.PythonCalls.Call(PythonFunction, new[] { arg });
+            PythonCalls.Call(PythonFunction, new[] { arg });
         }
     }
 }

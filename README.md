@@ -191,6 +191,7 @@ mpv.net bugs and requests: <https://github.com/stax76/mpv.net/issues>
 
 - when the main windows gets activated and the clipboard content starts with http
   mpv.net will ask to play the URL, previously this was restricted to YouTube URLs
+- Python script errors didn't show line and column
 
 ### 3.4 (2019-05-03)
 

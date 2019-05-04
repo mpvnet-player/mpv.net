@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
 
-using Sys;
-
 namespace mpvnet
 {
     static class Program

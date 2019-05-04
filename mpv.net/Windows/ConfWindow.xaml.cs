@@ -9,7 +9,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 
 using DynamicGUI;
-using Sys;
 
 namespace mpvnet
 {
