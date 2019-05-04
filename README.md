@@ -124,7 +124,7 @@ if it's missing mpv.net generates it with the following defaults:
 
 ### Add-ons
 
-[Add-on wiki page](https://github.com/stax76/mpv.net/wiki/Add-ons)
+[Add-on wiki page](https://github.com/stax76/mpv.net/wiki/Addons)
 
 ### Architecture
 
