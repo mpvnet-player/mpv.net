@@ -112,7 +112,7 @@
  _           ignore                 #menu: Volume > -
  m           cycle mute             #menu: Volume > Mute
 
- [           multiply speed 0.9     #menu: Speed > -10%
+ [           multiply speed 1/1.1   #menu: Speed > -10%
  ]           multiply speed 1.1     #menu: Speed > +10%
  _           ignore                 #menu: Speed > -
  {           multiply speed 0.5     #menu: Speed > Half

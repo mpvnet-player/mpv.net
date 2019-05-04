@@ -148,6 +148,7 @@ Third party components are:
 - [MediaInfo](https://mediaarea.net/en/MediaInfo)
 - [Tommy (TOML parser)](https://github.com/dezhidki/Tommy)
 - [IronPython](https://ironpython.net/)
+- [CS-Script](http://www.csscript.net/)
 
 ### Support
 
