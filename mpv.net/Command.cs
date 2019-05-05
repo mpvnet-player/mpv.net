@@ -26,7 +26,7 @@ namespace mpvnet
                     Type type = typeof(Command);
                     MethodInfo[] methods = type.GetMethods(System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
 
-                    foreach (var i in methods)
+                    foreach (MethodInfo i in methods)
                     {
                         ParameterInfo[] parameters = i.GetParameters();
 

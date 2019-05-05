@@ -21,7 +21,7 @@ namespace mpvnet
     public class mp
     {
         public static event Action VideoSizeChanged;
-                                                              // Lua/JS evens       libmpv events
+                                                              // Lua/JS event       libmpv event
 
                                                               //                    MPV_EVENT_NONE
         public static event Action Shutdown;                  // shutdown           MPV_EVENT_SHUTDOWN
@@ -562,9 +562,9 @@ namespace mpvnet
             {
                 string path = get_property_string("path");
                 if (!Directory.Exists(Path.GetDirectoryName(path))) return;
-                string[] types = "264 265 3gp aac ac3 avc avi avs bmp divx dts dtshd dtshr dtsma eac3 evo flac flv h264 h265 hevc hvc jpg jpeg m2t m2ts m2v m4a m4v mka mkv mlp mov mp2 mp3 mp4 mpa mpeg mpg mpv mts ogg ogm opus pcm png pva raw rmvb thd thd+ac3 true-hd truehd ts vdr vob vpy w64 wav webm wmv y4m".Split(' ');
                 List<string> files = Directory.GetFiles(Path.GetDirectoryName(path)).ToList();
-                files = files.Where((file) => types.Contains(Path.GetExtension(file).TrimStart(".".ToCharArray()).ToLower())).ToList();
+                files = files.Where((file) => App.VideoTypes.Contains(Path.GetExtension(file).TrimStart('.').ToLower()) ||
+                                              App.AudioTypes.Contains(Path.GetExtension(file).TrimStart('.').ToLower())).ToList();
                 files.Sort(new StringLogicalComparer());
                 int index = files.IndexOf(path);
                 files.Remove(path);
@@ -661,7 +661,7 @@ namespace mpvnet
                         Add(track, mi.GetVideo(i, "Forced") == "Yes" ? "Forced" : "");
                         Add(track, mi.GetVideo(i, "Default") == "Yes" ? "Default" : "");
                         Add(track, mi.GetVideo(i, "Title"));
-                        track.Text = "V: " + track.Text.Trim(" ,".ToCharArray());
+                        track.Text = "V: " + track.Text.Trim(' ', ',');
                         track.Type = "v";
                         track.ID = i + 1;
                         MediaTracks.Add(track);
@@ -681,7 +681,7 @@ namespace mpvnet
                         Add(track, mi.GetAudio(i, "Forced") == "Yes" ? "Forced" : "");
                         Add(track, mi.GetAudio(i, "Default") == "Yes" ? "Default" : "");
                         Add(track, mi.GetAudio(i, "Title"));
-                        track.Text = "A: " + track.Text.Trim(" ,".ToCharArray());
+                        track.Text = "A: " + track.Text.Trim(' ', ',');
                         track.Type = "a";
                         track.ID = i + 1;
                         MediaTracks.Add(track);
@@ -698,7 +698,7 @@ namespace mpvnet
                         Add(track, mi.GetText(i, "Forced") == "Yes" ? "Forced" : "");
                         Add(track, mi.GetText(i, "Default") == "Yes" ? "Default" : "");
                         Add(track, mi.GetText(i, "Title"));
-                        track.Text = "S: " + track.Text.Trim(" ,".ToCharArray());
+                        track.Text = "S: " + track.Text.Trim(' ', ',');
                         track.Type = "s";
                         track.ID = i + 1;
                         MediaTracks.Add(track);

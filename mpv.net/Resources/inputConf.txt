@@ -90,8 +90,8 @@
 
  KP7         script-message mpv.net cycle-audio #menu: Audio > Cycle/Next
  _           ignore                 #menu: Audio > -
- KP6         add audio-delay  0.100 #menu: Audio > Delay +0.1
- KP9         add audio-delay -0.100 #menu: Audio > Delay -0.1
+ KP6         add audio-delay  0.1   #menu: Audio > Delay +0.1
+ KP9         add audio-delay -0.1   #menu: Audio > Delay -0.1
 
  KP8         cycle sub              #menu: Subtitle > Cycle/Next
  v           cycle sub-visibility   #menu: Subtitle > Toggle Visibility
@@ -175,3 +175,5 @@
  Wheel_Down  add volume -10
  Prev playlist-prev
  Next playlist-next
+
+ MBTN_LEFT_DBL cycle fullscreen

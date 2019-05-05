@@ -114,7 +114,7 @@ namespace mpvnet
 
                         if (left.StartsWith("#"))
                         {
-                            Comments[filePath][left.TrimStart("#".ToCharArray())] = right;
+                            Comments[filePath][left.TrimStart('#')] = right;
                             continue;
                         }
 

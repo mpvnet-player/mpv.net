@@ -311,12 +311,12 @@ namespace mpvnet
             Dictionary<string, string> commandInputDic = new Dictionary<string, string>();
 
             if (content.Contains("#menu:"))
-                lines = content.Split("\r\n".ToCharArray()).ToList();
+                lines = content.Split('\r', '\n').ToList();
             else
             {
-                lines = Properties.Resources.inputConf.Split("\r\n".ToCharArray()).ToList();
+                lines = Properties.Resources.inputConf.Split('\r', '\n').ToList();
                 
-                foreach (string i in content.Split("\r\n".ToCharArray()))
+                foreach (string i in content.Split('\r', '\n'))
                 {
                     string line = i.Trim();
                     if (line.StartsWith("#") || !line.Contains(" ")) continue;
