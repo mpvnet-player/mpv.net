@@ -198,44 +198,65 @@ namespace mpvnet
             }
         }
 
+        public static ObservableCollection<CommandItem> GetItems(string content)
+        {
+            var items = new ObservableCollection<CommandItem>();
+
+            if (!string.IsNullOrEmpty(content))
+            {
+                foreach (string line in content.Split('\r', '\n'))
+                {
+                    string val = line.Trim();
+                    if (val.StartsWith("#")) continue;
+                    if (!val.Contains(" ")) continue;
+                    CommandItem item = new CommandItem();
+                    item.Input = val.Substring(0, val.IndexOf(" ")).Replace("_", "");
+                    val = val.Substring(val.IndexOf(" ") + 1);
+
+                    if (val.Contains("#menu:"))
+                    {
+                        item.Path = val.Substring(val.IndexOf("#menu:") + 6).Trim();
+                        val = val.Substring(0, val.IndexOf("#menu:"));
+
+                        if (item.Path.Contains(";"))
+                            item.Path = item.Path.Substring(item.Path.IndexOf(";") + 1).Trim();
+                    }
+
+                    item.Command = val.Trim();
+                    if (item.Command == "")
+                        continue;
+                    if (item.Command.ToLower() == "ignore")
+                        item.Command = "";
+                    MigrateCommands(item);
+                    items.Add(item);
+                }
+            }
+            return items;
+        }
+
         private static ObservableCollection<CommandItem> _Items;
 
         public static ObservableCollection<CommandItem> Items {
             get {
                 if (_Items is null)
-                {
-                    _Items = new ObservableCollection<CommandItem>();
-
-                    if (File.Exists(mp.InputConfPath))
-                    {
-                        foreach (string line in File.ReadAllLines(mp.InputConfPath))
-                        {
-                            string val = line.Trim();
-                            if (val.StartsWith("#")) continue;
-                            if (!val.Contains(" ")) continue;
-                            CommandItem item = new CommandItem();
-                            item.Input = val.Substring(0, val.IndexOf(" ")).Replace("_", "");
-                            val = val.Substring(val.IndexOf(" ") + 1);
-
-                            if (val.Contains("#menu:"))
-                            {
-                                item.Path = val.Substring(val.IndexOf("#menu:") + 6).Trim();
-                                val = val.Substring(0, val.IndexOf("#menu:"));
-
-                                if (item.Path.Contains(";"))
-                                    item.Path = item.Path.Substring(item.Path.IndexOf(";") + 1).Trim();
-                            }
-
-                            item.Command = val.Trim();
-                            if (item.Command == "")
-                                continue;
-                            if (item.Command.ToLower() == "ignore")
-                                item.Command = "";
-                            _Items.Add(item);
-                        }
-                    }
-                }
+                    _Items = GetItems(File.ReadAllText(mp.InputConfPath));
                 return _Items;
+            }
+        }
+
+        public static void MigrateCommands(CommandItem item)
+        {
+            switch (item.Command)
+            {
+                case "script-message mpv.net show-prefs":
+                    item.Command = "script-message mpv.net show-conf-editor";
+                    break;
+                case "script-message mpv.net show-keys":
+                    item.Command = "script-message mpv.net show-input-editor";
+                    break;
+                case "script-message mpv.net history":
+                    item.Command = "script-message mpv.net show-history";
+                    break;
             }
         }
     }

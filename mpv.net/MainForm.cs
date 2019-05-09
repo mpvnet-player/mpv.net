@@ -307,55 +307,32 @@ namespace mpvnet
         public void BuildMenu()
         {
             string content = File.ReadAllText(mp.InputConfPath);
-            List<string> lines = null;
-            Dictionary<string, string> commandInputDic = new Dictionary<string, string>();
+            var items = CommandItem.GetItems(content);
 
-            if (content.Contains("#menu:"))
-                lines = content.Split('\r', '\n').ToList();
-            else
+            if (!content.Contains("#menu:"))
             {
-                lines = Properties.Resources.inputConf.Split('\r', '\n').ToList();
-                
-                foreach (string i in content.Split('\r', '\n'))
-                {
-                    string line = i.Trim();
-                    if (line.StartsWith("#") || !line.Contains(" ")) continue;
-                    string input = line.Substring(0, line.IndexOf(" ")).Trim();
-                    string command = line.Substring(line.IndexOf(" ") + 1).Trim();
-                    commandInputDic[command] = input;
-                }
+                var defaultItems = CommandItem.GetItems(Properties.Resources.inputConf);
+                foreach (CommandItem item in items)
+                    foreach (CommandItem defaultItem in defaultItems)
+                        if (item.Command == defaultItem.Command)
+                            defaultItem.Input = item.Input;
+                items = defaultItems;
             }
 
-            foreach (string line in lines)
+            foreach (CommandItem item in items)
             {
-                if (!line.Contains("#menu:")) continue;
-                string left = line.Substring(0, line.IndexOf("#menu:")).Trim();
-                if (left.StartsWith("#")) continue;
-                string command = left.Substring(left.IndexOf(" ") + 1).Trim();
-                string menu = line.Substring(line.IndexOf("#menu:") + "#menu:".Length).Trim();
-                string input = left.Substring(0, left.IndexOf(" "));
-                if (input == "_") input = "";
-                if (menu.Contains(";")) input = menu.Substring(0, menu.IndexOf(";")).Trim();
-                string path = menu.Substring(menu.IndexOf(";") + 1).Trim().Replace("&", "&&");
-                if (path == "" || command == "") continue;
-
-                if (commandInputDic.Count > 0)
-                    if (commandInputDic.ContainsKey(command))
-                        input = commandInputDic[command];
-                    else
-                        input = "";
-
+                if (string.IsNullOrEmpty(item.Path))
+                    continue;
+                string path = item.Path.Replace("&", "&&");
                 MenuItem menuItem = ContextMenu.Add(path, () => {
                     try {
-                        mp.command_string(command);
-                    }
-                    catch (Exception ex) {
+                        mp.command_string(item.Command);
+                    } catch (Exception ex) {
                         Msg.ShowException(ex);
                     }
                 });
-                
                 if (menuItem != null)
-                    menuItem.ShortcutKeyDisplayString = input + "    ";
+                    menuItem.ShortcutKeyDisplayString = item.Input + "    ";
             }
         }
 

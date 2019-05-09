@@ -193,6 +193,9 @@ mpv.net bugs and requests: <https://github.com/stax76/mpv.net/issues>
 - when the main windows gets activated and the clipboard content starts with http
   mpv.net will ask to play the URL, previously this was restricted to YouTube URLs
 - Python script errors show line and column whenever it is supported by IronPython
+- if conf files exist in the startup directory mpv.net will use the startup
+  directory as config directory instead of creating default conf files in appdata
+- renamed commands are handled now by migration code instead of being broken
 
 ### 3.4 (2019-05-03)
 

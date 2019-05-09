@@ -74,9 +74,11 @@ namespace mpvnet
                 {
                     string portableFolder = Application.StartupPath + "\\portable_config\\";
                     string appdataFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\";
+                    string startupFolder = Application.StartupPath + "\\";
 
                     if (!Directory.Exists(appdataFolder) && !Directory.Exists(portableFolder) &&
-                        Sys.IsDirectoryWritable(Application.StartupPath))
+                        Sys.IsDirectoryWritable(Application.StartupPath) &&
+                        !File.Exists(startupFolder + "mpv.conf"))
                     {
                         using (TaskDialog<string> td = new TaskDialog<string>())
                         {
@@ -84,15 +86,17 @@ namespace mpvnet
                             td.Content = "[MPV documentation about files on Windows.](https://mpv.io/manual/master/#files-on-windows)";
                             td.AddCommandLink("appdata", appdataFolder, appdataFolder);
                             td.AddCommandLink("portable", portableFolder, portableFolder);
+                            td.AddCommandLink("startup", startupFolder, startupFolder);
                             td.AllowCancel = false;
                             _MpvConfFolder = td.Show();
                         }
                     }
-                    else
-                        if (Directory.Exists(portableFolder))
-                            _MpvConfFolder = portableFolder;
-                        else
-                            _MpvConfFolder = appdataFolder;
+                    else if (Directory.Exists(portableFolder))
+                        _MpvConfFolder = portableFolder;
+                    else if (Directory.Exists(appdataFolder))
+                        _MpvConfFolder = appdataFolder;
+                    else if (File.Exists(Application.StartupPath + "\\mpv.conf"))
+                        _MpvConfFolder = Application.StartupPath + "\\";
 
                     if (string.IsNullOrEmpty(_MpvConfFolder)) _MpvConfFolder = appdataFolder;
                     if (!Directory.Exists(_MpvConfFolder)) Directory.CreateDirectory(_MpvConfFolder);
