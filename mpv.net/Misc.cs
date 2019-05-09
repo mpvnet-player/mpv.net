@@ -257,6 +257,9 @@ namespace mpvnet
                 case "script-message mpv.net history":
                     item.Command = "script-message mpv.net show-history";
                     break;
+                case "script-message mpv.net open-config-folder":
+                    item.Command = "script-message open-conf-folder";
+                    break;
             }
         }
     }
