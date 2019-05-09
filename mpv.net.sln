@@ -10,9 +10,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RatingAddon", "addons\RatingAddon\RatingAddon.csproj", "{55C88710-539D-4402-84C8-31694841C731}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestAddon", "addons\TestAddon\TestAddon.csproj", "{06F854B0-00F9-4B53-94D9-0BE65A7C55D8}"
-	ProjectSection(ProjectDependencies) = postProject
-		{1751F378-8EDF-4B62-BE6D-304C7C287089} = {1751F378-8EDF-4B62-BE6D-304C7C287089}
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

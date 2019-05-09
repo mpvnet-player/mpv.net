@@ -31,9 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="mpvnet">
-      <HintPath>..\..\mpv.net\bin\x64\mpvnet.exe</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
@@ -47,6 +44,13 @@
   <ItemGroup>
     <Compile Include="TestAddon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\mpv.net\mpv.net.csproj">
+      <Project>{1751f378-8edf-4b62-be6d-304c7c287089}</Project>
+      <Name>mpv.net</Name>
+      <Private>False</Private>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

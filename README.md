@@ -102,21 +102,23 @@ input.conf defines mpv's key and mouse bindings and mpv.net uses comments to def
 
 ### Settings
 
-mpv.net shares the settings with mpv, settings can be edited in a settings dialog or in a config file called mpv.conf located in the config directory:
+mpv.net is able to share the settings with mpv and mpv.net uses the same logic to decide from where the settings are loaded. The default location is:
 
 ```Text
 C:\Users\%username%\AppData\Roaming\mpv\mpv.conf
 ```
 
-or in a portable setup at:
+If a directory named portable_config next to the mpvnet.exe exists, all config will be loaded from this directory only.
 
 ```Text
 <startup>\portable_config\mpv.conf
 ```
 
-if it's missing mpv.net generates it with the following defaults:
+In case there isn't any config folder mpv.net asks where to create it. If no mpv.conf file exists mpv.net generates it with the following defaults:
 
 <https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/mpvConf.txt>
+
+Config files located in the same directory as mpvnet.exe are loaded with lower priority. Some config files are loaded only once, which means that e.g. of 2 input.conf files located in two config directories, only the one from the directory with higher priority will be loaded.
 
 ### Scripting
 
@@ -188,7 +190,7 @@ mpv.net bugs and requests: <https://github.com/stax76/mpv.net/issues>
 
 ### Changelog
 
-### 3.5 (2019-??-??)
+### 3.5 (2019-05-09)
 
 - when the main windows gets activated and the clipboard content starts with http
   mpv.net will ask to play the URL, previously this was restricted to YouTube URLs
