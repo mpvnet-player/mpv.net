@@ -190,6 +190,10 @@ mpv.net bugs and requests: <https://github.com/stax76/mpv.net/issues>
 
 ### Changelog
 
+### 3.6 (2019-??-??)
+
+- playing files from rar archives caused an exception
+
 ### 3.5 (2019-05-09)
 
 - when the main windows gets activated and the clipboard content starts with http

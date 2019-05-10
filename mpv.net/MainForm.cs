@@ -341,7 +341,12 @@ namespace mpvnet
         private void Mp_FileLoaded()
         {
             string path = mp.get_property_string("path");
-            BeginInvoke(new Action(() => { Text = Path.GetFileName(path) + " - mpv.net " + Application.ProductVersion; }));
+            BeginInvoke(new Action(() => {
+                if (File.Exists(path) || path.StartsWith("http"))
+                    Text = Path.GetFileName(path) + " - mpv.net " + Application.ProductVersion;
+                else
+                    Text = "mpv.net " + Application.ProductVersion;
+            }));
             if (RecentFiles.Contains(path)) RecentFiles.Remove(path);
             RecentFiles.Insert(0, path);
             if (RecentFiles.Count > 15) RecentFiles.RemoveAt(15);

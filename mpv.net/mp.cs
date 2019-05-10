@@ -565,17 +565,15 @@ namespace mpvnet
             if (get_property_int("playlist-count") == 1)
             {
                 string path = get_property_string("path");
-                if (!Directory.Exists(Path.GetDirectoryName(path))) return;
+                if (!File.Exists(path)) return;
                 List<string> files = Directory.GetFiles(Path.GetDirectoryName(path)).ToList();
                 files = files.Where((file) => App.VideoTypes.Contains(Path.GetExtension(file).TrimStart('.').ToLower()) ||
                                               App.AudioTypes.Contains(Path.GetExtension(file).TrimStart('.').ToLower())).ToList();
                 files.Sort(new StringLogicalComparer());
                 int index = files.IndexOf(path);
                 files.Remove(path);
-
                 foreach (string i in files)
                     commandv("loadfile", i, "append");
-
                 if (index > 0)
                     commandv("playlist-move", "0", (index + 1).ToString());
             }
