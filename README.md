@@ -193,6 +193,7 @@ mpv.net bugs and requests: <https://github.com/stax76/mpv.net/issues>
 ### 3.6 (2019-??-??)
 
 - playing files from rar archives caused an exception
+- there was a bug that caused underscores beeing removed from input like MBTN_LEFT_DBL
 
 ### 3.5 (2019-05-09)
 

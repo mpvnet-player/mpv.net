@@ -210,14 +210,14 @@ namespace mpvnet
                     if (val.StartsWith("#")) continue;
                     if (!val.Contains(" ")) continue;
                     CommandItem item = new CommandItem();
-                    item.Input = val.Substring(0, val.IndexOf(" ")).Replace("_", "");
+                    item.Input = val.Substring(0, val.IndexOf(" "));
+                    if (item.Input == "_") item.Input = "";
                     val = val.Substring(val.IndexOf(" ") + 1);
 
                     if (val.Contains("#menu:"))
                     {
                         item.Path = val.Substring(val.IndexOf("#menu:") + 6).Trim();
                         val = val.Substring(0, val.IndexOf("#menu:"));
-
                         if (item.Path.Contains(";"))
                             item.Path = item.Path.Substring(item.Path.IndexOf(";") + 1).Trim();
                     }
