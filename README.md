@@ -43,10 +43,10 @@ Table of contents
 
 ### Features
 
-- Customizable context menu defined in the same file as the key bindings ([Screenshot](#context-menu))
+- Customizable context menu defined in the same file as the key bindings ([Screenshot](#context-menu-screenshot))
 - Searchable config dialog ([Screenshot](#config-editor))
 - Searchable input (key/mouse) binding editor ([Screenshot](#input-editor))
-- Searchable command palette to quickly launch commands and look for keys ([Screenshot](#command-palette))
+- Searchable command palette to quickly launch commands and look for keys ([Screenshot](#command-palette-screenshot))
 - Modern UI with dark mode ([Screenshot](#config-editor))
 - Addon/extension API for .NET languages
 - Scripting API for Python, C#, Lua, JavaScript and PowerShell ([wiki](https://github.com/stax76/mpv.net/wiki/Scripting))
@@ -54,7 +54,7 @@ Table of contents
 - Support of the same [CLI options](https://mpv.io/manual/master/#options) as mpv
 - DXVA2 video decoding acceleration
 - OpenGL based video output capable of features loved by videophiles, such as video scaling with popular high quality algorithms, color management, frame timing, interpolation, HDR, and more
-- Search feature powered by [Everything](https://www.voidtools.com) to find and play media ([Screenshot](#media-search))
+- Search feature powered by [Everything](https://www.voidtools.com) to find and play media ([Screenshot](#media-search-screenshot))
 
 ### Screenshots
 
