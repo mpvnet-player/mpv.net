@@ -107,12 +107,14 @@ namespace mpvnet
         private void ListView_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape) Close();
+            if (e.Key == Key.Enter) Execute();
         }
 
         void Execute()
         {
             if (ListView.SelectedItem != null)
                 mp.LoadFiles(ListView.SelectedItem as string);
+            Keyboard.Focus(FilterTextBox);
         }
 
         private void ListView_MouseUp(object sender, MouseButtonEventArgs e)
@@ -148,13 +150,12 @@ namespace mpvnet
                         string ext = Path.GetExtension(buf.ToString()).TrimStart('.').ToLower();
                         if (App.AudioTypes.Contains(ext) || App.VideoTypes.Contains(ext))
                             items.Add(buf.ToString());
-                        if (items.Count > 20) break;
+                        if (items.Count > 100) break;
                     }
                     Application.Current.Dispatcher.Invoke(() => {
                         ListView.ItemsSource = items;
                         SelectFirst();
                     });
-                    throw null;
                 }
                 catch (Exception)
                 {

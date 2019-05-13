@@ -54,6 +54,7 @@ Table of contents
 - Support of the same [CLI options](https://mpv.io/manual/master/#options) as mpv
 - DXVA2 video decoding acceleration
 - OpenGL based video output capable of features loved by videophiles, such as video scaling with popular high quality algorithms, color management, frame timing, interpolation, HDR, and more
+- Search feature powered by [Everything](https://www.voidtools.com) to find and play media
 
 ### Screenshots
 
@@ -196,7 +197,7 @@ mpv.net bugs and requests: <https://github.com/stax76/mpv.net/issues>
 - there was a bug that caused underscores beeing removed from input like MBTN_LEFT_DBL
 - the search clear button in the input editor had a render issue in dark mode
 - new search feature added to search and play media files, requires
-  [Everything](https://www.voidtools.com) to be installed. [Default Binding]()
+  [Everything](https://www.voidtools.com) to be installed. [Default Binding](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt#L29)
 
 ### 3.5 (2019-05-09)
 
