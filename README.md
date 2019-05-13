@@ -54,7 +54,7 @@ Table of contents
 - Support of the same [CLI options](https://mpv.io/manual/master/#options) as mpv
 - DXVA2 video decoding acceleration
 - OpenGL based video output capable of features loved by videophiles, such as video scaling with popular high quality algorithms, color management, frame timing, interpolation, HDR, and more
-- Search feature powered by [Everything](https://www.voidtools.com) to find and play media
+- Search feature powered by [Everything](https://www.voidtools.com) to find and play media ([Screenshot](#media-search))
 
 ### Screenshots
 
