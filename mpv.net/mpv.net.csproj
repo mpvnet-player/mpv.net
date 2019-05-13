@@ -146,6 +146,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Windows\EverythingWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Windows\CommandPaletteWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -191,6 +195,9 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TaskDialog.cs" />
+    <Compile Include="Windows\EverythingWindow.xaml.cs">
+      <DependentUpon>EverythingWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\CommandPaletteWindow.xaml.cs">
       <DependentUpon>CommandPaletteWindow.xaml</DependentUpon>
     </Compile>
@@ -245,7 +252,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\inputConfHeader.txt" />
-    <Content Include="screenshot.jpg" />
     <Content Include="Resources\inputConf.txt" />
   </ItemGroup>
   <ItemGroup>

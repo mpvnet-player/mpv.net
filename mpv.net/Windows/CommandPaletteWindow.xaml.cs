@@ -1,6 +1,8 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.ComponentModel;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;

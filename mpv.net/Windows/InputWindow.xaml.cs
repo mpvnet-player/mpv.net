@@ -30,9 +30,18 @@ namespace mpvnet
             if (App.IsDarkMode)
             {
                 Foreground = Brushes.White;
+                Foreground2 = Brushes.Silver;
                 Background = Brushes.Black;
             }
         }
+
+        public Brush Foreground2 {
+            get { return (Brush)GetValue(Foreground2Property); }
+            set { SetValue(Foreground2Property, value); }
+        }
+
+        public static readonly DependencyProperty Foreground2Property =
+            DependencyProperty.Register("Foreground2", typeof(Brush), typeof(ConfWindow), new PropertyMetadata(Brushes.DarkSlateGray));
 
         private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {

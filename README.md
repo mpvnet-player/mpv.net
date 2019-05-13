@@ -194,6 +194,9 @@ mpv.net bugs and requests: <https://github.com/stax76/mpv.net/issues>
 
 - playing files from rar archives caused an exception
 - there was a bug that caused underscores beeing removed from input like MBTN_LEFT_DBL
+- the search clear button in the input editor had a render issue in dark mode
+- new search feature added to search and play media files, requires
+  [Everything](https://www.voidtools.com) to be installed. [Default Binding]()
 
 ### 3.5 (2019-05-09)
 
