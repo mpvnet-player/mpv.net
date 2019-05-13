@@ -87,6 +87,12 @@ Just press Ctrl+Shift+P and find it easily in the searchable command palette.
 
 ![Command Palette](https://raw.githubusercontent.com/stax76/mpv.net/master/img/CommandPalette.png)
 
+#### Media Search Screenshot
+
+Media search feature powered by [Everything](https://www.voidtools.com) to find and play media
+
+![Media Search](https://raw.githubusercontent.com/stax76/mpv.net/master/img/MediaSearch.png)
+
 ### Context Menu
 
 The context menu can be customized via input.conf file located in the config directory:
