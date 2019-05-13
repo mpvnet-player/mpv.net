@@ -191,7 +191,7 @@ mpv.net bugs and requests: <https://github.com/stax76/mpv.net/issues>
 
 ### Changelog
 
-### 3.6 (2019-??-??)
+### 3.6
 
 - playing files from rar archives caused an exception
 - there was a bug that caused underscores beeing removed from input like MBTN_LEFT_DBL
@@ -199,7 +199,7 @@ mpv.net bugs and requests: <https://github.com/stax76/mpv.net/issues>
 - new search feature added to search and play media files, requires
   [Everything](https://www.voidtools.com) to be installed. [Default Binding](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt#L29)
 
-### 3.5 (2019-05-09)
+### 3.5
 
 - when the main windows gets activated and the clipboard content starts with http
   mpv.net will ask to play the URL, previously this was restricted to YouTube URLs
@@ -208,20 +208,8 @@ mpv.net bugs and requests: <https://github.com/stax76/mpv.net/issues>
   directory as config directory instead of creating default conf files in appdata
 - renamed commands are handled now by migration code instead of being broken
 
-### 3.4 (2019-05-03)
+### 3.4
 
 - new feature added to manage file associations from within the app. It can be found in the menu at: Tools > Manage... [Default Binding](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt#L149)
 - new zip download option added
 - new x86 download option added
-
-### 3.3 (2019-05-01)
-
-- dark mode support was added to the command palette and partly to the input editor
-- a new icon was designed. [Website](https://mpv-net.github.io/mpv.net-web-site/)
-- all windows (main, conf, input, about, command palette) can now be closed
-  by just pressing the Escape key
-- new feature added to open recent files and URLs with the context menu. [Default Binding](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt#L33)
-- the info command (i key) now works also for URLs
-- CSScriptAddon add-on didn't load cs scripts from \<startup\>\\scripts
-- error handling was improved by showing an improved message box that supports a text copy feature, a support link and text heading and text folding
-- libmpv was updated
