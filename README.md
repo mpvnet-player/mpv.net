@@ -197,6 +197,11 @@ mpv.net bugs and requests: <https://github.com/stax76/mpv.net/issues>
 
 ### Changelog
 
+### 3.6.1
+
+- there was a bug causing an exception if both the input editor and config editor
+  is opened, as soon as one is opened, the other can't be opened
+
 ### 3.6
 
 - playing files from rar archives caused an exception

@@ -41,7 +41,7 @@ namespace mpvnet
         }
 
         public static readonly DependencyProperty Foreground2Property =
-            DependencyProperty.Register("Foreground2", typeof(Brush), typeof(ConfWindow), new PropertyMetadata(Brushes.DarkSlateGray));
+            DependencyProperty.Register("Foreground2", typeof(Brush), typeof(InputWindow), new PropertyMetadata(Brushes.DarkSlateGray));
 
         private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
