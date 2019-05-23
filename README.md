@@ -158,6 +158,7 @@ Third party components are:
 - [Tommy (TOML parser)](https://github.com/dezhidki/Tommy)
 - [IronPython](https://ironpython.net/)
 - [CS-Script](http://www.csscript.net/)
+- [Everything](https://www.voidtools.com)
 
 ### Support
 
