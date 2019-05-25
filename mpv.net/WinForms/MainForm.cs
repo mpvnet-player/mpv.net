@@ -548,7 +548,7 @@ namespace mpvnet
             BuildMenu();
             ContextMenuStrip = ContextMenu;
             IgnoreDpiChanged = false;
-            CheckURL();
+            CheckURL();            
         }
 
         protected override void OnFormClosed(FormClosedEventArgs e)

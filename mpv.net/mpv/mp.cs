@@ -149,7 +149,7 @@ namespace mpvnet
         {
             string dummy = MpvConfFolder;
             LoadLibrary("mpv-1.dll");
-            MpvHandle = mpv_create();
+            MpvHandle = mpv_create();            
             set_property_string("input-default-bindings", "yes");
             set_property_string("osc", "yes");
             set_property_string("config", "yes");
