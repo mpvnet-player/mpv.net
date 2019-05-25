@@ -548,7 +548,13 @@ namespace mpvnet
             BuildMenu();
             ContextMenuStrip = ContextMenu;
             IgnoreDpiChanged = false;
-            CheckURL();            
+            CheckURL();
+        }
+
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+            if (mp.IsLogoVisible) mp.ShowLogo();
         }
 
         protected override void OnFormClosed(FormClosedEventArgs e)

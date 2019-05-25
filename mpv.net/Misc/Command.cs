@@ -154,7 +154,8 @@ namespace mpvnet
 
                 TimeSpan position = TimeSpan.FromSeconds(mp.get_property_number("time-pos"));
                 TimeSpan duration2 = TimeSpan.FromSeconds(mp.get_property_number("duration"));
-                string videoCodec = mp.get_property_string("video-format").ToUpper();
+                string videoFormat = mp.get_property_string("video-format").ToUpper();
+                string audioCodec = mp.get_property_string("audio-codec-name").ToUpper();
 
                 text = Path.GetFileName(path) + "\n" +
                     FormatTime(position.TotalMinutes) + ":" +
@@ -166,7 +167,7 @@ namespace mpvnet
                 if (fileSize > 0)
                     text += Convert.ToInt32(fileSize / 1024.0 / 1024.0).ToString() + " MB\n";
 
-                text += $"{videoCodec}\n";
+                text += $"{videoFormat}\n{audioCodec}";
 
                 mp.commandv("show-text", text, "5000");
                 string FormatTime(double value) => ((int)value).ToString("00");

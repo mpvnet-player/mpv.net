@@ -201,6 +201,13 @@ mpv.net bugs and requests: <https://github.com/stax76/mpv.net/issues>
 
 ### Changelog
 
+###
+
+- on the start screen the mpv.net logo is shown instead of the mpv logo
+- everytime only one file is opened mpv.net loads the complete folder
+  in the playlist
+- the info command (i key) shows the audio format
+
 ### 3.7
 
 - new icon design

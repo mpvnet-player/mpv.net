@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -53,6 +55,7 @@ namespace mpvnet
         public static IntPtr MpvHandle { get; set; }
         public static IntPtr MpvWindowHandle { get; set; }
         public static Addon Addon { get; set; }
+        public static bool IsLogoVisible { set; get; }
         public static List<KeyValuePair<string, Action<bool>>> BoolPropChangeActions { get; set; } = new List<KeyValuePair<string, Action<bool>>>();
         public static List<KeyValuePair<string, Action<int>>> IntPropChangeActions { get; set; } = new List<KeyValuePair<string, Action<int>>>();
         public static List<KeyValuePair<string, Action<string>>> StringPropChangeActions { get; set; } = new List<KeyValuePair<string, Action<string>>>();
@@ -157,6 +160,7 @@ namespace mpvnet
             set_property_string("force-window", "yes");
             set_property_string("input-media-keys", "yes");
             mpv_initialize(MpvHandle);
+            ShowLogo();
             ProcessCommandLine();
             Task.Run(() => { LoadScripts(); });
             Task.Run(() => { Addon = new Addon(); });
@@ -226,11 +230,12 @@ namespace mpvnet
                             break;
                         case mpv_event_id.MPV_EVENT_END_FILE:
                             var end_fileData = (mpv_event_end_file)Marshal.PtrToStructure(evt.data, typeof(mpv_event_end_file));
-                            EndFile?.Invoke((EndFileEventMode)end_fileData.reason);
+                            EndFileEventMode reason = (EndFileEventMode)end_fileData.reason;
+                            EndFile?.Invoke(reason);
                             break;
                         case mpv_event_id.MPV_EVENT_FILE_LOADED:
+                            HideLogo();
                             FileLoaded?.Invoke();
-                            LoadFolder();
                             WriteHistory(mp.get_property_string("path"));
                             break;
                         case mpv_event_id.MPV_EVENT_TRACKS_CHANGED:
@@ -241,6 +246,8 @@ namespace mpvnet
                             break;
                         case mpv_event_id.MPV_EVENT_IDLE:
                             Idle?.Invoke();
+                            if (mp.get_property_int("playlist-count") == 0)
+                                ShowLogo();
                             break;
                         case mpv_event_id.MPV_EVENT_PAUSE:
                             Pause?.Invoke();
@@ -340,6 +347,15 @@ namespace mpvnet
                 {
                     Msg.ShowException(ex);
                 }
+            }
+        }
+
+        static void HideLogo()
+        {
+            if (IsLogoVisible)
+            {
+                mp.commandv("overlay-remove", "0");
+                IsLogoVisible = false;
             }
         }
 
@@ -518,12 +534,13 @@ namespace mpvnet
         protected static void ProcessCommandLine()
         {
             var args = Environment.GetCommandLineArgs().Skip(1);
+            List<string> files = new List<string>();
 
             foreach (string i in args)
                 if (!i.StartsWith("--") && File.Exists(i))
-                    mp.commandv("loadfile", i, "append");
+                    files.Add(i);
 
-            mp.set_property_string("playlist-pos", "0");
+            mp.LoadFiles(files.ToArray());
 
             foreach (string i in args)
             {
@@ -543,6 +560,8 @@ namespace mpvnet
 
         public static void LoadFiles(params string[] files)
         {
+            if (files is null || files.Length == 0) return;
+            HideLogo();
             int count = mp.get_property_int("playlist-count");
 
             foreach (string file in files)
@@ -553,18 +572,13 @@ namespace mpvnet
             for (int i = 0; i < count; i++)
                 mp.commandv("playlist-remove", "0");
 
-            mp.LoadFolder();
+            mp.LoadFolder(files[0]);
         }
 
-        static bool WasFolderLoaded;
-
-        static void LoadFolder()
+        static void LoadFolder(string path)
         {
-            if (WasFolderLoaded) return;
-
             if (get_property_int("playlist-count") == 1)
             {
-                string path = get_property_string("path");
                 if (!File.Exists(path)) return;
                 List<string> files = Directory.GetFiles(Path.GetDirectoryName(path)).ToList();
                 files = files.Where((file) => App.VideoTypes.Contains(Path.GetExtension(file).TrimStart('.').ToLower()) ||
@@ -577,8 +591,6 @@ namespace mpvnet
                 if (index > 0)
                     commandv("playlist-move", "0", (index + 1).ToString());
             }
-
-            WasFolderLoaded = true;
         }
 
         static IntPtr AllocateUtf8IntPtrArrayWithSentinel(string[] arr, out IntPtr[] byteArrayPointers)
@@ -640,6 +652,28 @@ namespace mpvnet
 
             LastHistoryPath = filePath;
             LastHistoryStartDateTime = DateTime.Now;
+        }
+
+        public static void ShowLogo()
+        {
+            if (MainForm.Instance is null) return;
+            Rectangle cr = MainForm.Instance.ClientRectangle;
+
+            using (Bitmap b = new Bitmap(cr.Width, cr.Height))
+            {
+                using (Graphics g = Graphics.FromImage(b))
+                {
+                    g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                    g.Clear(Color.Black);
+                    int iconWidth = cr.Height / 7;
+                    Rectangle r = new Rectangle(cr.Width / 2 - iconWidth / 2, cr.Height / 2 - iconWidth / 2, iconWidth, iconWidth);
+                    g.DrawImage(Properties.Resources.mpvnet, r);
+                    BitmapData bd = b.LockBits(cr, ImageLockMode.ReadOnly, PixelFormat.Format32bppPArgb);
+                    mp.commandv("overlay-add", "0", "0", "0", "&" + bd.Scan0.ToInt64().ToString(), "0", "bgra", bd.Width.ToString(), bd.Height.ToString(), bd.Stride.ToString());
+                    b.UnlockBits(bd);
+                    IsLogoVisible = true;
+                }
+            }
         }
 
         static void ReadMetaData()
