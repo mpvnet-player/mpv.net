@@ -198,6 +198,12 @@ mpv.net bugs and requests: <https://github.com/stax76/mpv.net/issues>
 
 ### Changelog
 
+### 3.7
+
+- new icon design
+- the radio buttons in the config editor have now a Windows 10 like design,
+  they are larger and use the Windows theme color
+
 ### 3.6.1
 
 - there was a bug causing an exception if both the input editor and config editor
