@@ -141,13 +141,13 @@ Config files located in the same directory as mpvnet.exe are loaded with lower p
 
 mpv.net is written in C# 7.0 and runs on the .NET framework 4.7 or higher.
 
-The Add-on implementation is based on the [Managed Extensibility Framework](https://docs.microsoft.com/en-us/dotnet/framework/mef/),
-the entire application code is accessible for .NET add-ons,
-Python and PowerShell scripts.
+The Add-on implementation is based on the [Managed Extensibility Framework](https://docs.microsoft.com/en-us/dotnet/framework/mef/).
+
+There are no specific extension or scripting interfaces but instead everyting is accessible for .NET compatible languages (C#, VB.NET, F#,Python and PowerShell), this decision was made to keep the code extremely simple and lightweight.
 
 Python scripting is implemented with IronPython which uses Python 2.7.
 
-The main/video window is WinForms based, other windows are WPF based.
+The main/video window is WinForms based, all other windows are WPF based.
 
 The config editor adds it's controls dynamically and uses TOML to define it's
 content, there are only two simple types, StringSetting and OptionSetting.
