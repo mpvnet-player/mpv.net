@@ -141,8 +141,9 @@ Config files located in the same directory as mpvnet.exe are loaded with lower p
 
 mpv.net is written in C# 7.0 and runs on the .NET framework 4.7 or higher.
 
-The Add-on implementation is based on the Managed Extensibility Framework,
-the entire application code is accessible for add-ons and Python scripts.
+The Add-on implementation is based on the [Managed Extensibility Framework](https://docs.microsoft.com/en-us/dotnet/framework/mef/),
+the entire application code is accessible for .NET add-ons,
+Python and PowerShell scripts.
 
 Python scripting is implemented with IronPython which uses Python 2.7.
 
