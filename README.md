@@ -207,6 +207,9 @@ mpv.net bugs and requests: <https://github.com/stax76/mpv.net/issues>
 - everytime only one file is opened mpv.net loads the complete folder
   in the playlist
 - the info command (i key) shows the audio format
+- new option osd-font-size added
+- the config editor no longer shows the command line switches
+  as they are identical to the names
 
 ### 3.7
 

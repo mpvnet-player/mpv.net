@@ -3,37 +3,37 @@ name = "hwdec"
 default = "no"
 filter = "Video"
 helpurl = "https://mpv.io/manual/master/#options-hwdec"
-help = "--hwdec=<mode> Specify the hardware video decoding API that should be used if possible. Whether hardware decoding is actually done depends on the video codec. If hardware decoding is not possible, mpv will fall back on software decoding.\n\nFor more information visit:"
+help = "Specify the hardware video decoding API that should be used if possible. Whether hardware decoding is actually done depends on the video codec. If hardware decoding is not possible, mpv will fall back on software decoding.\n\nFor more information visit:"
 options = [{ name = "no",           help = "always use software decoding (Default)" },
            { name = "auto",         help = "enable best hw decoder (see below)" },
            { name = "yes",          help = "exactly the same as auto" },
            { name = "auto-copy",    help = "enable best hw decoder with copy-back (see below)" },
-           { name = "dxva2",        help = "requires --vo=gpu with --gpu-context=d3d11, --gpu-context=angle or --gpu-context=dxinterop (Windows only)" },
+           { name = "dxva2",        help = "requires vo=gpu with gpu-context=d3d11, gpu-context=angle or gpu-context=dxinterop (Windows only)" },
            { name = "dxva2-copy",   help = "copies video back to system RAM (Windows only)" },
-           { name = "d3d11va",      help = "requires --vo=gpu with --gpu-context=d3d11 or --gpu-context=angle (Windows 8+ only)" },
+           { name = "d3d11va",      help = "requires vo=gpu with gpu-context=d3d11 or gpu-context=angle (Windows 8+ only)" },
            { name = "d3d11va-copy", help = "copies video back to system RAM (Windows 8+ only)" },
-           { name = "cuda",         help = "requires --vo=gpu (Any platform CUDA is available)" },
+           { name = "cuda",         help = "requires vo=gpu (Any platform CUDA is available)" },
            { name = "cuda-copy",    help = "copies video back to system RAM (Any platform CUDA is available)" },
-           { name = "nvdec",        help = "requires --vo=gpu (Any platform CUDA is available)" },
+           { name = "nvdec",        help = "requires vo=gpu (Any platform CUDA is available)" },
            { name = "nvdec-copy",   help = "copies video back to system RAM (Any platform CUDA is available)" },
            { name = "crystalhd",    help = "copies video back to system RAM (Any platform supported by hardware)" },
-           { name = "rkmpp",        help = "requires --vo=gpu (some RockChip devices only)" }]
+           { name = "rkmpp",        help = "requires vo=gpu (some RockChip devices only)" }]
 
 [[settings]]
 name = "gpu-api"
 default = "auto"
 filter = "Video"
-help = "--gpu-api=<type> Controls which type of graphics APIs will be accepted."
+help = "Controls which type of graphics APIs will be accepted."
 options = [{ name = "auto",   help = "Use any available API (Default)" },
            { name = "opengl", help = "Allow only OpenGL (requires OpenGL 2.1+ or GLES 2.0+)" },
-           { name = "vulkan", help = "Allow only Vulkan (requires a valid/working --spirv-compiler)" },
-           { name = "d3d11",  help = "Allow only --gpu-context=d3d11" }]
+           { name = "vulkan", help = "Allow only Vulkan (requires a valid/working spirv-compiler)" },
+           { name = "d3d11",  help = "Allow only gpu-context=d3d11" }]
 
 [[settings]]
 name = "gpu-context"
 default = "auto"
 filter = "Video"
-help = "--gpu-context=<sys> The value auto (the default) selects the GPU context. You can also pass help to get a complete list of compiled in backends (sorted by autoprobe order)."
+help = "The value auto (the default) selects the GPU context. You can also pass help to get a complete list of compiled in backends (sorted by autoprobe order)."
 options = [{ name = "auto",      help = "auto-select (Default)" },
            { name = "win",       help = "Win32/WGL" },
            { name = "winvk",     help = "VK_KHR_win32_surface" },
@@ -46,7 +46,7 @@ name = "vo"
 default = "gpu"
 filter = "Video"
 helpurl = "https://mpv.io/manual/master/#video-output-drivers-vo"
-help = "--gpu=<mode> Video output drivers to be used. Default = gpu.\n\nFor more information visit:"
+help = "Video output drivers to be used. Default = gpu.\n\nFor more information visit:"
 options = [{ name = "gpu",      help = "General purpose, customizable, GPU-accelerated video output driver. It supports extended scaling methods, dithering, color management, custom shaders, HDR, and more. (Default)" },
            { name = "direct3d", help = "Video output driver that uses the Direct3D interface" }]
 
@@ -54,7 +54,7 @@ options = [{ name = "gpu",      help = "General purpose, customizable, GPU-accel
 name = "video-sync"
 default = "audio"
 filter = "Video"
-help = "--video-sync=<audio|...> How the player synchronizes audio and video.\n\nFor more information visit:"
+help = "How the player synchronizes audio and video.\n\nFor more information visit:"
 helpurl = "https://mpv.io/manual/master/#options-video-sync"
 options = [{ name = "audio" },
            { name = "display-resample" },
@@ -69,49 +69,49 @@ options = [{ name = "audio" },
 name = "scale"
 default = "bilinear"
 filter = "Video"
-help = "--scale=<filter> The GPU renderer filter function to use when upscaling video. There are some more filters, but most are not as useful. For a complete list, pass help as value, e.g.: mpv --scale=help"
+help = "The GPU renderer filter function to use when upscaling video. There are some more filters, but most are not as useful. For a complete list, pass help as value, e.g.: mpv --scale=help"
 options = [{ name = "bilinear",         help = "Bilinear hardware texture filtering (fastest, very low quality). This is the default for compatibility reasons." },
            { name = "spline36",         help = "Mid quality and speed. This is the default when using gpu-hq." },
            { name = "lanczos",          help = "Lanczos scaling. Provides mid quality and speed. Generally worse than spline36, but it results in a slightly sharper image which is good for some content types. The number of taps can be controlled with  scale-radius, but is best left unchanged. (This filter is an alias for sinc-windowed sinc)" },
            { name = "ewa_lanczos",      help = "Elliptic weighted average Lanczos scaling. Also known as Jinc. Relatively slow, but very good quality. The radius can be controlled with scale-radius. Increasing the radius makes the filter sharper but adds more ringing. (This filter is an alias for jinc-windowed jinc)" },
            { name = "ewa_lanczossharp", help = "A slightly sharpened version of ewa_lanczos, preconfigured to use an ideal radius and parameter. If your hardware can run it, this is probably what you should use by default." },
-           { name = "mitchell",         help = "Mitchell-Netravali. The B and C parameters can be set with  --scale-param1 and --scale-param2. This filter is very good at downscaling (see --dscale)." },
-           { name = "oversample",       help = "A version of nearest neighbour that (naively) oversamples pixels, so that pixels overlapping edges get linearly interpolated instead of rounded. This essentially removes the small imperfections and judder artifacts caused by nearest-neighbour interpolation, in exchange for adding some blur. This filter is good at temporal interpolation, and also known as \"smoothmotion\" (see --tscale)." },
-           { name = "linear",           help = "A --tscale filter." }]
+           { name = "mitchell",         help = "Mitchell-Netravali. The B and C parameters can be set with  scale-param1 and scale-param2. This filter is very good at downscaling (see dscale)." },
+           { name = "oversample",       help = "A version of nearest neighbour that (naively) oversamples pixels, so that pixels overlapping edges get linearly interpolated instead of rounded. This essentially removes the small imperfections and judder artifacts caused by nearest-neighbour interpolation, in exchange for adding some blur. This filter is good at temporal interpolation, and also known as \"smoothmotion\" (see tscale)." },
+           { name = "linear",           help = "A tscale filter." }]
 
 [[settings]]
 name = "cscale"
 default = "bilinear"
 filter = "Video"
-help = "--cscale=<filter> As --scale, but for interpolating chroma information. If the image is not subsampled, this option is ignored entirely."
+help = "As scale, but for interpolating chroma information. If the image is not subsampled, this option is ignored entirely."
 options = [{ name = "bilinear",         help = "Bilinear hardware texture filtering (fastest, very low quality). This is the default for compatibility reasons." },
            { name = "spline36",         help = "Mid quality and speed. This is the default when using gpu-hq." },
            { name = "lanczos",          help = "Lanczos scaling. Provides mid quality and speed. Generally worse than spline36, but it results in a slightly sharper image which is good for some content types. The number of taps can be controlled with  scale-radius, but is best left unchanged. (This filter is an alias for sinc-windowed sinc)" },
            { name = "ewa_lanczos",      help = "Elliptic weighted average Lanczos scaling. Also known as Jinc. Relatively slow, but very good quality. The radius can be controlled with scale-radius. Increasing the radius makes the filter sharper but adds more ringing. (This filter is an alias for jinc-windowed jinc)" },
            { name = "ewa_lanczossharp", help = "A slightly sharpened version of ewa_lanczos, preconfigured to use an ideal radius and parameter. If your hardware can run it, this is probably what you should use by default." },
-           { name = "mitchell",         help = "Mitchell-Netravali. The B and C parameters can be set with  --scale-param1 and --scale-param2. This filter is very good at downscaling (see --dscale)." },
-           { name = "oversample",       help = "A version of nearest neighbour that (naively) oversamples pixels, so that pixels overlapping edges get linearly interpolated instead of rounded. This essentially removes the small imperfections and judder artifacts caused by nearest-neighbour interpolation, in exchange for adding some blur. This filter is good at temporal interpolation, and also known as \"smoothmotion\" (see --tscale)." },
-           { name = "linear",           help = "A --tscale filter." }]
+           { name = "mitchell",         help = "Mitchell-Netravali. The B and C parameters can be set with scale-param1 and scale-param2. This filter is very good at downscaling (see dscale)." },
+           { name = "oversample",       help = "A version of nearest neighbour that (naively) oversamples pixels, so that pixels overlapping edges get linearly interpolated instead of rounded. This essentially removes the small imperfections and judder artifacts caused by nearest-neighbour interpolation, in exchange for adding some blur. This filter is good at temporal interpolation, and also known as \"smoothmotion\" (see tscale)." },
+           { name = "linear",           help = "A tscale filter." }]
 
 [[settings]]
 name = "dscale"
 default = "bilinear"
 filter = "Video"
-help = "--dscale=<filter> Like --scale, but apply these filters on downscaling instead. If this option is unset, the filter implied by --scale will be applied."
+help = "Like scale, but apply these filters on downscaling instead. If this option is unset, the filter implied by scale will be applied."
 options = [{ name = "bilinear",         help = "Bilinear hardware texture filtering (fastest, very low quality). This is the default for compatibility reasons." },
            { name = "spline36",         help = "Mid quality and speed. This is the default when using gpu-hq." },
            { name = "lanczos",          help = "Lanczos scaling. Provides mid quality and speed. Generally worse than spline36, but it results in a slightly sharper image which is good for some content types. The number of taps can be controlled with  scale-radius, but is best left unchanged. (This filter is an alias for sinc-windowed sinc)" },
            { name = "ewa_lanczos",      help = "Elliptic weighted average Lanczos scaling. Also known as Jinc. Relatively slow, but very good quality. The radius can be controlled with scale-radius. Increasing the radius makes the filter sharper but adds more ringing. (This filter is an alias for jinc-windowed jinc)" },
            { name = "ewa_lanczossharp", help = "A slightly sharpened version of ewa_lanczos, preconfigured to use an ideal radius and parameter. If your hardware can run it, this is probably what you should use by default." },
-           { name = "mitchell",         help = "Mitchell-Netravali. The B and C parameters can be set with  --scale-param1 and --scale-param2. This filter is very good at downscaling (see --dscale)." },
-           { name = "oversample",       help = "A version of nearest neighbour that (naively) oversamples pixels, so that pixels overlapping edges get linearly interpolated instead of rounded. This essentially removes the small imperfections and judder artifacts caused by nearest-neighbour interpolation, in exchange for adding some blur. This filter is good at temporal interpolation, and also known as \"smoothmotion\" (see --tscale)." },
-           { name = "linear",           help = "A --tscale filter." }]
+           { name = "mitchell",         help = "Mitchell-Netravali. The B and C parameters can be set with scale-param1 and scale-param2. This filter is very good at downscaling (see dscale)." },
+           { name = "oversample",       help = "A version of nearest neighbour that (naively) oversamples pixels, so that pixels overlapping edges get linearly interpolated instead of rounded. This essentially removes the small imperfections and judder artifacts caused by nearest-neighbour interpolation, in exchange for adding some blur. This filter is good at temporal interpolation, and also known as \"smoothmotion\" (see tscale)." },
+           { name = "linear",           help = "A tscale filter." }]
 
 [[settings]]
 name = "dither-depth"
 default = "no"
 filter = "Video"
-help = "--dither-depth=<N|no|auto> Set dither target depth to N. Default: no. Note that the depth of the connected video display device cannot be detected. Often, LCD panels will do dithering on their own, which conflicts with this option and leads to ugly output."
+help = "Set dither target depth to N. Default: no. Note that the depth of the connected video display device cannot be detected. Often, LCD panels will do dithering on their own, which conflicts with this option and leads to ugly output."
 options = [{ name = "no",   help = "Disable any dithering done by mpv." },
            { name = "auto", help = "Automatic selection. If output bit depth cannot be detected, 8 bits per component are assumed." },
            { name = "8",    help = "Dither to 8 bit output." }]
@@ -120,7 +120,7 @@ options = [{ name = "no",   help = "Disable any dithering done by mpv." },
 name = "correct-downscaling"
 default = "no"
 filter = "Video"
-help = "--correct-downscaling When using convolution based filters, extend the filter size when downscaling. Increases quality, but reduces performance while downscaling.\n\nThis will perform slightly sub-optimally for anamorphic video (but still better than without it) since it will extend the size to match only the milder of the scale factors between the axes."
+help = "When using convolution based filters, extend the filter size when downscaling. Increases quality, but reduces performance while downscaling.\n\nThis will perform slightly sub-optimally for anamorphic video (but still better than without it) since it will extend the size to match only the milder of the scale factors between the axes."
 options = [{ name = "yes" },
            { name = "no" }]
 
@@ -128,7 +128,7 @@ options = [{ name = "yes" },
 name = "sigmoid-upscaling"
 default = "no"
 filter = "Video"
-help = "--sigmoid-upscaling When upscaling, use a sigmoidal color transform to avoid emphasizing ringing artifacts. This also implies --linear-scaling."
+help = "When upscaling, use a sigmoidal color transform to avoid emphasizing ringing artifacts. This also implies linear-scaling."
 options = [{ name = "yes" },
            { name = "no" }]
 
@@ -136,7 +136,7 @@ options = [{ name = "yes" },
 name = "deband"
 default = "no"
 filter = "Video"
-help = "--deband Enable the debanding algorithm. This greatly reduces the amount of visible banding, blocking and other quantization artifacts, at the expense of very slightly blurring some of the finest details. In practice, it's virtually always an improvement - the only reason to disable it would be for performance."
+help = "Enable the debanding algorithm. This greatly reduces the amount of visible banding, blocking and other quantization artifacts, at the expense of very slightly blurring some of the finest details. In practice, it's virtually always an improvement - the only reason to disable it would be for performance."
 options = [{ name = "yes" },
            { name = "no" }]
 
@@ -144,59 +144,65 @@ options = [{ name = "yes" },
 name = "volume"
 default = "100"
 filter = "Audio"
-help = "--volume=<integer> Set the startup volume. 0 means silence, 100 means no volume reduction or amplification. Negative values can be passed for compatibility, but are treated as 0. Since mpv 0.18.1, this always controls the internal mixer (aka \"softvol\"). Default: 100"
+help = "Set the startup volume. 0 means silence, 100 means no volume reduction or amplification. Negative values can be passed for compatibility, but are treated as 0. Since mpv 0.18.1, this always controls the internal mixer (aka \"softvol\"). Default: 100"
 
 [[settings]]
 name = "alang"
 default = ""
 filter = "Audio"
-help = "--alang=<languagecode[,languagecode,...]> Specify a priority list of audio languages to use. Different container formats employ different language codes. DVDs use ISO 639-1 two-letter language codes, Matroska, MPEG-TS and NUT use ISO 639-2 three-letter language codes, while OGM uses a free-form identifier. See also --aid.\n\nExamples\n\nmpv dvd://1 --alang=hu,en chooses the Hungarian language track on a DVD and falls back on English if Hungarian is not available.\n\nmpv --alang=jpn example.mkv plays a Matroska file with Japanese audio."
+help = "Specify a priority list of audio languages to use. Different container formats employ different language codes. DVDs use ISO 639-1 two-letter language codes, Matroska, MPEG-TS and NUT use ISO 639-2 three-letter language codes, while OGM uses a free-form identifier. See also aid.\n\nExamples\n\nmpv dvd://1 alang=hu,en chooses the Hungarian language track on a DVD and falls back on English if Hungarian is not available.\n\nmpv alang=jpn example.mkv plays a Matroska file with Japanese audio."
 
 [[settings]]
 name = "audio-file-auto"
 default = "no"
 filter = "Audio"
-help = "--audio-file-auto=<no|exact|fuzzy|all>, --no-audio-file-auto Load additional audio files matching the video filename. The parameter specifies how external audio files are matched."
+help = "Load additional audio files matching the video filename. The parameter specifies how external audio files are matched."
 options = [{ name = "no",    help = "Don't automatically load external audio files (default)." },
            { name = "exact", help = "Load the media filename with audio file extension." },
            { name = "fuzzy", help = "Load all audio files containing media filename." },
-           { name = "all",   help = "Load all audio files in the current and --audio-file-paths directories." }]
+           { name = "all",   help = "Load all audio files in the current and audio-file-paths directories." }]
 
 [[settings]]
 name = "slang"
 default = ""
 filter = "Subtitle"
-help = "--slang=<languagecode[,languagecode,...]> Specify a priority list of subtitle languages to use. Different container formats employ different language codes. DVDs use ISO 639-1 two letter language codes, Matroska uses ISO 639-2 three letter language codes while OGM uses a free-form identifier. See also --sid."
+help = "Specify a priority list of subtitle languages to use. Different container formats employ different language codes. DVDs use ISO 639-1 two letter language codes, Matroska uses ISO 639-2 three letter language codes while OGM uses a free-form identifier. See also sid."
 
 [[settings]]
 name = "sub-auto"
 default = "exact"
 filter = "Subtitle"
-help = "--sub-auto=<no|exact|fuzzy|all>, --no-sub-auto Load additional subtitle files matching the video filename. The parameter specifies how external subtitle files are matched. exact is enabled by default."
+help = "Load additional subtitle files matching the video filename. The parameter specifies how external subtitle files are matched. exact is enabled by default."
 options = [{ name = "no",    help = "Don't automatically load external subtitle files." },
            { name = "exact", help = "Load the media filename with subtitle file extension (Default)." },
            { name = "fuzzy", help = "Load all subs containing media filename." },
-           { name = "all",   help = "Load all subs in the current and --sub-file-paths directories." }]
+           { name = "all",   help = "Load all subs in the current and sub-file-paths directories." }]
 
 [[settings]]
 name = "screen"
 default = ""
 filter = "Screen"
-help = "--screen=<default|0-32> In multi-monitor configurations (i.e. a single desktop that spans across multiple displays), this option tells mpv which screen to display the video on. Default: default."
+help = "In multi-monitor configurations (i.e. a single desktop that spans across multiple displays), this option tells mpv which screen to display the video on. Default: default"
 
 [[settings]]
 name = "osd-playing-msg"
 default = ""
 width = 300
 filter = "Screen"
-help = "--osd-playing-msg=<value> Show a message on OSD when playback starts. The string is expanded for properties, e.g. --osd-playing-msg='file: ${filename}' will show the message file: followed by a space and the currently played filename. For more information visit:"
+help = "Show a message on OSD when playback starts. The string is expanded for properties, e.g. osd-playing-msg='file: ${filename}' will show the message file: followed by a space and the currently played filename. For more information visit:"
 helpurl = "https://mpv.io/manual/master/#property-expansion"
+
+[[settings]]
+name = "osd-font-size"
+default = "55"
+filter = "Screen"
+help = "Specify the OSD font size. See sub-font-size for details. Default: 55"
 
 [[settings]]
 name = "fullscreen"
 default = "no"
 filter = "Screen"
-help = "--fullscreen=<yes|no>, fs=<yes|no> Start the player in fullscreen mode. Default: no."
+help = "Start the player in fullscreen mode. Default: no"
 options = [{ name = "yes" },
            { name = "no" }]
 
@@ -206,19 +212,19 @@ default = ""
 width = 500
 folder = true
 filter = "Screen"
-help = "--screenshot-directory=<value> Store screenshots in this directory. This path is joined with the filename generated by --screenshot-template. If the template filename is already absolute, the directory is ignored.\n\nIf the directory does not exist, it is created on the first screenshot. If it is not a directory, an error is generated when trying to write a screenshot.\n\nThis option is not set by default, and thus will write screenshots to the directory from which mpv was started. In pseudo-gui mode (see PSEUDO GUI MODE), this is set to the desktop."
+help = "Store screenshots in this directory. This path is joined with the filename generated by screenshot-template. If the template filename is already absolute, the directory is ignored.\n\nIf the directory does not exist, it is created on the first screenshot. If it is not a directory, an error is generated when trying to write a screenshot.\n\nThis option is not set by default, and thus will write screenshots to the directory from which mpv was started. In pseudo-gui mode (see PSEUDO GUI MODE), this is set to the desktop."
 
 [[settings]]
 name = "autofit"
 default = "50%"
 filter = "Screen"
-help = "--autofit=<percent value> Set the initial window size in percent. Please note that this setting is only partly implemented in mpv.net, accepted are only integer values with percent sign added. Default: 50%."
+help = "Set the initial window size in percent. Please note that this setting is only partly implemented in mpv.net, accepted are only integer values with percent sign added. Default: 50%"
 
 [[settings]]
 name = "keep-open-pause"
 default = "yes"
 filter = "Playback"
-help = "--keep-open-pause=<yes|no> If set to no, instead of pausing when --keep-open is active, just stop at end of file and continue playing forward when you seek backwards until end where it stops again. Default: yes."
+help = "If set to no, instead of pausing when keep-open is active, just stop at end of file and continue playing forward when you seek backwards until end where it stops again. Default: yes"
 options = [{ name = "yes" },
            { name = "no" }]
 
@@ -226,8 +232,8 @@ options = [{ name = "yes" },
 name = "keep-open"
 default = "no"
 filter = "Playback"
-help = "--keep-open=<yes|no|always> Do not terminate when playing or seeking beyond the end of the file, and there is not next file to be played (and --loop is not used). Instead, pause the player. When trying to seek beyond end of the file, the player will attempt to seek to the last frame.\n\nNormally, this will act like set pause yes on EOF, unless the  --keep-open-pause=no option is set."
-options = [{ name = "yes",    help = "Don't terminate if the current file is the last playlist entry. Equivalent to --keep-open without arguments."},
+help = "Do not terminate when playing or seeking beyond the end of the file, and there is not next file to be played (and loop is not used). Instead, pause the player. When trying to seek beyond end of the file, the player will attempt to seek to the last frame.\n\nNormally, this will act like set pause yes on EOF, unless the keep-open-pause=no option is set."
+options = [{ name = "yes",    help = "Don't terminate if the current file is the last playlist entry. Equivalent to keep-open without arguments."},
            { name = "no",     help = "If the current file ends, go to the next file or terminate. (Default.)" },
            { name = "always", help = "Like yes, but also applies to files before the last playlist entry. This means playback will never automatically advance to the next file."}]
 
@@ -235,13 +241,13 @@ options = [{ name = "yes",    help = "Don't terminate if the current file is the
 name = "loop-file"
 default = ""
 filter = "Playback"
-help = "--loop-file=<N|inf|no>, loop=<N|inf|no> Loop a single file N times. inf means forever, no means normal playback. For compatibility, --loop-file and --loop-file=yes are also accepted, and are the same as --loop-file=inf.\n\nThe difference to --loop-playlist is that this doesn't loop the playlist, just the file itself. If the playlist contains only a single file, the difference between the two option is that this option performs a seek on loop, instead of reloading the file.\n\n--loop is an alias for this option."
+help = "Loop a single file N times. inf means forever, no means normal playback.\n\nThe difference to loop-playlist is that this doesn't loop the playlist, just the file itself. If the playlist contains only a single file, the difference between the two option is that this option performs a seek on loop, instead of reloading the file. loop is an alias for this option."
 
 [[settings]]
 name = "save-position-on-quit"
 default = "no"
 filter = "Playback"
-help = "--save-position-on-quit=<yes|no> Always save the current playback position on quit. When this file is played again later, the player will seek to the old playback position on start. This does not happen if playback of a file is stopped in any other way than quitting. For example, going to the next file in the playlist will not save the position, and start playback at beginning the next time the file is played.\n\nThis behavior is disabled by default, but is always available when quitting the player with Shift+Q."
+help = "Always save the current playback position on quit. When this file is played again later, the player will seek to the old playback position on start. This does not happen if playback of a file is stopped in any other way than quitting. For example, going to the next file in the playlist will not save the position, and start playback at beginning the next time the file is played.\n\nThis behavior is disabled by default, but is always available when quitting the player with Shift+Q."
 options = [{ name = "yes" },
            { name = "no" }]
 
@@ -249,19 +255,19 @@ options = [{ name = "yes" },
 name = "input-ar-delay"
 default = ""
 filter = "Input"
-help = "--input-ar-delay=<integer> Delay in milliseconds before we start to autorepeat a key (0 to disable)."
+help = "Delay in milliseconds before we start to autorepeat a key (0 to disable)."
 
 [[settings]]
 name = "input-ar-rate"
 default = ""
 filter = "Input"
-help = "--input-ar-rate=<integer> Number of key presses to generate per second on autorepeat."
+help = "Number of key presses to generate per second on autorepeat."
 
 [[settings]]
 name = "hr-seek"
 default = "absolute"
 filter = "Playback"
-help = "--hr-seek=<no|absolute|yes> Select when to use precise seeks that are not limited to keyframes. Such seeks require decoding video from the previous keyframe up to the target position and so can take some time depending on decoding performance. For some video formats, precise seeks are disabled. This option selects the default choice to use for seeks; it is possible to explicitly override that default in the definition of key bindings and in input commands."
+help = "Select when to use precise seeks that are not limited to keyframes. Such seeks require decoding video from the previous keyframe up to the target position and so can take some time depending on decoding performance. For some video formats, precise seeks are disabled. This option selects the default choice to use for seeks; it is possible to explicitly override that default in the definition of key bindings and in input commands."
 options = [{ name = "yes",      help = "Use precise seeks whenever possible." },
            { name = "no",       help = "Never use precise seeks." },
            { name = "absolute", help = "Use precise seeks if the seek is to an absolute position in the file, such as a chapter seek, but not for relative seeks like the default behavior of arrow keys (default)." },
@@ -271,7 +277,7 @@ options = [{ name = "yes",      help = "Use precise seeks whenever possible." },
 name = "track-auto-selection"
 default = "yes"
 filter = "Playback"
-help = "--track-auto-selection=<yes|no> Enable the default track auto-selection (default: yes). Enabling this will make the player select streams according to --aid, --alang, and others. If it is disabled, no tracks are selected. In addition, the player will not exit if no tracks are selected, and wait instead (this wait mode is similar to pausing, but the pause option is not set).\n\nThis is useful with --lavfi-complex: you can start playback in this mode, and then set select tracks at runtime by setting the filter graph. Note that if --lavfi-complex is set before playback is started, the referenced tracks are always selected."
+help = "Enable the default track auto-selection (default: yes). Enabling this will make the player select streams according to aid, alang, and others. If it is disabled, no tracks are selected. In addition, the player will not exit if no tracks are selected, and wait instead (this wait mode is similar to pausing, but the pause option is not set).\n\nThis is useful with lavfi-complex: you can start playback in this mode, and then set select tracks at runtime by setting the filter graph. Note that if lavfi-complex is set before playback is started, the referenced tracks are always selected."
 options = [{ name = "yes" },
            { name = "no" }]
 
@@ -279,4 +285,4 @@ options = [{ name = "yes" },
 name = "loop-playlist"
 default = ""
 filter = "Playback"
-help = "--loop-playlist=<N|inf|force|no>, --loop-playlist Loops playback N times. A value of 1 plays it one time (default), 2 two times, etc. inf means forever. no is the same as 1 and disables looping. If several files are specified on command line, the entire playlist is looped. --loop-playlist is the same as  --loop-playlist=inf.\n\nThe force mode is like inf, but does not skip playlist entries which have been marked as failing. This means the player might waste CPU time trying to loop a file that doesn't exist. But it might be useful for playing webradios under very bad network conditions."
+help = "<N|inf|force|no> Loops playback N times. A value of 1 plays it one time (default), 2 two times, etc. inf means forever. no is the same as 1 and disables looping. If several files are specified on command line, the entire playlist is looped. The force mode is like inf, but does not skip playlist entries which have been marked as failing. This means the player might waste CPU time trying to loop a file that doesn't exist. But it might be useful for playing webradios under very bad network conditions."
