@@ -143,7 +143,7 @@ mpv.net is written in C# 7.0 and runs on the .NET framework 4.7 or higher.
 
 The Add-on implementation is based on the [Managed Extensibility Framework](https://docs.microsoft.com/en-us/dotnet/framework/mef/).
 
-There are no specific extension or scripting interfaces but instead everyting is accessible for .NET compatible languages (C#, VB.NET, F#,Python and PowerShell), this decision was made to keep the code extremely simple and lightweight.
+There are no specific extension or scripting interfaces but instead everyting is accessible for .NET compatible languages (C#, VB.NET, F#, Python and PowerShell), this decision was made to keep the code extremely simple and lightweight.
 
 Python scripting is implemented with IronPython which uses Python 2.7.
 
