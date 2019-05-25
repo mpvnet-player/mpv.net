@@ -1,6 +1,6 @@
 ![](https://raw.githubusercontent.com/stax76/mpv.net/master/img/mpvnet.png)
 
-# mpv.net
+# 🎞 mpv.net
 
 mpv.net is a modern media player for Windows that looks and works just like [mpv](https://mpv.io).
 
