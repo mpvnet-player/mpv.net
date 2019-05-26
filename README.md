@@ -209,6 +209,7 @@ mpv.net bugs and requests: <https://github.com/stax76/mpv.net/issues>
 - new options osd-font-size, sub-font, sub-font-size, sub-color, sub-border-color, sub-back-color
 - the config editor no longer shows the command line switches
 - the github start page was greatly improved 
+- the setup.ps1 PowerShell script was greatly improved in regard of error handling and readability
 
 ### 3.7
 
