@@ -156,12 +156,12 @@ mpv.net was started 2017 and consists of about 9000 lines of code.
 
 Third party components are:
 
-- [libmpv](https://mpv.io/)
-- [MediaInfo](https://mediaarea.net/en/MediaInfo)
-- [Tommy (TOML parser)](https://github.com/dezhidki/Tommy)
-- [IronPython](https://ironpython.net/)
-- [CS-Script](http://www.csscript.net/)
-- [Everything](https://www.voidtools.com)
+- [libmpv, the heard and soul of mpv.net](https://mpv.io/)
+- [MediaInfo, no media related project could do without](https://mediaarea.net/en/MediaInfo)
+- [Tommy, a single file TOML parser](https://github.com/dezhidki/Tommy)
+- [IronPython, bringing Python to dotnet](https://ironpython.net/)
+- [CS-Script, scripting with C#](http://www.csscript.net/)
+- [Everything, a blazing fast file search service](https://www.voidtools.com)
 
 ### Support
 
