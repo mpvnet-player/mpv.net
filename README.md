@@ -2,7 +2,7 @@
 
 # 🎞 mpv.net
 
-mpv.net is a modern media player for Windows that looks and works just like [mpv](https://mpv.io).
+mpv.net is a modern media player for Windows that works just like [mpv](https://mpv.io).
 
 #### Based on libmpv
 
