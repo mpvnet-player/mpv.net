@@ -14,15 +14,15 @@ mpv.net has the CLI of mpv: [CLI switches](https://mpv.io/manual/master/#options
 
 #### High quality video output
 
-mpv/libmpv has an OpenGL based video output that is capable of many features loved by videophiles, such as video scaling with popular high quality algorithms, color management, frame timing, interpolation, HDR, and more.
+libmpv has an OpenGL based video output that is capable of many features loved by videophiles, such as video scaling with popular high quality algorithms, color management, frame timing, interpolation, HDR, and more.
 
 #### On Screen Controller
 
-mpv.net uses the OSC of mpv/libmpv offering play controls with a modern flat design.
+The OSC of libmpv offers play controls with a modern flat design.
 
 #### GPU video decoding
 
-mpv/libmpv leverages the FFmpeg hwaccel APIs to support DXVA2 video decoding acceleration.
+libmpv leverages the FFmpeg hwaccel APIs to support DXVA2 video decoding acceleration.
 
 #### Active development
 
