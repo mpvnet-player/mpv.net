@@ -152,7 +152,7 @@ The main/video window is WinForms based, all other windows are WPF based.
 The config editor adds it's controls dynamically and uses TOML to define it's
 content, there are only two simple types, StringSetting and OptionSetting.
 
-mpv.net was started 2017 and consists of about 9000 lines of code.
+mpv.net was started 2017 and consists of about 6000 lines of code and markup.
 
 IDE, Editor: Visual Studio, Visual Studio Code!
 
