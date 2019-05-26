@@ -197,7 +197,7 @@ mpv.net bugs and requests: <https://github.com/stax76/mpv.net/issues>
 
 ### Changelog
 
-[Changelog](Changelog)
+[Changelog](Changelog.md)
 
 ### Download
 
