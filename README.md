@@ -18,7 +18,7 @@ libmpv has an OpenGL based video output that is capable of many features loved b
 
 #### On Screen Controller
 
-The OSC of libmpv offers play controls with a modern flat design.
+The OSC of libmpv offers play controls with a modern flat design. ([Screenshot](#main-window-screenshot))
 
 #### GPU video decoding
 
