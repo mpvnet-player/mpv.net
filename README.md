@@ -156,6 +156,11 @@ mpv.net was started 2017 and consists of about 9000 lines of code.
 
 IDE, Editor: Visual Studio, Visual Studio Code!
 
+Due to mpv.net being my first WPF app and mpv.net never ment
+to be a large application best practices and design pattern
+are often ignored, also the coding style might not be the
+best because I don't believe C has good syntax.
+
 Third party components:
 
 - [libmpv, the heard and soul of mpv.net](https://mpv.io/)
@@ -164,11 +169,6 @@ Third party components:
 - [IronPython, bringing Python to dotnet](https://ironpython.net/)
 - [CS-Script, scripting with C#](http://www.csscript.net/)
 - [Everything, a blazing fast file search service](https://www.voidtools.com)
-
-Due to mpv.net being my first WPF app and mpv.net never ment
-to be a large application best practices and design pattern
-are often ignored, also the coding style might not be the
-best because I don't believe C has good syntax.
 
 ### Support
 
