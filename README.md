@@ -156,7 +156,7 @@ content, there are only two simple types, StringSetting and OptionSetting.
 
 mpv.net was started 2017 and consists of about 6000 lines of code and markup.
 
-IDE, Editor: Visual Studio, Visual Studio Code!
+IDE, Editor: Visual Studio, Visual Studio Code.
 
 Due to mpv.net being my first WPF app and mpv.net never ment to be a large
 application best practices and design pattern are often ignored.
