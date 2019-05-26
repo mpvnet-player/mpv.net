@@ -1,6 +1,8 @@
 ### not yet released
 
-- on the start screen the mpv.net icon is shown instead of the mpv icon
+- on the start screen the mpv.NET icon is shown instead of the mpv icon,
+  feedback and contributions regarding the icon are welcome! The paint.net
+  pdn and png source is located [here](https://github.com/stax76/mpv.net/tree/master/img)
 - everytime only one file is opened the complete folder is loaded in the playlist
 - the info command (i key) shows the audio format
 - new options osd-font-size, sub-font, sub-font-size, sub-color, sub-border-color, sub-back-color
