@@ -206,10 +206,9 @@ mpv.net bugs and requests: <https://github.com/stax76/mpv.net/issues>
 - on the start screen the mpv.net icon is shown instead of the mpv icon
 - everytime only one file is opened the complete folder is loaded in the playlist
 - the info command (i key) shows the audio format
-- new options osd-font-size, sub-font, sub-font-size, sub-color,
-  sub-border-color, sub-back-color added
+- new options osd-font-size, sub-font, sub-font-size, sub-color, sub-border-color, sub-back-color
 - the config editor no longer shows the command line switches
-  as they are identical to the names
+- the github start page was greatly improved 
 
 ### 3.7
 
