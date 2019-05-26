@@ -154,7 +154,7 @@ content, there are only two simple types, StringSetting and OptionSetting.
 
 mpv.net was started 2017 and consists of about 9000 lines of code.
 
-As IDE/editor Visual Studio/Visual Studio Code is used.
+IDE, Editor: Visual Studio, Visual Studio Code!
 
 Third party components are:
 
