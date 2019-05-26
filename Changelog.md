@@ -5,7 +5,8 @@
   pdn and png source is located [here](https://github.com/stax76/mpv.net/tree/master/img)
 - everytime only one file is opened the complete folder is loaded in the playlist
 - the info command (i key) shows the audio format
-- new options osd-font-size, sub-font, sub-font-size, sub-color, sub-border-color, sub-back-color
+- new options osd-font-size, sub-font, sub-font-size
+- new color options with dedicated GUI support: sub-color, sub-border-color, sub-back-color
 - the config editor no longer shows the command line switches
 - the github start page was greatly improved 
 - the setup.ps1 PowerShell script was greatly improved in regard of error handling and readability

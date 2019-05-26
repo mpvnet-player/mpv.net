@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Linq;
 
 using DynamicGUI;
 
@@ -28,7 +29,7 @@ namespace mpvnet
             LoadSettings(MpvSettingsDefinitions, MpvConf);
             LoadSettings(MpvNetSettingsDefinitions, MpvNetConf);
             SearchControl.Text = RegistryHelp.GetString(@"HKCU\Software\mpv.net", "config editor search");
-            
+
             if (App.IsDarkMode)
             {
                 Foreground = Brushes.White;
@@ -215,6 +216,8 @@ namespace mpvnet
         {
             SearchControl.SearchTextBox.SelectAll();
             Keyboard.Focus(SearchControl.SearchTextBox);
+            foreach (var i in MainStackPanel.Children.OfType<StringSettingControl>())
+                i.Update();
         }
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -49,14 +49,16 @@ namespace DynamicGUI
                     StringSetting stringSetting = new StringSetting();
                     baseSetting = stringSetting;
                     stringSetting.Default = setting["default"];
-                    if (setting.HasKey("folder")) stringSetting.IsFolder = true;
                 }
 
                 baseSetting.Name = setting["name"];
                 baseSetting.Filter = setting["filter"];
+
                 if (setting.HasKey("help")) baseSetting.Help = setting["help"];
                 if (setting.HasKey("helpurl")) baseSetting.HelpURL = setting["helpurl"];
                 if (setting.HasKey("width")) baseSetting.Width = setting["width"];
+                if (setting.HasKey("type")) baseSetting.Type = setting["type"];
+
                 settingsList.Add(baseSetting);
             }
             return settingsList;
@@ -72,12 +74,12 @@ namespace DynamicGUI
         public string Default { get; set; }
         public string HelpURL { get; set; }
         public string Filter { get; set; }
+        public string Type { get; set; }
         public int Width { get; set; }
     }
 
     public class StringSetting : SettingBase
     {
-        public bool IsFolder { get; set; }
     }
 
     public class OptionSetting : SettingBase

@@ -165,6 +165,11 @@ Third party components:
 - [CS-Script, scripting with C#](http://www.csscript.net/)
 - [Everything, a blazing fast file search service](https://www.voidtools.com)
 
+Due to mpv.net being my first WPF app and mpv.net never ment
+to be a large application best practices and design pattern
+are often ignored, also the coding style might not be the
+best because I don't believe C has good syntax.
+
 ### Support
 
 [Support thread in Doom9 forum](https://forum.doom9.org/showthread.php?t=174841)
