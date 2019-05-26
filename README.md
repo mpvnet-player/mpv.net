@@ -143,7 +143,9 @@ mpv.net is written in C# 7.0 and runs on the .NET framework 4.7 or higher.
 
 The Add-on implementation is based on the [Managed Extensibility Framework](https://docs.microsoft.com/en-us/dotnet/framework/mef/).
 
-There are no specific extension or scripting interfaces but instead everyting is accessible for .NET compatible languages (C#, VB.NET, F#, Python and PowerShell), this decision was made to keep the code extremely simple and lightweight.
+There are no specific extension or scripting interfaces but instead everyting
+is accessible for .NET compatible languages (C#, VB.NET, F#, Python, PowerShell),
+this decision was made to keep the code simple and lightweight.
 
 Python scripting is implemented with IronPython which uses Python 2.7.
 
@@ -156,10 +158,8 @@ mpv.net was started 2017 and consists of about 6000 lines of code and markup.
 
 IDE, Editor: Visual Studio, Visual Studio Code!
 
-Due to mpv.net being my first WPF app and mpv.net never ment
-to be a large application best practices and design pattern
-are often ignored, also the coding style might not be the
-best because I don't believe C has good syntax.
+Due to mpv.net being my first WPF app and mpv.net never ment to be a large
+application best practices and design pattern are often ignored.
 
 Third party components:
 
