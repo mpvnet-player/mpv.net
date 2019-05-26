@@ -203,17 +203,17 @@ mpv.net bugs and requests: <https://github.com/stax76/mpv.net/issues>
 
 ###
 
-- on the start screen the mpv.net logo is shown instead of the mpv logo
-- everytime only one file is opened mpv.net loads the complete folder
-  in the playlist
+- on the start screen the mpv.net icon is shown instead of the mpv icon
+- everytime only one file is opened the complete folder is loaded in the playlist
 - the info command (i key) shows the audio format
-- new option osd-font-size added
+- new options osd-font-size, sub-font, sub-font-size, sub-color,
+  sub-border-color, sub-back-color added
 - the config editor no longer shows the command line switches
   as they are identical to the names
 
 ### 3.7
 
-- new icon design
+- new icon design, probably better then before but still too simple
 - the radio buttons in the config editor have now a Windows 10 like design,
   they are larger and use the Windows theme color
 

@@ -179,6 +179,36 @@ options = [{ name = "no",    help = "Don't automatically load external subtitle 
            { name = "all",   help = "Load all subs in the current and sub-file-paths directories." }]
 
 [[settings]]
+name = "sub-font"
+default = ""
+filter = "Subtitle"
+help = "Specify font to use for subtitles that do not themselves specify a particular font. The default is  sans-serif."
+
+[[settings]]
+name = "sub-font-size"
+default = ""
+filter = "Subtitle"
+help = "Specify the sub font size. The unit is the size in scaled pixels at a window height of 720. The actual pixel size is scaled with the window height: if the window height is larger or smaller than 720, the actual size of the text increases or decreases as well. Default: 55"
+
+[[settings]]
+name = "sub-color"
+default = ""
+filter = "Subtitle"
+help = "Specify the color used for unstyled text subtitles.\n\nThe color is specified in the form r/g/b, where each color component is specified as number in the range 0.0 to 1.0. It's also possible to specify the transparency by using r/g/b/a, where the alpha value 0 means fully transparent, and 1.0 means opaque. If the alpha component is not given, the color is 100% opaque.\n\nPassing a single number to the option sets the sub to gray, and the form gray/a lets you specify alpha additionally.\n\nExamples\n\n1.0/0.0/0.0 set sub to opaque red\n1.0/0.0/0.0/0.75 set sub to opaque red with 75% alpha\n0.5/0.75 set sub to 50% gray with 75% alpha\n\nAlternatively, the color can be specified as a RGB hex triplet in the form #RRGGBB, where each 2-digit group expresses a color value in the range 0 (00) to 255 (FF). For example, #FF0000 is red. This is similar to web colors. Alpha is given with #AARRGGBB.\n\nExamples\n\n#FF0000 set sub to opaque red\n#C0808080 set sub to 50% gray with 75% alpha"
+
+[[settings]]
+name = "sub-border-color"
+default = ""
+filter = "Subtitle"
+help = "See --sub-color. Color used for the sub font border. Ignored when sub-back-color is specified (or more exactly: when that option is not set to completely transparent)."
+
+[[settings]]
+name = "sub-back-color"
+default = ""
+filter = "Subtitle"
+help = "See sub-color. Color used for sub text background. You can use sub-shadow-offset to change its size relative to the text."
+
+[[settings]]
 name = "screen"
 default = ""
 filter = "Screen"
