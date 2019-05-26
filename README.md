@@ -10,7 +10,7 @@ mpv.net is based on libmpv which offers a straightforward C API that was designe
 
 #### Command Line Interface
 
-mpv.net just like mpv offers lot's of command line switches. [CLI switches](https://mpv.io/manual/master/#options)
+mpv.net just like mpv has a CLI. [CLI switches](https://mpv.io/manual/master/#options)
 
 #### High quality video output
 
