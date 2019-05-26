@@ -156,7 +156,7 @@ mpv.net was started 2017 and consists of about 9000 lines of code.
 
 IDE, Editor: Visual Studio, Visual Studio Code!
 
-Third party components are:
+Third party components:
 
 - [libmpv, the heard and soul of mpv.net](https://mpv.io/)
 - [MediaInfo, no media related project could do without](https://mediaarea.net/en/MediaInfo)
