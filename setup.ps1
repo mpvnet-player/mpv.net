@@ -31,7 +31,7 @@ CheckFileExist($msbuild); CheckFileExist($innoSetup); CheckFileExist($sevenZip);
 & $innoSetup /Darch="x64" setup.iss; CheckExitCode
 & $innoSetup /Darch="x86" setup.iss; CheckExitCode
 
-# create the x64 portable archives
+# create the x64 portable archives using 7zip
 $scriptDir = Split-Path -Path $PSCommandPath -Parent
 $desktopDir = [Environment]::GetFolderPath("Desktop")
 $exePath = $scriptDir + "\mpv.net\bin\x64\mpvnet.exe"
@@ -41,7 +41,7 @@ Copy-Item $scriptDir\mpv.net\bin\x64 $targetDir -Recurse -Exclude System.Managem
 & $sevenZip a -t7z  -mx9 "$targetDir.7z"  -r "$targetDir\*"; CheckExitCode
 & $sevenZip a -tzip -mx9 "$targetDir.zip" -r "$targetDir\*"; CheckExitCode
 
-# create the x86 portable archives
+# create the x86 portable archives using 7zip
 $exePath = $scriptDir + "\mpv.net\bin\x86\mpvnet.exe"
 $version = [Diagnostics.FileVersionInfo]::GetVersionInfo($exePath).FileVersion
 $targetDir = $desktopDir + "\mpv.net-portable-x86-" + $version
