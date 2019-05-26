@@ -1,5 +1,3 @@
-using namespace System.IO;
-
 # exit the script if the exit code is greater than 0
 function CheckExitCode {
     if ($LastExitCode -gt 0) {
@@ -10,7 +8,7 @@ function CheckExitCode {
 
 # exit the script if the file don't exist
 function CheckFileExist($path) {
-    if (![File]::Exists($path)) {
+    if (![IO.File]::Exists($path)) {
         Write-Host "`nFile is missing:`n`n$path`n" -ForegroundColor Red
         exit
     }
