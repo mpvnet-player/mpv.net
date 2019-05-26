@@ -1,4 +1,4 @@
-###
+### not yet released
 
 - on the start screen the mpv.net icon is shown instead of the mpv icon
 - everytime only one file is opened the complete folder is loaded in the playlist
