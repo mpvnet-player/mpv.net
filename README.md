@@ -33,6 +33,7 @@ Table of contents
 
 - [Features](#features)
 - [Screenshots](#screenshots)
+- [Manual](#manual)
 - [Context Menu](#context-menu)
 - [Settings](#settings)
 - [Scripting](#scripting)
@@ -94,6 +95,10 @@ Just press Ctrl+Shift+P and find it easily in the searchable command palette.
 Media search feature powered by [Everything](https://www.voidtools.com) to find and play media.
 
 ![Media Search](https://raw.githubusercontent.com/stax76/mpv.net/master/img/MediaSearch.png)
+
+### Manual
+
+[Manual](Manual.md) **(under construction)**
 
 ### Context Menu
 
