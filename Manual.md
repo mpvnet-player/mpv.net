@@ -22,7 +22,7 @@ For optimal results a modern graphics card is recommended.
 
 ## Installation
 
-mpv.net is available as setup and as portable downloads in the 7zip and zip archive format, to unpack the portable downloads 7zip can be used, it is available at www.7-zip.org.
+mpv.net is available as setup and as portable download in the 7zip and zip archive format, to unpack the portable download 7zip can be used, it is available at www.7-zip.org.
 
 If you are new to mpv.net the portable download is recommended, for regular mpv.net users the setup is typically more easy to use.
 
@@ -58,7 +58,7 @@ mpv.net monitors the Windows clipboard and ask if URLs should be played in case 
 
 ### Open > Show media search
 
-mpv.net supports system wide searches using the Everything indexing service installed by the popular Everything file search tool, Everything can be found at www.voidtools.com
+mpv.net supports system wide media searches using the Everything indexing service installed by the popular file search tool Everything (www.voidtools.com).
 
 ### Open > Load external audio files
 
