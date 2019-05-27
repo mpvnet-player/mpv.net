@@ -12,7 +12,7 @@ mpv.net is meant to be a small single person project.
 
 The target audience of mpv.net are Windows programmers and users that need something more advanced that common media players.
 
-Furthermore mpv.net is well suited for Windows users who are interested to learn about the Linux operating system and portable apps, even though mpv.net is not portable self.
+Furthermore mpv.net is well suited for Windows users who are interested to learn about the Linux operating system and portable apps, even though mpv.net self is not portable.
 
 ## Requirements
 
@@ -62,8 +62,8 @@ mpv.net supports system wide searches using the Everything indexing service inst
 
 ### Open > Load external audio files
 
-Allows to load an external audio file. It's also possible to auto detect external audio files based on the file name, the option for this can be found in the settings under 'Settings > Show Confif Editor > Audio > audio-file-auto'.
+Allows to load an external audio file. It's also possible to auto detect external audio files based on the file name, the option for this can be found in the settings under 'Settings > Show Config Editor > Audio > audio-file-auto'.
 
 ### Open > Load external subtitle files
 
-Allows to load an external subtitle file. It's also possible to auto detect external subtitle files based on the file name, the option for this can be found in the settings under 'Settings > Show Confif Editor > Subtitles > sub-auto'.
+Allows to load an external subtitle file. It's also possible to auto detect external subtitle files based on the file name, the option for this can be found in the settings under 'Settings > Show Config Editor > Subtitles > sub-auto'.
