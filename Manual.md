@@ -74,9 +74,9 @@ Play/Pause using the command:
 
 `cycle pause`
 
-https://mpv.io/manual/master/#command-interface-cycle-%3Cproperty%3E-[up|down]
+[cycle command](https://mpv.io/manual/master/#command-interface-cycle-%3Cproperty%3E-[up|down])
 
-https://mpv.io/manual/master/#options-pause
+[pause property](https://mpv.io/manual/master/#options-pause)
 
 ### Stop
 
@@ -84,7 +84,7 @@ Stops the player and unloads the playlist using the command:
 
 `stop`
 
-https://mpv.io/manual/master/#command-interface-stop
+[stop command](https://mpv.io/manual/master/#command-interface-stop)
 
 ### Toggle Fullscreen
 
@@ -92,7 +92,9 @@ Toggles fullscreen using the command:
 
 `cycle fullscreen`
 
-https://mpv.io/manual/master/#options-fs
+[cycle command](https://mpv.io/manual/master/#command-interface-cycle-%3Cproperty%3E-[up|down])
+
+[fullscreen property](https://mpv.io/manual/master/#options-fs)
 
 ### Navigate > Previous File
 
@@ -100,7 +102,7 @@ Navigates to the previous file in the playlist using the command:
 
 `playlist-prev`
 
-https://mpv.io/manual/master/#command-interface-playlist-prev
+[playlist-prev command](https://mpv.io/manual/master/#command-interface-playlist-prev)
 
 ### Navigate > Next File
 
@@ -108,7 +110,7 @@ Navigates to the next file in the playlist using the command:
 
 `playlist-next`
 
-https://mpv.io/manual/master/#command-interface-playlist-next
+[playlist-next command](https://mpv.io/manual/master/#command-interface-playlist-next)
 
 ### Navigate > Next Chapter
 
@@ -116,9 +118,9 @@ Navigates to the next chapter using the command:
 
 `add chapter 1`
 
-https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E]
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
 
-https://mpv.io/manual/master/#command-interface-chapter
+[chapter property](https://mpv.io/manual/master/#command-interface-chapter)
 
 ### Navigate > Previous Chapter
 
@@ -126,9 +128,9 @@ Navigates to the previous chapter using the command:
 
 `add chapter -1`
 
-https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E]
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
 
-https://mpv.io/manual/master/#command-interface-chapter
+[chapter property](https://mpv.io/manual/master/#command-interface-chapter)
 
 ### Navigate > Jump Next Frame
 
@@ -136,7 +138,7 @@ Jumps to the next frame using the command:
 
 `frame-step`
 
-https://mpv.io/manual/master/#command-interface-frame-step
+[frame-step command](https://mpv.io/manual/master/#command-interface-frame-step)
 
 ### Navigate > Jump Previous Frame
 
@@ -144,7 +146,7 @@ Jumps to the previous frame using the command:
 
 `frame-back-step`
 
-https://mpv.io/manual/master/#command-interface-frame-back-step
+[frame-back-step command](https://mpv.io/manual/master/#command-interface-frame-back-step)
 
 ### Navigate > Jump
 
@@ -157,9 +159,9 @@ is used because mpv.net includes a script that shows the position
 when a seek operation is performed, the script uses a more simple
 time format.
 
-https://mpv.io/manual/master/#command-interface-no-osd
+[no-osd command prefix](https://mpv.io/manual/master/#command-interface-no-osd)
 
-https://mpv.io/manual/master/#command-interface-[relative|absolute|absolute-percent|relative-percent|exact|keyframes]
+[seek command](https://mpv.io/manual/master/#command-interface-[relative|absolute|absolute-percent|relative-percent|exact|keyframes])
 
 ### Pan & Scan > Increase Size
 
@@ -167,9 +169,9 @@ Adds video zoom using the command:
 
 `add video-zoom  0.1`
 
-https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E]
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
 
-https://mpv.io/manual/master/#options-video-zoom
+[video-zoom property](https://mpv.io/manual/master/#options-video-zoom)
 
 ### Pan & Scan > Decrease Size
 
@@ -177,57 +179,57 @@ Adds negative video zoom using the command:
 
 `add video-zoom  -0.1`
 
-https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E]
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
 
-https://mpv.io/manual/master/#options-video-zoom
+[video-zoom property](https://mpv.io/manual/master/#options-video-zoom)
 
 ### Pan & Scan > Move Left
 
 `add video-pan-x -0.01`
 
-https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E]
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
 
-https://mpv.io/manual/master/#options-video-pan-y
+[video-pan-x, video-pan-y property](https://mpv.io/manual/master/#options-video-pan-y)
 
 ### Pan & Scan > Move Right
 
 `add video-pan-x 0.01`
 
-https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E]
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
 
-https://mpv.io/manual/master/#options-video-pan-y
+[video-pan-x, video-pan-y property](https://mpv.io/manual/master/#options-video-pan-y)
 
 ### Pan & Scan > Move Up
 
 `add video-pan-y -0.01`
 
-https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E]
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
 
-https://mpv.io/manual/master/#options-video-pan-y
+[video-pan-x, video-pan-y property](https://mpv.io/manual/master/#options-video-pan-y)
 
 ### Pan & Scan > Move Down
 
 `add video-pan-y 0.01`
 
-https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E]
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
 
-https://mpv.io/manual/master/#options-video-pan-y
+[video-pan-x, video-pan-y property](https://mpv.io/manual/master/#options-video-pan-y)
 
 ### Pan & Scan > Decrease Height
 
 `add panscan -0.1`
 
-https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E]
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
 
-https://mpv.io/manual/master/#options-panscan
+[panscan property](https://mpv.io/manual/master/#options-panscan)
 
 ### Pan & Scan > Increase Height
 
 `add panscan  0.1`
 
-https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E]
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
 
-https://mpv.io/manual/master/#options-panscan
+[panscan property](https://mpv.io/manual/master/#options-panscan)
 
 ### Pan & Scan > Reset
 
@@ -235,9 +237,9 @@ Resets Pan & Scan, multiple commands in the same line are separated with semicol
 
 `set video-zoom 0; set video-pan-x 0; set video-pan-y 0`
 
-https://mpv.io/manual/master/#options-video-zoom
+[video-zoom property](https://mpv.io/manual/master/#options-video-zoom)
 
-https://mpv.io/manual/master/#options-video-pan-y
+[video-pan-x, video-pan-y property](https://mpv.io/manual/master/#options-video-pan-y)
 
 ### Video > Decrease Contrast
 
@@ -245,9 +247,9 @@ Decreases contrast with the following command:
 
 `add contrast -1`
 
-https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E]
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
 
-https://mpv.io/manual/master/#options-contrast
+[contrast property](https://mpv.io/manual/master/#options-contrast)
 
 ### Video > Increase Contrast
 
@@ -255,7 +257,7 @@ Increases contrast with the following command:
 
 `add contrast 1`
 
-https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E]
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
 
-https://mpv.io/manual/master/#options-contrast
+[contrast property](https://mpv.io/manual/master/#options-contrast)
 
