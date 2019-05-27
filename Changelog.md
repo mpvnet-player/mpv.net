@@ -1,4 +1,4 @@
-### not yet released
+### 4.0
 
 - on the start screen the mpv.NET icon is shown instead of the mpv icon,
   feedback and contributions regarding the icon are welcome! The paint.net
@@ -10,6 +10,7 @@
 - the config editor no longer shows the command line switches
 - the github start page was greatly improved 
 - the setup.ps1 PowerShell script was greatly improved in regard of error handling and readability
+- a [manual to mpv.net](Manual.md) was created
 
 ### 3.7
 

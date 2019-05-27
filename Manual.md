@@ -1,4 +1,4 @@
-# mpv.net manual **(under construction)**
+# mpv.net manual
 
 ## Table of contents
 

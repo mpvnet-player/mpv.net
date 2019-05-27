@@ -98,7 +98,7 @@ Media search feature powered by [Everything](https://www.voidtools.com) to find 
 
 ### Manual
 
-[Manual](Manual.md) **(under construction)**
+[Manual](Manual.md)
 
 ### Context Menu
 
