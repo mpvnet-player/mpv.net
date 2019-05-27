@@ -72,7 +72,7 @@ Allows to load an external subtitle file. It's also possible to auto detect exte
 
 Play/Pause using the command:
 
-cycle pause
+`cycle pause`
 
 https://mpv.io/manual/master/#command-interface-cycle-%3Cproperty%3E-[up|down]
 
@@ -82,7 +82,7 @@ https://mpv.io/manual/master/#options-pause
 
 Stops the player and unloads the playlist using the command:
 
-stop
+`stop`
 
 https://mpv.io/manual/master/#command-interface-stop
 
@@ -90,7 +90,7 @@ https://mpv.io/manual/master/#command-interface-stop
 
 Toggles fullscreen using the command:
 
-cycle fullscreen
+`cycle fullscreen`
 
 https://mpv.io/manual/master/#options-fs
 
@@ -98,7 +98,7 @@ https://mpv.io/manual/master/#options-fs
 
 Navigates to the previous file in the playlist using the command:
 
-playlist-prev
+`playlist-prev`
 
 https://mpv.io/manual/master/#command-interface-playlist-prev
 
@@ -106,7 +106,7 @@ https://mpv.io/manual/master/#command-interface-playlist-prev
 
 Navigates to the next file in the playlist using the command:
 
-playlist-next
+`playlist-next`
 
 https://mpv.io/manual/master/#command-interface-playlist-next
 
@@ -114,7 +114,7 @@ https://mpv.io/manual/master/#command-interface-playlist-next
 
 Navigates to the next chapter using the command:
 
-add chapter 1
+`add chapter 1`
 
 https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E]
 
@@ -124,7 +124,7 @@ https://mpv.io/manual/master/#command-interface-chapter
 
 Navigates to the previous chapter using the command:
 
-add chapter -1
+`add chapter -1`
 
 https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E]
 
