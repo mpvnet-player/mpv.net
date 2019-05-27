@@ -74,7 +74,7 @@
  Ctrl+BS     set video-zoom 0; set video-pan-x 0; set video-pan-y 0 #menu: Pan & Scan > Reset
 
  Ctrl+1      add contrast -1        #menu: Video > Decrease Contrast
- Ctrl+2      add contrast           #menu: Video > Increase Contrast
+ Ctrl+2      add contrast  1        #menu: Video > Increase Contrast
  _           ignore                 #menu: Video > -
  Ctrl+3      add brightness -1      #menu: Video > Decrease Brightness
  Ctrl+4      add brightness  1      #menu: Video > Increase Brightness

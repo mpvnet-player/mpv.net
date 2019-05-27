@@ -161,3 +161,101 @@ https://mpv.io/manual/master/#command-interface-no-osd
 
 https://mpv.io/manual/master/#command-interface-[relative|absolute|absolute-percent|relative-percent|exact|keyframes]
 
+### Pan & Scan > Increase Size
+
+Adds video zoom using the command:
+
+`add video-zoom  0.1`
+
+https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E]
+
+https://mpv.io/manual/master/#options-video-zoom
+
+### Pan & Scan > Decrease Size
+
+Adds negative video zoom using the command:
+
+`add video-zoom  -0.1`
+
+https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E]
+
+https://mpv.io/manual/master/#options-video-zoom
+
+### Pan & Scan > Move Left
+
+`add video-pan-x -0.01`
+
+https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E]
+
+https://mpv.io/manual/master/#options-video-pan-y
+
+### Pan & Scan > Move Right
+
+`add video-pan-x 0.01`
+
+https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E]
+
+https://mpv.io/manual/master/#options-video-pan-y
+
+### Pan & Scan > Move Up
+
+`add video-pan-y -0.01`
+
+https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E]
+
+https://mpv.io/manual/master/#options-video-pan-y
+
+### Pan & Scan > Move Down
+
+`add video-pan-y 0.01`
+
+https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E]
+
+https://mpv.io/manual/master/#options-video-pan-y
+
+### Pan & Scan > Decrease Height
+
+`add panscan -0.1`
+
+https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E]
+
+https://mpv.io/manual/master/#options-panscan
+
+### Pan & Scan > Increase Height
+
+`add panscan  0.1`
+
+https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E]
+
+https://mpv.io/manual/master/#options-panscan
+
+### Pan & Scan > Reset
+
+Resets Pan & Scan, multiple commands in the same line are separated with semicolon.
+
+`set video-zoom 0; set video-pan-x 0; set video-pan-y 0`
+
+https://mpv.io/manual/master/#options-video-zoom
+
+https://mpv.io/manual/master/#options-video-pan-y
+
+### Video > Decrease Contrast
+
+Decreases contrast with the following command:
+
+`add contrast -1`
+
+https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E]
+
+https://mpv.io/manual/master/#options-contrast
+
+### Video > Increase Contrast
+
+Increases contrast with the following command:
+
+`add contrast 1`
+
+https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E]
+
+https://mpv.io/manual/master/#options-contrast
+
