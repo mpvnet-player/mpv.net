@@ -129,3 +129,35 @@ Navigates to the previous chapter using the command:
 https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E]
 
 https://mpv.io/manual/master/#command-interface-chapter
+
+### Navigate > Jump Next Frame
+
+Jumps to the next frame using the command:
+
+`frame-step`
+
+https://mpv.io/manual/master/#command-interface-frame-step
+
+### Navigate > Jump Previous Frame
+
+Jumps to the previous frame using the command:
+
+`frame-back-step`
+
+https://mpv.io/manual/master/#command-interface-frame-back-step
+
+### Navigate > Jump
+
+Seeking using the command:
+
+`no-osd seek sec`
+
+sec is the relative amount of seconds to jump, the no-osd prefix
+is used because mpv.net includes a script that shows the position
+when a seek operation is performed, the script uses a more simple
+time format.
+
+https://mpv.io/manual/master/#command-interface-no-osd
+
+https://mpv.io/manual/master/#command-interface-[relative|absolute|absolute-percent|relative-percent|exact|keyframes]
+
