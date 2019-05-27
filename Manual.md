@@ -6,7 +6,7 @@ mpv.net is a media player for Windows. Similar like VLC mpv.net is not based on 
 
 libmpv provides the majority of the features of the mpv media player, a fork of mplayer. mpv focuses on the usage of the command line interface, mpv.net retains the ability to be used from the command line and adds a simple and easy to use GUI on top of it.
 
-mpv.net is meant to be a small single person project.
+mpv.net is meant to be a small single person project, it's designed to be mpv compatible, can use the same settings as mpv and offers almost all mpv features because they are all contained in libmpv, this means the official [mpv manual](https://mpv.io/manual/master/) fully applies to mpv.net.
 
 ### Target Audience
 
@@ -261,3 +261,480 @@ Increases contrast with the following command:
 
 [contrast property](https://mpv.io/manual/master/#options-contrast)
 
+### Video > Decrease Brightness
+
+Decreases brightness using the following command:
+
+`add brightness -1`
+
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
+
+[brightness property](https://mpv.io/manual/master/#options-brightness)
+
+### Video > Increase Brightness
+
+Increases brightness using the following command:
+
+`add brightness 1`
+
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
+
+[brightness property](https://mpv.io/manual/master/#options-brightness)
+
+### Video > Decrease Gamma
+
+Decreases gamma using the following command:
+
+`add gamma -1`
+
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
+
+[gamma property](https://mpv.io/manual/master/#options-gamma)
+
+### Video > Increase Gamma
+
+Increases gamma using the following command:
+
+`add gamma 1`
+
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
+
+[gamma property](https://mpv.io/manual/master/#options-gamma)
+
+### Video > Decrease Saturation
+
+Decreases saturation using the following command:
+
+`add saturation -1`
+
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
+
+[saturation property](https://mpv.io/manual/master/#options-saturation)
+
+### Video > Increase Saturation
+
+Increases saturation using the following command:
+
+`add saturation 1`
+
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
+
+[saturation property](https://mpv.io/manual/master/#options-saturation)
+
+### Video > Take Screenshot
+
+`async screenshot`
+
+[async command prefix](https://mpv.io/manual/master/#command-interface-async)
+
+[screenshot command](https://mpv.io/manual/master/#command-interface-[subtitles|video|window|single|each-frame])
+
+### Video > Toggle Deinterlace
+
+Cycles the deinterlace property using the following command:
+
+`cycle deinterlace`
+
+[cycle command](https://mpv.io/manual/master/#command-interface-cycle-%3Cproperty%3E-[up|down])
+
+[deinterlace property](https://mpv.io/manual/master/#options-deinterlace)
+
+### Video > Cycle Aspect Ratio
+
+Cycles the aspect ratio using the following command:
+
+`cycle-values video-aspect "16:9" "4:3" "2.35:1" "-1"`
+
+[cycle-values command](https://mpv.io/manual/master/#command-interface-cycle-values)
+
+[video-aspect property](https://mpv.io/manual/master/#options-video-aspect)
+
+### Audio > Cycle/Next
+
+This uses a mpv.net command that shows better info then the mpv preset
+and also has the advantage of not showing no audio.
+
+### Audio > Delay +0.1
+
+Adds a audio delay using the following command:
+
+`add audio-delay 0.1`
+
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
+
+[audio-delay property](https://mpv.io/manual/master/#options-audio-delay)
+
+### Audio > Delay -0.1
+
+Adds a negative audio delay using the following command:
+
+`add audio-delay -0.1`
+
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
+
+[audio-delay property](https://mpv.io/manual/master/#options-audio-delay)
+
+### Subtitle > Cycle/Next
+
+Shows the next subtitle track using the following command:
+
+`cycle sub`
+
+[cycle command](https://mpv.io/manual/master/#command-interface-cycle-%3Cproperty%3E-[up|down])
+
+[sub/sid property](https://mpv.io/manual/master/#options-sid)
+
+### Subtitle > Toggle Visibility
+
+Cycles the subtitle visibility using the following command:
+
+`cycle sub-visibility`
+
+[cycle command](https://mpv.io/manual/master/#command-interface-cycle-%3Cproperty%3E-[up|down])
+
+[sub-visibility property](https://mpv.io/manual/master/#options-no-sub-visibility)
+
+### Subtitle > Delay -0.1
+
+Adds a negative subtitle delay using the following command:
+
+`add sub-delay -0.1`
+
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
+
+[sub-delay property](https://mpv.io/manual/master/#options-sub-delay)
+
+### Subtitle > Delay 0.1
+
+Adds a positive subtitle delay using the following command:
+
+`add sub-delay 0.1`
+
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
+
+[sub-delay property](https://mpv.io/manual/master/#options-sub-delay)
+
+### Subtitle > Move Up
+
+Moves the subtitle up using the following command:
+
+`add sub-pos -1`
+
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
+
+[sub-pos property](https://mpv.io/manual/master/#options-sub-pos)
+
+### Subtitle > Move Down
+
+Moves the subtitle down using the following command:
+
+`add sub-pos 1`
+
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
+
+[sub-pos property](https://mpv.io/manual/master/#options-sub-pos)
+
+### Subtitle > Decrease Subtitle Font Size
+
+Decreases the subtitle font size using the following command:
+
+`add sub-scale -0.1`
+
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
+
+[sub-scale property](https://mpv.io/manual/master/#options-sub-scale)
+
+### Subtitle > Increase Subtitle Font Size
+
+Increases the subtitle font size using the following command:
+
+`add sub-scale 0.1`
+
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
+
+[sub-scale property](https://mpv.io/manual/master/#options-sub-scale)
+
+### Volume > Up
+
+Increases the volume using the following command:
+
+`add volume 10`
+
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
+
+[volume property](https://mpv.io/manual/master/#options-volume)
+
+### Volume > Down
+
+Decreases the volume using the following command:
+
+`add volume -10`
+
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
+
+[volume property](https://mpv.io/manual/master/#options-volume)
+
+### Volume > Mute
+
+Cycles the mute property using the following command:
+
+`cycle mute`
+
+[cycle command](https://mpv.io/manual/master/#command-interface-cycle-%3Cproperty%3E-[up|down])
+
+[mute property](https://mpv.io/manual/master/#options-mute)
+
+### Speed > -10%
+
+Decreases the speed by 10% using the following command:
+
+`multiply speed 1/1.1`
+
+[multiply command](https://mpv.io/manual/master/#command-interface-multiply-%3Cproperty%3E-%3Cfactor%3E)
+
+[speed property](https://mpv.io/manual/master/#options-speed)
+
+### Speed > 10%
+
+Increases the speed by 10% using the following command:
+
+`multiply speed 1.1`
+
+[multiply command](https://mpv.io/manual/master/#command-interface-multiply-%3Cproperty%3E-%3Cfactor%3E)
+
+[speed property](https://mpv.io/manual/master/#options-speed)
+
+### Speed > Half
+
+Halfs the speed using the following command:
+
+`multiply speed 0.5`
+
+[multiply command](https://mpv.io/manual/master/#command-interface-multiply-%3Cproperty%3E-%3Cfactor%3E)
+
+[speed property](https://mpv.io/manual/master/#options-speed)
+
+### Speed > Double
+
+Doubles the speed using the following command:
+
+`multiply speed 2`
+
+[multiply command](https://mpv.io/manual/master/#command-interface-multiply-%3Cproperty%3E-%3Cfactor%3E)
+
+[speed property](https://mpv.io/manual/master/#options-speed)
+
+### Speed > Reset
+
+Resets the speed using the following command:
+
+`set speed 1`
+
+[set command](https://mpv.io/manual/master/#command-interface-set-%3Cproperty%3E-%22%3Cvalue%3E%22)
+
+[speed property](https://mpv.io/manual/master/#options-speed)
+
+### Extensions > Rating > 0stars
+
+A plugin the writes the rating to the filename.
+
+### View > On Top > Enable
+
+Forces the player to stay on top of other windows using the following command:
+
+`set ontop yes`
+
+[set command](https://mpv.io/manual/master/#command-interface-set-%3Cproperty%3E-%22%3Cvalue%3E%22)
+
+[ontop property](https://mpv.io/manual/master/#options-ontop)
+
+### View > On Top > Disable
+
+Disables the player to stay on top of other windows using the following command:
+
+`set ontop no`
+
+[set command](https://mpv.io/manual/master/#command-interface-set-%3Cproperty%3E-%22%3Cvalue%3E%22)
+
+[ontop property](https://mpv.io/manual/master/#options-ontop)
+
+### View > File Info
+
+Shows info using a mpv.net command about the current file, shows length, position, formats, size and filename.
+
+### View > Show Statistics
+
+Show statistics using the following command:
+
+`script-binding stats/display-stats`
+
+[script-binding command](https://mpv.io/manual/master/#command-interface-script-binding)
+
+### View > Toggle Statistics
+
+Toggles statistics using the following command:
+
+`script-binding stats/display-stats-toggle`
+
+[script-binding command](https://mpv.io/manual/master/#command-interface-script-binding)
+
+### View > Toggle OSC Visibility
+
+Toggles OSC Visibility using the following command:
+
+`script-binding osc/visibility`
+
+[script-binding command](https://mpv.io/manual/master/#command-interface-script-binding)
+
+### View > Show Playlist
+
+Shows the playlist for 5 seconds using the following command:
+
+`show-text ${playlist} 5000`
+
+[show-text command](https://mpv.io/manual/master/#command-interface-show-text)
+
+### View > Show Audio/Video/Subtitle List
+
+Shows the Audio/Video/Subtitle list for 5 seconds using the following command:
+
+`show-text ${track-list} 5000`
+
+[show-text command](https://mpv.io/manual/master/#command-interface-show-text)
+
+### Settings > Show Config Editor
+
+Shows mpv.net's config editor.
+
+### Settings > Show Input Editor
+
+Shows mpv.net's key binding editor.
+
+### Settings > Open Config Folder
+
+Opens the config folder which contains:
+
+mpv.conf file containing mpv settings
+
+mpvnet.conf file containing mpv.net settings
+
+input.conf containing mpv key bindings
+
+User scripts and user extensions
+
+### Tools > Command Palette
+
+Shows the command palette window which allows to find mpv.net commands, it shows the command's location in the context menu and the key shortcut.
+
+### Tools > Show History
+
+When enabled shows a file that contains the playback history containing the time and filename.
+
+### Tools > Set/clear A-B loop points
+
+Enables to set loop start and end points using the following command:
+
+`ab-loop`
+
+[ab-loop command](https://mpv.io/manual/master/#command-interface-ab-loop)
+
+### Tools > Toggle infinite file looping
+
+Loops the current file infinitely using the following command:
+
+cycle-values loop-file "inf" "no"
+
+[cycle-values command](https://mpv.io/manual/master/#command-interface-cycle-values)
+
+[loop-file command](https://mpv.io/manual/master/#options-loop)
+
+### Tools > Cycle Hardware Decoding
+
+Cycles the hwdec property to enable/disable hardware decoding using the following command:
+
+`cycle-values hwdec "auto" "no"`
+
+[cycle-values command](https://mpv.io/manual/master/#command-interface-cycle-values)
+
+[hwdec property](https://mpv.io/manual/master/#options-hwdec)
+
+### Tools > Execute mpv command
+
+Allows to execute mpv commands.
+
+### Tools > Manage File Associations
+
+Allows to manage file associations.
+
+### Help > Show mpv manual
+
+Shows the [mpv manual](https://mpv.io/manual/stable/).
+
+### Help > Show mpv default keys
+
+Shows the [mpv default keys](https://github.com/mpv-player/mpv/blob/master/etc/input.conf)
+
+### Help > Show mpv.net default keys
+
+Shows the [mpv.net default keys](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt)
+
+Help > Show mpv.net web site
+
+Shows the [mpv.net web site](https://mpv-net.github.io/mpv.net-web-site/)
+
+### Help > Show mpv.net manual
+
+Shows the [mpv.net manual](https://github.com/stax76/mpv.net/blob/master/Manual.md)
+
+### Help > About mpv.net
+
+Shows the mpv.net about dialog.
+
+### Exit
+
+Exits mpv.net using the following command:
+
+`quit`
+
+[quit command](https://mpv.io/manual/master/#command-interface-quit-[%3Ccode%3E])
+
+### Exit Watch Later
+
+Exits mpv.net and remembers the position in the file using the following command:
+
+`quit-watch-later`
+
+[quit-watch-later command](https://mpv.io/manual/master/#command-interface-quit-watch-later)
+
+## Command Line Interface
+
+mpvnet implements a basic CLI to set mpv commands.
+
+Example:
+
+mpvnet --mute=yes <file|URL>
+
+## Settings
+
+mpv.net is able to share the settings with mpv and mpv.net uses the same logic to decide from where the settings are loaded. The default location is:
+
+```Text
+C:\Users\%username%\AppData\Roaming\mpv\mpv.conf
+```
+
+If a directory named portable_config next to the mpvnet.exe exists, all config will be loaded from this directory only.
+
+```Text
+<startup>\portable_config\mpv.conf
+```
+
+In case there isn't any config folder mpv.net asks where to create it. If no mpv.conf file exists mpv.net generates it with the following defaults:
+
+<https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/mpvConf.txt>
+
+Config files located in the same directory as mpvnet.exe are loaded with lower priority. Some config files are loaded only once, which means that e.g. of 2 input.conf files located in two config directories, only the one from the directory with higher priority will be loaded.
+
+The key bindings and the context menu definitions are stored in the input.conf file,
+if it's missing mpv.net generates it with the following defaults:
+
+<https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt>

@@ -134,6 +134,11 @@ In case there isn't any config folder mpv.net asks where to create it. If no mpv
 
 Config files located in the same directory as mpvnet.exe are loaded with lower priority. Some config files are loaded only once, which means that e.g. of 2 input.conf files located in two config directories, only the one from the directory with higher priority will be loaded.
 
+The key bindings and the context menu definitions are stored in the input.conf file,
+if it's missing mpv.net generates it with the following defaults:
+
+<https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt>
+
 ### Scripting
 
 [Scripting wiki page](https://github.com/stax76/mpv.net/wiki/Scripting)
