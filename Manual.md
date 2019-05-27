@@ -67,3 +67,65 @@ Allows to load an external audio file. It's also possible to auto detect externa
 ### Open > Load external subtitle files
 
 Allows to load an external subtitle file. It's also possible to auto detect external subtitle files based on the file name, the option for this can be found in the settings under 'Settings > Show Config Editor > Subtitles > sub-auto'.
+
+### Play/Pause
+
+Play/Pause using the command:
+
+cycle pause
+
+https://mpv.io/manual/master/#command-interface-cycle-%3Cproperty%3E-[up|down]
+
+https://mpv.io/manual/master/#options-pause
+
+### Stop
+
+Stops the player and unloads the playlist using the command:
+
+stop
+
+https://mpv.io/manual/master/#command-interface-stop
+
+### Toggle Fullscreen
+
+Toggles fullscreen using the command:
+
+cycle fullscreen
+
+https://mpv.io/manual/master/#options-fs
+
+### Navigate > Previous File
+
+Navigates to the previous file in the playlist using the command:
+
+playlist-prev
+
+https://mpv.io/manual/master/#command-interface-playlist-prev
+
+### Navigate > Next File
+
+Navigates to the next file in the playlist using the command:
+
+playlist-next
+
+https://mpv.io/manual/master/#command-interface-playlist-next
+
+### Navigate > Next Chapter
+
+Navigates to the next chapter using the command:
+
+add chapter 1
+
+https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E]
+
+https://mpv.io/manual/master/#command-interface-chapter
+
+### Navigate > Previous Chapter
+
+Navigates to the previous chapter using the command:
+
+add chapter -1
+
+https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E]
+
+https://mpv.io/manual/master/#command-interface-chapter
