@@ -6,7 +6,7 @@ mpv.net is a media player for Windows. Similar like VLC mpv.net is not based on 
 
 libmpv provides the majority of the features of the mpv media player, a fork of mplayer. mpv focuses on the usage of the command line interface, mpv.net retains the ability to be used from the command line and adds a simple and easy to use GUI on top of it.
 
-mpv.net is ment to be a small single person project.
+mpv.net is meant to be a small single person project.
 
 ### Target Audience
 

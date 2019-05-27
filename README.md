@@ -163,8 +163,8 @@ mpv.net was started 2017 and consists of about 6000 lines of code and markup.
 
 IDE, Editor: Visual Studio, Visual Studio Code.
 
-Due to mpv.net being my first WPF app and mpv.net never ment to be a large
-application best practices and design pattern are often ignored.
+Due to mpv.net being my first WPF app and mpv.net never meant to be a large
+application best practices and design pattern are not always applied.
 
 Third party components:
 
