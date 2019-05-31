@@ -203,7 +203,6 @@ namespace mpvnet
                 {
                     d.InitialDirectory = Path.GetDirectoryName(mp.get_property_string("path", false));
                     d.Multiselect = true;
-
                     if (d.ShowDialog() == DialogResult.OK)
                         foreach (string i in d.FileNames)
                             mp.commandv("sub-add", i);

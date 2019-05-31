@@ -202,7 +202,7 @@ name = "sub-border-color"
 default = ""
 type = "color"
 filter = "Subtitle"
-help = "See --sub-color. Color used for the sub font border. Ignored when sub-back-color is specified (or more exactly: when that option is not set to completely transparent)."
+help = "See sub-color. Color used for the sub font border. Ignored when sub-back-color is specified (or more exactly: when that option is not set to completely transparent)."
 
 [[settings]]
 name = "sub-back-color"

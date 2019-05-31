@@ -562,6 +562,18 @@ namespace mpvnet
         {
             if (files is null || files.Length == 0) return;
             HideLogo();
+            List<string> fileList = files.ToList();
+
+            foreach (string file in files) {
+                string ext = Path.GetExtension(file).TrimStart('.').ToLower();
+                if (App.SubtitleTypes.Contains(ext)) {
+                    mp.commandv("sub-add", file);
+                    fileList.Remove(file);
+                }
+            }
+
+            if (fileList.Count == 0) return;
+            files = fileList.ToArray();
             int count = mp.get_property_int("playlist-count");
 
             foreach (string file in files)
