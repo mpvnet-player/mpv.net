@@ -1,3 +1,8 @@
+###
+
+- drag & drop support for subtitles was added
+- libmpv was updated
+
 ### 4.0
 
 - on the start screen the mpv.NET icon is shown instead of the mpv icon,
