@@ -537,8 +537,14 @@ namespace mpvnet
             List<string> files = new List<string>();
 
             foreach (string i in args)
-                if (!i.StartsWith("--") && File.Exists(i))
+            {
+                if (!i.StartsWith("--") && File.Exists(i) || i == "-" || i.StartsWith("http"))
+                {
                     files.Add(i);
+                    if (i.StartsWith("http"))
+                        RegistryHelp.SetObject("HKCU\\Software\\" + Application.ProductName, "LastURL", i);
+                }
+            }
 
             mp.LoadFiles(files.ToArray());
 
@@ -670,6 +676,7 @@ namespace mpvnet
         {
             if (MainForm.Instance is null) return;
             Rectangle cr = MainForm.Instance.ClientRectangle;
+            if (cr.Width == 0 || cr.Height == 0) return;
 
             using (Bitmap b = new Bitmap(cr.Width, cr.Height))
             {

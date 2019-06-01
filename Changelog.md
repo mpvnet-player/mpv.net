@@ -1,7 +1,12 @@
 ###
 
+### 4.1
+
 - drag & drop support for subtitles was added
 - libmpv was updated
+- command line support for stdin and URLs was added
+- there was a crash happening when the player is
+  minimized in the taskbar
 
 ### 4.0
 
