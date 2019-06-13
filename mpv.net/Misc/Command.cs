@@ -226,6 +226,16 @@ namespace mpvnet
             }));
         }
 
+        public static void add_files_to_playlist(string[] args)
+        {
+            MainForm.Instance.Invoke(new Action(() => {
+                using (var d = new OpenFileDialog() { Multiselect = true })
+                    if (d.ShowDialog() == DialogResult.OK)
+                        foreach(string file in d.FileNames)
+                            mp.commandv("loadfile", file, "append");
+            }));
+        }
+
         public static void cycle_audio(string[] args)
         {
             string filePath = mp.get_property_string("path", false);
