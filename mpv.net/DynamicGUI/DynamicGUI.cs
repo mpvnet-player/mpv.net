@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Navigation;
 
@@ -102,13 +103,18 @@ namespace DynamicGUI
             set => _Text = value;
         }
 
-        public bool IsChecked
+        public bool Checked
         {
             get => OptionSetting.Value == Name ;
             set {
                 if (value)
                     OptionSetting.Value = Name;
             }
+        }
+
+        public Visibility Visibility
+        {
+            get => string.IsNullOrEmpty(Help) ? Visibility.Collapsed : Visibility.Visible;
         }
     }
 

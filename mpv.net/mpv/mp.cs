@@ -52,8 +52,8 @@ namespace mpvnet
         public static event Action QueueOverflow;             //                    MPV_EVENT_QUEUE_OVERFLOW
         public static event Action Hook;                      //                    MPV_EVENT_HOOK
 
-        public static IntPtr MpvHandle { get; set; }
-        public static IntPtr MpvWindowHandle { get; set; }
+        public static IntPtr Handle { get; set; }
+        public static IntPtr WindowHandle { get; set; }
         public static Addon Addon { get; set; }
         public static bool IsLogoVisible { set; get; }
         public static List<KeyValuePair<string, Action<bool>>> BoolPropChangeActions { get; set; } = new List<KeyValuePair<string, Action<bool>>>();
@@ -65,15 +65,22 @@ namespace mpvnet
         public static List<MediaTrack> MediaTracks { get; set; } = new List<MediaTrack>();
         public static List<KeyValuePair<string, double>> Chapters { get; set; } = new List<KeyValuePair<string, double>>();
 
-        public static string InputConfPath  { get; } = MpvConfFolder + "\\input.conf";
-        public static string MpvConfPath    { get; } = MpvConfFolder + "\\mpv.conf";
-        public static string MpvNetConfPath { get; } = MpvConfFolder + "\\mpvnet.conf";
+        public static string InputConfPath  { get; } = ConfFolder + "\\input.conf";
+        public static string ConfPath    { get; } = ConfFolder + "\\mpv.conf";
 
-        static string _MpvConfFolder;
+        public static bool   Fullscreen { get; set; }
+        public static float  Autofit { get; set; } = 0.50f;
+        public static int    Screen { get; set; } = -1;
+        public static string Sid { get; set; } = "";
+        public static string Aid { get; set; } = "";
+        public static string Vid { get; set; } = "";
+        public static int Edition { get; set; }
 
-        public static string MpvConfFolder {
+        static string _ConfFolder;
+
+        public static string ConfFolder {
             get {
-                if (_MpvConfFolder == null)
+                if (_ConfFolder == null)
                 {
                     string portableFolder = Application.StartupPath + "\\portable_config\\";
                     string appdataFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\";
@@ -91,75 +98,61 @@ namespace mpvnet
                             td.AddCommandLink("portable", portableFolder, portableFolder);
                             td.AddCommandLink("startup", startupFolder, startupFolder);
                             td.AllowCancel = false;
-                            _MpvConfFolder = td.Show();
+                            _ConfFolder = td.Show();
                         }
                     }
                     else if (Directory.Exists(portableFolder))
-                        _MpvConfFolder = portableFolder;
+                        _ConfFolder = portableFolder;
                     else if (Directory.Exists(appdataFolder))
-                        _MpvConfFolder = appdataFolder;
+                        _ConfFolder = appdataFolder;
                     else if (File.Exists(Application.StartupPath + "\\mpv.conf"))
-                        _MpvConfFolder = Application.StartupPath + "\\";
+                        _ConfFolder = Application.StartupPath + "\\";
 
-                    if (string.IsNullOrEmpty(_MpvConfFolder)) _MpvConfFolder = appdataFolder;
-                    if (!Directory.Exists(_MpvConfFolder)) Directory.CreateDirectory(_MpvConfFolder);
+                    if (string.IsNullOrEmpty(_ConfFolder)) _ConfFolder = appdataFolder;
+                    if (!Directory.Exists(_ConfFolder)) Directory.CreateDirectory(_ConfFolder);
 
-                    if (!File.Exists(_MpvConfFolder + "\\input.conf"))
-                        File.WriteAllText(_MpvConfFolder + "\\input.conf", Properties.Resources.inputConf);
+                    if (!File.Exists(_ConfFolder + "\\input.conf"))
+                        File.WriteAllText(_ConfFolder + "\\input.conf", Properties.Resources.inputConf);
 
-                    if (!File.Exists(_MpvConfFolder + "\\mpv.conf"))
-                        File.WriteAllText(_MpvConfFolder + "\\mpv.conf", Properties.Resources.mpvConf);
+                    if (!File.Exists(_ConfFolder + "\\mpv.conf"))
+                        File.WriteAllText(_ConfFolder + "\\mpv.conf", Properties.Resources.mpvConf);
                 }
-                return _MpvConfFolder;
+                return _ConfFolder;
             }
         }
 
-        static Dictionary<string, string> _mpvConf;
+        static Dictionary<string, string> _Conf;
 
-        public static Dictionary<string, string> mpvConf {
+        public static Dictionary<string, string> Conf {
             get {
-                if (_mpvConf == null)
+                if (_Conf == null)
                 {
-                    _mpvConf = new Dictionary<string, string>();
+                    _Conf = new Dictionary<string, string>();
 
-                    if (File.Exists(MpvConfPath))
-                        foreach (var i in File.ReadAllLines(MpvConfPath))
+                    if (File.Exists(ConfPath))
+                        foreach (var i in File.ReadAllLines(ConfPath))
                             if (i.Contains("=") && ! i.StartsWith("#"))
-                                _mpvConf[i.Substring(0, i.IndexOf("=")).Trim()] = i.Substring(i.IndexOf("=") + 1).Trim();
+                                _Conf[i.Substring(0, i.IndexOf("=")).Trim()] = i.Substring(i.IndexOf("=") + 1).Trim();
+
+                    foreach (var i in Conf)
+                        ProcessProperty(i.Key, i.Value);
                 }
-                return _mpvConf;
-            }
-        }
-
-        static Dictionary<string, string> _mpvNetConf;
-
-        public static Dictionary<string, string> mpvNetConf {
-            get {
-                if (_mpvNetConf == null)
-                {
-                    _mpvNetConf = new Dictionary<string, string>();
-
-                    if (File.Exists(MpvNetConfPath))
-                        foreach (string i in File.ReadAllLines(MpvNetConfPath))
-                            if (i.Contains("=") && !i.StartsWith("#"))
-                                _mpvNetConf[i.Substring(0, i.IndexOf("=")).Trim()] = i.Substring(i.IndexOf("=") + 1).Trim();
-                }
-                return _mpvNetConf;
+                return _Conf;
             }
         }
 
         public static void Init()
         {
-            string dummy = MpvConfFolder;
+            string dummy = ConfFolder;
             LoadLibrary("mpv-1.dll");
-            MpvHandle = mpv_create();            
+            Handle = mpv_create();            
             set_property_string("input-default-bindings", "yes");
             set_property_string("osc", "yes");
             set_property_string("config", "yes");
             set_property_string("wid", MainForm.Hwnd.ToString());
             set_property_string("force-window", "yes");
             set_property_string("input-media-keys", "yes");
-            mpv_initialize(MpvHandle);
+            mpv_initialize(Handle);
             ShowLogo();
             ProcessCommandLine();
             Task.Run(() => { LoadScripts(); });
@@ -184,8 +177,8 @@ namespace mpvnet
                 if (Path.GetExtension(scriptPath) == ".ps1")
                     PowerShellScript.Init(scriptPath);
 
-            if (Directory.Exists(mp.MpvConfFolder + "Scripts"))
-                foreach (var scriptPath in Directory.GetFiles(mp.MpvConfFolder + "Scripts"))
+            if (Directory.Exists(mp.ConfFolder + "Scripts"))
+                foreach (var scriptPath in Directory.GetFiles(mp.ConfFolder + "Scripts"))
                     if (Path.GetExtension(scriptPath) == ".py")
                         PythonScripts.Add(new PythonScript(File.ReadAllText(scriptPath)));
                     else if (Path.GetExtension(scriptPath) == ".ps1")
@@ -196,11 +189,11 @@ namespace mpvnet
         {
             while (true)
             {
-                IntPtr ptr = mpv_wait_event(MpvHandle, -1);
+                IntPtr ptr = mpv_wait_event(Handle, -1);
                 mpv_event evt = (mpv_event)Marshal.PtrToStructure(ptr, typeof(mpv_event));
 
-                if (MpvWindowHandle == IntPtr.Zero)
-                    MpvWindowHandle = FindWindowEx(MainForm.Hwnd, IntPtr.Zero, "mpv", null);
+                if (WindowHandle == IntPtr.Zero)
+                    WindowHandle = FindWindowEx(MainForm.Hwnd, IntPtr.Zero, "mpv", null);
 
                 //Debug.WriteLine(evt.event_id.ToString());
 
@@ -405,11 +398,11 @@ namespace mpvnet
 
         public static void commandv(params string[] args)
         {
-            if (MpvHandle == IntPtr.Zero)
+            if (Handle == IntPtr.Zero)
                 return;
 
             IntPtr mainPtr = AllocateUtf8IntPtrArrayWithSentinel(args, out IntPtr[] byteArrayPointers);
-            int err = mpv_command(MpvHandle, mainPtr);
+            int err = mpv_command(Handle, mainPtr);
 
             if (err < 0)
                 throw new Exception($"{(mpv_error)err}");
@@ -422,10 +415,10 @@ namespace mpvnet
 
         public static void command_string(string command, bool throwException = false)
         {
-            if (MpvHandle == IntPtr.Zero)
+            if (Handle == IntPtr.Zero)
                 return;
 
-            int err = mpv_command_string(MpvHandle, command);
+            int err = mpv_command_string(Handle, command);
 
             if (err < 0 && throwException)
                 throw new Exception($"{(mpv_error)err}\r\n\r\n" + command);
@@ -434,7 +427,7 @@ namespace mpvnet
         public static void set_property_string(string name, string value, bool throwOnException = false)
         {
             byte[] bytes = GetUtf8Bytes(value);
-            int err = mpv_set_property(MpvHandle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_STRING, ref bytes);
+            int err = mpv_set_property(Handle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_STRING, ref bytes);
 
             if (err < 0 && throwOnException)
                 throw new Exception($"{name}: {(mpv_error)err}");
@@ -444,7 +437,7 @@ namespace mpvnet
         {
             try
             {
-                int err = mpv_get_property(MpvHandle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_STRING, out IntPtr lpBuffer);
+                int err = mpv_get_property(Handle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_STRING, out IntPtr lpBuffer);
 
                 if (err < 0 && throwOnException)
                     throw new Exception($"{name}: {(mpv_error)err}");
@@ -463,7 +456,7 @@ namespace mpvnet
 
         public static int get_property_int(string name, bool throwOnException = false)
         {
-            int err = mpv_get_property(MpvHandle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_INT64, out IntPtr lpBuffer);
+            int err = mpv_get_property(Handle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_INT64, out IntPtr lpBuffer);
 
             if (err < 0 && throwOnException)
                 throw new Exception($"{name}: {(mpv_error)err}");
@@ -474,7 +467,7 @@ namespace mpvnet
         public static double get_property_number(string name, bool throwOnException = false)
         {
             double val = 0;
-            int err = mpv_get_property(MpvHandle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_DOUBLE, ref val);
+            int err = mpv_get_property(Handle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_DOUBLE, ref val);
 
             if (err < 0 && throwOnException)
                 throw new Exception($"{name}: {(mpv_error)err}");
@@ -484,7 +477,7 @@ namespace mpvnet
 
         public static bool get_property_bool(string name, bool throwOnException = false)
         {
-            int err = mpv_get_property(MpvHandle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_FLAG, out IntPtr lpBuffer);
+            int err = mpv_get_property(Handle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_FLAG, out IntPtr lpBuffer);
 
             if (err < 0 && throwOnException)
                 throw new Exception($"{name}: {(mpv_error)err}");
@@ -495,7 +488,7 @@ namespace mpvnet
         public static void set_property_int(string name, int value, bool throwOnException = false)
         {
             Int64 val = value;
-            int err = mpv_set_property(MpvHandle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_INT64, ref val);
+            int err = mpv_set_property(Handle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_INT64, ref val);
 
             if (err < 0 && throwOnException)
                 throw new Exception($"{name}: {(mpv_error)err}");
@@ -503,7 +496,7 @@ namespace mpvnet
 
         public static void observe_property_int(string name, Action<int> action)
         {
-            int err = mpv_observe_property(MpvHandle, (ulong)action.GetHashCode(), name, mpv_format.MPV_FORMAT_INT64);
+            int err = mpv_observe_property(Handle, (ulong)action.GetHashCode(), name, mpv_format.MPV_FORMAT_INT64);
 
             if (err < 0)
                 throw new Exception($"{name}: {(mpv_error)err}");
@@ -513,7 +506,7 @@ namespace mpvnet
 
         public static void observe_property_bool(string name, Action<bool> action)
         {
-            int err = mpv_observe_property(MpvHandle, (ulong)action.GetHashCode(), name, mpv_format.MPV_FORMAT_FLAG);
+            int err = mpv_observe_property(Handle, (ulong)action.GetHashCode(), name, mpv_format.MPV_FORMAT_FLAG);
 
             if (err < 0)
                 throw new Exception($"{name}: {(mpv_error)err}");
@@ -523,7 +516,7 @@ namespace mpvnet
 
         public static void observe_property_string(string name, Action<string> action)
         {
-            int err = mpv_observe_property(MpvHandle, (ulong)action.GetHashCode(), name, mpv_format.MPV_FORMAT_STRING);
+            int err = mpv_observe_property(Handle, (ulong)action.GetHashCode(), name, mpv_format.MPV_FORMAT_STRING);
 
             if (err < 0)
                 throw new Exception($"{name}: {(mpv_error)err}");
@@ -661,7 +654,7 @@ namespace mpvnet
 
             if (File.Exists(LastHistoryPath) && totalMinutes > 1)
             {
-                string historyFilepath = mp.MpvConfFolder + "history.txt";
+                string historyFilepath = mp.ConfFolder + "history.txt";
 
                 File.AppendAllText(historyFilepath, DateTime.Now.ToString().Substring(0, 16) +
                     " " + totalMinutes.ToString().PadLeft(3) + " " +
@@ -692,6 +685,25 @@ namespace mpvnet
                     b.UnlockBits(bd);
                     IsLogoVisible = true;
                 }
+            }
+        }
+
+        public static void ProcessProperty(string name, string value)
+        {
+            switch (name)
+            {
+                case "autofit":
+                    if (value.Length == 3 && value.EndsWith("%"))
+                        if (int.TryParse(value.Substring(0, 2), out int result))
+                            mp.Autofit = result / 100f;
+                    break;
+                case "fs":
+                case "fullscreen":
+                    mp.Fullscreen = value == "yes";
+                    break;
+                case "screen":
+                    mp.Screen = Convert.ToInt32(value);
+                    break;
             }
         }
 

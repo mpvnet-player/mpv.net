@@ -52,7 +52,7 @@ namespace mpvnet
 
         public static void open_conf_folder(string[] args)
         {
-            Process.Start(mp.MpvConfFolder);
+            Process.Start(mp.ConfFolder);
         }
 
         public static void show_input_editor(string[] args)
@@ -102,7 +102,7 @@ namespace mpvnet
 
         public static void show_history(string[] args)
         {
-            var fp = mp.MpvConfFolder + "history.txt";
+            var fp = mp.ConfFolder + "history.txt";
 
             if (File.Exists(fp))
                 Process.Start(fp);
@@ -172,8 +172,9 @@ namespace mpvnet
                 mp.commandv("show-text", text, "5000");
                 string FormatTime(double value) => ((int)value).ToString("00");
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Msg.ShowException(e);
             }
         }
 

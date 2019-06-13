@@ -17,14 +17,83 @@ namespace mpvnet
 {
     public class App
     {
+        public static string ConfFilePath { get; } = mp.ConfFolder + "\\mpvnet.conf";
+        public static string ClipboardMonitoring { get; set; } = "yes";
+
         public static string[] VideoTypes    { get; } = "mkv mp4 mpg avi mov webm vob wmv flv avs 264 h264 asf webm mpeg mpv y4m avc hevc 265 h265 m2v m2ts vpy mts m4v".Split(' ');
         public static string[] AudioTypes    { get; } = "mp3 mp2 ac3 ogg opus flac wav w64 m4a dts dtsma dtshr dtshd eac3 thd thd+ac3 mka aac mpa".Split(' ');
         public static string[] SubtitleTypes { get; } = "srt ass idx sup ttxt ssa smi".Split(' ');
 
+        public static string DarkMode { get; set; } = "always";
+
         public static bool IsDarkMode { 
+            get => (DarkMode == "system" && Sys.IsDarkTheme) || DarkMode == "always";
+        }
+
+        public static void Init()
+        {
+            foreach (var i in Conf)
+                ProcessProperty(i.Key, i.Value);
+        }
+
+        static Dictionary<string, string> _Conf;
+
+        public static Dictionary<string, string> Conf {
             get {
-                string darkMode = MainForm.Instance.MpvNetDarkMode;
-                return (darkMode == "system" && Sys.IsDarkTheme) || darkMode == "always";
+                if (_Conf == null)
+                {
+                    _Conf = new Dictionary<string, string>();
+
+                    if (File.Exists(ConfFilePath))
+                        foreach (string i in File.ReadAllLines(ConfFilePath))
+                            if (i.Contains("=") && !i.StartsWith("#"))
+                                _Conf[i.Substring(0, i.IndexOf("=")).Trim()] = i.Substring(i.IndexOf("=") + 1).Trim();
+                }
+                return _Conf;
+            }
+        }
+
+        public static void ProcessProperty(string name, string value)
+        {
+            switch (name)
+            {
+                case "dark-mode":
+                    DarkMode = value;
+                    break;
+                case "clipboard-monitoring":
+                    ClipboardMonitoring = value;
+                    break;
+            }
+        }
+
+        public static void ProcessCommandLineEarly()
+        {
+            var args = Environment.GetCommandLineArgs().Skip(1);
+
+            foreach (string i in args)
+            {
+                if (i.StartsWith("--"))
+                {
+                    if (i.Contains("="))
+                    {
+                        string left = i.Substring(2, i.IndexOf("=") - 2);
+                        string right = i.Substring(left.Length + 3);
+                        mp.ProcessProperty(left, right);
+                        ProcessProperty(left, right);
+                    }
+                    else
+                    {
+                        string switchName = i.Substring(2);
+
+                        switch (switchName)
+                        {
+                            case "fs":
+                            case "fullscreen":
+                                mp.Fullscreen = true;
+                                break;
+                        }
+                    }
+                }
             }
         }
     }

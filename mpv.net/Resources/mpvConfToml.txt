@@ -4,7 +4,7 @@ default = "no"
 filter = "Video"
 helpurl = "https://mpv.io/manual/master/#options-hwdec"
 help = "Specify the hardware video decoding API that should be used if possible. Whether hardware decoding is actually done depends on the video codec. If hardware decoding is not possible, mpv will fall back on software decoding.\n\nFor more information visit:"
-options = [{ name = "no",           help = "always use software decoding (Default)" },
+options = [{ name = "no",           help = "always use software decoding" },
            { name = "auto",         help = "enable best hw decoder (see below)" },
            { name = "yes",          help = "exactly the same as auto" },
            { name = "auto-copy",    help = "enable best hw decoder with copy-back (see below)" },
@@ -24,7 +24,7 @@ name = "gpu-api"
 default = "auto"
 filter = "Video"
 help = "Controls which type of graphics APIs will be accepted."
-options = [{ name = "auto",   help = "Use any available API (Default)" },
+options = [{ name = "auto",   help = "Use any available API" },
            { name = "opengl", help = "Allow only OpenGL (requires OpenGL 2.1+ or GLES 2.0+)" },
            { name = "vulkan", help = "Allow only Vulkan (requires a valid/working spirv-compiler)" },
            { name = "d3d11",  help = "Allow only gpu-context=d3d11" }]
@@ -33,8 +33,7 @@ options = [{ name = "auto",   help = "Use any available API (Default)" },
 name = "gpu-context"
 default = "auto"
 filter = "Video"
-help = "The value auto (the default) selects the GPU context. You can also pass help to get a complete list of compiled in backends (sorted by autoprobe order)."
-options = [{ name = "auto",      help = "auto-select (Default)" },
+options = [{ name = "auto",      help = "auto-select" },
            { name = "win",       help = "Win32/WGL" },
            { name = "winvk",     help = "VK_KHR_win32_surface" },
            { name = "angle",     help = "Direct3D11 through the OpenGL ES translation layer ANGLE. This supports almost everything the win backend does (if the ANGLE build is new enough)." },
@@ -45,9 +44,9 @@ options = [{ name = "auto",      help = "auto-select (Default)" },
 name = "vo"
 default = "gpu"
 filter = "Video"
+help = "Video output drivers to be used.\n\nFor more information visit:"
 helpurl = "https://mpv.io/manual/master/#video-output-drivers-vo"
-help = "Video output drivers to be used. Default = gpu.\n\nFor more information visit:"
-options = [{ name = "gpu",      help = "General purpose, customizable, GPU-accelerated video output driver. It supports extended scaling methods, dithering, color management, custom shaders, HDR, and more. (Default)" },
+options = [{ name = "gpu",      help = "General purpose, customizable, GPU-accelerated video output driver. It supports extended scaling methods, dithering, color management, custom shaders, HDR, and more." },
            { name = "direct3d", help = "Video output driver that uses the Direct3D interface" }]
 
 [[settings]]
@@ -70,7 +69,7 @@ name = "scale"
 default = "bilinear"
 filter = "Video"
 help = "The GPU renderer filter function to use when upscaling video. There are some more filters, but most are not as useful. For a complete list, pass help as value, e.g.: mpv --scale=help"
-options = [{ name = "bilinear",         help = "Bilinear hardware texture filtering (fastest, very low quality). This is the default for compatibility reasons." },
+options = [{ name = "bilinear",         help = "Bilinear hardware texture filtering (fastest, very low quality)." },
            { name = "spline36",         help = "Mid quality and speed. This is the default when using gpu-hq." },
            { name = "lanczos",          help = "Lanczos scaling. Provides mid quality and speed. Generally worse than spline36, but it results in a slightly sharper image which is good for some content types. The number of taps can be controlled with  scale-radius, but is best left unchanged. (This filter is an alias for sinc-windowed sinc)" },
            { name = "ewa_lanczos",      help = "Elliptic weighted average Lanczos scaling. Also known as Jinc. Relatively slow, but very good quality. The radius can be controlled with scale-radius. Increasing the radius makes the filter sharper but adds more ringing. (This filter is an alias for jinc-windowed jinc)" },
@@ -84,7 +83,7 @@ name = "cscale"
 default = "bilinear"
 filter = "Video"
 help = "As scale, but for interpolating chroma information. If the image is not subsampled, this option is ignored entirely."
-options = [{ name = "bilinear",         help = "Bilinear hardware texture filtering (fastest, very low quality). This is the default for compatibility reasons." },
+options = [{ name = "bilinear",         help = "Bilinear hardware texture filtering (fastest, very low quality)." },
            { name = "spline36",         help = "Mid quality and speed. This is the default when using gpu-hq." },
            { name = "lanczos",          help = "Lanczos scaling. Provides mid quality and speed. Generally worse than spline36, but it results in a slightly sharper image which is good for some content types. The number of taps can be controlled with  scale-radius, but is best left unchanged. (This filter is an alias for sinc-windowed sinc)" },
            { name = "ewa_lanczos",      help = "Elliptic weighted average Lanczos scaling. Also known as Jinc. Relatively slow, but very good quality. The radius can be controlled with scale-radius. Increasing the radius makes the filter sharper but adds more ringing. (This filter is an alias for jinc-windowed jinc)" },
@@ -98,7 +97,7 @@ name = "dscale"
 default = "bilinear"
 filter = "Video"
 help = "Like scale, but apply these filters on downscaling instead. If this option is unset, the filter implied by scale will be applied."
-options = [{ name = "bilinear",         help = "Bilinear hardware texture filtering (fastest, very low quality). This is the default for compatibility reasons." },
+options = [{ name = "bilinear",         help = "Bilinear hardware texture filtering (fastest, very low quality)." },
            { name = "spline36",         help = "Mid quality and speed. This is the default when using gpu-hq." },
            { name = "lanczos",          help = "Lanczos scaling. Provides mid quality and speed. Generally worse than spline36, but it results in a slightly sharper image which is good for some content types. The number of taps can be controlled with  scale-radius, but is best left unchanged. (This filter is an alias for sinc-windowed sinc)" },
            { name = "ewa_lanczos",      help = "Elliptic weighted average Lanczos scaling. Also known as Jinc. Relatively slow, but very good quality. The radius can be controlled with scale-radius. Increasing the radius makes the filter sharper but adds more ringing. (This filter is an alias for jinc-windowed jinc)" },
@@ -111,7 +110,7 @@ options = [{ name = "bilinear",         help = "Bilinear hardware texture filter
 name = "dither-depth"
 default = "no"
 filter = "Video"
-help = "Set dither target depth to N. Default: no. Note that the depth of the connected video display device cannot be detected. Often, LCD panels will do dithering on their own, which conflicts with this option and leads to ugly output."
+help = "Set dither target depth to N. Note that the depth of the connected video display device cannot be detected. Often, LCD panels will do dithering on their own, which conflicts with this option and leads to ugly output."
 options = [{ name = "no",   help = "Disable any dithering done by mpv." },
            { name = "auto", help = "Automatic selection. If output bit depth cannot be detected, 8 bits per component are assumed." },
            { name = "8",    help = "Dither to 8 bit output." }]
@@ -157,7 +156,7 @@ name = "audio-file-auto"
 default = "no"
 filter = "Audio"
 help = "Load additional audio files matching the video filename. The parameter specifies how external audio files are matched."
-options = [{ name = "no",    help = "Don't automatically load external audio files (default)." },
+options = [{ name = "no",    help = "Don't automatically load external audio files." },
            { name = "exact", help = "Load the media filename with audio file extension." },
            { name = "fuzzy", help = "Load all audio files containing media filename." },
            { name = "all",   help = "Load all audio files in the current and audio-file-paths directories." }]
@@ -174,7 +173,7 @@ default = "exact"
 filter = "Subtitle"
 help = "Load additional subtitle files matching the video filename. The parameter specifies how external subtitle files are matched. exact is enabled by default."
 options = [{ name = "no",    help = "Don't automatically load external subtitle files." },
-           { name = "exact", help = "Load the media filename with subtitle file extension (Default)." },
+           { name = "exact", help = "Load the media filename with subtitle file extension." },
            { name = "fuzzy", help = "Load all subs containing media filename." },
            { name = "all",   help = "Load all subs in the current and sub-file-paths directories." }]
 
@@ -215,7 +214,7 @@ help = "See sub-color. Color used for sub text background. You can use sub-shado
 name = "screen"
 default = ""
 filter = "Screen"
-help = "In multi-monitor configurations (i.e. a single desktop that spans across multiple displays), this option tells mpv which screen to display the video on. Default: default"
+help = "In multi-monitor configurations (i.e. a single desktop that spans across multiple displays), this option tells mpv which screen to display the video on."
 
 [[settings]]
 name = "osd-playing-msg"
@@ -235,7 +234,7 @@ help = "Specify the OSD font size. See sub-font-size for details. Default: 55"
 name = "fullscreen"
 default = "no"
 filter = "Screen"
-help = "Start the player in fullscreen mode. Default: no"
+help = "Start the player in fullscreen mode."
 options = [{ name = "yes" },
            { name = "no" }]
 
@@ -257,7 +256,7 @@ help = "Set the initial window size in percent. Please note that this setting is
 name = "keep-open-pause"
 default = "yes"
 filter = "Playback"
-help = "If set to no, instead of pausing when keep-open is active, just stop at end of file and continue playing forward when you seek backwards until end where it stops again. Default: yes"
+help = "If set to no, instead of pausing when keep-open is active, just stop at end of file and continue playing forward when you seek backwards until end where it stops again."
 options = [{ name = "yes" },
            { name = "no" }]
 
@@ -267,7 +266,7 @@ default = "no"
 filter = "Playback"
 help = "Do not terminate when playing or seeking beyond the end of the file, and there is not next file to be played (and loop is not used). Instead, pause the player. When trying to seek beyond end of the file, the player will attempt to seek to the last frame.\n\nNormally, this will act like set pause yes on EOF, unless the keep-open-pause=no option is set."
 options = [{ name = "yes",    help = "Don't terminate if the current file is the last playlist entry. Equivalent to keep-open without arguments."},
-           { name = "no",     help = "If the current file ends, go to the next file or terminate. (Default.)" },
+           { name = "no",     help = "If the current file ends, go to the next file or terminate." },
            { name = "always", help = "Like yes, but also applies to files before the last playlist entry. This means playback will never automatically advance to the next file."}]
 
 [[settings]]
@@ -303,14 +302,14 @@ filter = "Playback"
 help = "Select when to use precise seeks that are not limited to keyframes. Such seeks require decoding video from the previous keyframe up to the target position and so can take some time depending on decoding performance. For some video formats, precise seeks are disabled. This option selects the default choice to use for seeks; it is possible to explicitly override that default in the definition of key bindings and in input commands."
 options = [{ name = "yes",      help = "Use precise seeks whenever possible." },
            { name = "no",       help = "Never use precise seeks." },
-           { name = "absolute", help = "Use precise seeks if the seek is to an absolute position in the file, such as a chapter seek, but not for relative seeks like the default behavior of arrow keys (default)." },
+           { name = "absolute", help = "Use precise seeks if the seek is to an absolute position in the file, such as a chapter seek, but not for relative seeks like the default behavior of arrow keys." },
            { name = "always",   help = "Same as yes (for compatibility)." }]
 
 [[settings]]
 name = "track-auto-selection"
 default = "yes"
 filter = "Playback"
-help = "Enable the default track auto-selection (default: yes). Enabling this will make the player select streams according to aid, alang, and others. If it is disabled, no tracks are selected. In addition, the player will not exit if no tracks are selected, and wait instead (this wait mode is similar to pausing, but the pause option is not set).\n\nThis is useful with lavfi-complex: you can start playback in this mode, and then set select tracks at runtime by setting the filter graph. Note that if lavfi-complex is set before playback is started, the referenced tracks are always selected."
+help = "Enable the default track auto-selection. Enabling this will make the player select streams according to aid, alang, and others. If it is disabled, no tracks are selected. In addition, the player will not exit if no tracks are selected, and wait instead (this wait mode is similar to pausing, but the pause option is not set).\n\nThis is useful with lavfi-complex: you can start playback in this mode, and then set select tracks at runtime by setting the filter graph. Note that if lavfi-complex is set before playback is started, the referenced tracks are always selected."
 options = [{ name = "yes" },
            { name = "no" }]
 

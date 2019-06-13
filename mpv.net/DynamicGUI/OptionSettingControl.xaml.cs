@@ -12,11 +12,13 @@ namespace DynamicGUI
             OptionSetting = optionSetting;
             InitializeComponent();
             TitleTextBox.Text = optionSetting.Name;
+            if (string.IsNullOrEmpty(optionSetting.Help))
+                HelpTextBox.Visibility = Visibility.Collapsed;
             HelpTextBox.Text = optionSetting.Help;
             ItemsControl.ItemsSource = optionSetting.Options;
-            Link.SetURL(optionSetting.HelpURL);
             if (string.IsNullOrEmpty(optionSetting.HelpURL))
                 LinkTextBlock.Visibility = Visibility.Collapsed;
+            Link.SetURL(optionSetting.HelpURL);
         }
 
         private string _SearchableText;

@@ -15,8 +15,8 @@ namespace mpvnet
 {
     public partial class ConfWindow : Window
     {
-        private List<SettingBase> MpvSettingsDefinitions = Settings.LoadSettings(Properties.Resources.mpvConfToml);
-        private List<SettingBase> MpvNetSettingsDefinitions = Settings.LoadSettings(Properties.Resources.mpvNetConfToml);
+        private List<SettingBase> SettingsDefinitions = Settings.LoadSettings(Properties.Resources.mpvConfToml);
+        private List<SettingBase> NetSettingsDefinitions = Settings.LoadSettings(Properties.Resources.mpvNetConfToml);
         private Dictionary<string, Dictionary<string, string>> Comments = new Dictionary<string, Dictionary<string, string>>();
 
         public ObservableCollection<string> FilterStrings { get; } = new ObservableCollection<string>();
@@ -26,8 +26,8 @@ namespace mpvnet
             InitializeComponent();
             DataContext = this;
             SearchControl.SearchTextBox.TextChanged += SearchTextBox_TextChanged;
-            LoadSettings(MpvSettingsDefinitions, MpvConf);
-            LoadSettings(MpvNetSettingsDefinitions, MpvNetConf);
+            LoadSettings(SettingsDefinitions, Conf);
+            LoadSettings(NetSettingsDefinitions, NetConf);
             SearchControl.Text = RegistryHelp.GetString(@"HKCU\Software\mpv.net", "config editor search");
 
             if (App.IsDarkMode)
@@ -80,21 +80,21 @@ namespace mpvnet
             }
         }
 
-        private Dictionary<string, string> _mpvConf;
+        private Dictionary<string, string> _Conf;
 
-        public Dictionary<string, string> MpvConf {
+        public Dictionary<string, string> Conf {
             get {
-                if (_mpvConf == null) _mpvConf = LoadConf(mp.MpvConfPath);
-                return _mpvConf;
+                if (_Conf == null) _Conf = LoadConf(mp.ConfPath);
+                return _Conf;
             }
         }
 
-        private Dictionary<string, string> _mpvNetConf;
+        private Dictionary<string, string> _NetConf;
 
-        public Dictionary<string, string> MpvNetConf {
+        public Dictionary<string, string> NetConf {
             get {
-                if (_mpvNetConf == null) _mpvNetConf = LoadConf(mp.MpvNetConfPath);
-                return _mpvNetConf;
+                if (_NetConf == null) _NetConf = LoadConf(App.ConfFilePath);
+                return _NetConf;
             }
         }
 
@@ -139,19 +139,19 @@ namespace mpvnet
         {
             bool isDirty = false;
 
-            foreach (SettingBase i in MpvSettingsDefinitions)
+            foreach (SettingBase i in SettingsDefinitions)
                 if (i.StartValue != i.Value)
                     isDirty = true;
 
-            foreach (SettingBase i in MpvNetSettingsDefinitions)
+            foreach (SettingBase i in NetSettingsDefinitions)
                 if (i.StartValue != i.Value)
                     isDirty = true;
 
             if (!isDirty)
                 return;
 
-            WriteToDisk(mp.MpvConfPath, MpvConf, MpvSettingsDefinitions);
-            WriteToDisk(mp.MpvNetConfPath, MpvNetConf, MpvNetSettingsDefinitions);
+            WriteToDisk(mp.ConfPath, Conf, SettingsDefinitions);
+            WriteToDisk(App.ConfFilePath, NetConf, NetSettingsDefinitions);
 
             Msg.Show("Changes will be available on next mpv.net startup.");
         }
@@ -228,7 +228,7 @@ namespace mpvnet
 
         private void OpenSettingsTextBlock_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            Process.Start(Path.GetDirectoryName(mp.MpvConfPath));
+            Process.Start(Path.GetDirectoryName(mp.ConfPath));
         }
 
         private void ShowManualTextBlock_MouseUp(object sender, MouseButtonEventArgs e)

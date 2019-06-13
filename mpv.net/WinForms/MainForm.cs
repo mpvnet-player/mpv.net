@@ -24,15 +24,6 @@ namespace mpvnet
         bool   IgnoreDpiChanged = true;
         List<string> RecentFiles;
 
-        public string MpvNetDarkMode { get; set; } = "always";
-        public bool   MpvFullscreen  { get; set; }
-        public float  MpvAutofit { get; set; } = 0.50f;
-        public int    MpvScreen  { get; set; } = -1;
-        public string MpvSid     { get; set; } = "";
-        public string MpvAid     { get; set; } = "";
-        public string MpvVid     { get; set; } = "";
-        public int    MpvEdition { get; set; }
-
         public MainForm()
         {
             InitializeComponent();
@@ -44,6 +35,7 @@ namespace mpvnet
                 Msg.SupportURL = "https://github.com/stax76/mpv.net#support";
                 Instance = this;
                 WPF.WPF.Init();
+                App.Init();
                 System.Windows.Application.Current.ShutdownMode = System.Windows.ShutdownMode.OnExplicitShutdown;
                 Hwnd = Handle;
                 MinimumSize = new Size(FontHeight * 16, FontHeight * 9);
@@ -56,18 +48,13 @@ namespace mpvnet
                 else
                     RecentFiles = new List<string>();
 
-                foreach (var i in mp.mpvConf)
-                    ProcessMpvProperty(i.Key, i.Value);
+                var dummy = mp.Conf;
+                App.ProcessCommandLineEarly();
 
-                foreach (var i in mp.mpvNetConf)
-                    ProcessMpvNetProperty(i.Key, i.Value);
+                if (mp.Screen == -1) mp.Screen = Array.IndexOf(Screen.AllScreens, Screen.PrimaryScreen);
+                SetScreen(mp.Screen);
 
-                ProcessCommandLineEarly();
-
-                if (MpvScreen == -1) MpvScreen = Array.IndexOf(Screen.AllScreens, Screen.PrimaryScreen);
-                SetScreen(MpvScreen);
-
-                ChangeFullscreen(MpvFullscreen);
+                ChangeFullscreen(mp.Fullscreen);
             }
             catch (Exception ex)
             {
@@ -94,7 +81,7 @@ namespace mpvnet
                     {
                         MenuItem mi = new MenuItem(track.Text);
                         mi.Action = () => { mp.commandv("set", "vid", track.ID.ToString()); };
-                        mi.Checked = MpvVid == track.ID.ToString();
+                        mi.Checked = mp.Vid == track.ID.ToString();
                         trackMenuItem.DropDownItems.Add(mi);
                     }
 
@@ -105,7 +92,7 @@ namespace mpvnet
                     {
                         MenuItem mi = new MenuItem(track.Text);
                         mi.Action = () => { mp.commandv("set", "aid", track.ID.ToString()); };
-                        mi.Checked = MpvAid == track.ID.ToString();
+                        mi.Checked = mp.Aid == track.ID.ToString();
                         trackMenuItem.DropDownItems.Add(mi);
                     }
 
@@ -116,7 +103,7 @@ namespace mpvnet
                     {
                         MenuItem mi = new MenuItem(track.Text);
                         mi.Action = () => { mp.commandv("set", "sid", track.ID.ToString()); };
-                        mi.Checked = MpvSid == track.ID.ToString();
+                        mi.Checked = mp.Sid == track.ID.ToString();
                         trackMenuItem.DropDownItems.Add(mi);
                     }
 
@@ -124,7 +111,7 @@ namespace mpvnet
                     {
                         MenuItem mi = new MenuItem("S: No subtitles");
                         mi.Action = () => { mp.commandv("set", "sid", "no"); };
-                        mi.Checked = MpvSid == "no";
+                        mi.Checked = mp.Sid == "no";
                         trackMenuItem.DropDownItems.Add(mi);
                     }
 
@@ -135,7 +122,7 @@ namespace mpvnet
                     {
                         MenuItem mi = new MenuItem(track.Text);
                         mi.Action = () => { mp.commandv("set", "edition", track.ID.ToString()); };
-                        mi.Checked = MpvEdition == track.ID;
+                        mi.Checked = mp.Edition == track.ID;
                         trackMenuItem.DropDownItems.Add(mi);
                     }
                 }
@@ -215,7 +202,7 @@ namespace mpvnet
         {
             if (IsFullscreen || mp.VideoSize.Width == 0) return;
             Screen screen = Screen.FromControl(this);
-            int height = Convert.ToInt32(screen.Bounds.Height * MpvAutofit);
+            int height = Convert.ToInt32(screen.Bounds.Height * mp.Autofit);
             int width = Convert.ToInt32(height * mp.VideoSize.Width / (double)mp.VideoSize.Height);
             Point middlePos = new Point(Left + Width / 2, Top + Height / 2);
             var rect = new Native.RECT(new Rectangle(screen.Bounds.X, screen.Bounds.Y, width, height));
@@ -230,7 +217,7 @@ namespace mpvnet
             if (IsFullscreen || mp.VideoSize.Width == 0) return;
             Screen screen = Screen.FromControl(this);
             int height = ClientSize.Height;
-            if (height > screen.Bounds.Height * 0.9) height = Convert.ToInt32(screen.Bounds.Height * MpvAutofit);
+            if (height > screen.Bounds.Height * 0.9) height = Convert.ToInt32(screen.Bounds.Height * mp.Autofit);
             int width = Convert.ToInt32(height * mp.VideoSize.Width / (double)mp.VideoSize.Height);
             Point middlePos = new Point(Left + Width / 2, Top + Height / 2);
             var rect = new Native.RECT(new Rectangle(screen.Bounds.X, screen.Bounds.Y, width, height));
@@ -242,66 +229,6 @@ namespace mpvnet
             int maxLeft = screens[0].Bounds.Left + screens.Select((sc) => sc.Bounds.Width).Sum() - rect.Width - SystemInformation.CaptionHeight;
             if (left > maxLeft) left = maxLeft;
             Native.SetWindowPos(Handle, IntPtr.Zero /* HWND_TOP */, left, top, rect.Width, rect.Height, 4 /* SWP_NOZORDER */);
-        }
-
-        protected void ProcessCommandLineEarly()
-        {
-            var args = Environment.GetCommandLineArgs().Skip(1);
-
-            foreach (string i in args)
-            {
-                if (i.StartsWith("--"))
-                {
-                    if (i.Contains("="))
-                    {
-                        string left = i.Substring(2, i.IndexOf("=") - 2);
-                        string right = i.Substring(left.Length + 3);
-                        ProcessMpvProperty(left, right);
-                        ProcessMpvNetProperty(left, right);
-                    }
-                    else
-                    {
-                        string switchName = i.Substring(2);
-
-                        switch (switchName)
-                        {
-                            case "fs":
-                            case "fullscreen":
-                                MpvFullscreen = true;
-                                break;
-                        }
-                    }
-                }
-            }
-        }
-
-        void ProcessMpvProperty(string name, string value)
-        {
-            switch (name)
-            {
-                case "autofit":
-                    if (value.Length == 3 && value.EndsWith("%"))
-                        if (int.TryParse(value.Substring(0, 2), out int result))
-                            MpvAutofit = result / 100f;
-                    break;
-                case "fs":
-                case "fullscreen":
-                    MpvFullscreen = value == "yes";
-                    break;
-                case "screen":
-                    MpvScreen = Convert.ToInt32(value);
-                    break;
-            }
-        }
-
-        void ProcessMpvNetProperty(string name, string value)
-        {
-            switch (name)
-            {
-                case "dark-mode":
-                    MpvNetDarkMode = value;
-                    break;
-            }
         }
 
         public void BuildMenu()
@@ -414,12 +341,12 @@ namespace mpvnet
                 case 0x0104: // WM_SYSKEYDOWN
                 case 0x0105: // WM_SYSKEYUP
                 case 0x020A: // WM_MOUSEWHEEL
-                    if (mp.MpvWindowHandle != IntPtr.Zero)
-                        Native.SendMessage(mp.MpvWindowHandle, m.Msg, m.WParam, m.LParam);
+                    if (mp.WindowHandle != IntPtr.Zero)
+                        Native.SendMessage(mp.WindowHandle, m.Msg, m.WParam, m.LParam);
                     break;
                 case 0x319: // WM_APPCOMMAND
-                    if (mp.MpvWindowHandle != IntPtr.Zero)
-                        Native.PostMessage(mp.MpvWindowHandle, m.Msg, m.WParam, m.LParam);
+                    if (mp.WindowHandle != IntPtr.Zero)
+                        Native.PostMessage(mp.WindowHandle, m.Msg, m.WParam, m.LParam);
                     break;
                 case 0x203: // Native.WM.LBUTTONDBLCLK
                     if (!IsMouseInOSC())
@@ -529,19 +456,18 @@ namespace mpvnet
 
         void mpPropChangeOnTop(bool value) => BeginInvoke(new Action(() => TopMost = value));
 
-        void mpPropChangeAid(string value) => MpvAid = value;
+        void mpPropChangeAid(string value) => mp.Aid = value;
 
-        void mpPropChangeSid(string value) => MpvSid = value;
+        void mpPropChangeSid(string value) => mp.Sid = value;
 
-        void mpPropChangeVid(string value) => MpvVid = value;
+        void mpPropChangeVid(string value) => mp.Vid = value;
 
-        void mpPropChangeEdition(int value) => MpvEdition = value;
+        void mpPropChangeEdition(int value) => mp.Edition = value;
 
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
-            if ((MpvNetDarkMode == "system" && Sys.IsDarkTheme) || MpvNetDarkMode == "always")
-                ToolStripRendererEx.ColorTheme = Color.Black;
+            if (App.IsDarkMode) ToolStripRendererEx.ColorTheme = Color.Black;
             ContextMenu = new ContextMenuStripEx(components);
             ContextMenu.Opened += ContextMenu_Opened;
             ContextMenu.Opening += ContextMenu_Opening;
@@ -579,6 +505,7 @@ namespace mpvnet
 
         void CheckURL()
         {
+            if (App.ClipboardMonitoring != "yes") return;
             string clipboard = Clipboard.GetText();
 
             if (clipboard.StartsWith("http") && RegistryHelp.GetString("HKCU\\Software\\" + Application.ProductName, "LastURL") != clipboard && Visible)
