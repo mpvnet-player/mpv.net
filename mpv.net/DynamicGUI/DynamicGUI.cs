@@ -106,10 +106,7 @@ namespace DynamicGUI
         public bool Checked
         {
             get => OptionSetting.Value == Name ;
-            set {
-                if (value)
-                    OptionSetting.Value = Name;
-            }
+            set { if (value) OptionSetting.Value = Name; }
         }
 
         public Visibility Visibility

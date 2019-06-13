@@ -13,7 +13,7 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <WrapPanel Orientation="Vertical">
-                            <RadioButton x:Name="RadioButton" VerticalContentAlignment="Center" IsChecked="{Binding IsChecked}" GroupName="{Binding OptionSetting.Name}" Content="{Binding Text}" FontSize="16" FontWeight="Normal" VerticalAlignment="Top" Foreground="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"></RadioButton>
+                            <RadioButton x:Name="RadioButton" VerticalContentAlignment="Center" IsChecked="{Binding Checked}" GroupName="{Binding OptionSetting.Name}" Content="{Binding Text}" FontSize="16" FontWeight="Normal" VerticalAlignment="Top" Foreground="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"></RadioButton>
                             <TextBox x:Name="ItemHelpTextBox" TextWrapping="WrapWithOverflow" Text="{Binding Help}" Visibility="{Binding Visibility}" Margin="10,0,0,0" BorderThickness="0" IsReadOnly="True" Padding="7,0,0,0" MinHeight="0" Foreground="{Binding Path=Foreground2, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}" Background="{Binding Path=Background, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"></TextBox>
                         </WrapPanel>
                     </DataTemplate>

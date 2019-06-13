@@ -2,7 +2,7 @@
 
 ###
 
-- the help in the config editor was improved
+- the help and layout in the config editor was improved
 - clipboard monitoring for URLs can be disabled in the settings
 - internal refactoring that might break features, scripts or extensions
 
