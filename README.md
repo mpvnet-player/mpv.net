@@ -188,6 +188,8 @@ Third party components:
 
 [Issue tracker to report bugs and request features](https://github.com/stax76/mpv.net/issues)
 
+[frank.skare.de@gmail.com](mailto:frank.skare.de@gmail.com?Subject=mpv.net%20support)
+
 ### Links
 
 mpv manual: <https://mpv.io/manual/master/>
