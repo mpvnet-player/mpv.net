@@ -46,7 +46,7 @@ Table of contents
 
 ### Features
 
-- Customizable context menu defined in the same file as the key bindings ([Screenshot](#context-menu-screenshot))
+- Customizable context menu defined in the same file as the key bindings ([Screenshot](#context-menu-screenshot), [Defaults](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt))
 - Searchable config dialog ([Screenshot](#config-editor-screenshot))
 - Searchable input (key/mouse) binding editor ([Screenshot](#input-editor-screenshot))
 - Searchable command palette to quickly launch commands and look for keys ([Screenshot](#command-palette-screenshot))
