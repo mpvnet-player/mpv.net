@@ -139,6 +139,8 @@ if it's missing mpv.net generates it with the following defaults:
 
 <https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt>
 
+mpv.net supports almost all mpv settings and features, [limitations are listed in the wiki](https://github.com/stax76/mpv.net/wiki/Limitations).
+
 ### Scripting
 
 [Scripting wiki page](https://github.com/stax76/mpv.net/wiki/Scripting)
