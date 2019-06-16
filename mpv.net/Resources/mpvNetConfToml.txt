@@ -14,3 +14,12 @@ filter = "mpv.net"
 help = "Monitors the clipboard for URLs to play."
 options = [{ name = "yes" },
            { name = "no" }]
+
+[[settings]]
+name = "process-instance"
+default = "single"
+filter = "mpv.net"
+help = "Defines if more then one mpv.net process is allowed."
+options = [{ name = "multi",  help = "Create a new process everytime the shell starts mpv.net" },
+           { name = "single", help = "Force a single process everytime the shell starts mpv.net" },
+		   { name = "queue",  help = "Force a single process and add files to playlist" }]

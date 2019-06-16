@@ -7,6 +7,8 @@ using System.Reflection;
 using System.Windows.Forms;
 using System.Windows.Interop;
 
+using VB = Microsoft.VisualBasic;
+
 namespace mpvnet
 {
     public class Command
@@ -46,7 +48,7 @@ namespace mpvnet
             MainForm.Instance.Invoke(new Action(() => {
                 using (var d = new OpenFileDialog() { Multiselect = true })
                     if (d.ShowDialog() == DialogResult.OK)
-                        mp.LoadFiles(d.FileNames);
+                        mp.Load(d.FileNames);
             }));
         }
 
@@ -181,9 +183,9 @@ namespace mpvnet
         public static void execute_mpv_command(string[] args)
         {
             MainForm.Instance.Invoke(new Action(() => {
-                string command = Microsoft.VisualBasic.Interaction.InputBox("Enter a mpv command to be executed.", "Execute Command", RegistryHelp.GetString("HKCU\\Software\\" + Application.ProductName, "RecentExecutedCommand"));
+                string command = VB.Interaction.InputBox("Enter a mpv command to be executed.", "Execute Command", RegistryHelp.GetString(App.RegPath, "RecentExecutedCommand"));
                 if (string.IsNullOrEmpty(command)) return;
-                RegistryHelp.SetObject("HKCU\\Software\\" + Application.ProductName, "RecentExecutedCommand", command);
+                RegistryHelp.SetObject(App.RegPath, "RecentExecutedCommand", command);
                 mp.command_string(command, false);
             }));
         }
@@ -191,9 +193,9 @@ namespace mpvnet
         public static void open_url(string[] args)
         {
             MainForm.Instance.Invoke(new Action(() => {
-                string command = Microsoft.VisualBasic.Interaction.InputBox("Enter URL to be opened.");
+                string command = VB.Interaction.InputBox("Enter URL to be opened.");
                 if (string.IsNullOrEmpty(command)) return;
-                mp.LoadFiles(command);
+                mp.Load(command);
             }));
         }
 

@@ -35,13 +35,12 @@ namespace mpvnet
                 Msg.SupportURL = "https://github.com/stax76/mpv.net#support";
                 Instance = this;
                 WPF.WPF.Init();
-                App.Init();
                 System.Windows.Application.Current.ShutdownMode = System.Windows.ShutdownMode.OnExplicitShutdown;
                 Hwnd = Handle;
                 MinimumSize = new Size(FontHeight * 16, FontHeight * 9);
                 Text += " " + Application.ProductVersion;
 
-                object recent = RegistryHelp.GetObject("HKCU\\Software\\" + Application.ProductName, "Recent");
+                object recent = RegistryHelp.GetObject(App.RegPath, "Recent");
 
                 if (recent is string[] r)
                     RecentFiles = new List<string>(r);
@@ -153,7 +152,7 @@ namespace mpvnet
                 recent.DropDownItems.Clear();
 
                 foreach (string path in RecentFiles)
-                    MenuItem.Add(recent.DropDownItems, path, () => mp.LoadFiles(path));
+                    MenuItem.Add(recent.DropDownItems, path, () => mp.Load(path));
 
                 recent.DropDownItems.Add(new ToolStripSeparator());
                 MenuItem mi = new MenuItem("Clear List");
@@ -376,6 +375,31 @@ namespace mpvnet
                     m.Result = new IntPtr(1);
                     return;
             }
+
+            if (m.Msg == SingleProcess.Message)
+            {
+                object filesObject = RegistryHelp.GetObject(App.RegPath, "ShellFiles");
+
+                if (filesObject is string[] files)
+                {
+                    switch (RegistryHelp.GetString(App.RegPath, "ProcessInstanceMode"))
+                    {
+                        case "single":
+                            mp.Load(files);
+                            break;
+                        case "queue":
+                            foreach (string file in files)
+                                if (File.Exists(file))
+                                    mp.commandv("loadfile", file, "append");
+                            break;
+                    }
+                }
+
+                RegistryHelp.RemoveValue(App.RegPath, "ShellFiles");
+                Activate();
+                return;
+            }
+
             base.WndProc(ref m);
         }
 
@@ -390,9 +414,9 @@ namespace mpvnet
         {
             base.OnDragDrop(e);
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
-                mp.LoadFiles(e.Data.GetData(DataFormats.FileDrop) as String[]);
+                mp.Load(e.Data.GetData(DataFormats.FileDrop) as String[]);
             if (e.Data.GetDataPresent(DataFormats.Text))
-                mp.LoadFiles(e.Data.GetData(DataFormats.Text).ToString());
+                mp.Load(e.Data.GetData(DataFormats.Text).ToString());
         }
 
         protected override void OnMouseDown(MouseEventArgs e)
@@ -474,7 +498,7 @@ namespace mpvnet
             BuildMenu();
             ContextMenuStrip = ContextMenu;
             IgnoreDpiChanged = false;
-            CheckURL();
+            CheckURLinClipboard();
         }
 
         protected override void OnResize(EventArgs e)
@@ -486,7 +510,7 @@ namespace mpvnet
         protected override void OnFormClosed(FormClosedEventArgs e)
         {
             base.OnFormClosed(e);
-            RegistryHelp.SetObject("HKCU\\Software\\" + Application.ProductName, "Recent", RecentFiles.ToArray());
+            RegistryHelp.SetObject(App.RegPath, "Recent", RecentFiles.ToArray());
             mp.commandv("quit");
             mp.AutoResetEvent.WaitOne(3000);
         }
@@ -500,20 +524,20 @@ namespace mpvnet
         protected override void OnActivated(EventArgs e)
         {
             base.OnActivated(e);
-            CheckURL();
+            CheckURLinClipboard();
         }
 
-        void CheckURL()
+        void CheckURLinClipboard()
         {
             if (App.ClipboardMonitoring != "yes") return;
             string clipboard = Clipboard.GetText();
 
-            if (clipboard.StartsWith("http") && RegistryHelp.GetString("HKCU\\Software\\" + Application.ProductName, "LastURL") != clipboard && Visible)
+            if (clipboard.StartsWith("http") && RegistryHelp.GetString(App.RegPath, "LastURL") != clipboard && Visible)
             {
-                RegistryHelp.SetObject("HKCU\\Software\\" + Application.ProductName, "LastURL", clipboard);
+                RegistryHelp.SetObject(App.RegPath, "LastURL", clipboard);
 
                 if (Msg.ShowQuestion("Play URL?", clipboard) == MsgResult.OK)
-                    mp.LoadFiles(clipboard);
+                    mp.Load(clipboard);
             }
         }
     }

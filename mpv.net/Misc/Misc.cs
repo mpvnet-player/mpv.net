@@ -18,6 +18,7 @@ namespace mpvnet
     public class App
     {
         public static string ConfFilePath { get; } = mp.ConfFolder + "\\mpvnet.conf";
+        public static string RegPath { get; } = "HKCU\\Software\\" + Application.ProductName;
         public static string ClipboardMonitoring { get; set; } = "yes";
 
         public static string[] VideoTypes    { get; } = "mkv mp4 mpg avi mov webm vob wmv flv avs 264 h264 asf webm mpeg mpv y4m avc hevc 265 h265 m2v m2ts vpy mts m4v".Split(' ');
@@ -25,6 +26,7 @@ namespace mpvnet
         public static string[] SubtitleTypes { get; } = "srt ass idx sup ttxt ssa smi".Split(' ');
 
         public static string DarkMode { get; set; } = "always";
+        public static string ProcessInstance { get; set; } = "single";
 
         public static bool IsDarkMode { 
             get => (DarkMode == "system" && Sys.IsDarkTheme) || DarkMode == "always";
@@ -57,12 +59,9 @@ namespace mpvnet
         {
             switch (name)
             {
-                case "dark-mode":
-                    DarkMode = value;
-                    break;
-                case "clipboard-monitoring":
-                    ClipboardMonitoring = value;
-                    break;
+                case "clipboard-monitoring": ClipboardMonitoring = value; break;
+                case "process-instance": ProcessInstance = value; break;
+                case "dark-mode": DarkMode = value; break;
             }
         }
 
@@ -362,5 +361,16 @@ namespace mpvnet
                 Math.Abs(screenPos.X - Control.MousePosition.X) > 10 ||
                 Math.Abs(screenPos.Y - Control.MousePosition.Y) > 10;
         }
+    }
+
+    public class SingleProcess
+    {
+        public static int Message { get; } = RegisterWindowMessage("mpvnet_IPC");
+
+        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+        static extern int RegisterWindowMessage(string id);
+
+        [DllImport("user32.dll")]
+        public static extern bool AllowSetForegroundWindow(int dwProcessId);
     }
 }

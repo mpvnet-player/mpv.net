@@ -531,15 +531,15 @@ namespace mpvnet
 
             foreach (string i in args)
             {
-                if (!i.StartsWith("--") && File.Exists(i) || i == "-" || i.StartsWith("http"))
+                if (!i.StartsWith("--") && (File.Exists(i) || i == "-" || i.StartsWith("http")))
                 {
                     files.Add(i);
                     if (i.StartsWith("http"))
-                        RegistryHelp.SetObject("HKCU\\Software\\" + Application.ProductName, "LastURL", i);
+                        RegistryHelp.SetObject(App.RegPath, "LastURL", i);
                 }
             }
 
-            mp.LoadFiles(files.ToArray());
+            mp.Load(files.ToArray());
 
             foreach (string i in args)
             {
@@ -557,7 +557,7 @@ namespace mpvnet
             }
         }
 
-        public static void LoadFiles(params string[] files)
+        public static void Load(params string[] files)
         {
             if (files is null || files.Length == 0) return;
             HideLogo();
