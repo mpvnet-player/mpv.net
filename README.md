@@ -48,7 +48,7 @@ Table of contents
 
 - Customizable context menu defined in the same file as the key bindings ([Screenshot](#context-menu-screenshot), [Defaults](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt))
 - Searchable config dialog ([Screenshot](#config-editor-screenshot), [Defaults](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/mpvConf.txt))
-- Searchable input (key/mouse) binding editor ([Screenshot](#input-editor-screenshot))
+- Searchable input (key/mouse) binding editor ([Screenshot](#input-editor-screenshot), [Defaults](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt))
 - Searchable command palette to quickly launch commands and look for keys ([Screenshot](#command-palette-screenshot))
 - Modern UI with dark mode ([Screenshot](#config-editor-screenshot))
 - Addon/extension API for .NET languages
