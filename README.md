@@ -6,7 +6,7 @@ mpv.net is a modern media player for Windows that works just like [mpv](https://
 
 #### Based on libmpv
 
-mpv.net is based on libmpv which offers a straightforward C API that was designed from the ground up to make mpv usable as a library and facilitate easy integration into other applications.
+mpv.net is based on libmpv which offers a straightforward C API that was designed from the ground up to make mpv usable as a library and facilitate easy integration into other applications. mpv is like vlc not based on DirectShow or Media Foundation. 
 
 #### Command Line Interface
 
