@@ -54,7 +54,7 @@ Table of contents
 - Addon/extension API for .NET languages
 - Scripting API for Python, C#, Lua, JavaScript and PowerShell ([wiki](https://github.com/stax76/mpv.net/wiki/Scripting))
 - mpv's OSC, IPC and conf files
-- Support of the same [CLI options](https://mpv.io/manual/master/#options) as mpv
+- [Command Line Interface](https://mpv.io/manual/master/#options)
 - DXVA2 video decoding acceleration
 - OpenGL based video output capable of features loved by videophiles, such as video scaling with popular high quality algorithms, color management, frame timing, interpolation, HDR, and more
 - Search feature powered by [Everything](https://www.voidtools.com) to find and play media ([Screenshot](#media-search-screenshot))
