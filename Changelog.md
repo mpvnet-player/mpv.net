@@ -3,7 +3,7 @@
 - the help and layout in the config editor was improved
 - clipboard monitoring for URLs can be disabled in the settings
 - the context menu has a new feature: Open > Add files to playlist,
-  it appends files to the playlist [(Default binding)](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt#L34)
+  it appends files to the playlist [(Default binding)](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt#L33)
 - a setting was added to force using a single mpv.net process instance
 
 ### 4.1
