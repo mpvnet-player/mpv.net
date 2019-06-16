@@ -1,6 +1,4 @@
-###
-
-### 4.2
+### 4.2 Letting Go
 
 - the help and layout in the config editor was improved
 - clipboard monitoring for URLs can be disabled in the settings
