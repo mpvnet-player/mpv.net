@@ -13,8 +13,6 @@ namespace mpvnet
         [STAThread]
         static void Main()
         {
-            Mutex mutex = new Mutex(true, "mpvnetProcessInstance", out bool isFirst);
-
             try
             {
                 string[] args = Environment.GetCommandLineArgs().Skip(1).ToArray();
@@ -27,6 +25,7 @@ namespace mpvnet
                     return;
                 }
 
+                Mutex mutex = new Mutex(true, "mpvnetProcessInstance", out bool isFirst);
                 App.Init();
 
                 if ((App.ProcessInstance == "single" || App.ProcessInstance == "queue") && !isFirst)
@@ -56,14 +55,11 @@ namespace mpvnet
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 Application.Run(new MainForm());
+                mutex.Dispose();
             }
             catch (Exception ex)
             {
                 Msg.ShowException(ex);
-            }
-            finally
-            {
-                mutex.Dispose();
             }
         }
     }

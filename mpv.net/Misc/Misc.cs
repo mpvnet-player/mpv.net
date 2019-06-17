@@ -212,14 +212,18 @@ namespace mpvnet
 
         public static void RemoveKey(string path)
         {
-            GetRootKey(path).DeleteSubKeyTree(path.Substring(5), false);
+            try {
+                GetRootKey(path).DeleteSubKeyTree(path.Substring(5), false);
+            } catch { }
         }
 
         public static void RemoveValue(string path, string name)
         {
-            using (RegistryKey rk = GetRootKey(path).OpenSubKey(path.Substring(5), true))
-                if (!(rk is null))
-                    rk.DeleteValue(name, false);
+            try {
+                using (RegistryKey rk = GetRootKey(path).OpenSubKey(path.Substring(5), true))
+                    if (!(rk is null))
+                        rk.DeleteValue(name, false);
+            } catch {}
         }
 
         static RegistryKey GetRootKey(string path)

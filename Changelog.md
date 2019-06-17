@@ -1,4 +1,8 @@
-### 4.2 Letting Go
+### 4.3
+
+- there was new bug in file association feature
+
+### 4.2
 
 - the help and layout in the config editor was improved
 - clipboard monitoring for URLs can be disabled in the settings

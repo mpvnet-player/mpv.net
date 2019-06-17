@@ -193,7 +193,10 @@ namespace mpvnet
                 mpv_event evt = (mpv_event)Marshal.PtrToStructure(ptr, typeof(mpv_event));
 
                 if (WindowHandle == IntPtr.Zero)
+                {
                     WindowHandle = FindWindowEx(MainForm.Hwnd, IntPtr.Zero, "mpv", null);
+                    //Native.EnableWindow(WindowHandle, true);
+                }
 
                 //Debug.WriteLine(evt.event_id.ToString());
 
@@ -563,9 +566,12 @@ namespace mpvnet
             HideLogo();
             List<string> fileList = files.ToList();
 
-            foreach (string file in files) {
+            foreach (string file in files)
+            {
                 string ext = Path.GetExtension(file).TrimStart('.').ToLower();
-                if (App.SubtitleTypes.Contains(ext)) {
+
+                if (App.SubtitleTypes.Contains(ext))
+                {
                     mp.commandv("sub-add", file);
                     fileList.Remove(file);
                 }
@@ -573,6 +579,7 @@ namespace mpvnet
 
             if (fileList.Count == 0) return;
             files = fileList.ToArray();
+
             int count = mp.get_property_int("playlist-count");
 
             foreach (string file in files)

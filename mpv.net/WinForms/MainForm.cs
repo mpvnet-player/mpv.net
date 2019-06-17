@@ -343,6 +343,11 @@ namespace mpvnet
                     if (mp.WindowHandle != IntPtr.Zero)
                         Native.SendMessage(mp.WindowHandle, m.Msg, m.WParam, m.LParam);
                     break;
+                case 0x0200: // WM_MOUSEMOVE
+                    Point pos = PointToClient(Cursor.Position);
+                    mp.command_string($"mouse {pos.X} {pos.Y}");
+                    if (CursorHelp.IsPosDifferent(LastCursorPosChanged)) CursorHelp.Show();
+                    break;
                 case 0x319: // WM_APPCOMMAND
                     if (mp.WindowHandle != IntPtr.Zero)
                         Native.PostMessage(mp.WindowHandle, m.Msg, m.WParam, m.LParam);
@@ -389,8 +394,7 @@ namespace mpvnet
                             break;
                         case "queue":
                             foreach (string file in files)
-                                if (File.Exists(file))
-                                    mp.commandv("loadfile", file, "append");
+                                mp.commandv("loadfile", file, "append");
                             break;
                     }
                 }
@@ -434,15 +438,6 @@ namespace mpvnet
 
             if (Width - e.Location.X < 10 && e.Location.Y < 10)
                 mp.commandv("quit");
-        }
-
-        protected override void OnMouseMove(MouseEventArgs e)
-        {
-            base.OnMouseMove(e);
-            mp.command_string($"mouse {e.X} {e.Y}");
-
-            if (CursorHelp.IsPosDifferent(LastCursorPosChanged))
-                CursorHelp.Show();
         }
 
         bool IsMouseInOSC() => PointToClient(Control.MousePosition).Y > ClientSize.Height * 0.9;
