@@ -566,17 +566,13 @@ namespace mpvnet
             HideLogo();
 
             for (int i = 0; i < files.Length; i++)
-            {
-                string file = files[i];
-
-                if (App.SubtitleTypes.Contains(Path.GetExtension(file).TrimStart('.').ToLower()))
-                    mp.commandv("sub-add", file);
+                if (App.SubtitleTypes.Contains(Path.GetExtension(files[i]).TrimStart('.').ToLower()))
+                    mp.commandv("sub-add", files[i]);
                 else
                     if (i == 0)
-                        mp.commandv("loadfile", file);
+                        mp.commandv("loadfile", files[i]);
                     else
-                        mp.commandv("loadfile", file, "append");
-            }
+                        mp.commandv("loadfile", files[i], "append");
 
             mp.LoadFolder(files[0]);
         }
