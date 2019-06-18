@@ -353,8 +353,7 @@ namespace mpvnet
                         Native.PostMessage(mp.WindowHandle, m.Msg, m.WParam, m.LParam);
                     break;
                 case 0x203: // Native.WM.LBUTTONDBLCLK
-                    if (!IsMouseInOSC())
-                        mp.command_string("cycle fullscreen");
+                    if (!IsMouseInOSC()) mp.command_string("cycle fullscreen");
                     break;
                 case 0x02E0: // WM_DPICHANGED
                     if (IgnoreDpiChanged) break;

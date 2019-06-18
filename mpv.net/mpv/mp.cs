@@ -564,31 +564,19 @@ namespace mpvnet
         {
             if (files is null || files.Length == 0) return;
             HideLogo();
-            List<string> fileList = files.ToList();
 
-            foreach (string file in files)
+            for (int i = 0; i < files.Length; i++)
             {
-                string ext = Path.GetExtension(file).TrimStart('.').ToLower();
+                string file = files[i];
 
-                if (App.SubtitleTypes.Contains(ext))
-                {
+                if (App.SubtitleTypes.Contains(Path.GetExtension(file).TrimStart('.').ToLower()))
                     mp.commandv("sub-add", file);
-                    fileList.Remove(file);
-                }
+                else
+                    if (i == 0)
+                        mp.commandv("loadfile", file);
+                    else
+                        mp.commandv("loadfile", file, "append");
             }
-
-            if (fileList.Count == 0) return;
-            files = fileList.ToArray();
-
-            int count = mp.get_property_int("playlist-count");
-
-            foreach (string file in files)
-                mp.commandv("loadfile", file, "append");
-
-            mp.set_property_int("playlist-pos", count);
-
-            for (int i = 0; i < count; i++)
-                mp.commandv("playlist-remove", "0");
 
             mp.LoadFolder(files[0]);
         }
