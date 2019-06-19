@@ -25,8 +25,8 @@ namespace mpvnet
                     return;
                 }
 
-                Mutex mutex = new Mutex(true, "mpvnetProcessInstance", out bool isFirst);
                 App.Init();
+                Mutex mutex = new Mutex(true, "mpvnetProcessInstance", out bool isFirst);
 
                 if ((App.ProcessInstance == "single" || App.ProcessInstance == "queue") && !isFirst)
                 {
@@ -49,6 +49,7 @@ namespace mpvnet
                         } catch {}
                     }
 
+                    mutex.Dispose();
                     return;
                 }
 

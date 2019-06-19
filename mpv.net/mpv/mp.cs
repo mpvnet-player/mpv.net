@@ -574,25 +574,20 @@ namespace mpvnet
                     else
                         mp.commandv("loadfile", files[i], "append");
 
-            mp.LoadFolder(files[0]);
-        }
-
-        static void LoadFolder(string path)
-        {
-            if (get_property_int("playlist-count") == 1)
-            {
-                if (!File.Exists(path)) return;
-                List<string> files = Directory.GetFiles(Path.GetDirectoryName(path)).ToList();
-                files = files.Where((file) => App.VideoTypes.Contains(Path.GetExtension(file).TrimStart('.').ToLower()) ||
-                                              App.AudioTypes.Contains(Path.GetExtension(file).TrimStart('.').ToLower())).ToList();
-                files.Sort(new StringLogicalComparer());
-                int index = files.IndexOf(path);
-                files.Remove(path);
-                foreach (string i in files)
-                    commandv("loadfile", i, "append");
-                if (index > 0)
-                    commandv("playlist-move", "0", (index + 1).ToString());
-            }
+            Thread.Sleep(50); // user reported race condition
+            string path = files[0];
+            if (files.Length != 1 || !File.Exists(path)) return;
+            List<string> filesInFolder = Directory.GetFiles(Path.GetDirectoryName(path)).ToList();
+            filesInFolder = filesInFolder.Where((file) =>
+                App.VideoTypes.Contains(Path.GetExtension(file).TrimStart('.').ToLower()) ||
+                App.AudioTypes.Contains(Path.GetExtension(file).TrimStart('.').ToLower())).ToList();
+            filesInFolder.Sort(new StringLogicalComparer());
+            int index = filesInFolder.IndexOf(path);
+            filesInFolder.Remove(path);
+            foreach (string i in filesInFolder)
+                commandv("loadfile", i, "append");
+            if (index > 0)
+                commandv("playlist-move", "0", (index + 1).ToString());
         }
 
         static IntPtr AllocateUtf8IntPtrArrayWithSentinel(string[] arr, out IntPtr[] byteArrayPointers)
