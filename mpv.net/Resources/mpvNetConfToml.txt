@@ -23,3 +23,11 @@ help = "Defines if more then one mpv.net process is allowed."
 options = [{ name = "multi",  help = "Create a new process everytime the shell starts mpv.net" },
            { name = "single", help = "Force a single process everytime the shell starts mpv.net" },
 		   { name = "queue",  help = "Force a single process and add files to playlist" }]
+
+[[settings]]
+name = "debug-mode"
+default = "no"
+filter = "mpv.net"
+help = "Writes debug info to a file located on the desktop."
+options = [{ name = "yes" },
+           { name = "no" }]

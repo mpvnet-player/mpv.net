@@ -49,10 +49,8 @@ namespace mpvnet
 
                 var dummy = mp.Conf;
                 App.ProcessCommandLineEarly();
-
                 if (mp.Screen == -1) mp.Screen = Array.IndexOf(Screen.AllScreens, Screen.PrimaryScreen);
                 SetScreen(mp.Screen);
-
                 ChangeFullscreen(mp.Fullscreen);
             }
             catch (Exception ex)
@@ -224,9 +222,6 @@ namespace mpvnet
             int left = middlePos.X - rect.Width / 2;
             int top = middlePos.Y - rect.Height / 2;
             Screen[] screens = Screen.AllScreens;
-            if (left < screens[0].Bounds.Left) left = screens[0].Bounds.Left;
-            int maxLeft = screens[0].Bounds.Left + screens.Select((sc) => sc.Bounds.Width).Sum() - rect.Width - SystemInformation.CaptionHeight;
-            if (left > maxLeft) left = maxLeft;
             Native.SetWindowPos(Handle, IntPtr.Zero /* HWND_TOP */, left, top, rect.Width, rect.Height, 4 /* SWP_NOZORDER */);
         }
 
@@ -505,6 +500,7 @@ namespace mpvnet
         {
             base.OnFormClosed(e);
             RegistryHelp.SetObject(App.RegPath, "Recent", RecentFiles.ToArray());
+            App.Exit();
             mp.commandv("quit");
             mp.AutoResetEvent.WaitOne(3000);
         }

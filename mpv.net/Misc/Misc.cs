@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -12,6 +13,7 @@ using System.Runtime.Serialization;
 using System.Windows.Forms;
 
 using Microsoft.Win32;
+using VB = Microsoft.VisualBasic;
 
 namespace mpvnet
 {
@@ -28,6 +30,8 @@ namespace mpvnet
         public static string DarkMode { get; set; } = "always";
         public static string ProcessInstance { get; set; } = "single";
 
+        public static bool DebugMode { get; set; } = false;
+
         public static bool IsDarkMode { 
             get => (DarkMode == "system" && Sys.IsDarkTheme) || DarkMode == "always";
         }
@@ -36,6 +40,28 @@ namespace mpvnet
         {
             foreach (var i in Conf)
                 ProcessProperty(i.Key, i.Value);
+
+            if (App.DebugMode)
+            {
+                try
+                {
+                    string filePath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "\\mpvnet-debug.log";
+                    if (File.Exists(filePath)) File.Delete(filePath);
+                    Trace.Listeners.Clear();
+                    Trace.Listeners.Add(new TextWriterTraceListener(filePath));
+                    foreach (Screen screen in Screen.AllScreens)
+                        Trace.WriteLine(screen);
+                }
+                catch (Exception e)
+                {
+                    Msg.ShowException(e);
+                }
+            }
+        }
+
+        public static void Exit()
+        {
+            if (Trace.Listeners.Count > 0) Trace.Listeners[0].Close();
         }
 
         static Dictionary<string, string> _Conf;
@@ -62,6 +88,7 @@ namespace mpvnet
                 case "clipboard-monitoring": ClipboardMonitoring = value; break;
                 case "process-instance": ProcessInstance = value; break;
                 case "dark-mode": DarkMode = value; break;
+                case "debug-mode": DebugMode = value == "yes"; break;
             }
         }
 

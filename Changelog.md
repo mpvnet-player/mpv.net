@@ -1,3 +1,7 @@
+### 4.3.1
+
+- there was a old bug setting the screen property
+
 ### 4.3
 
 - there was new bug in file association feature

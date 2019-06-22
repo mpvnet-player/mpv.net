@@ -214,7 +214,7 @@ help = "See sub-color. Color used for sub text background. You can use sub-shado
 name = "screen"
 default = ""
 filter = "Screen"
-help = "In multi-monitor configurations (i.e. a single desktop that spans across multiple displays), this option tells mpv which screen to display the video on."
+help = "<0-32> In multi-monitor configurations (i.e. a single desktop that spans across multiple displays), this option tells mpv which screen to display the video on."
 
 [[settings]]
 name = "osd-playing-msg"
