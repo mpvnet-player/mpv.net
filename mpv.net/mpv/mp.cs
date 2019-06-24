@@ -167,7 +167,7 @@ namespace mpvnet
 
             foreach (var scriptPath in startupScripts)
                 if (jsLua.Contains(Path.GetExtension(scriptPath).ToLower()))
-                    mp.commandv("load-script", $"{scriptPath}");
+                    commandv("load-script", $"{scriptPath}");
 
             foreach (var scriptPath in startupScripts)
                 if (Path.GetExtension(scriptPath) == ".py")
@@ -177,8 +177,8 @@ namespace mpvnet
                 if (Path.GetExtension(scriptPath) == ".ps1")
                     PowerShellScript.Init(scriptPath);
 
-            if (Directory.Exists(mp.ConfFolder + "Scripts"))
-                foreach (var scriptPath in Directory.GetFiles(mp.ConfFolder + "Scripts"))
+            if (Directory.Exists(ConfFolder + "Scripts"))
+                foreach (var scriptPath in Directory.GetFiles(ConfFolder + "Scripts"))
                     if (Path.GetExtension(scriptPath) == ".py")
                         PythonScripts.Add(new PythonScript(File.ReadAllText(scriptPath)));
                     else if (Path.GetExtension(scriptPath) == ".ps1")
@@ -232,7 +232,7 @@ namespace mpvnet
                         case mpv_event_id.MPV_EVENT_FILE_LOADED:
                             HideLogo();
                             FileLoaded?.Invoke();
-                            WriteHistory(mp.get_property_string("path"));
+                            WriteHistory(get_property_string("path"));
                             break;
                         case mpv_event_id.MPV_EVENT_TRACKS_CHANGED:
                             TracksChanged?.Invoke();
@@ -242,8 +242,7 @@ namespace mpvnet
                             break;
                         case mpv_event_id.MPV_EVENT_IDLE:
                             Idle?.Invoke();
-                            if (mp.get_property_int("playlist-count") == 0)
-                                ShowLogo();
+                            if (get_property_int("playlist-count") == 0) ShowLogo();
                             break;
                         case mpv_event_id.MPV_EVENT_PAUSE:
                             Pause?.Invoke();
@@ -350,7 +349,7 @@ namespace mpvnet
         {
             if (IsLogoVisible)
             {
-                mp.commandv("overlay-remove", "0");
+                commandv("overlay-remove", "0");
                 IsLogoVisible = false;
             }
         }
@@ -441,18 +440,14 @@ namespace mpvnet
             try
             {
                 int err = mpv_get_property(Handle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_STRING, out IntPtr lpBuffer);
-
-                if (err < 0 && throwOnException)
-                    throw new Exception($"{name}: {(mpv_error)err}");
-
+                if (err < 0 && throwOnException) throw new Exception($"{name}: {(mpv_error)err}");
                 string ret = StringFromNativeUtf8(lpBuffer);
                 mpv_free(lpBuffer);
-
                 return ret;
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                if (throwOnException) throw ex;
+                if (throwOnException) throw e;
                 return "";
             }
         }
@@ -542,7 +537,7 @@ namespace mpvnet
                 }
             }
 
-            mp.Load(files.ToArray(), App.ProcessInstance != "queue", Control.ModifierKeys.HasFlag(Keys.Control));
+            Load(files.ToArray(), App.ProcessInstance != "queue", Control.ModifierKeys.HasFlag(Keys.Control));
 
             foreach (string i in args)
             {
@@ -552,10 +547,10 @@ namespace mpvnet
                     {
                         string left = i.Substring(2, i.IndexOf("=") - 2);
                         string right = i.Substring(left.Length + 3);
-                        mp.set_property_string(left, right);
+                        set_property_string(left, right);
                     }
                     else
-                        mp.set_property_string(i.Substring(2), "yes");
+                        set_property_string(i.Substring(2), "yes");
                 }
             }
         }
@@ -567,20 +562,22 @@ namespace mpvnet
 
             for (int i = 0; i < files.Length; i++)
                 if (App.SubtitleTypes.Contains(Path.GetExtension(files[i]).TrimStart('.').ToLower()))
-                    mp.commandv("sub-add", files[i]);
+                    commandv("sub-add", files[i]);
                 else
                     if (i == 0 && !append)
-                        mp.commandv("loadfile", files[i]);
+                        commandv("loadfile", files[i]);
                     else
-                        mp.commandv("loadfile", files[i], "append");
+                        commandv("loadfile", files[i], "append");
 
+            if (string.IsNullOrEmpty(get_property_string("path")))
+                set_property_int("playlist-pos", 0);
             if (loadFolder && !append) Task.Run(() => LoadFolder()); // user reported race condition
         }
 
         static void LoadFolder()
         {
             Thread.Sleep(50); // user reported race condition
-            string path = mp.get_property_string("path");
+            string path = get_property_string("path");
             if (!File.Exists(path) || get_property_int("playlist-count") != 1) return;
             List<string> files = Directory.GetFiles(Path.GetDirectoryName(path)).ToList();
             files = files.Where((file) =>
@@ -644,7 +641,7 @@ namespace mpvnet
 
             if (File.Exists(LastHistoryPath) && totalMinutes > 1)
             {
-                string historyFilepath = mp.ConfFolder + "history.txt";
+                string historyFilepath = ConfFolder + "history.txt";
 
                 File.AppendAllText(historyFilepath, DateTime.Now.ToString().Substring(0, 16) +
                     " " + totalMinutes.ToString().PadLeft(3) + " " +
@@ -671,7 +668,7 @@ namespace mpvnet
                     Rectangle r = new Rectangle(cr.Width / 2 - iconWidth / 2, cr.Height / 2 - iconWidth / 2, iconWidth, iconWidth);
                     g.DrawImage(Properties.Resources.mpvnet, r);
                     BitmapData bd = b.LockBits(cr, ImageLockMode.ReadOnly, PixelFormat.Format32bppPArgb);
-                    mp.commandv("overlay-add", "0", "0", "0", "&" + bd.Scan0.ToInt64().ToString(), "0", "bgra", bd.Width.ToString(), bd.Height.ToString(), bd.Stride.ToString());
+                    commandv("overlay-add", "0", "0", "0", "&" + bd.Scan0.ToInt64().ToString(), "0", "bgra", bd.Width.ToString(), bd.Height.ToString(), bd.Stride.ToString());
                     b.UnlockBits(bd);
                     IsLogoVisible = true;
                 }
@@ -685,15 +682,11 @@ namespace mpvnet
                 case "autofit":
                     if (value.Length == 3 && value.EndsWith("%"))
                         if (int.TryParse(value.Substring(0, 2), out int result))
-                            mp.Autofit = result / 100f;
+                            Autofit = result / 100f;
                     break;
                 case "fs":
-                case "fullscreen":
-                    mp.Fullscreen = value == "yes";
-                    break;
-                case "screen":
-                    mp.Screen = Convert.ToInt32(value);
-                    break;
+                case "fullscreen": Fullscreen = value == "yes"; break;
+                case "screen": Screen = Convert.ToInt32(value); break;
             }
         }
 
@@ -703,7 +696,7 @@ namespace mpvnet
             {
                 MediaTracks.Clear();
 
-                using (MediaInfo mi = new MediaInfo(mp.get_property_string("path")))
+                using (MediaInfo mi = new MediaInfo(get_property_string("path")))
                 {
                     int count = mi.GetCount(MediaInfoStreamKind.Video);
 

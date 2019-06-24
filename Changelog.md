@@ -1,9 +1,10 @@
 ### 
 
 - clipboard-monitoring was replaced by url-whitelist:
-  Domain whitelist to monitor the clipboard for URLs to play.
-  Default: youtube ard zdf
+  Keyword whitelist to monitor the clipboard for URLs to play.
+  Default: tube vimeo ard zdf 
 - some settings like colors didn't work because enclosing quotes were missing
+- when single process queue is used the folder is no longer loaded
 - the playlist is never cleared whenever the control key is down but
   files and URLs are appended instead
 
