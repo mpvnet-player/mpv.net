@@ -179,5 +179,6 @@
  Wheel_Down  add volume -10
  Prev playlist-prev
  Next playlist-next
-
+ Ctrl+Wheel_Up   no-osd seek  7
+ Ctrl+Wheel_Down no-osd seek -7
  MBTN_LEFT_DBL cycle fullscreen

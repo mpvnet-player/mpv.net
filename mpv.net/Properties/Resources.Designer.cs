@@ -106,9 +106,9 @@ namespace mpvnet.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to 
-        ///# mpv manual: https://mpv.io/manual/master/
+        ///# manual: https://mpv.io/manual/master/
         ///
-        ///# mpv.net mpv.conf defaults: https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/mpvConf.txt
+        ///# defaults: https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/mpvConf.txt
         ///
         ///input-ar-delay = 500
         ///input-ar-rate = 20
@@ -164,12 +164,15 @@ namespace mpvnet.Properties {
         ///		   { name = &quot;never&quot; }]
         ///
         ///[[settings]]
-        ///name = &quot;clipboard-monitoring&quot;
-        ///default = &quot;yes&quot;
+        ///name = &quot;url-whitelist&quot;
         ///filter = &quot;mpv.net&quot;
-        ///help = &quot;Monitors the clipboard for URLs to play.&quot;
-        ///options = [{ name = &quot;yes&quot; },
-        ///           { name = &quot;no&quot; }].
+        ///help = &quot;Domain whitelist to monitor the clipboard for URLs to play.\n\nDefault: youtube ard zdf&quot;
+        ///
+        ///[[settings]]
+        ///name = &quot;process-instance&quot;
+        ///default = &quot;single&quot;
+        ///filter = &quot;mpv.net&quot;
+        ///help = &quot;Defines if more then [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string mpvNetConfToml {
             get {

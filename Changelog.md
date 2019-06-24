@@ -1,3 +1,12 @@
+### 
+
+- clipboard-monitoring was replaced by url-whitelist:
+  Domain whitelist to monitor the clipboard for URLs to play.
+  Default: youtube ard zdf
+- some settings like colors didn't work because enclosing quotes were missing
+- the playlist is never cleared whenever the control key is down but
+  files and URLs are appended instead
+
 ### 4.3.1
 
 - there was a old bug setting the screen property

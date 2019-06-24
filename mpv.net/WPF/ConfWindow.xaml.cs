@@ -28,7 +28,7 @@ namespace mpvnet
             SearchControl.SearchTextBox.TextChanged += SearchTextBox_TextChanged;
             LoadSettings(SettingsDefinitions, Conf);
             LoadSettings(NetSettingsDefinitions, NetConf);
-            SearchControl.Text = RegistryHelp.GetString(@"HKCU\Software\mpv.net", "config editor search");
+            SearchControl.Text = RegHelp.GetString(App.RegPath, "config editor search");
 
             if (App.IsDarkMode)
             {
@@ -49,7 +49,7 @@ namespace mpvnet
         private void LoadSettings(List<SettingBase> settingsDefinitions,
                                   Dictionary<string, string> confSettings)
         {
-            foreach (var setting in settingsDefinitions)
+            foreach (SettingBase setting in settingsDefinitions)
             {
                 if (!FilterStrings.Contains(setting.Filter))
                     FilterStrings.Add(setting.Filter);
@@ -58,7 +58,7 @@ namespace mpvnet
                 {
                     if (setting.Name == pair.Key)
                     {
-                        setting.Value = pair.Value;
+                        setting.Value = pair.Value.Trim('\'', '"');
                         setting.StartValue = pair.Value;
                         continue;
                     }
@@ -132,7 +132,7 @@ namespace mpvnet
         {
             base.OnClosed(e);
             WriteToDisk();
-            RegistryHelp.SetObject(@"HKCU\Software\mpv.net", "config editor search", SearchControl.Text);
+            RegHelp.SetObject(App.RegPath, "config editor search", SearchControl.Text);
         }
 
         void WriteToDisk()
@@ -165,17 +165,22 @@ namespace mpvnet
             foreach (var i in Comments[filePath])
                 content += $"#{i.Key} = {i.Value}\r\n";
 
-            foreach (var setting in settings)
+            foreach (SettingBase setting in settings)
             {
                 if ((setting.Value ?? "") != setting.Default)
-                    confSettings[setting.Name] = setting.Value;
+                    if (setting.Type == "string" ||
+                        setting.Type == "folder" ||
+                        setting.Type == "color")
+
+                        confSettings[setting.Name] = "'" + setting.Value + "'";
+                    else
+                        confSettings[setting.Name] = setting.Value;
 
                 if (confSettings.ContainsKey(setting.Name) &&
                     (setting.Value ?? "") == setting.Default ||
                     (setting.Value ?? "") == "")
-                {
+
                     confSettings.Remove(setting.Name);
-                }
             }
 
             foreach (var i in confSettings)

@@ -45,11 +45,11 @@ namespace DynamicGUI
                         optionSetting.Options.Add(opt);
                     }
                 }
-                else if (setting["default"].IsString)
+                else
                 {
                     StringSetting stringSetting = new StringSetting();
                     baseSetting = stringSetting;
-                    stringSetting.Default = setting["default"];
+                    stringSetting.Default = setting.HasKey("default") ? setting["default"].ToString() : "";
                 }
 
                 baseSetting.Name = setting["name"];

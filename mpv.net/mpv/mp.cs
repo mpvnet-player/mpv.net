@@ -538,11 +538,11 @@ namespace mpvnet
                 {
                     files.Add(i);
                     if (i.StartsWith("http"))
-                        RegistryHelp.SetObject(App.RegPath, "LastURL", i);
+                        RegHelp.SetObject(App.RegPath, "LastURL", i);
                 }
             }
 
-            mp.Load(files.ToArray());
+            mp.Load(files.ToArray(), App.ProcessInstance != "queue", Control.ModifierKeys.HasFlag(Keys.Control));
 
             foreach (string i in args)
             {
@@ -560,7 +560,7 @@ namespace mpvnet
             }
         }
 
-        public static void Load(params string[] files)
+        public static void Load(string[] files, bool loadFolder, bool append)
         {
             if (files is null || files.Length == 0) return;
             HideLogo();
@@ -569,12 +569,12 @@ namespace mpvnet
                 if (App.SubtitleTypes.Contains(Path.GetExtension(files[i]).TrimStart('.').ToLower()))
                     mp.commandv("sub-add", files[i]);
                 else
-                    if (i == 0)
+                    if (i == 0 && !append)
                         mp.commandv("loadfile", files[i]);
                     else
                         mp.commandv("loadfile", files[i], "append");
 
-            Task.Run(() => LoadFolder()); // user reported race condition
+            if (loadFolder && !append) Task.Run(() => LoadFolder()); // user reported race condition
         }
 
         static void LoadFolder()

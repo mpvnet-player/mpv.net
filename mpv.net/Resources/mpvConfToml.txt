@@ -147,8 +147,8 @@ help = "Set the startup volume. 0 means silence, 100 means no volume reduction o
 
 [[settings]]
 name = "alang"
-default = ""
 filter = "Audio"
+type = "string"
 help = "Specify a priority list of audio languages to use. Different container formats employ different language codes. DVDs use ISO 639-1 two-letter language codes, Matroska, MPEG-TS and NUT use ISO 639-2 three-letter language codes, while OGM uses a free-form identifier. See also aid.\n\nExamples\n\nmpv dvd://1 alang=hu,en chooses the Hungarian language track on a DVD and falls back on English if Hungarian is not available.\n\nmpv alang=jpn example.mkv plays a Matroska file with Japanese audio."
 
 [[settings]]
@@ -163,8 +163,8 @@ options = [{ name = "no",    help = "Don't automatically load external audio fil
 
 [[settings]]
 name = "slang"
-default = ""
 filter = "Subtitle"
+type = "string"
 help = "Specify a priority list of subtitle languages to use. Different container formats employ different language codes. DVDs use ISO 639-1 two letter language codes, Matroska uses ISO 639-2 three letter language codes while OGM uses a free-form identifier. See also sid."
 
 [[settings]]
@@ -179,48 +179,43 @@ options = [{ name = "no",    help = "Don't automatically load external subtitle 
 
 [[settings]]
 name = "sub-font"
-default = ""
 filter = "Subtitle"
+type = "string"
 help = "Specify font to use for subtitles that do not themselves specify a particular font. The default is  sans-serif."
 
 [[settings]]
 name = "sub-font-size"
-default = ""
 filter = "Subtitle"
 help = "Specify the sub font size. The unit is the size in scaled pixels at a window height of 720. The actual pixel size is scaled with the window height: if the window height is larger or smaller than 720, the actual size of the text increases or decreases as well. Default: 55"
 
 [[settings]]
 name = "sub-color"
-default = ""
 type = "color"
 filter = "Subtitle"
 help = "Specify the color used for unstyled text subtitles.\n\nThe color is specified in the form r/g/b, where each color component is specified as number in the range 0.0 to 1.0. It's also possible to specify the transparency by using r/g/b/a, where the alpha value 0 means fully transparent, and 1.0 means opaque. If the alpha component is not given, the color is 100% opaque.\n\nPassing a single number to the option sets the sub to gray, and the form gray/a lets you specify alpha additionally.\n\nExamples\n\n1.0/0.0/0.0 set sub to opaque red\n1.0/0.0/0.0/0.75 set sub to opaque red with 75% alpha\n0.5/0.75 set sub to 50% gray with 75% alpha\n\nAlternatively, the color can be specified as a RGB hex triplet in the form #RRGGBB, where each 2-digit group expresses a color value in the range 0 (00) to 255 (FF). For example, #FF0000 is red. This is similar to web colors. Alpha is given with #AARRGGBB.\n\nExamples\n\n#FF0000 set sub to opaque red\n#C0808080 set sub to 50% gray with 75% alpha"
 
 [[settings]]
 name = "sub-border-color"
-default = ""
 type = "color"
 filter = "Subtitle"
 help = "See sub-color. Color used for the sub font border. Ignored when sub-back-color is specified (or more exactly: when that option is not set to completely transparent)."
 
 [[settings]]
 name = "sub-back-color"
-default = ""
 type = "color"
 filter = "Subtitle"
 help = "See sub-color. Color used for sub text background. You can use sub-shadow-offset to change its size relative to the text."
 
 [[settings]]
 name = "screen"
-default = ""
 filter = "Screen"
 help = "<0-32> In multi-monitor configurations (i.e. a single desktop that spans across multiple displays), this option tells mpv which screen to display the video on."
 
 [[settings]]
 name = "osd-playing-msg"
-default = ""
 width = 300
 filter = "Screen"
+type = "string"
 help = "Show a message on OSD when playback starts. The string is expanded for properties, e.g. osd-playing-msg='file: ${filename}' will show the message file: followed by a space and the currently played filename. For more information visit:"
 helpurl = "https://mpv.io/manual/master/#property-expansion"
 
@@ -240,7 +235,6 @@ options = [{ name = "yes" },
 
 [[settings]]
 name = "screenshot-directory"
-default = ""
 width = 500
 type = "folder"
 filter = "Screen"
@@ -271,7 +265,6 @@ options = [{ name = "yes",    help = "Don't terminate if the current file is the
 
 [[settings]]
 name = "loop-file"
-default = ""
 filter = "Playback"
 help = "Loop a single file N times. inf means forever, no means normal playback.\n\nThe difference to loop-playlist is that this doesn't loop the playlist, just the file itself. If the playlist contains only a single file, the difference between the two option is that this option performs a seek on loop, instead of reloading the file. loop is an alias for this option."
 
@@ -285,13 +278,11 @@ options = [{ name = "yes" },
 
 [[settings]]
 name = "input-ar-delay"
-default = ""
 filter = "Input"
 help = "Delay in milliseconds before we start to autorepeat a key (0 to disable)."
 
 [[settings]]
 name = "input-ar-rate"
-default = ""
 filter = "Input"
 help = "Number of key presses to generate per second on autorepeat."
 
@@ -315,6 +306,5 @@ options = [{ name = "yes" },
 
 [[settings]]
 name = "loop-playlist"
-default = ""
 filter = "Playback"
 help = "<N|inf|force|no> Loops playback N times. A value of 1 plays it one time (default), 2 two times, etc. inf means forever. no is the same as 1 and disables looping. If several files are specified on command line, the entire playlist is looped. The force mode is like inf, but does not skip playlist entries which have been marked as failing. This means the player might waste CPU time trying to loop a file that doesn't exist. But it might be useful for playing webradios under very bad network conditions."

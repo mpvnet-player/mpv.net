@@ -13,22 +13,20 @@ using System.Runtime.Serialization;
 using System.Windows.Forms;
 
 using Microsoft.Win32;
-using VB = Microsoft.VisualBasic;
 
 namespace mpvnet
 {
     public class App
     {
         public static string ConfFilePath { get; } = mp.ConfFolder + "\\mpvnet.conf";
-        public static string RegPath { get; } = "HKCU\\Software\\" + Application.ProductName;
-        public static string ClipboardMonitoring { get; set; } = "yes";
+        public static string RegPath { get; } = @"HKCU\Software\" + Application.ProductName;
+        public static string DarkMode { get; set; } = "always";
+        public static string ProcessInstance { get; set; } = "single";
 
         public static string[] VideoTypes    { get; } = "mkv mp4 mpg avi mov webm vob wmv flv avs 264 h264 asf webm mpeg mpv y4m avc hevc 265 h265 m2v m2ts vpy mts m4v".Split(' ');
         public static string[] AudioTypes    { get; } = "mp3 mp2 ac3 ogg opus flac wav w64 m4a dts dtsma dtshr dtshd eac3 thd thd+ac3 mka aac mpa".Split(' ');
         public static string[] SubtitleTypes { get; } = "srt ass idx sup ttxt ssa smi".Split(' ');
-
-        public static string DarkMode { get; set; } = "always";
-        public static string ProcessInstance { get; set; } = "single";
+        public static string[] UrlWhitelist { get; set; } = { "youtube", "ard", "zdf" };
 
         public static bool DebugMode { get; set; } = false;
 
@@ -85,10 +83,12 @@ namespace mpvnet
         {
             switch (name)
             {
-                case "clipboard-monitoring": ClipboardMonitoring = value; break;
                 case "process-instance": ProcessInstance = value; break;
                 case "dark-mode": DarkMode = value; break;
                 case "debug-mode": DebugMode = value == "yes"; break;
+                case "url-whitelist":
+                    UrlWhitelist = value.Split(' ', ',', ';');
+                    break;
             }
         }
 
@@ -171,49 +171,49 @@ namespace mpvnet
         {
             Types = types;
 
-            RegistryHelp.SetObject(@"HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\" + ExeFilename, null, ExePath);
-            RegistryHelp.SetObject($"HKCR\\Applications\\{ExeFilename}", "FriendlyAppName", "mpv.net media player");
-            RegistryHelp.SetObject($"HKCR\\Applications\\{ExeFilename}\\shell\\open\\command", null, $"\"{ExePath}\" \"%1\"");
-            RegistryHelp.SetObject(@"HKLM\SOFTWARE\Clients\Media\mpv\Capabilities", "ApplicationDescription", "mpv.net media player");
-            RegistryHelp.SetObject(@"HKLM\SOFTWARE\Clients\Media\mpv\Capabilities", "ApplicationName", "mpv.net");
-            RegistryHelp.SetObject($"HKCR\\SystemFileAssociations\\video\\OpenWithList\\{ExeFilename}", null, "");
-            RegistryHelp.SetObject($"HKCR\\SystemFileAssociations\\audio\\OpenWithList\\{ExeFilename}", null, "");
+            RegHelp.SetObject(@"HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\" + ExeFilename, null, ExePath);
+            RegHelp.SetObject($"HKCR\\Applications\\{ExeFilename}", "FriendlyAppName", "mpv.net media player");
+            RegHelp.SetObject($"HKCR\\Applications\\{ExeFilename}\\shell\\open\\command", null, $"\"{ExePath}\" \"%1\"");
+            RegHelp.SetObject(@"HKLM\SOFTWARE\Clients\Media\mpv\Capabilities", "ApplicationDescription", "mpv.net media player");
+            RegHelp.SetObject(@"HKLM\SOFTWARE\Clients\Media\mpv\Capabilities", "ApplicationName", "mpv.net");
+            RegHelp.SetObject($"HKCR\\SystemFileAssociations\\video\\OpenWithList\\{ExeFilename}", null, "");
+            RegHelp.SetObject($"HKCR\\SystemFileAssociations\\audio\\OpenWithList\\{ExeFilename}", null, "");
 
             foreach (string ext in Types)
             {
-                RegistryHelp.SetObject($"HKCR\\Applications\\{ExeFilename}\\SupportedTypes", "." + ext, "");
-                RegistryHelp.SetObject($"HKCR\\" + "." + ext, null, ExeFilenameNoExt + "." + ext);
-                RegistryHelp.SetObject($"HKCR\\" + "." + ext + "\\OpenWithProgIDs", ExeFilenameNoExt + "." + ext, "");
+                RegHelp.SetObject($"HKCR\\Applications\\{ExeFilename}\\SupportedTypes", "." + ext, "");
+                RegHelp.SetObject($"HKCR\\" + "." + ext, null, ExeFilenameNoExt + "." + ext);
+                RegHelp.SetObject($"HKCR\\" + "." + ext + "\\OpenWithProgIDs", ExeFilenameNoExt + "." + ext, "");
                 if (App.VideoTypes.Contains(ext))
-                    RegistryHelp.SetObject($"HKCR\\" + "." + ext, "PerceivedType", "video");
+                    RegHelp.SetObject($"HKCR\\" + "." + ext, "PerceivedType", "video");
                 if (App.AudioTypes.Contains(ext))
-                    RegistryHelp.SetObject($"HKCR\\" + "." + ext, "PerceivedType", "audio");
-                RegistryHelp.SetObject($"HKCR\\" + ExeFilenameNoExt + "." + ext + "\\shell\\open", null, "Play with " +  Application.ProductName);
-                RegistryHelp.SetObject($"HKCR\\" + ExeFilenameNoExt + "." + ext + "\\shell\\open\\command", null, $"\"{ExePath}\" \"%1\"");
-                RegistryHelp.SetObject(@"HKLM\SOFTWARE\Clients\Media\mpv.net\Capabilities\FileAssociations", "." + ext, ExeFilenameNoExt + "." + ext);
+                    RegHelp.SetObject($"HKCR\\" + "." + ext, "PerceivedType", "audio");
+                RegHelp.SetObject($"HKCR\\" + ExeFilenameNoExt + "." + ext + "\\shell\\open", null, "Play with " +  Application.ProductName);
+                RegHelp.SetObject($"HKCR\\" + ExeFilenameNoExt + "." + ext + "\\shell\\open\\command", null, $"\"{ExePath}\" \"%1\"");
+                RegHelp.SetObject(@"HKLM\SOFTWARE\Clients\Media\mpv.net\Capabilities\FileAssociations", "." + ext, ExeFilenameNoExt + "." + ext);
             }
         }
 
         public static void Unregister()
         {
-            RegistryHelp.RemoveKey(@"HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\" + ExeFilename);
-            RegistryHelp.RemoveKey($"HKCR\\Applications\\{ExeFilename}");
-            RegistryHelp.RemoveKey(@"HKLM\SOFTWARE\Clients\Media\mpv.net");
-            RegistryHelp.RemoveKey($"HKCR\\SystemFileAssociations\\video\\OpenWithList\\{ExeFilename}");
-            RegistryHelp.RemoveKey($"HKCR\\SystemFileAssociations\\audio\\OpenWithList\\{ExeFilename}");
+            RegHelp.RemoveKey(@"HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\" + ExeFilename);
+            RegHelp.RemoveKey($"HKCR\\Applications\\{ExeFilename}");
+            RegHelp.RemoveKey(@"HKLM\SOFTWARE\Clients\Media\mpv.net");
+            RegHelp.RemoveKey($"HKCR\\SystemFileAssociations\\video\\OpenWithList\\{ExeFilename}");
+            RegHelp.RemoveKey($"HKCR\\SystemFileAssociations\\audio\\OpenWithList\\{ExeFilename}");
 
             foreach (string id in Registry.ClassesRoot.GetSubKeyNames())
             {
                 if (id.StartsWith(ExeFilenameNoExt + "."))
                     Registry.ClassesRoot.DeleteSubKeyTree(id);
 
-                RegistryHelp.RemoveValue($"HKCR\\Software\\Classes\\" + id + "\\OpenWithProgIDs", ExeFilenameNoExt + id);
-                RegistryHelp.RemoveValue($"HKLM\\Software\\Classes\\" + id + "\\OpenWithProgIDs", ExeFilenameNoExt + id);
+                RegHelp.RemoveValue($"HKCR\\Software\\Classes\\" + id + "\\OpenWithProgIDs", ExeFilenameNoExt + id);
+                RegHelp.RemoveValue($"HKLM\\Software\\Classes\\" + id + "\\OpenWithProgIDs", ExeFilenameNoExt + id);
             }
         }
     }
 
-    public class RegistryHelp
+    public class RegHelp
     {
         public static void SetObject(string path, string name, object value)
         {

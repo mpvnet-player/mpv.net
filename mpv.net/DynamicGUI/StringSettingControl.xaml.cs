@@ -64,7 +64,8 @@ namespace DynamicGUI
                     {
                         d.FullOpen = true;
                         try {
-                            d.Color = System.Drawing.ColorTranslator.FromHtml(ValueTextBox.Text);
+                            Color col = GetColor(ValueTextBox.Text);
+                            d.Color = System.Drawing.Color.FromArgb(col.A, col.R, col.G, col.B); 
                         } catch { }
                         if (d.ShowDialog() == WinForms.DialogResult.OK)
                             ValueTextBox.Text = System.Drawing.ColorTranslator.ToHtml(d.Color);
@@ -75,29 +76,31 @@ namespace DynamicGUI
 
         private void ValueTextBox_TextChanged(object sender, TextChangedEventArgs e) => Update();
 
+        Color GetColor(string value)
+        {
+            if (value.Contains("/"))
+            {
+                string[] a = value.Split('/');
+
+                if (a.Length == 3)
+                    return Color.FromRgb(ToByte(a[0]), ToByte(a[1]), ToByte(a[2]));
+                else if (a.Length == 4)
+                    return Color.FromArgb(ToByte(a[3]), ToByte(a[0]), ToByte(a[1]), ToByte(a[2]));
+            }
+
+            return (Color)ColorConverter.ConvertFromString(value);
+
+            Byte ToByte(string val) => Convert.ToByte(Convert.ToSingle(val, CultureInfo.InvariantCulture) * 255);
+        }
+
         public void Update()
         {
             if (StringSetting.Type == "color")
             {
                 Color c = Colors.Transparent;
-                if (ValueTextBox.Text != "")
-                {
-                    try {
-                        if (ValueTextBox.Text.Contains("/"))
-                        {
-                            string[] a = ValueTextBox.Text.Split('/');
-                            if (a.Length == 3)
-                                c = Color.FromRgb(ToByte(a[0]), ToByte(a[1]), ToByte(a[2]));
-                            else if (a.Length == 4)
-                                c = Color.FromArgb(ToByte(a[3]), ToByte(a[0]), ToByte(a[1]), ToByte(a[2]));
-                        }
-                        else
-                            c = (Color)ColorConverter.ConvertFromString(ValueTextBox.Text);
-                    } catch {}
-                }
+                if (ValueTextBox.Text != "") try { c = GetColor(ValueTextBox.Text); } catch {}
                 ValueTextBox.Background = new SolidColorBrush(c);
             }
-            Byte ToByte(string val) => Convert.ToByte(Convert.ToSingle(val, CultureInfo.InvariantCulture) * 255);
         }
     }
 }

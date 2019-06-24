@@ -37,9 +37,9 @@ namespace mpvnet
                             files.Add(arg);
 
                     if (files.Count > 0)
-                        RegistryHelp.SetObject(App.RegPath, "ShellFiles", files.ToArray());
+                        RegHelp.SetObject(App.RegPath, "ShellFiles", files.ToArray());
 
-                    RegistryHelp.SetObject(App.RegPath, "ProcessInstanceMode", App.ProcessInstance);
+                    RegHelp.SetObject(App.RegPath, "ProcessInstanceMode", App.ProcessInstance);
 
                     foreach(Process process in Process.GetProcessesByName("mpvnet"))
                     {

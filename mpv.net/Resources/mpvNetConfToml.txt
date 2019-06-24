@@ -8,12 +8,10 @@ options = [{ name = "always" },
 		   { name = "never" }]
 
 [[settings]]
-name = "clipboard-monitoring"
-default = "yes"
+name = "url-whitelist"
 filter = "mpv.net"
-help = "Monitors the clipboard for URLs to play."
-options = [{ name = "yes" },
-           { name = "no" }]
+type = "string"
+help = "Domain whitelist to monitor the clipboard for URLs to play.\n\nDefault: youtube ard zdf"
 
 [[settings]]
 name = "process-instance"

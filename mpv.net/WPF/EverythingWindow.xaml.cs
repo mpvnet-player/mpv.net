@@ -95,12 +95,8 @@ namespace mpvnet
                         ListView.ScrollIntoView(ListView.SelectedItem);
                     }
                     break;
-                case Key.Escape:
-                    Close();
-                    break;
-                case Key.Enter:
-                    Execute();
-                    break;
+                case Key.Escape: Close(); break;
+                case Key.Enter:  Execute(); break;
             }
         }
 
@@ -113,14 +109,11 @@ namespace mpvnet
         void Execute()
         {
             if (ListView.SelectedItem != null)
-                mp.Load(ListView.SelectedItem as string);
+                mp.Load(new[] { ListView.SelectedItem as string }, true, Keyboard.Modifiers == ModifierKeys.Control);
             Keyboard.Focus(FilterTextBox);
         }
 
-        private void ListView_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            Execute();
-        }
+        private void ListView_MouseUp(object sender, MouseButtonEventArgs e) => Execute();
 
         private void FilterTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {

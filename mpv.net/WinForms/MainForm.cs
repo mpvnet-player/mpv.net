@@ -40,7 +40,7 @@ namespace mpvnet
                 MinimumSize = new Size(FontHeight * 16, FontHeight * 9);
                 Text += " " + Application.ProductVersion;
 
-                object recent = RegistryHelp.GetObject(App.RegPath, "Recent");
+                object recent = RegHelp.GetObject(App.RegPath, "Recent");
 
                 if (recent is string[] r)
                     RecentFiles = new List<string>(r);
@@ -150,7 +150,7 @@ namespace mpvnet
                 recent.DropDownItems.Clear();
 
                 foreach (string path in RecentFiles)
-                    MenuItem.Add(recent.DropDownItems, path, () => mp.Load(path));
+                    MenuItem.Add(recent.DropDownItems, path, () => mp.Load(new[] { path }, true, Control.ModifierKeys.HasFlag(Keys.Control)));
 
                 recent.DropDownItems.Add(new ToolStripSeparator());
                 MenuItem mi = new MenuItem("Clear List");
@@ -377,14 +377,14 @@ namespace mpvnet
 
             if (m.Msg == SingleProcess.Message)
             {
-                object filesObject = RegistryHelp.GetObject(App.RegPath, "ShellFiles");
+                object filesObject = RegHelp.GetObject(App.RegPath, "ShellFiles");
 
                 if (filesObject is string[] files)
                 {
-                    switch (RegistryHelp.GetString(App.RegPath, "ProcessInstanceMode"))
+                    switch (RegHelp.GetString(App.RegPath, "ProcessInstanceMode"))
                     {
                         case "single":
-                            mp.Load(files);
+                            mp.Load(files, true, Control.ModifierKeys.HasFlag(Keys.Control));
                             break;
                         case "queue":
                             foreach (string file in files)
@@ -393,7 +393,7 @@ namespace mpvnet
                     }
                 }
 
-                RegistryHelp.RemoveValue(App.RegPath, "ShellFiles");
+                RegHelp.RemoveValue(App.RegPath, "ShellFiles");
                 Activate();
                 return;
             }
@@ -412,9 +412,9 @@ namespace mpvnet
         {
             base.OnDragDrop(e);
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
-                mp.Load(e.Data.GetData(DataFormats.FileDrop) as String[]);
+                mp.Load(e.Data.GetData(DataFormats.FileDrop) as String[], true, Control.ModifierKeys.HasFlag(Keys.Control));
             if (e.Data.GetDataPresent(DataFormats.Text))
-                mp.Load(e.Data.GetData(DataFormats.Text).ToString());
+                mp.Load(new[] { e.Data.GetData(DataFormats.Text).ToString() }, true, Control.ModifierKeys.HasFlag(Keys.Control));
         }
 
         protected override void OnMouseDown(MouseEventArgs e)
@@ -487,7 +487,7 @@ namespace mpvnet
             BuildMenu();
             ContextMenuStrip = ContextMenu;
             IgnoreDpiChanged = false;
-            CheckURLinClipboard();
+            CheckUrlInClipboard();
         }
 
         protected override void OnResize(EventArgs e)
@@ -499,7 +499,7 @@ namespace mpvnet
         protected override void OnFormClosed(FormClosedEventArgs e)
         {
             base.OnFormClosed(e);
-            RegistryHelp.SetObject(App.RegPath, "Recent", RecentFiles.ToArray());
+            RegHelp.SetObject(App.RegPath, "Recent", RecentFiles.ToArray());
             App.Exit();
             mp.commandv("quit");
             mp.AutoResetEvent.WaitOne(3000);
@@ -514,20 +514,24 @@ namespace mpvnet
         protected override void OnActivated(EventArgs e)
         {
             base.OnActivated(e);
-            CheckURLinClipboard();
+            CheckUrlInClipboard();
         }
 
-        void CheckURLinClipboard()
+        void CheckUrlInClipboard()
         {
-            if (App.ClipboardMonitoring != "yes") return;
             string clipboard = Clipboard.GetText();
 
-            if (clipboard.StartsWith("http") && RegistryHelp.GetString(App.RegPath, "LastURL") != clipboard && Visible)
+            foreach (string url in App.UrlWhitelist)
             {
-                RegistryHelp.SetObject(App.RegPath, "LastURL", clipboard);
+                if (clipboard.Contains("://") && !clipboard.Contains("\n") &&
+                    clipboard.Contains(url.ToLower()) &&
+                    RegHelp.GetString(App.RegPath, "LastURL") != clipboard && Visible)
+                {
+                    RegHelp.SetObject(App.RegPath, "LastURL", clipboard);
 
-                if (Msg.ShowQuestion("Play URL?", clipboard) == MsgResult.OK)
-                    mp.Load(clipboard);
+                    if (Msg.ShowQuestion("Play URL?", clipboard) == MsgResult.OK)
+                        mp.Load(new[] { clipboard }, true, Control.ModifierKeys.HasFlag(Keys.Control));
+                }
             }
         }
     }
