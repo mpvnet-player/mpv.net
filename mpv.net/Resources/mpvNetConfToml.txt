@@ -11,7 +11,7 @@ options = [{ name = "always" },
 name = "url-whitelist"
 filter = "mpv.net"
 type = "string"
-help = "Domain whitelist to monitor the clipboard for URLs to play.\n\nDefault: youtube ard zdf"
+help = "Whitelist to monitor the clipboard for URLs to play.\n\nDefault: tube vimeo ard zdf"
 
 [[settings]]
 name = "process-instance"
