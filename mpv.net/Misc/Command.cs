@@ -32,10 +32,15 @@ namespace mpvnet
                     {
                         ParameterInfo[] parameters = i.GetParameters();
 
-                        if (parameters == null || parameters.Length != 1 || parameters[0].ParameterType != typeof(string[]))
+                        if (parameters == null ||
+                            parameters.Length != 1 ||
+                            parameters[0].ParameterType != typeof(string[]))
                             continue;
 
-                        Command cmd = new Command() { Name = i.Name.Replace("_","-"), Action = (Action<string[]>)i.CreateDelegate(typeof(Action<string[]>)) };
+                        Command cmd = new Command() {
+                            Name = i.Name.Replace("_", "-"),
+                            Action = (Action<string[]>)i.CreateDelegate(typeof(Action<string[]>)) };
+
                         commands.Add(cmd);
                     }
                 }
@@ -45,10 +50,30 @@ namespace mpvnet
 
         public static void open_files(string[] args)
         {
+            bool append = Control.ModifierKeys.HasFlag(Keys.Control);
+            bool loadFolder = true;
+
+            foreach (string arg in args)
+            {
+                if (arg == "append") append = true;
+                if (arg == "no-folder") loadFolder = false;
+            }
+
             MainForm.Instance.Invoke(new Action(() => {
                 using (var d = new OpenFileDialog() { Multiselect = true })
                     if (d.ShowDialog() == DialogResult.OK)
-                        mp.Load(d.FileNames, true, Control.ModifierKeys.HasFlag(Keys.Control));
+                        mp.Load(d.FileNames, loadFolder, append);
+            }));
+        }
+
+        // deprecated in 2019
+        public static void add_files_to_playlist(string[] args)
+        {
+            MainForm.Instance.Invoke(new Action(() => {
+                using (var d = new OpenFileDialog() { Multiselect = true })
+                    if (d.ShowDialog() == DialogResult.OK)
+                        foreach (string file in d.FileNames)
+                            mp.commandv("loadfile", file, "append");
             }));
         }
 
@@ -225,16 +250,6 @@ namespace mpvnet
                         foreach (string i in d.FileNames)
                             mp.commandv("audio-add", i);
                 }
-            }));
-        }
-
-        public static void add_files_to_playlist(string[] args)
-        {
-            MainForm.Instance.Invoke(new Action(() => {
-                using (var d = new OpenFileDialog() { Multiselect = true })
-                    if (d.ShowDialog() == DialogResult.OK)
-                        foreach(string file in d.FileNames)
-                            mp.commandv("loadfile", file, "append");
             }));
         }
 

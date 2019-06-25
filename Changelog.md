@@ -7,6 +7,8 @@
 - when single process queue is used the folder is no longer loaded
 - the playlist is never cleared whenever the control key is down but
   files and URLs are appended instead
+- 2 powershell script hosting bugs were fixed and a new powershell example script
+  was added to the [scripting wiki page](https://github.com/stax76/mpv.net/wiki/Scripting#powershell)
 
 ### 4.3.1
 

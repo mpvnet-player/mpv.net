@@ -14,26 +14,27 @@ namespace mpvnet
             using (Runspace runspace = RunspaceFactory.CreateRunspace())
             {
                 runspace.ApartmentState = ApartmentState.STA;
-                runspace.ThreadOptions = PSThreadOptions.UseCurrentThread;
                 runspace.Open();
 
                 using (Pipeline pipeline = runspace.CreatePipeline())
                 {
                     pipeline.Commands.AddScript(
-@"Using namespace mpvnet;
-Using namespace System;
-[System.Reflection.Assembly]::LoadWithPartialName(""mpvnet"")");
+                        "Using namespace mpvnet\n" +
+                        "Using namespace System\n" +
+                        "[System.Reflection.Assembly]::LoadWithPartialName(\"mpvnet\")\n");
 
                     pipeline.Commands.AddScript(code);
 
+                    if (parameters != null)
+                        foreach (var i in parameters)
+                            pipeline.Commands[1].Parameters.Add(null, i);
+
                     try
                     {
-                        var ret = pipeline.Invoke(parameters);
-
-                        if (ret.Count > 0)
-                            return ret[0];
+                        var ret = pipeline.Invoke();
+                        if (ret.Count > 0) return ret[0];
                     }
-                    catch (Exception ex)
+                    catch (Exception e)
                     {
                         try
                         {
@@ -46,12 +47,12 @@ Using namespace System;
                                     throw new Exception();
                             }
                         }
-                        catch (Exception ex2)
+                        catch (Exception e2)
                         {
-                            Msg.ShowError("PowerShell Setup Problem\n\nEnsure you have at least PowerShell 5.1 installed.", ex2.ToString());
+                            Msg.ShowError("PowerShell Setup Problem\n\nEnsure you have at least PowerShell 5.1 installed.", e2.ToString());
                             return null;
                         }
-                        Msg.ShowException(ex);
+                        Msg.ShowException(e);
                     }
                 }
             }
@@ -70,17 +71,11 @@ Using namespace System;
                     eventObject.FilePath = filePath;
 
                     if (eventInfo.EventHandlerType == typeof(Action))
-                    {
                         mi = eventObject.GetType().GetMethod(nameof(PowerShellEventObject.Invoke));
-                    }
                     else if (eventInfo.EventHandlerType == typeof(Action<EndFileEventMode>))
-                    {
                         mi = eventObject.GetType().GetMethod(nameof(PowerShellEventObject.InvokeEndFileEventMode));
-                    }
                     else if (eventInfo.EventHandlerType == typeof(Action<string[]>))
-                    {
                         mi = eventObject.GetType().GetMethod(nameof(PowerShellEventObject.InvokeStrings));
-                    }
                     else
                         throw new Exception();
 
@@ -91,10 +86,7 @@ Using namespace System;
                     return;
                 }
             }
-            Task.Run(() =>
-            {
-                PowerShellScript.Execute(File.ReadAllText(filePath), new string[] {});
-            });
+            Task.Run(() => PowerShellScript.Execute(File.ReadAllText(filePath), null));
         }
     }
 
@@ -104,24 +96,16 @@ Using namespace System;
         public Delegate Delegate { get; set; }
         public string FilePath { get; set; }
 
-        public void Invoke()
-        {
-            Task.Run(() => { PowerShellScript.Execute(File.ReadAllText(FilePath), new string[] { }); });
-        }
+        public void Invoke() => Task.Run(() => { PowerShellScript.Execute(File.ReadAllText(FilePath), null); });
 
         public void InvokeEndFileEventMode(EndFileEventMode arg)
         {
-            Task.Run(() =>
-            {
-                PowerShellScript.Execute(File.ReadAllText(FilePath), new string[] { arg.ToString() });
-            });
+            Task.Run(() => PowerShellScript.Execute(File.ReadAllText(FilePath), new [] { arg.ToString() }));
         }
 
         public void InvokeStrings(string[] args)
         {
-            Task.Run(() => {
-                PowerShellScript.Execute(File.ReadAllText(FilePath), args);
-            });
+            Task.Run(() => PowerShellScript.Execute(File.ReadAllText(FilePath), args));
         }
     }
 }

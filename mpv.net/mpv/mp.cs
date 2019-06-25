@@ -193,10 +193,7 @@ namespace mpvnet
                 mpv_event evt = (mpv_event)Marshal.PtrToStructure(ptr, typeof(mpv_event));
 
                 if (WindowHandle == IntPtr.Zero)
-                {
                     WindowHandle = FindWindowEx(MainForm.Hwnd, IntPtr.Zero, "mpv", null);
-                    //Native.EnableWindow(WindowHandle, true);
-                }
 
                 //Debug.WriteLine(evt.event_id.ToString());
 
@@ -270,10 +267,6 @@ namespace mpvnet
                                     {
                                         found = true;
                                         i.Action.Invoke(args.Skip(2).ToArray());
-                                        MainForm.Instance.BeginInvoke(new Action(() => {
-                                            Message m = new Message() { Msg = 0x0202 }; // WM_LBUTTONUP
-                                            Native.SendMessage(MainForm.Instance.Handle, m.Msg, m.WParam, m.LParam);
-                                        }));
                                     }
                                 }
                                 if (!found)
@@ -368,17 +361,11 @@ namespace mpvnet
                     MethodInfo mi;
 
                     if (eventInfo.EventHandlerType == typeof(Action))
-                    {
                         mi = eventObject.GetType().GetMethod(nameof(PythonEventObject.Invoke));
-                    }
                     else if (eventInfo.EventHandlerType == typeof(Action<EndFileEventMode>))
-                    {
                         mi = eventObject.GetType().GetMethod(nameof(PythonEventObject.InvokeEndFileEventMode));
-                    }
                     else if (eventInfo.EventHandlerType == typeof(Action<string[]>))
-                    {
                         mi = eventObject.GetType().GetMethod(nameof(PythonEventObject.InvokeStrings));
-                    }
                     else
                         throw new Exception();
 
@@ -400,28 +387,19 @@ namespace mpvnet
 
         public static void commandv(params string[] args)
         {
-            if (Handle == IntPtr.Zero)
-                return;
-
+            if (Handle == IntPtr.Zero) return;
             IntPtr mainPtr = AllocateUtf8IntPtrArrayWithSentinel(args, out IntPtr[] byteArrayPointers);
             int err = mpv_command(Handle, mainPtr);
-
-            if (err < 0)
-                throw new Exception($"{(mpv_error)err}");
-
+            if (err < 0) throw new Exception($"{(mpv_error)err}");
             foreach (var ptr in byteArrayPointers)
                 Marshal.FreeHGlobal(ptr);
-
             Marshal.FreeHGlobal(mainPtr);
         }
 
         public static void command_string(string command, bool throwException = false)
         {
-            if (Handle == IntPtr.Zero)
-                return;
-
+            if (Handle == IntPtr.Zero) return;
             int err = mpv_command_string(Handle, command);
-
             if (err < 0 && throwException)
                 throw new Exception($"{(mpv_error)err}\r\n\r\n" + command);
         }
@@ -430,7 +408,6 @@ namespace mpvnet
         {
             byte[] bytes = GetUtf8Bytes(value);
             int err = mpv_set_property(Handle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_STRING, ref bytes);
-
             if (err < 0 && throwOnException)
                 throw new Exception($"{name}: {(mpv_error)err}");
         }
@@ -574,7 +551,7 @@ namespace mpvnet
             if (loadFolder && !append) Task.Run(() => LoadFolder()); // user reported race condition
         }
 
-        static void LoadFolder()
+        public static void LoadFolder()
         {
             Thread.Sleep(50); // user reported race condition
             string path = get_property_string("path");

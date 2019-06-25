@@ -27,9 +27,6 @@ namespace mpvnet
         [DllImport("user32.dll", SetLastError = true)]
         public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, int uFlags);
 
-        [DllImport("user32.dll")]
-        public static extern bool EnableWindow(IntPtr hWnd, bool bEnable);
-
         [DllImport("user32.dll", EntryPoint = "GetWindowLong")]
         private static extern IntPtr GetWindowLong32(IntPtr hWnd, int nIndex);
 
