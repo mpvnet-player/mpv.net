@@ -207,6 +207,22 @@ filter = "Subtitle"
 help = "See sub-color. Color used for sub text background. You can use sub-shadow-offset to change its size relative to the text."
 
 [[settings]]
+name = "fullscreen"
+default = "no"
+filter = "Screen"
+help = "Start the player in fullscreen mode."
+options = [{ name = "yes" },
+           { name = "no" }]
+
+[[settings]]
+name = "border"
+default = "yes"
+filter = "Screen"
+help = "Show window with decoration (titlebar, border)."
+options = [{ name = "yes" },
+           { name = "no" }]
+
+[[settings]]
 name = "screen"
 filter = "Screen"
 help = "<0-32> In multi-monitor configurations (i.e. a single desktop that spans across multiple displays), this option tells mpv which screen to display the video on."
@@ -224,14 +240,6 @@ name = "osd-font-size"
 default = "55"
 filter = "Screen"
 help = "Specify the OSD font size. See sub-font-size for details. Default: 55"
-
-[[settings]]
-name = "fullscreen"
-default = "no"
-filter = "Screen"
-help = "Start the player in fullscreen mode."
-options = [{ name = "yes" },
-           { name = "no" }]
 
 [[settings]]
 name = "screenshot-directory"

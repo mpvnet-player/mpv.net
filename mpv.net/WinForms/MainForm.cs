@@ -8,7 +8,6 @@ using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
-using System.Diagnostics;
 
 namespace mpvnet
 {
@@ -51,13 +50,31 @@ namespace mpvnet
                 App.ProcessCommandLineEarly();
                 if (mp.Screen == -1) mp.Screen = Array.IndexOf(Screen.AllScreens, Screen.PrimaryScreen);
                 SetScreen(mp.Screen);
-                ChangeFullscreen(mp.Fullscreen);
+                CycleFullscreen(mp.Fullscreen);
             }
             catch (Exception ex)
             {
                 Msg.ShowException(ex);
             }
         }
+
+        public MenuItem FindMenuItem(string text) => FindMenuItem(text, ContextMenu.Items);
+
+        void Idle() => BeginInvoke(new Action(() => { Text = "mpv.net " + Application.ProductVersion; }));
+
+        void CM_Popup(object sender, EventArgs e) => CursorHelp.Show();
+
+        void VideoSizeChanged() => BeginInvoke(new Action(() => SetFormPosAndSizeKeepHeight()));
+
+        void Shutdown() => BeginInvoke(new Action(() => Close()));
+
+        void PropChangeFullscreen(bool value) => BeginInvoke(new Action(() => CycleFullscreen(value)));
+
+        void ContextMenu_Opened(object sender, EventArgs e) => CursorHelp.Show();
+
+        bool IsFullscreen => WindowState == FormWindowState.Maximized;
+
+        bool IsMouseInOSC() => PointToClient(Control.MousePosition).Y > ClientSize.Height * 0.9;
 
         void ContextMenu_Opening(object sender, CancelEventArgs e)
         {
@@ -148,18 +165,14 @@ namespace mpvnet
             if (recent != null)
             {
                 recent.DropDownItems.Clear();
-
                 foreach (string path in RecentFiles)
                     MenuItem.Add(recent.DropDownItems, path, () => mp.Load(new[] { path }, true, Control.ModifierKeys.HasFlag(Keys.Control)));
-
                 recent.DropDownItems.Add(new ToolStripSeparator());
                 MenuItem mi = new MenuItem("Clear List");
                 mi.Action = () => RecentFiles.Clear();
                 recent.DropDownItems.Add(mi);
             }
         }
-
-        public MenuItem FindMenuItem(string text) => FindMenuItem(text, ContextMenu.Items);
 
         MenuItem FindMenuItem(string text, ToolStripItemCollection items)
         {
@@ -209,7 +222,7 @@ namespace mpvnet
             Native.SetWindowPos(Handle, IntPtr.Zero /* HWND_TOP */, left, top, rect.Width, rect.Height, 4 /* SWP_NOZORDER */);
         }
 
-        void SetFormPositionAndSizeKeepHeight()
+        void SetFormPosAndSizeKeepHeight()
         {
             if (IsFullscreen || mp.VideoSize.Width == 0) return;
             Screen screen = Screen.FromControl(this);
@@ -242,8 +255,7 @@ namespace mpvnet
 
             foreach (CommandItem item in items)
             {
-                if (string.IsNullOrEmpty(item.Path))
-                    continue;
+                if (string.IsNullOrEmpty(item.Path)) continue;
                 string path = item.Path.Replace("&", "&&");
                 MenuItem menuItem = ContextMenu.Add(path, () => {
                     try {
@@ -252,14 +264,11 @@ namespace mpvnet
                         Msg.ShowException(ex);
                     }
                 });
-                if (menuItem != null)
-                    menuItem.ShortcutKeyDisplayString = item.Input + "    ";
+                if (menuItem != null) menuItem.ShortcutKeyDisplayString = item.Input + "    ";
             }
         }
 
-        void ContextMenu_Opened(object sender, EventArgs e) => CursorHelp.Show();
-
-        private void Mp_FileLoaded()
+        private void FileLoaded()
         {
             string path = mp.get_property_string("path");
             BeginInvoke(new Action(() => {
@@ -273,10 +282,6 @@ namespace mpvnet
             if (RecentFiles.Count > 15) RecentFiles.RemoveAt(15);
         }
 
-        void Mp_Idle() => BeginInvoke(new Action(() => { Text = "mpv.net " + Application.ProductVersion; }));
-
-        void CM_Popup(object sender, EventArgs e) => CursorHelp.Show();
-
         void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
         {
             Msg.ShowException(e.Exception);
@@ -286,29 +291,12 @@ namespace mpvnet
         {
            Msg.ShowError(e.ExceptionObject.ToString());
         }
-
-        void mp_VideoSizeChanged()
+        
+        public void CycleFullscreen(bool enabled)
         {
-            BeginInvoke(new Action(() => SetFormPositionAndSizeKeepHeight()));
-        }
-
-        void mp_Shutdown()
-        {
-            BeginInvoke(new Action(() => Close()));  
-        }
-
-        public bool IsFullscreen => WindowState == FormWindowState.Maximized;
-
-        void mpPropChangeFullscreen(bool value)
-        {
-            BeginInvoke(new Action(() => ChangeFullscreen(value)));
-        }
-
-        void ChangeFullscreen(bool value)
-        {
-            if (value)
+            if (enabled)
             {
-                if (FormBorderStyle != FormBorderStyle.None)
+                if (WindowState != FormWindowState.Maximized)
                 {
                     FormBorderStyle = FormBorderStyle.None;
                     WindowState = FormWindowState.Maximized;
@@ -317,14 +305,19 @@ namespace mpvnet
             else
             {
                 WindowState = FormWindowState.Normal;
-                FormBorderStyle = FormBorderStyle.Sizable;
-                SetFormPositionAndSizeKeepHeight();
+
+                if (mp.Border)
+                    FormBorderStyle = FormBorderStyle.Sizable;
+                else
+                    FormBorderStyle = FormBorderStyle.None;
+
+                SetFormPosAndSizeKeepHeight();
             }
         }
 
         protected override void WndProc(ref Message m)
         {
-            //Debug.WriteLine(m);
+            //System.Diagnostics.Debug.WriteLine(m);
 
             switch (m.Msg)
             {
@@ -342,6 +335,9 @@ namespace mpvnet
                     Point pos = PointToClient(Cursor.Position);
                     mp.command_string($"mouse {pos.X} {pos.Y}");
                     if (CursorHelp.IsPosDifferent(LastCursorPosChanged)) CursorHelp.Show();
+                    break;
+                case 0x2a3: // WM_MOUSELEAVE
+                    mp.command_string("mouse 1 1"); // osc won't always auto hide
                     break;
                 case 0x319: // WM_APPCOMMAND
                     if (mp.WindowHandle != IntPtr.Zero)
@@ -417,25 +413,6 @@ namespace mpvnet
                 mp.Load(new[] { e.Data.GetData(DataFormats.Text).ToString() }, true, Control.ModifierKeys.HasFlag(Keys.Control));
         }
 
-        protected override void OnMouseDown(MouseEventArgs e)
-        {
-            base.OnMouseDown(e);
-
-            if (WindowState == FormWindowState.Normal &&
-                e.Button == MouseButtons.Left &&
-                e.Y < ClientSize.Height * 0.9)
-            {
-                var HTCAPTION = new IntPtr(2);
-                Native.ReleaseCapture();
-                Native.PostMessage(Handle, 0xA1 /* WM_NCLBUTTONDOWN */, HTCAPTION, IntPtr.Zero);
-            }
-
-            if (Width - e.Location.X < 10 && e.Location.Y < 10)
-                mp.commandv("quit");
-        }
-
-        bool IsMouseInOSC() => PointToClient(Control.MousePosition).Y > ClientSize.Height * 0.9;
-
         void Timer_Tick(object sender, EventArgs e)
         {
             if (CursorHelp.IsPosDifferent(LastCursorPosChanged))
@@ -446,36 +423,50 @@ namespace mpvnet
             else if (Environment.TickCount - LastCursorChangedTickCount > 1500 &&
                 !IsMouseInOSC() && ClientRectangle.Contains(PointToClient(MousePosition)) &&
                 Form.ActiveForm == this && !ContextMenu.Visible)
-            {
+
                 CursorHelp.Hide();
-            }
+        }
+
+        void PropChangeOnTop(bool value) => BeginInvoke(new Action(() => TopMost = value));
+
+        void PropChangeAid(string value) => mp.Aid = value;
+
+        void PropChangeSid(string value) => mp.Sid = value;
+
+        void PropChangeVid(string value) => mp.Vid = value;
+
+        void PropChangeEdition(int value) => mp.Edition = value;
+
+        void PropChangeBorder(bool enabled) {
+            mp.Border = enabled;
+
+            BeginInvoke(new Action(() => {
+                if (!IsFullscreen)
+                {
+                    if (mp.Border && FormBorderStyle == FormBorderStyle.None)
+                        FormBorderStyle = FormBorderStyle.Sizable;
+                    if (!mp.Border && FormBorderStyle == FormBorderStyle.Sizable)
+                        FormBorderStyle = FormBorderStyle.None;
+                }
+            }));
         }
 
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
             mp.Init();
-            mp.observe_property_bool("fullscreen", mpPropChangeFullscreen);
-            mp.observe_property_bool("ontop", mpPropChangeOnTop);
-            mp.observe_property_string("sid", mpPropChangeSid);
-            mp.observe_property_string("aid", mpPropChangeAid);
-            mp.observe_property_string("vid", mpPropChangeVid);
-            mp.observe_property_int("edition", mpPropChangeEdition);
-            mp.Shutdown += mp_Shutdown;
-            mp.VideoSizeChanged += mp_VideoSizeChanged;
-            mp.FileLoaded += Mp_FileLoaded;
-            mp.Idle += Mp_Idle;
+            mp.observe_property_bool("fullscreen", PropChangeFullscreen);
+            mp.observe_property_bool("ontop", PropChangeOnTop);
+            mp.observe_property_bool("border", PropChangeBorder);
+            mp.observe_property_string("sid", PropChangeSid);
+            mp.observe_property_string("aid", PropChangeAid);
+            mp.observe_property_string("vid", PropChangeVid);
+            mp.observe_property_int("edition", PropChangeEdition);
+            mp.Shutdown += Shutdown;
+            mp.VideoSizeChanged += VideoSizeChanged;
+            mp.FileLoaded += FileLoaded;
+            mp.Idle += Idle;
         }
-
-        void mpPropChangeOnTop(bool value) => BeginInvoke(new Action(() => TopMost = value));
-
-        void mpPropChangeAid(string value) => mp.Aid = value;
-
-        void mpPropChangeSid(string value) => mp.Sid = value;
-
-        void mpPropChangeVid(string value) => mp.Vid = value;
-
-        void mpPropChangeEdition(int value) => mp.Edition = value;
 
         protected override void OnShown(EventArgs e)
         {
@@ -488,6 +479,14 @@ namespace mpvnet
             ContextMenuStrip = ContextMenu;
             IgnoreDpiChanged = false;
             CheckUrlInClipboard();
+        }
+
+        protected override void OnActivated(EventArgs e)
+        {
+            base.OnActivated(e);
+            CheckUrlInClipboard();
+            Message m = new Message() { Msg = 0x0202 }; // WM_LBUTTONUP
+            Native.SendMessage(Handle, m.Msg, m.WParam, m.LParam);
         }
 
         protected override void OnResize(EventArgs e)
@@ -505,18 +504,27 @@ namespace mpvnet
             mp.AutoResetEvent.WaitOne(3000);
         }
 
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            base.OnMouseDown(e);
+
+            if (WindowState == FormWindowState.Normal &&
+                e.Button == MouseButtons.Left &&
+                e.Y < ClientSize.Height * 0.9)
+            {
+                var HTCAPTION = new IntPtr(2);
+                Native.ReleaseCapture();
+                Native.PostMessage(Handle, 0xA1 /* WM_NCLBUTTONDOWN */, HTCAPTION, IntPtr.Zero);
+            }
+
+            if (Width - e.Location.X < 10 && e.Location.Y < 10)
+                mp.commandv("quit");
+        }
+
         protected override void OnLostFocus(EventArgs e)
         {
             base.OnLostFocus(e);
             CursorHelp.Show();
-        }
-
-        protected override void OnActivated(EventArgs e)
-        {
-            base.OnActivated(e);
-            CheckUrlInClipboard();
-            Message m = new Message() { Msg = 0x0202 }; // WM_LBUTTONUP
-            Native.SendMessage(Handle, m.Msg, m.WParam, m.LParam);
         }
 
         void CheckUrlInClipboard()

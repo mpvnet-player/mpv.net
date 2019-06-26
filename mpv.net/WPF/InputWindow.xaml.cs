@@ -102,7 +102,15 @@ namespace mpvnet
 
         string GetInputConfContent()
         {
-            string text = Properties.Resources.inputConfHeader + "\r\n";
+            string text = null;
+
+            foreach (string line in Properties.Resources.inputConf.Split(new[] { "\r\n" }, StringSplitOptions.None))
+            {
+                string test = line.Trim();
+                if (test == "" || test.StartsWith("#")) text += test + "\r\n";
+            }
+
+            text = "\r\n" + text.Trim() + "\r\n\r\n";
 
             foreach (CommandItem item in CommandItem.Items)
             {

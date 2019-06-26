@@ -31,7 +31,7 @@
  Alt+s       script-message mpv.net load-sub   #menu: Open > Load external subtitle files...
  _           ignore                            #menu: Open > -
  _           script-message mpv.net open-files append #menu: Open > Add files to playlist...
- Ctrl+S      script-message mpv.net show-media-search #menu: Open > Show media search...
+ F3          script-message mpv.net show-media-search #menu: Open > Show media search...
  _           ignore                            #menu: Open > -
  _           ignore                            #menu: Open > Recent
 
@@ -132,6 +132,7 @@
 
  Ctrl+t set ontop yes                             #menu: View > On Top > Enable
  Ctrl+T set ontop no                              #menu: View > On Top > Disable
+ b      cycle border                              #menu: View > Toggle Border
  i      script-message mpv.net show-info          #menu: View > File Info
  t      script-binding stats/display-stats        #menu: View > Show Statistics
  T      script-binding stats/display-stats-toggle #menu: View > Toggle Statistics
@@ -143,11 +144,11 @@
  Ctrl+i script-message mpv.net show-input-editor  #menu: Settings > Show Input Editor
  Ctrl+f script-message mpv.net open-conf-folder   #menu: Settings > Open Config Folder
 
- Ctrl+P script-message mpv.net show-command-palette #menu: Tools > Command Palette
+ F1     script-message mpv.net show-command-palette #menu: Tools > Show All Commands
  h      script-message mpv.net show-history         #menu: Tools > Show History
  l      ab-loop                                     #menu: Tools > Set/clear A-B loop points
  L      cycle-values loop-file "inf" "no"           #menu: Tools > Toggle infinite file looping
- Ctrl+h cycle-values hwdec "auto" "no"              #menu: Tools > Cycle Hardware Decoding
+ Ctrl+h cycle-values hwdec "auto" "no"              #menu: Tools > Toggle Hardware Decoding
  _ script-message mpv.net execute-mpv-command       #menu: Tools > Execute mpv command...
  _ script-message mpv.net manage-file-associations  #menu: Tools > Manage File Associations...
 

@@ -260,7 +260,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\inputConfHeader.txt" />
     <Content Include="Resources\inputConf.txt" />
   </ItemGroup>
   <ItemGroup>

@@ -7,8 +7,14 @@
 - when single process queue is used the folder is no longer loaded
 - the playlist is never cleared whenever the control key is down but
   files and URLs are appended instead
-- 2 powershell script hosting bugs were fixed and a new powershell example script
+- powershell script hosting bugs were fixed and a new powershell example script
   was added to the [scripting wiki page](https://github.com/stax76/mpv.net/wiki/Scripting#powershell)
+- the menu entry for the command palette was renamed to 'Show All Commands' and
+  the default key binding was changed to F1 which is also the default in VS Code
+- the default key binding of the Everything media search was changed to F3
+- support for the mpv property 'border' was added to show/hide
+  the window decoration (titlebar, border). A menu item and key binding (b)
+  was added as well
 
 ### 4.3.1
 

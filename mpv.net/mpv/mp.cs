@@ -65,16 +65,35 @@ namespace mpvnet
         public static List<MediaTrack> MediaTracks { get; set; } = new List<MediaTrack>();
         public static List<KeyValuePair<string, double>> Chapters { get; set; } = new List<KeyValuePair<string, double>>();
 
-        public static string InputConfPath  { get; } = ConfFolder + "\\input.conf";
-        public static string ConfPath    { get; } = ConfFolder + "\\mpv.conf";
-
-        public static bool   Fullscreen { get; set; }
-        public static float  Autofit { get; set; } = 0.50f;
-        public static int    Screen { get; set; } = -1;
+        public static string InputConfPath { get; } = ConfFolder + "\\input.conf";
+        public static string ConfPath      { get; } = ConfFolder + "\\mpv.conf";
         public static string Sid { get; set; } = "";
         public static string Aid { get; set; } = "";
         public static string Vid { get; set; } = "";
+
+        public static bool Fullscreen { get; set; }
+        public static bool Border { get; set; } = true;
+
+        public static int Screen { get; set; } = -1;
         public static int Edition { get; set; }
+
+        public static float Autofit { get; set; } = 0.50f;
+
+        public static void ProcessProperty(string name, string value)
+        {
+            switch (name)
+            {
+                case "autofit":
+                    if (value.Length == 3 && value.EndsWith("%"))
+                        if (int.TryParse(value.Substring(0, 2), out int result))
+                            Autofit = result / 100f;
+                    break;
+                case "fs":
+                case "fullscreen": Fullscreen = value == "yes"; break;
+                case "border": Border = value == "yes"; break;
+                case "screen": Screen = Convert.ToInt32(value); break;
+            }
+        }
 
         static string _ConfFolder;
 
@@ -146,7 +165,6 @@ namespace mpvnet
             string dummy = ConfFolder;
             LoadLibrary("mpv-1.dll");
             Handle = mpv_create();            
-            set_property_string("input-default-bindings", "yes");
             set_property_string("osc", "yes");
             set_property_string("config", "yes");
             set_property_string("wid", MainForm.Hwnd.ToString());
@@ -649,21 +667,6 @@ namespace mpvnet
                     b.UnlockBits(bd);
                     IsLogoVisible = true;
                 }
-            }
-        }
-
-        public static void ProcessProperty(string name, string value)
-        {
-            switch (name)
-            {
-                case "autofit":
-                    if (value.Length == 3 && value.EndsWith("%"))
-                        if (int.TryParse(value.Substring(0, 2), out int result))
-                            Autofit = result / 100f;
-                    break;
-                case "fs":
-                case "fullscreen": Fullscreen = value == "yes"; break;
-                case "screen": Screen = Convert.ToInt32(value); break;
             }
         }
 

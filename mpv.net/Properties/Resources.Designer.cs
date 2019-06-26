@@ -84,28 +84,6 @@ namespace mpvnet.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to 
-        /// # This file defines the input (keys and mouse) bindings of mpv and mpv.net
-        /// # and it also defines the context menu of mpv.net. mpv.net has an input
-        /// # editor and an config editor as alternatives to editing conf text files.
-        /// # The input and config editor can be found in mpv.net&apos;s context menu at:
-        ///
-        /// # Settings &gt; Show Config Editor
-        /// # Settings &gt; Show Input Editor
-        ///
-        /// # The defaults of this file can be found at:
-        ///
-        /// # https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt
-        ///
-        /// # t [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string inputConfHeader {
-            get {
-                return ResourceManager.GetString("inputConfHeader", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 
         ///# manual: https://mpv.io/manual/master/
         ///
         ///# defaults: https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/mpvConf.txt
@@ -116,10 +94,9 @@ namespace mpvnet.Properties {
         ///hwdec = yes
         ///keep-open = yes
         ///keep-open-pause = no
-        ///osd-playing-msg = ${filename}
-        ///screenshot-directory = ~~desktop/
-        ///input-default-bindings = no
-        ///.
+        ///osd-playing-msg = &apos;${filename}&apos;
+        ///screenshot-directory = &apos;~~desktop/&apos;
+        ///input-default-bindings = no.
         /// </summary>
         internal static string mpvConf {
             get {
@@ -166,13 +143,14 @@ namespace mpvnet.Properties {
         ///[[settings]]
         ///name = &quot;url-whitelist&quot;
         ///filter = &quot;mpv.net&quot;
-        ///help = &quot;Domain whitelist to monitor the clipboard for URLs to play.\n\nDefault: youtube ard zdf&quot;
+        ///type = &quot;string&quot;
+        ///help = &quot;Whitelist to monitor the clipboard for URLs to play.\n\nDefault: tube vimeo ard zdf&quot;
         ///
         ///[[settings]]
         ///name = &quot;process-instance&quot;
         ///default = &quot;single&quot;
         ///filter = &quot;mpv.net&quot;
-        ///help = &quot;Defines if more then [rest of string was truncated]&quot;;.
+        ///help = &quot;Defines [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string mpvNetConfToml {
             get {
