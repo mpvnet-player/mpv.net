@@ -192,6 +192,8 @@ Third party components:
 
 [frank.skare.de@gmail.com](mailto:frank.skare.de@gmail.com?Subject=mpv.net%20support)
 
+Please click on the star at the top of the page and like mpv.net at [alternativeto.net](https://alternativeto.net/software/mpv-net/).
+
 ### Links
 
 mpv manual: <https://mpv.io/manual/master/>

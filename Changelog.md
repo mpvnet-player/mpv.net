@@ -1,4 +1,4 @@
-### 
+### 4.4
 
 - clipboard-monitoring was replaced by url-whitelist:
   Keyword whitelist to monitor the clipboard for URLs to play.
