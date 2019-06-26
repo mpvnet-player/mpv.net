@@ -93,9 +93,9 @@
 
 ## About mpv.net
 
-mpv.net is a media player for Windows. Similar like VLC mpv.net is not based on DirectShow like MPC, mpv.net is based on libmpv which in return is based on ffmpeg.
+mpv.net is a modern media player for Windows. mpv is similar to VLC not based on DirectShow like MPC, mpv.net is based on libmpv which in return is based on ffmpeg.
 
-libmpv provides the majority of the features of the mpv media player, a fork of mplayer. mpv focuses on the usage of the command line interface, mpv.net retains the ability to be used from the command line and adds a simple and easy to use GUI on top of it.
+libmpv provides the majority of the features of the mpv media player, a fork of mplayer. mpv focuses on the usage of the command line interface, mpv.net retains the ability to be used from the command line and adds a modern GUI on top of it.
 
 mpv.net is meant to be a small single person project, it's designed to be mpv compatible, can use the same settings as mpv and offers almost all mpv features because they are all contained in libmpv, this means the official [mpv manual](https://mpv.io/manual/master/) fully applies to mpv.net.
 
@@ -141,11 +141,15 @@ Another way to open files is the command line, it is used by the Windows File Ex
 
 A third way is to drag and drop files on the main window.
 
+Whenever the control key is pressed when files are opened, the playlist is not cleared but the files are appended to the playlist.
+
 ### Open > Open URL
 
 The Open URL menu entry can be used to open URLs for example from YouTube.
 
-mpv.net monitors the Windows clipboard and ask if URLs should be played in case it finds a URL in the clipboard.
+mpv.net monitors the Windows clipboard and ask if URLs should be played in case it finds a URL in the clipboard. This feature uses a keyword whitelist that can be configured in the config editor. 
+
+Whenever the control key is pressed when URLs are opened, the playlist is not cleared but the URLs are appended to the playlist.
 
 ### Open > Show media search
 

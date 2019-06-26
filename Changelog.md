@@ -12,9 +12,9 @@
 - the menu entry for the command palette was renamed to 'Show All Commands' and
   the default key binding was changed to F1 which is also the default in VS Code
 - the default key binding of the Everything media search was changed to F3
-- support for the mpv property 'border' was added to show/hide
-  the window decoration (titlebar, border). A menu item and key binding (b)
-  was added as well
+- support for the mpv property 'border' was added to the config editor
+  to show/hide the window decoration (titlebar, border). A menu item and
+  key binding (b) was added as well ([Default Binding](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt#L135))
 
 ### 4.3.1
 
