@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("mpv.net")]
 [assembly: AssemblyDescription("A modern media player")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Frank Skare (stax76)")]
 [assembly: AssemblyProduct("mpv.net")]
 [assembly: AssemblyCopyright("Copyright © 2017-2019 Frank Skare (stax76)")]
 [assembly: AssemblyTrademark("")]

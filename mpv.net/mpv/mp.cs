@@ -163,7 +163,7 @@ namespace mpvnet
         {
             string dummy = ConfFolder;
             LoadLibrary("mpv-1.dll");
-            Handle = mpv_create();            
+            Handle = mpv_create();
             set_property_string("osc", "yes");
             set_property_string("config", "yes");
             set_property_string("wid", MainForm.Hwnd.ToString());
@@ -179,23 +179,22 @@ namespace mpvnet
 
         public static void LoadScripts()
         {
-            string[] jsLua = { ".lua", ".js" };
             string[] startupScripts = Directory.GetFiles(Application.StartupPath + "\\Scripts");
 
-            foreach (var scriptPath in startupScripts)
-                if (jsLua.Contains(Path.GetExtension(scriptPath).ToLower()))
+            foreach (string scriptPath in startupScripts)
+                if (scriptPath.EndsWith(".lua") || scriptPath.EndsWith(".js"))
                     commandv("load-script", $"{scriptPath}");
 
-            foreach (var scriptPath in startupScripts)
+            foreach (string scriptPath in startupScripts)
                 if (Path.GetExtension(scriptPath) == ".py")
                     PythonScripts.Add(new PythonScript(File.ReadAllText(scriptPath)));
 
-            foreach (var scriptPath in startupScripts)
+            foreach (string scriptPath in startupScripts)
                 if (Path.GetExtension(scriptPath) == ".ps1")
                     PowerShellScript.Init(scriptPath);
 
             if (Directory.Exists(ConfFolder + "Scripts"))
-                foreach (var scriptPath in Directory.GetFiles(ConfFolder + "Scripts"))
+                foreach (string scriptPath in Directory.GetFiles(ConfFolder + "Scripts"))
                     if (Path.GetExtension(scriptPath) == ".py")
                         PythonScripts.Add(new PythonScript(File.ReadAllText(scriptPath)));
                     else if (Path.GetExtension(scriptPath) == ".ps1")
@@ -274,11 +273,11 @@ namespace mpvnet
                             var client_messageData = (mpv_event_client_message)Marshal.PtrToStructure(evt.data, typeof(mpv_event_client_message));
                             string[] args = NativeUtf8StrArray2ManagedStrArray(client_messageData.args, client_messageData.num_args);
 
-                            if (args != null && args.Length > 1 && args[0] == "mpv.net")
+                            if (args.Length > 1 && args[0] == "mpv.net")
                             {
                                 bool found = false;
 
-                                foreach (var i in mpvnet.Command.Commands)
+                                foreach (Command i in Command.Commands)
                                 {
                                     if (args[1] == i.Name)
                                     {
@@ -293,7 +292,8 @@ namespace mpvnet
                                     Msg.ShowError($"No command '{args[1]}' found.", $"Available commands are:\n\n{string.Join("\n", names)}\n\nHow to bind these commands can be seen in the [default input bindings and menu definition](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt).");
                                 }
                             }
-                            ClientMessage?.Invoke(args);
+                            else if (args.Length > 0)
+                                ClientMessage?.Invoke(args);
                             break;
                         case mpv_event_id.MPV_EVENT_VIDEO_RECONFIG:
                             VideoReconfig?.Invoke();
@@ -603,16 +603,16 @@ namespace mpvnet
             return rootPointer;
         }
 
-        static string[] NativeUtf8StrArray2ManagedStrArray(IntPtr pUnmanagedStringArray, int StringCount)
+        static string[] NativeUtf8StrArray2ManagedStrArray(IntPtr unmanagedStringArray, int StringCount)
         {
-            IntPtr[] pIntPtrArray = new IntPtr[StringCount];
-            string[] ManagedStringArray = new string[StringCount];
-            Marshal.Copy(pUnmanagedStringArray, pIntPtrArray, 0, StringCount);
+            IntPtr[] intPtrArray = new IntPtr[StringCount];
+            string[] stringArray = new string[StringCount];
+            Marshal.Copy(unmanagedStringArray, intPtrArray, 0, StringCount);
 
             for (int i = 0; i < StringCount; i++)
-                ManagedStringArray[i] = StringFromNativeUtf8(pIntPtrArray[i]);
+                stringArray[i] = StringFromNativeUtf8(intPtrArray[i]);
 
-            return ManagedStringArray;
+            return stringArray;
         }
 
         static string StringFromNativeUtf8(IntPtr nativeUtf8)

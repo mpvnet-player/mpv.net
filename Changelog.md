@@ -1,6 +1,9 @@
 ###
 
 - opening a URL manually no longer uses a input box but uses the clipboard directly
+- the manifest was missing the company attribute which caused
+  mpv.net not appearing in the 'Open with' menu of the Windows File Explorer,
+  thanks to 44vince44 for pointing this out!!!
 
 ### 4.4
 

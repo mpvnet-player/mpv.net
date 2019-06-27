@@ -46,11 +46,8 @@ namespace RatingAddon
 
         void ClientMessage(string[] args)
         {
-            if (args == null || args.Length != 2 || args[0] != "rate-file" ||
-                ! int.TryParse(args[1], out int rating))
-
+            if (args.Length != 2 || args[0] != "rate-file" || ! int.TryParse(args[1], out int rating))
                 return;
-
             Dic[mp.get_property_string("path")] = rating;
             mp.commandv("show-text", $"Rating: {rating}");
         }

@@ -17,7 +17,7 @@ help = "Whitelist to monitor the clipboard for URLs to play.\n\nDefault: tube vi
 name = "process-instance"
 default = "single"
 filter = "mpv.net"
-help = "Defines if more then one mpv.net process is allowed."
+help = "Defines if more then one mpv.net process is allowed.\n\nTip: Whenever the control key is pressed when files or URLs are opened, the playlist is not cleared but the files or URLs are appended to the playlist."
 options = [{ name = "multi",  help = "Create a new process everytime the shell starts mpv.net" },
            { name = "single", help = "Force a single process everytime the shell starts mpv.net" },
 		   { name = "queue",  help = "Force a single process and add files to playlist" }]
