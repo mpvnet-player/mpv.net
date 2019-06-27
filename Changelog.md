@@ -1,3 +1,7 @@
+###
+
+- opening a URL manually no longer uses a input box but uses the clipboard directly
+
 ### 4.4
 
 - clipboard-monitoring was replaced by url-whitelist:

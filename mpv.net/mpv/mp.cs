@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
@@ -213,7 +212,7 @@ namespace mpvnet
                 if (WindowHandle == IntPtr.Zero)
                     WindowHandle = FindWindowEx(MainForm.Hwnd, IntPtr.Zero, "mpv", null);
 
-                //Debug.WriteLine(evt.event_id.ToString());
+                //System.Diagnostics.Debug.WriteLine(evt.event_id.ToString());
 
                 try
                 {

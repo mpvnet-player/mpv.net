@@ -14,11 +14,11 @@ namespace RatingAddon
 
         public RatingAddon()
         {
-            mp.ClientMessage += mpv_ClientMessage;
-            mp.Shutdown += mpv_Shutdown;
+            mp.ClientMessage += ClientMessage;
+            mp.Shutdown += Shutdown;
         }
 
-        void mpv_Shutdown()
+        void Shutdown()
         {
             foreach (var i in Dic)
             {
@@ -44,12 +44,10 @@ namespace RatingAddon
             }            
         }
 
-        void mpv_ClientMessage(string[] args)
+        void ClientMessage(string[] args)
         {
-            if (args == null ||
-                args.Length != 2 ||
-                args[0] != "rate-file" ||
-                !int.TryParse(args[1], out int rating))
+            if (args == null || args.Length != 2 || args[0] != "rate-file" ||
+                ! int.TryParse(args[1], out int rating))
 
                 return;
 

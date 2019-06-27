@@ -218,9 +218,13 @@ namespace mpvnet
         public static void open_url(string[] args)
         {
             MainForm.Instance.Invoke(new Action(() => {
-                string command = VB.Interaction.InputBox("Enter URL to be opened.");
-                if (string.IsNullOrEmpty(command)) return;
-                mp.Load(new [] { command }, false, Control.ModifierKeys.HasFlag(Keys.Control));
+                string clipboard = Clipboard.GetText();
+                if (string.IsNullOrEmpty(clipboard) || !clipboard.Contains("://") || clipboard.Contains("\n") || clipboard.Contains(" "))
+                {
+                    Msg.ShowError("The clipboard does not contain a valid URL, it has to contain :// and is not allowed to contain a newline or space character.");
+                    return;
+                }
+                mp.Load(new [] { clipboard }, false, Control.ModifierKeys.HasFlag(Keys.Control));
             }));
         }
 
