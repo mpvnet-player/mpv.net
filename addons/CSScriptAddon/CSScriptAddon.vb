@@ -1,4 +1,7 @@
-﻿Imports System.ComponentModel.Composition
+﻿'this addon implements the C# scripting feature of mpv.net,
+'it is based on CS-Script: https://www.cs-script.net/
+
+Imports System.ComponentModel.Composition
 Imports System.IO
 Imports System.Windows.Forms
 
