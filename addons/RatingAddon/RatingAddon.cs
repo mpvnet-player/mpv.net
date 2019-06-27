@@ -1,4 +1,7 @@
-﻿using System;
+﻿// this addon writes a rating to the filename of the current video,
+// the input.conf defaults contain key bindings for this addon
+
+using System;
 using System.ComponentModel.Composition;
 using System.Collections.Generic;
 using System.IO;
@@ -14,7 +17,7 @@ namespace RatingAddon
 
         public RatingAddon()
         {
-            mp.ClientMessage += ClientMessage;
+            mp.ClientMessage += ClientMessage; //handles keys defined in input.conf
             mp.Shutdown += Shutdown;
         }
 
@@ -44,6 +47,7 @@ namespace RatingAddon
             }            
         }
 
+        //handles keys defined in input.conf
         void ClientMessage(string[] args)
         {
             if (args.Length != 2 || args[0] != "rate-file" || ! int.TryParse(args[1], out int rating))
