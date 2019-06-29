@@ -4,8 +4,9 @@
 - the manifest was missing the company attribute which caused
   mpv.net not appearing in the 'Open with' menu of the Windows File Explorer,
   thanks to 44vince44 for pointing this out!!!
-- a new Python script example was added to the wiki and the scripting and
+- new Python and C# script examples were added to the wiki and the scripting and
   add-on documentation was improved
+- invalid command line arguments were ignored, now an error message is shown
 
 ### 4.4
 

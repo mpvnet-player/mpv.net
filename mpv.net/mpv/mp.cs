@@ -285,6 +285,7 @@ namespace mpvnet
                                         i.Action.Invoke(args.Skip(2).ToArray());
                                     }
                                 }
+
                                 if (!found)
                                 {
                                     List<string> names = mpvnet.Command.Commands.Select((item) => item.Name).ToList();
@@ -523,7 +524,7 @@ namespace mpvnet
 
             foreach (string i in args)
             {
-                if (!i.StartsWith("--") && (File.Exists(i) || i == "-" || i.StartsWith("http")))
+                if (!i.StartsWith("--") && (i == "-" || i.StartsWith("http") || File.Exists(i)))
                 {
                     files.Add(i);
                     if (i.StartsWith("http"))
@@ -537,14 +538,21 @@ namespace mpvnet
             {
                 if (i.StartsWith("--"))
                 {
-                    if (i.Contains("="))
+                    try
                     {
-                        string left = i.Substring(2, i.IndexOf("=") - 2);
-                        string right = i.Substring(left.Length + 3);
-                        set_property_string(left, right);
+                        if (i.Contains("="))
+                        {
+                            string left = i.Substring(2, i.IndexOf("=") - 2);
+                            string right = i.Substring(left.Length + 3);
+                            set_property_string(left, right, true);
+                        }
+                        else
+                            set_property_string(i.Substring(2), "yes", true);
                     }
-                    else
-                        set_property_string(i.Substring(2), "yes");
+                    catch (Exception e)
+                    {
+                        Msg.ShowException(e);
+                    }
                 }
             }
         }
