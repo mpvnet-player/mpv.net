@@ -7,6 +7,7 @@
 * [Requirements](#requirements)
 * [Installation](#installation)
   + [File Associations](#file-associations)
+  + [Chrome Extension](#chrome-extension)
 * [Context Menu](#context-menu)
   + [Open > Open Files](#open--open-files)
   + [Open > Open URL](#open--open-url)
@@ -119,7 +120,7 @@ If you are new to mpv.net the portable download is recommended, for regular mpv.
 
 The x64 editions require more memory and have the advantage of decoders being typically first and better optimized for x64.
 
-x86 should though still be well supported and work.
+x86 should though still be well supported and work but it's not as well tested than x64.
 
 ### File Associations
 
@@ -128,6 +129,12 @@ File Associations can be created using the setup or from within the apps context
 Windows 10 prevents apps to register as the default app, to define the default video or audio player app in Windows 10 go to the Windows settings under 'Settings > Apps > Default apps' or shell execute 'ms-settings:defaultapps'.
 
 It's also possible to change the default application using the Open With feature of the context menu in Windows File Explorer.
+
+### Chrome Extension
+
+In order to play videos from sites such as YouTube the Chrome Extension [Play with mpv](https://chrome.google.com/webstore/detail/play-with-mpv/hahklcmnfgffdlchjigehabfbiigleji) can be used. A modified Python HTTP server can be downloaded [here](http://www.mediafire.com/file/6tmwdjsfknhmsxy/play-with-mpvnet-server.7z/file), Python is embedded so it don't has to be installed. When the built in file association registration was executed then the server will probably find the location of mpv.net, if not it might help to add the mpv.net folder to the PATH environment variable of the current user, a reboot should not be required, only a restart of the server, if it don't help then please contact support. The chrome extension works only when the server is running so it makes sense to start the server on system start, to achieve this a link can be created in the auto start folder located at:
+
+`C:\Users\%username%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup`
 
 ## Context Menu
 
