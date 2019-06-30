@@ -132,9 +132,13 @@ It's also possible to change the default application using the Open With feature
 
 ### Chrome Extension
 
-In order to play videos from sites such as YouTube the Chrome Extension [Play with mpv](https://chrome.google.com/webstore/detail/play-with-mpv/hahklcmnfgffdlchjigehabfbiigleji) can be used. A modified Python HTTP server can be downloaded [here](http://www.mediafire.com/file/6tmwdjsfknhmsxy/play-with-mpvnet-server.7z/file), Python is embedded so it don't has to be installed. When the built in file association registration was executed then the server will probably find the location of mpv.net, if not it might help to add the mpv.net folder to the PATH environment variable of the current user, a reboot should not be required, only a restart of the server, if it don't help then please contact support. The chrome extension works only when the server is running so it makes sense to start the server on system start, to achieve this a link can be created in the auto start folder located at:
+In order to play videos from sites such as YouTube the Chrome Extension [Play with mpv](https://chrome.google.com/webstore/detail/play-with-mpv/hahklcmnfgffdlchjigehabfbiigleji) can be used.
+
+Due to Chrome Extensions not being able to start a app, another app that communicates with the extension is required, this app can be downloaded [here](http://www.mediafire.com/file/6tmwdjsfknhmsxy/play-with-mpvnet-server.7z/file). The extension works only when the app is running, to have the app always running a link can be created in the auto start folder located at:
 
 `C:\Users\%username%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup`
+
+This will start the app on system start and have it running in the background. When the file association registration of mpv.net was executed then the app should find the location of mpv.net, alternativly the mpv.net folder can be added to the PATH environment variable of the current user.
 
 ## Context Menu
 
