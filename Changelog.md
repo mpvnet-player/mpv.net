@@ -7,8 +7,9 @@
 - new Python and C# script examples were added to the wiki and the scripting and
   add-on documentation was improved
 - invalid command line arguments were ignored, now an error message is shown
-- a [new wiki page](https://github.com/stax76/mpv.net/wiki/Google-Chrome-Extension) was added to describe how to start mpv.net from Google Chrome
-  to watch videos from sites like YouTube
+- a description on how to start mpv.net from Google Chrome was added to the
+  manual, it's useful to play videos from sites like YouTube, find the
+  description [here](https://github.com/stax76/mpv.net/blob/master/Manual.md#chrome-extension)
   
 ### 4.4
 
