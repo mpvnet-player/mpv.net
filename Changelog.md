@@ -1,3 +1,7 @@
+###
+
+- fix for middle mouse button not working
+
 ### 4.5
 
 - opening a URL manually no longer uses a input box but uses the clipboard directly

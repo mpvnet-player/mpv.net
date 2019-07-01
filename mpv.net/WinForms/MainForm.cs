@@ -329,6 +329,8 @@ namespace mpvnet
                 case 0x0104: // WM_SYSKEYDOWN
                 case 0x0105: // WM_SYSKEYUP
                 case 0x020A: // WM_MOUSEWHEEL
+                case 0x0207: // WM_MBUTTONDOWN
+                case 0x0208: // WM_MBUTTONUP
                     if (mp.WindowHandle != IntPtr.Zero)
                         Native.SendMessage(mp.WindowHandle, m.Msg, m.WParam, m.LParam);
                     break;
