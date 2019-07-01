@@ -64,7 +64,7 @@ namespace mpvnet
 
         void CM_Popup(object sender, EventArgs e) => CursorHelp.Show();
 
-        void VideoSizeChanged() => BeginInvoke(new Action(() => SetFormPosAndSizeKeepHeight()));
+        void VideoSizeChanged() => BeginInvoke(new Action(() => SetFormPosAndSize()));
 
         void Shutdown() => BeginInvoke(new Action(() => Close()));
 
@@ -222,11 +222,12 @@ namespace mpvnet
             Native.SetWindowPos(Handle, IntPtr.Zero /* HWND_TOP */, left, top, rect.Width, rect.Height, 4 /* SWP_NOZORDER */);
         }
 
-        void SetFormPosAndSizeKeepHeight()
+        void SetFormPosAndSize()
         {
             if (IsFullscreen || mp.VideoSize.Width == 0) return;
             Screen screen = Screen.FromControl(this);
-            int height = ClientSize.Height;
+            int height = mp.VideoSize.Height;
+            if (mp.RememberHeight) height = ClientSize.Height;
             if (height > screen.Bounds.Height * 0.9) height = Convert.ToInt32(screen.Bounds.Height * mp.Autofit);
             int width = Convert.ToInt32(height * mp.VideoSize.Width / (double)mp.VideoSize.Height);
             Point middlePos = new Point(Left + Width / 2, Top + Height / 2);
@@ -272,7 +273,7 @@ namespace mpvnet
         {
             string path = mp.get_property_string("path");
             BeginInvoke(new Action(() => {
-                if (File.Exists(path) || path.StartsWith("http"))
+                if (File.Exists(path) || path.Contains("://"))
                     Text = Path.GetFileName(path) + " - mpv.net " + Application.ProductVersion;
                 else
                     Text = "mpv.net " + Application.ProductVersion;
@@ -311,7 +312,7 @@ namespace mpvnet
                 else
                     FormBorderStyle = FormBorderStyle.None;
 
-                SetFormPosAndSizeKeepHeight();
+                SetFormPosAndSize();
             }
         }
 

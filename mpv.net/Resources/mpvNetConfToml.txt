@@ -1,7 +1,7 @@
 ﻿[[settings]]
 name = "dark-mode"
 default = "always"
-filter = "mpv.net"
+filter = "General"
 help = "Enables a dark theme."
 options = [{ name = "always" },
            { name = "system" , help = "Available on Windows 10 or higher" },
@@ -9,15 +9,15 @@ options = [{ name = "always" },
 
 [[settings]]
 name = "url-whitelist"
-filter = "mpv.net"
+filter = "General"
 type = "string"
-help = "Whitelist to monitor the clipboard for URLs to play.\n\nDefault: tube vimeo ard zdf"
+help = "mpv.net specific whitelist setting to monitor the clipboard for URLs to play.\n\nDefault: tube vimeo ard zdf"
 
 [[settings]]
 name = "process-instance"
 default = "single"
-filter = "mpv.net"
-help = "Defines if more then one mpv.net process is allowed.\n\nTip: Whenever the control key is pressed when files or URLs are opened, the playlist is not cleared but the files or URLs are appended to the playlist."
+filter = "General"
+help = "mpv.net specific setting that defines if more then one mpv.net process is allowed.\n\nTip: Whenever the control key is pressed when files or URLs are opened, the playlist is not cleared but the files or URLs are appended to the playlist."
 options = [{ name = "multi",  help = "Create a new process everytime the shell starts mpv.net" },
            { name = "single", help = "Force a single process everytime the shell starts mpv.net" },
 		   { name = "queue",  help = "Force a single process and add files to playlist" }]
@@ -25,7 +25,7 @@ options = [{ name = "multi",  help = "Create a new process everytime the shell s
 [[settings]]
 name = "debug-mode"
 default = "no"
-filter = "mpv.net"
-help = "Writes debug info to a file located on the desktop."
+filter = "General"
+help = "mpv.net specific setting that writes debug info to a file located on the desktop."
 options = [{ name = "yes" },
            { name = "no" }]

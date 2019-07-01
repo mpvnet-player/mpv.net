@@ -219,9 +219,9 @@ namespace mpvnet
         {
             MainForm.Instance.Invoke(new Action(() => {
                 string clipboard = Clipboard.GetText();
-                if (string.IsNullOrEmpty(clipboard) || !clipboard.Contains("://") || clipboard.Contains("\n") || clipboard.Contains(" "))
+                if (string.IsNullOrEmpty(clipboard) || (!clipboard.Contains("://") && !File.Exists(clipboard)) || clipboard.Contains("\n"))
                 {
-                    Msg.ShowError("The clipboard does not contain a valid URL, it has to contain :// and is not allowed to contain a newline or space character.");
+                    Msg.ShowError("The clipboard does not contain a valid URL or file, URLs have to contain :// and is not allowed to contain a newline character.");
                     return;
                 }
                 mp.Load(new [] { clipboard }, false, Control.ModifierKeys.HasFlag(Keys.Control));

@@ -72,11 +72,12 @@ namespace mpvnet
 
         public static bool Fullscreen { get; set; }
         public static bool Border { get; set; } = true;
+        public static bool RememberHeight { get; set; } = true;
 
         public static int Screen { get; set; } = -1;
         public static int Edition { get; set; }
 
-        public static float Autofit { get; set; } = 0.50f;
+        public static float Autofit { get; set; } = 0.5f;
 
         public static void ProcessProperty(string name, string value)
         {
@@ -91,6 +92,7 @@ namespace mpvnet
                 case "fullscreen": Fullscreen = value == "yes"; break;
                 case "border": Border = value == "yes"; break;
                 case "screen": Screen = Convert.ToInt32(value); break;
+                case "remember-height": RememberHeight = value == "yes"; break;
             }
         }
 
@@ -524,11 +526,10 @@ namespace mpvnet
 
             foreach (string i in args)
             {
-                if (!i.StartsWith("--") && (i == "-" || i.StartsWith("http") || File.Exists(i)))
+                if (!i.StartsWith("--") && (i == "-" || i.Contains("://") || File.Exists(i)))
                 {
                     files.Add(i);
-                    if (i.StartsWith("http"))
-                        RegHelp.SetObject(App.RegPath, "LastURL", i);
+                    if (i.Contains("://")) RegHelp.SetObject(App.RegPath, "LastURL", i);
                 }
             }
 

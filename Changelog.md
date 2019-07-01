@@ -1,4 +1,4 @@
-###
+### 4.5
 
 - opening a URL manually no longer uses a input box but uses the clipboard directly
 - the manifest was missing the company attribute which caused
@@ -10,7 +10,10 @@
 - a description on how to start mpv.net from Google Chrome was added to the
   manual, it's useful to play videos from sites like YouTube, find the
   description [here](https://github.com/stax76/mpv.net/blob/master/Manual.md#chrome-extension)
-  
+- new config setting remember-height added to remember the window height,
+  otherwise the video's native resolution is used
+- support for protocols other then http added
+
 ### 4.4
 
 - clipboard-monitoring was replaced by url-whitelist:

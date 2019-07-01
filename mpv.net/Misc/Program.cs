@@ -33,7 +33,7 @@ namespace mpvnet
                     List<string> files = new List<string>();
 
                     foreach (string arg in args)
-                        if (!arg.StartsWith("--") && (File.Exists(arg) || arg == "-" || arg.StartsWith("http")))
+                        if (!arg.StartsWith("--") && (arg == "-" || arg.Contains("://") || File.Exists(arg)))
                             files.Add(arg);
 
                     if (files.Count > 0)
