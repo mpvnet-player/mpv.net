@@ -58,6 +58,7 @@ Table of contents
 - DXVA2 video decoding acceleration
 - OpenGL based video output capable of features loved by videophiles, such as video scaling with popular high quality algorithms, color management, frame timing, interpolation, HDR, and more
 - Search feature powered by [Everything](https://www.voidtools.com) to find and play media ([Screenshot](#media-search-screenshot))
+- extension to start mpv.net from Google Chrome ([Manual](Manual.md#chrome-extension))
 
 ### Screenshots
 
