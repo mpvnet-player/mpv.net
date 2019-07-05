@@ -87,7 +87,7 @@ A searchable key and mouse binding editor.
 #### Command Palette Screenshot
 
 Forgot where a command in the menu is located or what shortcut key it has?
-Just press Ctrl+Shift+P and find it easily in the searchable command palette.
+Just press F1 and find it easily in the searchable command palette.
 
 ![Command Palette](https://raw.githubusercontent.com/stax76/mpv.net/master/img/CommandPalette.png)
 
