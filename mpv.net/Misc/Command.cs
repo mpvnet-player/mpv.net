@@ -23,11 +23,11 @@ namespace mpvnet
                 case "open-url": OpenURL(); break;
                 case "execute-mpv-command": ExecuteMpvCommand(); break;
                 case "show-history": ShowHistory(); break;
-                case "show-media-search": ShowMediaSearch(); break;
-                case "show-command-palette": ShowCommandPalette(); break;
-                case "show-about": ShowAbout(); break;
-                case "show-conf-editor": ShowConfEditor(); break;
-                case "show-input-editor": ShowInputEditor(); break;
+                case "show-media-search": ShowDialog(typeof(EverythingWindow)); break;
+                case "show-command-palette": ShowDialog(typeof(CommandPaletteWindow)); break;
+                case "show-about": ShowDialog(typeof(AboutWindow)); break;
+                case "show-conf-editor": ShowDialog(typeof(ConfWindow)); break;
+                case "show-input-editor": ShowDialog(typeof(InputWindow)); break;
                 case "open-conf-folder": Process.Start(mp.ConfFolder); break;
                 case "open-files": OpenFiles(args); break;
                 case "shell-execute": Process.Start(args[0]); break;
@@ -47,16 +47,6 @@ namespace mpvnet
                 win.ShowDialog();
             }));
         }
-
-        public static void ShowInputEditor() => ShowDialog(typeof(InputWindow));
-
-        public static void ShowConfEditor() => ShowDialog(typeof(ConfWindow));
-
-        public static void ShowAbout() => ShowDialog(typeof(AboutWindow));
-
-        public static void ShowCommandPalette() => ShowDialog(typeof(CommandPaletteWindow));
-
-        public static void ShowMediaSearch() => ShowDialog(typeof(EverythingWindow));
 
         public static void OpenFiles(params string[] args)
         {
