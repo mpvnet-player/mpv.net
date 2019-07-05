@@ -274,27 +274,8 @@ namespace mpvnet
                         case mpv_event_id.MPV_EVENT_CLIENT_MESSAGE:
                             var client_messageData = (mpv_event_client_message)Marshal.PtrToStructure(evt.data, typeof(mpv_event_client_message));
                             string[] args = NativeUtf8StrArray2ManagedStrArray(client_messageData.args, client_messageData.num_args);
-
                             if (args.Length > 1 && args[0] == "mpv.net")
-                            {
-                                bool found = false;
-
-                                foreach (Command i in Command.Commands)
-                                {
-                                    if (args[1] == i.Name)
-                                    {
-                                        found = true;
-                                        i.Action.Invoke(args.Skip(2).ToArray());
-                                    }
-                                }
-
-                                if (!found)
-                                {
-                                    List<string> names = mpvnet.Command.Commands.Select((item) => item.Name).ToList();
-                                    names.Sort();
-                                    Msg.ShowError($"No command '{args[1]}' found.", $"Available commands are:\n\n{string.Join("\n", names)}\n\nHow to bind these commands can be seen in the [default input bindings and menu definition](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt).");
-                                }
-                            }
+                                Command.Execute(args[1], args.Skip(2).ToArray());
                             else if (args.Length > 0)
                                 ClientMessage?.Invoke(args);
                             break;
@@ -558,10 +539,17 @@ namespace mpvnet
             }
         }
 
+        static DateTime LastLoad;
+
         public static void Load(string[] files, bool loadFolder, bool append)
         {
             if (files is null || files.Length == 0) return;
             HideLogo();
+
+            if ((DateTime.Now - LastLoad).TotalMilliseconds < 500)
+                append = true;
+
+            LastLoad = DateTime.Now;
 
             for (int i = 0; i < files.Length; i++)
                 if (App.SubtitleTypes.Contains(Path.GetExtension(files[i]).TrimStart('.').ToLower()))
@@ -579,7 +567,7 @@ namespace mpvnet
 
         public static void LoadFolder()
         {
-            Thread.Sleep(50); // user reported race condition
+            Thread.Sleep(200); // user reported race condition
             string path = get_property_string("path");
             if (!File.Exists(path) || get_property_int("playlist-count") != 1) return;
             List<string> files = Directory.GetFiles(Path.GetDirectoryName(path)).ToList();

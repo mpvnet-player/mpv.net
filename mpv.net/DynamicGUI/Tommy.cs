@@ -1752,7 +1752,6 @@ namespace Tommy
                         }
                         else
                             stringBuilder.Append(c);
-
                         break;
                 }
             }

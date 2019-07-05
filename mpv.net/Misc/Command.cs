@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Reflection;
+using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Interop;
 
@@ -13,42 +12,53 @@ namespace mpvnet
 {
     public class Command
     {
-        public string Name { get; set; }
-        public Action<string[]> Action { get; set; }
-
-        static List<Command> commands;
-
-        public static List<Command> Commands
+        public static void Execute(string id, string[] args)
         {
-            get
+            switch (id)
             {
-                if (commands == null)
-                {
-                    commands = new List<Command>();
-                    Type type = typeof(Command);
-                    MethodInfo[] methods = type.GetMethods(System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
-
-                    foreach (MethodInfo i in methods)
-                    {
-                        ParameterInfo[] parameters = i.GetParameters();
-
-                        if (parameters == null ||
-                            parameters.Length != 1 ||
-                            parameters[0].ParameterType != typeof(string[]))
-                            continue;
-
-                        Command cmd = new Command() {
-                            Name = i.Name.Replace("_", "-"),
-                            Action = (Action<string[]>)i.CreateDelegate(typeof(Action<string[]>)) };
-
-                        commands.Add(cmd);
-                    }
-                }
-                return commands;
+                case "manage-file-associations": ManageFileAssociations(); break;
+                case "cycle-audio": CycleAudio(); break;
+                case "load-audio": LoadAudio(); break;
+                case "load-sub": LoadSubtitle(); break;
+                case "open-url": OpenURL(); break;
+                case "execute-mpv-command": ExecuteMpvCommand(); break;
+                case "show-history": ShowHistory(); break;
+                case "show-media-search": ShowMediaSearch(); break;
+                case "show-command-palette": ShowCommandPalette(); break;
+                case "show-about": ShowAbout(); break;
+                case "show-conf-editor": ShowConfEditor(); break;
+                case "show-input-editor": ShowInputEditor(); break;
+                case "open-conf-folder": Process.Start(mp.ConfFolder); break;
+                case "open-files": OpenFiles(args); break;
+                case "shell-execute": Process.Start(args[0]); break;
+                case "show-info": ShowInfo(); break;
+                case "add-files-to-playlist": OpenFiles("append"); break; // deprecated 2019
+                default: Msg.ShowError($"No command '{id}' found."); break;
             }
         }
 
-        public static void open_files(string[] args)
+        public static void InvokeOnMainThread(Action action) => MainForm.Instance.Invoke(action);
+
+        public static void ShowDialog(Type winType)
+        {
+            InvokeOnMainThread(new Action(() => {
+                Window win = Activator.CreateInstance(winType) as Window;
+                new WindowInteropHelper(win).Owner = MainForm.Instance.Handle;
+                win.ShowDialog();
+            }));
+        }
+
+        public static void ShowInputEditor() => ShowDialog(typeof(InputWindow));
+
+        public static void ShowConfEditor() => ShowDialog(typeof(ConfWindow));
+
+        public static void ShowAbout() => ShowDialog(typeof(AboutWindow));
+
+        public static void ShowCommandPalette() => ShowDialog(typeof(CommandPaletteWindow));
+
+        public static void ShowMediaSearch() => ShowDialog(typeof(EverythingWindow));
+
+        public static void OpenFiles(params string[] args)
         {
             bool append = Control.ModifierKeys.HasFlag(Keys.Control);
             bool loadFolder = true;
@@ -59,75 +69,14 @@ namespace mpvnet
                 if (arg == "no-folder") loadFolder = false;
             }
 
-            MainForm.Instance.Invoke(new Action(() => {
+            InvokeOnMainThread(new Action(() => {
                 using (var d = new OpenFileDialog() { Multiselect = true })
                     if (d.ShowDialog() == DialogResult.OK)
                         mp.Load(d.FileNames, loadFolder, append);
             }));
         }
 
-        // deprecated in 2019
-        public static void add_files_to_playlist(string[] args)
-        {
-            MainForm.Instance.Invoke(new Action(() => {
-                using (var d = new OpenFileDialog() { Multiselect = true })
-                    if (d.ShowDialog() == DialogResult.OK)
-                        foreach (string file in d.FileNames)
-                            mp.commandv("loadfile", file, "append");
-            }));
-        }
-
-        public static void open_conf_folder(string[] args)
-        {
-            Process.Start(mp.ConfFolder);
-        }
-
-        public static void show_input_editor(string[] args)
-        {
-            MainForm.Instance.Invoke(new Action(() => {
-                InputWindow w = new InputWindow();
-                new WindowInteropHelper(w).Owner = MainForm.Instance.Handle;
-                w.ShowDialog();
-            }));
-        }
-
-        public static void show_conf_editor(string[] args)
-        {
-            MainForm.Instance.Invoke(new Action(() => {
-                ConfWindow w = new ConfWindow();
-                new WindowInteropHelper(w).Owner = MainForm.Instance.Handle;
-                w.ShowDialog();
-            }));
-        }
-
-        public static void show_about(string[] args)
-        {
-            MainForm.Instance.Invoke(new Action(() => {
-                AboutWindow w = new AboutWindow();
-                new WindowInteropHelper(w).Owner = MainForm.Instance.Handle;
-                w.ShowDialog();
-            }));
-        }
-
-        public static void show_command_palette(string[] args)
-        {
-            MainForm.Instance.Invoke(new Action(() => {
-                var w = new CommandPaletteWindow();
-                new WindowInteropHelper(w).Owner = MainForm.Instance.Handle;
-                w.ShowDialog();
-            }));
-        }
-
-        public static void show_media_search(string[] args)
-        {
-            MainForm.Instance.Invoke(new Action(() => {
-                var w = new EverythingWindow();
-                new WindowInteropHelper(w).Owner = MainForm.Instance.Handle;
-                w.ShowDialog();
-            }));
-        }
-
-        public static void show_history(string[] args)
+        public static void ShowHistory()
         {
             var fp = mp.ConfFolder + "history.txt";
 
@@ -139,9 +88,7 @@ namespace mpvnet
                     File.WriteAllText(fp, "");
         }
 
-        public static void shell_execute(string[] args) => Process.Start(args[0]);
-
-        public static void show_info(string[] args)
+        public static void ShowInfo()
         {
             try
             {
@@ -205,9 +152,9 @@ namespace mpvnet
             }
         }
 
-        public static void execute_mpv_command(string[] args)
+        public static void ExecuteMpvCommand()
         {
-            MainForm.Instance.Invoke(new Action(() => {
+            InvokeOnMainThread(new Action(() => {
                 string command = VB.Interaction.InputBox("Enter a mpv command to be executed.", "Execute Command", RegHelp.GetString(App.RegPath, "RecentExecutedCommand"));
                 if (string.IsNullOrEmpty(command)) return;
                 RegHelp.SetObject(App.RegPath, "RecentExecutedCommand", command);
@@ -215,22 +162,22 @@ namespace mpvnet
             }));
         }
         
-        public static void open_url(string[] args)
+        public static void OpenURL()
         {
-            MainForm.Instance.Invoke(new Action(() => {
-                string clipboard = Clipboard.GetText();
+            InvokeOnMainThread(new Action(() => {
+                string clipboard = System.Windows.Forms.Clipboard.GetText();
                 if (string.IsNullOrEmpty(clipboard) || (!clipboard.Contains("://") && !File.Exists(clipboard)) || clipboard.Contains("\n"))
                 {
-                    Msg.ShowError("The clipboard does not contain a valid URL or file, URLs have to contain :// and is not allowed to contain a newline character.");
+                    Msg.ShowError("The clipboard does not contain a valid URL or file, URLs have to contain :// and are not allowed to contain a newline character.");
                     return;
                 }
                 mp.Load(new [] { clipboard }, false, Control.ModifierKeys.HasFlag(Keys.Control));
             }));
         }
 
-        public static void load_sub(string[] args)
+        public static void LoadSubtitle()
         {
-            MainForm.Instance.Invoke(new Action(() => {
+            InvokeOnMainThread(new Action(() => {
                 using (var d = new OpenFileDialog())
                 {
                     d.InitialDirectory = Path.GetDirectoryName(mp.get_property_string("path", false));
@@ -242,9 +189,9 @@ namespace mpvnet
             }));
         }
 
-        public static void load_audio(string[] args)
+        public static void LoadAudio()
         {
-            MainForm.Instance.Invoke(new Action(() => {
+            InvokeOnMainThread(new Action(() => {
                 using (var d = new OpenFileDialog())
                 {
                     d.InitialDirectory = Path.GetDirectoryName(mp.get_property_string("path", false));
@@ -257,7 +204,7 @@ namespace mpvnet
             }));
         }
 
-        public static void cycle_audio(string[] args)
+        public static void CycleAudio()
         {
             string filePath = mp.get_property_string("path", false);
             if (!File.Exists(filePath)) return;
@@ -274,7 +221,7 @@ namespace mpvnet
             }
         }
 
-        public static void manage_file_associations(string[] args)
+        public static void ManageFileAssociations()
         {
             using (var td = new TaskDialog<string>())
             {
@@ -283,7 +230,7 @@ namespace mpvnet
 
                 td.AddCommandLink("Register video file extensions", "video");
                 td.AddCommandLink("Register audio file extensions", "audio");
-                td.AddCommandLink("Unregister file extensions",     "unreg");
+                td.AddCommandLink("Unregister file extensions", "unreg");
 
                 string result = td.Show();
 
@@ -291,14 +238,10 @@ namespace mpvnet
                 {
                     using (var proc = new Process())
                     {
-                        proc.StartInfo.FileName = Application.ExecutablePath;
+                        proc.StartInfo.FileName = System.Windows.Forms.Application.ExecutablePath;
                         proc.StartInfo.Arguments = "--reg-file-assoc " + result;
                         proc.StartInfo.Verb = "runas";
-                        try {
-                            proc.Start();
-                        }
-                        catch (Exception)
-                        { }
+                        try { proc.Start(); } catch { }
                     }
                 }
             }

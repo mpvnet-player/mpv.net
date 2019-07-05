@@ -365,22 +365,17 @@ namespace mpvnet
                     int[] d_corners = { d_w, d_h, -d_w, -d_h };
                     int[] corners = { rc.Left, rc.Top, rc.Right, rc.Bottom };
                     int corner = NativeHelp.GetResizeBorder(m.WParam.ToInt32());
-
-                    if (corner >= 0)
-                        corners[corner] -= d_corners[corner];
-
+                    if (corner >= 0) corners[corner] -= d_corners[corner];
                     Marshal.StructureToPtr<Native.RECT>(new Native.RECT(corners[0], corners[1], corners[2], corners[3]), m.LParam, false);
                     m.Result = new IntPtr(1);
                     return;
-            }
+                case 0x004A: // WM_COPYDATA
+                    var copyData = (Native.COPYDATASTRUCT)m.GetLParam(typeof(Native.COPYDATASTRUCT));
+                    string[] files = copyData.lpData.Split('\n');
+                    string mode = files[0];
+                    files = files.Skip(1).ToArray();
 
-            if (m.Msg == SingleProcess.Message)
-            {
-                object filesObject = RegHelp.GetObject(App.RegPath, "ShellFiles");
-
-                if (filesObject is string[] files)
-                {
-                    switch (RegHelp.GetString(App.RegPath, "ProcessInstanceMode"))
+                    switch (mode)
                     {
                         case "single":
                             mp.Load(files, true, Control.ModifierKeys.HasFlag(Keys.Control));
@@ -390,11 +385,9 @@ namespace mpvnet
                                 mp.commandv("loadfile", file, "append");
                             break;
                     }
-                }
 
-                RegHelp.RemoveValue(App.RegPath, "ShellFiles");
-                Activate();
-                return;
+                    Activate();
+                    return;
             }
 
             base.WndProc(ref m);
@@ -481,13 +474,13 @@ namespace mpvnet
             BuildMenu();
             ContextMenuStrip = ContextMenu;
             IgnoreDpiChanged = false;
-            CheckUrlInClipboard();
+            CheckClipboardForURL();
         }
 
         protected override void OnActivated(EventArgs e)
         {
             base.OnActivated(e);
-            CheckUrlInClipboard();
+            CheckClipboardForURL();
             Message m = new Message() { Msg = 0x0202 }; // WM_LBUTTONUP
             Native.SendMessage(Handle, m.Msg, m.WParam, m.LParam);
         }
@@ -530,7 +523,7 @@ namespace mpvnet
             CursorHelp.Show();
         }
 
-        void CheckUrlInClipboard()
+        void CheckClipboardForURL()
         {
             string clipboard = Clipboard.GetText();
 

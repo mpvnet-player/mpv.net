@@ -228,6 +228,13 @@ namespace mpvnet
             return val.ToString();
         }
 
+        public static int GetInt(string path, string name)
+        {
+            object val = GetObject(path, name);
+            if (val == null || !(val is int)) return 0;
+            return (int)val;
+        }
+
         public static object GetObject(string path, string name)
         {
             using (RegistryKey rk = GetRootKey(path).OpenSubKey(path.Substring(5)))
@@ -392,16 +399,5 @@ namespace mpvnet
                 Math.Abs(screenPos.X - Control.MousePosition.X) > 10 ||
                 Math.Abs(screenPos.Y - Control.MousePosition.Y) > 10;
         }
-    }
-
-    public class SingleProcess
-    {
-        public static int Message { get; } = RegisterWindowMessage("mpvnet_IPC");
-
-        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
-        static extern int RegisterWindowMessage(string id);
-
-        [DllImport("user32.dll")]
-        public static extern bool AllowSetForegroundWindow(int dwProcessId);
     }
 }

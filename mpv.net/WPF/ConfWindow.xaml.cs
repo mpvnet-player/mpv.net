@@ -59,7 +59,7 @@ namespace mpvnet
                     if (setting.Name == pair.Key)
                     {
                         setting.Value = pair.Value.Trim('\'', '"');
-                        setting.StartValue = pair.Value;
+                        setting.StartValue = pair.Value.Trim('\'', '"');
                         continue;
                     }
                 }

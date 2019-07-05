@@ -1,6 +1,10 @@
 ###
 
 - fix for middle mouse button not working
+- the config dialog was showing a message about app restart even when no
+  settings were modified
+- when multiple files are selected in Windows File Explorer and enter is
+  pressed, the files are opened, the order is random however
 
 ### 4.5
 

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace mpvnet
 {
@@ -31,24 +32,31 @@ namespace mpvnet
                 if ((App.ProcessInstance == "single" || App.ProcessInstance == "queue") && !isFirst)
                 {
                     List<string> files = new List<string>();
+                    files.Add(App.ProcessInstance);
 
                     foreach (string arg in args)
                         if (!arg.StartsWith("--") && (arg == "-" || arg.Contains("://") || File.Exists(arg)))
                             files.Add(arg);
 
-                    if (files.Count > 0)
-                        RegHelp.SetObject(App.RegPath, "ShellFiles", files.ToArray());
+                    Process[] procs = Process.GetProcessesByName("mpvnet");
 
-                    RegHelp.SetObject(App.RegPath, "ProcessInstanceMode", App.ProcessInstance);
-
-                    foreach(Process process in Process.GetProcessesByName("mpvnet"))
+                    for (int i = 0; i < 20; i++)
                     {
-                        try {
-                            SingleProcess.AllowSetForegroundWindow(process.Id);
-                            Native.SendMessage(process.MainWindowHandle, SingleProcess.Message, IntPtr.Zero, IntPtr.Zero);
-                        } catch {}
+                        foreach (Process proc in procs)
+                        {
+                            if (proc.MainWindowHandle != IntPtr.Zero)
+                            {
+                                Native.AllowSetForegroundWindow(proc.Id);
+                                var data = new Native.COPYDATASTRUCT();
+                                data.lpData = string.Join("\n", files.ToArray());
+                                data.cbData = data.lpData.Length * 2 + 1;
+                                Native.SendMessage(proc.MainWindowHandle, 0x004A /*WM_COPYDATA*/, IntPtr.Zero, ref data);
+                                mutex.Dispose();
+                                return;
+                            }
+                        }
+                        Thread.Sleep(50);
                     }
-
                     mutex.Dispose();
                     return;
                 }

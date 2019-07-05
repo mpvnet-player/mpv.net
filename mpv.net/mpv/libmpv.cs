@@ -144,7 +144,7 @@ namespace mpvnet
             MPV_END_FILE_REASON_REDIRECT = 5
         }
 
-            [StructLayout(LayoutKind.Sequential)]
+        [StructLayout(LayoutKind.Sequential)]
         public struct mpv_event_log_message
         {
             public string prefix;
