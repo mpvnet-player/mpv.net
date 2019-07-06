@@ -1,12 +1,18 @@
 ###
 
 - fix for middle mouse button not working
-- fix of logo overlay using a huge amount of memory 
+- fix of logo overlay using a huge amount of memory (thx for the [ghacks article](https://www.ghacks.net/2019/07/05/a-look-at-mpv-net-a-mpv-frontend-with-everything-integration/))
 - fix config dialog showing a message about app restart without reason
 - when multiple files are selected in Windows File Explorer and enter is
   pressed, the files are opened as selected, the order is random though
   because Explorer starts multiple mpv.net processes concurrently
 - libmpv was updated to shinchiro 2019-06-30
+- the [mpv.conf defaults](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/mpvConf.txt) were changed to show a larger OSC
+- in case a file is opened that has a aspect ratio smaller then 1.2 then
+  the window size will use a aspect ratio of 1.8
+- new JavaScript script osc-visibility.js included in the distribution
+  under startup\scripts. It sets the OSC to be always on for audio files
+  and auto for non audio files
 
 ### 4.5
 

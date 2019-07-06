@@ -224,12 +224,28 @@ namespace mpvnet
 
         void SetFormPosAndSize()
         {
-            if (IsFullscreen || mp.VideoSize.Width == 0) return;
+            if (IsFullscreen)
+                return;
+
+            Size size = mp.VideoSize;
             Screen screen = Screen.FromControl(this);
-            int height = mp.VideoSize.Height;
-            if (mp.RememberHeight) height = ClientSize.Height;
-            if (height > screen.Bounds.Height * 0.9) height = Convert.ToInt32(screen.Bounds.Height * mp.Autofit);
-            int width = Convert.ToInt32(height * mp.VideoSize.Width / (double)mp.VideoSize.Height);
+            int fixedHeight = Convert.ToInt32(screen.Bounds.Height * mp.Autofit);
+
+            if (size.Height == 0 || size.Width == 0 || size.Width / (float)size.Height < 1.2)
+            {
+                size.Height = fixedHeight;
+                size.Width = (int)(fixedHeight * 1.8);
+            }
+
+            int height = size.Height;
+
+            if (mp.RememberHeight)
+                height = ClientSize.Height;
+
+            if (height > screen.Bounds.Height * 0.9)
+                height = fixedHeight;
+
+            int width = Convert.ToInt32(height * size.Width / (double)size.Height);
             Point middlePos = new Point(Left + Width / 2, Top + Height / 2);
             var rect = new Native.RECT(new Rectangle(screen.Bounds.X, screen.Bounds.Y, width, height));
             NativeHelp.AddWindowBorders(Handle, ref rect);
