@@ -1,4 +1,4 @@
-###
+### 4.6
 
 - fix for middle mouse button not working
 - fix of logo overlay using a huge amount of memory (thx for the [ghacks article](https://www.ghacks.net/2019/07/05/a-look-at-mpv-net-a-mpv-frontend-with-everything-integration/))
