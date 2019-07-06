@@ -1,10 +1,11 @@
 ###
 
 - fix for middle mouse button not working
-- the config dialog was showing a message about app restart even when no
-  settings were modified
+- fix of logo overlay using a huge amount of memory 
+- fix config dialog showing a message about app restart without reason
 - when multiple files are selected in Windows File Explorer and enter is
-  pressed, the files are opened, the order is random however
+  pressed, the files are opened as selected, the order is random though
+  because Explorer starts multiple mpv.net processes concurrently
 - libmpv was updated to shinchiro 2019-06-30
 
 ### 4.5

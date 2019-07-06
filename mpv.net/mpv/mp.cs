@@ -648,18 +648,20 @@ namespace mpvnet
             if (MainForm.Instance is null) return;
             Rectangle cr = MainForm.Instance.ClientRectangle;
             if (cr.Width == 0 || cr.Height == 0) return;
+            int len = cr.Height / 5;
 
-            using (Bitmap b = new Bitmap(cr.Width, cr.Height))
+            using (Bitmap b = new Bitmap(len, len))
             {
                 using (Graphics g = Graphics.FromImage(b))
                 {
                     g.InterpolationMode = InterpolationMode.HighQualityBicubic;
                     g.Clear(Color.Black);
-                    int iconWidth = cr.Height / 7;
-                    Rectangle r = new Rectangle(cr.Width / 2 - iconWidth / 2, cr.Height / 2 - iconWidth / 2, iconWidth, iconWidth);
-                    g.DrawImage(Properties.Resources.mpvnet, r);
-                    BitmapData bd = b.LockBits(cr, ImageLockMode.ReadOnly, PixelFormat.Format32bppPArgb);
-                    commandv("overlay-add", "0", "0", "0", "&" + bd.Scan0.ToInt64().ToString(), "0", "bgra", bd.Width.ToString(), bd.Height.ToString(), bd.Stride.ToString());
+                    Rectangle rect = new Rectangle(0, 0, len, len);
+                    g.DrawImage(Properties.Resources.mpvnet, rect);
+                    BitmapData bd = b.LockBits(rect, ImageLockMode.ReadOnly, PixelFormat.Format32bppPArgb);
+                    int x = Convert.ToInt32((cr.Width - len) / 2.0);
+                    int y = Convert.ToInt32(((cr.Height - len) / 2.0) * 0.9);
+                    commandv("overlay-add", "0", $"{x}", $"{y}", "&" + bd.Scan0.ToInt64().ToString(), "0", "bgra", bd.Width.ToString(), bd.Height.ToString(), bd.Stride.ToString());
                     b.UnlockBits(bd);
                     IsLogoVisible = true;
                 }
