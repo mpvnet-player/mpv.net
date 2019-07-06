@@ -109,15 +109,9 @@ namespace mpvnet
                     }
                     else
                     {
-                        string switchName = i.Substring(2);
-
-                        switch (switchName)
-                        {
-                            case "fs":
-                            case "fullscreen":
-                                mp.Fullscreen = true;
-                                break;
-                        }
+                        string name = i.Substring(2);
+                        mp.ProcessProperty(name, "yes");
+                        ProcessProperty(name, "yes");
                     }
                 }
             }

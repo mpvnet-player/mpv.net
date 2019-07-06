@@ -5,6 +5,7 @@
   settings were modified
 - when multiple files are selected in Windows File Explorer and enter is
   pressed, the files are opened, the order is random however
+- libmpv was updated to shinchiro 2019-06-30
 
 ### 4.5
 

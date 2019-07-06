@@ -52,7 +52,7 @@ Table of contents
 - Searchable command palette to quickly launch commands and look for keys ([Screenshot](#command-palette-screenshot))
 - Modern UI with dark mode ([Screenshot](#config-editor-screenshot))
 - Addon/extension API for .NET languages
-- Scripting API for Python, C#, Lua, JavaScript and PowerShell ([wiki](https://github.com/stax76/mpv.net/wiki/Scripting))
+- Scripting API for Python, C#, Lua, JavaScript and PowerShell ([Wiki](https://github.com/stax76/mpv.net/wiki/Scripting))
 - mpv's OSC, IPC and conf files
 - [Command Line Interface](https://mpv.io/manual/master/#options)
 - DXVA2 video decoding acceleration
