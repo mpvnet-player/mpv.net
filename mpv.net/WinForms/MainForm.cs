@@ -205,10 +205,10 @@ namespace mpvnet
             Rectangle target = screen.Bounds;
             Left = target.X + Convert.ToInt32((target.Width - Width) / 2.0);
             Top = target.Y + Convert.ToInt32((target.Height - Height) / 2.0);
-            SetStartFormPositionAndSize();
+            SetStartFormPosAndSize();
         }
 
-        void SetStartFormPositionAndSize()
+        void SetStartFormPosAndSize()
         {
             if (IsFullscreen || mp.VideoSize.Width == 0) return;
             Screen screen = Screen.FromControl(this);
@@ -231,10 +231,10 @@ namespace mpvnet
             Screen screen = Screen.FromControl(this);
             int fixedHeight = Convert.ToInt32(screen.Bounds.Height * mp.Autofit);
 
-            if (size.Height == 0 || size.Width == 0 || size.Width / (float)size.Height < 1.2)
+            if (size.Height == 0 || size.Width == 0 || size.Width / (float)size.Height < 1.3)
             {
                 size.Height = fixedHeight;
-                size.Width = (int)(fixedHeight * 1.8);
+                size.Width = (int)(fixedHeight * 1.7);
             }
 
             int height = size.Height;
@@ -344,16 +344,18 @@ namespace mpvnet
                 case 0x0101: // WM_KEYUP
                 case 0x0104: // WM_SYSKEYDOWN
                 case 0x0105: // WM_SYSKEYUP
-                case 0x020A: // WM_MOUSEWHEEL
                 case 0x0207: // WM_MBUTTONDOWN
                 case 0x0208: // WM_MBUTTONUP
+                case 0x020A: // WM_MOUSEWHEEL
                     if (mp.WindowHandle != IntPtr.Zero)
                         Native.SendMessage(mp.WindowHandle, m.Msg, m.WParam, m.LParam);
                     break;
                 case 0x0200: // WM_MOUSEMOVE
-                    Point pos = PointToClient(Cursor.Position);
-                    mp.command_string($"mouse {pos.X} {pos.Y}");
-                    if (CursorHelp.IsPosDifferent(LastCursorPosChanged)) CursorHelp.Show();
+                    {
+                        Point pos = PointToClient(Cursor.Position);
+                        mp.command_string($"mouse {pos.X} {pos.Y}");
+                        if (CursorHelp.IsPosDifferent(LastCursorPosChanged)) CursorHelp.Show();
+                    }
                     break;
                 case 0x2a3: // WM_MOUSELEAVE
                     mp.command_string("mouse 1 1"); // osc won't always auto hide
@@ -363,7 +365,10 @@ namespace mpvnet
                         Native.PostMessage(mp.WindowHandle, m.Msg, m.WParam, m.LParam);
                     break;
                 case 0x203: // Native.WM.LBUTTONDBLCLK
-                    if (!IsMouseInOSC()) mp.command_string("cycle fullscreen");
+                    {
+                        Point pos = PointToClient(Cursor.Position);
+                        mp.command_string($"mouse {pos.X} {pos.Y} 0 double");
+                    }
                     break;
                 case 0x02E0: // WM_DPICHANGED
                     if (IgnoreDpiChanged) break;
@@ -439,7 +444,7 @@ namespace mpvnet
                 CursorHelp.Hide();
         }
 
-        void PropChangeOnTop(bool value) => BeginInvoke(new Action(() => TopMost = value));
+    void PropChangeOnTop(bool value) => BeginInvoke(new Action(() => TopMost = value));
 
         void PropChangeAid(string value) => mp.Aid = value;
 

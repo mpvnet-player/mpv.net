@@ -79,6 +79,24 @@ namespace mpvnet
 
         public static float Autofit { get; set; } = 0.5f;
 
+        public static void Init()
+        {
+            string dummy = ConfFolder;
+            LoadLibrary("mpv-1.dll");
+            Handle = mpv_create();
+            set_property_string("osc", "yes");
+            set_property_string("config", "yes");
+            set_property_string("wid", MainForm.Hwnd.ToString());
+            set_property_string("force-window", "yes");
+            set_property_string("input-media-keys", "yes");
+            mpv_initialize(Handle);
+            ShowLogo();
+            ProcessCommandLine();
+            Task.Run(() => { LoadScripts(); });
+            Task.Run(() => { Addon = new Addon(); });
+            Task.Run(() => { EventLoop(); });
+        }
+
         public static void ProcessProperty(string name, string value)
         {
             switch (name)
@@ -159,24 +177,6 @@ namespace mpvnet
                 }
                 return _Conf;
             }
-        }
-
-        public static void Init()
-        {
-            string dummy = ConfFolder;
-            LoadLibrary("mpv-1.dll");
-            Handle = mpv_create();
-            set_property_string("osc", "yes");
-            set_property_string("config", "yes");
-            set_property_string("wid", MainForm.Hwnd.ToString());
-            set_property_string("force-window", "yes");
-            set_property_string("input-media-keys", "yes");
-            mpv_initialize(Handle);
-            ShowLogo();
-            ProcessCommandLine();
-            Task.Run(() => { LoadScripts(); });
-            Task.Run(() => { Addon = new Addon(); });
-            Task.Run(() => { EventLoop(); });
         }
 
         public static void LoadScripts()

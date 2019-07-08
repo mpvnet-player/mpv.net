@@ -39,7 +39,7 @@ namespace mpvnet
         [DllImport("user32.dll", EntryPoint = "GetWindowLongPtr")]
         private static extern IntPtr GetWindowLong64(IntPtr hWnd, int nIndex);
 
-        public static IntPtr GetWindowLongPtr(IntPtr hWnd, int nIndex)
+        public static IntPtr GetWindowLong(IntPtr hWnd, int nIndex)
         {
             if (IntPtr.Size == 8)
                 return GetWindowLong64(hWnd, nIndex);

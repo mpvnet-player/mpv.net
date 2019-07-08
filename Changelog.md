@@ -1,3 +1,7 @@
+###
+
+- left mouse double click MBTN_LEFT_DBL was not working
+
 ### 4.6
 
 - fix for middle mouse button not working
