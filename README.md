@@ -195,6 +195,10 @@ Third party components:
 
 Please click on the star at the top of the page and like mpv.net at [alternativeto.net](https://alternativeto.net/software/mpv-net/).
 
+If you like you can express your appreciation for my player by sending little beer money with paypal.
+
+<https://www.paypal.me/stax76>
+
 ### Links
 
 mpv manual: <https://mpv.io/manual/master/>
