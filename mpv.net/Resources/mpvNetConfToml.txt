@@ -29,3 +29,11 @@ filter = "General"
 help = "mpv.net specific setting that writes debug info to a file located on the desktop."
 options = [{ name = "yes" },
            { name = "no" }]
+
+[[settings]]
+name = "start-size"
+default = "previous"
+filter = "Screen"
+help = "mpv.net specific setting to remember the window height in the current session, otherwise the video's native resolution is used."
+options = [{ name = "video", help = "Window size is set to native video resolution" },
+           { name = "previous", help = "Window size is remembered but only from the current session" }]

@@ -255,14 +255,6 @@ filter = "Screen"
 help = "Set the initial window size in percent. Please note that this setting is only partly implemented in mpv.net, accepted are only integer values with percent sign added. Default: 50%"
 
 [[settings]]
-name = "remember-height"
-default = "yes"
-filter = "Screen"
-help = "mpv.net specific setting to remember the window height, otherwise the video's native resolution is used."
-options = [{ name = "yes" },
-           { name = "no" }]
-
-[[settings]]
 name = "keep-open-pause"
 default = "yes"
 filter = "Playback"

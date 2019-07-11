@@ -1,6 +1,10 @@
 ###
 
 - left mouse double click MBTN_LEFT_DBL was not working
+- remember-height was replaced with start-size, when start-size is set
+  to video the main video starts directly with the native video size,
+  before it was starting with the autofit size first and was only
+  afterwards resized to the native video size
 
 ### 4.6
 

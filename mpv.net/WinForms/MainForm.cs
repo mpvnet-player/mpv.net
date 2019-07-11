@@ -8,6 +8,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
+using System.Threading.Tasks;
 
 namespace mpvnet
 {
@@ -36,7 +37,6 @@ namespace mpvnet
                 WPF.WPF.Init();
                 System.Windows.Application.Current.ShutdownMode = System.Windows.ShutdownMode.OnExplicitShutdown;
                 Hwnd = Handle;
-                MinimumSize = new Size(FontHeight * 16, FontHeight * 9);
                 Text += " " + Application.ProductVersion;
 
                 object recent = RegHelp.GetObject(App.RegPath, "Recent");
@@ -46,11 +46,31 @@ namespace mpvnet
                 else
                     RecentFiles = new List<string>();
 
-                var dummy = mp.Conf;
                 App.ProcessCommandLineEarly();
+
                 if (mp.Screen == -1) mp.Screen = Array.IndexOf(Screen.AllScreens, Screen.PrimaryScreen);
-                SetScreen(mp.Screen);
-                CycleFullscreen(mp.Fullscreen);
+                int targetIndex = mp.Screen;
+                Screen[] screens = Screen.AllScreens;
+                if (targetIndex < 0) targetIndex = 0;
+                if (targetIndex > screens.Length - 1) targetIndex = screens.Length - 1;
+                Screen screen = screens[Array.IndexOf(screens, screens[targetIndex])];
+                Rectangle target = screen.Bounds;
+                Left = target.X + Convert.ToInt32((target.Width - Width) / 2.0);
+                Top = target.Y + Convert.ToInt32((target.Height - Height) / 2.0);
+
+                mp.Shutdown += Shutdown;
+                mp.VideoSizeChanged += VideoSizeChanged;
+                mp.FileLoaded += FileLoaded;
+                mp.Idle += Idle;
+                Task.Run(() => mp.Init());
+                mp.VideoSizeAutoResetEvent.WaitOne(1000);
+                mp.observe_property_bool("fullscreen", PropChangeFullscreen);
+                mp.observe_property_bool("ontop", PropChangeOnTop);
+                mp.observe_property_bool("border", PropChangeBorder);
+                mp.observe_property_string("sid", PropChangeSid);
+                mp.observe_property_string("aid", PropChangeAid);
+                mp.observe_property_string("vid", PropChangeVid);
+                mp.observe_property_int("edition", PropChangeEdition);
             }
             catch (Exception ex)
             {
@@ -64,7 +84,7 @@ namespace mpvnet
 
         void CM_Popup(object sender, EventArgs e) => CursorHelp.Show();
 
-        void VideoSizeChanged() => BeginInvoke(new Action(() => SetFormPosAndSize()));
+        void VideoSizeChanged() => Invoke(new Action(() => SetFormPosAndSize()));
 
         void Shutdown() => BeginInvoke(new Action(() => Close()));
 
@@ -192,40 +212,13 @@ namespace mpvnet
             return null;
         }
 
-        protected void SetScreen(int targetIndex)
-        {
-            Screen[] screens = Screen.AllScreens;
-            if (targetIndex < 0) targetIndex = 0;
-            if (targetIndex > screens.Length - 1) targetIndex = screens.Length - 1;
-            SetScreen(screens[Array.IndexOf(screens, screens[targetIndex])]);
-        }
-
-        protected void SetScreen(Screen screen)
-        {
-            Rectangle target = screen.Bounds;
-            Left = target.X + Convert.ToInt32((target.Width - Width) / 2.0);
-            Top = target.Y + Convert.ToInt32((target.Height - Height) / 2.0);
-            SetStartFormPosAndSize();
-        }
-
-        void SetStartFormPosAndSize()
-        {
-            if (IsFullscreen || mp.VideoSize.Width == 0) return;
-            Screen screen = Screen.FromControl(this);
-            int height = Convert.ToInt32(screen.Bounds.Height * mp.Autofit);
-            int width = Convert.ToInt32(height * mp.VideoSize.Width / (double)mp.VideoSize.Height);
-            Point middlePos = new Point(Left + Width / 2, Top + Height / 2);
-            var rect = new Native.RECT(new Rectangle(screen.Bounds.X, screen.Bounds.Y, width, height));
-            NativeHelp.AddWindowBorders(Handle, ref rect);
-            int left = middlePos.X - rect.Width / 2;
-            int top = middlePos.Y - rect.Height / 2;
-            Native.SetWindowPos(Handle, IntPtr.Zero /* HWND_TOP */, left, top, rect.Width, rect.Height, 4 /* SWP_NOZORDER */);
-        }
-
         void SetFormPosAndSize()
         {
-            if (IsFullscreen)
+            if (mp.Fullscreen)
+            {
+                CycleFullscreen(true);
                 return;
+            }
 
             Size size = mp.VideoSize;
             Screen screen = Screen.FromControl(this);
@@ -239,7 +232,7 @@ namespace mpvnet
 
             int height = size.Height;
 
-            if (mp.RememberHeight)
+            if (App.RememberHeight)
                 height = ClientSize.Height;
 
             if (height > screen.Bounds.Height * 0.9)
@@ -251,8 +244,35 @@ namespace mpvnet
             NativeHelp.AddWindowBorders(Handle, ref rect);
             int left = middlePos.X - rect.Width / 2;
             int top = middlePos.Y - rect.Height / 2;
-            Screen[] screens = Screen.AllScreens;
             Native.SetWindowPos(Handle, IntPtr.Zero /* HWND_TOP */, left, top, rect.Width, rect.Height, 4 /* SWP_NOZORDER */);
+        }
+
+        public void CycleFullscreen(bool enabled)
+        {
+            mp.Fullscreen = enabled;
+
+            if (enabled)
+            {
+                if (WindowState != FormWindowState.Maximized)
+                {
+                    FormBorderStyle = FormBorderStyle.None;
+                    WindowState = FormWindowState.Maximized;
+                }
+            }
+            else
+            {
+                if (WindowState == FormWindowState.Maximized)
+                {
+                    WindowState = FormWindowState.Normal;
+
+                    if (mp.Border)
+                        FormBorderStyle = FormBorderStyle.Sizable;
+                    else
+                        FormBorderStyle = FormBorderStyle.None;
+
+                    SetFormPosAndSize();
+                }
+            }
         }
 
         public void BuildMenu()
@@ -307,29 +327,6 @@ namespace mpvnet
         void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
            Msg.ShowError(e.ExceptionObject.ToString());
-        }
-        
-        public void CycleFullscreen(bool enabled)
-        {
-            if (enabled)
-            {
-                if (WindowState != FormWindowState.Maximized)
-                {
-                    FormBorderStyle = FormBorderStyle.None;
-                    WindowState = FormWindowState.Maximized;
-                }
-            }
-            else
-            {
-                WindowState = FormWindowState.Normal;
-
-                if (mp.Border)
-                    FormBorderStyle = FormBorderStyle.Sizable;
-                else
-                    FormBorderStyle = FormBorderStyle.None;
-
-                SetFormPosAndSize();
-            }
         }
 
         protected override void WndProc(ref Message m)
@@ -444,7 +441,7 @@ namespace mpvnet
                 CursorHelp.Hide();
         }
 
-    void PropChangeOnTop(bool value) => BeginInvoke(new Action(() => TopMost = value));
+        void PropChangeOnTop(bool value) => BeginInvoke(new Action(() => TopMost = value));
 
         void PropChangeAid(string value) => mp.Aid = value;
 
@@ -466,23 +463,6 @@ namespace mpvnet
                         FormBorderStyle = FormBorderStyle.None;
                 }
             }));
-        }
-
-        protected override void OnLoad(EventArgs e)
-        {
-            base.OnLoad(e);
-            mp.Init();
-            mp.observe_property_bool("fullscreen", PropChangeFullscreen);
-            mp.observe_property_bool("ontop", PropChangeOnTop);
-            mp.observe_property_bool("border", PropChangeBorder);
-            mp.observe_property_string("sid", PropChangeSid);
-            mp.observe_property_string("aid", PropChangeAid);
-            mp.observe_property_string("vid", PropChangeVid);
-            mp.observe_property_int("edition", PropChangeEdition);
-            mp.Shutdown += Shutdown;
-            mp.VideoSizeChanged += VideoSizeChanged;
-            mp.FileLoaded += FileLoaded;
-            mp.Idle += Idle;
         }
 
         protected override void OnShown(EventArgs e)
@@ -518,7 +498,7 @@ namespace mpvnet
             RegHelp.SetObject(App.RegPath, "Recent", RecentFiles.ToArray());
             App.Exit();
             mp.commandv("quit");
-            mp.AutoResetEvent.WaitOne(3000);
+            mp.ShutdownAutoResetEvent.WaitOne(3000);
         }
 
         protected override void OnMouseDown(MouseEventArgs e)

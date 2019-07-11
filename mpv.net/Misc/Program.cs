@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
 
 namespace mpvnet
 {

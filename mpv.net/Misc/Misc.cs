@@ -28,6 +28,7 @@ namespace mpvnet
         public static string[] SubtitleTypes { get; } = "srt ass idx sup ttxt ssa smi".Split(' ');
         public static string[] UrlWhitelist { get; set; } = { "tube", "vimeo", "ard", "zdf" };
 
+        public static bool RememberHeight { get; set; } = true;
         public static bool DebugMode { get; set; } = false;
 
         public static bool IsDarkMode { 
@@ -36,6 +37,9 @@ namespace mpvnet
 
         public static void Init()
         {
+            string dummy = mp.ConfFolder;
+            var dummy2 = mp.Conf;
+
             foreach (var i in Conf)
                 ProcessProperty(i.Key, i.Value);
 
@@ -83,6 +87,7 @@ namespace mpvnet
         {
             switch (name)
             {
+                case "start-size": RememberHeight = value == "previous"; break;
                 case "process-instance": ProcessInstance = value; break;
                 case "dark-mode": DarkMode = value; break;
                 case "debug-mode": DebugMode = value == "yes"; break;

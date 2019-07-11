@@ -58,9 +58,10 @@ namespace mpvnet
         public static List<KeyValuePair<string, Action<bool>>> BoolPropChangeActions { get; set; } = new List<KeyValuePair<string, Action<bool>>>();
         public static List<KeyValuePair<string, Action<int>>> IntPropChangeActions { get; set; } = new List<KeyValuePair<string, Action<int>>>();
         public static List<KeyValuePair<string, Action<string>>> StringPropChangeActions { get; set; } = new List<KeyValuePair<string, Action<string>>>();
-        public static Size VideoSize { get; set; } = new Size(1920, 1080);
+        public static Size VideoSize { get; set; }
         public static List<PythonScript> PythonScripts { get; set; } = new List<PythonScript>();
-        public static AutoResetEvent AutoResetEvent { get; set; } = new AutoResetEvent(false);
+        public static AutoResetEvent ShutdownAutoResetEvent { get; set; } = new AutoResetEvent(false);
+        public static AutoResetEvent VideoSizeAutoResetEvent { get; set; } = new AutoResetEvent(false);
         public static List<MediaTrack> MediaTracks { get; set; } = new List<MediaTrack>();
         public static List<KeyValuePair<string, double>> Chapters { get; set; } = new List<KeyValuePair<string, double>>();
 
@@ -72,7 +73,6 @@ namespace mpvnet
 
         public static bool Fullscreen { get; set; }
         public static bool Border { get; set; } = true;
-        public static bool RememberHeight { get; set; } = true;
 
         public static int Screen { get; set; } = -1;
         public static int Edition { get; set; }
@@ -81,7 +81,6 @@ namespace mpvnet
 
         public static void Init()
         {
-            string dummy = ConfFolder;
             LoadLibrary("mpv-1.dll");
             Handle = mpv_create();
             set_property_string("osc", "yes");
@@ -110,7 +109,6 @@ namespace mpvnet
                 case "fullscreen": Fullscreen = value == "yes"; break;
                 case "border": Border = value == "yes"; break;
                 case "screen": Screen = Convert.ToInt32(value); break;
-                case "remember-height": RememberHeight = value == "yes"; break;
             }
         }
 
@@ -222,7 +220,7 @@ namespace mpvnet
                         case mpv_event_id.MPV_EVENT_SHUTDOWN:
                             Shutdown?.Invoke();
                             WriteHistory(null);
-                            AutoResetEvent.Set();
+                            ShutdownAutoResetEvent.Set();
                             return;
                         case mpv_event_id.MPV_EVENT_LOG_MESSAGE:
                             LogMessage?.Invoke();
@@ -316,8 +314,9 @@ namespace mpvnet
                             if (VideoSize != vidSize && vidSize != Size.Empty)
                             {
                                 VideoSize = vidSize;
+                                VideoSizeAutoResetEvent.Set();
                                 VideoSizeChanged?.Invoke();
-                            }                    
+                            }
 
                             Task.Run(new Action(() => ReadMetaData()));
                             break;
