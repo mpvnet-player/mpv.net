@@ -102,9 +102,9 @@ mpv.net is meant to be a small single person project, it's designed to be mpv co
 
 ### Target Audience
 
-The target audience of mpv.net are Windows programmers and users that need something more advanced than common media players.
+The target audience of mpv.net are programmers, nerds and software enthusiasts that need something more advanced than typical media players.
 
-Furthermore mpv.net is well suited for Windows users who are interested to learn about the Linux operating system and portable apps, even though mpv.net self is not portable.
+Furthermore mpv.net is well suited for users who are interested to learn mpv, Linux, portable apps and the command line.
 
 ## Requirements
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
@@ -12,10 +13,7 @@ namespace mpvnet
         public CommandItem InputItem { get; set; }
         public string NewKey { get; set; } = "";
 
-        public LearnWindow()
-        {
-            InitializeComponent();
-        }
+        public LearnWindow() => InitializeComponent();
 
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
@@ -43,8 +41,7 @@ namespace mpvnet
             else
                 try {
                     text = Convert.ToChar(charValue).ToString().ToLower().Trim();
-                }
-                catch {}
+                } catch {}
 
             for (int i = 0; i < 13; i++)
                 if ("D" + i.ToString() == text)
@@ -144,8 +141,8 @@ namespace mpvnet
         void SetKey(string key)
         {
             NewKey = key;
-            MenuLabel.Content = InputItem.Path;
-            KeyLabel.Content = key;
+            MenuTextBlock.Text = InputItem.Path;
+            KeyTextBlock.Text = key;
         }
 
         [DllImport("user32.dll")]
@@ -294,6 +291,39 @@ namespace mpvnet
                 SetKey("WHEEL_UP");
             else
                 SetKey("WHEEL_DOWN");
+        }
+
+        private void Window_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            switch (e.ChangedButton)
+            {
+                case MouseButton.Left:
+                    if (BlockMBTN_LEFT)
+                        BlockMBTN_LEFT = false;
+                    else
+                        SetKey("MBTN_LEFT");
+                    break;
+                case MouseButton.Middle:
+                    SetKey("MBTN_MID");
+                    break;
+                case MouseButton.XButton1:
+                    SetKey("MBTN_BACK");
+                    break;
+                case MouseButton.XButton2:
+                    SetKey("MBTN_FORWARD");
+                    break;
+            }
+        }
+
+        bool BlockMBTN_LEFT;
+
+        private void Window_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                SetKey("MBTN_LEFT_DBL");
+                BlockMBTN_LEFT = true;
+            }
         }
     }
 }

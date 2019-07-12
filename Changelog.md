@@ -1,11 +1,16 @@
-###
+### 4.7
 
-- left mouse double click MBTN_LEFT_DBL was not working
 - remember-height was replaced with start-size, when start-size is set
   to video the main video starts directly with the native video size,
   before it was starting with the autofit size first and was only
   afterwards resized to the native video size
 - on exit the window location can be saved with remember-position
+- in the learn window of the input editor underscores were stripped
+  because they have a special meaning in WPF labels 
+- keys/input not working for MBTN_LEFT_DBL, MBTN_BACK, MBTN_FORWARD
+- in the learn window of the input editor support was added for
+  mouse left, mouse left double, mouse mid, mouse forward, mouse back
+- libmpv updated to shinchiro 2019-07-07
 
 ### 4.6
 

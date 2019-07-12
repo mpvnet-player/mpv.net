@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="Learn Input" Height="200" Width="400" WindowStartupLocation="CenterOwner"
-        ResizeMode="NoResize" Loaded="Window_Loaded" Background="Black" MouseWheel="Window_MouseWheel">
+        ResizeMode="NoResize" Loaded="Window_Loaded" Background="Black" MouseWheel="Window_MouseWheel" MouseUp="Window_MouseUp" MouseDoubleClick="Window_MouseDoubleClick">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -16,8 +16,8 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Label x:Name="MenuLabel" Grid.ColumnSpan="2" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16"></Label>
-        <Label x:Name="KeyLabel" Grid.Row="1" Grid.ColumnSpan="2" Foreground="White" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="16"></Label>
+        <TextBlock x:Name="MenuTextBlock" Grid.ColumnSpan="2" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16"></TextBlock>
+        <TextBlock x:Name="KeyTextBlock" Grid.Row="1" Grid.ColumnSpan="2" Foreground="White" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="16"></TextBlock>
         <Button x:Name="ConfirmButton" Grid.Row="2" Click="ConfirmButton_Click">Confirm</Button>
         <Button x:Name="ClearButton" Grid.Row="2" Click="ClearButton_Click" Grid.Column="1">Clear</Button>
     </Grid>

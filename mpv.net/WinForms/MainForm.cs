@@ -61,7 +61,7 @@ namespace mpvnet
                 int posX = RegHelp.GetInt(App.RegPath, "PosX");
                 int posY = RegHelp.GetInt(App.RegPath, "PosY");
 
-                if (posX != 0 && posY != 0)
+                if (posX != 0 && posY != 0 && App.RememberPosition)
                 {
                     Left = posX - Width / 2;
                     Top = posY - Height / 2;
@@ -89,11 +89,11 @@ namespace mpvnet
 
         public MenuItem FindMenuItem(string text) => FindMenuItem(text, ContextMenu.Items);
 
-        void Idle() => BeginInvoke(new Action(() => { Text = "mpv.net " + Application.ProductVersion; }));
+        void Idle() => BeginInvoke(new Action(() => Text = "mpv.net " + Application.ProductVersion));
 
         void CM_Popup(object sender, EventArgs e) => CursorHelp.Show();
 
-        void VideoSizeChanged() => Invoke(new Action(() => SetFormPosAndSize()));
+        void VideoSizeChanged() => BeginInvoke(new Action(() => SetFormPosAndSize()));
 
         void Shutdown() => BeginInvoke(new Action(() => Close()));
 
@@ -358,13 +358,15 @@ namespace mpvnet
             {
                 case 0x0201: // WM_LBUTTONDOWN
                 case 0x0202: // WM_LBUTTONUP
+                case 0x0207: // WM_MBUTTONDOWN
+                case 0x0208: // WM_MBUTTONUP
+                case 0x020A: // WM_MOUSEWHEEL
+                case 0x020C: // WM_XBUTTONUP
+                case 0x020B: // WM_XBUTTONDOWN
                 case 0x0100: // WM_KEYDOWN
                 case 0x0101: // WM_KEYUP
                 case 0x0104: // WM_SYSKEYDOWN
                 case 0x0105: // WM_SYSKEYUP
-                case 0x0207: // WM_MBUTTONDOWN
-                case 0x0208: // WM_MBUTTONUP
-                case 0x020A: // WM_MOUSEWHEEL
                     if (mp.WindowHandle != IntPtr.Zero)
                         Native.SendMessage(mp.WindowHandle, m.Msg, m.WParam, m.LParam);
                     break;

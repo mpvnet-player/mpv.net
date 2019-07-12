@@ -314,9 +314,10 @@ namespace mpvnet
                             if (VideoSize != vidSize && vidSize != Size.Empty)
                             {
                                 VideoSize = vidSize;
-                                VideoSizeAutoResetEvent.Set();
                                 VideoSizeChanged?.Invoke();
                             }
+
+                            VideoSizeAutoResetEvent.Set();
 
                             Task.Run(new Action(() => ReadMetaData()));
                             break;
@@ -515,6 +516,8 @@ namespace mpvnet
 
             Load(files.ToArray(), App.ProcessInstance != "queue", Control.ModifierKeys.HasFlag(Keys.Control));
 
+            if (files.Count == 0) VideoSizeAutoResetEvent.Set();
+
             foreach (string i in args)
             {
                 if (i.StartsWith("--"))
@@ -538,7 +541,7 @@ namespace mpvnet
             }
         }
 
-        static DateTime LastLoad;
+        public static DateTime LastLoad;
 
         public static void Load(string[] files, bool loadFolder, bool append)
         {

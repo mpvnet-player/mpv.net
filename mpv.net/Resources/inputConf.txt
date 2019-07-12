@@ -24,6 +24,8 @@
 
  # mpv input keys:     https://github.com/stax76/mpv.net/wiki/mpv-input-keys
 
+ # run mpv.net in input test mode with: mpvnet --input-test
+
  o           script-message mpv.net open-files #menu: Open > Open Files...
  u           script-message mpv.net open-url   #menu: Open > Open URL or file path from clipboard
  _           ignore                            #menu: Open > -
