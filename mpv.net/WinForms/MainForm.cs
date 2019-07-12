@@ -55,8 +55,17 @@ namespace mpvnet
                 if (targetIndex > screens.Length - 1) targetIndex = screens.Length - 1;
                 Screen screen = screens[Array.IndexOf(screens, screens[targetIndex])];
                 Rectangle target = screen.Bounds;
-                Left = target.X + Convert.ToInt32((target.Width - Width) / 2.0);
-                Top = target.Y + Convert.ToInt32((target.Height - Height) / 2.0);
+                Left = target.X + (target.Width - Width) / 2;
+                Top = target.Y + (target.Height - Height) / 2;
+
+                int posX = RegHelp.GetInt(App.RegPath, "PosX");
+                int posY = RegHelp.GetInt(App.RegPath, "PosY");
+
+                if (posX != 0 && posY != 0)
+                {
+                    Left = posX - Width / 2;
+                    Top = posY - Height / 2;
+                }
 
                 mp.Shutdown += Shutdown;
                 mp.VideoSizeChanged += VideoSizeChanged;
@@ -244,6 +253,18 @@ namespace mpvnet
             NativeHelp.AddWindowBorders(Handle, ref rect);
             int left = middlePos.X - rect.Width / 2;
             int top = middlePos.Y - rect.Height / 2;
+
+            Screen[] screens = Screen.AllScreens;
+            int minLeft = screens.Select(val => val.WorkingArea.X).Min();
+            int maxRight = screens.Select(val => val.WorkingArea.Right).Max();
+            int minTop = screens.Select(val => val.WorkingArea.Y).Min();
+            int maxBottom = screens.Select(val => val.WorkingArea.Bottom).Max();
+
+            if (left < minLeft) left = minLeft;
+            if (left + rect.Width > maxRight) left = maxRight - rect.Width;
+            if (top < minTop) top = minTop;
+            if (top + rect.Height > maxBottom) top = maxBottom - rect.Height;
+
             Native.SetWindowPos(Handle, IntPtr.Zero /* HWND_TOP */, left, top, rect.Width, rect.Height, 4 /* SWP_NOZORDER */);
         }
 
@@ -492,9 +513,16 @@ namespace mpvnet
             if (mp.IsLogoVisible) mp.ShowLogo();
         }
 
-        protected override void OnFormClosed(FormClosedEventArgs e)
+        protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            base.OnFormClosed(e);
+            base.OnFormClosing(e);
+
+            if (WindowState == FormWindowState.Normal)
+            {
+                RegHelp.SetObject(App.RegPath, "PosX", Left + Width / 2);
+                RegHelp.SetObject(App.RegPath, "PosY", Top + Height / 2);
+            }
+
             RegHelp.SetObject(App.RegPath, "Recent", RecentFiles.ToArray());
             App.Exit();
             mp.commandv("quit");

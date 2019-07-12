@@ -37,3 +37,11 @@ filter = "Screen"
 help = "mpv.net specific setting to remember the window height in the current session, otherwise the video's native resolution is used."
 options = [{ name = "video", help = "Window size is set to native video resolution" },
            { name = "previous", help = "Window size is remembered but only from the current session" }]
+
+[[settings]]
+name = "remember-position"
+default = "no"
+filter = "Screen"
+help = "mpv.net specific setting to save the window position on exit."
+options = [{ name = "yes" },
+           { name = "no" }]

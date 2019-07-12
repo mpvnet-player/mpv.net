@@ -29,6 +29,7 @@ namespace mpvnet
         public static string[] UrlWhitelist { get; set; } = { "tube", "vimeo", "ard", "zdf" };
 
         public static bool RememberHeight { get; set; } = true;
+        public static bool RememberPosition { get; set; }
         public static bool DebugMode { get; set; } = false;
 
         public static bool IsDarkMode { 
@@ -87,6 +88,7 @@ namespace mpvnet
         {
             switch (name)
             {
+                case "remember-position": RememberPosition = value == "yes"; break;
                 case "start-size": RememberHeight = value == "previous"; break;
                 case "process-instance": ProcessInstance = value; break;
                 case "dark-mode": DarkMode = value; break;

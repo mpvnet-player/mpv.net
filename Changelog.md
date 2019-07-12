@@ -5,6 +5,7 @@
   to video the main video starts directly with the native video size,
   before it was starting with the autofit size first and was only
   afterwards resized to the native video size
+- on exit the window location can be saved with remember-position
 
 ### 4.6
 
