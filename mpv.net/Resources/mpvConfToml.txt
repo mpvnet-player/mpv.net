@@ -274,7 +274,7 @@ options = [{ name = "yes",    help = "Don't terminate if the current file is the
 [[settings]]
 name = "loop-file"
 filter = "Playback"
-help = "Loop a single file N times. inf means forever, no means normal playback.\n\nThe difference to loop-playlist is that this doesn't loop the playlist, just the file itself. If the playlist contains only a single file, the difference between the two option is that this option performs a seek on loop, instead of reloading the file. loop is an alias for this option."
+help = "<N|inf|no> Loop a single file N times. inf means forever, no means normal playback.\n\nThe difference to loop-playlist is that this doesn't loop the playlist, just the file itself. If the playlist contains only a single file, the difference between the two option is that this option performs a seek on loop, instead of reloading the file. loop is an alias for this option."
 
 [[settings]]
 name = "save-position-on-quit"

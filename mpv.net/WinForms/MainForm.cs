@@ -221,6 +221,8 @@ namespace mpvnet
             return null;
         }
 
+        bool WasInitialSizeSet;
+
         void SetFormPosAndSize()
         {
             if (mp.Fullscreen)
@@ -229,23 +231,31 @@ namespace mpvnet
                 return;
             }
 
-            Size size = mp.VideoSize;
             Screen screen = Screen.FromControl(this);
-            int fixedHeight = Convert.ToInt32(screen.Bounds.Height * mp.Autofit);
+            int autoFitHeight = Convert.ToInt32(screen.Bounds.Height * mp.Autofit);
 
-            if (size.Height == 0 || size.Width == 0 || size.Width / (float)size.Height < 1.3)
-            {
-                size.Height = fixedHeight;
-                size.Width = (int)(fixedHeight * 1.7);
-            }
+            if (mp.VideoSize.Height == 0 || mp.VideoSize.Width == 0 ||
+                mp.VideoSize.Width / (float)mp.VideoSize.Height < 1.3)
+
+                mp.VideoSize = new Size((int)(autoFitHeight * 1.7), autoFitHeight);
+
+            Size size = mp.VideoSize;
 
             int height = size.Height;
 
             if (App.RememberHeight)
-                height = ClientSize.Height;
+            {
+                if (WasInitialSizeSet)
+                    height = ClientSize.Height;
+                else
+                {
+                    height = autoFitHeight;
+                    WasInitialSizeSet = true;
+                }
+            }
 
             if (height > screen.Bounds.Height * 0.9)
-                height = fixedHeight;
+                height = autoFitHeight;
 
             int width = Convert.ToInt32(height * size.Width / (double)size.Height);
             Point middlePos = new Point(Left + Width / 2, Top + Height / 2);

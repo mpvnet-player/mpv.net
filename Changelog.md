@@ -1,3 +1,7 @@
+### 4.7.1
+
+- few layout problems were fixed, autosize for instance did not work
+
 ### 4.7
 
 - remember-height was replaced with start-size, when start-size is set
@@ -7,14 +11,14 @@
 - on exit the window location can be saved with remember-position
 - in the learn window of the input editor underscores were stripped
   because they have a special meaning in WPF labels 
-- keys/input not working for MBTN_LEFT_DBL, MBTN_BACK, MBTN_FORWARD
+- fix for keys/input not working for MBTN_LEFT_DBL, MBTN_BACK, MBTN_FORWARD
 - in the learn window of the input editor support was added for
   mouse left, mouse left double, mouse mid, mouse forward, mouse back
-- libmpv updated to shinchiro 2019-07-07
+- libmpv was updated to shinchiro 2019-07-07
 - when border is none it wasn't possible to minimize the window from
   the task bar because this is the WinForms default behavier. This
   was fixed by calling Spy++ to the rescue and adding WS_MINIMIZEBOX
-  in CreateParams  
+  in CreateParams
 
 ### 4.6
 

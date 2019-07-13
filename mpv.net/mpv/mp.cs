@@ -79,6 +79,8 @@ namespace mpvnet
 
         public static float Autofit { get; set; } = 0.5f;
 
+        static string LastPlaybackRestartFile;
+
         public static void Init()
         {
             LoadLibrary("mpv-1.dll");
@@ -211,7 +213,7 @@ namespace mpvnet
                 if (WindowHandle == IntPtr.Zero)
                     WindowHandle = FindWindowEx(MainForm.Hwnd, IntPtr.Zero, "mpv", null);
 
-                //System.Diagnostics.Debug.WriteLine(evt.event_id.ToString());
+                // System.Diagnostics.Debug.WriteLine(evt.event_id.ToString());
 
                 try
                 {
@@ -309,17 +311,21 @@ namespace mpvnet
                             break;
                         case mpv_event_id.MPV_EVENT_PLAYBACK_RESTART:
                             PlaybackRestart?.Invoke();
-                            Size vidSize = new Size(get_property_int("dwidth"), get_property_int("dheight"));
-
-                            if (VideoSize != vidSize && vidSize != Size.Empty)
+                            string path = get_property_string("path");
+                            if (LastPlaybackRestartFile != path)
                             {
-                                VideoSize = vidSize;
-                                VideoSizeChanged?.Invoke();
+                                Size vidSize = new Size(get_property_int("dwidth"), get_property_int("dheight"));
+                                if (vidSize.Width == 0 || vidSize.Height == 0)
+                                    vidSize = new Size(1, 1);
+                                if (VideoSize != vidSize)
+                                {
+                                    VideoSize = vidSize;
+                                    VideoSizeChanged?.Invoke();
+                                }
+                                VideoSizeAutoResetEvent.Set();
+                                Task.Run(new Action(() => ReadMetaData()));
+                                LastPlaybackRestartFile = path;
                             }
-
-                            VideoSizeAutoResetEvent.Set();
-
-                            Task.Run(new Action(() => ReadMetaData()));
                             break;
                         case mpv_event_id.MPV_EVENT_CHAPTER_CHANGE:
                             ChapterChange?.Invoke();
@@ -516,7 +522,11 @@ namespace mpvnet
 
             Load(files.ToArray(), App.ProcessInstance != "queue", Control.ModifierKeys.HasFlag(Keys.Control));
 
-            if (files.Count == 0) VideoSizeAutoResetEvent.Set();
+            if (files.Count == 0)
+            {
+                VideoSizeAutoResetEvent.Set();
+                VideoSizeChanged?.Invoke();
+            }
 
             foreach (string i in args)
             {
