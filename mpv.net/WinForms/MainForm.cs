@@ -72,7 +72,8 @@ namespace mpvnet
                 mp.FileLoaded += FileLoaded;
                 mp.Idle += Idle;
                 Task.Run(() => mp.Init());
-                mp.VideoSizeAutoResetEvent.WaitOne(1000);
+                mp.VideoSizeAutoResetEvent.WaitOne(3000);
+                if (Height < FontHeight * 3) SetFormPosAndSize();
                 mp.observe_property_bool("fullscreen", PropChangeFullscreen);
                 mp.observe_property_bool("ontop", PropChangeOnTop);
                 mp.observe_property_bool("border", PropChangeBorder);
@@ -418,7 +419,9 @@ namespace mpvnet
                     var r = rc;
                     NativeHelp.SubtractWindowBorders(Handle, ref r);
                     int c_w = r.Right - r.Left, c_h = r.Bottom - r.Top;
-                    float aspect = mp.VideoSize.Width / (float)mp.VideoSize.Height;
+                    Size s = mp.VideoSize;
+                    if (s == Size.Empty) s = new Size(16, 9);
+                    float aspect = s.Width / (float)s.Height;
                     int d_w = Convert.ToInt32(c_h * aspect - c_w);
                     int d_h = Convert.ToInt32(c_w / aspect - c_h);
                     int[] d_corners = { d_w, d_h, -d_w, -d_h };
