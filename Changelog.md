@@ -1,3 +1,7 @@
+### 4.7.2
+
+- fix cursor showing load activity on startup
+
 ### 4.7.1
 
 - few layout problems were fixed, autosize for instance did not work

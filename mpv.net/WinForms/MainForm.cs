@@ -511,7 +511,6 @@ namespace mpvnet
 
         protected override void OnShown(EventArgs e)
         {
-            base.OnShown(e);
             if (App.IsDarkMode) ToolStripRendererEx.ColorTheme = Color.Black;
             ContextMenu = new ContextMenuStripEx(components);
             ContextMenu.Opened += ContextMenu_Opened;
@@ -521,6 +520,7 @@ namespace mpvnet
             IgnoreDpiChanged = false;
             CheckClipboardForURL();
             Cursor.Position = new Point(Cursor.Position.X + 1, Cursor.Position.Y);
+            base.OnShown(e);
         }
 
         protected override void OnActivated(EventArgs e)
