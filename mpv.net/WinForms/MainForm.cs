@@ -520,6 +520,7 @@ namespace mpvnet
             ContextMenuStrip = ContextMenu;
             IgnoreDpiChanged = false;
             CheckClipboardForURL();
+            Cursor.Position = new Point(Cursor.Position.X + 1, Cursor.Position.Y);
         }
 
         protected override void OnActivated(EventArgs e)
