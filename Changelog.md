@@ -11,6 +11,10 @@
 - in the learn window of the input editor support was added for
   mouse left, mouse left double, mouse mid, mouse forward, mouse back
 - libmpv updated to shinchiro 2019-07-07
+- when border is none it wasn't possible to minimize the window from
+  the task bar because this is the WinForms default behavier. This
+  was fixed by calling Spy++ to the rescue and adding WS_MINIMIZEBOX
+  in CreateParams  
 
 ### 4.6
 

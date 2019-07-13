@@ -350,6 +350,14 @@ namespace mpvnet
            Msg.ShowError(e.ExceptionObject.ToString());
         }
 
+        protected override CreateParams CreateParams {
+            get {
+                CreateParams cp = base.CreateParams;
+                cp.Style |= 0x00020000 /* WS_MINIMIZEBOX */;
+                return cp;
+            }
+        }
+
         protected override void WndProc(ref Message m)
         {
             //System.Diagnostics.Debug.WriteLine(m);
