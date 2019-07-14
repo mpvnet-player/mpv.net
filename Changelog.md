@@ -1,4 +1,4 @@
-### 4.7.2
+### 4.7.3
 
 - fix cursor showing load activity on startup
 

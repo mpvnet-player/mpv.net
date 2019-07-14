@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace mpvnet
 {
@@ -45,6 +46,11 @@ namespace mpvnet
                     RecentFiles = new List<string>(r);
                 else
                     RecentFiles = new List<string>();
+
+                if (App.IsDarkMode) ToolStripRendererEx.ColorTheme = Color.Black;
+                ContextMenu = new ContextMenuStripEx(components);
+                ContextMenu.Opened += ContextMenu_Opened;
+                ContextMenu.Opening += ContextMenu_Opening;
 
                 App.ProcessCommandLineEarly();
 
@@ -511,16 +517,12 @@ namespace mpvnet
 
         protected override void OnShown(EventArgs e)
         {
-            if (App.IsDarkMode) ToolStripRendererEx.ColorTheme = Color.Black;
-            ContextMenu = new ContextMenuStripEx(components);
-            ContextMenu.Opened += ContextMenu_Opened;
-            ContextMenu.Opening += ContextMenu_Opening;
+            base.OnShown(e);
             BuildMenu();
             ContextMenuStrip = ContextMenu;
             IgnoreDpiChanged = false;
             CheckClipboardForURL();
             Cursor.Position = new Point(Cursor.Position.X + 1, Cursor.Position.Y);
-            base.OnShown(e);
         }
 
         protected override void OnActivated(EventArgs e)
