@@ -109,7 +109,22 @@ namespace mpvnet
                             if (genre != "") text += "Genre: " + genre + "\n";
                             if (date != "") text += "Year: " + date + "\n";
                             if (duration != "") text += "Length: " + duration + "\n";
-                            text += "Size: " + mediaInfo.GetInfo(MediaInfoStreamKind.General, "FileSize/String");
+                            text += "Size: " + mediaInfo.GetInfo(MediaInfoStreamKind.General, "FileSize/String") + "\n";
+                            text += "Type: " + Path.GetExtension(path).ToUpper().TrimStart('.');
+
+                            mp.commandv("show-text", text, "5000");
+                            return;
+                        }
+                    }
+                    else if (App.ImageTypes.Contains(Path.GetExtension(path).ToLower().TrimStart('.')))
+                    {
+                        using (MediaInfo mediaInfo = new MediaInfo(path))
+                        {
+                            text =
+                                "Width: " + mediaInfo.GetInfo(MediaInfoStreamKind.Image, "Width") + "\n" +
+                                "Height: " + mediaInfo.GetInfo(MediaInfoStreamKind.Image, "Height") + "\n" +
+                                "Size: " + mediaInfo.GetInfo(MediaInfoStreamKind.General, "FileSize/String") + "\n" +
+                                "Type: " + Path.GetExtension(path).ToUpper().TrimStart('.');
 
                             mp.commandv("show-text", text, "5000");
                             return;

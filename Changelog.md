@@ -1,7 +1,8 @@
 ### 4.7.3
 
 - fix cursor showing load activity on startup
-- added file size to info command using audio files
+- added file size and type to info command using audio files
+- added image format support for the info command
 
 ### 4.7.1
 
