@@ -109,6 +109,7 @@ namespace mpvnet
                             if (genre != "") text += "Genre: " + genre + "\n";
                             if (date != "") text += "Year: " + date + "\n";
                             if (duration != "") text += "Length: " + duration + "\n";
+                            text += "Size: " + mediaInfo.GetInfo(MediaInfoStreamKind.General, "FileSize/String");
 
                             mp.commandv("show-text", text, "5000");
                             return;
