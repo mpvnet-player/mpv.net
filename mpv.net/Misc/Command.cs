@@ -236,6 +236,7 @@ namespace mpvnet
 
                 td.AddCommandLink("Register video file extensions", "video");
                 td.AddCommandLink("Register audio file extensions", "audio");
+                td.AddCommandLink("Register audio file extensions", "image");
                 td.AddCommandLink("Unregister file extensions", "unreg");
 
                 string result = td.Show();

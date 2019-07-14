@@ -585,7 +585,8 @@ namespace mpvnet
             List<string> files = Directory.GetFiles(Path.GetDirectoryName(path)).ToList();
             files = files.Where((file) =>
                 App.VideoTypes.Contains(Path.GetExtension(file).TrimStart('.').ToLower()) ||
-                App.AudioTypes.Contains(Path.GetExtension(file).TrimStart('.').ToLower())).ToList();
+                App.AudioTypes.Contains(Path.GetExtension(file).TrimStart('.').ToLower()) ||
+                App.ImageTypes.Contains(Path.GetExtension(file).TrimStart('.').ToLower())).ToList();
             files.Sort(new StringLogicalComparer());
             int index = files.IndexOf(path);
             files.Remove(path);

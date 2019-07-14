@@ -39,6 +39,7 @@ Source: "{#MyAppSourceDir}\*"; DestDir: "{app}"; Flags: ignoreversion recursesub
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "Associate video file extensions?"; Flags: postinstall unchecked runascurrentuser runhidden nowait; Parameters: "--reg-file-assoc video"
 Filename: "{app}\{#MyAppExeName}"; Description: "Associate audio file extensions?"; Flags: postinstall unchecked runascurrentuser runhidden nowait; Parameters: "--reg-file-assoc audio"
+Filename: "{app}\{#MyAppExeName}"; Description: "Associate image file extensions?"; Flags: postinstall unchecked runascurrentuser runhidden nowait; Parameters: "--reg-file-assoc image"
 
 [UninstallRun]
 Filename: "{app}\{#MyAppExeName}"; Flags: runascurrentuser runhidden; Parameters: "--reg-file-assoc unreg"

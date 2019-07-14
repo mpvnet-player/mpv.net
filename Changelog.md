@@ -2,7 +2,8 @@
 
 - fix cursor showing load activity on startup
 - added file size and type to info command using audio files
-- added image format support for the info command
+- added image format support to the info command, to file
+  association management, to folder loading, to Everything
 
 ### 4.7.1
 

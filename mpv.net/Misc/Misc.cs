@@ -190,6 +190,8 @@ namespace mpvnet
                     RegHelp.SetObject($"HKCR\\" + "." + ext, "PerceivedType", "video");
                 if (App.AudioTypes.Contains(ext))
                     RegHelp.SetObject($"HKCR\\" + "." + ext, "PerceivedType", "audio");
+                if (App.ImageTypes.Contains(ext))
+                    RegHelp.SetObject($"HKCR\\" + "." + ext, "PerceivedType", "image");
                 RegHelp.SetObject($"HKCR\\" + ExeFilenameNoExt + "." + ext + "\\shell\\open", null, "Play with " +  Application.ProductName);
                 RegHelp.SetObject($"HKCR\\" + ExeFilenameNoExt + "." + ext + "\\shell\\open\\command", null, $"\"{ExePath}\" \"%1\"");
                 RegHelp.SetObject(@"HKLM\SOFTWARE\Clients\Media\mpv.net\Capabilities\FileAssociations", "." + ext, ExeFilenameNoExt + "." + ext);
