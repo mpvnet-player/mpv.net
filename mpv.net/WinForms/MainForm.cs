@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Threading.Tasks;
-using System.Diagnostics;
 
 namespace mpvnet
 {
@@ -31,13 +30,14 @@ namespace mpvnet
 
             try
             {
+                Instance = this;
+                Hwnd = Handle;
+                mp.Init();
                 AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
                 Application.ThreadException += Application_ThreadException;
                 Msg.SupportURL = "https://github.com/stax76/mpv.net#support";
-                Instance = this;
                 WPF.WPF.Init();
                 System.Windows.Application.Current.ShutdownMode = System.Windows.ShutdownMode.OnExplicitShutdown;
-                Hwnd = Handle;
                 Text += " " + Application.ProductVersion;
 
                 object recent = RegHelp.GetObject(App.RegPath, "Recent");
@@ -77,7 +77,6 @@ namespace mpvnet
                 mp.VideoSizeChanged += VideoSizeChanged;
                 mp.FileLoaded += FileLoaded;
                 mp.Idle += Idle;
-                Task.Run(() => mp.Init());
                 mp.VideoSizeAutoResetEvent.WaitOne(3000);
                 if (Height < FontHeight * 3) SetFormPosAndSize();
                 mp.observe_property_bool("fullscreen", PropChangeFullscreen);

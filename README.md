@@ -46,19 +46,34 @@ Table of contents
 
 ### Features
 
+- Extremely high degree of mpv compatibility, almost all mpv features are available
 - Customizable context menu defined in the same file as the key bindings ([Screenshot](#context-menu-screenshot), [Defaults](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt))
 - Searchable config dialog ([Screenshot](#config-editor-screenshot), [Defaults](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/mpvConf.txt))
 - Searchable input (key/mouse) binding editor ([Screenshot](#input-editor-screenshot), [Defaults](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt))
+- Configuration files that are easy to read and edit
 - Searchable command palette to quickly launch commands and look for keys ([Screenshot](#command-palette-screenshot))
-- Modern UI with dark mode ([Screenshot](#config-editor-screenshot))
+- Modern WPF based graphical user interface with dark mode ([Screenshot](#config-editor-screenshot))
 - Addon/extension API for .NET languages
 - Scripting API for Python, C#, Lua, JavaScript and PowerShell ([Wiki](https://github.com/stax76/mpv.net/wiki/Scripting))
-- mpv's OSC, IPC and conf files
+- On Screen Controler (OSC, play control buttons)
 - [Command Line Interface](https://mpv.io/manual/master/#options)
 - DXVA2 video decoding acceleration
 - OpenGL based video output capable of features loved by videophiles, such as video scaling with popular high quality algorithms, color management, frame timing, interpolation, HDR, and more
 - Search feature powered by [Everything](https://www.voidtools.com) to find and play media ([Screenshot](#media-search-screenshot))
 - Extension to start mpv.net from Google Chrome ([Manual](Manual.md#chrome-extension))
+- Extremely fast seek performance
+- Very fast startup performance, video is usally ready to play in less then a second
+- All decoders are built-in, no external codecs have to be installed
+- Setup and portable download options, Setup is recommended but not required
+- Build-in media streaming via youtube-dl
+- x64 and x86 Support (64-bit and 32-bit)
+- File associations can be created by the setup and from the player
+- JSON IPC
+- External audio and subtitle files can either be loaded manually or automatically
+- Screenshot feature with many options
+- File history feature to log time and filename
+- A-B loop feature
+- watch later feature to save the position
 
 ### Screenshots
 
