@@ -66,6 +66,7 @@ Table of contents
 - Extension to start mpv.net from Google Chrome ([Manual](Manual.md#chrome-extension))
 - Extremely fast seek performance
 - Very fast startup performance, video is usally ready to play in less then a second
+- Usable as video player, audio player and even image viewer with a wide range of supported formats
 - All decoders are built-in, no external codecs have to be installed
 - Setup and portable download options, setup is recommended but not required
 - Build-in media streaming via youtube-dl
