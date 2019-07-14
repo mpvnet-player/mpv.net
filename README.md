@@ -67,7 +67,7 @@ Table of contents
 - Extremely fast seek performance
 - Very fast startup performance, video is usally ready to play in less then a second
 - All decoders are built-in, no external codecs have to be installed
-- Setup and portable download options, Setup is recommended but not required
+- Setup and portable download options, setup is recommended but not required
 - Build-in media streaming via youtube-dl
 - x64 and x86 Support (64-bit and 32-bit)
 - File associations can be created by the setup and from the player
@@ -170,7 +170,15 @@ mpv.net supports almost all mpv settings and features, [limitations are listed i
 
 ### Architecture
 
-mpv.net is written in C# 7.0 and runs on the .NET framework 4.7 or higher.
+Coding mpv.net was great fun because libmpv is such a awesome
+library with a very clever design, I'm having a great experience
+with libmpv.
+
+The player does not contain any feature that was more work than 1-2 days or
+was difficult to build, the hard parts are totally covered by libmpv.
+
+mpv.net is written in C# 7 and runs on .NET 4.7, I've not yet decided
+if I will port it to C# 8 and .NET 5 once available.
 
 The Add-on implementation is based on the [Managed Extensibility Framework](https://docs.microsoft.com/en-us/dotnet/framework/mef/).
 
