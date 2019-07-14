@@ -4,6 +4,7 @@
 - added file size and type to info command using audio files
 - added image format support to the info command, to file
   association management, to folder loading, to Everything
+- readme/github have a updated features and architecture section
 
 ### 4.7.1
 
