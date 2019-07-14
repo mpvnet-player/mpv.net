@@ -47,6 +47,8 @@ Table of contents
 ### Features
 
 - Extremely high degree of mpv compatibility, almost all mpv features are available
+- Great usability due to everything in the application being searchable
+- Open source built with only modern tools and applications
 - Customizable context menu defined in the same file as the key bindings ([Screenshot](#context-menu-screenshot), [Defaults](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt))
 - Searchable config dialog ([Screenshot](#config-editor-screenshot), [Defaults](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/mpvConf.txt))
 - Searchable input (key/mouse) binding editor ([Screenshot](#input-editor-screenshot), [Defaults](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt))
@@ -55,6 +57,7 @@ Table of contents
 - Modern WPF based graphical user interface with dark mode ([Screenshot](#config-editor-screenshot))
 - Addon/extension API for .NET languages
 - Scripting API for Python, C#, Lua, JavaScript and PowerShell ([Wiki](https://github.com/stax76/mpv.net/wiki/Scripting))
+- Language agnostic JSON IPC to control the player out of process with a external programs
 - On Screen Controler (OSC, play control buttons)
 - [Command Line Interface](https://mpv.io/manual/master/#options)
 - DXVA2 video decoding acceleration
@@ -68,12 +71,12 @@ Table of contents
 - Build-in media streaming via youtube-dl
 - x64 and x86 Support (64-bit and 32-bit)
 - File associations can be created by the setup and from the player
-- JSON IPC
 - External audio and subtitle files can either be loaded manually or automatically
 - Screenshot feature with many options
 - File history feature to log time and filename
 - A-B loop feature
 - watch later feature to save the position
+- [Manual](#manual)
 
 ### Screenshots
 
@@ -177,9 +180,10 @@ this decision was made to keep the code simple and lightweight.
 
 Python scripting is implemented with IronPython which uses Python 2.7.
 
-The main/video window is WinForms based, all other windows are WPF based.
+The main window is WinForms based and uses less than 600 lines of code,
+all other windows are WPF based and use even less code.
 
-The config editor adds it's controls dynamically and uses TOML to define it's
+The config editor adds it's controls dynamically and uses [TOML](https://en.wikipedia.org/wiki/TOML) to define it's
 content, there are only two simple types, StringSetting and OptionSetting.
 
 mpv.net was started 2017 and consists of about 6000 lines of code and markup.
