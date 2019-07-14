@@ -1,3 +1,7 @@
+### 4.7.4
+
+- fix for mouse button back/forward causing freeze
+
 ### 4.7.3
 
 - fix cursor showing load activity on startup

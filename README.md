@@ -46,9 +46,9 @@ Table of contents
 
 ### Features
 
-- Extremely high degree of mpv compatibility, almost all mpv features are available
+- Very high degree of mpv compatibility, almost all mpv features are available
 - Great usability due to everything in the application being searchable
-- Open source built with only modern tools and applications
+- Open source built with modern tools and applications
 - Customizable context menu defined in the same file as the key bindings ([Screenshot](#context-menu-screenshot), [Defaults](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt))
 - Searchable config dialog ([Screenshot](#config-editor-screenshot), [Defaults](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/mpvConf.txt))
 - Searchable input (key/mouse) binding editor ([Screenshot](#input-editor-screenshot), [Defaults](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt))
@@ -57,7 +57,7 @@ Table of contents
 - Modern WPF based graphical user interface with dark mode ([Screenshot](#config-editor-screenshot))
 - Addon/extension API for .NET languages
 - Scripting API for Python, C#, Lua, JavaScript and PowerShell ([Wiki](https://github.com/stax76/mpv.net/wiki/Scripting))
-- Language agnostic JSON IPC to control the player out of process with a external programs
+- Language agnostic JSON IPC to control the player with a external programs
 - On Screen Controler (OSC, play control buttons)
 - [Command Line Interface](https://mpv.io/manual/master/#options)
 - DXVA2 video decoding acceleration
@@ -66,7 +66,7 @@ Table of contents
 - Extension to start mpv.net from Google Chrome ([Manual](Manual.md#chrome-extension))
 - Extremely fast seek performance
 - Very fast startup performance, video is usally ready to play in less then a second
-- Usable as video player, audio player and even image viewer with a wide range of supported formats
+- Usable as video player, audio player and image viewer with a wide range of supported formats
 - All decoders are built-in, no external codecs have to be installed
 - Setup and portable download options, setup is recommended but not required
 - Build-in media streaming via youtube-dl

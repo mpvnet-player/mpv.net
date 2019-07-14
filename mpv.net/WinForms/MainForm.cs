@@ -385,8 +385,6 @@ namespace mpvnet
                 case 0x0207: // WM_MBUTTONDOWN
                 case 0x0208: // WM_MBUTTONUP
                 case 0x020A: // WM_MOUSEWHEEL
-                case 0x020C: // WM_XBUTTONUP
-                case 0x020B: // WM_XBUTTONDOWN
                 case 0x0100: // WM_KEYDOWN
                 case 0x0101: // WM_KEYUP
                 case 0x0104: // WM_SYSKEYDOWN
@@ -404,7 +402,9 @@ namespace mpvnet
                 case 0x2a3: // WM_MOUSELEAVE
                     mp.command_string("mouse 1 1"); // osc won't always auto hide
                     break;
-                case 0x319: // WM_APPCOMMAND
+                case 0x319:  // WM_APPCOMMAND
+                case 0x020C: // WM_XBUTTONUP
+                case 0x020B: // WM_XBUTTONDOWN
                     if (mp.WindowHandle != IntPtr.Zero)
                         Native.PostMessage(mp.WindowHandle, m.Msg, m.WParam, m.LParam);
                     break;
