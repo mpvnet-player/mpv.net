@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace mpvnet
 {
@@ -9,7 +10,6 @@ namespace mpvnet
         {
             InitializeComponent();
             Version.Text = $"Version {System.Windows.Forms.Application.ProductVersion}";
-            Foreground = WPF.WPF.ThemeBrush;
         }
 
         protected override void OnPreviewKeyDown(KeyEventArgs e) => Close();

@@ -131,8 +131,10 @@ public class MenuItem : ToolStripMenuItem
 
 public class ToolStripRendererEx : ToolStripSystemRenderer
 {
+    public static bool IsDarkMode { get; set; }
+
     public static Color ColorForeground { get; set; } = Color.Black;
-    public static Color ColorTheme { get; set; } = Color.Empty;
+    public static Color ColorTheme { get; set; }
     public static Color ColorChecked { get; set; }
     public static Color ColorBorder { get; set; }
     public static Color ColorTop { get; set; }
@@ -146,19 +148,7 @@ public class ToolStripRendererEx : ToolStripSystemRenderer
 
     int TextOffset;
 
-    public ToolStripRendererEx()
-    {
-        var argb = Convert.ToInt32(Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", 0));
-
-        if (argb == 0)
-            argb = Color.LightBlue.ToArgb();
-        if (ColorTheme == Color.Empty)
-            InitColors(Color.FromArgb(argb));
-        else
-            InitColors(ColorTheme);
-    }
-
-    public static void InitColors(Color c)
+    public static void InitColors(Color c, bool darkMode)
     {
         ColorBorder = HSLColor.Convert(c).ToColorSetLuminosity(100);
         ColorChecked = HSLColor.Convert(c).ToColorSetLuminosity(160);
@@ -166,7 +156,7 @@ public class ToolStripRendererEx : ToolStripSystemRenderer
         ColorBackground = HSLColor.Convert(c).ToColorSetLuminosity(210);
         ColorTop = HSLColor.Convert(c).ToColorSetLuminosity(240);
 
-        if (ColorTheme == Color.Black)
+        if (darkMode)
         {
             ColorBorder = Color.White;
             ColorBackground = Color.FromArgb(50, 50, 50);

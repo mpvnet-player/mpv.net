@@ -22,6 +22,8 @@ namespace mpvnet
         public static string RegPath { get; } = @"HKCU\Software\" + Application.ProductName;
         public static string DarkMode { get; set; } = "always";
         public static string ProcessInstance { get; set; } = "single";
+        public static string DarkColor { get; set; }
+        public static string LightColor { get; set; }
 
         public static string[] VideoTypes { get; } = "mkv mp4 mpg avi mov webm vob wmv flv avs 264 h264 asf webm mpeg mpv y4m avc hevc 265 h265 m2v m2ts vpy mts m4v".Split(' ');
         public static string[] AudioTypes { get; } = "mp3 mp2 ac3 ogg opus flac wav w64 m4a dts dtsma dtshr dtshd eac3 thd thd+ac3 mka aac mpa".Split(' ');
@@ -31,9 +33,9 @@ namespace mpvnet
 
         public static bool RememberHeight { get; set; } = true;
         public static bool RememberPosition { get; set; }
-        public static bool DebugMode { get; set; } = false;
+        public static bool DebugMode { get; set; }
 
-        public static bool IsDarkMode { 
+        public static bool IsDarkMode {
             get => (DarkMode == "system" && Sys.IsDarkTheme) || DarkMode == "always";
         }
 
@@ -49,12 +51,11 @@ namespace mpvnet
             {
                 try
                 {
-                    string filePath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "\\mpvnet-debug.log";
+                    string filePath = mp.ConfFolder + "\\mpvnet-debug.log";
                     if (File.Exists(filePath)) File.Delete(filePath);
                     Trace.Listeners.Clear();
                     Trace.Listeners.Add(new TextWriterTraceListener(filePath));
-                    foreach (Screen screen in Screen.AllScreens)
-                        Trace.WriteLine(screen);
+                    Trace.AutoFlush = true;
                 }
                 catch (Exception e)
                 {
@@ -94,6 +95,8 @@ namespace mpvnet
                 case "process-instance": ProcessInstance = value; break;
                 case "dark-mode": DarkMode = value; break;
                 case "debug-mode": DebugMode = value == "yes"; break;
+                case "dark-color": DarkColor = value.Trim('\'', '"'); break;
+                case "light-color": LightColor = value.Trim('\'', '"'); break;
                 case "url-whitelist":
                     UrlWhitelist = value.Split(' ', ',', ';');
                     break;

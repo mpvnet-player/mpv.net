@@ -187,7 +187,9 @@ namespace mpvnet
                 OnKeyUp(new WF.KeyEventArgs((WF.Keys)(unchecked((int)(long)m.WParam)) | ModifierKeys));
             else if (m.Msg == WM_APPCOMMAND)
             {
-                switch ((AppCommand)(m.LParam.ToInt32() >> 16))
+                var value = (AppCommand)(m.LParam.ToInt64() >> 16 & ~0xf000);
+
+                switch (value)
                 {
                     case AppCommand.MEDIA_CHANNEL_DOWN:
                         SetKey("Channel_Down");
@@ -230,6 +232,9 @@ namespace mpvnet
                         break;
                     case AppCommand.VolumeMute:
                         SetKey("Mute");
+                        break;
+                    default:
+                        Msg.ShowError($"AppCommand {value} not supported,\nplease contact support.");
                         break;
                 }
             }

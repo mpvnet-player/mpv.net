@@ -8,6 +8,18 @@ options = [{ name = "always" },
 		   { name = "never" }]
 
 [[settings]]
+name = "dark-color"
+type = "color"
+filter = "General"
+help = "Theme color used in dark-mode. Leave empty to use OS theme."
+
+[[settings]]
+name = "light-color"
+type = "color"
+filter = "General"
+help = "Theme color used when dark-mode is disabled. Leave empty to use OS theme"
+
+[[settings]]
 name = "url-whitelist"
 filter = "General"
 type = "string"
@@ -17,7 +29,7 @@ help = "mpv.net specific whitelist setting to monitor the clipboard for URLs to 
 name = "process-instance"
 default = "single"
 filter = "General"
-help = "mpv.net specific setting that defines if more then one mpv.net process is allowed.\n\nTip: Whenever the control key is pressed when files or URLs are opened, the playlist is not cleared but the files or URLs are appended to the playlist."
+help = "mpv.net specific setting that defines if more then one mpv.net process is allowed.\n\nTip: Whenever the control key is pressed when files or URLs are opened, the playlist is not cleared but the files or URLs are appended to the playlist. This not only works on process startup but in all mpv.net features that open files."
 options = [{ name = "multi",  help = "Create a new process everytime the shell starts mpv.net" },
            { name = "single", help = "Force a single process everytime the shell starts mpv.net" },
 		   { name = "queue",  help = "Force a single process and add files to playlist" }]
@@ -26,7 +38,7 @@ options = [{ name = "multi",  help = "Create a new process everytime the shell s
 name = "debug-mode"
 default = "no"
 filter = "General"
-help = "mpv.net specific setting that writes debug info to a file located on the desktop."
+help = "mpv.net specific debugging setting, enable this only when a developer asks for it."
 options = [{ name = "yes" },
            { name = "no" }]
 

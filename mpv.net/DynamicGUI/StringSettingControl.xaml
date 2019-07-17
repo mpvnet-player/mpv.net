@@ -15,7 +15,7 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <TextBox x:Name="ValueTextBox" Text="{Binding Path=Text, ElementName=StringSettingControl1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="150" HorizontalAlignment="Left" Height="20" Foreground="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}" Background="{Binding Path=Background, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}" TextChanged="ValueTextBox_TextChanged"/>
+                <TextBox x:Name="ValueTextBox" Text="{Binding Path=Text, ElementName=StringSettingControl1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="150" HorizontalAlignment="Left" Height="20" Foreground="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}" Background="{Binding Path=Background, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}" CaretBrush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}" TextChanged="ValueTextBox_TextChanged"/>
                 <Button x:Name="Button" Height="20" Grid.Column="1" Visibility="{Binding Path=Text, ElementName=StringSettingControl1}" Margin="5,0,0,0" Width="20" Click="Button_Click">...</Button>
             </Grid>
             <TextBox x:Name="HelpTextBox" TextWrapping="WrapWithOverflow" BorderThickness="0" IsReadOnly="True" Foreground="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}" Background="{Binding Path=Background, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"></TextBox>

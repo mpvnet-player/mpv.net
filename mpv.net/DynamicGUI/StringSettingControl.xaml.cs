@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
@@ -64,11 +65,14 @@ namespace DynamicGUI
                     {
                         d.FullOpen = true;
                         try {
-                            Color col = GetColor(ValueTextBox.Text);
-                            d.Color = System.Drawing.Color.FromArgb(col.A, col.R, col.G, col.B); 
-                        } catch { }
+                            if (!string.IsNullOrEmpty(ValueTextBox.Text))
+                            {
+                                Color col = GetColor(ValueTextBox.Text);
+                                d.Color = System.Drawing.Color.FromArgb(col.A, col.R, col.G, col.B); 
+                            }
+                        } catch {}
                         if (d.ShowDialog() == WinForms.DialogResult.OK)
-                            ValueTextBox.Text = System.Drawing.ColorTranslator.ToHtml(d.Color);
+                            ValueTextBox.Text = "#" + d.Color.ToArgb().ToString("X8");
                     }
                     break;
             }

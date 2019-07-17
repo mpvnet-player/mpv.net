@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
@@ -213,14 +214,16 @@ namespace mpvnet
                 if (WindowHandle == IntPtr.Zero)
                     WindowHandle = FindWindowEx(MainForm.Hwnd, IntPtr.Zero, "mpv", null);
 
-                // System.Diagnostics.Debug.WriteLine(evt.event_id.ToString());
+                // Debug.WriteLine(evt.event_id.ToString());
 
                 try
                 {
                     switch (evt.event_id)
                     {
                         case mpv_event_id.MPV_EVENT_SHUTDOWN:
+                            if (App.DebugMode) Trace.WriteLine("before Shutdown.Invoke");
                             Shutdown?.Invoke();
+                            if (App.DebugMode) Trace.WriteLine("after Shutdown.Invoke");
                             WriteHistory(null);
                             ShutdownAutoResetEvent.Set();
                             return;

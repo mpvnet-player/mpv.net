@@ -8,7 +8,6 @@ using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
-using System.Threading.Tasks;
 
 namespace mpvnet
 {
@@ -47,7 +46,10 @@ namespace mpvnet
                 else
                     RecentFiles = new List<string>();
 
-                if (App.IsDarkMode) ToolStripRendererEx.ColorTheme = Color.Black;
+                var wpfColor = WPF.WPF.ThemeColor;
+                Color color = Color.FromArgb(wpfColor.A, wpfColor.R, wpfColor.G, wpfColor.B);
+                ToolStripRendererEx.InitColors(color, App.IsDarkMode);
+
                 ContextMenu = new ContextMenuStripEx(components);
                 ContextMenu.Opened += ContextMenu_Opened;
                 ContextMenu.Opening += ContextMenu_Opening;
@@ -403,8 +405,6 @@ namespace mpvnet
                     mp.command_string("mouse 1 1"); // osc won't always auto hide
                     break;
                 case 0x319:  // WM_APPCOMMAND
-                case 0x020C: // WM_XBUTTONUP
-                case 0x020B: // WM_XBUTTONDOWN
                     if (mp.WindowHandle != IntPtr.Zero)
                         Native.PostMessage(mp.WindowHandle, m.Msg, m.WParam, m.LParam);
                     break;
@@ -566,6 +566,12 @@ namespace mpvnet
                 Native.ReleaseCapture();
                 Native.PostMessage(Handle, 0xA1 /* WM_NCLBUTTONDOWN */, HTCAPTION, IntPtr.Zero);
             }
+
+            if (e.Button == MouseButtons.XButton1)
+                mp.command_string($"mouse {e.Location.X} {e.Location.Y} 7 single");
+
+            if (e.Button == MouseButtons.XButton2)
+                mp.command_string($"mouse {e.Location.X} {e.Location.Y} 8 single");
 
             if (Width - e.Location.X < 10 && e.Location.Y < 10)
                 mp.commandv("quit");
