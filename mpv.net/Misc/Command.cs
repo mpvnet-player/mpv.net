@@ -186,7 +186,8 @@ namespace mpvnet
             InvokeOnMainThread(new Action(() => {
                 using (var d = new OpenFileDialog())
                 {
-                    d.InitialDirectory = Path.GetDirectoryName(mp.get_property_string("path", false));
+                    string path = mp.get_property_string("path");
+                    if (File.Exists(path)) d.InitialDirectory = Path.GetDirectoryName(path);
                     d.Multiselect = true;
                     if (d.ShowDialog() == DialogResult.OK)
                         foreach (string i in d.FileNames)
@@ -200,7 +201,9 @@ namespace mpvnet
             InvokeOnMainThread(new Action(() => {
                 using (var d = new OpenFileDialog())
                 {
-                    d.InitialDirectory = Path.GetDirectoryName(mp.get_property_string("path", false));
+                    string path = mp.get_property_string("path");
+                    if (File.Exists(path))
+                        d.InitialDirectory = Path.GetDirectoryName(path);
                     d.Multiselect = true;
 
                     if (d.ShowDialog() == DialogResult.OK)
@@ -212,10 +215,10 @@ namespace mpvnet
 
         public static void CycleAudio()
         {
-            string filePath = mp.get_property_string("path", false);
-            if (!File.Exists(filePath)) return;
+            string path = mp.get_property_string("path");
+            if (!File.Exists(path)) return;
 
-            using (MediaInfo mi = new MediaInfo(filePath))
+            using (MediaInfo mi = new MediaInfo(path))
             {
                 MediaTrack[] audTracks = mp.MediaTracks.Where(track => track.Type == "a").ToArray();
                 if (audTracks.Length < 2) return;

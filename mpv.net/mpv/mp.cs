@@ -410,16 +410,14 @@ namespace mpvnet
         {
             if (Handle == IntPtr.Zero) return;
             int err = mpv_command_string(Handle, command);
-            if (err < 0 && throwException)
-                throw new Exception($"{(mpv_error)err}\r\n\r\n" + command);
+            if (err < 0 && throwException) throw new Exception($"{(mpv_error)err}\n\n" + command);
         }
 
         public static void set_property_string(string name, string value, bool throwOnException = false)
         {
             byte[] bytes = GetUtf8Bytes(value);
             int err = mpv_set_property(Handle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_STRING, ref bytes);
-            if (err < 0 && throwOnException)
-                throw new Exception($"{name}: {(mpv_error)err}");
+            if (err < 0 && throwOnException) throw new Exception($"{name}: {(mpv_error)err}");
         }
 
         public static string get_property_string(string name, bool throwOnException = false)
@@ -427,7 +425,13 @@ namespace mpvnet
             try
             {
                 int err = mpv_get_property(Handle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_STRING, out IntPtr lpBuffer);
-                if (err < 0 && throwOnException) throw new Exception($"{name}: {(mpv_error)err}");
+
+                if (err < 0)
+                {
+                    if (throwOnException) throw new Exception($"{name}: {(mpv_error)err}");
+                    return "";
+                }
+
                 string ret = StringFromNativeUtf8(lpBuffer);
                 mpv_free(lpBuffer);
                 return ret;
@@ -443,10 +447,13 @@ namespace mpvnet
         {
             int err = mpv_get_property(Handle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_INT64, out IntPtr lpBuffer);
 
-            if (err < 0 && throwOnException)
-                throw new Exception($"{name}: {(mpv_error)err}");
-            else
-                return lpBuffer.ToInt32();
+            if (err < 0)
+            {
+                if (throwOnException) throw new Exception($"{name}: {(mpv_error)err}");
+                return 0;
+            }
+
+            return lpBuffer.ToInt32();
         }
 
         public static double get_property_number(string name, bool throwOnException = false)
@@ -454,10 +461,13 @@ namespace mpvnet
             double val = 0;
             int err = mpv_get_property(Handle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_DOUBLE, ref val);
 
-            if (err < 0 && throwOnException)
-                throw new Exception($"{name}: {(mpv_error)err}");
-            else
-                return val;
+            if (err < 0)
+            {
+                if (throwOnException) throw new Exception($"{name}: {(mpv_error)err}");
+                return 0;
+            }
+
+            return val;
         }
 
         public static bool get_property_bool(string name, bool throwOnException = false)
@@ -474,9 +484,7 @@ namespace mpvnet
         {
             Int64 val = value;
             int err = mpv_set_property(Handle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_INT64, ref val);
-
-            if (err < 0 && throwOnException)
-                throw new Exception($"{name}: {(mpv_error)err}");
+            if (err < 0 && throwOnException) throw new Exception($"{name}: {(mpv_error)err}");
         }
 
         public static void observe_property_int(string name, Action<int> action)
@@ -642,8 +650,9 @@ namespace mpvnet
         static string LastHistoryPath;
         static DateTime LastHistoryStartDateTime;
 
-        static void WriteHistory(string filePath)
+        static void WriteHistory(string path)
         {
+            if (!File.Exists(path)) return;
             int totalMinutes = Convert.ToInt32((DateTime.Now - LastHistoryStartDateTime).TotalMinutes);
 
             if (File.Exists(LastHistoryPath) && totalMinutes > 1)
@@ -655,7 +664,7 @@ namespace mpvnet
                     Path.GetFileNameWithoutExtension(LastHistoryPath) + "\r\n");
             }
 
-            LastHistoryPath = filePath;
+            LastHistoryPath = path;
             LastHistoryStartDateTime = DateTime.Now;
         }
 
@@ -690,81 +699,87 @@ namespace mpvnet
             {
                 MediaTracks.Clear();
 
-                using (MediaInfo mi = new MediaInfo(get_property_string("path")))
+                string path = get_property_string("path");
+
+                if (File.Exists(path))
                 {
-                    int count = mi.GetCount(MediaInfoStreamKind.Video);
-
-                    for (int i = 0; i < count; i++)
+                    using (MediaInfo mi = new MediaInfo(path))
                     {
-                        MediaTrack track = new MediaTrack();
-                        Add(track, mi.GetVideo(i, "Format"));
-                        Add(track, mi.GetVideo(i, "Format_Profile"));
-                        Add(track, mi.GetVideo(i, "Width") + "x" + mi.GetVideo(i, "Height"));
-                        Add(track, mi.GetVideo(i, "FrameRate") + " FPS");
-                        Add(track, mi.GetVideo(i, "Language/String"));
-                        Add(track, mi.GetVideo(i, "Forced") == "Yes" ? "Forced" : "");
-                        Add(track, mi.GetVideo(i, "Default") == "Yes" ? "Default" : "");
-                        Add(track, mi.GetVideo(i, "Title"));
-                        track.Text = "V: " + track.Text.Trim(' ', ',');
-                        track.Type = "v";
-                        track.ID = i + 1;
-                        MediaTracks.Add(track);
-                    }
+                        int count = mi.GetCount(MediaInfoStreamKind.Video);
 
-                    count = mi.GetCount(MediaInfoStreamKind.Audio);
+                        for (int i = 0; i < count; i++)
+                        {
+                            MediaTrack track = new MediaTrack();
+                            Add(track, mi.GetVideo(i, "Format"));
+                            Add(track, mi.GetVideo(i, "Format_Profile"));
+                            Add(track, mi.GetVideo(i, "Width") + "x" + mi.GetVideo(i, "Height"));
+                            Add(track, mi.GetVideo(i, "FrameRate") + " FPS");
+                            Add(track, mi.GetVideo(i, "Language/String"));
+                            Add(track, mi.GetVideo(i, "Forced") == "Yes" ? "Forced" : "");
+                            Add(track, mi.GetVideo(i, "Default") == "Yes" ? "Default" : "");
+                            Add(track, mi.GetVideo(i, "Title"));
+                            track.Text = "V: " + track.Text.Trim(' ', ',');
+                            track.Type = "v";
+                            track.ID = i + 1;
+                            MediaTracks.Add(track);
+                        }
 
-                    for (int i = 0; i < count; i++)
-                    {
-                        MediaTrack track = new MediaTrack();
-                        Add(track, mi.GetAudio(i, "Language/String"));
-                        Add(track, mi.GetAudio(i, "Format"));
-                        Add(track, mi.GetAudio(i, "Format_Profile"));
-                        Add(track, mi.GetAudio(i, "BitRate/String"));
-                        Add(track, mi.GetAudio(i, "Channel(s)/String"));
-                        Add(track, mi.GetAudio(i, "SamplingRate/String"));
-                        Add(track, mi.GetAudio(i, "Forced") == "Yes" ? "Forced" : "");
-                        Add(track, mi.GetAudio(i, "Default") == "Yes" ? "Default" : "");
-                        Add(track, mi.GetAudio(i, "Title"));
-                        track.Text = "A: " + track.Text.Trim(' ', ',');
-                        track.Type = "a";
-                        track.ID = i + 1;
-                        MediaTracks.Add(track);
-                    }
+                        count = mi.GetCount(MediaInfoStreamKind.Audio);
 
-                    count = mi.GetCount(MediaInfoStreamKind.Text);
+                        for (int i = 0; i < count; i++)
+                        {
+                            MediaTrack track = new MediaTrack();
+                            Add(track, mi.GetAudio(i, "Language/String"));
+                            Add(track, mi.GetAudio(i, "Format"));
+                            Add(track, mi.GetAudio(i, "Format_Profile"));
+                            Add(track, mi.GetAudio(i, "BitRate/String"));
+                            Add(track, mi.GetAudio(i, "Channel(s)/String"));
+                            Add(track, mi.GetAudio(i, "SamplingRate/String"));
+                            Add(track, mi.GetAudio(i, "Forced") == "Yes" ? "Forced" : "");
+                            Add(track, mi.GetAudio(i, "Default") == "Yes" ? "Default" : "");
+                            Add(track, mi.GetAudio(i, "Title"));
+                            track.Text = "A: " + track.Text.Trim(' ', ',');
+                            track.Type = "a";
+                            track.ID = i + 1;
+                            MediaTracks.Add(track);
+                        }
 
-                    for (int i = 0; i < count; i++)
-                    {
-                        MediaTrack track = new MediaTrack();
-                        Add(track, mi.GetText(i, "Language/String"));
-                        Add(track, mi.GetText(i, "Format"));
-                        Add(track, mi.GetText(i, "Format_Profile"));
-                        Add(track, mi.GetText(i, "Forced") == "Yes" ? "Forced" : "");
-                        Add(track, mi.GetText(i, "Default") == "Yes" ? "Default" : "");
-                        Add(track, mi.GetText(i, "Title"));
-                        track.Text = "S: " + track.Text.Trim(' ', ',');
-                        track.Type = "s";
-                        track.ID = i + 1;
-                        MediaTracks.Add(track);
-                    }
+                        count = mi.GetCount(MediaInfoStreamKind.Text);
 
-                    count = get_property_int("edition-list/count");
+                        for (int i = 0; i < count; i++)
+                        {
+                            MediaTrack track = new MediaTrack();
+                            Add(track, mi.GetText(i, "Language/String"));
+                            Add(track, mi.GetText(i, "Format"));
+                            Add(track, mi.GetText(i, "Format_Profile"));
+                            Add(track, mi.GetText(i, "Forced") == "Yes" ? "Forced" : "");
+                            Add(track, mi.GetText(i, "Default") == "Yes" ? "Default" : "");
+                            Add(track, mi.GetText(i, "Title"));
+                            track.Text = "S: " + track.Text.Trim(' ', ',');
+                            track.Type = "s";
+                            track.ID = i + 1;
+                            MediaTracks.Add(track);
+                        }
 
-                    for (int i = 0; i < count; i++)
-                    {
-                        MediaTrack track = new MediaTrack();
-                        track.Text = "E: " + get_property_string($"edition-list/{i}/title");
-                        track.Type = "e";
-                        track.ID = i;
-                        MediaTracks.Add(track);
-                    }
+                        count = get_property_int("edition-list/count");
 
-                    void Add(MediaTrack track, string val)
-                    {
-                        if (!string.IsNullOrEmpty(val) && !(track.Text != null && track.Text.Contains(val)))
-                            track.Text += " " + val + ",";
+                        for (int i = 0; i < count; i++)
+                        {
+                            MediaTrack track = new MediaTrack();
+                            track.Text = "E: " + get_property_string($"edition-list/{i}/title");
+                            track.Type = "e";
+                            track.ID = i;
+                            MediaTracks.Add(track);
+                        }
+
+                        void Add(MediaTrack track, string val)
+                        {
+                            if (!string.IsNullOrEmpty(val) && !(track.Text != null && track.Text.Contains(val)))
+                                track.Text += " " + val + ",";
+                        }
                     }
                 }
+
             }
 
             lock (Chapters)

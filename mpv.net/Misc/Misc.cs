@@ -53,7 +53,6 @@ namespace mpvnet
                 {
                     string filePath = mp.ConfFolder + "\\mpvnet-debug.log";
                     if (File.Exists(filePath)) File.Delete(filePath);
-                    Trace.Listeners.Clear();
                     Trace.Listeners.Add(new TextWriterTraceListener(filePath));
                     Trace.AutoFlush = true;
                 }
@@ -62,11 +61,6 @@ namespace mpvnet
                     Msg.ShowException(e);
                 }
             }
-        }
-
-        public static void Exit()
-        {
-            if (Trace.Listeners.Count > 0) Trace.Listeners[0].Close();
         }
 
         static Dictionary<string, string> _Conf;

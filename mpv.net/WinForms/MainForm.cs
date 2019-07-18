@@ -8,6 +8,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
+using System.Diagnostics;
 
 namespace mpvnet
 {
@@ -378,7 +379,7 @@ namespace mpvnet
 
         protected override void WndProc(ref Message m)
         {
-            //System.Diagnostics.Debug.WriteLine(m);
+            //Debug.WriteLine(m);
 
             switch (m.Msg)
             {
@@ -549,7 +550,6 @@ namespace mpvnet
             }
 
             RegHelp.SetObject(App.RegPath, "Recent", RecentFiles.ToArray());
-            App.Exit();
             mp.commandv("quit");
             mp.ShutdownAutoResetEvent.WaitOne(3000);
         }
