@@ -28,7 +28,7 @@ namespace mpvnet
                 case "show-about": ShowDialog(typeof(AboutWindow)); break;
                 case "show-conf-editor": ShowDialog(typeof(ConfWindow)); break;
                 case "show-input-editor": ShowDialog(typeof(InputWindow)); break;
-                case "open-conf-folder": Process.Start(mp.ConfFolder); break;
+                case "open-conf-folder": Process.Start(mp.ConfigFolder); break;
                 case "open-files": OpenFiles(args); break;
                 case "shell-execute": Process.Start(args[0]); break;
                 case "show-info": ShowInfo(); break;
@@ -68,7 +68,7 @@ namespace mpvnet
 
         public static void ShowHistory()
         {
-            var fp = mp.ConfFolder + "history.txt";
+            var fp = mp.ConfigFolder + "history.txt";
 
             if (File.Exists(fp))
                 Process.Start(fp);

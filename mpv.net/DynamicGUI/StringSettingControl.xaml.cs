@@ -56,7 +56,7 @@ namespace DynamicGUI
                     {
                         d.Description = "Choose a folder.";
                         d.SelectedPath = ValueTextBox.Text;
-                        if (d.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                        if (d.ShowDialog() == WinForms.DialogResult.OK)
                             ValueTextBox.Text = d.SelectedPath;
                     }
                     break;

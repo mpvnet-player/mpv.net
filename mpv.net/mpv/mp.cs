@@ -13,6 +13,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using WinForms = System.Windows.Forms;
+
 using static mpvnet.libmpv;
 using static mpvnet.Native;
 
@@ -66,8 +68,8 @@ namespace mpvnet
         public static List<MediaTrack> MediaTracks { get; set; } = new List<MediaTrack>();
         public static List<KeyValuePair<string, double>> Chapters { get; set; } = new List<KeyValuePair<string, double>>();
 
-        public static string InputConfPath { get; } = ConfFolder + "\\input.conf";
-        public static string ConfPath      { get; } = ConfFolder + "\\mpv.conf";
+        public static string InputConfPath { get; } = ConfigFolder + "\\input.conf";
+        public static string ConfPath      { get; } = ConfigFolder + "\\mpv.conf";
         public static string Sid { get; set; } = "";
         public static string Aid { get; set; } = "";
         public static string Vid { get; set; } = "";
@@ -86,6 +88,7 @@ namespace mpvnet
         {
             LoadLibrary("mpv-1.dll");
             Handle = mpv_create();
+            set_property_string("config-dir", ConfigFolder);
             set_property_string("osc", "yes");
             set_property_string("config", "yes");
             set_property_string("wid", MainForm.Hwnd.ToString());
@@ -115,48 +118,61 @@ namespace mpvnet
             }
         }
 
-        static string _ConfFolder;
+        static string _ConfigFolder;
 
-        public static string ConfFolder {
+        public static string ConfigFolder {
             get {
-                if (_ConfFolder == null)
+                if (_ConfigFolder == null)
                 {
-                    string portableFolder = Application.StartupPath + "\\portable_config\\";
-                    string appdataFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\";
-                    string startupFolder = Application.StartupPath + "\\";
+                    _ConfigFolder = Application.StartupPath + "\\portable_config\\";
 
-                    if (!Directory.Exists(appdataFolder) && !Directory.Exists(portableFolder) &&
-                        Sys.IsDirectoryWritable(Application.StartupPath) &&
-                        !File.Exists(startupFolder + "mpv.conf"))
+                    if (!Directory.Exists(_ConfigFolder))
+                        _ConfigFolder = RegHelp.GetString(App.RegPath, "ConfigFolder");
+
+                    if (!Directory.Exists(_ConfigFolder))
                     {
+                        string portableFolder = Application.StartupPath + "\\portable_config\\";
+                        string appdataFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv.net\\";
+                        string appdataFolderMpv = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\";
+                        string startupFolder = Application.StartupPath + "\\";
+
                         using (TaskDialog<string> td = new TaskDialog<string>())
                         {
                             td.MainInstruction = "Choose a settings folder.";
-                            td.Content = "[MPV documentation about files on Windows.](https://mpv.io/manual/master/#files-on-windows)";
-                            td.AddCommandLink("appdata", appdataFolder, appdataFolder);
-                            td.AddCommandLink("portable", portableFolder, portableFolder);
-                            td.AddCommandLink("startup", startupFolder, startupFolder);
+                            td.AddCommandLink(@"AppData\Roaming\mpv.net", appdataFolder, appdataFolder);
+                            td.AddCommandLink(@"AppData\Roaming\mpv", appdataFolderMpv, appdataFolderMpv);
+                            td.AddCommandLink("<startup>\\portable_config", portableFolder, portableFolder);
+                            td.AddCommandLink("<startup>", startupFolder, startupFolder);
+                            td.AddCommandLink("Choose custom folder", "custom");
                             td.AllowCancel = false;
-                            _ConfFolder = td.Show();
+                            _ConfigFolder = td.Show();
+                        }
+
+                        if (_ConfigFolder == "custom")
+                        {
+                            using (var d = new WinForms.FolderBrowserDialog())
+                            {
+                                d.Description = "Choose a folder.";
+                                if (d.ShowDialog() == WinForms.DialogResult.OK)
+                                    _ConfigFolder = d.SelectedPath + "\\";
+                                else
+                                    _ConfigFolder = appdataFolder;
+                            }
                         }
                     }
-                    else if (Directory.Exists(portableFolder))
-                        _ConfFolder = portableFolder;
-                    else if (Directory.Exists(appdataFolder))
-                        _ConfFolder = appdataFolder;
-                    else if (File.Exists(Application.StartupPath + "\\mpv.conf"))
-                        _ConfFolder = Application.StartupPath + "\\";
 
-                    if (string.IsNullOrEmpty(_ConfFolder)) _ConfFolder = appdataFolder;
-                    if (!Directory.Exists(_ConfFolder)) Directory.CreateDirectory(_ConfFolder);
+                    if (!Directory.Exists(_ConfigFolder))
+                        Directory.CreateDirectory(_ConfigFolder);
 
-                    if (!File.Exists(_ConfFolder + "\\input.conf"))
-                        File.WriteAllText(_ConfFolder + "\\input.conf", Properties.Resources.inputConf);
+                    RegHelp.SetObject(App.RegPath, "ConfigFolder", _ConfigFolder);
 
-                    if (!File.Exists(_ConfFolder + "\\mpv.conf"))
-                        File.WriteAllText(_ConfFolder + "\\mpv.conf", Properties.Resources.mpvConf);
+                    if (!File.Exists(_ConfigFolder + "\\input.conf"))
+                        File.WriteAllText(_ConfigFolder + "\\input.conf", Properties.Resources.inputConf);
+
+                    if (!File.Exists(_ConfigFolder + "\\mpv.conf"))
+                        File.WriteAllText(_ConfigFolder + "\\mpv.conf", Properties.Resources.mpvConf);
                 }
-                return _ConfFolder;
+                return _ConfigFolder;
             }
         }
 
@@ -182,22 +198,26 @@ namespace mpvnet
 
         public static void LoadScripts()
         {
-            string[] startupScripts = Directory.GetFiles(Application.StartupPath + "\\Scripts");
 
-            foreach (string scriptPath in startupScripts)
-                if (scriptPath.EndsWith(".lua") || scriptPath.EndsWith(".js"))
-                    commandv("load-script", $"{scriptPath}");
+            if (Directory.Exists(Application.StartupPath + "\\Scripts"))
+            {
+                string[] startupScripts = Directory.GetFiles(Application.StartupPath + "\\Scripts");
 
-            foreach (string scriptPath in startupScripts)
-                if (Path.GetExtension(scriptPath) == ".py")
-                    PythonScripts.Add(new PythonScript(File.ReadAllText(scriptPath)));
+                foreach (string scriptPath in startupScripts)
+                    if (scriptPath.EndsWith(".lua") || scriptPath.EndsWith(".js"))
+                        commandv("load-script", $"{scriptPath}");
 
-            foreach (string scriptPath in startupScripts)
-                if (Path.GetExtension(scriptPath) == ".ps1")
-                    PowerShellScript.Init(scriptPath);
+                foreach (string scriptPath in startupScripts)
+                    if (Path.GetExtension(scriptPath) == ".py")
+                        PythonScripts.Add(new PythonScript(File.ReadAllText(scriptPath)));
 
-            if (Directory.Exists(ConfFolder + "Scripts"))
-                foreach (string scriptPath in Directory.GetFiles(ConfFolder + "Scripts"))
+                foreach (string scriptPath in startupScripts)
+                    if (Path.GetExtension(scriptPath) == ".ps1")
+                        PowerShellScript.Init(scriptPath);
+            }
+
+            if (Directory.Exists(ConfigFolder + "Scripts"))
+                foreach (string scriptPath in Directory.GetFiles(ConfigFolder + "Scripts"))
                     if (Path.GetExtension(scriptPath) == ".py")
                         PythonScripts.Add(new PythonScript(File.ReadAllText(scriptPath)));
                     else if (Path.GetExtension(scriptPath) == ".ps1")
@@ -657,7 +677,7 @@ namespace mpvnet
 
             if (File.Exists(LastHistoryPath) && totalMinutes > 1)
             {
-                string historyFilepath = ConfFolder + "history.txt";
+                string historyFilepath = ConfigFolder + "history.txt";
 
                 File.AppendAllText(historyFilepath, DateTime.Now.ToString().Substring(0, 16) +
                     " " + totalMinutes.ToString().PadLeft(3) + " " +
@@ -698,7 +718,6 @@ namespace mpvnet
             lock (MediaTracks)
             {
                 MediaTracks.Clear();
-
                 string path = get_property_string("path");
 
                 if (File.Exists(path))
@@ -779,7 +798,6 @@ namespace mpvnet
                         }
                     }
                 }
-
             }
 
             lock (Chapters)

@@ -16,8 +16,8 @@ Public Class CSScriptAddon
     Sub New()
         Dim scriptFiles As New List(Of String)
 
-        If Directory.Exists(mp.ConfFolder + "scripts") Then
-            scriptFiles.AddRange(Directory.GetFiles(mp.ConfFolder + "scripts", "*.cs"))
+        If Directory.Exists(mp.ConfigFolder + "scripts") Then
+            scriptFiles.AddRange(Directory.GetFiles(mp.ConfigFolder + "scripts", "*.cs"))
         End If
 
         If Directory.Exists(Application.StartupPath + "\scripts") Then

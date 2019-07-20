@@ -18,8 +18,8 @@ namespace mpvnet
 {
     public class App
     {
-        public static string ConfFilePath { get; } = mp.ConfFolder + "\\mpvnet.conf";
         public static string RegPath { get; } = @"HKCU\Software\" + Application.ProductName;
+        public static string ConfFilePath { get; } = mp.ConfigFolder + "\\mpvnet.conf";
         public static string DarkMode { get; set; } = "always";
         public static string ProcessInstance { get; set; } = "single";
         public static string DarkColor { get; set; }
@@ -41,7 +41,7 @@ namespace mpvnet
 
         public static void Init()
         {
-            string dummy = mp.ConfFolder;
+            string dummy = mp.ConfigFolder;
             var dummy2 = mp.Conf;
 
             foreach (var i in Conf)
@@ -51,7 +51,7 @@ namespace mpvnet
             {
                 try
                 {
-                    string filePath = mp.ConfFolder + "\\mpvnet-debug.log";
+                    string filePath = mp.ConfigFolder + "\\mpvnet-debug.log";
                     if (File.Exists(filePath)) File.Delete(filePath);
                     Trace.Listeners.Add(new TextWriterTraceListener(filePath));
                     Trace.AutoFlush = true;

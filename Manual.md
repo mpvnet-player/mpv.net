@@ -822,25 +822,23 @@ mpvnet --mute=yes <file|URL>
 
 ## Settings
 
-mpv.net is able to share the settings with mpv and mpv.net uses the same logic to decide from where the settings are loaded. The default location is:
-
-```Text
-C:\Users\%username%\AppData\Roaming\mpv\mpv.conf
-```
+mpv.net is able to share the settings with mpv.
 
 If a directory named portable_config next to the mpvnet.exe exists, all config will be loaded from this directory only.
 
 ```Text
-<startup>\portable_config\mpv.conf
+<startup>\portable_config\
 ```
 
-In case there isn't any config folder mpv.net asks where to create it. If no mpv.conf file exists mpv.net generates it with the following defaults:
+On first start if no portable config folder exists mpv.net asks which folder should be used as config folder.
+
+If no mpv.conf file exists mpv.net generates it with the following defaults:
 
 <https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/mpvConf.txt>
-
-Config files located in the same directory as mpvnet.exe are loaded with lower priority. Some config files are loaded only once, which means that e.g. of 2 input.conf files located in two config directories, only the one from the directory with higher priority will be loaded.
 
 The key bindings and the context menu definitions are stored in the input.conf file,
 if it's missing mpv.net generates it with the following defaults:
 
 <https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt>
+
+mpv.net supports almost all mpv settings and features, [limitations are listed in the wiki](https://github.com/stax76/mpv.net/wiki/Limitations).

@@ -80,8 +80,8 @@ namespace mpvnet
                 mp.VideoSizeChanged += VideoSizeChanged;
                 mp.FileLoaded += FileLoaded;
                 mp.Idle += Idle;
-                mp.VideoSizeAutoResetEvent.WaitOne(3000);
-                if (Height < FontHeight * 3) SetFormPosAndSize();
+                mp.VideoSizeAutoResetEvent.WaitOne(1500);
+                if (Height < FontHeight * 4) SetFormPosAndSize();
                 mp.observe_property_bool("fullscreen", PropChangeFullscreen);
                 mp.observe_property_bool("ontop", PropChangeOnTop);
                 mp.observe_property_bool("border", PropChangeBorder);
@@ -246,7 +246,7 @@ namespace mpvnet
             if (mp.VideoSize.Height == 0 || mp.VideoSize.Width == 0 ||
                 mp.VideoSize.Width / (float)mp.VideoSize.Height < 1.3)
 
-                mp.VideoSize = new Size((int)(autoFitHeight * 1.7), autoFitHeight);
+                mp.VideoSize = new Size((int)(autoFitHeight * (16 / 9.0)), autoFitHeight);
 
             Size size = mp.VideoSize;
 
@@ -387,11 +387,14 @@ namespace mpvnet
                 case 0x0202: // WM_LBUTTONUP
                 case 0x0207: // WM_MBUTTONDOWN
                 case 0x0208: // WM_MBUTTONUP
+                case 0x020b: // WM_XBUTTONDOWN
+                case 0x020c: // WM_XBUTTONUP
                 case 0x020A: // WM_MOUSEWHEEL
                 case 0x0100: // WM_KEYDOWN
                 case 0x0101: // WM_KEYUP
                 case 0x0104: // WM_SYSKEYDOWN
                 case 0x0105: // WM_SYSKEYUP
+                case 0x319:  // WM_APPCOMMAND
                     if (mp.WindowHandle != IntPtr.Zero)
                         Native.SendMessage(mp.WindowHandle, m.Msg, m.WParam, m.LParam);
                     break;
@@ -404,10 +407,6 @@ namespace mpvnet
                     break;
                 case 0x2a3: // WM_MOUSELEAVE
                     mp.command_string("mouse 1 1"); // osc won't always auto hide
-                    break;
-                case 0x319:  // WM_APPCOMMAND
-                    if (mp.WindowHandle != IntPtr.Zero)
-                        Native.PostMessage(mp.WindowHandle, m.Msg, m.WParam, m.LParam);
                     break;
                 case 0x203: // Native.WM.LBUTTONDBLCLK
                     {
@@ -566,12 +565,6 @@ namespace mpvnet
                 Native.ReleaseCapture();
                 Native.PostMessage(Handle, 0xA1 /* WM_NCLBUTTONDOWN */, HTCAPTION, IntPtr.Zero);
             }
-
-            if (e.Button == MouseButtons.XButton1)
-                mp.command_string($"mouse {e.Location.X} {e.Location.Y} 7 single");
-
-            if (e.Button == MouseButtons.XButton2)
-                mp.command_string($"mouse {e.Location.X} {e.Location.Y} 8 single");
 
             if (Width - e.Location.X < 10 && e.Location.Y < 10)
                 mp.commandv("quit");

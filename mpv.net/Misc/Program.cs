@@ -15,6 +15,9 @@ namespace mpvnet
         {
             try
             {
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+
                 string[] args = Environment.GetCommandLineArgs().Skip(1).ToArray();
 
                 if (args.Length == 2 && args[0] == "--reg-file-assoc")
@@ -61,8 +64,6 @@ namespace mpvnet
                     return;
                 }
 
-                Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
                 Application.Run(new MainForm());
                 mutex.Dispose();
             }

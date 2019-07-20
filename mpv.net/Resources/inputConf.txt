@@ -166,23 +166,25 @@
  Esc quit           #menu: Exit
  Q quit-watch-later #menu: Exit Watch Later
 
- > playlist-next
- < playlist-prev
- Power quit
- Play      cycle pause
- Pause     cycle pause
- PlayPause cycle pause
- Stop stop
- Forward seek  60
- Rewind  seek -60
- Mute cycle mute
- Volume_Up   add volume  10
- Volume_Down add volume -10
- Wheel_Up    add volume  10
- Wheel_Down  add volume -10
- Prev playlist-prev
- Next playlist-next
+ Power        quit
+ Play         cycle pause
+ Pause        cycle pause
+ PlayPause    cycle pause
+ Stop         stop
+ Forward      seek  60
+ Rewind       seek -60
+ Mute         cycle mute
+ Volume_Up    add volume  10
+ Volume_Down  add volume -10
+ Wheel_Up     add volume  10
+ Wheel_Down   add volume -10
+ Prev         playlist-prev
+ Next         playlist-next
+ MBTN_Forward playlist-next
+ MBTN_Back    playlist-prev
+ >            playlist-next
+ <            playlist-prev
  Ctrl+Wheel_Up   no-osd seek  7
  Ctrl+Wheel_Down no-osd seek -7
- MBTN_LEFT_DBL cycle fullscreen
- KP_ENTER      cycle fullscreen
+ MBTN_Left_DBL   cycle fullscreen
+ KP_Enter        cycle fullscreen

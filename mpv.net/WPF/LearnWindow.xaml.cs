@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
@@ -61,59 +60,59 @@ namespace mpvnet
                 case WF.Keys.NumPad9:
                     text = "KP" + e.KeyCode.ToString()[6].ToString(); break;
                 case WF.Keys.Space:
-                    text = "Space"; break;
+                    text = "SPACE"; break;
                 case WF.Keys.Enter:
-                    text = "Enter"; break;
+                    text = "ENTER"; break;
                 case WF.Keys.Tab:
-                    text = "Tab"; break;
+                    text = "TAB"; break;
                 case WF.Keys.Back:
                     text = "BS"; break;
                 case WF.Keys.Delete:
-                    text = "Del"; break;
+                    text = "DEL"; break;
                 case WF.Keys.Insert:
-                    text = "Ins"; break;
+                    text = "INS"; break;
                 case WF.Keys.Home:
-                    text = "Home"; break;
+                    text = "HOME"; break;
                 case WF.Keys.End:
-                    text = "End"; break;
+                    text = "END"; break;
                 case WF.Keys.PageUp:
                     text = "PGUP"; break;
                 case WF.Keys.PageDown:
                     text = "PGDWN"; break;
                 case WF.Keys.Escape:
-                    text = "Esc"; break;
+                    text = "ESC"; break;
                 case WF.Keys.PrintScreen:
-                    text = "Print"; break;
+                    text = "PRINT"; break;
                 case WF.Keys.Play:
-                    text = "Play"; break;
+                    text = "PLAY"; break;
                 case WF.Keys.Pause:
-                    text = "Pause"; break;
+                    text = "PAUSE"; break;
                 case WF.Keys.MediaPlayPause:
-                    text = "PlayPause"; break;
+                    text = "PLAYPAUSE"; break;
                 case WF.Keys.MediaStop:
-                    text = "Stop"; break;
+                    text = "STOP"; break;
                 case WF.Keys.MediaNextTrack:
-                    text = "Next"; break;
+                    text = "NEXT"; break;
                 case WF.Keys.MediaPreviousTrack:
-                    text = "Prev"; break;
+                    text = "PREV"; break;
                 case WF.Keys.VolumeUp:
-                    text = "Volume_Up"; break;
+                    text = "VOLUME_UP"; break;
                 case WF.Keys.VolumeDown:
-                    text = "Volume_Down"; break;
+                    text = "VOLUME_DOWN"; break;
                 case WF.Keys.VolumeMute:
-                    text = "Mute"; break;
+                    text = "MUTE"; break;
                 case WF.Keys.BrowserHome:
-                    text = "Homepage"; break;
+                    text = "HOMEPAGE"; break;
                 case WF.Keys.LaunchMail:
-                    text = "Mail"; break;
+                    text = "MAIL"; break;
                 case WF.Keys.BrowserFavorites:
-                    text = "Favorites"; break;
+                    text = "FAVORITES"; break;
                 case WF.Keys.BrowserSearch:
-                    text = "Search"; break;
+                    text = "SEARCH"; break;
                 case WF.Keys.Sleep:
-                    text = "Sleep"; break;
+                    text = "SLEEP"; break;
                 case WF.Keys.Cancel:
-                    text = "Cancel"; break;
+                    text = "CANCEL"; break;
             }
 
             bool shiftWasHandled = false;
@@ -138,11 +137,14 @@ namespace mpvnet
                 SetKey(text);
         }
 
+        DateTime LastKeyUp;
+
         void SetKey(string key)
         {
             NewKey = key;
             MenuTextBlock.Text = InputItem.Path;
             KeyTextBlock.Text = key;
+            LastKeyUp = DateTime.Now;
         }
 
         [DllImport("user32.dll")]
@@ -191,50 +193,62 @@ namespace mpvnet
 
                 switch (value)
                 {
-                    case AppCommand.MEDIA_CHANNEL_DOWN:
-                        SetKey("Channel_Down");
+                    case AppCommand.APPCOMMAND_MEDIA_CHANNEL_DOWN:
+                        SetKey("CHANNEL_DOWN");
                         break;
-                    case AppCommand.MEDIA_CHANNEL_UP:
-                        SetKey("Channel_Up");
+                    case AppCommand.APPCOMMAND_MEDIA_CHANNEL_UP:
+                        SetKey("CHANNEL_UP");
                         break;
-                    case AppCommand.MEDIA_FAST_FORWARD:
-                        SetKey("Forward");
+                    case AppCommand.APPCOMMAND_MEDIA_FAST_FORWARD:
+                        SetKey("FORWARD");
                         break;
-                    case AppCommand.MEDIA_REWIND:
-                        SetKey("Rewind");
+                    case AppCommand.APPCOMMAND_MEDIA_REWIND:
+                        SetKey("REWIND");
                         break;
-                    case AppCommand.MEDIA_PAUSE:
-                        SetKey("Pause");
+                    case AppCommand.APPCOMMAND_MEDIA_PAUSE:
+                        SetKey("PAUSE");
                         break;
-                    case AppCommand.MEDIA_PLAY:
-                        SetKey("Play");
+                    case AppCommand.APPCOMMAND_MEDIA_PLAY:
+                        SetKey("PLAY");
                         break;
-                    case AppCommand.MEDIA_PLAY_PAUSE:
-                        SetKey("PlayPause");
+                    case AppCommand.APPCOMMAND_MEDIA_PLAY_PAUSE:
+                        SetKey("PLAYPAUSE");
                         break;
-                    case AppCommand.MEDIA_NEXTTRACK:
-                        SetKey("Next");
+                    case AppCommand.APPCOMMAND_MEDIA_NEXTTRACK:
+                        SetKey("NEXT");
                         break;
-                    case AppCommand.MEDIA_PREVIOUSTRACK:
-                        SetKey("Prev");
+                    case AppCommand.APPCOMMAND_MEDIA_PREVIOUSTRACK:
+                        SetKey("PREV");
                         break;
-                    case AppCommand.MEDIA_RECORD:
-                        SetKey("Record");
+                    case AppCommand.APPCOMMAND_MEDIA_RECORD:
+                        SetKey("RECORD");
                         break;
-                    case AppCommand.MEDIA_STOP:
-                        SetKey("Stop");
+                    case AppCommand.APPCOMMAND_MEDIA_STOP:
+                        SetKey("STOP");
                         break;
-                    case AppCommand.VolumeUp:
-                        SetKey("Volume_Up");
+                    case AppCommand.APPCOMMAND_VOLUME_UP:
+                        SetKey("VOLUME_UP");
                         break;
-                    case AppCommand.VolumeDown:
-                        SetKey("Volume_Down");
+                    case AppCommand.APPCOMMAND_VOLUME_DOWN:
+                        SetKey("VOLUME_DOWN");
                         break;
-                    case AppCommand.VolumeMute:
-                        SetKey("Mute");
+                    case AppCommand.APPCOMMAND_VOLUME_MUTE:
+                        SetKey("MUTE");
                         break;
-                    default:
-                        Msg.ShowError($"AppCommand {value} not supported,\nplease contact support.");
+                    case AppCommand.APPCOMMAND_BROWSER_HOME:
+                        SetKey("HOMEPAGE");
+                        break;
+                    case AppCommand.APPCOMMAND_LAUNCH_MAIL:
+                        SetKey("MAIL");
+                        break;
+                    case AppCommand.APPCOMMAND_BROWSER_FAVORITES:
+                        SetKey("FAVORITES");
+                        break;
+                    case AppCommand.APPCOMMAND_BROWSER_SEARCH:
+                        SetKey("SEARCH");
+                        break;
+                    case AppCommand.APPCOMMAND_PRINT:
+                        SetKey("PRINT");
                         break;
                 }
             }
@@ -242,20 +256,58 @@ namespace mpvnet
 
         internal enum AppCommand
         {
-            MEDIA_CHANNEL_DOWN = 52,
-            MEDIA_CHANNEL_UP = 51,
-            MEDIA_FAST_FORWARD = 49,
-            MEDIA_NEXTTRACK = 11,
-            MEDIA_PAUSE = 47,
-            MEDIA_PLAY = 46,
-            MEDIA_PLAY_PAUSE = 14,
-            MEDIA_PREVIOUSTRACK = 12,
-            MEDIA_RECORD = 48,
-            MEDIA_REWIND = 50,
-            MEDIA_STOP = 13,
-            VolumeMute = 8,
-            VolumeDown = 9,
-            VolumeUp = 10
+            APPCOMMAND_BASS_BOOST = 20,
+            APPCOMMAND_BASS_DOWN = 19,
+            APPCOMMAND_BASS_UP = 21,
+            APPCOMMAND_BROWSER_BACKWARD = 1,
+            APPCOMMAND_BROWSER_FAVORITES = 6,
+            APPCOMMAND_BROWSER_FORWARD = 2,
+            APPCOMMAND_BROWSER_HOME = 7,
+            APPCOMMAND_BROWSER_REFRESH = 3,
+            APPCOMMAND_BROWSER_SEARCH = 5,
+            APPCOMMAND_BROWSER_STOP = 4,
+            APPCOMMAND_CLOSE = 31,
+            APPCOMMAND_COPY = 36,
+            APPCOMMAND_CORRECTION_LIST = 45,
+            APPCOMMAND_CUT = 37,
+            APPCOMMAND_DICTATE_OR_COMMAND_CONTROL_TOGGLE = 43,
+            APPCOMMAND_FIND = 28,
+            APPCOMMAND_FORWARD_MAIL = 40,
+            APPCOMMAND_HELP = 27,
+            APPCOMMAND_LAUNCH_APP1 = 17,
+            APPCOMMAND_LAUNCH_APP2 = 18,
+            APPCOMMAND_LAUNCH_MAIL = 15,
+            APPCOMMAND_LAUNCH_MEDIA_SELECT = 16,
+            APPCOMMAND_MEDIA_CHANNEL_DOWN = 52,
+            APPCOMMAND_MEDIA_CHANNEL_UP = 51,
+            APPCOMMAND_MEDIA_FAST_FORWARD = 49,
+            APPCOMMAND_MEDIA_NEXTTRACK = 11,
+            APPCOMMAND_MEDIA_PAUSE = 47,
+            APPCOMMAND_MEDIA_PLAY = 46,
+            APPCOMMAND_MEDIA_PLAY_PAUSE = 14,
+            APPCOMMAND_MEDIA_PREVIOUSTRACK = 12,
+            APPCOMMAND_MEDIA_RECORD = 48,
+            APPCOMMAND_MEDIA_REWIND = 50,
+            APPCOMMAND_MEDIA_STOP = 13,
+            APPCOMMAND_MIC_ON_OFF_TOGGLE = 44,
+            APPCOMMAND_MICROPHONE_VOLUME_DOWN = 25,
+            APPCOMMAND_MICROPHONE_VOLUME_MUTE = 24,
+            APPCOMMAND_MICROPHONE_VOLUME_UP = 26,
+            APPCOMMAND_NEW = 29,
+            APPCOMMAND_OPEN = 30,
+            APPCOMMAND_PASTE = 38,
+            APPCOMMAND_PRINT = 33,
+            APPCOMMAND_REDO = 35,
+            APPCOMMAND_REPLY_TO_MAIL = 39,
+            APPCOMMAND_SAVE = 32,
+            APPCOMMAND_SEND_MAIL = 41,
+            APPCOMMAND_SPELL_CHECK = 42,
+            APPCOMMAND_TREBLE_DOWN = 22,
+            APPCOMMAND_TREBLE_UP = 23,
+            APPCOMMAND_UNDO = 34,
+            APPCOMMAND_VOLUME_DOWN = 9,
+            APPCOMMAND_VOLUME_MUTE = 8,
+            APPCOMMAND_VOLUME_UP = 10
         }
 
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
