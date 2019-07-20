@@ -1,12 +1,11 @@
 ### 4.7.6.3
 
-- fix for mouse button back/forward causing freeze
-- fix for WM_APPCOMMAND not working but crashing in input editor learn window
 - on Win 7 the theme color was hardcoded to DarkSlateGrey because
   WPF was returning a bad color on Win 7, this was fixed by reading
   the theme color from the Registry on Win 7
 - new option dark-color was added to overwrite the OS theme color used in dark mode, find the option under 'General'
 - new option light-color was added to overwrite the OS theme color used in non dark mode, find the option under 'General'
+- various changes regarding input handling
 - it's now possible to use a custom folder as config folder
 
 ### 4.7.3
