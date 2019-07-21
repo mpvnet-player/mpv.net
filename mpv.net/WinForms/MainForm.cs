@@ -236,7 +236,7 @@ namespace mpvnet
             }
 
             Screen screen = Screen.FromControl(this);
-            int autoFitHeight = Convert.ToInt32(screen.Bounds.Height * mp.Autofit);
+            int autoFitHeight = Convert.ToInt32(screen.WorkingArea.Height * mp.Autofit);
 
             if (mp.VideoSize.Height == 0 || mp.VideoSize.Width == 0 ||
                 mp.VideoSize.Width / (float)mp.VideoSize.Height < 1.3)
@@ -258,10 +258,32 @@ namespace mpvnet
                 }
             }
 
-            if (height > screen.Bounds.Height * 0.9)
-                height = autoFitHeight;
-
             int width = Convert.ToInt32(height * size.Width / (double)size.Height);
+
+            if (height > screen.WorkingArea.Height * 0.9)
+            {
+                height = Convert.ToInt32(screen.WorkingArea.Height * 0.9);
+                width = Convert.ToInt32(height * size.Width / (double)size.Height);
+            }
+
+            if (width > screen.WorkingArea.Width * 0.9)
+            {
+                width = Convert.ToInt32(screen.WorkingArea.Width * 0.9);
+                height = Convert.ToInt32(width * size.Height / (double)size.Width);
+            }
+
+            if (height < screen.WorkingArea.Height * mp.AutofitSmaller)
+            {
+                height = Convert.ToInt32(screen.WorkingArea.Height * mp.AutofitSmaller);
+                width = Convert.ToInt32(height * size.Width / (double)size.Height);
+            }
+
+            if (height > screen.WorkingArea.Height * mp.AutofitLarger)
+            {
+                height = Convert.ToInt32(screen.WorkingArea.Height * mp.AutofitLarger);
+                width = Convert.ToInt32(height * size.Width / (double)size.Height);
+            }
+
             Point middlePos = new Point(Left + Width / 2, Top + Height / 2);
             var rect = new Native.RECT(new Rectangle(screen.Bounds.X, screen.Bounds.Y, width, height));
             NativeHelp.AddWindowBorders(Handle, ref rect);

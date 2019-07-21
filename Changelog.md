@@ -4,12 +4,21 @@
   WPF was returning a bad color on Win 7, this was fixed by reading
   the theme color from the Registry on Win 7. If the theme color
   is identical to the background color it's corrected
-- new option dark-color was added to overwrite the OS theme color used in dark mode, find the option under 'General'
-- new option light-color was added to overwrite the OS theme color used in non dark mode, find the option under 'General'
-- various changes regarding input handling
-- it's now possible to use a custom folder as config folder
-- slightly increased startup performance
-- start-threshold setting added. Threshold in milliseconds to wait for libmpv returning the video resolution before the window is shown, otherwise default dimensions are used as defined by autofit and start-size. Default: 1500
+- dark-color setting was added to overwrite the OS theme color used in dark mode,
+  find the setting on the General tab
+- light-color setting was added to overwrite the OS theme color used in non dark mode,
+  find the setting on the General tab
+- various changes regarding input handling, multi media keys and
+  mouse forward/backward were tested on my system
+- it's now possible to use a custom folder as config folder,
+  TaskDialog shows five options: 1. appdata mpv.net, 2. appdata mpv (shared with mpv),
+  3. portable_config, 4. startup, 5. custom
+- slightly increased startup performance, start-threshold setting added.
+  Threshold in milliseconds to wait for libmpv returning the video resolution
+  before the window is shown, otherwise default dimensions are used as defined
+  by autofit and start-size. Default: 1500
+- autofit-smaller setting added. Minimum window height in percent. Default: 40%
+- autofit-larger setting added. Maximum window height in percent. Default: 75%
 
 ### 4.7.3
 

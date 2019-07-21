@@ -81,6 +81,8 @@ namespace mpvnet
         public static int Edition { get; set; }
 
         public static float Autofit { get; set; } = 0.5f;
+        public static float AutofitSmaller { get; set; } = 0.4f;
+        public static float AutofitLarger { get; set; } = 0.75f;
 
         public static void Init()
         {
@@ -105,9 +107,16 @@ namespace mpvnet
             switch (name)
             {
                 case "autofit":
-                    if (value.Length == 3 && value.EndsWith("%"))
-                        if (int.TryParse(value.Substring(0, 2), out int result))
-                            Autofit = result / 100f;
+                    if (int.TryParse(value.Trim('%'), out int result))
+                        Autofit = result / 100f;
+                    break;
+                case "autofit-smaller":
+                    if (int.TryParse(value.Trim('%'), out int result2))
+                        AutofitSmaller = result2 / 100f;
+                    break;
+                case "autofit-larger":
+                    if (int.TryParse(value.Trim('%'), out int result3))
+                        AutofitLarger = result3 / 100f;
                     break;
                 case "fs":
                 case "fullscreen": Fullscreen = value == "yes"; break;

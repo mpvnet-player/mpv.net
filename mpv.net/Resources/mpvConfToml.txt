@@ -250,9 +250,18 @@ help = "Store screenshots in this directory. This path is joined with the filena
 
 [[settings]]
 name = "autofit"
-default = "50%"
 filter = "Screen"
-help = "Set the initial window size in percent. Please note that this setting is only partly implemented in mpv.net, accepted are only integer values with percent sign added. Default: 50%"
+help = "<int> Initial window height in percent. Default: 50%"
+
+[[settings]]
+name = "autofit-smaller"
+filter = "Screen"
+help = "<int> Minimum window height in percent. Default: 40%"
+
+[[settings]]
+name = "autofit-larger"
+filter = "Screen"
+help = "<int> Maximum window height in percent. Default: 75%"
 
 [[settings]]
 name = "keep-open-pause"
