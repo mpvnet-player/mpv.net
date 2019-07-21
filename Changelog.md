@@ -1,4 +1,4 @@
-### 4.7.6.3
+### 4.7.7
 
 - on Win 7 the theme color was hardcoded to DarkSlateGrey because
   WPF was returning a bad color on Win 7, this was fixed by reading
@@ -9,9 +9,9 @@
 - light-color setting was added to overwrite the OS theme color used in non dark mode,
   find the setting on the General tab
 - various changes regarding input handling, multi media keys and
-  mouse forward/backward were tested on my system
+  mouse forward/backward were successfully tested
 - it's now possible to use a custom folder as config folder,
-  TaskDialog shows five options: 1. appdata mpv.net, 2. appdata mpv (shared with mpv),
+  A TaskDialog shows five options: 1. appdata mpv.net, 2. appdata mpv (shared with mpv),
   3. portable_config, 4. startup, 5. custom
 - slightly increased startup performance, start-threshold setting added.
   Threshold in milliseconds to wait for libmpv returning the video resolution

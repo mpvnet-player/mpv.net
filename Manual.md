@@ -90,7 +90,6 @@
   + [Exit](#exit)
   + [Exit Watch Later](#exit-watch-later)
 * [Command Line Interface](#command-line-interface)
-* [Settings](#settings)
 
 ## About mpv.net
 
@@ -819,26 +818,3 @@ mpvnet implements a basic CLI to set mpv commands.
 Example:
 
 mpvnet --mute=yes <file|URL>
-
-## Settings
-
-mpv.net is able to share the settings with mpv.
-
-If a directory named portable_config next to the mpvnet.exe exists, all config will be loaded from this directory only.
-
-```Text
-<startup>\portable_config\
-```
-
-On first start if no portable config folder exists mpv.net asks which folder should be used as config folder.
-
-If no mpv.conf file exists mpv.net generates it with the following defaults:
-
-<https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/mpvConf.txt>
-
-The key bindings and the context menu definitions are stored in the input.conf file,
-if it's missing mpv.net generates it with the following defaults:
-
-<https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt>
-
-mpv.net supports almost all mpv settings and features, [limitations are listed in the wiki](https://github.com/stax76/mpv.net/wiki/Limitations).
