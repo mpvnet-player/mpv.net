@@ -172,6 +172,7 @@
  Play         cycle pause
  Pause        cycle pause
  PlayPause    cycle pause
+ MBTN_Mid     cycle pause
  Stop         stop
  Forward      seek  60
  Rewind       seek -60
