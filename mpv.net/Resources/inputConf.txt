@@ -131,6 +131,8 @@
  KP3 script-message rate-file 3     #menu: Extensions > Rating > 3stars
  KP4 script-message rate-file 4     #menu: Extensions > Rating > 4stars
  KP5 script-message rate-file 5     #menu: Extensions > Rating > 5stars
+ _   ignore                         #menu: Extensions > Rating > -
+ _   script-message rate-file about #menu: Extensions > Rating > About
 
  Ctrl+t set ontop yes                             #menu: View > On Top > Enable
  Ctrl+T set ontop no                              #menu: View > On Top > Disable

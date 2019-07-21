@@ -1,5 +1,4 @@
-﻿// this addon writes a rating to the filename of rated videos when mpv.net
-// shuts down. The input.conf defaults contain key bindings for this addon.
+﻿// sometimes the add-on don't work, it's containing a lot of trace code at the moment
 
 using System;
 using System.ComponentModel.Composition;
@@ -57,12 +56,17 @@ namespace RatingAddon
         //handles keys defined in input.conf
         void ClientMessage(string[] args)
         {
-            if (args[0] != "rate-file" || ! int.TryParse(args[1], out int rating))
-                return;
-            string path = mp.get_property_string("path");
-            if (!File.Exists(path)) return;
-            Dic[path] = rating;
-            mp.commandv("show-text", $"Rating: {rating}");
+            if (args[0] != "rate-file") return;
+
+            if (int.TryParse(args[1], out int rating))
+            {
+                string path = mp.get_property_string("path");
+                if (!File.Exists(path)) return;
+                Dic[path] = rating;
+                mp.commandv("show-text", $"Rating: {rating}");
+            }
+            else if (args[1] == "about")
+                Msg.Show("Rating Extension", "This extension writes a rating to the filename of rated videos when mpv.net shuts down.\n\nThe input.conf defaults contain key bindings for this addon to set ratings.");
         }
     }
 }
