@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace mpvnet
 {
@@ -33,12 +34,10 @@ namespace mpvnet
                 Instance = this;
                 Hwnd = Handle;
                 mp.Init();
-                AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
-                Application.ThreadException += Application_ThreadException;
+                AppDomain.CurrentDomain.UnhandledException += (sender, e) => Msg.ShowError(e.ExceptionObject.ToString());
+                Application.ThreadException += (sender, e) => Msg.ShowException(e.Exception);
                 Msg.SupportURL = "https://github.com/stax76/mpv.net#support";
-                WPF.WPF.Init();
-                System.Windows.Application.Current.ShutdownMode = System.Windows.ShutdownMode.OnExplicitShutdown;
-                Text += " " + Application.ProductVersion;
+                Text = "mpv.net " + Application.ProductVersion;
 
                 object recent = RegHelp.GetObject(App.RegPath, "Recent");
 
@@ -46,10 +45,6 @@ namespace mpvnet
                     RecentFiles = new List<string>(r);
                 else
                     RecentFiles = new List<string>();
-
-                var wpfColor = WPF.WPF.ThemeColor;
-                Color color = Color.FromArgb(wpfColor.A, wpfColor.R, wpfColor.G, wpfColor.B);
-                ToolStripRendererEx.InitColors(color, App.IsDarkMode);
 
                 ContextMenu = new ContextMenuStripEx(components);
                 ContextMenu.Opened += ContextMenu_Opened;
@@ -80,7 +75,7 @@ namespace mpvnet
                 mp.VideoSizeChanged += VideoSizeChanged;
                 mp.FileLoaded += FileLoaded;
                 mp.Idle += Idle;
-                mp.VideoSizeAutoResetEvent.WaitOne(1500);
+                mp.VideoSizeAutoResetEvent.WaitOne(App.StartThreshold);
                 if (Height < FontHeight * 4) SetFormPosAndSize();
                 mp.observe_property_bool("fullscreen", PropChangeFullscreen);
                 mp.observe_property_bool("ontop", PropChangeOnTop);
@@ -359,16 +354,6 @@ namespace mpvnet
             if (RecentFiles.Count > 15) RecentFiles.RemoveAt(15);
         }
 
-        void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
-        {
-            Msg.ShowException(e.Exception);
-        }
-
-        void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
-        {
-           Msg.ShowError(e.ExceptionObject.ToString());
-        }
-
         protected override CreateParams CreateParams {
             get {
                 CreateParams cp = base.CreateParams;
@@ -517,8 +502,13 @@ namespace mpvnet
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
+            var wpfColor = WPF.WPF.ThemeColor;
+            Color color = Color.FromArgb(wpfColor.A, wpfColor.R, wpfColor.G, wpfColor.B);
+            ToolStripRendererEx.InitColors(color, App.IsDarkMode);
             BuildMenu();
             ContextMenuStrip = ContextMenu;
+            WPF.WPF.Init();
+            System.Windows.Application.Current.ShutdownMode = System.Windows.ShutdownMode.OnExplicitShutdown;
             IgnoreDpiChanged = false;
             CheckClipboardForURL();
             Cursor.Position = new Point(Cursor.Position.X + 1, Cursor.Position.Y);

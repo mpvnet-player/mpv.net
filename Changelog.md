@@ -2,11 +2,14 @@
 
 - on Win 7 the theme color was hardcoded to DarkSlateGrey because
   WPF was returning a bad color on Win 7, this was fixed by reading
-  the theme color from the Registry on Win 7
+  the theme color from the Registry on Win 7. If the theme color
+  is identical to the background color it's corrected
 - new option dark-color was added to overwrite the OS theme color used in dark mode, find the option under 'General'
 - new option light-color was added to overwrite the OS theme color used in non dark mode, find the option under 'General'
 - various changes regarding input handling
 - it's now possible to use a custom folder as config folder
+- slightly increased startup performance
+- start-threshold setting added. Threshold in milliseconds to wait for libmpv returning the video resolution before the window is shown, otherwise default dimensions are used as defined by autofit and start-size. Default: 1500
 
 ### 4.7.3
 

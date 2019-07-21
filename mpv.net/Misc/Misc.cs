@@ -35,6 +35,8 @@ namespace mpvnet
         public static bool RememberPosition { get; set; }
         public static bool DebugMode { get; set; }
 
+        public static int StartThreshold { get; set; } = 1500;
+
         public static bool IsDarkMode {
             get => (DarkMode == "system" && Sys.IsDarkTheme) || DarkMode == "always";
         }
@@ -93,6 +95,10 @@ namespace mpvnet
                 case "light-color": LightColor = value.Trim('\'', '"'); break;
                 case "url-whitelist":
                     UrlWhitelist = value.Split(' ', ',', ';');
+                    break;
+                case "start-threshold":
+                    int.TryParse(value, out int result);
+                    StartThreshold = result;
                     break;
             }
         }

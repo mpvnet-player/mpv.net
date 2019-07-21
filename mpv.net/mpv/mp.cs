@@ -82,8 +82,6 @@ namespace mpvnet
 
         public static float Autofit { get; set; } = 0.5f;
 
-        static string LastPlaybackRestartFile;
-
         public static void Init()
         {
             LoadLibrary("mpv-1.dll");
@@ -164,7 +162,8 @@ namespace mpvnet
                     if (!Directory.Exists(_ConfigFolder))
                         Directory.CreateDirectory(_ConfigFolder);
 
-                    RegHelp.SetObject(App.RegPath, "ConfigFolder", _ConfigFolder);
+                    if (!_ConfigFolder.Contains("portable_config"))
+                        RegHelp.SetObject(App.RegPath, "ConfigFolder", _ConfigFolder);
 
                     if (!File.Exists(_ConfigFolder + "\\input.conf"))
                         File.WriteAllText(_ConfigFolder + "\\input.conf", Properties.Resources.inputConf);
@@ -270,6 +269,16 @@ namespace mpvnet
                         case mpv_event_id.MPV_EVENT_FILE_LOADED:
                             HideLogo();
                             FileLoaded?.Invoke();
+                            Size vidSize = new Size(get_property_int("width"), get_property_int("height"));
+                            if (vidSize.Width == 0 || vidSize.Height == 0)
+                                vidSize = new Size(1, 1);
+                            if (VideoSize != vidSize)
+                            {
+                                VideoSize = vidSize;
+                                VideoSizeChanged?.Invoke();
+                            }
+                            VideoSizeAutoResetEvent.Set();
+                            Task.Run(new Action(() => ReadMetaData()));
                             WriteHistory(get_property_string("path"));
                             break;
                         case mpv_event_id.MPV_EVENT_TRACKS_CHANGED:
@@ -334,21 +343,6 @@ namespace mpvnet
                             break;
                         case mpv_event_id.MPV_EVENT_PLAYBACK_RESTART:
                             PlaybackRestart?.Invoke();
-                            string path = get_property_string("path");
-                            if (LastPlaybackRestartFile != path)
-                            {
-                                Size vidSize = new Size(get_property_int("dwidth"), get_property_int("dheight"));
-                                if (vidSize.Width == 0 || vidSize.Height == 0)
-                                    vidSize = new Size(1, 1);
-                                if (VideoSize != vidSize)
-                                {
-                                    VideoSize = vidSize;
-                                    VideoSizeChanged?.Invoke();
-                                }
-                                VideoSizeAutoResetEvent.Set();
-                                Task.Run(new Action(() => ReadMetaData()));
-                                LastPlaybackRestartFile = path;
-                            }
                             break;
                         case mpv_event_id.MPV_EVENT_CHAPTER_CHANGE:
                             ChapterChange?.Invoke();
@@ -553,7 +547,7 @@ namespace mpvnet
 
             Load(files.ToArray(), App.ProcessInstance != "queue", Control.ModifierKeys.HasFlag(Keys.Control));
 
-            if (files.Count == 0)
+            if (files.Count == 0 || files[0].Contains("://"))
             {
                 VideoSizeAutoResetEvent.Set();
                 VideoSizeChanged?.Invoke();
@@ -605,6 +599,7 @@ namespace mpvnet
 
             if (string.IsNullOrEmpty(get_property_string("path")))
                 set_property_int("playlist-pos", 0);
+
             if (loadFolder && !append) Task.Run(() => LoadFolder()); // user reported race condition
         }
 
@@ -692,8 +687,8 @@ namespace mpvnet
         {
             if (MainForm.Instance is null) return;
             Rectangle cr = MainForm.Instance.ClientRectangle;
-            if (cr.Width == 0 || cr.Height == 0) return;
             int len = cr.Height / 5;
+            if (len == 0) return;
 
             using (Bitmap b = new Bitmap(len, len))
             {

@@ -50,14 +50,15 @@ namespace WPF
                         if (Environment.OSVersion.Version.Major < 10)
                         {
                             int argb = Convert.ToInt32(Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", 0));
-                            if (argb == 0) System.Drawing.Color.Blue.ToArgb();
-                            var c = System.Drawing.Color.FromArgb(argb);
-                            color = Color.FromArgb(c.A, c.R, c.G, c.B);
+                            var wfc = System.Drawing.Color.FromArgb(argb);
+                            color = Color.FromArgb(wfc.A, wfc.R, wfc.G, wfc.B);
                         }
                         else
                             color = SystemParameters.WindowGlassColor;
                     }
 
+                    if (App.IsDarkMode && color == Colors.Black) color = Colors.Orange;
+                    if (!App.IsDarkMode && color == Colors.White) color = Colors.Orange;
                     _ThemeColor = color.Value;
                     WasThemeColorSet = true;
                 }

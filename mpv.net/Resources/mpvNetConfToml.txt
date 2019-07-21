@@ -2,7 +2,7 @@
 name = "dark-mode"
 default = "always"
 filter = "General"
-help = "Enables a dark theme."
+help = "Enables a dark theme. (mpv.net specific setting)"
 options = [{ name = "always" },
            { name = "system" , help = "Available on Windows 10 or higher" },
 		   { name = "never" }]
@@ -11,25 +11,25 @@ options = [{ name = "always" },
 name = "dark-color"
 type = "color"
 filter = "General"
-help = "Theme color used in dark-mode. Leave empty to use OS theme."
+help = "Theme color used in dark-mode. Leave empty to use OS theme. (mpv.net specific setting)"
 
 [[settings]]
 name = "light-color"
 type = "color"
 filter = "General"
-help = "Theme color used when dark-mode is disabled. Leave empty to use OS theme"
+help = "Theme color used when dark-mode is disabled. Leave empty to use OS theme. (mpv.net specific setting)"
 
 [[settings]]
 name = "url-whitelist"
 filter = "General"
 type = "string"
-help = "mpv.net specific whitelist setting to monitor the clipboard for URLs to play.\n\nDefault: tube vimeo ard zdf"
+help = "Whitelist setting to monitor the clipboard for URLs to play. (mpv.net specific setting)\n\nDefault: tube vimeo ard zdf"
 
 [[settings]]
 name = "process-instance"
 default = "single"
 filter = "General"
-help = "mpv.net specific setting that defines if more then one mpv.net process is allowed.\n\nTip: Whenever the control key is pressed when files or URLs are opened, the playlist is not cleared but the files or URLs are appended to the playlist. This not only works on process startup but in all mpv.net features that open files."
+help = "Defines if more then one mpv.net process is allowed. (mpv.net specific setting)\n\nTip: Whenever the control key is pressed when files or URLs are opened, the playlist is not cleared but the files or URLs are appended to the playlist. This not only works on process startup but in all mpv.net features that open files."
 options = [{ name = "multi",  help = "Create a new process everytime the shell starts mpv.net" },
            { name = "single", help = "Force a single process everytime the shell starts mpv.net" },
 		   { name = "queue",  help = "Force a single process and add files to playlist" }]
@@ -38,7 +38,7 @@ options = [{ name = "multi",  help = "Create a new process everytime the shell s
 name = "debug-mode"
 default = "no"
 filter = "General"
-help = "mpv.net specific debugging setting, enable this only when a developer asks for it."
+help = "Enable this only when a developer asks for it. (mpv.net specific setting)"
 options = [{ name = "yes" },
            { name = "no" }]
 
@@ -46,14 +46,19 @@ options = [{ name = "yes" },
 name = "start-size"
 default = "previous"
 filter = "Screen"
-help = "mpv.net specific setting to remember the window height in the current session, otherwise the video's native resolution is used."
+help = "Setting to remember the window height in the current session, otherwise the video's native resolution is used. (mpv.net specific setting)"
 options = [{ name = "video", help = "Window size is set to native video resolution" },
            { name = "previous", help = "Window size is remembered but only from the current session" }]
+
+[[settings]]
+name = "start-threshold"
+filter = "Screen"
+help = "Threshold in milliseconds to wait for libmpv returning the video resolution before the window is shown, otherwise default dimensions are used as defined by autofit and start-size. (mpv.net specific setting) Default: 1500"
 
 [[settings]]
 name = "remember-position"
 default = "no"
 filter = "Screen"
-help = "mpv.net specific setting to save the window position on exit."
+help = "Setting to save the window position on exit. (mpv.net specific setting)"
 options = [{ name = "yes" },
            { name = "no" }]
