@@ -96,7 +96,8 @@ namespace mpvnet.Properties {
         ///keep-open-pause = no
         ///osd-playing-msg = &apos;${filename}&apos;
         ///screenshot-directory = &apos;~~desktop/&apos;
-        ///input-default-bindings = no.
+        ///input-default-bindings = no
+        ///script-opts=osc-scalewindowed=1.5.
         /// </summary>
         internal static string mpvConf {
             get {
@@ -134,23 +135,22 @@ namespace mpvnet.Properties {
         ///   Looks up a localized string similar to [[settings]]
         ///name = &quot;dark-mode&quot;
         ///default = &quot;always&quot;
-        ///filter = &quot;mpv.net&quot;
-        ///help = &quot;Enables a dark theme.&quot;
+        ///filter = &quot;General&quot;
+        ///help = &quot;Enables a dark theme. (mpv.net specific setting)&quot;
         ///options = [{ name = &quot;always&quot; },
         ///           { name = &quot;system&quot; , help = &quot;Available on Windows 10 or higher&quot; },
         ///		   { name = &quot;never&quot; }]
         ///
         ///[[settings]]
-        ///name = &quot;url-whitelist&quot;
-        ///filter = &quot;mpv.net&quot;
-        ///type = &quot;string&quot;
-        ///help = &quot;Whitelist to monitor the clipboard for URLs to play.\n\nDefault: tube vimeo ard zdf&quot;
+        ///name = &quot;dark-color&quot;
+        ///type = &quot;color&quot;
+        ///filter = &quot;General&quot;
+        ///help = &quot;Theme color used in dark-mode. Leave empty to use OS theme. (mpv.net specific setting)&quot;
         ///
         ///[[settings]]
-        ///name = &quot;process-instance&quot;
-        ///default = &quot;single&quot;
-        ///filter = &quot;mpv.net&quot;
-        ///help = &quot;Defines [rest of string was truncated]&quot;;.
+        ///name = &quot;light-color&quot;
+        ///type = &quot;color&quot;
+        ///filter = &quot;General&quot; [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string mpvNetConfToml {
             get {

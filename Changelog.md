@@ -1,3 +1,7 @@
+###
+
+- icon was modified
+
 ### 4.7.7
 
 - on Win 7 the theme color was hardcoded to DarkSlateGrey because
