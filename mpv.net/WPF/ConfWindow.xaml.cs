@@ -17,10 +17,9 @@ namespace mpvnet
     {
         private List<SettingBase> SettingsDefinitions = Settings.LoadSettings(Properties.Resources.mpvConfToml);
         private List<SettingBase> NetSettingsDefinitions = Settings.LoadSettings(Properties.Resources.mpvNetConfToml);
-        private Dictionary<string, Dictionary<string, string>> Comments = new Dictionary<string, Dictionary<string, string>>();
-
         public ObservableCollection<string> FilterStrings { get; } = new ObservableCollection<string>();
-
+        string InitialContent;
+        
         public ConfWindow()
         {
             InitializeComponent();
@@ -28,6 +27,8 @@ namespace mpvnet
             SearchControl.SearchTextBox.TextChanged += SearchTextBox_TextChanged;
             LoadSettings(SettingsDefinitions, Conf);
             LoadSettings(NetSettingsDefinitions, NetConf);
+            InitialContent = GetContent(mp.ConfPath, Conf, SettingsDefinitions) +
+                             GetContent(App.ConfPath, NetConf, NetSettingsDefinitions);
             SearchControl.Text = RegHelp.GetString(App.RegPath, "config editor search");
 
             if (App.IsDarkMode)
@@ -59,7 +60,6 @@ namespace mpvnet
                     if (setting.Name == pair.Key)
                     {
                         setting.Value = pair.Value.Trim('\'', '"');
-                        setting.StartValue = pair.Value.Trim('\'', '"');
                         continue;
                     }
                 }
@@ -93,7 +93,7 @@ namespace mpvnet
 
         public Dictionary<string, string> NetConf {
             get {
-                if (_NetConf == null) _NetConf = LoadConf(App.ConfFilePath);
+                if (_NetConf == null) _NetConf = LoadConf(App.ConfPath);
                 return _NetConf;
             }
         }
@@ -101,7 +101,6 @@ namespace mpvnet
         private Dictionary<string, string> LoadConf(string filePath)
         {
             Dictionary<string, string> conf = new Dictionary<string, string>();
-            Comments[filePath] = new Dictionary<string, string>();
 
             if (File.Exists(filePath))
             {
@@ -110,15 +109,9 @@ namespace mpvnet
                     if (i.Contains("="))
                     {
                         int pos = i.IndexOf("=");
-                        string left = i.Substring(0, pos).Replace(" ", "").ToLower();
+                        string left = i.Substring(0, pos).Trim().ToLower();
                         string right = i.Substring(pos + 1).Trim();
-
-                        if (left.StartsWith("#"))
-                        {
-                            Comments[filePath][left.TrimStart('#')] = right;
-                            continue;
-                        }
-
+                        if (left.StartsWith("#")) continue;
                         if (left == "fs") left = "fullscreen";
                         if (left == "loop") left = "loop-file";
                         conf[left] = right;
@@ -131,39 +124,19 @@ namespace mpvnet
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
-            WriteToDisk();
+            string content = GetContent(mp.ConfPath, Conf, SettingsDefinitions);
+            string netContent = GetContent(App.ConfPath, NetConf, NetSettingsDefinitions);
+            if (InitialContent == content + netContent) return;
+            string header = "\r\n# manual: https://mpv.io/manual/master/\r\n\r\n# defaults: https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/mpvConf.txt\r\n\r\n";
+            File.WriteAllText(mp.ConfPath, header + content);
+            File.WriteAllText(App.ConfPath, netContent);
+            Msg.Show("Changes will be available on next mpv.net startup.");            
             RegHelp.SetObject(App.RegPath, "config editor search", SearchControl.Text);
         }
 
-        void WriteToDisk()
-        {
-            bool isDirty = false;
-
-            foreach (SettingBase i in SettingsDefinitions)
-                if (i.StartValue != i.Value)
-                    isDirty = true;
-
-            foreach (SettingBase i in NetSettingsDefinitions)
-                if (i.StartValue != i.Value)
-                    isDirty = true;
-
-            if (!isDirty)
-                return;
-
-            WriteToDisk(mp.ConfPath, Conf, SettingsDefinitions);
-            WriteToDisk(App.ConfFilePath, NetConf, NetSettingsDefinitions);
-
-            Msg.Show("Changes will be available on next mpv.net startup.");
-        }
-
-        void WriteToDisk(string filePath,
-                         Dictionary<string, string> confSettings,
-                         List<SettingBase> settings)
+        string GetContent(string filePath, Dictionary<string, string> confSettings, List<SettingBase> settings)
         {
             string content = "";
-
-            foreach (var i in Comments[filePath])
-                content += $"#{i.Key} = {i.Value}\r\n";
 
             foreach (SettingBase setting in settings)
             {
@@ -186,7 +159,7 @@ namespace mpvnet
             foreach (var i in confSettings)
                 content = content + $"{i.Key} = {i.Value}\r\n";
 
-            File.WriteAllText(filePath, content);
+            return content;
         }
 
         private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -234,6 +207,11 @@ namespace mpvnet
         private void OpenSettingsTextBlock_MouseUp(object sender, MouseButtonEventArgs e)
         {
             Process.Start(Path.GetDirectoryName(mp.ConfPath));
+        }
+
+        private void PreviewTextBlock_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            Msg.Show("mpv.conf Preview", GetContent(mp.ConfPath, Conf, SettingsDefinitions));
         }
 
         private void ShowManualTextBlock_MouseUp(object sender, MouseButtonEventArgs e)

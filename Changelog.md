@@ -6,6 +6,7 @@
   screenshot-format, screenshot-tag-colorspace, screenshot-high-bit-depth,
   screenshot-jpeg-source-chroma, screenshot-template, screenshot-jpeg-quality,
   screenshot-png-compression, screenshot-png-filter 
+- mpv.conf preview feature added to config editor, it previews the mpv.conf content
 
 ### 4.7.7
 

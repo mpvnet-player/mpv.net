@@ -19,7 +19,7 @@ namespace mpvnet
     public class App
     {
         public static string RegPath { get; } = @"HKCU\Software\" + Application.ProductName;
-        public static string ConfFilePath { get; } = mp.ConfigFolder + "\\mpvnet.conf";
+        public static string ConfPath { get; } = mp.ConfigFolder + "\\mpvnet.conf";
         public static string DarkMode { get; set; } = "always";
         public static string ProcessInstance { get; set; } = "single";
         public static string DarkColor { get; set; }
@@ -73,8 +73,8 @@ namespace mpvnet
                 {
                     _Conf = new Dictionary<string, string>();
 
-                    if (File.Exists(ConfFilePath))
-                        foreach (string i in File.ReadAllLines(ConfFilePath))
+                    if (File.Exists(ConfPath))
+                        foreach (string i in File.ReadAllLines(ConfPath))
                             if (i.Contains("=") && !i.StartsWith("#"))
                                 _Conf[i.Substring(0, i.IndexOf("=")).Trim()] = i.Substring(i.IndexOf("=") + 1).Trim();
                 }
