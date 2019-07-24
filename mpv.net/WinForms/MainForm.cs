@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Diagnostics;
-using System.Threading.Tasks;
 
 namespace mpvnet
 {
@@ -22,7 +21,7 @@ namespace mpvnet
 
         Point  LastCursorPosChanged;
         int    LastCursorChangedTickCount;
-        bool   IgnoreDpiChanged = true;
+        bool   WasShown;
         List<string> RecentFiles;
 
         public MainForm()
@@ -422,7 +421,7 @@ namespace mpvnet
                     }
                     break;
                 case 0x02E0: // WM_DPICHANGED
-                    if (IgnoreDpiChanged) break;
+                    if (!WasShown) break;
                     var r2 = Marshal.PtrToStructure<Native.RECT>(m.LParam);
                     Native.SetWindowPos(Handle, IntPtr.Zero, r2.Left, r2.Top, r2.Width, r2.Height, 0);
                     break;
@@ -531,9 +530,9 @@ namespace mpvnet
             ContextMenuStrip = ContextMenu;
             WPF.WPF.Init();
             System.Windows.Application.Current.ShutdownMode = System.Windows.ShutdownMode.OnExplicitShutdown;
-            IgnoreDpiChanged = false;
             CheckClipboardForURL();
             Cursor.Position = new Point(Cursor.Position.X + 1, Cursor.Position.Y);
+            WasShown = true;
         }
 
         protected override void OnActivated(EventArgs e)

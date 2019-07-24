@@ -16,9 +16,9 @@ namespace DynamicGUI
                 HelpTextBox.Visibility = Visibility.Collapsed;
             HelpTextBox.Text = optionSetting.Help;
             ItemsControl.ItemsSource = optionSetting.Options;
-            if (string.IsNullOrEmpty(optionSetting.HelpURL))
+            if (string.IsNullOrEmpty(optionSetting.URL))
                 LinkTextBlock.Visibility = Visibility.Collapsed;
-            Link.SetURL(optionSetting.HelpURL);
+            Link.SetURL(optionSetting.URL);
         }
 
         private string _SearchableText;

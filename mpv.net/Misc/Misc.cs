@@ -25,9 +25,9 @@ namespace mpvnet
         public static string DarkColor { get; set; }
         public static string LightColor { get; set; }
 
-        public static string[] VideoTypes { get; } = "mkv mp4 mpg avi mov webm vob wmv flv avs 264 h264 asf webm mpeg mpv y4m avc hevc 265 h265 m2v m2ts vpy mts m4v".Split(' ');
+        public static string[] VideoTypes { get; } = "264 265 asf avc avi avs flv h264 h265 hevc m2ts m2v m4v mkv mov mp4 mpeg mpg mpv mts ts vob vpy webm webm wmv y4m".Split(' ');
         public static string[] AudioTypes { get; } = "mp3 mp2 ac3 ogg opus flac wav w64 m4a dts dtsma dtshr dtshd eac3 thd thd+ac3 mka aac mpa".Split(' ');
-        public static string[] ImageTypes { get; } = "jpg bmp gif".Split(' ');
+        public static string[] ImageTypes { get; } = "jpg bmp gif png".Split(' ');
         public static string[] SubtitleTypes { get; } = "srt ass idx sup ttxt ssa smi".Split(' ');
         public static string[] UrlWhitelist { get; set; } = { "tube", "vimeo", "ard", "zdf" };
 

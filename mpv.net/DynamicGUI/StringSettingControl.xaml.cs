@@ -23,8 +23,8 @@ namespace DynamicGUI
                 ValueTextBox.Width = StringSetting.Width;
             if (StringSetting.Type != "folder" && StringSetting.Type != "color")
                 Button.Visibility = Visibility.Hidden;
-            Link.SetURL(StringSetting.HelpURL);
-            if (string.IsNullOrEmpty(stringSetting.HelpURL))
+            Link.SetURL(StringSetting.URL);
+            if (string.IsNullOrEmpty(stringSetting.URL))
                 LinkTextBlock.Visibility = Visibility.Collapsed;
         }
 
