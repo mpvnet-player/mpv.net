@@ -1,11 +1,11 @@
 ###
 
-- changed icon design
+- [changed icon design](https://github.com/stax76/mpv.net/blob/master/img/mpvnet.png)
 - libmpv was updated to shinchiro 2019-07-14
 - new or improved config editor settings: screenshot-directory,
   screenshot-format, screenshot-tag-colorspace, screenshot-high-bit-depth,
   screenshot-jpeg-source-chroma, screenshot-template, screenshot-jpeg-quality,
-  screenshot-png-compression, screenshot-png-filter 
+  screenshot-png-compression, screenshot-png-filter
 - mpv.conf preview feature added to config editor, it previews the mpv.conf content
 
 ### 4.7.7
