@@ -83,7 +83,7 @@
   mpv.net not appearing in the 'Open with' menu of the Windows File Explorer,
   thanks to 44vince44 for pointing this out!!!
 - new Python and C# script examples were added to the wiki and the scripting and
-  add-on documentation was improved
+  extension documentation was improved
 - invalid command line arguments were ignored, now an error message is shown
 - a description on how to start mpv.net from Google Chrome was added to the
   manual, it's useful to play videos from sites like YouTube, find the

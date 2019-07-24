@@ -56,8 +56,9 @@ namespace mpvnet
 
         public static IntPtr Handle { get; set; }
         public static IntPtr WindowHandle { get; set; }
-        public static Addon Addon { get; set; }
+        public static Extension Extension { get; set; }
         public static bool IsLogoVisible { set; get; }
+        public static bool IsQuitNeeded { set; get; } = true;
         public static List<KeyValuePair<string, Action<bool>>> BoolPropChangeActions { get; set; } = new List<KeyValuePair<string, Action<bool>>>();
         public static List<KeyValuePair<string, Action<int>>> IntPropChangeActions { get; set; } = new List<KeyValuePair<string, Action<int>>>();
         public static List<KeyValuePair<string, Action<string>>> StringPropChangeActions { get; set; } = new List<KeyValuePair<string, Action<string>>>();
@@ -98,7 +99,7 @@ namespace mpvnet
             ShowLogo();
             ProcessCommandLine();
             Task.Run(() => { LoadScripts(); });
-            Task.Run(() => { Addon = new Addon(); });
+            Task.Run(() => { Extension = new Extension(); });
             Task.Run(() => { EventLoop(); });
         }
 
@@ -249,9 +250,8 @@ namespace mpvnet
                     switch (evt.event_id)
                     {
                         case mpv_event_id.MPV_EVENT_SHUTDOWN:
-                            if (App.DebugMode) Trace.WriteLine("before Shutdown.Invoke");
+                            IsQuitNeeded = false;
                             Shutdown?.Invoke();
-                            if (App.DebugMode) Trace.WriteLine("after Shutdown.Invoke");
                             WriteHistory(null);
                             ShutdownAutoResetEvent.Set();
                             return;

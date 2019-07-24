@@ -8,11 +8,11 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("CSScriptAddon")>
+<Assembly: AssemblyTitle("CSScriptExtension")>
 <Assembly: AssemblyDescription("")>
 <Assembly: AssemblyCompany("")>
-<Assembly: AssemblyProduct("CSScriptAddon")>
-<Assembly: AssemblyCopyright("Copyright ©  2019")>
+<Assembly: AssemblyProduct("CSScriptExtension")>
+<Assembly: AssemblyCopyright("Copyright © 2017-2019 Frank Skare (stax76)")>
 <Assembly: AssemblyTrademark("")>
 
 <Assembly: ComVisible(False)>

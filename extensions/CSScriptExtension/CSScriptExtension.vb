@@ -1,4 +1,4 @@
-﻿'this addon implements the C# scripting feature of mpv.net,
+﻿'this extension implements the C# scripting feature of mpv.net,
 'it is based on CS-Script: https://www.cs-script.net/
 
 Imports System.ComponentModel.Composition
@@ -9,9 +9,9 @@ Imports mpvnet
 
 Imports CSScriptLibrary
 
-<Export(GetType(IAddon))>
-Public Class CSScriptAddon
-    Implements IAddon
+<Export(GetType(IExtension))>
+Public Class CSScriptExtension
+    Implements IExtension
 
     Sub New()
         Dim scriptFiles As New List(Of String)

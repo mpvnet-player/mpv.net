@@ -560,8 +560,12 @@ namespace mpvnet
             }
 
             RegHelp.SetObject(App.RegPath, "Recent", RecentFiles.ToArray());
-            mp.commandv("quit");
-            mp.ShutdownAutoResetEvent.WaitOne(3000);
+
+            if (mp.IsQuitNeeded)
+                mp.commandv("quit");
+
+            if (!mp.ShutdownAutoResetEvent.WaitOne(10000))
+                Msg.ShowError("Shutdown thread failed to complete within 10 seconds.");
         }
 
         protected override void OnMouseDown(MouseEventArgs e)

@@ -37,7 +37,7 @@ Table of contents
 - [Context Menu](#context-menu)
 - [Settings](#settings)
 - [Scripting](#scripting)
-- [Add-ons](#add-ons)
+- [Extensions](#extensions)
 - [Architecture](#architecture)
 - [Support](#support)
 - [Links](#links)
@@ -55,7 +55,7 @@ Table of contents
 - Configuration files that are easy to read and edit
 - Searchable command palette to quickly launch commands and look for keys ([Screenshot](#command-palette-screenshot))
 - Modern WPF based graphical user interface with dark mode ([Screenshot](#config-editor-screenshot))
-- Addon/extension API for .NET languages
+- Extension API for .NET languages
 - Scripting API for Python, C#, Lua, JavaScript and PowerShell ([Wiki](https://github.com/stax76/mpv.net/wiki/Scripting))
 - Language agnostic JSON IPC to control the player with a external programs
 - On Screen Controler (OSC, play control buttons)
@@ -167,9 +167,9 @@ mpv.net supports almost all mpv settings and features,
 
 [Scripting wiki page](https://github.com/stax76/mpv.net/wiki/Scripting)
 
-### Add-ons
+### Extensions
 
-[Add-on wiki page](https://github.com/stax76/mpv.net/wiki/Addons)
+[Extensions wiki page](https://github.com/stax76/mpv.net/wiki/Extensions)
 
 ### Architecture
 
@@ -183,7 +183,7 @@ was difficult to build, the hard parts are totally covered by libmpv.
 mpv.net is written in C# 7 and runs on .NET 4.7, I've not yet decided
 if I will port it to C# 8 and .NET 5 once available.
 
-The Add-on implementation is based on the [Managed Extensibility Framework](https://docs.microsoft.com/en-us/dotnet/framework/mef/).
+The Extension implementation is based on the [Managed Extensibility Framework](https://docs.microsoft.com/en-us/dotnet/framework/mef/).
 
 There are no specific extension or scripting interfaces but instead everyting
 is accessible for .NET compatible languages (C#, VB.NET, F#, Python, PowerShell),

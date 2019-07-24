@@ -57,6 +57,7 @@ namespace mpvnet
                     if (File.Exists(filePath)) File.Delete(filePath);
                     Trace.Listeners.Add(new TextWriterTraceListener(filePath));
                     Trace.AutoFlush = true;
+                    //if (App.DebugMode) Trace.WriteLine("");
                 }
                 catch (Exception e)
                 {

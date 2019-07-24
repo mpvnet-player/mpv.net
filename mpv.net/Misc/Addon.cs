@@ -7,30 +7,30 @@ using System.Windows.Forms;
 
 namespace mpvnet
 {
-    public class Addon
+    public class Extension
     {
         [ImportMany]
-        public IEnumerable<IAddon> Addons = null;
+        public IEnumerable<IExtension> Extensions = null;
 
         readonly CompositionContainer CompositionContainer;
 
-        public Addon()
+        public Extension()
         {
             try
             {
                 AggregateCatalog catalog = new AggregateCatalog();
 
-                string dir = Application.StartupPath + "\\Addons";
+                string dir = Application.StartupPath + "\\Extensions";
 
                 if (Directory.Exists(dir))
                     foreach (string i in Directory.GetDirectories(dir))
-                        catalog.Catalogs.Add(new DirectoryCatalog(i, "*Addon.dll"));
+                        catalog.Catalogs.Add(new DirectoryCatalog(i, "*Extensions.dll"));
 
-                dir = mp.ConfigFolder + "\\Addons";
+                dir = mp.ConfigFolder + "\\Extensions";
 
                 if (Directory.Exists(dir))
                     foreach (string i in Directory.GetDirectories(dir))
-                        catalog.Catalogs.Add(new DirectoryCatalog(i, "*Addon.dll"));
+                        catalog.Catalogs.Add(new DirectoryCatalog(i, "*Extension.dll"));
 
                 if (catalog.Catalogs.Count > 0)
                 {
@@ -45,7 +45,7 @@ namespace mpvnet
         }
     }
 
-    public interface IAddon
+    public interface IExtension
     {
     }
 }

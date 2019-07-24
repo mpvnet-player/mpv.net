@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{71808A87-8B1C-4DF8-957C-D79C3B164CCA}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>CSScriptAddon</RootNamespace>
-    <AssemblyName>CSScriptAddon</AssemblyName>
+    <RootNamespace>CSScriptExtension</RootNamespace>
+    <AssemblyName>CSScriptExtension</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
@@ -51,7 +51,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\..\mpv.net\bin\x86\Addons\CSScriptAddon\</OutputPath>
+    <OutputPath>..\..\mpv.net\bin\x86\Extensions\CSScriptExtension\</OutputPath>
     <NoWarn>42105,42106,42107,42353,42354,42355</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
@@ -60,7 +60,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\mpv.net\bin\x86\Addons\CSScriptAddon\</OutputPath>
+    <OutputPath>..\..\mpv.net\bin\x86\Extensions\CSScriptExtension\</OutputPath>
     <Optimize>true</Optimize>
     <NoWarn>42105,42106,42107,42353,42354,42355</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -72,7 +72,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\..\mpv.net\bin\x64\Addons\CSScriptAddon\</OutputPath>
+    <OutputPath>..\..\mpv.net\bin\x64\Extensions\CSScriptExtension\</OutputPath>
     <NoWarn>42105,42106,42107,42353,42354,42355</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
@@ -81,7 +81,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\mpv.net\bin\x64\Addons\CSScriptAddon\</OutputPath>
+    <OutputPath>..\..\mpv.net\bin\x64\Extensions\CSScriptExtension\</OutputPath>
     <Optimize>true</Optimize>
     <NoWarn>42105,42106,42107,42353,42354,42355</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -116,7 +116,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CSScriptAddon.vb" />
+    <Compile Include="CSScriptExtension.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

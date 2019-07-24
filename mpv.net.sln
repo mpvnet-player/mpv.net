@@ -5,11 +5,9 @@ VisualStudioVersion = 16.0.28729.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mpv.net", "mpv.net\mpv.net.csproj", "{1751F378-8EDF-4B62-BE6D-304C7C287089}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "CSScriptAddon", "addons\CSScriptAddon\CSScriptAddon.vbproj", "{71808A87-8B1C-4DF8-957C-D79C3B164CCA}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "CSScriptExtension", "extensions\CSScriptExtension\CSScriptExtension.vbproj", "{71808A87-8B1C-4DF8-957C-D79C3B164CCA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RatingAddon", "addons\RatingAddon\RatingAddon.csproj", "{55C88710-539D-4402-84C8-31694841C731}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestAddon", "addons\TestAddon\TestAddon.csproj", "{06F854B0-00F9-4B53-94D9-0BE65A7C55D8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RatingExtension", "extensions\RatingExtension\RatingExtension.csproj", "{55C88710-539D-4402-84C8-31694841C731}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,18 +55,6 @@ Global
 		{55C88710-539D-4402-84C8-31694841C731}.Release|x64.Build.0 = Release|x64
 		{55C88710-539D-4402-84C8-31694841C731}.Release|x86.ActiveCfg = Release|x86
 		{55C88710-539D-4402-84C8-31694841C731}.Release|x86.Build.0 = Release|x86
-		{06F854B0-00F9-4B53-94D9-0BE65A7C55D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{06F854B0-00F9-4B53-94D9-0BE65A7C55D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{06F854B0-00F9-4B53-94D9-0BE65A7C55D8}.Debug|x64.ActiveCfg = Debug|x64
-		{06F854B0-00F9-4B53-94D9-0BE65A7C55D8}.Debug|x64.Build.0 = Debug|x64
-		{06F854B0-00F9-4B53-94D9-0BE65A7C55D8}.Debug|x86.ActiveCfg = Debug|x86
-		{06F854B0-00F9-4B53-94D9-0BE65A7C55D8}.Debug|x86.Build.0 = Debug|x86
-		{06F854B0-00F9-4B53-94D9-0BE65A7C55D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{06F854B0-00F9-4B53-94D9-0BE65A7C55D8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{06F854B0-00F9-4B53-94D9-0BE65A7C55D8}.Release|x64.ActiveCfg = Release|Any CPU
-		{06F854B0-00F9-4B53-94D9-0BE65A7C55D8}.Release|x64.Build.0 = Release|Any CPU
-		{06F854B0-00F9-4B53-94D9-0BE65A7C55D8}.Release|x86.ActiveCfg = Release|Any CPU
-		{06F854B0-00F9-4B53-94D9-0BE65A7C55D8}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
