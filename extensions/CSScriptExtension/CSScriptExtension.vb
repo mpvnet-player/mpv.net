@@ -1,6 +1,8 @@
 ﻿'this extension implements the C# scripting feature of mpv.net,
 'it is based on CS-Script: https://www.cs-script.net/
 
+' the assembly/dll name of extensions must end with 'Extension'
+
 Imports System.ComponentModel.Composition
 Imports System.IO
 Imports System.Windows.Forms

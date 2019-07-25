@@ -7,6 +7,11 @@
   screenshot-jpeg-source-chroma, screenshot-template, screenshot-jpeg-quality,
   screenshot-png-compression, screenshot-png-filter
 - mpv.conf preview feature added to config editor, it previews the mpv.conf content
+- in the entire project the term addon was replaced with the term extension,
+  unfortunately this will break user extensions. The reason for this drastic
+  change is that there exist too many different terms, addons, addins,
+  extensions, modules, packages etc.. mpv.net follows Google Chrome as the worlds
+  most popular extendable app, Chrome uses the term Extension.
 
 ### 4.7.7
 
