@@ -12,6 +12,11 @@
   change is that there exist too many different terms, addons, addins,
   extensions, modules, packages etc.. mpv.net follows Google Chrome as the worlds
   most popular extendable app, Chrome uses the term Extension.
+- a thread synchronisation bug was fixed, the shutdown thread was aborted
+  if it was running more then 3 seconds, this caused the rating addon
+  to fail if it was waiting for a drive to wakeup
+- a new JavaScript was included to show the playlist with a smaller font size,
+  the script is located at startup/scripts
 
 ### 4.7.7
 

@@ -429,7 +429,7 @@ namespace mpvnet
             Marshal.FreeHGlobal(mainPtr);
         }
 
-        public static void command_string(string command, bool throwException = false)
+        public static void command(string command, bool throwException = false)
         {
             if (Handle == IntPtr.Zero) return;
             int err = mpv_command_string(Handle, command);

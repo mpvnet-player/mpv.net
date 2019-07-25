@@ -164,7 +164,7 @@ namespace mpvnet
                 string command = VB.Interaction.InputBox("Enter a mpv command to be executed.", "Execute Command", RegHelp.GetString(App.RegPath, "RecentExecutedCommand"));
                 if (string.IsNullOrEmpty(command)) return;
                 RegHelp.SetObject(App.RegPath, "RecentExecutedCommand", command);
-                mp.command_string(command, false);
+                mp.command(command, false);
             }));
         }
         

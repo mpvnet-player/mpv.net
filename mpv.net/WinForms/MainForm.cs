@@ -352,7 +352,7 @@ namespace mpvnet
                 string path = item.Path.Replace("&", "&&");
                 MenuItem menuItem = ContextMenu.Add(path, () => {
                     try {
-                        mp.command_string(item.Command);
+                        mp.command(item.Command);
                     } catch (Exception ex) {
                         Msg.ShowException(ex);
                     }
@@ -407,17 +407,17 @@ namespace mpvnet
                 case 0x0200: // WM_MOUSEMOVE
                     {
                         Point pos = PointToClient(Cursor.Position);
-                        mp.command_string($"mouse {pos.X} {pos.Y}");
+                        mp.command($"mouse {pos.X} {pos.Y}");
                         if (CursorHelp.IsPosDifferent(LastCursorPosChanged)) CursorHelp.Show();
                     }
                     break;
                 case 0x2a3: // WM_MOUSELEAVE
-                    mp.command_string("mouse 1 1"); // osc won't always auto hide
+                    mp.command("mouse 1 1"); // osc won't always auto hide
                     break;
                 case 0x203: // Native.WM.LBUTTONDBLCLK
                     {
                         Point pos = PointToClient(Cursor.Position);
-                        mp.command_string($"mouse {pos.X} {pos.Y} 0 double");
+                        mp.command($"mouse {pos.X} {pos.Y} 0 double");
                     }
                     break;
                 case 0x02E0: // WM_DPICHANGED

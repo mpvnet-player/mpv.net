@@ -104,7 +104,7 @@ namespace mpvnet
             {
                 CommandItem item = ListView.SelectedItem as CommandItem;
                 Close();
-                mp.command_string(item.Command);
+                mp.command(item.Command);
             }
         }
 

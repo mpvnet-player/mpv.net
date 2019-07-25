@@ -141,7 +141,7 @@
  t      script-binding stats/display-stats        #menu: View > Show Statistics
  T      script-binding stats/display-stats-toggle #menu: View > Toggle Statistics
  Del    script-binding osc/visibility             #menu: View > Toggle OSC Visibility
- F8     show-text ${playlist}   5000              #menu: View > Show Playlist
+ F8     script-binding show-playlist              #menu: View > Show Playlist
  F9     show-text ${track-list} 5000              #menu: View > Show Audio/Video/Subtitle List
 
  c      script-message mpv.net show-conf-editor   #menu: Settings > Show Config Editor
