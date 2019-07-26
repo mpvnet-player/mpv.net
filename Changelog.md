@@ -1,4 +1,4 @@
-###
+### 5.0
 
 - [changed icon design](https://github.com/stax76/mpv.net/blob/master/img/mpvnet.png)
 - libmpv was updated to shinchiro 2019-07-14
@@ -13,11 +13,11 @@
   extensions, modules, packages etc.. mpv.net follows Google Chrome as the worlds
   most popular extendable app, Chrome uses the term Extension.
 - a thread synchronisation bug was fixed, the shutdown thread was aborted
-  if it was running more then 3 seconds, this caused the rating addon
+  if it was running more then 3 seconds, this caused the rating extension
   to fail if it was waiting for a drive to wakeup
 - a new JavaScript was included to show the playlist with a smaller font size,
   the script is located at startup/scripts
-- terminal support added via mpvnet.com, this brings mpv.net to a new level :-)
+- terminal support added using mpvnet.com !
 - script engine performence and error handling was improved
 - the [scripting wiki page](https://github.com/stax76/mpv.net/wiki/Scripting) was improved
 - the C# scripting host extension was converted from VB to C# because it's not
