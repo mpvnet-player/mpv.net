@@ -554,14 +554,6 @@ namespace mpvnet
                 }
             }
 
-            Load(files.ToArray(), App.ProcessInstance != "queue", Control.ModifierKeys.HasFlag(Keys.Control));
-
-            if (files.Count == 0 || files[0].Contains("://"))
-            {
-                VideoSizeAutoResetEvent.Set();
-                VideoSizeChanged?.Invoke();
-            }
-
             foreach (string i in args)
             {
                 if (i.StartsWith("--"))
@@ -582,6 +574,14 @@ namespace mpvnet
                         Msg.ShowException(e);
                     }
                 }
+            }
+
+            Load(files.ToArray(), App.ProcessInstance != "queue", Control.ModifierKeys.HasFlag(Keys.Control));
+
+            if (files.Count == 0 || files[0].Contains("://"))
+            {
+                VideoSizeAutoResetEvent.Set();
+                VideoSizeChanged?.Invoke();
             }
         }
 

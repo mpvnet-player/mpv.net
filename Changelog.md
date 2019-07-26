@@ -17,6 +17,10 @@
   to fail if it was waiting for a drive to wakeup
 - a new JavaScript was included to show the playlist with a smaller font size,
   the script is located at startup/scripts
+- mpv.net attaches now to the parent terminal, when started from
+  a PowerShell terminal using the --terminal switch mpvnet gives
+  status messages on the console and debug messages useful to write
+  JavaScript and Lua scripts
 
 ### 4.7.7
 

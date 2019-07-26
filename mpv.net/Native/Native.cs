@@ -7,6 +7,12 @@ namespace mpvnet
     public class Native
     {
         [DllImport("kernel32.dll")]
+        public static extern bool AttachConsole(int dwProcessId);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        public static extern bool FreeConsole();
+
+        [DllImport("kernel32.dll")]
         public static extern IntPtr LoadLibrary(string dllToLoad);
 
         [DllImport("user32.dll", CharSet = CharSet.Unicode)]

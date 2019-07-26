@@ -64,7 +64,9 @@ namespace mpvnet
                     return;
                 }
 
+                Native.AttachConsole(-1 /*ATTACH_PARENT_PROCESS*/);
                 Application.Run(new MainForm());
+                Native.FreeConsole();
                 mutex.Dispose();
             }
             catch (Exception ex)

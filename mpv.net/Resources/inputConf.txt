@@ -137,7 +137,7 @@
  Ctrl+t set ontop yes                             #menu: View > On Top > Enable
  Ctrl+T set ontop no                              #menu: View > On Top > Disable
  b      cycle border                              #menu: View > Toggle Border
- i      script-message mpv.net show-info          #menu: View > File Info
+ i      script-message mpv.net show-info          #menu: View > File/Stream Info
  t      script-binding stats/display-stats        #menu: View > Show Statistics
  T      script-binding stats/display-stats-toggle #menu: View > Toggle Statistics
  Del    script-binding osc/visibility             #menu: View > Toggle OSC Visibility
@@ -191,3 +191,4 @@
  Ctrl+Wheel_Down no-osd seek -7
  MBTN_Left_DBL   cycle fullscreen
  KP_Enter        cycle fullscreen
+ MBTN_Left       ignore
