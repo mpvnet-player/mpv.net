@@ -90,7 +90,7 @@ namespace mpvnet
             LoadLibrary("mpv-1.dll");
             Handle = mpv_create();
 
-            if (App.IsTerminalHosted)
+            if (App.IsStartedFromTerminal)
             {
                 set_property_string("terminal", "yes");
                 set_property_string("msg-level", "osd/libass=fatal");
@@ -105,8 +105,6 @@ namespace mpvnet
             mpv_initialize(Handle);
             ShowLogo();
             ProcessCommandLine();
-            Task.Run(() => { LoadScripts(); });
-            Task.Run(() => { Extension = new Extension(); });
             Task.Run(() => { EventLoop(); });
         }
 
@@ -498,16 +496,6 @@ namespace mpvnet
             }
 
             return val;
-        }
-
-        public static bool get_property_bool(string name, bool throwOnException = false)
-        {
-            int err = mpv_get_property(Handle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_FLAG, out IntPtr lpBuffer);
-
-            if (err < 0 && throwOnException)
-                throw new Exception($"{name}: {(mpv_error)err}");
-            else
-                return lpBuffer.ToInt32() == 1;
         }
 
         public static void set_property_int(string name, int value, bool throwOnException = false)

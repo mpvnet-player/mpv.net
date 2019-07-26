@@ -17,8 +17,14 @@
   to fail if it was waiting for a drive to wakeup
 - a new JavaScript was included to show the playlist with a smaller font size,
   the script is located at startup/scripts
-- terminal support added via mpvnet.com, reading input keys from stdin
-  is not supported
+- terminal support added via mpvnet.com, this brings mpv.net to a new level :-)
+- script engine performence and error handling was improved
+- the [scripting wiki page](https://github.com/stax76/mpv.net/wiki/Scripting) was improved
+- the C# scripting host extension was converted from VB to C# because it's not
+  only used for hosting but I also use it now to code and debug script code
+- there was a copy paste bug in the file association feature resulting in keys
+  from mpv being overwritten instead of using mpv.net keys. Thanks to floppyD!
+- there was a exception fixed that happened opening rar files
 
 ### 4.7.7
 

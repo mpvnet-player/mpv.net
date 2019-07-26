@@ -137,7 +137,7 @@ namespace mpvnet
                 string videoFormat = mp.get_property_string("video-format").ToUpper();
                 string audioCodec = mp.get_property_string("audio-codec-name").ToUpper();
 
-                text = Path.GetFileName(path) + "\n" +
+                text = PathHelp.GetFileName(path) + "\n" +
                     FormatTime(position.TotalMinutes) + ":" +
                     FormatTime(position.Seconds) + " / " +
                     FormatTime(duration2.TotalMinutes) + ":" +

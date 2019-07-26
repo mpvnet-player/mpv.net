@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace mpvnet
 {
@@ -366,7 +367,7 @@ namespace mpvnet
             string path = mp.get_property_string("path");
             BeginInvoke(new Action(() => {
                 if (File.Exists(path) || path.Contains("://"))
-                    Text = Path.GetFileName(path) + " - mpv.net " + Application.ProductVersion;
+                    Text = PathHelp.GetFileName(path) + " - mpv.net " + Application.ProductVersion;
                 else
                     Text = "mpv.net " + Application.ProductVersion;
             }));
@@ -533,6 +534,8 @@ namespace mpvnet
             CheckClipboardForURL();
             Cursor.Position = new Point(Cursor.Position.X + 1, Cursor.Position.Y);
             WasShown = true;
+            Task.Run(() => { mp.LoadScripts(); });
+            Task.Run(() => { mp.Extension = new Extension(); });
         }
 
         protected override void OnActivated(EventArgs e)

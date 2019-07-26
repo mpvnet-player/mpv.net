@@ -34,7 +34,7 @@ namespace mpvnet
         public static bool RememberHeight { get; set; } = true;
         public static bool RememberPosition { get; set; }
         public static bool DebugMode { get; set; }
-        public static bool IsTerminalHosted { get; } = Environment.GetEnvironmentVariable("_started_from_console") == "yes";
+        public static bool IsStartedFromTerminal { get; } = Environment.GetEnvironmentVariable("_started_from_console") == "yes";
 
         public static int StartThreshold { get; set; } = 1500;
 
@@ -181,8 +181,8 @@ namespace mpvnet
             RegHelp.SetObject(@"HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\" + ExeFilename, null, ExePath);
             RegHelp.SetObject($"HKCR\\Applications\\{ExeFilename}", "FriendlyAppName", "mpv.net media player");
             RegHelp.SetObject($"HKCR\\Applications\\{ExeFilename}\\shell\\open\\command", null, $"\"{ExePath}\" \"%1\"");
-            RegHelp.SetObject(@"HKLM\SOFTWARE\Clients\Media\mpv\Capabilities", "ApplicationDescription", "mpv.net media player");
-            RegHelp.SetObject(@"HKLM\SOFTWARE\Clients\Media\mpv\Capabilities", "ApplicationName", "mpv.net");
+            RegHelp.SetObject(@"HKLM\SOFTWARE\Clients\Media\mpv.net\Capabilities", "ApplicationDescription", "mpv.net media player");
+            RegHelp.SetObject(@"HKLM\SOFTWARE\Clients\Media\mpv.net\Capabilities", "ApplicationName", "mpv.net");
             RegHelp.SetObject($"HKCR\\SystemFileAssociations\\video\\OpenWithList\\{ExeFilename}", null, "");
             RegHelp.SetObject($"HKCR\\SystemFileAssociations\\audio\\OpenWithList\\{ExeFilename}", null, "");
 
@@ -407,6 +407,19 @@ namespace mpvnet
             return
                 Math.Abs(screenPos.X - Control.MousePosition.X) > 10 ||
                 Math.Abs(screenPos.Y - Control.MousePosition.Y) > 10;
+        }
+    }
+
+    public class PathHelp
+    {
+        public static string GetFileName(string path)
+        {
+            if (string.IsNullOrEmpty(path)) return "";
+            int index = path.LastIndexOf('\\');
+            if (index > -1) return path.Substring(index + 1);
+            index = path.LastIndexOf('/');
+            if (index > -1) return path.Substring(index + 1);
+            return path;
         }
     }
 }

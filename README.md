@@ -136,17 +136,14 @@ input.conf defines mpv's key and mouse bindings and mpv.net uses comments to def
 
 ### Settings
 
-mpv.net is able to share the settings with mpv.
+When mpv.net finds no config folder on startup it will ask for a location.
 
-If a directory named portable_config next to the mpvnet.exe exists,
-all config will be loaded from this directory only.
+If a folder named portable_config next to the mpvnet.exe exists,
+all config will be loaded from this folder only.
 
 ```Text
 <startup>\portable_config\
 ```
-
-On first start if no portable config folder exists mpv.net asks
-which folder should be used as config folder.
 
 mpv specific settings are stored in the file mpv.conf, if no mpv.conf file exists
 mpv.net generates it with the following defaults:
@@ -162,6 +159,8 @@ input.conf file, if it's missing mpv.net generates it with the following default
 
 mpv.net supports almost all mpv settings and features,
 [limitations are listed in the wiki](https://github.com/stax76/mpv.net/wiki/Limitations).
+
+The config folder can be opened from the context menu.
 
 ### Scripting
 

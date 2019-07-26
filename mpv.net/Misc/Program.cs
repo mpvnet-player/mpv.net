@@ -64,9 +64,9 @@ namespace mpvnet
                     return;
                 }
 
-                if (App.IsTerminalHosted) Native.AttachConsole(-1 /*ATTACH_PARENT_PROCESS*/);
+                if (App.IsStartedFromTerminal) Native.AttachConsole(-1 /*ATTACH_PARENT_PROCESS*/);
                 Application.Run(new MainForm());
-                if (App.IsTerminalHosted) Native.FreeConsole();
+                if (App.IsStartedFromTerminal) Native.FreeConsole();
                 mutex.Dispose();
             }
             catch (Exception ex)
