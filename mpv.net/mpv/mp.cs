@@ -89,6 +89,13 @@ namespace mpvnet
         {
             LoadLibrary("mpv-1.dll");
             Handle = mpv_create();
+
+            if (App.IsTerminalHosted)
+            {
+                set_property_string("terminal", "yes");
+                set_property_string("msg-level", "osd/libass=fatal");
+            }
+
             set_property_string("config-dir", ConfigFolder);
             set_property_string("osc", "yes");
             set_property_string("config", "yes");

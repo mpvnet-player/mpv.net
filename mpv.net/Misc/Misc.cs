@@ -34,6 +34,7 @@ namespace mpvnet
         public static bool RememberHeight { get; set; } = true;
         public static bool RememberPosition { get; set; }
         public static bool DebugMode { get; set; }
+        public static bool IsTerminalHosted { get; } = Environment.GetEnvironmentVariable("_started_from_console") == "yes";
 
         public static int StartThreshold { get; set; } = 1500;
 
