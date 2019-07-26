@@ -25,6 +25,8 @@
 - there was a copy paste bug in the file association feature resulting in keys
   from mpv being overwritten instead of using mpv.net keys. Thanks to floppyD!
 - there was a exception fixed that happened opening rar files
+- instead of using the OS theme color there are now default colors
+  for dark-color and light-color
 
 ### 4.7.7
 

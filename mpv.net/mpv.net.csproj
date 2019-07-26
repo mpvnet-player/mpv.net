@@ -232,6 +232,7 @@
     <Content Include="Resources\mpvConfToml.txt" />
     <None Include="Resources\mpvnet.ico" />
     <None Include="Resources\mpvnet.png" />
+    <None Include="Resources\mpvNetConf.txt" />
     <Content Include="Resources\mpvNetConfToml.txt" />
   </ItemGroup>
   <ItemGroup>
