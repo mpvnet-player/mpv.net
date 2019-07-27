@@ -628,7 +628,7 @@ namespace mpvnet
             if (index > 0) commandv("playlist-move", "0", (index + 1).ToString());
         }
 
-        static IntPtr AllocateUtf8IntPtrArrayWithSentinel(string[] arr, out IntPtr[] byteArrayPointers)
+        public static IntPtr AllocateUtf8IntPtrArrayWithSentinel(string[] arr, out IntPtr[] byteArrayPointers)
         {
             int numberOfStrings = arr.Length + 1; // add extra element for extra null pointer last (sentinel)
             byteArrayPointers = new IntPtr[numberOfStrings];
@@ -646,7 +646,7 @@ namespace mpvnet
             return rootPointer;
         }
 
-        static string[] NativeUtf8StrArray2ManagedStrArray(IntPtr unmanagedStringArray, int StringCount)
+        public static string[] NativeUtf8StrArray2ManagedStrArray(IntPtr unmanagedStringArray, int StringCount)
         {
             IntPtr[] intPtrArray = new IntPtr[StringCount];
             string[] stringArray = new string[StringCount];
@@ -658,7 +658,7 @@ namespace mpvnet
             return stringArray;
         }
 
-        static string StringFromNativeUtf8(IntPtr nativeUtf8)
+        public static string StringFromNativeUtf8(IntPtr nativeUtf8)
         {
             int len = 0;
             while (Marshal.ReadByte(nativeUtf8, len) != 0) ++len;
@@ -667,7 +667,7 @@ namespace mpvnet
             return Encoding.UTF8.GetString(buffer);
         }
 
-        static byte[] GetUtf8Bytes(string s) => Encoding.UTF8.GetBytes(s + "\0");
+        public static byte[] GetUtf8Bytes(string s) => Encoding.UTF8.GetBytes(s + "\0");
 
         static string LastHistoryPath;
         static DateTime LastHistoryStartDateTime;
