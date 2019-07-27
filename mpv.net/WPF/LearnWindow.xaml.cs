@@ -10,7 +10,8 @@ namespace mpvnet
     public partial class LearnWindow : Window
     {
         public CommandItem InputItem { get; set; }
-        public string NewKey { get; set; } = "";
+        string NewKey = "";
+        string KeyChar = "";
 
         public LearnWindow() => InitializeComponent();
 
@@ -60,9 +61,9 @@ namespace mpvnet
                 case WF.Keys.NumPad9:
                     text = "KP" + e.KeyCode.ToString()[6].ToString(); break;
                 case WF.Keys.Space:
-                    text = "SPACE"; break;
+                    text = "Space"; break;
                 case WF.Keys.Enter:
-                    text = "ENTER"; break;
+                    text = "Enter"; break;
                 case WF.Keys.Tab:
                     text = "TAB"; break;
                 case WF.Keys.Back:
@@ -72,7 +73,7 @@ namespace mpvnet
                 case WF.Keys.Insert:
                     text = "INS"; break;
                 case WF.Keys.Home:
-                    text = "HOME"; break;
+                    text = "Home"; break;
                 case WF.Keys.End:
                     text = "END"; break;
                 case WF.Keys.PageUp:
@@ -82,56 +83,56 @@ namespace mpvnet
                 case WF.Keys.Escape:
                     text = "ESC"; break;
                 case WF.Keys.PrintScreen:
-                    text = "PRINT"; break;
+                    text = "Print"; break;
                 case WF.Keys.Play:
-                    text = "PLAY"; break;
+                    text = "Play"; break;
                 case WF.Keys.Pause:
-                    text = "PAUSE"; break;
+                    text = "Pause"; break;
                 case WF.Keys.MediaPlayPause:
-                    text = "PLAYPAUSE"; break;
+                    text = "PlayPause"; break;
                 case WF.Keys.MediaStop:
-                    text = "STOP"; break;
+                    text = "Stop"; break;
                 case WF.Keys.MediaNextTrack:
-                    text = "NEXT"; break;
+                    text = "Next"; break;
                 case WF.Keys.MediaPreviousTrack:
-                    text = "PREV"; break;
+                    text = "Prev"; break;
                 case WF.Keys.VolumeUp:
-                    text = "VOLUME_UP"; break;
+                    text = "Volume_Up"; break;
                 case WF.Keys.VolumeDown:
-                    text = "VOLUME_DOWN"; break;
+                    text = "Volume_Down"; break;
                 case WF.Keys.VolumeMute:
-                    text = "MUTE"; break;
+                    text = "Mute"; break;
                 case WF.Keys.BrowserHome:
-                    text = "HOMEPAGE"; break;
+                    text = "Homepage"; break;
                 case WF.Keys.LaunchMail:
-                    text = "MAIL"; break;
+                    text = "Mail"; break;
                 case WF.Keys.BrowserFavorites:
-                    text = "FAVORITES"; break;
+                    text = "Favorites"; break;
                 case WF.Keys.BrowserSearch:
-                    text = "SEARCH"; break;
+                    text = "Search"; break;
                 case WF.Keys.Sleep:
-                    text = "SLEEP"; break;
+                    text = "Sleep"; break;
                 case WF.Keys.Cancel:
-                    text = "CANCEL"; break;
+                    text = "Cancel"; break;
             }
 
-            bool shiftWasHandled = false;
+            bool wasModified = false;
 
             bool isAlt   = GetKeyState(18) < (short)0;
             bool isShift = GetKeyState(16) < (short)0;
             bool isCtrl  = GetKeyState(17) < (short)0;
 
-            if (text.Length == 1 && isShift && text[0] != GetModifiedKey(text[0]))
+            if (text.Length == 1 && KeyChar != text)
             {
-                text = GetModifiedKey(text[0]).ToString();
-                shiftWasHandled = true;
+                text = KeyChar;
+                wasModified = true;
             }
 
-            if (text == "#") text = "Sharp";
+            if (text == "#") text = "SHARP";
 
-            if (isAlt) text = "Alt+" + text;
-            if (isShift && !shiftWasHandled) text = "Shift+" + text;
-            if (isCtrl) text = "Ctrl+" + text;
+            if (isAlt   && !wasModified) text = "ALT+" + text;
+            if (isShift && !wasModified) text = "SHIFT+" + text;
+            if (isCtrl  && !wasModified) text = "CTRL+" + text;
 
             if (!string.IsNullOrEmpty(text))
                 SetKey(text);
@@ -161,24 +162,6 @@ namespace mpvnet
                     keys |= WF.Keys.Alt;
                 return keys;
             }
-        }
-
-        public static char GetModifiedKey(char c)
-        {
-            short vkKeyScanResult = VkKeyScan(c);
-
-            if (vkKeyScanResult == -1)
-                return c;
-
-            uint code = (uint)vkKeyScanResult & 0xff;
-            byte[] b = new byte[256];
-            b[0x10] = 0x80;
-            uint r;
-
-            if (1 != ToAscii(code, code, b, out r, 0))
-                return c;
-
-            return (char)r;
         }
 
         void ProcessKeyEventArgs(ref WF.Message m)
@@ -381,6 +364,11 @@ namespace mpvnet
                 SetKey("MBTN_LEFT_DBL");
                 BlockMBTN_LEFT = true;
             }
+        }
+
+        private void Window_TextInput(object sender, TextCompositionEventArgs e)
+        {
+            KeyChar = e.Text;
         }
     }
 }

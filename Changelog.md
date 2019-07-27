@@ -4,8 +4,11 @@
   [mpv-repl](https://github.com/rossy/mpv-repl) is currently the best choice
 - many [wiki pages](https://github.com/stax76/mpv.net/wiki) were improved
 - the logo/icon had a very small cosmetic change
-- the help in the context menu was improved
+- the help in the context menu was improved,
+  for quick access consider the command palette (F1 key)
 - config options specific to mpv.net are now available from the command line
+- the input editor no longer as known limitations, 'alt gr' and ctrl+alt are working now
+- the help in the input editor was simplified and the filter logic was improved
 
 ### 5.0
 

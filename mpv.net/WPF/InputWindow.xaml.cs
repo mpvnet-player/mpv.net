@@ -48,16 +48,21 @@ namespace mpvnet
             CollectionView.Refresh();
 
             if (SearchControl.SearchTextBox.Text == "?")
-                Msg.Show("Filtering works by searching in the Input, Menu and Command but it's possible to reduce the filter scope to either of Input, Menu or Command by prefixing as follows:\n\ni <input search>\ni: <input search>\n\nm <menu search>\nm: <menu search>\n\nc <command search>\nc: <command search>\n\nIf only one character is entered the search will be performed only in the input.", "Filtering");
+            {
+                SearchControl.SearchTextBox.Text = "";
+                Msg.Show("Filtering", "Reduce the filter scope with:\n\ni input\n\nm menu\n\nc command\n\nIf only one character is entered input search is performed.");
+            }
         }
 
         bool Filter(CommandItem item)
         {
             if (item.Command == "") return false;
             string searchText = SearchControl.SearchTextBox.Text.ToLower();
-            if (searchText == "") return true;
+            if (searchText == "" || searchText == "?") return true;
 
-            if (searchText.StartsWith("i ") || searchText.StartsWith("i:") || searchText.Length == 1)
+            if (searchText.Length == 1)
+                return item.Input.ToLower().Replace("ctrl+", "").Replace("shift+", "").Replace("alt+", "") == searchText.ToLower();
+            else if (searchText.StartsWith("i ") || searchText.StartsWith("i:") || searchText.Length == 1)
             {
                 if (searchText.Length > 1)
                     searchText = searchText.Substring(2).Trim();

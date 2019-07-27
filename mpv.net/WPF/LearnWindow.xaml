@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="Learn Input" Height="200" Width="400" WindowStartupLocation="CenterOwner"
-        ResizeMode="NoResize" Loaded="Window_Loaded" Background="Black" MouseWheel="Window_MouseWheel" MouseUp="Window_MouseUp" MouseDoubleClick="Window_MouseDoubleClick">
+        ResizeMode="NoResize" Loaded="Window_Loaded" Background="Black" MouseWheel="Window_MouseWheel" MouseUp="Window_MouseUp" MouseDoubleClick="Window_MouseDoubleClick" TextInput="Window_TextInput">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
