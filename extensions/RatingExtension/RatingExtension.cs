@@ -1,4 +1,8 @@
-﻿using System;
+// This extension writes a rating to the filename of rated videos when mpv.net shuts down.
+
+// The input.conf defaults contain key bindings for this extension to set ratings.
+
+using System;
 using System.ComponentModel.Composition;
 using System.Collections.Generic;
 using System.IO;
