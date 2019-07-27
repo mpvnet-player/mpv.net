@@ -233,18 +233,18 @@ If you want to support the development of mpv.net or express your appreciation y
 
 ### Links
 
-mpv.net wiki: <https://github.com/stax76/mpv.net/wiki>
-mpv.net default key bindings: <https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt>
-mpv.net download: <https://github.com/stax76/mpv.net/releases>
-mpv.net bugs and requests: <https://github.com/stax76/mpv.net/issues>
+- mpv.net wiki: <https://github.com/stax76/mpv.net/wiki>
+- mpv.net default key bindings: <https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt>
+- mpv.net download: <https://github.com/stax76/mpv.net/releases>
+- mpv.net bugs and requests: <https://github.com/stax76/mpv.net/issues>
 
-mpv manual: <https://mpv.io/manual/master/>
-mpv wiki: <https://github.com/mpv-player/mpv/wiki>
-mpv apps: <https://github.com/mpv-player/mpv/wiki/Applications-using-mpv>
-mpv user scripts: <https://github.com/mpv-player/mpv/wiki/User-Scripts>
-mpv default key bindings: <https://github.com/mpv-player/mpv/blob/master/etc/input.conf>
-mpv download: <https://mpv.io/installation/>
-mpv bugs and requests: <https://mpv.io/bug-reports/>
+- mpv manual: <https://mpv.io/manual/master/>
+- mpv wiki: <https://github.com/mpv-player/mpv/wiki>
+- mpv apps: <https://github.com/mpv-player/mpv/wiki/Applications-using-mpv>
+- mpv user scripts: <https://github.com/mpv-player/mpv/wiki/User-Scripts>
+- mpv default key bindings: <https://github.com/mpv-player/mpv/blob/master/etc/input.conf>
+- mpv download: <https://mpv.io/installation/>
+- mpv bugs and requests: <https://mpv.io/bug-reports/>
 
 ### Changelog
 
