@@ -1,4 +1,4 @@
-﻿//'This extension implements the C# scripting feature of mpv.net which
+// This extension implements the C# scripting feature of mpv.net which
 // is based on CS-Script (https://www.cs-script.net).
 
 // Furthermore the extension is used to code and debug scripts
