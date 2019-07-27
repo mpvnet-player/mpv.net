@@ -1,8 +1,11 @@
-﻿//'This extension implements the C# scripting feature of mpv.net which
+// This extension implements the C# scripting feature of mpv.net which
 // is based on CS-Script (https://www.cs-script.net).
 
-// Furthermore the extension is used to code and debug scripts
-// because writing script code without debugger is not an option :-)
+// Furthermore I use this extension to code and debug scripts
+// because writing script code without debugger is not much fun.
+
+// Once the code was developed and debugged, I move the code
+// from the extension to a standalone script.
 
 using System;
 using System.ComponentModel.Composition;
