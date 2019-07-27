@@ -1,5 +1,7 @@
 ![](https://raw.githubusercontent.com/stax76/mpv.net/master/img/mpvnet.png)
 
+![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/stax76/mpv.net) ![GitHub closed issues](https://img.shields.io/github/issues-closed/stax76/mpv.net) ![GitHub All Releases](https://img.shields.io/github/downloads/stax76/mpv.net/total) ![GitHub tag (latest by date)](https://img.shields.io/github/tag-date/stax76/mpv.net) ![GitHub stars](https://img.shields.io/github/stars/stax76/mpv.net) [![PayPal donate button](https://img.shields.io/badge/paypal-donate-yellow.svg)](https://www.paypal.me/stax76)
+
 # 🎞 mpv.net
 
 mpv.net is a modern media player for Windows that works just like [mpv](https://mpv.io).
@@ -225,7 +227,7 @@ Third party components:
 
 Please click on the star at the top of the page and like mpv.net at [alternativeto.net](https://alternativeto.net/software/mpv-net/).
 
-If you want to support the development of mpv.net you can do so with a donation.
+If you want to support the development of mpv.net or express your appreciation you can do so with a donation:
 
 <https://www.paypal.me/stax76>
 
