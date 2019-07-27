@@ -104,6 +104,7 @@ namespace mpvnet
             set_property_string("input-media-keys", "yes");
             mpv_initialize(Handle);
             ShowLogo();
+            LoadMpvScripts();
             ProcessCommandLine();
             Task.Run(() => { EventLoop(); });
         }
@@ -213,16 +214,21 @@ namespace mpvnet
             }
         }
 
+        public static void LoadMpvScripts()
+        {
+            string[] startupScripts = Directory.GetFiles(Application.StartupPath + "\\Scripts");
+
+            foreach (string scriptPath in startupScripts)
+                if (scriptPath.EndsWith(".lua") || scriptPath.EndsWith(".js"))
+                    commandv("load-script", $"{scriptPath}");
+        }
+
         public static void LoadScripts()
         {
 
             if (Directory.Exists(Application.StartupPath + "\\Scripts"))
             {
                 string[] startupScripts = Directory.GetFiles(Application.StartupPath + "\\Scripts");
-
-                foreach (string scriptPath in startupScripts)
-                    if (scriptPath.EndsWith(".lua") || scriptPath.EndsWith(".js"))
-                        commandv("load-script", $"{scriptPath}");
 
                 foreach (string scriptPath in startupScripts)
                     if (Path.GetExtension(scriptPath) == ".py")
@@ -562,10 +568,17 @@ namespace mpvnet
                         {
                             string left = i.Substring(2, i.IndexOf("=") - 2);
                             string right = i.Substring(left.Length + 3);
-                            set_property_string(left, right, true);
+                            mp.ProcessProperty(left, right);
+                            if (!App.ProcessProperty(left, right))
+                                set_property_string(left, right, true);
                         }
                         else
-                            set_property_string(i.Substring(2), "yes", true);
+                        {
+                            string name = i.Substring(2);
+                            mp.ProcessProperty(name, "yes");
+                            if (!App.ProcessProperty(name, "yes"))
+                                set_property_string(name, "yes", true);
+                        }
                     }
                     catch (Exception e)
                     {

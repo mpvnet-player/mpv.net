@@ -219,39 +219,30 @@ Third party components:
 
 [Support thread in VideoHelp forum](https://forum.videohelp.com/threads/392514-mpv-net-a-extendable-media-player-for-windows)
 
-[Issue tracker to report bugs and request features](https://github.com/stax76/mpv.net/issues)
+[Issue tracker, feel free to use for anything mpv.net related](https://github.com/stax76/mpv.net/issues)
 
 [frank.skare.de@gmail.com](mailto:frank.skare.de@gmail.com?Subject=mpv.net%20support)
 
 Please click on the star at the top of the page and like mpv.net at [alternativeto.net](https://alternativeto.net/software/mpv-net/).
 
-If you like you can express your appreciation for my player by sending little beer money with paypal.
+If you want to support the development of mpv.net you can do so with a donation.
 
 <https://www.paypal.me/stax76>
 
 ### Links
 
-mpv manual: <https://mpv.io/manual/master/>
-
-mpv wiki: <https://github.com/mpv-player/mpv/wiki>
-
 mpv.net wiki: <https://github.com/stax76/mpv.net/wiki>
-
-mpv apps: <https://github.com/mpv-player/mpv/wiki/Applications-using-mpv>
-
-mpv user scripts: <https://github.com/mpv-player/mpv/wiki/User-Scripts>
-
-mpv default key bindings: <https://github.com/mpv-player/mpv/blob/master/etc/input.conf>
-
 mpv.net default key bindings: <https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt>
-
-mpv download: <https://mpv.io/installation/>
-
 mpv.net download: <https://github.com/stax76/mpv.net/releases>
-
-mpv bugs and requests: <https://mpv.io/bug-reports/>
-
 mpv.net bugs and requests: <https://github.com/stax76/mpv.net/issues>
+
+mpv manual: <https://mpv.io/manual/master/>
+mpv wiki: <https://github.com/mpv-player/mpv/wiki>
+mpv apps: <https://github.com/mpv-player/mpv/wiki/Applications-using-mpv>
+mpv user scripts: <https://github.com/mpv-player/mpv/wiki/User-Scripts>
+mpv default key bindings: <https://github.com/mpv-player/mpv/blob/master/etc/input.conf>
+mpv download: <https://mpv.io/installation/>
+mpv bugs and requests: <https://mpv.io/bug-reports/>
 
 ### Changelog
 

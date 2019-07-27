@@ -2,6 +2,10 @@
 
 - 'Tools > Execute mpv command' was removed,
   [mpv-repl](https://github.com/rossy/mpv-repl) is currently the best choice
+- many [wiki pages](https://github.com/stax76/mpv.net/wiki) were improved
+- the logo/icon had a very small cosmetic change
+- the help in the context menu was improved
+- config options specific to mpv.net are now available from the command line
 
 ### 5.0
 

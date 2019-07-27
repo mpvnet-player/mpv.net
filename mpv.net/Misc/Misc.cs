@@ -84,50 +84,24 @@ namespace mpvnet
             }
         }
 
-        public static void ProcessProperty(string name, string value)
+        public static bool ProcessProperty(string name, string value)
         {
-            switch (name)
+            switch (name) // return true instead of break!
             {
-                case "remember-position": RememberPosition = value == "yes"; break;
-                case "start-size": RememberHeight = value == "previous"; break;
-                case "process-instance": ProcessInstance = value; break;
-                case "dark-mode": DarkMode = value; break;
-                case "debug-mode": DebugMode = value == "yes"; break;
-                case "dark-color": DarkColor = value.Trim('\'', '"'); break;
-                case "light-color": LightColor = value.Trim('\'', '"'); break;
-                case "url-whitelist":
-                    UrlWhitelist = value.Split(' ', ',', ';');
-                    break;
+                case "remember-position": RememberPosition = value == "yes"; return true;
+                case "start-size": RememberHeight = value == "previous"; return true;
+                case "process-instance": ProcessInstance = value; return true;
+                case "dark-mode": DarkMode = value; return true;
+                case "debug-mode": DebugMode = value == "yes"; return true;
+                case "dark-color": DarkColor = value.Trim('\'', '"'); return true;
+                case "light-color": LightColor = value.Trim('\'', '"'); return true;
+                case "url-whitelist": UrlWhitelist = value.Split(' ', ',', ';'); return true;
                 case "start-threshold":
                     int.TryParse(value, out int result);
                     StartThreshold = result;
-                    break;
+                    return true;
             }
-        }
-
-        public static void ProcessCommandLineEarly()
-        {
-            var args = Environment.GetCommandLineArgs().Skip(1);
-
-            foreach (string i in args)
-            {
-                if (i.StartsWith("--"))
-                {
-                    if (i.Contains("="))
-                    {
-                        string left = i.Substring(2, i.IndexOf("=") - 2);
-                        string right = i.Substring(left.Length + 3);
-                        mp.ProcessProperty(left, right);
-                        ProcessProperty(left, right);
-                    }
-                    else
-                    {
-                        string name = i.Substring(2);
-                        mp.ProcessProperty(name, "yes");
-                        ProcessProperty(name, "yes");
-                    }
-                }
-            }
+            return false;
         }
     }
 

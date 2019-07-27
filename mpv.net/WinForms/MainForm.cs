@@ -50,8 +50,6 @@ namespace mpvnet
                 ContextMenu.Opened += ContextMenu_Opened;
                 ContextMenu.Opening += ContextMenu_Opening;
 
-                App.ProcessCommandLineEarly();
-
                 if (mp.Screen == -1) mp.Screen = Array.IndexOf(Screen.AllScreens, Screen.PrimaryScreen);
                 int targetIndex = mp.Screen;
                 Screen[] screens = Screen.AllScreens;
