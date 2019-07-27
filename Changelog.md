@@ -1,3 +1,8 @@
+###
+
+- 'Tools > Execute mpv command' was removed,
+  [mpv-repl](https://github.com/rossy/mpv-repl) is currently the best choice
+
 ### 5.0
 
 - [changed icon design](https://github.com/stax76/mpv.net/blob/master/img/mpvnet.png)
@@ -12,13 +17,13 @@
   change is that there exist too many different terms, addons, addins,
   extensions, modules, packages etc.. mpv.net follows Google Chrome as the worlds
   most popular extendable app, Chrome uses the term Extension.
-- a thread synchronisation bug was fixed, the shutdown thread was aborted
-  if it was running more then 3 seconds, this caused the rating extension
-  to fail if it was waiting for a drive to wakeup
+- a thread synchronization bug was fixed, the shutdown thread was aborted
+  if it was running more than 3 seconds, this caused the rating extension
+  to fail if it was waiting for a drive to wake up
 - a new JavaScript was included to show the playlist with a smaller font size,
   the script is located at startup/scripts
 - terminal support added using mpvnet.com !
-- script engine performence and error handling was improved
+- script engine performance and error handling was improved
 - the [scripting wiki page](https://github.com/stax76/mpv.net/wiki/Scripting) was improved
 - the C# scripting host extension was converted from VB to C# because it's not
   only used for hosting but I also use it now to code and debug script code
