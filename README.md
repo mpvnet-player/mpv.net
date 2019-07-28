@@ -221,7 +221,7 @@ Third party components:
 
 [Support thread in VideoHelp forum](https://forum.videohelp.com/threads/392514-mpv-net-a-extendable-media-player-for-windows)
 
-[Issue tracker, feel free to use for anything mpv.net related](https://github.com/stax76/mpv.net/issues)
+[Issue tracker](https://github.com/stax76/mpv.net/issues), feel free to use for anything mpv.net related
 
 [frank.skare.de@gmail.com](mailto:frank.skare.de@gmail.com?Subject=mpv.net%20support)
 
@@ -237,7 +237,7 @@ If you want to support the development of mpv.net or express your appreciation y
 - mpv.net default key bindings: <https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt>
 - mpv.net download: <https://github.com/stax76/mpv.net/releases>
 - mpv.net bugs and requests: <https://github.com/stax76/mpv.net/issues>
-
+- mpv website: <https://mpv.io/>
 - mpv manual: <https://mpv.io/manual/master/>
 - mpv wiki: <https://github.com/mpv-player/mpv/wiki>
 - mpv apps: <https://github.com/mpv-player/mpv/wiki/Applications-using-mpv>

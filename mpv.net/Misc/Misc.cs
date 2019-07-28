@@ -152,25 +152,23 @@ namespace mpvnet
         {
             Types = types;
 
-            RegHelp.SetObject(@"HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\" + ExeFilename, null, ExePath);
+            RegHelp.SetObject($"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\App Paths\\{ExeFilename}", null, ExePath);
             RegHelp.SetObject($"HKCR\\Applications\\{ExeFilename}", "FriendlyAppName", "mpv.net media player");
             RegHelp.SetObject($"HKCR\\Applications\\{ExeFilename}\\shell\\open\\command", null, $"\"{ExePath}\" \"%1\"");
             RegHelp.SetObject(@"HKLM\SOFTWARE\Clients\Media\mpv.net\Capabilities", "ApplicationDescription", "mpv.net media player");
             RegHelp.SetObject(@"HKLM\SOFTWARE\Clients\Media\mpv.net\Capabilities", "ApplicationName", "mpv.net");
             RegHelp.SetObject($"HKCR\\SystemFileAssociations\\video\\OpenWithList\\{ExeFilename}", null, "");
             RegHelp.SetObject($"HKCR\\SystemFileAssociations\\audio\\OpenWithList\\{ExeFilename}", null, "");
+            RegHelp.SetObject(@"HKLM\SOFTWARE\RegisteredApplications", "mpv.net", @"SOFTWARE\Clients\Media\mpv.net\Capabilities");
 
             foreach (string ext in Types)
             {
                 RegHelp.SetObject($"HKCR\\Applications\\{ExeFilename}\\SupportedTypes", "." + ext, "");
                 RegHelp.SetObject($"HKCR\\" + "." + ext, null, ExeFilenameNoExt + "." + ext);
                 RegHelp.SetObject($"HKCR\\" + "." + ext + "\\OpenWithProgIDs", ExeFilenameNoExt + "." + ext, "");
-                if (App.VideoTypes.Contains(ext))
-                    RegHelp.SetObject($"HKCR\\" + "." + ext, "PerceivedType", "video");
-                if (App.AudioTypes.Contains(ext))
-                    RegHelp.SetObject($"HKCR\\" + "." + ext, "PerceivedType", "audio");
-                if (App.ImageTypes.Contains(ext))
-                    RegHelp.SetObject($"HKCR\\" + "." + ext, "PerceivedType", "image");
+                if (App.VideoTypes.Contains(ext)) RegHelp.SetObject($"HKCR\\" + "." + ext, "PerceivedType", "video");
+                if (App.AudioTypes.Contains(ext)) RegHelp.SetObject($"HKCR\\" + "." + ext, "PerceivedType", "audio");
+                if (App.ImageTypes.Contains(ext)) RegHelp.SetObject($"HKCR\\" + "." + ext, "PerceivedType", "image");
                 RegHelp.SetObject($"HKCR\\" + ExeFilenameNoExt + "." + ext + "\\shell\\open", null, "Play with " +  Application.ProductName);
                 RegHelp.SetObject($"HKCR\\" + ExeFilenameNoExt + "." + ext + "\\shell\\open\\command", null, $"\"{ExePath}\" \"%1\"");
                 RegHelp.SetObject(@"HKLM\SOFTWARE\Clients\Media\mpv.net\Capabilities\FileAssociations", "." + ext, ExeFilenameNoExt + "." + ext);
@@ -179,17 +177,16 @@ namespace mpvnet
 
         public static void Unregister()
         {
-            RegHelp.RemoveKey(@"HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\" + ExeFilename);
+            RegHelp.RemoveKey($"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\App Paths\\{ExeFilename}");
             RegHelp.RemoveKey($"HKCR\\Applications\\{ExeFilename}");
-            RegHelp.RemoveKey(@"HKLM\SOFTWARE\Clients\Media\mpv.net");
+            RegHelp.RemoveKey($"HKLM\\SOFTWARE\\Clients\\Media\\mpv.net");
             RegHelp.RemoveKey($"HKCR\\SystemFileAssociations\\video\\OpenWithList\\{ExeFilename}");
             RegHelp.RemoveKey($"HKCR\\SystemFileAssociations\\audio\\OpenWithList\\{ExeFilename}");
+            RegHelp.RemoveValue(@"HKLM\SOFTWARE\RegisteredApplications", "mpv.net");
 
             foreach (string id in Registry.ClassesRoot.GetSubKeyNames())
             {
-                if (id.StartsWith(ExeFilenameNoExt + "."))
-                    Registry.ClassesRoot.DeleteSubKeyTree(id);
-
+                if (id.StartsWith(ExeFilenameNoExt + ".")) Registry.ClassesRoot.DeleteSubKeyTree(id);
                 RegHelp.RemoveValue($"HKCR\\Software\\Classes\\" + id + "\\OpenWithProgIDs", ExeFilenameNoExt + id);
                 RegHelp.RemoveValue($"HKLM\\Software\\Classes\\" + id + "\\OpenWithProgIDs", ExeFilenameNoExt + id);
             }

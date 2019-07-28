@@ -9,6 +9,7 @@
 - config options specific to mpv.net are now available from the command line
 - the input editor no longer as known limitations, 'alt gr' and ctrl+alt are working now
 - the help in the input editor was simplified and the filter logic was improved
+- fixed issue in file associations causing mpv.net not to appear in OS default apps
 
 ### 5.0
 
