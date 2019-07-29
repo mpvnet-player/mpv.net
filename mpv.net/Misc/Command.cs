@@ -28,6 +28,7 @@ namespace mpvnet
                 case "show-about": ShowDialog(typeof(AboutWindow)); break;
                 case "show-conf-editor": ShowDialog(typeof(ConfWindow)); break;
                 case "show-input-editor": ShowDialog(typeof(InputWindow)); break;
+                case "show-setup-dialog": ShowDialog(typeof(SetupWindow)); break;
                 case "open-conf-folder": Process.Start(mp.ConfigFolder); break;
                 case "open-files": OpenFiles(args); break;
                 case "shell-execute": Process.Start(args[0]); break;
@@ -230,31 +231,6 @@ namespace mpvnet
             }
         }
 
-        public static void ManageFileAssociations()
-        {
-            using (var td = new TaskDialog<string>())
-            {
-                td.MainInstruction = "Choose an option.";
-                td.MainIcon = MsgIcon.Shield;
-
-                td.AddCommandLink("Register video file extensions", "video");
-                td.AddCommandLink("Register audio file extensions", "audio");
-                td.AddCommandLink("Register image file extensions", "image");
-                td.AddCommandLink("Unregister file extensions", "unreg");
-
-                string result = td.Show();
-
-                if (!string.IsNullOrEmpty(result))
-                {
-                    using (var proc = new Process())
-                    {
-                        proc.StartInfo.FileName = System.Windows.Forms.Application.ExecutablePath;
-                        proc.StartInfo.Arguments = "--reg-file-assoc " + result;
-                        proc.StartInfo.Verb = "runas";
-                        try { proc.Start(); } catch { }
-                    }
-                }
-            }
-        }
+        public static void ManageFileAssociations() => ShowDialog(typeof(SetupWindow)); // deprecated 2019
     }
 }

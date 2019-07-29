@@ -10,6 +10,11 @@
 - the input editor no longer as known limitations, 'alt gr' and ctrl+alt are working now
 - the help in the input editor was simplified and the filter logic was improved
 - fixed issue in file associations causing mpv.net not to appear in OS default apps
+- 'Tools > Manage File Associations' was replaced by 'Tools > OS Setup',
+  it has now a feature to add and remove mpv.net to and from the Path
+  environment variable and the OS default apps settings can be opened (Win 10 only)
+- Error messages are shown when unknown scripts and extensions are found in the startup folder
+  because user scripts are supposed to be located in the config folder instead
 
 ### 5.0
 

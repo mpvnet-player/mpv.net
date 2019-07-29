@@ -153,7 +153,7 @@
  l      ab-loop                                     #menu: Tools > Set/clear A-B loop points
  L      cycle-values loop-file "inf" "no"           #menu: Tools > Toggle infinite file looping
  Ctrl+h cycle-values hwdec "auto" "no"              #menu: Tools > Toggle Hardware Decoding
- _ script-message mpv.net manage-file-associations  #menu: Tools > Manage File Associations...
+ _ script-message mpv.net show-setup-dialog         #menu: Tools > OS Setup...
 
  _ script-message mpv.net shell-execute https://github.com/stax76/mpv.net/blob/master/Manual.md      #menu: Help > mpv.net Manual
  _ script-message mpv.net shell-execute https://github.com/stax76/mpv.net                            #menu: Help > mpv.net GitHub

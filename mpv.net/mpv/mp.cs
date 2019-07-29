@@ -156,7 +156,6 @@ namespace mpvnet
                             td.AddCommandLink(@"AppData\Roaming\mpv.net", appdataFolder, appdataFolder);
                             td.AddCommandLink(@"AppData\Roaming\mpv", appdataFolderMpv, appdataFolderMpv);
                             td.AddCommandLink("<startup>\\portable_config", portableFolder, portableFolder);
-                            td.AddCommandLink("<startup>", startupFolder, startupFolder);
                             td.AddCommandLink("Choose custom folder", "custom");
                             td.AllowCancel = false;
                             _ConfigFolder = td.Show();
@@ -214,36 +213,45 @@ namespace mpvnet
             }
         }
 
+        public static void UnknownScriptError(string path) => Msg.ShowError("Failed to load script", "Only scripts that ship with mpv.net are allowed in <startup>\\scripts.\n\nUser scripts have to use <config folder>\\scripts.\n\nNever copy a new mpv.net version over a old mpv.net version.\n\nNever install a new mpv.net version on top of a old mpv.net version.\n\n" + path);
+
         public static void LoadMpvScripts()
         {
             string[] startupScripts = Directory.GetFiles(Application.StartupPath + "\\Scripts");
 
-            foreach (string scriptPath in startupScripts)
-                if (scriptPath.EndsWith(".lua") || scriptPath.EndsWith(".js"))
-                    commandv("load-script", $"{scriptPath}");
+            foreach (string path in startupScripts)
+                if (path.EndsWith(".lua") || path.EndsWith(".js"))
+                    if (KnownScripts.Contains(Path.GetFileName(path)))
+                        commandv("load-script", $"{path}");
+                    else
+                        UnknownScriptError(path);
         }
+
+        public static string[] KnownScripts { get; } = { "osc-visibility.js", "show-playlist.js", "seek-show-position.py" };
 
         public static void LoadScripts()
         {
-
             if (Directory.Exists(Application.StartupPath + "\\Scripts"))
             {
-                string[] startupScripts = Directory.GetFiles(Application.StartupPath + "\\Scripts");
-
-                foreach (string scriptPath in startupScripts)
-                    if (Path.GetExtension(scriptPath) == ".py")
-                        PythonScripts.Add(new PythonScript(File.ReadAllText(scriptPath)));
-
-                foreach (string scriptPath in startupScripts)
-                    if (Path.GetExtension(scriptPath) == ".ps1")
-                        PowerShellScript.Init(scriptPath);
+                foreach (string path in Directory.GetFiles(Application.StartupPath + "\\Scripts"))
+                {
+                    if (KnownScripts.Contains(Path.GetFileName(path)))
+                    {
+                        if (path.EndsWith(".py"))
+                            PythonScripts.Add(new PythonScript(File.ReadAllText(path)));
+                        else if (path.EndsWith(".ps1"))
+                            PowerShellScript.Init(path);
+                    }
+                    else
+                        UnknownScriptError(path);
+                }
             }
 
             if (Directory.Exists(ConfigFolder + "Scripts"))
                 foreach (string scriptPath in Directory.GetFiles(ConfigFolder + "Scripts"))
-                    if (Path.GetExtension(scriptPath) == ".py")
+                    if (scriptPath.EndsWith(".py")) 
                         PythonScripts.Add(new PythonScript(File.ReadAllText(scriptPath)));
-                    else if (Path.GetExtension(scriptPath) == ".ps1")
+                    else if (scriptPath.EndsWith(".ps1"))
                         PowerShellScript.Init(scriptPath);
         }
 

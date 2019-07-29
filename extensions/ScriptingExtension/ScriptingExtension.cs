@@ -1,11 +1,9 @@
 // This extension implements the C# scripting feature of mpv.net which
 // is based on CS-Script (https://www.cs-script.net).
 
-// Furthermore I use this extension to code and debug scripts
-// because writing script code without debugger is not much fun.
-
-// Once the code was developed and debugged, I move the code
-// from the extension to a standalone script.
+// I also use this extension to code scripts in order to have full
+// code completion and debugger support, once the script code is
+// finished I move it from the extension to a standalone script.
 
 using System;
 using System.ComponentModel.Composition;
@@ -21,7 +19,7 @@ namespace ScriptingExtension // the file name of extensions must end with 'Exten
     [Export(typeof(IExtension))]
     public class ScriptingExtension : IExtension
     {
-        Script Script;
+        //Script Script;
 
         public ScriptingExtension()
         {
@@ -32,7 +30,8 @@ namespace ScriptingExtension // the file name of extensions must end with 'Exten
                 scriptFiles.AddRange(Directory.GetFiles(mp.ConfigFolder + "scripts", "*.cs"));
 
             if (Directory.Exists(Application.StartupPath + "\\scripts"))
-                scriptFiles.AddRange(Directory.GetFiles(Application.StartupPath + "\\scripts", "*.cs"));
+                foreach (string file in Directory.GetFiles(Application.StartupPath + "\\scripts", "*.cs"))
+                    Msg.ShowError("Failed to load script.", "Only scripts that ship with mpv.net are allowed in <startup>\\scripts.\n\nUser scripts have to use <config folder>\\scripts.\n\nNever copy a new mpv.net version over a old mpv.net version.\n\nNever install a new mpv.net version on top of a old mpv.net version.\n\n" + file);
 
             if (scriptFiles.Count == 0) return;
             CSScriptLibrary.CSScript.EvaluatorConfig.Engine = EvaluatorEngine.CodeDom;

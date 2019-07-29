@@ -1,0 +1,19 @@
+﻿<Window x:Class="mpvnet.SetupWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="mpv.net OS Setup" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterOwner">
+    <Grid>
+        <StackPanel>
+            <Button Name="RegisterVideo" Margin="5" Click="RegisterVideo_Click">Register video file extensions (requires elevated privileges)</Button>
+            <Button Name="RegisterAudio" Margin="5" Click="RegisterAudio_Click">Register audio file extensions (requires elevated privileges)</Button>
+            <Button Name="RegisterImage" Margin="5" Click="RegisterImage_Click">Register image file extensions (requires elevated privileges)</Button>
+            <Button Name="AddToPathEnvVar" Margin="5" Click="AddToPathEnvVar_Click">Add mpv.net to Path environment variable</Button>
+            <Button Name="ManageDefaultApps" Margin="5" Click="ManageDefaultApps_Click">Manage Default Apps (Win 10 or higher)</Button>
+            <Button Name="UnregisterFileAssociations" Margin="5,20,5,5" Click="UnregisterFileAssociations_Click">Unregister file extensions (requires elevated privileges)</Button>
+            <Button Name="RemoveFromPathEnvVar" Margin="5" Click="RemoveFromPathEnvVar_Click">Remove mpv.net from Path environment variable</Button>
+        </StackPanel>
+    </Grid>
+</Window>
