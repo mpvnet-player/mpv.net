@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -140,7 +139,7 @@ namespace mpvnet
                     for (i = 0; i < Everything_GetNumResults(); i++)
                     {
                         Everything_GetResultFullPathName(i, buf, bufsize);
-                        string ext = Path.GetExtension(buf.ToString()).TrimStart('.').ToLower();
+                        string ext = PathHelp.GetShortExtension(buf.ToString());
 
                         if (App.AudioTypes.Contains(ext) || App.VideoTypes.Contains(ext) ||
                             App.ImageTypes.Contains(ext))

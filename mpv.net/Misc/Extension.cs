@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.IO;
-using System.Windows.Forms;
 using System.Linq;
 
 namespace mpvnet
@@ -20,7 +19,7 @@ namespace mpvnet
             try
             {
                 AggregateCatalog catalog = new AggregateCatalog();
-                string dir = Application.StartupPath + "\\Extensions";
+                string dir = PathHelp.StartupPath + "Extensions";
 
                 if (Directory.Exists(dir))
                 {
@@ -35,9 +34,9 @@ namespace mpvnet
                     }
                 }
 
-                dir = mp.ConfigFolder + "\\Extensions";
+                dir = mp.ConfigFolder + "Extensions";
 
-                if (Directory.Exists(dir))
+                if (Directory.Exists(dir) && mp.ConfigFolder != PathHelp.StartupPath)
                     foreach (string i in Directory.GetDirectories(dir))
                         catalog.Catalogs.Add(new DirectoryCatalog(i, "*Extension.dll"));
 

@@ -93,7 +93,7 @@ namespace mpvnet
                 {
                     fileSize = new FileInfo(path).Length;
 
-                    if (App.AudioTypes.Contains(Path.GetExtension(path).ToLower().TrimStart('.')))
+                    if (App.AudioTypes.Contains(PathHelp.GetShortExtension(path)))
                     {
                         using (MediaInfo mediaInfo = new MediaInfo(path))
                         {
@@ -111,13 +111,13 @@ namespace mpvnet
                             if (date != "") text += "Year: " + date + "\n";
                             if (duration != "") text += "Length: " + duration + "\n";
                             text += "Size: " + mediaInfo.GetInfo(MediaInfoStreamKind.General, "FileSize/String") + "\n";
-                            text += "Type: " + Path.GetExtension(path).ToUpper().TrimStart('.');
+                            text += "Type: " + PathHelp.GetShortExtension(path).ToUpper();
 
                             mp.commandv("show-text", text, "5000");
                             return;
                         }
                     }
-                    else if (App.ImageTypes.Contains(Path.GetExtension(path).ToLower().TrimStart('.')))
+                    else if (App.ImageTypes.Contains(PathHelp.GetShortExtension(path)))
                     {
                         using (MediaInfo mediaInfo = new MediaInfo(path))
                         {
@@ -125,7 +125,7 @@ namespace mpvnet
                                 "Width: " + mediaInfo.GetInfo(MediaInfoStreamKind.Image, "Width") + "\n" +
                                 "Height: " + mediaInfo.GetInfo(MediaInfoStreamKind.Image, "Height") + "\n" +
                                 "Size: " + mediaInfo.GetInfo(MediaInfoStreamKind.General, "FileSize/String") + "\n" +
-                                "Type: " + Path.GetExtension(path).ToUpper().TrimStart('.');
+                                "Type: " + PathHelp.GetShortExtension(path).ToUpper();
 
                             mp.commandv("show-text", text, "5000");
                             return;

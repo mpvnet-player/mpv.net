@@ -138,17 +138,16 @@ namespace mpvnet
             get {
                 if (_ConfigFolder == null)
                 {
-                    _ConfigFolder = Application.StartupPath + "\\portable_config\\";
+                    _ConfigFolder = PathHelp.StartupPath + "portable_config\\";
 
                     if (!Directory.Exists(_ConfigFolder))
                         _ConfigFolder = RegHelp.GetString(App.RegPath, "ConfigFolder");
 
                     if (!Directory.Exists(_ConfigFolder))
                     {
-                        string portableFolder = Application.StartupPath + "\\portable_config\\";
+                        string portableFolder = PathHelp.StartupPath + "portable_config\\";
                         string appdataFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv.net\\";
                         string appdataFolderMpv = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\";
-                        string startupFolder = Application.StartupPath + "\\";
 
                         using (TaskDialog<string> td = new TaskDialog<string>())
                         {
@@ -215,7 +214,7 @@ namespace mpvnet
 
         public static void LoadMpvScripts()
         {
-            string[] startupScripts = Directory.GetFiles(Application.StartupPath + "\\Scripts");
+            string[] startupScripts = Directory.GetFiles(PathHelp.StartupPath + "Scripts");
 
             foreach (string path in startupScripts)
                 if (path.EndsWith(".lua") || path.EndsWith(".js"))
@@ -229,9 +228,9 @@ namespace mpvnet
 
         public static void LoadScripts()
         {
-            if (Directory.Exists(Application.StartupPath + "\\Scripts"))
+            if (Directory.Exists(PathHelp.StartupPath + "Scripts"))
             {
-                foreach (string path in Directory.GetFiles(Application.StartupPath + "\\Scripts"))
+                foreach (string path in Directory.GetFiles(PathHelp.StartupPath + "Scripts"))
                 {
                     if (KnownScripts.Contains(Path.GetFileName(path)))
                     {
@@ -615,7 +614,7 @@ namespace mpvnet
             LastLoad = DateTime.Now;
 
             for (int i = 0; i < files.Length; i++)
-                if (App.SubtitleTypes.Contains(Path.GetExtension(files[i]).TrimStart('.').ToLower()))
+                if (App.SubtitleTypes.Contains(PathHelp.GetShortExtension(files[i])))
                     commandv("sub-add", files[i]);
                 else
                     if (i == 0 && !append)
@@ -636,9 +635,9 @@ namespace mpvnet
             if (!File.Exists(path) || get_property_int("playlist-count") != 1) return;
             List<string> files = Directory.GetFiles(Path.GetDirectoryName(path)).ToList();
             files = files.Where((file) =>
-                App.VideoTypes.Contains(Path.GetExtension(file).TrimStart('.').ToLower()) ||
-                App.AudioTypes.Contains(Path.GetExtension(file).TrimStart('.').ToLower()) ||
-                App.ImageTypes.Contains(Path.GetExtension(file).TrimStart('.').ToLower())).ToList();
+                App.VideoTypes.Contains(PathHelp.GetShortExtension(file)) ||
+                App.AudioTypes.Contains(PathHelp.GetShortExtension(file)) ||
+                App.ImageTypes.Contains(PathHelp.GetShortExtension(file))).ToList();
             files.Sort(new StringLogicalComparer());
             int index = files.IndexOf(path);
             files.Remove(path);

@@ -9,7 +9,6 @@ using System;
 using System.ComponentModel.Composition;
 using System.Collections.Generic;
 using System.IO;
-using System.Windows.Forms;
 
 using mpvnet;
 using CSScriptLibrary;
@@ -29,8 +28,8 @@ namespace ScriptingExtension // the file name of extensions must end with 'Exten
             if (Directory.Exists(mp.ConfigFolder + "scripts"))
                 scriptFiles.AddRange(Directory.GetFiles(mp.ConfigFolder + "scripts", "*.cs"));
 
-            if (Directory.Exists(Application.StartupPath + "\\scripts"))
-                foreach (string file in Directory.GetFiles(Application.StartupPath + "\\scripts", "*.cs"))
+            if (Directory.Exists(PathHelp.StartupPath + "scripts") && mp.ConfigFolder != PathHelp.StartupPath)
+                foreach (string file in Directory.GetFiles(PathHelp.StartupPath + "scripts", "*.cs"))
                     App.UnknownModule(file);
 
             if (scriptFiles.Count == 0) return;
