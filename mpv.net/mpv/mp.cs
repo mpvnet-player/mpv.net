@@ -138,14 +138,14 @@ namespace mpvnet
             get {
                 if (_ConfigFolder == null)
                 {
-                    _ConfigFolder = PathHelp.StartupPath + "portable_config\\";
+                    string portableFolder = PathHelp.StartupPath + "portable_config\\";
+                    _ConfigFolder = portableFolder;
 
                     if (!Directory.Exists(_ConfigFolder))
                         _ConfigFolder = RegHelp.GetString(App.RegPath, "ConfigFolder");
 
                     if (!Directory.Exists(_ConfigFolder))
                     {
-                        string portableFolder = PathHelp.StartupPath + "portable_config\\";
                         string appdataFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv.net\\";
                         string appdataFolderMpv = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\";
 
@@ -165,12 +165,19 @@ namespace mpvnet
                             using (var d = new WinForms.FolderBrowserDialog())
                             {
                                 d.Description = "Choose a folder.";
+
                                 if (d.ShowDialog() == WinForms.DialogResult.OK)
                                     _ConfigFolder = d.SelectedPath + "\\";
                                 else
                                     _ConfigFolder = appdataFolder;
                             }
                         }
+                    }
+
+                    if (PathHelp.StartupPath == _ConfigFolder)
+                    {
+                        Msg.ShowError("Startup folder and config folder cannot be identical, using portable_config instead.");
+                        _ConfigFolder = portableFolder;
                     }
 
                     if (!Directory.Exists(_ConfigFolder))

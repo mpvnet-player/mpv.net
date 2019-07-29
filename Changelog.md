@@ -13,13 +13,10 @@
 - 'Tools > Manage File Associations' was replaced by 'Tools > OS Setup',
   it has now a feature to add and remove mpv.net to and from the Path
   environment variable and the OS default apps settings can be opened (Win 10 only)
+- startup folder and config folder beeing identical is no longer
+  a supported scenaria because it's a brain-dead idea
 - Error messages are shown when unknown scripts and extensions are found in the startup folder
   because user scripts and extensions are supposed to be located in the config folder instead
-- when the config folder and the startup folder were identical then extensions were loaded
-  twice and script were loaded four times because the script host is an extension, there is
-  now a check to ensure extensions and scripts are only loaded once. On first start there
-  is no longer an option to select the startup folder as config folder, it's still possible
-  using a custom folder but discouraged
 
 ### 5.0
 

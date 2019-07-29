@@ -36,7 +36,7 @@ namespace mpvnet
 
                 dir = mp.ConfigFolder + "Extensions";
 
-                if (Directory.Exists(dir) && mp.ConfigFolder != PathHelp.StartupPath)
+                if (Directory.Exists(dir))
                     foreach (string i in Directory.GetDirectories(dir))
                         catalog.Catalogs.Add(new DirectoryCatalog(i, "*Extension.dll"));
 

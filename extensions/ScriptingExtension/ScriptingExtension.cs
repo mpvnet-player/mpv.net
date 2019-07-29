@@ -28,7 +28,7 @@ namespace ScriptingExtension // the file name of extensions must end with 'Exten
             if (Directory.Exists(mp.ConfigFolder + "scripts"))
                 scriptFiles.AddRange(Directory.GetFiles(mp.ConfigFolder + "scripts", "*.cs"));
 
-            if (Directory.Exists(PathHelp.StartupPath + "scripts") && mp.ConfigFolder != PathHelp.StartupPath)
+            if (Directory.Exists(PathHelp.StartupPath + "scripts"))
                 foreach (string file in Directory.GetFiles(PathHelp.StartupPath + "scripts", "*.cs"))
                     App.UnknownModule(file);
 
