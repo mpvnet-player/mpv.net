@@ -213,8 +213,6 @@ namespace mpvnet
             }
         }
 
-        public static void UnknownScriptError(string path) => Msg.ShowError("Failed to load script", "Only scripts that ship with mpv.net are allowed in <startup>\\scripts.\n\nUser scripts have to use <config folder>\\scripts.\n\nNever copy a new mpv.net version over a old mpv.net version.\n\nNever install a new mpv.net version on top of a old mpv.net version.\n\n" + path);
-
         public static void LoadMpvScripts()
         {
             string[] startupScripts = Directory.GetFiles(Application.StartupPath + "\\Scripts");
@@ -224,7 +222,7 @@ namespace mpvnet
                     if (KnownScripts.Contains(Path.GetFileName(path)))
                         commandv("load-script", $"{path}");
                     else
-                        UnknownScriptError(path);
+                        App.UnknownModule(path);
         }
 
         public static string[] KnownScripts { get; } = { "osc-visibility.js", "show-playlist.js", "seek-show-position.py" };
@@ -243,7 +241,7 @@ namespace mpvnet
                             PowerShellScript.Init(path);
                     }
                     else
-                        UnknownScriptError(path);
+                        App.UnknownModule(path);
                 }
             }
 

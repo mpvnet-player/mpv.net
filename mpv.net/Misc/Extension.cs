@@ -31,7 +31,7 @@ namespace mpvnet
                         if (knownExtensions.Contains(Path.GetFileName(path)))
                             catalog.Catalogs.Add(new DirectoryCatalog(path, "*Extension.dll"));
                         else
-                            Msg.ShowError("Failed to load extension", "Only extensions that ship with mpv.net are allowed in <startup>\\extensions.\n\nUser extensions have to use <config folder>\\extensions.\n\nNever copy a new mpv.net version over a old mpv.net version.\n\nNever install a new mpv.net version on top of a old mpv.net version.\n\n" + path);
+                            App.UnknownModule(path);
                     }
                 }
 

@@ -31,7 +31,7 @@ namespace ScriptingExtension // the file name of extensions must end with 'Exten
 
             if (Directory.Exists(Application.StartupPath + "\\scripts"))
                 foreach (string file in Directory.GetFiles(Application.StartupPath + "\\scripts", "*.cs"))
-                    Msg.ShowError("Failed to load script.", "Only scripts that ship with mpv.net are allowed in <startup>\\scripts.\n\nUser scripts have to use <config folder>\\scripts.\n\nNever copy a new mpv.net version over a old mpv.net version.\n\nNever install a new mpv.net version on top of a old mpv.net version.\n\n" + file);
+                    App.UnknownModule(file);
 
             if (scriptFiles.Count == 0) return;
             CSScriptLibrary.CSScript.EvaluatorConfig.Engine = EvaluatorEngine.CodeDom;
