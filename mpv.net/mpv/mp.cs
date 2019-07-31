@@ -54,6 +54,8 @@ namespace mpvnet
         public static event Action QueueOverflow;             //                    MPV_EVENT_QUEUE_OVERFLOW
         public static event Action Hook;                      //                    MPV_EVENT_HOOK
 
+        public static event Action Initialized;
+
         public static IntPtr Handle { get; set; }
         public static IntPtr WindowHandle { get; set; }
         public static Extension Extension { get; set; }
@@ -77,7 +79,7 @@ namespace mpvnet
 
         public static bool Fullscreen { get; set; }
         public static bool Border { get; set; } = true;
-
+        
         public static int Screen { get; set; } = -1;
         public static int Edition { get; set; }
 
@@ -89,6 +91,7 @@ namespace mpvnet
         {
             LoadLibrary("mpv-1.dll");
             Handle = mpv_create();
+            Task.Run(() => { EventLoop(); });
 
             if (App.IsStartedFromTerminal)
             {
@@ -96,17 +99,17 @@ namespace mpvnet
                 set_property_string("msg-level", "osd/libass=fatal");
             }
 
+            set_property_string("wid", MainForm.Hwnd.ToString());
             set_property_string("config-dir", ConfigFolder);
             set_property_string("osc", "yes");
             set_property_string("config", "yes");
-            set_property_string("wid", MainForm.Hwnd.ToString());
             set_property_string("force-window", "yes");
             set_property_string("input-media-keys", "yes");
             mpv_initialize(Handle);
+            Initialized?.Invoke();
             ShowLogo();
             LoadMpvScripts();
             ProcessCommandLine();
-            Task.Run(() => { EventLoop(); });
         }
 
         public static void ProcessProperty(string name, string value)
@@ -556,7 +559,7 @@ namespace mpvnet
                 StringPropChangeActions.Add(new KeyValuePair<string, Action<string>>(name, action));
         }
 
-        protected static void ProcessCommandLine()
+        public static void ProcessCommandLine()
         {
             var args = Environment.GetCommandLineArgs().Skip(1);
             List<string> files = new List<string>();

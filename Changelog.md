@@ -13,9 +13,8 @@
 - 'Tools > Manage File Associations' was replaced by 'Tools > OS Setup',
   it has now a feature to add and remove mpv.net to and from the Path
   environment variable and the OS default apps settings can be opened (Win 10 only)
-- startup folder and config folder beeing identical is no longer
-  a supported scenaria because it's a brain-dead idea
-- Error messages are shown when unknown scripts and extensions are found in the startup folder
+- startup folder and config folder beeing identical is no longer a supported scenaria
+- error messages are shown when unknown scripts and extensions are found in the startup folder
   because user scripts and extensions are supposed to be located in the config folder instead
 
 ### 5.0
@@ -99,6 +98,10 @@
   the task bar because this is the WinForms default behavier. This
   was fixed by calling Spy++ to the rescue and adding WS_MINIMIZEBOX
   in CreateParams
+- changing from maximized to fullscreen did not work
+- the search field in the config editor was not always remembered
+- new setting remember-volume added, saves volume and mute on exit
+  and restores it on start.
 
 ### 4.6
 

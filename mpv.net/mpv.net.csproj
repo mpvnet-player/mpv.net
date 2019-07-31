@@ -114,6 +114,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Misc\App.cs" />
     <Compile Include="Misc\Extension.cs" />
     <Page Include="Controls\SearchTextBoxUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>

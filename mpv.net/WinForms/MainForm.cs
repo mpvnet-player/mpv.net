@@ -73,8 +73,7 @@ namespace mpvnet
                 mp.VideoSizeChanged += VideoSizeChanged;
                 mp.FileLoaded += FileLoaded;
                 mp.Idle += Idle;
-                mp.VideoSizeAutoResetEvent.WaitOne(App.StartThreshold);
-                if (Height < FontHeight * 4) SetFormPosAndSize();
+
                 mp.observe_property_bool("fullscreen", PropChangeFullscreen);
                 mp.observe_property_bool("ontop", PropChangeOnTop);
                 mp.observe_property_bool("border", PropChangeBorder);
@@ -82,6 +81,9 @@ namespace mpvnet
                 mp.observe_property_string("aid", PropChangeAid);
                 mp.observe_property_string("vid", PropChangeVid);
                 mp.observe_property_int("edition", PropChangeEdition);
+
+                mp.VideoSizeAutoResetEvent.WaitOne(App.StartThreshold);
+                if (Height < FontHeight * 4) SetFormPosAndSize();
             }
             catch (Exception ex)
             {
@@ -308,7 +310,7 @@ namespace mpvnet
 
             if (enabled)
             {
-                if (WindowState != FormWindowState.Maximized)
+                if (WindowState != FormWindowState.Maximized || FormBorderStyle != FormBorderStyle.None)
                 {
                     FormBorderStyle = FormBorderStyle.None;
                     WindowState = FormWindowState.Maximized;
@@ -465,22 +467,6 @@ namespace mpvnet
             base.WndProc(ref m);
         }
 
-        protected override void OnDragEnter(DragEventArgs e)
-        {
-            base.OnDragEnter(e);
-            if (e.Data.GetDataPresent(DataFormats.FileDrop) || e.Data.GetDataPresent(DataFormats.Text))
-                e.Effect = DragDropEffects.Copy;
-        }
-
-        protected override void OnDragDrop(DragEventArgs e)
-        {
-            base.OnDragDrop(e);
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
-                mp.Load(e.Data.GetData(DataFormats.FileDrop) as String[], true, Control.ModifierKeys.HasFlag(Keys.Control));
-            if (e.Data.GetDataPresent(DataFormats.Text))
-                mp.Load(new[] { e.Data.GetData(DataFormats.Text).ToString() }, true, Control.ModifierKeys.HasFlag(Keys.Control));
-        }
-
         void Timer_Tick(object sender, EventArgs e)
         {
             if (CursorHelp.IsPosDifferent(LastCursorPosChanged))
@@ -584,6 +570,22 @@ namespace mpvnet
 
             if (Width - e.Location.X < 10 && e.Location.Y < 10)
                 mp.commandv("quit");
+        }
+
+        protected override void OnDragEnter(DragEventArgs e)
+        {
+            base.OnDragEnter(e);
+            if (e.Data.GetDataPresent(DataFormats.FileDrop) || e.Data.GetDataPresent(DataFormats.Text))
+                e.Effect = DragDropEffects.Copy;
+        }
+
+        protected override void OnDragDrop(DragEventArgs e)
+        {
+            base.OnDragDrop(e);
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                mp.Load(e.Data.GetData(DataFormats.FileDrop) as String[], true, Control.ModifierKeys.HasFlag(Keys.Control));
+            if (e.Data.GetDataPresent(DataFormats.Text))
+                mp.Load(new[] { e.Data.GetData(DataFormats.Text).ToString() }, true, Control.ModifierKeys.HasFlag(Keys.Control));
         }
 
         protected override void OnLostFocus(EventArgs e)

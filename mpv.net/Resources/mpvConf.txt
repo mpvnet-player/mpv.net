@@ -1,9 +1,4 @@
-﻿
-# manual: https://mpv.io/manual/master/
-
-# defaults: https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/mpvConf.txt
-
-input-ar-delay = 500
+﻿input-ar-delay = 500
 input-ar-rate = 20
 volume = 50
 hwdec = yes

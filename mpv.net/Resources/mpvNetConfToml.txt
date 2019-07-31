@@ -59,6 +59,14 @@ help = "Threshold in milliseconds to wait for libmpv returning the video resolut
 name = "remember-position"
 default = "no"
 filter = "Screen"
-help = "Setting to save the window position on exit. (mpv.net specific setting)"
+help = "Save the window position on exit. (mpv.net specific setting)"
+options = [{ name = "yes" },
+           { name = "no" }]
+
+[[settings]]
+name = "remember-volume"
+default = "no"
+filter = "Audio"
+help = "Save volume and mute on exit and restore it on start. (mpv.net specific setting)"
 options = [{ name = "yes" },
            { name = "no" }]

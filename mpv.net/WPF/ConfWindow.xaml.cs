@@ -29,7 +29,7 @@ namespace mpvnet
             LoadSettings(NetSettingsDefinitions, NetConf);
             InitialContent = GetContent(mp.ConfPath, Conf, SettingsDefinitions) +
                              GetContent(App.ConfPath, NetConf, NetSettingsDefinitions);
-            SearchControl.Text = RegHelp.GetString(App.RegPath, "config editor search");
+            SearchControl.Text = RegHelp.GetString(App.RegPath, "ConfigEditorSearch");
 
             if (App.IsDarkMode)
             {
@@ -124,14 +124,13 @@ namespace mpvnet
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
+            RegHelp.SetObject(App.RegPath, "ConfigEditorSearch", SearchControl.Text);
             string content = GetContent(mp.ConfPath, Conf, SettingsDefinitions);
             string netContent = GetContent(App.ConfPath, NetConf, NetSettingsDefinitions);
             if (InitialContent == content + netContent) return;
-            string header = "\r\n# manual: https://mpv.io/manual/master/\r\n\r\n# defaults: https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/mpvConf.txt\r\n\r\n";
-            File.WriteAllText(mp.ConfPath, header + content);
+            File.WriteAllText(mp.ConfPath, content);
             File.WriteAllText(App.ConfPath, netContent);
             Msg.Show("Changes will be available on next mpv.net startup.");            
-            RegHelp.SetObject(App.RegPath, "config editor search", SearchControl.Text);
         }
 
         string GetContent(string filePath, Dictionary<string, string> confSettings, List<SettingBase> settings)
