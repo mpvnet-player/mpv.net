@@ -88,7 +88,7 @@ namespace mpvnet
         {
             public IntPtr dwData;
             public int cbData;
-            [MarshalAs(UnmanagedType.LPStr)]
+            [MarshalAs(UnmanagedType.LPTStr)]
             public string lpData;
         }
     }

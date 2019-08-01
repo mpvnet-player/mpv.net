@@ -110,7 +110,6 @@ namespace mpvnet
 
             mpv_initialize(Handle);
             Initialized?.Invoke();
-            ShowLogo();
             LoadMpvScripts();
             if (GPUAPI != "vulkan") ProcessCommandLine();
         }

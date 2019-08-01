@@ -1,3 +1,9 @@
+###
+
+- bug fix for single-instance not working with unicode filenames
+- bug fix for logo not shown
+- bug fix osd-visibility.js script causing memory leak
+
 ### 5.1
 
 - 'Tools > Execute mpv command' was replaced with [mpv-repl](https://github.com/rossy/mpv-repl)
