@@ -63,6 +63,7 @@ Table of contents
 - On Screen Controler (OSC, play control buttons)
 - [Command Line Interface](https://mpv.io/manual/master/#options)
 - If started from a PowerShell terminal mpv.net will attach to the terminal and print status and debug output
+- [OSD REPL](https://github.com/rossy/mpv-repl)
 - DXVA2 video decoding acceleration
 - OpenGL based video output capable of features loved by videophiles, such as video scaling with popular high quality algorithms, color management, frame timing, interpolation, HDR, and more
 - Search feature powered by [Everything](https://www.voidtools.com) to find and play media ([Screenshot](#media-search-screenshot))
@@ -99,6 +100,12 @@ Context menu defined in the input.conf file with dark mode support.
 A searchable config editor as alternative to edit the mpv.conf file manually.
 
 ![](https://raw.githubusercontent.com/stax76/mpv.net/master/img/ConfEditor.png)
+
+#### Terminal and REPL Screenshot
+
+mpv.net attached to a PowerShell terminal showing the [OSD REPL](https://github.com/rossy/mpv-repl).
+
+![](https://raw.githubusercontent.com/stax76/mpv.net/master/img/Terminal.png)
 
 #### Input Editor Screenshot
 
