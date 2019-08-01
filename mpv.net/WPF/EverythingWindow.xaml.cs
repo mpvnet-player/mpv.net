@@ -136,10 +136,11 @@ namespace mpvnet
                     Everything_SetRequestFlags(EVERYTHING_REQUEST_FILE_NAME | EVERYTHING_REQUEST_PATH);
                     Everything_SetSort(EVERYTHING_SORT_SIZE_DESCENDING);
                     Everything_Query(true);
+
                     for (i = 0; i < Everything_GetNumResults(); i++)
                     {
                         Everything_GetResultFullPathName(i, buf, bufsize);
-                        string ext = PathHelp.GetShortExtension(buf.ToString());
+                        string ext = buf.ToString().ShortExt();
 
                         if (App.AudioTypes.Contains(ext) || App.VideoTypes.Contains(ext) ||
                             App.ImageTypes.Contains(ext))
@@ -148,6 +149,7 @@ namespace mpvnet
 
                         if (items.Count > 100) break;
                     }
+
                     Application.Current.Dispatcher.Invoke(() => {
                         ListView.ItemsSource = items;
                         SelectFirst();

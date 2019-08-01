@@ -93,7 +93,7 @@ namespace mpvnet
                 {
                     fileSize = new FileInfo(path).Length;
 
-                    if (App.AudioTypes.Contains(PathHelp.GetShortExtension(path)))
+                    if (App.AudioTypes.Contains(path.ShortExt()))
                     {
                         using (MediaInfo mediaInfo = new MediaInfo(path))
                         {
@@ -111,13 +111,13 @@ namespace mpvnet
                             if (date != "") text += "Year: " + date + "\n";
                             if (duration != "") text += "Length: " + duration + "\n";
                             text += "Size: " + mediaInfo.GetInfo(MediaInfoStreamKind.General, "FileSize/String") + "\n";
-                            text += "Type: " + PathHelp.GetShortExtension(path).ToUpper();
+                            text += "Type: " + path.ShortExt().ToUpper();
 
                             mp.commandv("show-text", text, "5000");
                             return;
                         }
                     }
-                    else if (App.ImageTypes.Contains(PathHelp.GetShortExtension(path)))
+                    else if (App.ImageTypes.Contains(path.ShortExt()))
                     {
                         using (MediaInfo mediaInfo = new MediaInfo(path))
                         {
@@ -125,7 +125,7 @@ namespace mpvnet
                                 "Width: " + mediaInfo.GetInfo(MediaInfoStreamKind.Image, "Width") + "\n" +
                                 "Height: " + mediaInfo.GetInfo(MediaInfoStreamKind.Image, "Height") + "\n" +
                                 "Size: " + mediaInfo.GetInfo(MediaInfoStreamKind.General, "FileSize/String") + "\n" +
-                                "Type: " + PathHelp.GetShortExtension(path).ToUpper();
+                                "Type: " + path.ShortExt().ToUpper();
 
                             mp.commandv("show-text", text, "5000");
                             return;
@@ -138,7 +138,7 @@ namespace mpvnet
                 string videoFormat = mp.get_property_string("video-format").ToUpper();
                 string audioCodec = mp.get_property_string("audio-codec-name").ToUpper();
 
-                text = PathHelp.GetFileName(path) + "\n" +
+                text = path.FileName() + "\n" +
                     FormatTime(position.TotalMinutes) + ":" +
                     FormatTime(position.Seconds) + " / " +
                     FormatTime(duration2.TotalMinutes) + ":" +

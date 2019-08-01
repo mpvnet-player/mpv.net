@@ -131,8 +131,6 @@ public class MenuItem : ToolStripMenuItem
 
 public class ToolStripRendererEx : ToolStripSystemRenderer
 {
-    public static bool IsDarkMode { get; set; }
-
     public static Color ColorForeground { get; set; } = Color.Black;
     public static Color ColorTheme { get; set; }
     public static Color ColorChecked { get; set; }
@@ -141,34 +139,33 @@ public class ToolStripRendererEx : ToolStripSystemRenderer
     public static Color ColorSelection { get; set; }
     public static Color ColorBackground { get; set; }
 
-    public static Color ColorToolStrip1 { get; set; }
-    public static Color ColorToolStrip2 { get; set; }
-    public static Color ColorToolStrip3 { get; set; }
-    public static Color ColorToolStrip4 { get; set; }
-
     int TextOffset;
 
-    public static void InitColors(Color c, bool darkMode)
+    public static void InitColors(Color themeColor, bool darkMode, bool themed)
     {
-        ColorBorder = HSLColor.Convert(c).ToColorSetLuminosity(100);
-        ColorChecked = HSLColor.Convert(c).ToColorSetLuminosity(160);
-        ColorSelection = HSLColor.Convert(c).ToColorSetLuminosity(180);
-        ColorBackground = HSLColor.Convert(c).ToColorSetLuminosity(210);
-        ColorTop = HSLColor.Convert(c).ToColorSetLuminosity(240);
-
         if (darkMode)
         {
             ColorBorder = Color.White;
             ColorBackground = Color.FromArgb(50, 50, 50);
             ColorSelection = Color.FromArgb(80, 80, 80);
-            ColorForeground = Color.White;
+
+            if (themed)
+                ColorForeground = themeColor;
+            else
+                ColorForeground = Color.White;
+
             ColorChecked = Color.FromArgb(90, 90, 90);
         }
+        else
+        {
+            if (!themed) themeColor = Color.FromArgb(238, 238, 238);
 
-        ColorToolStrip1 = ControlPaint.LightLight(ControlPaint.LightLight(ControlPaint.Light(ColorBorder, 1)));
-        ColorToolStrip2 = ControlPaint.LightLight(ControlPaint.LightLight(ControlPaint.Light(ColorBorder, 0.7f)));
-        ColorToolStrip3 = ControlPaint.LightLight(ControlPaint.LightLight(ControlPaint.Light(ColorBorder, 0.1f)));
-        ColorToolStrip4 = ControlPaint.LightLight(ControlPaint.LightLight(ControlPaint.Light(ColorBorder, 0.4f)));
+            ColorBorder = HSLColor.Convert(themeColor).ToColorSetLuminosity(100);
+            ColorChecked = HSLColor.Convert(themeColor).ToColorSetLuminosity(160);
+            ColorSelection = HSLColor.Convert(themeColor).ToColorSetLuminosity(180);
+            ColorBackground = HSLColor.Convert(themeColor).ToColorSetLuminosity(210);
+            ColorTop = HSLColor.Convert(themeColor).ToColorSetLuminosity(240);
+        }
     }
 
     protected override void OnRenderToolStripBorder(ToolStripRenderEventArgs e)
@@ -198,17 +195,6 @@ public class ToolStripRendererEx : ToolStripSystemRenderer
         }
 
         base.OnRenderItemText(e);
-    }
-
-    protected override void OnRenderToolStripBackground(ToolStripRenderEventArgs e)
-    {
-        if (!(e.ToolStrip is ToolStripDropDownMenu) && !(e.ToolStrip.LayoutStyle == ToolStripLayoutStyle.VerticalStackWithOverflow))
-        {
-            Rectangle r = new Rectangle(-1, -1, e.AffectedBounds.Width, e.AffectedBounds.Height);
-
-            using (SolidBrush b = new SolidBrush(ColorToolStrip2))
-                e.Graphics.FillRectangle(b, r);
-        }
     }
 
     protected override void OnRenderMenuItemBackground(ToolStripItemRenderEventArgs e)

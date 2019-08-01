@@ -294,20 +294,5 @@ namespace mpvnet
     public class PathHelp
     {
         public static string StartupPath { get; } = Application.StartupPath + "\\";
-
-        public static string GetFileName(string path)
-        {
-            if (string.IsNullOrEmpty(path)) return "";
-            int index = path.LastIndexOf('\\');
-            if (index > -1) return path.Substring(index + 1);
-            index = path.LastIndexOf('/');
-            if (index > -1) return path.Substring(index + 1);
-            return path;
-        }
-
-        public static string GetShortExtension(string path)
-        {
-            return Path.GetExtension(path).ToLower().TrimStart('.');
-        }
     }
 }

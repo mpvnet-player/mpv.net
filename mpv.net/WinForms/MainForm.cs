@@ -2,7 +2,6 @@
 using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Threading;
 using System.Windows.Forms;
 using System.Linq;
 using System.Collections.Generic;
@@ -82,7 +81,7 @@ namespace mpvnet
                 mp.observe_property_string("vid", PropChangeVid);
                 mp.observe_property_int("edition", PropChangeEdition);
 
-                mp.VideoSizeAutoResetEvent.WaitOne(App.StartThreshold);
+                if (mp.GPUAPI != "vulkan") mp.VideoSizeAutoResetEvent.WaitOne(App.StartThreshold);
                 if (Height < FontHeight * 4) SetFormPosAndSize();
             }
             catch (Exception ex)
@@ -239,7 +238,7 @@ namespace mpvnet
             int autoFitHeight = Convert.ToInt32(screen.WorkingArea.Height * mp.Autofit);
 
             if (mp.VideoSize.Height == 0 || mp.VideoSize.Width == 0 ||
-                mp.VideoSize.Width / (float)mp.VideoSize.Height < 1.3)
+                mp.VideoSize.Width / (float)mp.VideoSize.Height < App.MinimumAspectRatio)
 
                 mp.VideoSize = new Size((int)(autoFitHeight * (16 / 9.0)), autoFitHeight);
 
@@ -367,7 +366,7 @@ namespace mpvnet
             string path = mp.get_property_string("path");
             BeginInvoke(new Action(() => {
                 if (File.Exists(path) || path.Contains("://"))
-                    Text = PathHelp.GetFileName(path) + " - mpv.net " + Application.ProductVersion;
+                    Text = path.FileName() + " - mpv.net " + Application.ProductVersion;
                 else
                     Text = "mpv.net " + Application.ProductVersion;
             }));
@@ -508,9 +507,10 @@ namespace mpvnet
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
+            if (mp.GPUAPI == "vulkan") mp.ProcessCommandLine();
             var wpfColor = WPF.WPF.ThemeColor;
             Color color = Color.FromArgb(wpfColor.A, wpfColor.R, wpfColor.G, wpfColor.B);
-            ToolStripRendererEx.InitColors(color, App.IsDarkMode);
+            ToolStripRendererEx.InitColors(color, App.IsDarkMode, App.ThemedMenu);
             BuildMenu();
             ContextMenuStrip = ContextMenu;
             WPF.WPF.Init();

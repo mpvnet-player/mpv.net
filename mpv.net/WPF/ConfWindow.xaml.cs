@@ -197,7 +197,7 @@ namespace mpvnet
                 i.Update();
         }
 
-        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void FilterListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.AddedItems.Count > 0)
                 SearchControl.Text = e.AddedItems[0].ToString() + ":";

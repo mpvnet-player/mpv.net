@@ -244,17 +244,17 @@ help = "Specify the OSD font size. See sub-font-size for details. Default: 55"
 [[settings]]
 name = "autofit"
 filter = "Screen"
-help = "<int> Initial window height in percent. Default: 50%"
+help = "<int> Initial window height in percent. Default: 50"
 
 [[settings]]
 name = "autofit-smaller"
 filter = "Screen"
-help = "<int> Minimum window height in percent. Default: 40%"
+help = "<int> Minimum window height in percent. Default: 40"
 
 [[settings]]
 name = "autofit-larger"
 filter = "Screen"
-help = "<int> Maximum window height in percent. Default: 75%"
+help = "<int> Maximum window height in percent. Default: 75"
 
 [[settings]]
 name = "screenshot-directory"

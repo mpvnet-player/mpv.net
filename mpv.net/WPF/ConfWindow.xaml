@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:WPF="clr-namespace:WPF"
         mc:Ignorable="d"
-        Height="500" Width="700" Loaded="ConfWindow1_Loaded" ShowInTaskbar="False"
+        Height="530" Width="700" Loaded="ConfWindow1_Loaded" ShowInTaskbar="False"
         WindowStartupLocation="CenterScreen" Title="Config Editor">
     <Grid>
         <Grid.RowDefinitions>
@@ -21,7 +21,7 @@
             <StackPanel x:Name="MainStackPanel"></StackPanel>
         </ScrollViewer>
         <StackPanel Margin="20,0,0,0" Grid.Row="1">
-            <ListBox x:Name="FilterListBox" ItemsSource="{Binding FilterStrings}" BorderThickness="0" SelectionChanged="ListBox_SelectionChanged" Foreground="{x:Static WPF:WPF.ThemeBrush}" Background="{Binding Path=Background, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}">
+            <ListBox x:Name="FilterListBox" ItemsSource="{Binding FilterStrings}" BorderThickness="0" SelectionChanged="FilterListBox_SelectionChanged" Foreground="{x:Static WPF:WPF.ThemeBrush}" Background="{Binding Path=Background, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding}" FontSize="16" />

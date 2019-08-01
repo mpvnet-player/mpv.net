@@ -13,9 +13,30 @@
 - 'Tools > Manage File Associations' was replaced by 'Tools > OS Setup',
   it has now a feature to add and remove mpv.net to and from the Path
   environment variable and the OS default apps settings can be opened (Win 10 only)
-- startup folder and config folder beeing identical is no longer a supported scenaria
+- startup folder and config folder beeing identical was causing a critical issue
+  as mpv.net was loading extensions twice and scripts four times, now identical
+  folders are no longer permitted
 - error messages are shown when unknown scripts and extensions are found in the startup folder
   because user scripts and extensions are supposed to be located in the config folder instead
+- changing from maximized to fullscreen did not work
+- the search field in the config editor was not always remembered
+- new setting remember-volume added, saves volume and mute on exit
+  and restores it on start.
+- it's now enforced that mpv properties on the command line and in
+  the mpv.conf config file are lowercase, if not a error is shown
+- gpu-api vulkan was not working if media files were opened via
+  command line (that included Explorer), Vulkan unlike d3d11 and opengl
+  requires a window being visible, this is now satisfied with a
+  workaround, it's only possible showing a window with default size
+  first as defines by autofit. Vulkan has few issues, usually the auto option
+  which uses d3d11 is better! Using Vulkan the mpv.net setting
+- new setting minimum-aspect-ratio added, minimum aspect ratio for the window,
+  this was previously hard coded to 1.3
+- new setting auto-load-folder added, for single files automatically load
+  the entire directory into the playlist, previously this was forced,
+  now it can be disabled
+- new setting themed-menu added, follow theme color in context menu,
+  default: no, UI related settings have now a separate UI tab in the config editor
 
 ### 5.0
 
@@ -98,10 +119,6 @@
   the task bar because this is the WinForms default behavier. This
   was fixed by calling Spy++ to the rescue and adding WS_MINIMIZEBOX
   in CreateParams
-- changing from maximized to fullscreen did not work
-- the search field in the config editor was not always remembered
-- new setting remember-volume added, saves volume and mute on exit
-  and restores it on start.
 
 ### 4.6
 

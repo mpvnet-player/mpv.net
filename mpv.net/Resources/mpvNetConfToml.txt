@@ -1,29 +1,9 @@
 ﻿[[settings]]
-name = "dark-mode"
-default = "always"
-filter = "General"
-help = "Enables a dark theme. (mpv.net specific setting)"
-options = [{ name = "always" },
-           { name = "system" , help = "Available on Windows 10 or higher" },
-		   { name = "never" }]
-
-[[settings]]
-name = "dark-color"
-type = "color"
-filter = "General"
-help = "Theme color used in dark-mode. Leave empty to use OS theme. (mpv.net specific setting)"
-
-[[settings]]
-name = "light-color"
-type = "color"
-filter = "General"
-help = "Theme color used when dark-mode is disabled. Leave empty to use OS theme. (mpv.net specific setting)"
-
-[[settings]]
 name = "url-whitelist"
 filter = "General"
 type = "string"
-help = "Whitelist setting to monitor the clipboard for URLs to play. (mpv.net specific setting)\n\nDefault: tube vimeo ard zdf"
+help = "Whitelist setting to monitor the clipboard for URLs to play. (mpv.net specific setting)\n\nDefault: tube vimeo ard zdf\n\nHow to start mpv.net directly from Google Chrome is described in the manual:"
+url = "https://github.com/stax76/mpv.net/blob/master/Manual.md#chrome-extension"
 
 [[settings]]
 name = "process-instance"
@@ -56,6 +36,11 @@ filter = "Screen"
 help = "Threshold in milliseconds to wait for libmpv returning the video resolution before the window is shown, otherwise default dimensions are used as defined by autofit and start-size. (mpv.net specific setting) Default: 1500"
 
 [[settings]]
+name = "minimum-aspect-ratio"
+filter = "Screen"
+help = "<float> Minimum aspect ratio for the window. Default: 1.3"
+
+[[settings]]
 name = "remember-position"
 default = "no"
 filter = "Screen"
@@ -68,5 +53,42 @@ name = "remember-volume"
 default = "no"
 filter = "Audio"
 help = "Save volume and mute on exit and restore it on start. (mpv.net specific setting)"
+options = [{ name = "yes" },
+           { name = "no" }]
+
+[[settings]]
+name = "auto-load-folder"
+default = "yes"
+filter = "Playback"
+help = "For single files automatically load the entire directory into the playlist. (mpv.net specific setting)"
+options = [{ name = "yes" },
+           { name = "no" }]
+
+[[settings]]
+name = "dark-mode"
+default = "always"
+filter = "UI"
+help = "Enables a dark theme. (mpv.net specific setting)"
+options = [{ name = "always" },
+           { name = "system" , help = "Available on Windows 10 or higher" },
+		   { name = "never" }]
+
+[[settings]]
+name = "dark-color"
+type = "color"
+filter = "UI"
+help = "Theme color used in dark-mode. Leave empty to use OS theme. (mpv.net specific setting)"
+
+[[settings]]
+name = "light-color"
+type = "color"
+filter = "UI"
+help = "Theme color used when dark-mode is disabled. Leave empty to use OS theme. (mpv.net specific setting)"
+
+[[settings]]
+name = "themed-menu"
+default = "no"
+filter = "UI"
+help = "Follow theme color in context menu. (mpv.net specific setting)"
 options = [{ name = "yes" },
            { name = "no" }]

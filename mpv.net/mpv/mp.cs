@@ -56,27 +56,29 @@ namespace mpvnet
 
         public static event Action Initialized;
 
-        public static IntPtr Handle { get; set; }
-        public static IntPtr WindowHandle { get; set; }
-        public static Extension Extension { get; set; }
-        public static bool IsLogoVisible { set; get; }
-        public static bool IsQuitNeeded { set; get; } = true;
         public static List<KeyValuePair<string, Action<bool>>> BoolPropChangeActions { get; set; } = new List<KeyValuePair<string, Action<bool>>>();
         public static List<KeyValuePair<string, Action<int>>> IntPropChangeActions { get; set; } = new List<KeyValuePair<string, Action<int>>>();
         public static List<KeyValuePair<string, Action<string>>> StringPropChangeActions { get; set; } = new List<KeyValuePair<string, Action<string>>>();
-        public static Size VideoSize { get; set; }
-        public static List<PythonScript> PythonScripts { get; set; } = new List<PythonScript>();
-        public static AutoResetEvent ShutdownAutoResetEvent { get; set; } = new AutoResetEvent(false);
-        public static AutoResetEvent VideoSizeAutoResetEvent { get; set; } = new AutoResetEvent(false);
         public static List<MediaTrack> MediaTracks { get; set; } = new List<MediaTrack>();
         public static List<KeyValuePair<string, double>> Chapters { get; set; } = new List<KeyValuePair<string, double>>();
+
+        public static IntPtr Handle { get; set; }
+        public static IntPtr WindowHandle { get; set; }
+        public static Extension Extension { get; set; }
+        public static List<PythonScript> PythonScripts { get; set; } = new List<PythonScript>();
+        public static Size VideoSize { get; set; }
+        public static AutoResetEvent ShutdownAutoResetEvent { get; set; } = new AutoResetEvent(false);
+        public static AutoResetEvent VideoSizeAutoResetEvent { get; set; } = new AutoResetEvent(false);
 
         public static string InputConfPath { get; } = ConfigFolder + "\\input.conf";
         public static string ConfPath      { get; } = ConfigFolder + "\\mpv.conf";
         public static string Sid { get; set; } = "";
         public static string Aid { get; set; } = "";
         public static string Vid { get; set; } = "";
+        public static string GPUAPI { get; set; } = "auto";
 
+        public static bool IsLogoVisible { set; get; }
+        public static bool IsQuitNeeded { set; get; } = true;
         public static bool Fullscreen { get; set; }
         public static bool Border { get; set; } = true;
         
@@ -100,20 +102,23 @@ namespace mpvnet
             }
 
             set_property_string("wid", MainForm.Hwnd.ToString());
-            set_property_string("config-dir", ConfigFolder);
             set_property_string("osc", "yes");
-            set_property_string("config", "yes");
             set_property_string("force-window", "yes");
             set_property_string("input-media-keys", "yes");
+            set_property_string("config-dir", ConfigFolder);
+            set_property_string("config", "yes");
+
             mpv_initialize(Handle);
             Initialized?.Invoke();
             ShowLogo();
             LoadMpvScripts();
-            ProcessCommandLine();
+            if (GPUAPI != "vulkan") ProcessCommandLine();
         }
 
         public static void ProcessProperty(string name, string value)
         {
+            if (name.Any(char.IsUpper)) Msg.ShowError("Uppercase char detected: " + name, "mpv properties using the command line and the mpv.conf config file are required to be lowercase.");
+
             switch (name)
             {
                 case "autofit":
@@ -132,6 +137,7 @@ namespace mpvnet
                 case "fullscreen": Fullscreen = value == "yes"; break;
                 case "border": Border = value == "yes"; break;
                 case "screen": Screen = Convert.ToInt32(value); break;
+                case "gpu-api": GPUAPI = value; break;
             }
         }
 
@@ -212,10 +218,10 @@ namespace mpvnet
 
                     if (File.Exists(ConfPath))
                         foreach (var i in File.ReadAllLines(ConfPath))
-                            if (i.Contains("=") && ! i.StartsWith("#"))
+                            if (i.Contains("=") && !i.TrimStart().StartsWith("#"))
                                 _Conf[i.Substring(0, i.IndexOf("=")).Trim()] = i.Substring(i.IndexOf("=") + 1).Trim();
 
-                    foreach (var i in Conf)
+                    foreach (var i in _Conf)
                         ProcessProperty(i.Key, i.Value);
                 }
                 return _Conf;
@@ -224,14 +230,17 @@ namespace mpvnet
 
         public static void LoadMpvScripts()
         {
-            string[] startupScripts = Directory.GetFiles(PathHelp.StartupPath + "Scripts");
+            if (Directory.Exists(PathHelp.StartupPath + "Scripts"))
+            {
+                string[] startupScripts = Directory.GetFiles(PathHelp.StartupPath + "Scripts");
 
-            foreach (string path in startupScripts)
-                if (path.EndsWith(".lua") || path.EndsWith(".js"))
-                    if (KnownScripts.Contains(Path.GetFileName(path)))
-                        commandv("load-script", $"{path}");
-                    else
-                        App.UnknownModule(path);
+                foreach (string path in startupScripts)
+                    if (path.EndsWith(".lua") || path.EndsWith(".js"))
+                        if (KnownScripts.Contains(Path.GetFileName(path)))
+                            commandv("load-script", $"{path}");
+                        else
+                            App.UnknownModule(path);
+            }
         }
 
         public static string[] KnownScripts { get; } = { "osc-visibility.js", "show-playlist.js", "seek-show-position.py" };
@@ -624,7 +633,7 @@ namespace mpvnet
             LastLoad = DateTime.Now;
 
             for (int i = 0; i < files.Length; i++)
-                if (App.SubtitleTypes.Contains(PathHelp.GetShortExtension(files[i])))
+                if (App.SubtitleTypes.Contains(files[i].ShortExt()))
                     commandv("sub-add", files[i]);
                 else
                     if (i == 0 && !append)
@@ -640,14 +649,15 @@ namespace mpvnet
 
         public static void LoadFolder()
         {
+            if (!App.AutoLoadFolder) return;
             Thread.Sleep(200); // user reported race condition
             string path = get_property_string("path");
             if (!File.Exists(path) || get_property_int("playlist-count") != 1) return;
             List<string> files = Directory.GetFiles(Path.GetDirectoryName(path)).ToList();
             files = files.Where((file) =>
-                App.VideoTypes.Contains(PathHelp.GetShortExtension(file)) ||
-                App.AudioTypes.Contains(PathHelp.GetShortExtension(file)) ||
-                App.ImageTypes.Contains(PathHelp.GetShortExtension(file))).ToList();
+                App.VideoTypes.Contains(file.ShortExt()) ||
+                App.AudioTypes.Contains(file.ShortExt()) ||
+                App.ImageTypes.Contains(file.ShortExt())).ToList();
             files.Sort(new StringLogicalComparer());
             int index = files.IndexOf(path);
             files.Remove(path);
