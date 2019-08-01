@@ -150,6 +150,7 @@
 
  F1     script-message mpv.net show-command-palette #menu: Tools > Show All Commands
  h      script-message mpv.net show-history         #menu: Tools > Show History
+ Ctrl+r script-message-to repl type ""              #menu: Tools > Show REPL
  l      ab-loop                                     #menu: Tools > Set/clear A-B loop points
  L      cycle-values loop-file "inf" "no"           #menu: Tools > Toggle infinite file looping
  Ctrl+h cycle-values hwdec "auto" "no"              #menu: Tools > Toggle Hardware Decoding

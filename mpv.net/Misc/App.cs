@@ -100,11 +100,6 @@ namespace mpvnet
             }
         }
 
-        public static void UnknownModule(string path)
-        {
-            Msg.ShowError("Failed to load script or extension", "Only scripts and extensions that ship with mpv.net are allowed in <startup>\\scripts or <startup>\\extensions.\n\nUser scripts or extensions have to use <config folder>\\scripts or <config folder>\\extensions.\n\nNever copy a new mpv.net version over a old mpv.net version.\n\nNever install a new mpv.net version on top of a old mpv.net version.\n\n" + path);
-        }
-
         public static bool ProcessProperty(string name, string value)
         {
             switch (name)

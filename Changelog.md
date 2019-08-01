@@ -1,13 +1,12 @@
-###
+### 5.1
 
-- 'Tools > Execute mpv command' was removed,
-  [mpv-repl](https://github.com/rossy/mpv-repl) is currently the best choice
+- 'Tools > Execute mpv command' was replaced with [mpv-repl](https://github.com/rossy/mpv-repl)
 - many [wiki pages](https://github.com/stax76/mpv.net/wiki) were improved
 - the logo/icon had a very small cosmetic change
 - the help in the context menu was improved,
   for quick access consider the command palette (F1 key)
 - config options specific to mpv.net are now available from the command line
-- the input editor no longer as known limitations, 'alt gr' and ctrl+alt are working now
+- the input editor no longer has known limitations, 'alt gr' and ctrl+alt are working now
 - the help in the input editor was simplified and the filter logic was improved
 - fixed issue in file associations causing mpv.net not to appear in OS default apps
 - 'Tools > Manage File Associations' was replaced by 'Tools > OS Setup',
@@ -25,18 +24,14 @@
 - it's now enforced that mpv properties on the command line and in
   the mpv.conf config file are lowercase, if not a error is shown
 - gpu-api vulkan was not working if media files were opened via
-  command line (that included Explorer), Vulkan unlike d3d11 and opengl
-  requires a window being visible, this is now satisfied with a
-  workaround, it's only possible showing a window with default size
-  first as defines by autofit. Vulkan has few issues, usually the auto option
-  which uses d3d11 is better! Using Vulkan the mpv.net setting
+  command line (that included Explorer)
 - new setting minimum-aspect-ratio added, minimum aspect ratio for the window,
   this was previously hard coded to 1.3
 - new setting auto-load-folder added, for single files automatically load
   the entire directory into the playlist, previously this was forced,
   now it can be disabled
 - new setting themed-menu added, follow theme color in context menu,
-  default: no, UI related settings have now a separate UI tab in the config editor
+  default: no. UI related settings have now a separate UI tab in the config editor
 
 ### 5.0
 

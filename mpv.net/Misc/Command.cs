@@ -16,7 +16,7 @@ namespace mpvnet
         {
             switch (id)
             {
-                case "manage-file-associations": ManageFileAssociations(); break;
+                case "manage-file-associations": ManageFileAssociations(); break; // deprecated 2019
                 case "cycle-audio": CycleAudio(); break;
                 case "load-audio": LoadAudio(); break;
                 case "load-sub": LoadSubtitle(); break;

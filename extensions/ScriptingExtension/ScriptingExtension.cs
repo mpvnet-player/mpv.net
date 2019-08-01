@@ -29,8 +29,8 @@ namespace ScriptingExtension // the file name of extensions must end with 'Exten
                 scriptFiles.AddRange(Directory.GetFiles(mp.ConfigFolder + "scripts", "*.cs"));
 
             if (Directory.Exists(PathHelp.StartupPath + "scripts"))
-                foreach (string file in Directory.GetFiles(PathHelp.StartupPath + "scripts", "*.cs"))
-                    App.UnknownModule(file);
+                foreach (string path in Directory.GetFiles(PathHelp.StartupPath + "scripts", "*.cs"))
+                    scriptFiles.AddRange(Directory.GetFiles(PathHelp.StartupPath + "scripts", "*.cs"));
 
             if (scriptFiles.Count == 0) return;
             CSScriptLibrary.CSScript.EvaluatorConfig.Engine = EvaluatorEngine.CodeDom;

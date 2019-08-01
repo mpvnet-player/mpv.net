@@ -235,15 +235,12 @@ namespace mpvnet
                 string[] startupScripts = Directory.GetFiles(PathHelp.StartupPath + "Scripts");
 
                 foreach (string path in startupScripts)
-                    if (path.EndsWith(".lua") || path.EndsWith(".js"))
-                        if (KnownScripts.Contains(Path.GetFileName(path)))
-                            commandv("load-script", $"{path}");
-                        else
-                            App.UnknownModule(path);
+                    if ((path.EndsWith(".lua") || path.EndsWith(".js")) && KnownScripts.Contains(Path.GetFileName(path)))
+                        commandv("load-script", $"{path}");
             }
         }
 
-        public static string[] KnownScripts { get; } = { "osc-visibility.js", "show-playlist.js", "seek-show-position.py" };
+        public static string[] KnownScripts { get; } = { "osc-visibility.js", "show-playlist.js", "seek-show-position.py", "repl.lua" };
 
         public static void LoadScripts()
         {
@@ -259,7 +256,7 @@ namespace mpvnet
                             PowerShellScript.Init(path);
                     }
                     else
-                        App.UnknownModule(path);
+                        Msg.ShowError("Failed to load script", path + "\n\nOnly scripts that ship with mpv.net are allowed in <startup>\\scripts\n\nUser scripts have to use <config folder>\\scripts\n\nNever copy or install a new mpv.net version over a old mpv.net version.");
                 }
             }
 

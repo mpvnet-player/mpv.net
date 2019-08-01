@@ -311,6 +311,9 @@ namespace mpvnet
             {
                 if (WindowState != FormWindowState.Maximized || FormBorderStyle != FormBorderStyle.None)
                 {
+                    if (WindowState == FormWindowState.Maximized)
+                        WindowState = FormWindowState.Minimized;
+
                     FormBorderStyle = FormBorderStyle.None;
                     WindowState = FormWindowState.Maximized;
                 }
@@ -324,7 +327,7 @@ namespace mpvnet
                     if (mp.Border)
                         FormBorderStyle = FormBorderStyle.Sizable;
                     else
-                        FormBorderStyle = FormBorderStyle.None;
+                        FormBorderStyle = FormBorderStyle.None;                      
 
                     SetFormPosAndSize();
                 }
