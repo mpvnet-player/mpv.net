@@ -166,8 +166,13 @@ namespace mpvnet
                             td.AddCommandLink(@"AppData\Roaming\mpv", appdataFolderMpv, appdataFolderMpv);
                             td.AddCommandLink("<startup>\\portable_config", portableFolder, portableFolder);
                             td.AddCommandLink("Choose custom folder", "custom");
-                            td.AllowCancel = false;
                             _ConfigFolder = td.Show();
+                        }
+
+                        if (_ConfigFolder == null)
+                        {
+                            _ConfigFolder = "";
+                            return "";
                         }
 
                         if (_ConfigFolder == "custom")

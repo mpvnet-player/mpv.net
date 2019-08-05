@@ -359,7 +359,7 @@ public class TaskDialog<T> : TaskDialogNative, IDisposable
     public void AddCommandLink(string text, T value)
     {
         int n = 1000 + IdValueDic.Count + 1;
-        IdValueDic[n] = value == null ? (T)(object)text : value;
+        IdValueDic[n] = value;
         IdTextDic[n] = text;
         Buttons.Add(new TaskDialogNative.TASKDIALOG_BUTTON(n, text));
         Config.dwFlags |= TaskDialogNative.TASKDIALOG_FLAGS.TDF_USE_COMMAND_LINKS;

@@ -83,7 +83,6 @@ namespace mpvnet
 
                 if (mp.GPUAPI != "vulkan") mp.VideoSizeAutoResetEvent.WaitOne(App.StartThreshold);
                 if (Height < FontHeight * 4) SetFormPosAndSize();
-                if (mp.get_property_int("playlist-count") == 0) mp.ShowLogo();
             }
             catch (Exception ex)
             {
@@ -506,6 +505,12 @@ namespace mpvnet
                         FormBorderStyle = FormBorderStyle.None;
                 }
             }));
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            if (mp.get_property_int("playlist-count") == 0) mp.ShowLogo();
         }
 
         protected override void OnShown(EventArgs e)

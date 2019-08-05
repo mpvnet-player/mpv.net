@@ -18,6 +18,8 @@ namespace mpvnet
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
 
+                if (mp.ConfigFolder == "") return;
+
                 string[] args = Environment.GetCommandLineArgs().Skip(1).ToArray();
 
                 if (args.Length == 2 && args[0] == "--reg-file-assoc")
