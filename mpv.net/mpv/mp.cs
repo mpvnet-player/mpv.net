@@ -98,6 +98,7 @@ namespace mpvnet
             if (App.IsStartedFromTerminal)
             {
                 set_property_string("terminal", "yes");
+                set_property_string("input-terminal", "yes");
                 set_property_string("msg-level", "osd/libass=fatal");
             }
 
@@ -108,10 +109,11 @@ namespace mpvnet
             set_property_string("config-dir", ConfigFolder);
             set_property_string("config", "yes");
 
+            ProcessCommandLine(true);
             mpv_initialize(Handle);
             Initialized?.Invoke();
             LoadMpvScripts();
-            if (GPUAPI != "vulkan") ProcessCommandLine();
+            if (GPUAPI != "vulkan") ProcessCommandLine(false);
         }
 
         public static void ProcessProperty(string name, string value)
@@ -564,40 +566,40 @@ namespace mpvnet
                 StringPropChangeActions.Add(new KeyValuePair<string, Action<string>>(name, action));
         }
 
-        public static void ProcessCommandLine()
+        public static void ProcessCommandLine(bool preInit)
         {
             var args = Environment.GetCommandLineArgs().Skip(1);
-            List<string> files = new List<string>();
+
+            //Msg.Show(string.Join("\n", args));
+
+            string[] preInitProperties = { "input-terminal", "terminal", "input-file", "config", "config-dir", "input-conf", "load-scripts", "scripts", "player-operation-mode" };
 
             foreach (string i in args)
             {
-                if (!i.StartsWith("--") && (i == "-" || i.Contains("://") || File.Exists(i)))
-                {
-                    files.Add(i);
-                    if (i.Contains("://")) RegHelp.SetObject(App.RegPath, "LastURL", i);
-                }
-            }
+                string arg = i;
 
-            foreach (string i in args)
-            {
-                if (i.StartsWith("--"))
+                if (arg.StartsWith("--"))
                 {
                     try
                     {
-                        if (i.Contains("="))
+                        if (!arg.Contains("=")) arg += "=yes";
+
+                        string left = arg.Substring(2, arg.IndexOf("=") - 2);
+                        string right = arg.Substring(left.Length + 3);
+
+                        if (left == "script") left = "scripts";
+
+                        if (preInit && preInitProperties.Contains(left))
                         {
-                            string left = i.Substring(2, i.IndexOf("=") - 2);
-                            string right = i.Substring(left.Length + 3);
                             mp.ProcessProperty(left, right);
                             if (!App.ProcessProperty(left, right))
                                 set_property_string(left, right, true);
                         }
-                        else
+                        else if (!preInit && !preInitProperties.Contains(left))
                         {
-                            string name = i.Substring(2);
-                            mp.ProcessProperty(name, "yes");
-                            if (!App.ProcessProperty(name, "yes"))
-                                set_property_string(name, "yes", true);
+                            mp.ProcessProperty(left, right);
+                            if (!App.ProcessProperty(left, right))
+                                set_property_string(left, right, true);
                         }
                     }
                     catch (Exception e)
@@ -607,12 +609,26 @@ namespace mpvnet
                 }
             }
 
-            Load(files.ToArray(), App.ProcessInstance != "queue", Control.ModifierKeys.HasFlag(Keys.Control));
-
-            if (files.Count == 0 || files[0].Contains("://"))
+            if (!preInit)
             {
-                VideoSizeAutoResetEvent.Set();
-                VideoSizeChanged?.Invoke();
+                List<string> files = new List<string>();
+
+                foreach (string i in args)
+                {
+                    if (!i.StartsWith("--") && (i == "-" || i.Contains("://") || File.Exists(i)))
+                    {
+                        files.Add(i);
+                        if (i.Contains("://")) RegHelp.SetObject(App.RegPath, "LastURL", i);
+                    }
+                }
+
+                Load(files.ToArray(), App.ProcessInstance != "queue", Control.ModifierKeys.HasFlag(Keys.Control));
+
+                if (files.Count == 0 || files[0].Contains("://"))
+                {
+                    VideoSizeAutoResetEvent.Set();
+                    VideoSizeChanged?.Invoke();
+                }
             }
         }
 

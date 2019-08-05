@@ -4,13 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="About mpv.net" Height="230" Width="420" FontSize="16" ShowInTaskbar="False"
+        Title="About mpv.net" Height="230" Width="500" FontSize="16" ShowInTaskbar="False"
         WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
     <Grid>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock FontSize="48" HorizontalAlignment="Center" Margin="0,0,0,10">mpv.net</TextBlock>
             <TextBlock HorizontalAlignment="Center">Copyright (c) 2017-2019 Frank Skare (stax76)</TextBlock>
             <TextBlock Name="Version" HorizontalAlignment="Center" />
+            <TextBlock Name="mpvVersion" HorizontalAlignment="Center" />
             <TextBlock HorizontalAlignment="Center" Margin="0,0,0,20">MIT License</TextBlock>
         </StackPanel>
     </Grid>

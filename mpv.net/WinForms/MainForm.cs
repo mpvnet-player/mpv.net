@@ -511,7 +511,7 @@ namespace mpvnet
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
-            if (mp.GPUAPI == "vulkan") mp.ProcessCommandLine();
+            if (mp.GPUAPI == "vulkan") mp.ProcessCommandLine(false);
             var wpfColor = WPF.WPF.ThemeColor;
             Color color = Color.FromArgb(wpfColor.A, wpfColor.R, wpfColor.G, wpfColor.B);
             ToolStripRendererEx.InitColors(color, App.IsDarkMode, App.ThemedMenu);

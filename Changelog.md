@@ -1,8 +1,15 @@
 ###
 
 - bug fix for single-instance not working with unicode filenames
-- bug fix for logo not shown
-- bug fix osd-visibility.js script causing memory leak
+- bug fix for logo not shown on start
+- osd-visibility.js script was removed because the OSC uses too much memory
+- youtube-dl was updated
+- in case mpv.net is started from a terminal it sets now the mpv property input-terminal to yes,
+  this means mpv.net will now receive input keys from the terminal
+- command line processing was improved, certain properties didn't work, now they should work:
+  (input-terminal, terminal, input-file, config, config-dir, input-conf,
+  load-scripts, script, scripts, player-operation-mode)
+- the about dialog shows now the mpv version and build date
 
 ### 5.1
 
