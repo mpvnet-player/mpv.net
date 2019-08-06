@@ -1,4 +1,4 @@
-###
+### 5.2
 
 - bug fix for single-instance not working with unicode filenames
 - bug fix for logo not shown on start
@@ -10,6 +10,7 @@
 - certain command line properties didn't work (input-terminal, terminal, input-file,
   config, config-dir, input-conf, load-scripts, script, scripts, player-operation-mode)
 - the about dialog shows now the mpv version and build date
+- the dialog that asks for a config folder has now a cancel option
 
 ### 5.1
 

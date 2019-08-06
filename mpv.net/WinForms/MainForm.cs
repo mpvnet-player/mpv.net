@@ -609,8 +609,8 @@ namespace mpvnet
 
             foreach (string url in App.UrlWhitelist)
             {
-                if (clipboard.Contains("://") && ! clipboard.Contains("\n") &&
-                    ! clipboard.Contains(" ") && clipboard.Contains(url.ToLower().Trim()) &&
+                if (clipboard.Contains("://") && !clipboard.Contains("\n") &&
+                    !clipboard.Contains(" ") && clipboard.Contains(url.ToLower().Trim()) &&
                     RegHelp.GetString(App.RegPath, "LastURL") != clipboard && Visible)
                 {
                     RegHelp.SetObject(App.RegPath, "LastURL", clipboard);
