@@ -70,8 +70,8 @@ namespace mpvnet
         public static AutoResetEvent ShutdownAutoResetEvent { get; set; } = new AutoResetEvent(false);
         public static AutoResetEvent VideoSizeAutoResetEvent { get; set; } = new AutoResetEvent(false);
 
-        public static string InputConfPath { get; } = ConfigFolder + "\\input.conf";
-        public static string ConfPath      { get; } = ConfigFolder + "\\mpv.conf";
+        public static string InputConfPath { get => ConfigFolder + "input.conf"; }
+        public static string ConfPath      { get => ConfigFolder + "mpv.conf"; }
         public static string Sid { get; set; } = "";
         public static string Aid { get; set; } = "";
         public static string Vid { get; set; } = "";
@@ -201,14 +201,14 @@ namespace mpvnet
                     if (!_ConfigFolder.Contains("portable_config"))
                         RegHelp.SetObject(App.RegPath, "ConfigFolder", _ConfigFolder);
 
-                    if (!File.Exists(_ConfigFolder + "\\input.conf"))
-                        File.WriteAllText(_ConfigFolder + "\\input.conf", Properties.Resources.inputConf);
+                    if (!File.Exists(_ConfigFolder + "input.conf"))
+                        File.WriteAllText(_ConfigFolder + "input.conf", Properties.Resources.inputConf);
 
-                    if (!File.Exists(_ConfigFolder + "\\mpv.conf"))
-                        File.WriteAllText(_ConfigFolder + "\\mpv.conf", Properties.Resources.mpvConf);
+                    if (!File.Exists(_ConfigFolder + "mpv.conf"))
+                        File.WriteAllText(_ConfigFolder + "mpv.conf", Properties.Resources.mpvConf);
 
-                    if (!File.Exists(_ConfigFolder + "\\mpvnet.conf"))
-                        File.WriteAllText(_ConfigFolder + "\\mpvnet.conf", Properties.Resources.mpvNetConf);
+                    if (!File.Exists(_ConfigFolder + "mpvnet.conf"))
+                        File.WriteAllText(_ConfigFolder + "mpvnet.conf", Properties.Resources.mpvNetConf);
                 }
                 return _ConfigFolder;
             }
@@ -266,8 +266,8 @@ namespace mpvnet
                 }
             }
 
-            if (Directory.Exists(ConfigFolder + "Scripts"))
-                foreach (string scriptPath in Directory.GetFiles(ConfigFolder + "Scripts"))
+            if (Directory.Exists(ConfigFolder + "scripts"))
+                foreach (string scriptPath in Directory.GetFiles(ConfigFolder + "scripts"))
                     if (scriptPath.EndsWith(".py")) 
                         PythonScripts.Add(new PythonScript(File.ReadAllText(scriptPath)));
                     else if (scriptPath.EndsWith(".ps1"))
@@ -734,11 +734,8 @@ namespace mpvnet
 
             if (File.Exists(LastHistoryPath) && totalMinutes > 1)
             {
-                string historyFilepath = ConfigFolder + "history.txt";
-
-                File.AppendAllText(historyFilepath, DateTime.Now.ToString().Substring(0, 16) +
-                    " " + totalMinutes.ToString().PadLeft(3) + " " +
-                    Path.GetFileNameWithoutExtension(LastHistoryPath) + "\r\n");
+                File.AppendAllText(ConfigFolder + "history.txt", DateTime.Now.ToString().Substring(0, 16) +
+                    " " + totalMinutes.ToString().PadLeft(3) + " " + Path.GetFileNameWithoutExtension(LastHistoryPath) + "\r\n");
             }
 
             LastHistoryPath = path;

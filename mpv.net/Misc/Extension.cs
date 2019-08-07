@@ -34,7 +34,7 @@ namespace mpvnet
                     }
                 }
 
-                dir = mp.ConfigFolder + "Extensions";
+                dir = mp.ConfigFolder + "extensions";
 
                 if (Directory.Exists(dir))
                     foreach (string i in Directory.GetDirectories(dir))

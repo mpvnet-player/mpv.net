@@ -15,7 +15,7 @@ namespace mpvnet
         public static string[] UrlWhitelist { get; set; } = { "tube", "vimeo", "ard", "zdf" };
 
         public static string RegPath { get; } = @"HKCU\Software\" + Application.ProductName;
-        public static string ConfPath { get; } = mp.ConfigFolder + "\\mpvnet.conf";
+        public static string ConfPath { get => mp.ConfigFolder + "mpvnet.conf"; }
         public static string DarkMode { get; set; } = "always";
         public static string ProcessInstance { get; set; } = "single";
         public static string DarkColor { get; set; }
@@ -49,7 +49,7 @@ namespace mpvnet
             {
                 try
                 {
-                    string filePath = mp.ConfigFolder + "\\mpvnet-debug.log";
+                    string filePath = mp.ConfigFolder + "mpvnet-debug.log";
                     if (File.Exists(filePath)) File.Delete(filePath);
                     Trace.Listeners.Add(new TextWriterTraceListener(filePath));
                     Trace.AutoFlush = true;

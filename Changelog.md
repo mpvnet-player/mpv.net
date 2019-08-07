@@ -1,3 +1,7 @@
+### 5.2.1
+
+- fixed race condition causing various features to fail
+
 ### 5.2
 
 - bug fix for single-instance not working with unicode filenames
