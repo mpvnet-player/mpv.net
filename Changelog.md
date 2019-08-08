@@ -1,6 +1,9 @@
 ###
 
 - added new feature: Open > Open DVD/Blu-ray Drive/Folder...
+- the default of remember-volume has been set to yes
+- scale, cscale, dscale defaults have been set to spline36,
+  profile=gpu-hq is not used in the defaults because it starts very slow
 
 ### 5.2.1.3
 

@@ -50,7 +50,7 @@ options = [{ name = "yes" },
 
 [[settings]]
 name = "remember-volume"
-default = "no"
+default = "yes"
 filter = "Audio"
 help = "Save volume and mute on exit and restore it on start. (mpv.net specific setting)"
 options = [{ name = "yes" },

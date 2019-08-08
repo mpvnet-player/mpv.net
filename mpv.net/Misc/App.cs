@@ -25,7 +25,7 @@ namespace mpvnet
         public static bool RememberPosition { get; set; }
         public static bool DebugMode { get; set; }
         public static bool IsStartedFromTerminal { get; } = Environment.GetEnvironmentVariable("_started_from_console") == "yes";
-        public static bool RememberVolume { get; set; }
+        public static bool RememberVolume { get; set; } = true;
         public static bool AutoLoadFolder { get; set; } = true;
         public static bool ThemedMenu { get; set; }
 
