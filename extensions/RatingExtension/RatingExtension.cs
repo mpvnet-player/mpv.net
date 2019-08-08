@@ -30,7 +30,7 @@ namespace RatingExtension // the assembly name must end with 'Extension'
             {
                 string filepath = i.Key;
                 int rating = i.Value;
-                if (String.IsNullOrEmpty(filepath) || ! File.Exists(filepath))
+                if (String.IsNullOrEmpty(filepath) || !File.Exists(filepath))
                     return;
                 string basename = Path.GetFileNameWithoutExtension(filepath);
 

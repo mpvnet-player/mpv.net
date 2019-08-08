@@ -1,3 +1,7 @@
+###
+
+- added new feature: Open > Open DVD/Blu-ray Drive/Folder...
+
 ### 5.2.1.3
 
 - in the config dialog the description for keep-open was corrected

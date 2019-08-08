@@ -149,9 +149,11 @@ The Open Files menu entry is one way to open files in mpv.net, it supports multi
 
 Another way to open files is the command line, it is used by the Windows File Explorer if file associations exist.
 
+When mpv.net is started from a terminal such as PowerShell, mpv.net attaches to the terminal and outputs status and debug messages. 
+
 A third way is to drag and drop files on the main window.
 
-Whenever the control key is pressed when files are opened, the playlist is not cleared but the files are appended to the playlist.
+Whenever the control key is pressed when files or URLs are opened, the playlist is not cleared but the files or URLs are appended to the playlist. This works in all mpv.net features that open files or URLs.
 
 ### Open > Open URL
 
@@ -159,7 +161,9 @@ The Open URL menu entry can be used to open URLs for example from YouTube.
 
 mpv.net monitors the Windows clipboard and ask if URLs should be played in case it finds a URL in the clipboard. This feature uses a keyword whitelist that can be configured in the config editor. 
 
-Whenever the control key is pressed when URLs are opened, the playlist is not cleared but the URLs are appended to the playlist.
+When mpv.net is started from a terminal such as PowerShell, mpv.net attaches to the terminal and outputs status and debug messages. 
+
+Whenever the control key is pressed when files or URLs are opened, the playlist is not cleared but the files or URLs are appended to the playlist. This works in all mpv.net features that open files or URLs.
 
 ### Open > Show media search
 

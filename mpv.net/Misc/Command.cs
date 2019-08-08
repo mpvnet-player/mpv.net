@@ -16,11 +16,13 @@ namespace mpvnet
         {
             switch (id)
             {
+                case "open-files": OpenFiles(args); break;
+                case "open-url": OpenURL(); break;
+                case "open-optical-media": Open_DVD_Or_BD_Folder(); break;
                 case "manage-file-associations": ManageFileAssociations(); break; // deprecated 2019
                 case "cycle-audio": CycleAudio(); break;
                 case "load-audio": LoadAudio(); break;
                 case "load-sub": LoadSubtitle(); break;
-                case "open-url": OpenURL(); break;
                 case "execute-mpv-command": ExecuteMpvCommand(); break;
                 case "show-history": ShowHistory(); break;
                 case "show-media-search": ShowDialog(typeof(EverythingWindow)); break;
@@ -30,7 +32,6 @@ namespace mpvnet
                 case "show-input-editor": ShowDialog(typeof(InputWindow)); break;
                 case "show-setup-dialog": ShowDialog(typeof(SetupWindow)); break;
                 case "open-conf-folder": Process.Start(mp.ConfigFolder); break;
-                case "open-files": OpenFiles(args); break;
                 case "shell-execute": Process.Start(args[0]); break;
                 case "show-info": ShowInfo(); break;
                 case "add-files-to-playlist": OpenFiles("append"); break; // deprecated 2019
@@ -64,6 +65,31 @@ namespace mpvnet
                 using (var d = new OpenFileDialog() { Multiselect = true })
                     if (d.ShowDialog() == DialogResult.OK)
                         mp.Load(d.FileNames, loadFolder, append);
+            }));
+        }
+
+        public static void Open_DVD_Or_BD_Folder(params string[] args)
+        {
+            InvokeOnMainThread(new Action(() => {
+                using (var d = new FolderBrowserDialog())
+                {
+                    d.Description = "Select a DVD or Blu-ray folder.";
+                    d.ShowNewFolderButton = false;
+
+                    if (d.ShowDialog() == DialogResult.OK)
+                    {
+                        if (Directory.Exists(d.SelectedPath + "\\BDMV"))
+                        {
+                            mp.set_property_string("bluray-device", d.SelectedPath);
+                            mp.Load(new[] { @"bd://" }, false, false);
+                        }
+                        else
+                        {
+                            mp.set_property_string("dvd-device", d.SelectedPath);
+                            mp.Load(new[] { @"dvd://" }, false, false);
+                        }
+                    }
+                }
             }));
         }
 

@@ -368,7 +368,9 @@ namespace mpvnet
         {
             string path = mp.get_property_string("path");
             BeginInvoke(new Action(() => {
-                if (File.Exists(path) || path.Contains("://"))
+                if (path.Contains("://"))
+                    Text = path + " - mpv.net " + Application.ProductVersion;
+                else if (File.Exists(path))
                     Text = path.FileName() + " - mpv.net " + Application.ProductVersion;
                 else
                     Text = "mpv.net " + Application.ProductVersion;

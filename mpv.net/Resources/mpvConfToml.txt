@@ -23,10 +23,10 @@ options = [{ name = "no",           help = "always use software decoding" },
 name = "gpu-api"
 default = "auto"
 filter = "Video"
-help = "Controls which type of graphics APIs will be accepted. Auto uses d3d11, it should only be changed in case of problems."
+help = "Controls which type of graphics APIs will be accepted. Auto uses d3d11, it should only be changed in case of problems, Vulkan is not recommended."
 options = [{ name = "auto",   help = "Use any available API" },
            { name = "opengl", help = "Allow only OpenGL (requires OpenGL 2.1+ or GLES 2.0+)" },
-           { name = "vulkan", help = "Allow only Vulkan (requires a working spirv-compiler). " },
+           { name = "vulkan", help = "Allow only Vulkan (not recommended). " },
            { name = "d3d11",  help = "Allow only gpu-context=d3d11" }]
 
 [[settings]]
