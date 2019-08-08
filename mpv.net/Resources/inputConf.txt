@@ -1,17 +1,11 @@
 
- # This file defines the input (keys and mouse) bindings of mpv and mpv.net
- # and it also defines the context menu of mpv.net. mpv.net has an input
- # editor and an config editor as alternative to editing conf text files.
- # The input and config editor can be found in mpv.net's context menu at:
-
- # Settings > Show Config Editor
- # Settings > Show Input Editor
-
- # The defaults of this file can be found at:
+ # This file defines the key and mouse bindings and the context menu
+ # of mpv.net. A input and config editor can be found in mpv.net's
+ # context menu under 'Settings'. The defaults of this file can be found at:
 
  # https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt
 
- # the defaults of mpv can be found at:
+ # The defaults of mpv can be found at:
 
  # https://github.com/mpv-player/mpv/blob/master/etc/input.conf
 

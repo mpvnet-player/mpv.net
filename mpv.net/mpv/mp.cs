@@ -113,7 +113,6 @@ namespace mpvnet
             mpv_initialize(Handle);
             Initialized?.Invoke();
             LoadMpvScripts();
-            if (GPUAPI != "vulkan") ProcessCommandLine(false);
         }
 
         public static void ProcessProperty(string name, string value)
@@ -339,7 +338,7 @@ namespace mpvnet
                             break;
                         case mpv_event_id.MPV_EVENT_IDLE:
                             Idle?.Invoke();
-                            if (get_property_int("playlist-count") == 0) ShowLogo();
+                            ShowLogo();
                             break;
                         case mpv_event_id.MPV_EVENT_PAUSE:
                             Pause?.Invoke();
@@ -377,19 +376,22 @@ namespace mpvnet
                             var propData = (mpv_event_property)Marshal.PtrToStructure(evt.data, typeof(mpv_event_property));
 
                             if (propData.format == mpv_format.MPV_FORMAT_FLAG)
-                                foreach (var i in BoolPropChangeActions)
-                                    if (i.Key== propData.name)
-                                        i.Value.Invoke(Marshal.PtrToStructure<int>(propData.data) == 1);
+                                lock (BoolPropChangeActions)
+                                    foreach (var i in BoolPropChangeActions)
+                                        if (i.Key== propData.name)
+                                            i.Value.Invoke(Marshal.PtrToStructure<int>(propData.data) == 1);
 
                             if (propData.format == mpv_format.MPV_FORMAT_STRING)
-                                foreach (var i in StringPropChangeActions)
-                                    if (i.Key == propData.name)
-                                        i.Value.Invoke(StringFromNativeUtf8(Marshal.PtrToStructure<IntPtr>(propData.data)));
+                                lock (StringPropChangeActions)
+                                    foreach (var i in StringPropChangeActions)
+                                        if (i.Key == propData.name)
+                                            i.Value.Invoke(StringFromNativeUtf8(Marshal.PtrToStructure<IntPtr>(propData.data)));
 
                             if (propData.format == mpv_format.MPV_FORMAT_INT64)
-                                foreach (var i in IntPropChangeActions)
-                                    if (i.Key == propData.name)
-                                        i.Value.Invoke(Marshal.PtrToStructure<int>(propData.data));
+                                lock (IntPropChangeActions)
+                                    foreach (var i in IntPropChangeActions)
+                                        if (i.Key == propData.name)
+                                            i.Value.Invoke(Marshal.PtrToStructure<int>(propData.data));
                             break;
                         case mpv_event_id.MPV_EVENT_PLAYBACK_RESTART:
                             PlaybackRestart?.Invoke();
@@ -548,7 +550,8 @@ namespace mpvnet
             if (err < 0)
                 throw new Exception($"{name}: {(mpv_error)err}");
             else
-                IntPropChangeActions.Add(new KeyValuePair<string, Action<int>>(name, action));
+                lock (IntPropChangeActions)
+                    IntPropChangeActions.Add(new KeyValuePair<string, Action<int>>(name, action));
         }
 
         public static void observe_property_bool(string name, Action<bool> action)
@@ -558,7 +561,8 @@ namespace mpvnet
             if (err < 0)
                 throw new Exception($"{name}: {(mpv_error)err}");
             else
-                BoolPropChangeActions.Add(new KeyValuePair<string, Action<bool>>(name, action));
+                lock (BoolPropChangeActions)
+                    BoolPropChangeActions.Add(new KeyValuePair<string, Action<bool>>(name, action));
         }
 
         public static void observe_property_string(string name, Action<string> action)
@@ -568,7 +572,8 @@ namespace mpvnet
             if (err < 0)
                 throw new Exception($"{name}: {(mpv_error)err}");
             else
-                StringPropChangeActions.Add(new KeyValuePair<string, Action<string>>(name, action));
+                lock (StringPropChangeActions)
+                    StringPropChangeActions.Add(new KeyValuePair<string, Action<string>>(name, action));
         }
 
         public static void ProcessCommandLine(bool preInit)
@@ -631,8 +636,8 @@ namespace mpvnet
 
                 if (files.Count == 0 || files[0].Contains("://"))
                 {
-                    VideoSizeAutoResetEvent.Set();
                     VideoSizeChanged?.Invoke();
+                    VideoSizeAutoResetEvent.Set();
                 }
             }
         }

@@ -193,6 +193,7 @@ namespace mpvnet
         {
             SearchControl.SearchTextBox.SelectAll();
             Keyboard.Focus(SearchControl.SearchTextBox);
+
             foreach (var i in MainStackPanel.Children.OfType<StringSettingControl>())
                 i.Update();
         }

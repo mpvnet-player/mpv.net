@@ -33,6 +33,22 @@ namespace mpvnet
                 Instance = this;
                 Hwnd = Handle;
                 mp.Init();
+
+                mp.Shutdown += Shutdown;
+                mp.VideoSizeChanged += VideoSizeChanged;
+                mp.FileLoaded += FileLoaded;
+                mp.Idle += Idle;
+
+                mp.observe_property_bool("fullscreen", PropChangeFullscreen);
+                mp.observe_property_bool("ontop", PropChangeOnTop);
+                mp.observe_property_bool("border", PropChangeBorder);
+                mp.observe_property_string("sid", PropChangeSid);
+                mp.observe_property_string("aid", PropChangeAid);
+                mp.observe_property_string("vid", PropChangeVid);
+                mp.observe_property_int("edition", PropChangeEdition);
+
+                if (mp.GPUAPI != "vulkan") mp.ProcessCommandLine(false);
+
                 AppDomain.CurrentDomain.UnhandledException += (sender, e) => Msg.ShowError(e.ExceptionObject.ToString());
                 Application.ThreadException += (sender, e) => Msg.ShowException(e.Exception);
                 Msg.SupportURL = "https://github.com/stax76/mpv.net#support";
@@ -67,22 +83,6 @@ namespace mpvnet
                     Left = posX - Width / 2;
                     Top = posY - Height / 2;
                 }
-
-                mp.Shutdown += Shutdown;
-                mp.VideoSizeChanged += VideoSizeChanged;
-                mp.FileLoaded += FileLoaded;
-                mp.Idle += Idle;
-
-                mp.observe_property_bool("fullscreen", PropChangeFullscreen);
-                mp.observe_property_bool("ontop", PropChangeOnTop);
-                mp.observe_property_bool("border", PropChangeBorder);
-                mp.observe_property_string("sid", PropChangeSid);
-                mp.observe_property_string("aid", PropChangeAid);
-                mp.observe_property_string("vid", PropChangeVid);
-                mp.observe_property_int("edition", PropChangeEdition);
-
-                if (mp.GPUAPI != "vulkan") mp.VideoSizeAutoResetEvent.WaitOne(App.StartThreshold);
-                if (Height < FontHeight * 4) SetFormPosAndSize();
             }
             catch (Exception ex)
             {
@@ -510,7 +510,8 @@ namespace mpvnet
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            if (mp.get_property_int("playlist-count") == 0) mp.ShowLogo();
+            if (mp.GPUAPI != "vulkan") mp.VideoSizeAutoResetEvent.WaitOne(App.StartThreshold);
+            SetFormPosAndSize();
         }
 
         protected override void OnShown(EventArgs e)

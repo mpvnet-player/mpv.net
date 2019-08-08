@@ -1,3 +1,14 @@
+### 5.2.1.3
+
+- in the config dialog the description for keep-open was corrected
+  because unlike mpv, mpv.net will never terminate automatically
+- there was a rare occasion where the mpv.net logo wasn't shown
+- mpv setting osd-scale-by-window added to config dialog
+
+### 5.2.1.2
+
+- fix excessive memory usage using `osd-scale-by-window = no`
+
 ### 5.2.1
 
 - fixed race condition causing various features to fail

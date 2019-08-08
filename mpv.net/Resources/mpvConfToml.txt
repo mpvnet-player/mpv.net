@@ -26,7 +26,7 @@ filter = "Video"
 help = "Controls which type of graphics APIs will be accepted. Auto uses d3d11, it should only be changed in case of problems."
 options = [{ name = "auto",   help = "Use any available API" },
            { name = "opengl", help = "Allow only OpenGL (requires OpenGL 2.1+ or GLES 2.0+)" },
-           { name = "vulkan", help = "Allow only Vulkan (requires a valid/working spirv-compiler)" },
+           { name = "vulkan", help = "Allow only Vulkan (requires a working spirv-compiler). " },
            { name = "d3d11",  help = "Allow only gpu-context=d3d11" }]
 
 [[settings]]
@@ -242,6 +242,14 @@ filter = "Screen"
 help = "Specify the OSD font size. See sub-font-size for details. Default: 55"
 
 [[settings]]
+name = "osd-scale-by-window"
+default = "yes"
+filter = "Screen"
+help = "Whether to scale the OSD with the window size. If this is disabled, osd-font-size and other OSD options that use scaled pixels are always in actual pixels. The effect is that changing the window size won't change the OSD font size."
+options = [{ name = "yes" },
+           { name = "no" }]
+
+[[settings]]
 name = "autofit"
 filter = "Screen"
 help = "<int> Initial window height in percent. Default: 50"
@@ -283,7 +291,7 @@ options = [{ name = "yes" },
 name = "screenshot-high-bit-depth"
 default = "yes"
 filter = "Screen"
-help = "If possible, write screenshots with a bit depth similar to the source video (default: yes). This is interesting in particular for PNG, as this sometimes triggers writing 16 bit PNGs with huge file sizes. This will also include an unused alpha channel in the resulting files if 16 bit is used."
+help = "If possible, write screenshots with a bit depth similar to the source video. This is interesting in particular for PNG, as this sometimes triggers writing 16 bit PNGs with huge file sizes. This will also include an unused alpha channel in the resulting files if 16 bit is used."
 options = [{ name = "yes" },
            { name = "no" }]
 
@@ -291,7 +299,7 @@ options = [{ name = "yes" },
 name = "screenshot-jpeg-source-chroma"
 default = "yes"
 filter = "Screen"
-help = "Write JPEG files with the same chroma subsampling as the video (default: yes). If disabled, the libjpeg default is used."
+help = "Write JPEG files with the same chroma subsampling as the video. If disabled, the libjpeg default is used."
 options = [{ name = "yes" },
            { name = "no" }]
 
@@ -329,10 +337,10 @@ options = [{ name = "yes" },
 name = "keep-open"
 default = "no"
 filter = "Playback"
-help = "Do not terminate when playing or seeking beyond the end of the file, and there is not next file to be played (and loop is not used). Instead, pause the player. When trying to seek beyond end of the file, the player will attempt to seek to the last frame.\n\nNormally, this will act like set pause yes on EOF, unless the keep-open-pause=no option is set."
-options = [{ name = "yes",    help = "Don't terminate if the current file is the last playlist entry. Equivalent to keep-open without arguments."},
-           { name = "no",     help = "If the current file ends, go to the next file or terminate." },
-           { name = "always", help = "Like yes, but also applies to files before the last playlist entry. This means playback will never automatically advance to the next file."}]
+help = "Unlike mpv, mpv.net never exits automatically."
+options = [{ name = "yes",    help = "Useless in mpv.net because mpv.net never terminates automatically."},
+           { name = "no",     help = "If the current file ends, go to the next file." },
+           { name = "always", help = "Playback will never automatically advance to the next file."}]
 
 [[settings]]
 name = "loop-file"
