@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="About mpv.net" Height="230" Width="500" FontSize="16" ShowInTaskbar="False"
+        Title="About mpv.net" Height="230" Width="400" FontSize="16" ShowInTaskbar="False"
         WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
     <Grid>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">

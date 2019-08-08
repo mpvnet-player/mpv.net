@@ -337,8 +337,8 @@ options = [{ name = "yes" },
 name = "keep-open"
 default = "no"
 filter = "Playback"
-help = "Unlike mpv, mpv.net never exits automatically."
-options = [{ name = "yes",    help = "Useless in mpv.net because mpv.net never terminates automatically."},
+help = "Using no, mpv would terminate after the last file but mpv.net never terminates automatically."
+options = [{ name = "yes",    help = "If the current file ends, go to the next file, keep the last file open."},
            { name = "no",     help = "If the current file ends, go to the next file." },
            { name = "always", help = "Playback will never automatically advance to the next file."}]
 

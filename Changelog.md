@@ -4,6 +4,8 @@
 - the default of remember-volume has been set to yes
 - scale, cscale, dscale defaults have been set to spline36,
   profile=gpu-hq is not used in the defaults because it starts very slow
+- new menu items have been added to navigate to the first and
+  last playlist position, key bindings: Home, End
 
 ### 5.2.1.3
 

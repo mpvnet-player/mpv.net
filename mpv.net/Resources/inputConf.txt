@@ -41,6 +41,9 @@
  F11         playlist-prev          #menu: Navigate > Previous File
  F12         playlist-next          #menu: Navigate > Next File
  _           ignore                 #menu: Navigate > -
+ Home        set playlist-pos 0     #menu: Navigate > First File
+ End         script-message mpv.net playlist-last #menu: Navigate > Last File
+ _           ignore                 #menu: Navigate > -
  PGUP        add chapter  1         #menu: Navigate > Next Chapter
  PGDWN       add chapter -1         #menu: Navigate > Previous Chapter
  _           ignore                 #menu: Navigate > -

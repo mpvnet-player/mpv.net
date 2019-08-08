@@ -1,7 +1,6 @@
 ﻿using System.IO;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
 
 namespace mpvnet
 {
@@ -10,7 +9,7 @@ namespace mpvnet
         public AboutWindow()
         {
             InitializeComponent();
-            Version.Text = $"mpv.net Version {System.Windows.Forms.Application.ProductVersion}";
+            Version.Text = $"mpv.net Version {System.Windows.Forms.Application.ProductVersion} ({File.GetLastWriteTime(System.Windows.Forms.Application.ExecutablePath).ToShortDateString()})";
             mpvVersion.Text = $"{mp.get_property_string("mpv-version")} ({File.GetLastWriteTime(PathHelp.StartupPath + "mpv-1.dll").ToShortDateString()})";
         }
 

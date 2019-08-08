@@ -19,7 +19,8 @@ namespace mpvnet
                 case "open-files": OpenFiles(args); break;
                 case "open-url": OpenURL(); break;
                 case "open-optical-media": Open_DVD_Or_BD_Folder(); break;
-                case "manage-file-associations": ManageFileAssociations(); break; // deprecated 2019
+                case "manage-file-associations": // deprecated 2019
+                case "show-setup-dialog": ShowDialog(typeof(SetupWindow)); break;
                 case "cycle-audio": CycleAudio(); break;
                 case "load-audio": LoadAudio(); break;
                 case "load-sub": LoadSubtitle(); break;
@@ -30,10 +31,10 @@ namespace mpvnet
                 case "show-about": ShowDialog(typeof(AboutWindow)); break;
                 case "show-conf-editor": ShowDialog(typeof(ConfWindow)); break;
                 case "show-input-editor": ShowDialog(typeof(InputWindow)); break;
-                case "show-setup-dialog": ShowDialog(typeof(SetupWindow)); break;
                 case "open-conf-folder": Process.Start(mp.ConfigFolder); break;
                 case "shell-execute": Process.Start(args[0]); break;
                 case "show-info": ShowInfo(); break;
+                case "playlist-last": PlaylistLast(); break;
                 case "add-files-to-playlist": OpenFiles("append"); break; // deprecated 2019
                 default: Msg.ShowError($"No command '{id}' found."); break;
             }
@@ -68,7 +69,7 @@ namespace mpvnet
             }));
         }
 
-        public static void Open_DVD_Or_BD_Folder(params string[] args)
+        public static void Open_DVD_Or_BD_Folder()
         {
             InvokeOnMainThread(new Action(() => {
                 using (var d = new FolderBrowserDialog())
@@ -92,6 +93,8 @@ namespace mpvnet
                 }
             }));
         }
+
+        public static void PlaylistLast() => mp.set_property_int("playlist-pos", mp.get_property_int("playlist-count") - 1);
 
         public static void ShowHistory()
         {
@@ -256,7 +259,5 @@ namespace mpvnet
                 mp.commandv("show-text", audTracks[aid - 1].Text.Substring(3), "5000");
             }
         }
-
-        public static void ManageFileAssociations() => ShowDialog(typeof(SetupWindow)); // deprecated 2019
     }
 }

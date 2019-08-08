@@ -2,6 +2,7 @@
 input-ar-delay = 500
 input-ar-rate = 20
 hwdec = yes
+keep-open = yes
 keep-open-pause = no
 osd-playing-msg = '${filename}'
 screenshot-directory = '~~desktop/'
