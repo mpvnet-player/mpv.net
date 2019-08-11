@@ -62,7 +62,7 @@ Table of contents
 - Language agnostic JSON IPC to control the player with a external programs
 - On Screen Controler (OSC, play control buttons)
 - [Command Line Interface](https://mpv.io/manual/master/#options)
-- If started from a PowerShell terminal mpv.net will attach to the terminal and print status and debug output
+- If started from a PowerShell terminal mpv.net will attach to the terminal and print status and debug output ([Screenshot](#terminal-and repl-screenshot)
 - [OSD REPL](https://github.com/rossy/mpv-repl)
 - DXVA2 video decoding acceleration
 - OpenGL based video output capable of features loved by videophiles, such as video scaling with popular high quality algorithms, color management, frame timing, interpolation, HDR, and more
