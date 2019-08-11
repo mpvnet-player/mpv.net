@@ -1,12 +1,12 @@
 ﻿input-default-bindings = no
 input-ar-delay = 500
 input-ar-rate = 20
-hwdec = yes
 keep-open = yes
 keep-open-pause = no
 osd-playing-msg = '${filename}'
-screenshot-directory = '~~desktop/'
 script-opts=osc-scalewindowed=1.5
+screenshot-directory = '~~desktop/'
 cscale = spline36
 dscale = spline36
 scale = spline36
+hwdec = yes

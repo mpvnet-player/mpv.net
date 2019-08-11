@@ -93,7 +93,7 @@ namespace mpvnet
         {
             LoadLibrary("mpv-1.dll");
             Handle = mpv_create();
-            Task.Run(() => { EventLoop(); });
+            Task.Run(() => EventLoop());
 
             if (App.IsStartedFromTerminal)
             {
@@ -676,7 +676,7 @@ namespace mpvnet
             string path = get_property_string("path");
             if (!File.Exists(path) || get_property_int("playlist-count") != 1) return;
             List<string> files = Directory.GetFiles(Path.GetDirectoryName(path)).ToList();
-            files = files.Where((file) =>
+            files = files.Where(file =>
                 App.VideoTypes.Contains(file.ShortExt()) ||
                 App.AudioTypes.Contains(file.ShortExt()) ||
                 App.ImageTypes.Contains(file.ShortExt())).ToList();

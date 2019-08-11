@@ -126,7 +126,7 @@ namespace mpvnet
                     foreach (MediaTrack track in vidTracks)
                     {
                         MenuItem mi = new MenuItem(track.Text);
-                        mi.Action = () => { mp.commandv("set", "vid", track.ID.ToString()); };
+                        mi.Action = () => mp.commandv("set", "vid", track.ID.ToString());
                         mi.Checked = mp.Vid == track.ID.ToString();
                         trackMenuItem.DropDownItems.Add(mi);
                     }
@@ -137,7 +137,7 @@ namespace mpvnet
                     foreach (MediaTrack track in audTracks)
                     {
                         MenuItem mi = new MenuItem(track.Text);
-                        mi.Action = () => { mp.commandv("set", "aid", track.ID.ToString()); };
+                        mi.Action = () => mp.commandv("set", "aid", track.ID.ToString());
                         mi.Checked = mp.Aid == track.ID.ToString();
                         trackMenuItem.DropDownItems.Add(mi);
                     }
@@ -148,7 +148,7 @@ namespace mpvnet
                     foreach (MediaTrack track in subTracks)
                     {
                         MenuItem mi = new MenuItem(track.Text);
-                        mi.Action = () => { mp.commandv("set", "sid", track.ID.ToString()); };
+                        mi.Action = () => mp.commandv("set", "sid", track.ID.ToString());
                         mi.Checked = mp.Sid == track.ID.ToString();
                         trackMenuItem.DropDownItems.Add(mi);
                     }
@@ -156,7 +156,7 @@ namespace mpvnet
                     if (subTracks.Length > 0)
                     {
                         MenuItem mi = new MenuItem("S: No subtitles");
-                        mi.Action = () => { mp.commandv("set", "sid", "no"); };
+                        mi.Action = () => mp.commandv("set", "sid", "no");
                         mi.Checked = mp.Sid == "no";
                         trackMenuItem.DropDownItems.Add(mi);
                     }
@@ -167,7 +167,7 @@ namespace mpvnet
                     foreach (MediaTrack track in ediTracks)
                     {
                         MenuItem mi = new MenuItem(track.Text);
-                        mi.Action = () => { mp.commandv("set", "edition", track.ID.ToString()); };
+                        mi.Action = () => mp.commandv("set", "edition", track.ID.ToString());
                         mi.Checked = mp.Edition == track.ID;
                         trackMenuItem.DropDownItems.Add(mi);
                     }
@@ -186,7 +186,7 @@ namespace mpvnet
                     {
                         MenuItem mi = new MenuItem(i.Key);
                         mi.ShortcutKeyDisplayString = TimeSpan.FromSeconds(i.Value).ToString().Substring(0, 8) + "     ";
-                        mi.Action = () => { mp.commandv("seek", i.Value.ToString(CultureInfo.InvariantCulture), "absolute"); };
+                        mi.Action = () => mp.commandv("seek", i.Value.ToString(CultureInfo.InvariantCulture), "absolute");
                         chaptersMenuItem.DropDownItems.Add(mi);
                     }
                 }
@@ -377,7 +377,7 @@ namespace mpvnet
             }));
             if (RecentFiles.Contains(path)) RecentFiles.Remove(path);
             RecentFiles.Insert(0, path);
-            if (RecentFiles.Count > 15) RecentFiles.RemoveAt(15);
+            while (RecentFiles.Count > App.RecentCount) RecentFiles.RemoveAt(App.RecentCount);
         }
 
         protected override CreateParams CreateParams {
@@ -530,8 +530,8 @@ namespace mpvnet
             CheckClipboardForURL();
             Cursor.Position = new Point(Cursor.Position.X + 1, Cursor.Position.Y);
             WasShown = true;
-            Task.Run(() => { mp.LoadScripts(); });
-            Task.Run(() => { mp.Extension = new Extension(); });
+            Task.Run(() => mp.LoadScripts());
+            Task.Run(() => mp.Extension = new Extension());
         }
 
         protected override void OnActivated(EventArgs e)

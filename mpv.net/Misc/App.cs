@@ -30,6 +30,7 @@ namespace mpvnet
         public static bool ThemedMenu { get; set; }
 
         public static int StartThreshold { get; set; } = 1500;
+        public static int RecentCount { get; set; } = 15;
 
         public static float MinimumAspectRatio { get; set; } = 1.3f;
                
@@ -117,6 +118,7 @@ namespace mpvnet
                 case "minimum-aspect-ratio": MinimumAspectRatio = value.Float(); return true;
                 case "auto-load-folder": AutoLoadFolder = value == "yes"; return true;
                 case "themed-menu": ThemedMenu = value == "yes"; return true;
+                case "recent-count": RecentCount = value.Int(); return true;
             }
             return false;
         }

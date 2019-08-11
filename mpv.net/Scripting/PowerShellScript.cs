@@ -96,7 +96,7 @@ namespace mpvnet
         public Delegate Delegate { get; set; }
         public string FilePath { get; set; }
 
-        public void Invoke() => Task.Run(() => { PowerShellScript.Execute(File.ReadAllText(FilePath), null); });
+        public void Invoke() => Task.Run(() => PowerShellScript.Execute(File.ReadAllText(FilePath), null));
 
         public void InvokeEndFileEventMode(EndFileEventMode arg)
         {

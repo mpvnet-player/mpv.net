@@ -6,6 +6,8 @@
   profile=gpu-hq is not used in the defaults because it starts very slow
 - new menu items have been added to navigate to the first and
   last playlist position, key bindings: Home, End
+- new config setting recent-count added, amount of menu items
+  shown under 'Open > Recent'
 
 ### 5.2.1.3
 

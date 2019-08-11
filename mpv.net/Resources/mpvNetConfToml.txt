@@ -23,6 +23,11 @@ options = [{ name = "yes" },
            { name = "no" }]
 
 [[settings]]
+name = "recent-count"
+filter = "General"
+help = "<int> Amount of recent files to be remembered. Default: 15"
+
+[[settings]]
 name = "start-size"
 default = "previous"
 filter = "Screen"
