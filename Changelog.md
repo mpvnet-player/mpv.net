@@ -1,4 +1,4 @@
-###
+### 5.3
 
 - added new feature: Open > Open DVD/Blu-ray Drive/Folder...
 - the default of remember-volume has been set to yes
@@ -8,17 +8,11 @@
   last playlist position, key bindings: Home, End
 - new config setting recent-count added, amount of menu items
   shown under 'Open > Recent'
-
-### 5.2.1.3
-
 - in the config dialog the description for keep-open was corrected
   because unlike mpv, mpv.net will never terminate automatically
 - there was a rare occasion where the mpv.net logo wasn't shown
-- mpv setting osd-scale-by-window added to config dialog
-
-### 5.2.1.2
-
 - fix excessive memory usage using `osd-scale-by-window = no`
+- mpv setting osd-scale-by-window added to config dialog
 
 ### 5.2.1
 

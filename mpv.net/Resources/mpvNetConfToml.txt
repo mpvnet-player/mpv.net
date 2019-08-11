@@ -15,17 +15,9 @@ options = [{ name = "multi",  help = "Create a new process everytime the shell s
 		   { name = "queue",  help = "Force a single process and add files to playlist" }]
 
 [[settings]]
-name = "debug-mode"
-default = "no"
-filter = "General"
-help = "Enable this only when a developer asks for it. (mpv.net specific setting)"
-options = [{ name = "yes" },
-           { name = "no" }]
-
-[[settings]]
 name = "recent-count"
 filter = "General"
-help = "<int> Amount of recent files to be remembered. Default: 15"
+help = "<int> Amount of recent files to be remembered. Default: 15 (mpv.net specific setting)"
 
 [[settings]]
 name = "start-size"
@@ -38,12 +30,12 @@ options = [{ name = "video", help = "Window size is set to native video resoluti
 [[settings]]
 name = "start-threshold"
 filter = "Screen"
-help = "Threshold in milliseconds to wait for libmpv returning the video resolution before the window is shown, otherwise default dimensions are used as defined by autofit and start-size. (mpv.net specific setting) Default: 1500"
+help = "Threshold in milliseconds to wait for libmpv returning the video resolution before the window is shown, otherwise default dimensions are used as defined by autofit and start-size. Default: 1500 (mpv.net specific setting)"
 
 [[settings]]
 name = "minimum-aspect-ratio"
 filter = "Screen"
-help = "<float> Minimum aspect ratio for the window. Default: 1.3"
+help = "<float> Minimum aspect ratio for the window. Default: 1.3 (mpv.net specific setting)"
 
 [[settings]]
 name = "remember-position"
@@ -95,5 +87,13 @@ name = "themed-menu"
 default = "no"
 filter = "UI"
 help = "Follow theme color in context menu. (mpv.net specific setting)"
+options = [{ name = "yes" },
+           { name = "no" }]
+
+[[settings]]
+name = "debug-mode"
+default = "no"
+filter = "General"
+help = "Enable this only when a developer asks for it. (mpv.net specific setting)"
 options = [{ name = "yes" },
            { name = "no" }]
