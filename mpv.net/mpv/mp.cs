@@ -103,9 +103,11 @@ namespace mpvnet
             }
 
             set_property_string("wid", MainForm.Hwnd.ToString());
-            set_property_string("osc", "yes");
+
+            if (!Conf.Keys.Contains("osc")) set_property_string("osc", "yes");
+            if (!Conf.Keys.Contains("input-media-keys")) set_property_string("input-media-keys", "yes");
+
             set_property_string("force-window", "yes");
-            set_property_string("input-media-keys", "yes");
             set_property_string("config-dir", ConfigFolder);
             set_property_string("config", "yes");
 

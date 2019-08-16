@@ -1,3 +1,8 @@
+###
+
+- osc=yes and input-media-keys=yes was enforced,
+  now it can be disabled in mpv.conf
+
 ### 5.3
 
 - added new feature: Open > Open DVD/Blu-ray Drive/Folder...
