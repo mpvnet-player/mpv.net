@@ -1,7 +1,6 @@
 ###
 
-- osc=yes and input-media-keys=yes was enforced,
-  now it can be disabled in mpv.conf
+- added new setting to start with maximized window
 
 ### 5.3
 

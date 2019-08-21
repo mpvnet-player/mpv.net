@@ -103,10 +103,8 @@ namespace mpvnet
             }
 
             set_property_string("wid", MainForm.Hwnd.ToString());
-
-            if (!Conf.Keys.Contains("osc")) set_property_string("osc", "yes");
-            if (!Conf.Keys.Contains("input-media-keys")) set_property_string("input-media-keys", "yes");
-
+            set_property_string("osc", "yes");
+            set_property_string("input-media-keys", "yes");
             set_property_string("force-window", "yes");
             set_property_string("config-dir", ConfigFolder);
             set_property_string("config", "yes");
@@ -418,11 +416,8 @@ namespace mpvnet
 
         static void HideLogo()
         {
-            if (IsLogoVisible)
-            {
-                commandv("overlay-remove", "0");
-                IsLogoVisible = false;
-            }
+            command("overlay-remove 0");
+            IsLogoVisible = false;
         }
 
         static List<PythonEventObject> PythonEventObjects = new List<PythonEventObject>();

@@ -83,6 +83,8 @@ namespace mpvnet
                     Left = posX - Width / 2;
                     Top = posY - Height / 2;
                 }
+
+                if (App.Maximized) WindowState = FormWindowState.Maximized;
             }
             catch (Exception ex)
             {
@@ -104,7 +106,7 @@ namespace mpvnet
 
         void ContextMenu_Opened(object sender, EventArgs e) => CursorHelp.Show();
 
-        bool IsFullscreen => WindowState == FormWindowState.Maximized;
+        bool IsFullscreen => WindowState == FormWindowState.Maximized && FormBorderStyle == FormBorderStyle.None;
 
         bool IsMouseInOSC() => PointToClient(Control.MousePosition).Y > ClientSize.Height * 0.9;
 
@@ -228,6 +230,9 @@ namespace mpvnet
 
         void SetFormPosAndSize()
         {
+            if (WindowState == FormWindowState.Maximized)
+                return;
+
             if (mp.Fullscreen)
             {
                 CycleFullscreen(true);
@@ -320,7 +325,7 @@ namespace mpvnet
             }
             else
             {
-                if (WindowState == FormWindowState.Maximized)
+                if (WindowState == FormWindowState.Maximized && FormBorderStyle == FormBorderStyle.None)
                 {
                     WindowState = FormWindowState.Normal;
 

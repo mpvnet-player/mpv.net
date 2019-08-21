@@ -46,6 +46,14 @@ options = [{ name = "yes" },
            { name = "no" }]
 
 [[settings]]
+name = "maximized"
+default = "no"
+filter = "Screen"
+help = "Start with a maximized window. (mpv.net specific setting)"
+options = [{ name = "yes" },
+           { name = "no" }]
+
+[[settings]]
 name = "remember-volume"
 default = "yes"
 filter = "Audio"

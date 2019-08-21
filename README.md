@@ -80,7 +80,7 @@ Table of contents
 - Screenshot feature with many options
 - File history feature to log time and filename
 - A-B loop feature
-- watch later feature to save the position
+- Watch later feature to save the position
 - [Manual](#manual)
 
 ### Screenshots
