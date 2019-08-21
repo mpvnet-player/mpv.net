@@ -1,6 +1,7 @@
 ###
 
 - added new setting to start with maximized window
+- long file names work now even if not enabled by the OS
 
 ### 5.3
 
