@@ -375,7 +375,7 @@ namespace mpvnet
             BeginInvoke(new Action(() => {
                 if (path.Contains("://"))
                     Text = path + " - mpv.net " + Application.ProductVersion;
-                else if (File.Exists(path))
+                else if (path.Contains(":\\") || path.StartsWith("\\\\"))
                     Text = path.FileName() + " - mpv.net " + Application.ProductVersion;
                 else
                     Text = "mpv.net " + Application.ProductVersion;

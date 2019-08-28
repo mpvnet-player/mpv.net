@@ -2,6 +2,7 @@
 
 - added new setting to start with maximized window
 - long file names work now even if not enabled by the OS
+- fixed history being written even when history file wasn't created prior
 
 ### 5.3
 

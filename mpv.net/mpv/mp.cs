@@ -622,7 +622,7 @@ namespace mpvnet
 
                 foreach (string i in args)
                 {
-                    if (!i.StartsWith("--") && (i == "-" || i.Contains("://") || i.Contains(":\\")))
+                    if (!i.StartsWith("--") && (i == "-" || i.Contains("://") || i.Contains(":\\") || i.StartsWith("\\\\")))
                     {
                         files.Add(i);
                         if (i.Contains("://")) RegHelp.SetObject(App.RegPath, "LastURL", i);
@@ -731,14 +731,12 @@ namespace mpvnet
 
         static void WriteHistory(string path)
         {
-            if (!File.Exists(path)) return;
+            if (!File.Exists(ConfigFolder + "history.txt") || !File.Exists(path)) return;
             int totalMinutes = Convert.ToInt32((DateTime.Now - LastHistoryStartDateTime).TotalMinutes);
 
             if (File.Exists(LastHistoryPath) && totalMinutes > 1)
-            {
                 File.AppendAllText(ConfigFolder + "history.txt", DateTime.Now.ToString().Substring(0, 16) +
                     " " + totalMinutes.ToString().PadLeft(3) + " " + Path.GetFileNameWithoutExtension(LastHistoryPath) + "\r\n");
-            }
 
             LastHistoryPath = path;
             LastHistoryStartDateTime = DateTime.Now;

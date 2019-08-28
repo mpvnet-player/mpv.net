@@ -98,14 +98,15 @@ namespace mpvnet
 
         public static void ShowHistory()
         {
-            var fp = mp.ConfigFolder + "history.txt";
-
-            if (File.Exists(fp))
-                Process.Start(fp);
+            if (File.Exists(mp.ConfigFolder + "history.txt"))
+                Process.Start(mp.ConfigFolder + "history.txt");
             else
+            {
                 if (Msg.ShowQuestion("Create history.txt file in config folder?",
                     "mpv.net will write the date, time and filename of opened files to it.") == MsgResult.OK)
-                    File.WriteAllText(fp, "");
+
+                    File.WriteAllText(mp.ConfigFolder + "history.txt", "");
+            }
         }
 
         public static void ShowInfo()

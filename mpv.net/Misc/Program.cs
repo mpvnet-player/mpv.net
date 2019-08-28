@@ -40,7 +40,7 @@ namespace mpvnet
                     files.Add(App.ProcessInstance);
 
                     foreach (string arg in args)
-                        if (!arg.StartsWith("--") && (arg == "-" || arg.Contains("://") || File.Exists(arg)))
+                        if (!arg.StartsWith("--") && (arg == "-" || arg.Contains("://") || arg.Contains(":\\") || arg.StartsWith("\\\\")))
                             files.Add(arg);
 
                     Process[] procs = Process.GetProcessesByName("mpvnet");
