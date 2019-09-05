@@ -387,10 +387,10 @@ namespace mpvnet
                 else
                     Text = "mpv.net " + Application.ProductVersion;
 
-                double duration = mp.get_property_number("duration");
                 ProgressTimer.Interval = (int)(mp.Duration.TotalMilliseconds / 99);
                 if (ProgressTimer.Interval < 100) ProgressTimer.Interval = 100;
                 if (ProgressTimer.Interval > 999) ProgressTimer.Interval = 999;
+                UpdateProgressBar();
             }));
 
             if (RecentFiles.Contains(path)) RecentFiles.Remove(path);
@@ -513,7 +513,7 @@ namespace mpvnet
 
         void UpdateProgressBar()
         {
-            if (mp.TaskbarProgress)
+            if (mp.TaskbarProgress && Taskbar != null)
                 Taskbar.SetValue(mp.get_property_number("time-pos"), mp.Duration.TotalSeconds);
         }
 
