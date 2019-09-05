@@ -625,7 +625,8 @@ namespace mpvnet
 
                 foreach (string i in args)
                 {
-                    if (!i.StartsWith("--") && (i == "-" || i.Contains("://") || i.Contains(":\\") || i.StartsWith("\\\\")))
+                    if (!i.StartsWith("--") && (i == "-" || i.Contains("://") ||
+                        i.Contains(":\\") || i.StartsWith("\\\\") || File.Exists(i)))
                     {
                         files.Add(i);
                         if (i.Contains("://")) RegHelp.SetObject(App.RegPath, "LastURL", i);
