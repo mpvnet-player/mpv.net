@@ -1,8 +1,8 @@
-###
+### 5.4
 
 - added taskbar-progress implementation
 - added new setting to start with maximized window
-- long file names work now even if not enabled by the OS
+- long file paths work now even if not enabled by the OS
 - fixed history being written even when history file wasn't created prior
 - libmpv updated to shinchiro 2019-08-31
 
