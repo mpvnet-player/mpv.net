@@ -197,4 +197,3 @@
  Ctrl+Wheel_Down no-osd seek -7
  MBTN_Left_DBL   cycle fullscreen
  KP_Enter        cycle fullscreen
- MBTN_Left       ignore

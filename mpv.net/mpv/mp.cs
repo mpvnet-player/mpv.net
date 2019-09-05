@@ -61,12 +61,12 @@ namespace mpvnet
         public static List<KeyValuePair<string, Action<string>>> StringPropChangeActions { get; set; } = new List<KeyValuePair<string, Action<string>>>();
         public static List<MediaTrack> MediaTracks { get; set; } = new List<MediaTrack>();
         public static List<KeyValuePair<string, double>> Chapters { get; set; } = new List<KeyValuePair<string, double>>();
-
         public static IntPtr Handle { get; set; }
         public static IntPtr WindowHandle { get; set; }
         public static Extension Extension { get; set; }
         public static List<PythonScript> PythonScripts { get; set; } = new List<PythonScript>();
         public static Size VideoSize { get; set; }
+        public static TimeSpan Duration;
         public static AutoResetEvent ShutdownAutoResetEvent { get; set; } = new AutoResetEvent(false);
         public static AutoResetEvent VideoSizeAutoResetEvent { get; set; } = new AutoResetEvent(false);
 
@@ -81,7 +81,8 @@ namespace mpvnet
         public static bool IsQuitNeeded { set; get; } = true;
         public static bool Fullscreen { get; set; }
         public static bool Border { get; set; } = true;
-        
+        public static bool TaskbarProgress { get; set; } = true;
+
         public static int Screen { get; set; } = -1;
         public static int Edition { get; set; }
 
@@ -136,6 +137,7 @@ namespace mpvnet
                 case "fs":
                 case "fullscreen": Fullscreen = value == "yes"; break;
                 case "border": Border = value == "yes"; break;
+                case "taskbar-progress": TaskbarProgress = value == "yes"; break;
                 case "screen": Screen = Convert.ToInt32(value); break;
                 case "gpu-api": GPUAPI = value; break;
             }
@@ -317,7 +319,7 @@ namespace mpvnet
                             break;
                         case mpv_event_id.MPV_EVENT_FILE_LOADED:
                             HideLogo();
-                            FileLoaded?.Invoke();
+                            Duration = TimeSpan.FromSeconds(get_property_number("duration"));
                             Size vidSize = new Size(get_property_int("width"), get_property_int("height"));
                             if (vidSize.Width == 0 || vidSize.Height == 0)
                                 vidSize = new Size(1, 1);
@@ -329,6 +331,7 @@ namespace mpvnet
                             VideoSizeAutoResetEvent.Set();
                             Task.Run(new Action(() => ReadMetaData()));
                             WriteHistory(get_property_string("path"));
+                            FileLoaded?.Invoke();
                             break;
                         case mpv_event_id.MPV_EVENT_TRACKS_CHANGED:
                             TracksChanged?.Invoke();

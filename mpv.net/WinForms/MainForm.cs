@@ -16,12 +16,12 @@ namespace mpvnet
     {
         public static MainForm Instance { get; set; }
         public static IntPtr Hwnd { get; set; }
-
         public new ContextMenuStripEx ContextMenu { get; set; }
-
         Point  LastCursorPosChanged;
         int    LastCursorChangedTickCount;
+        int    TaskbarButtonCreatedMessage;
         bool   WasShown;
+        Taskbar Taskbar;
         List<string> RecentFiles;
 
         public MainForm()
@@ -38,7 +38,9 @@ namespace mpvnet
                 mp.VideoSizeChanged += VideoSizeChanged;
                 mp.FileLoaded += FileLoaded;
                 mp.Idle += Idle;
+                mp.Seek += () => UpdateProgressBar();
 
+                mp.observe_property_bool("pause", PropChangePause);
                 mp.observe_property_bool("fullscreen", PropChangeFullscreen);
                 mp.observe_property_bool("ontop", PropChangeOnTop);
                 mp.observe_property_bool("border", PropChangeBorder);
@@ -46,14 +48,15 @@ namespace mpvnet
                 mp.observe_property_string("aid", PropChangeAid);
                 mp.observe_property_string("vid", PropChangeVid);
                 mp.observe_property_int("edition", PropChangeEdition);
-
+                
                 if (mp.GPUAPI != "vulkan") mp.ProcessCommandLine(false);
 
                 AppDomain.CurrentDomain.UnhandledException += (sender, e) => Msg.ShowError(e.ExceptionObject.ToString());
                 Application.ThreadException += (sender, e) => Msg.ShowException(e.Exception);
                 Msg.SupportURL = "https://github.com/stax76/mpv.net#support";
                 Text = "mpv.net " + Application.ProductVersion;
-
+                TaskbarButtonCreatedMessage = Native.RegisterWindowMessage("TaskbarButtonCreated");
+                
                 object recent = RegHelp.GetObject(App.RegPath, "Recent");
 
                 if (recent is string[] r)
@@ -94,13 +97,16 @@ namespace mpvnet
 
         public MenuItem FindMenuItem(string text) => FindMenuItem(text, ContextMenu.Items);
 
-        void Idle() => BeginInvoke(new Action(() => Text = "mpv.net " + Application.ProductVersion));
+        void Shutdown() => BeginInvoke(new Action(() => Close()));
+
+        void Idle()
+        {
+            BeginInvoke(new Action(() => Text = "mpv.net " + Application.ProductVersion));
+        }
 
         void CM_Popup(object sender, EventArgs e) => CursorHelp.Show();
 
         void VideoSizeChanged() => BeginInvoke(new Action(() => SetFormPosAndSize()));
-
-        void Shutdown() => BeginInvoke(new Action(() => Close()));
 
         void PropChangeFullscreen(bool value) => BeginInvoke(new Action(() => CycleFullscreen(value)));
 
@@ -372,6 +378,7 @@ namespace mpvnet
         private void FileLoaded()
         {
             string path = mp.get_property_string("path");
+
             BeginInvoke(new Action(() => {
                 if (path.Contains("://"))
                     Text = path + " - mpv.net " + Application.ProductVersion;
@@ -379,7 +386,13 @@ namespace mpvnet
                     Text = path.FileName() + " - mpv.net " + Application.ProductVersion;
                 else
                     Text = "mpv.net " + Application.ProductVersion;
+
+                double duration = mp.get_property_number("duration");
+                ProgressTimer.Interval = (int)(mp.Duration.TotalMilliseconds / 99);
+                if (ProgressTimer.Interval < 100) ProgressTimer.Interval = 100;
+                if (ProgressTimer.Interval > 999) ProgressTimer.Interval = 999;
             }));
+
             if (RecentFiles.Contains(path)) RecentFiles.Remove(path);
             RecentFiles.Insert(0, path);
             while (RecentFiles.Count > App.RecentCount) RecentFiles.RemoveAt(App.RecentCount);
@@ -473,10 +486,16 @@ namespace mpvnet
                     return;
             }
 
+            if (m.Msg == TaskbarButtonCreatedMessage)
+            {
+                Taskbar = new Taskbar(Handle);
+                ProgressTimer.Start();
+            }
+
             base.WndProc(ref m);
         }
 
-        void Timer_Tick(object sender, EventArgs e)
+        void CursorTimer_Tick(object sender, EventArgs e)
         {
             if (CursorHelp.IsPosDifferent(LastCursorPosChanged))
             {
@@ -488,6 +507,14 @@ namespace mpvnet
                 Form.ActiveForm == this && !ContextMenu.Visible)
 
                 CursorHelp.Hide();
+        }
+
+        private void ProgressTimer_Tick(object sender, EventArgs e) => UpdateProgressBar();
+
+        void UpdateProgressBar()
+        {
+            if (mp.TaskbarProgress)
+                Taskbar.SetValue(mp.get_property_number("time-pos"), mp.Duration.TotalSeconds);
         }
 
         void PropChangeOnTop(bool value) => BeginInvoke(new Action(() => TopMost = value));
@@ -512,6 +539,17 @@ namespace mpvnet
                         FormBorderStyle = FormBorderStyle.None;
                 }
             }));
+        }
+
+        void PropChangePause(bool enabled)
+        {
+            if (Taskbar != null)
+            {
+                if (enabled)
+                    Taskbar.SetState(TaskbarStates.Paused);
+                else
+                    Taskbar.SetState(TaskbarStates.Normal);
+            }
         }
 
         protected override void OnLoad(EventArgs e)

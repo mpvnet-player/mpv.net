@@ -153,6 +153,7 @@
     <Compile Include="DynamicGUI\Tommy.cs" />
     <Compile Include="Misc\ExtensionMethods.cs" />
     <Compile Include="Native\MediaInfo.cs" />
+    <Compile Include="Native\Taskbar.cs" />
     <Compile Include="WinForms\Menu.cs">
       <SubType>Component</SubType>
     </Compile>
