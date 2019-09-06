@@ -387,9 +387,10 @@ namespace mpvnet
                 else
                     Text = "mpv.net " + Application.ProductVersion;
 
-                ProgressTimer.Interval = (int)(mp.Duration.TotalMilliseconds / 99);
-                if (ProgressTimer.Interval < 100) ProgressTimer.Interval = 100;
-                if (ProgressTimer.Interval > 999) ProgressTimer.Interval = 999;
+                int interval = (int)(mp.Duration.TotalMilliseconds / 100);
+                if (interval < 100) interval = 100;
+                if (interval > 1000) interval = 1000;
+                ProgressTimer.Interval = interval;
                 UpdateProgressBar();
             }));
 
@@ -486,7 +487,7 @@ namespace mpvnet
                     return;
             }
 
-            if (m.Msg == TaskbarButtonCreatedMessage)
+            if (m.Msg == TaskbarButtonCreatedMessage && mp.TaskbarProgress)
             {
                 Taskbar = new Taskbar(Handle);
                 ProgressTimer.Start();
@@ -543,7 +544,7 @@ namespace mpvnet
 
         void PropChangePause(bool enabled)
         {
-            if (Taskbar != null)
+            if (Taskbar != null && mp.TaskbarProgress)
             {
                 if (enabled)
                     Taskbar.SetState(TaskbarStates.Paused);

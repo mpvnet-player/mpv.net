@@ -1,3 +1,11 @@
+###
+
+- a issue with the taskbar-progress feature was fixed
+
+### 5.4.1
+
+- fix ArgumentOutOfRangeException
+
 ### 5.4
 
 - added taskbar-progress implementation
