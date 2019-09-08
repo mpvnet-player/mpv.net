@@ -9,7 +9,7 @@ namespace mpvnet
 {
     public class PowerShellScript
     {
-        public static object Execute(string code, string[] parameters)
+        public static object Execute(string filepath, params string[] parameters)
         {
             using (Runspace runspace = RunspaceFactory.CreateRunspace())
             {
@@ -23,22 +23,27 @@ namespace mpvnet
                         "Using namespace System\n" +
                         "[System.Reflection.Assembly]::LoadWithPartialName(\"mpvnet\")\n");
 
-                    pipeline.Commands.AddScript(code);
+                    pipeline.Commands.AddScript(File.ReadAllText(filepath));
 
                     if (parameters != null)
-                        foreach (var i in parameters)
+                        foreach (string i in parameters)
                             pipeline.Commands[1].Parameters.Add(null, i);
 
                     try
                     {
-                        pipeline.Output.DataReady += Output_DataReady;
-                        pipeline.Error.DataReady += Error_DataReady;
+                        var output = new PowerShellOutput();
+                        output.ModuleName = Path.GetFileName(filepath);
+
+                        pipeline.Output.DataReady += output.Output_DataReady;
+                        pipeline.Error.DataReady += output.Error_DataReady;
+
+                        runspace.SessionStateProxy.SetVariable("Output", output);
 
                         var ret = pipeline.Invoke();
                         if (ret.Count > 0) return ret[0];
 
-                        pipeline.Output.DataReady -= Output_DataReady;
-                        pipeline.Error.DataReady -= Error_DataReady;
+                        pipeline.Output.DataReady -= output.Output_DataReady;
+                        pipeline.Error.DataReady -= output.Error_DataReady;
                     }
                     catch (Exception e)
                     {
@@ -49,35 +54,21 @@ namespace mpvnet
             return null;
         }
 
-        private static void Output_DataReady(object sender, EventArgs e)
-        {
-            var output = sender as PipelineReader<PSObject>;
-            while (output.Count > 0) Console.WriteLine(output.Read().ToString());
-        }
-
-        private static void Error_DataReady(object sender, EventArgs e)
-        {
-            var output = sender as PipelineReader<Object>;
-            Console.ForegroundColor = ConsoleColor.Red;
-            while (output.Count > 0) Console.WriteLine(output.Read().ToString());
-            Console.ResetColor();
-        }
-
-        public static void Init(string filePath)
+        public static void Init(string filepath)
         {
             foreach (var eventInfo in typeof(mp).GetEvents())
             {
                 if (eventInfo.Name.ToLower() ==
-                    Path.GetFileNameWithoutExtension(filePath).ToLower().Replace("-", ""))
+                    Path.GetFileNameWithoutExtension(filepath).ToLower().Replace("-", ""))
                 {
                     PowerShellEventObject eventObject = new PowerShellEventObject();
                     MethodInfo mi;
-                    eventObject.FilePath = filePath;
+                    eventObject.Filepath = filepath;
 
                     if (eventInfo.EventHandlerType == typeof(Action))
                         mi = eventObject.GetType().GetMethod(nameof(PowerShellEventObject.Invoke));
                     else if (eventInfo.EventHandlerType == typeof(Action<EndFileEventMode>))
-                        mi = eventObject.GetType().GetMethod(nameof(PowerShellEventObject.InvokeEndFileEventMode));
+                        mi = eventObject.GetType().GetMethod(nameof(PowerShellEventObject.InvokeEndFile));
                     else if (eventInfo.EventHandlerType == typeof(Action<string[]>))
                         mi = eventObject.GetType().GetMethod(nameof(PowerShellEventObject.InvokeStrings));
                     else
@@ -90,7 +81,33 @@ namespace mpvnet
                     return;
                 }
             }
-            PowerShellScript.Execute(File.ReadAllText(filePath), null);
+            Execute(filepath);
+        }
+
+        class PowerShellOutput
+        {
+            public string ModuleName { get; set; }
+
+            public bool WriteStandard { get; set; } = true;
+            public bool WriteError { get; set; } = true;
+
+            public void Output_DataReady(object sender, EventArgs e)
+            {
+                if (!WriteStandard) return;
+                var output = sender as PipelineReader<PSObject>;
+                while (output.Count > 0)
+                    Console.WriteLine("[" + ModuleName + "] " + output.Read().ToString());
+            }
+
+            public void Error_DataReady(object sender, EventArgs e)
+            {
+                if (!WriteError) return;
+                var output = sender as PipelineReader<Object>;
+                Console.ForegroundColor = ConsoleColor.Red;
+                while (output.Count > 0)
+                    Console.WriteLine("[" + ModuleName + "] " + output.Read().ToString());
+                Console.ResetColor();
+            }
         }
     }
 
@@ -98,18 +115,10 @@ namespace mpvnet
     {
         public EventInfo EventInfo { get; set; }
         public Delegate Delegate { get; set; }
-        public string FilePath { get; set; }
+        public string Filepath { get; set; }
 
-        public void Invoke() => PowerShellScript.Execute(File.ReadAllText(FilePath), null);
-
-        public void InvokeEndFileEventMode(EndFileEventMode arg)
-        {
-            PowerShellScript.Execute(File.ReadAllText(FilePath), new[] { arg.ToString() });
-        }
-
-        public void InvokeStrings(string[] args)
-        {
-            PowerShellScript.Execute(File.ReadAllText(FilePath), args);
-        }
+        public void Invoke() => PowerShellScript.Execute(Filepath);
+        public void InvokeEndFile(EndFileEventMode arg) => PowerShellScript.Execute(Filepath, arg.ToString());
+        public void InvokeStrings(string[] args) => PowerShellScript.Execute(Filepath, args);
     }
 }
