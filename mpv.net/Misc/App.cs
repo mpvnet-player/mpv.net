@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace mpvnet
 {
-    public class App
+    public static class App
     {
         public static string[] VideoTypes { get; } = "264 265 asf avc avi avs flv h264 h265 hevc m2ts m2v m4v mkv mov mp4 mpeg mpg mpv mts ts vob vpy webm wmv y4m".Split(' ');
         public static string[] AudioTypes { get; } = "mp3 mp2 ac3 ogg opus flac wav w64 m4a dts dtsma dtshr dtshd eac3 thd thd+ac3 mka aac mpa".Split(' ');
@@ -34,7 +34,9 @@ namespace mpvnet
         public static int RecentCount { get; set; } = 15;
 
         public static float MinimumAspectRatio { get; set; } = 1.3f;
-               
+
+        public static Extension Extension { get; set; }
+
         public static bool IsDarkMode {
             get => (DarkMode == "system" && Sys.IsDarkTheme) || DarkMode == "always";
         }

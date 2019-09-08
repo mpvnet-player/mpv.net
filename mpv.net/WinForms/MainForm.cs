@@ -574,8 +574,8 @@ namespace mpvnet
             CheckClipboardForURL();
             Cursor.Position = new Point(Cursor.Position.X + 1, Cursor.Position.Y);
             WasShown = true;
-            Task.Run(() => mp.LoadScripts());
-            Task.Run(() => mp.Extension = new Extension());
+            mp.LoadScripts();
+            Task.Run(() => App.Extension = new Extension());
         }
 
         protected override void OnActivated(EventArgs e)

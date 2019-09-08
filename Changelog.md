@@ -1,6 +1,7 @@
-###
+### 5.4.1.1
 
 - a issue with the taskbar-progress feature was fixed
+- improved PowerShell scrip host
 
 ### 5.4.1
 

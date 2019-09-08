@@ -63,7 +63,6 @@ namespace mpvnet
         public static List<KeyValuePair<string, double>> Chapters { get; set; } = new List<KeyValuePair<string, double>>();
         public static IntPtr Handle { get; set; }
         public static IntPtr WindowHandle { get; set; }
-        public static Extension Extension { get; set; }
         public static List<PythonScript> PythonScripts { get; set; } = new List<PythonScript>();
         public static Size VideoSize { get; set; }
         public static TimeSpan Duration;
@@ -258,9 +257,9 @@ namespace mpvnet
                     if (KnownScripts.Contains(Path.GetFileName(path)))
                     {
                         if (path.EndsWith(".py"))
-                            PythonScripts.Add(new PythonScript(File.ReadAllText(path)));
+                            Task.Run(() => PythonScripts.Add(new PythonScript(File.ReadAllText(path))));
                         else if (path.EndsWith(".ps1"))
-                            PowerShellScript.Init(path);
+                            Task.Run(() => PowerShellScript.Init(path));
                     }
                     else
                         Msg.ShowError("Failed to load script", path + "\n\nOnly scripts that ship with mpv.net are allowed in <startup>\\scripts\n\nUser scripts have to use <config folder>\\scripts\n\nNever copy or install a new mpv.net version over a old mpv.net version.");
@@ -269,10 +268,10 @@ namespace mpvnet
 
             if (Directory.Exists(ConfigFolder + "scripts"))
                 foreach (string scriptPath in Directory.GetFiles(ConfigFolder + "scripts"))
-                    if (scriptPath.EndsWith(".py")) 
-                        PythonScripts.Add(new PythonScript(File.ReadAllText(scriptPath)));
+                    if (scriptPath.EndsWith(".py"))
+                        Task.Run(() => PythonScripts.Add(new PythonScript(File.ReadAllText(scriptPath))));
                     else if (scriptPath.EndsWith(".ps1"))
-                        PowerShellScript.Init(scriptPath);
+                        Task.Run(() => PowerShellScript.Init(scriptPath));
         }
 
         public static void EventLoop()

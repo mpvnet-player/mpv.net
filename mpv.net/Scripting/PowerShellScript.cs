@@ -3,7 +3,7 @@ using System.IO;
 using System.Threading;
 using System.Management.Automation.Runspaces;
 using System.Reflection;
-using System.Threading.Tasks;
+using System.Management.Automation;
 
 namespace mpvnet
 {
@@ -31,32 +31,36 @@ namespace mpvnet
 
                     try
                     {
+                        pipeline.Output.DataReady += Output_DataReady;
+                        pipeline.Error.DataReady += Error_DataReady;
+
                         var ret = pipeline.Invoke();
                         if (ret.Count > 0) return ret[0];
+
+                        pipeline.Output.DataReady -= Output_DataReady;
+                        pipeline.Error.DataReady -= Error_DataReady;
                     }
                     catch (Exception e)
                     {
-                        try
-                        {
-                            using (Pipeline pipeline2 = runspace.CreatePipeline())
-                            {
-                                pipeline2.Commands.AddScript("$PSVersionTable.PSVersion.Major * 10 +" +
-                                    "$PSVersionTable.PSVersion.Minor");
-
-                                if (Convert.ToInt32(pipeline2.Invoke()[0].ToString()) < 51)
-                                    throw new Exception();
-                            }
-                        }
-                        catch (Exception e2)
-                        {
-                            Msg.ShowError("PowerShell Setup Problem\n\nEnsure you have at least PowerShell 5.1 installed.", e2.ToString());
-                            return null;
-                        }
                         Msg.ShowException(e);
                     }
                 }
             }
             return null;
+        }
+
+        private static void Output_DataReady(object sender, EventArgs e)
+        {
+            var output = sender as PipelineReader<PSObject>;
+            while (output.Count > 0) Console.WriteLine(output.Read().ToString());
+        }
+
+        private static void Error_DataReady(object sender, EventArgs e)
+        {
+            var output = sender as PipelineReader<Object>;
+            Console.ForegroundColor = ConsoleColor.Red;
+            while (output.Count > 0) Console.WriteLine(output.Read().ToString());
+            Console.ResetColor();
         }
 
         public static void Init(string filePath)
@@ -86,7 +90,7 @@ namespace mpvnet
                     return;
                 }
             }
-            Task.Run(() => PowerShellScript.Execute(File.ReadAllText(filePath), null));
+            PowerShellScript.Execute(File.ReadAllText(filePath), null);
         }
     }
 
@@ -96,16 +100,16 @@ namespace mpvnet
         public Delegate Delegate { get; set; }
         public string FilePath { get; set; }
 
-        public void Invoke() => Task.Run(() => PowerShellScript.Execute(File.ReadAllText(FilePath), null));
+        public void Invoke() => PowerShellScript.Execute(File.ReadAllText(FilePath), null);
 
         public void InvokeEndFileEventMode(EndFileEventMode arg)
         {
-            Task.Run(() => PowerShellScript.Execute(File.ReadAllText(FilePath), new [] { arg.ToString() }));
+            PowerShellScript.Execute(File.ReadAllText(FilePath), new[] { arg.ToString() });
         }
 
         public void InvokeStrings(string[] args)
         {
-            Task.Run(() => PowerShellScript.Execute(File.ReadAllText(FilePath), args));
+            PowerShellScript.Execute(File.ReadAllText(FilePath), args);
         }
     }
 }

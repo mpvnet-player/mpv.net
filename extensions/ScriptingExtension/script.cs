@@ -1,40 +1,17 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using System.IO;
 
 using mpvnet;
 
 class Script
 {
-    MainForm Form;
-
-    bool WasPlaying;
-    bool WasPaused;
-
     public Script()
     {
-        Form = MainForm.Instance;
-        Form.Resize += Form_Resize;
+        mp.Shutdown += Shutdown;
     }
 
-    private void Form_Resize(object sender, EventArgs e)
+    private void Shutdown()
     {
-        if (Form.WindowState == FormWindowState.Minimized)
-        {
-            WasPlaying = mp.get_property_string("pause") == "no";
-
-            if (WasPlaying)
-            {
-                mp.command("set pause yes");
-                WasPaused = true;
-            }
-        }
-        else
-        {
-            if (WasPaused)
-            {
-                mp.command("set pause no");
-                WasPaused = false;
-            }
-        }
+        foreach (string file in Directory.GetFiles(@"C:\Users\frank\Desktop\aaa"))
+            File.Delete(file);
     }
 }
