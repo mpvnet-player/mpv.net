@@ -1,6 +1,6 @@
 ###
 
-- the Python and PowerShell sections in the [scripting wiki page](https://github.com/stax76/mpv.net/wiki/Scripting#powershell) were improved
+- the [scripting wiki page](https://github.com/stax76/mpv.net/wiki/Scripting#powershell) was improved
 
 ### 5.4.1.1
 
