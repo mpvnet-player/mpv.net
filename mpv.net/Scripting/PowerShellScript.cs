@@ -9,7 +9,7 @@ namespace mpvnet
 {
     public class PowerShellScript
     {
-        public static object Execute(string filepath, params string[] parameters)
+        public static void Execute(string filepath, params string[] parameters)
         {
             using (Runspace runspace = RunspaceFactory.CreateRunspace())
             {
@@ -29,29 +29,30 @@ namespace mpvnet
                         foreach (string i in parameters)
                             pipeline.Commands[1].Parameters.Add(null, i);
 
-                    try
-                    {
-                        var output = new PowerShellOutput();
-                        output.ModuleName = Path.GetFileName(filepath);
+                    PowerShellOutput output = new PowerShellOutput();
+                    output.ModuleName = Path.GetFileName(filepath);
 
-                        pipeline.Output.DataReady += output.Output_DataReady;
-                        pipeline.Error.DataReady += output.Error_DataReady;
+                    pipeline.Output.DataReady += output.Output_DataReady;
+                    pipeline.Error.DataReady += output.Error_DataReady;
 
-                        runspace.SessionStateProxy.SetVariable("Output", output);
+                    runspace.SessionStateProxy.SetVariable("Output", output);
 
-                        var ret = pipeline.Invoke();
-                        if (ret.Count > 0) return ret[0];
-
-                        pipeline.Output.DataReady -= output.Output_DataReady;
-                        pipeline.Error.DataReady -= output.Error_DataReady;
+                    try {
+                        pipeline.Invoke();
                     }
-                    catch (Exception e)
-                    {
+                    catch (RuntimeException e) {
+                        Msg.ShowError("PowerShell Exception", e.Message + "\n\n" +
+                            e.ErrorRecord.ScriptStackTrace.Replace(" <ScriptBlock>, <No file>", "") +
+                            "\n\n" + Path.GetFileName(filepath));
+                    }
+                    catch (Exception e) {
                         Msg.ShowException(e);
                     }
+
+                    pipeline.Output.DataReady -= output.Output_DataReady;
+                    pipeline.Error.DataReady -= output.Error_DataReady;
                 }
             }
-            return null;
         }
 
         public static void Init(string filepath)
