@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Reflection;
 
 using Microsoft.Scripting;
@@ -15,7 +16,7 @@ namespace mpvnet
         ScriptEngine engine;
         ScriptScope scope;
 
-        public PythonScript(string code)
+        public PythonScript(string scriptPath)
         {
             try
             {
@@ -26,14 +27,14 @@ namespace mpvnet
                 engine.Execute("clr.AddReference(\"mpvnet\")", scope);
                 engine.Execute("import mpvnet", scope);
                 engine.Execute("from mpvnet import *", scope);
-                engine.Execute(code, scope);
+                engine.Execute(File.ReadAllText(scriptPath), scope);
             }
             catch (Exception ex)
             {
                 if (ex is SyntaxErrorException e)
-                    Msg.ShowError($"{e.Line}, {e.Column}: " + ex.Message);
+                    Msg.ShowError(e.GetType().Name,$"{e.Line}, {e.Column}: " + e.Message + "\n\n" + Path.GetFileName(scriptPath));
                 else
-                    Msg.ShowException(ex);
+                    Msg.ShowError(ex.GetType().Name, ex.Message + "\n\n" + Path.GetFileName(scriptPath));
             }
         }
     }

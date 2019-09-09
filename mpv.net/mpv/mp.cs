@@ -252,24 +252,24 @@ namespace mpvnet
         {
             if (Directory.Exists(PathHelp.StartupPath + "Scripts"))
             {
-                foreach (string path in Directory.GetFiles(PathHelp.StartupPath + "Scripts"))
+                foreach (string scriptPath in Directory.GetFiles(PathHelp.StartupPath + "Scripts"))
                 {
-                    if (KnownScripts.Contains(Path.GetFileName(path)))
+                    if (KnownScripts.Contains(Path.GetFileName(scriptPath)))
                     {
-                        if (path.EndsWith(".py"))
-                            Task.Run(() => PythonScripts.Add(new PythonScript(File.ReadAllText(path))));
-                        else if (path.EndsWith(".ps1"))
-                            Task.Run(() => PowerShellScript.Init(path));
+                        if (scriptPath.EndsWith(".py"))
+                            Task.Run(() => PythonScripts.Add(new PythonScript(scriptPath)));
+                        else if (scriptPath.EndsWith(".ps1"))
+                            Task.Run(() => PowerShellScript.Init(scriptPath));
                     }
                     else
-                        Msg.ShowError("Failed to load script", path + "\n\nOnly scripts that ship with mpv.net are allowed in <startup>\\scripts\n\nUser scripts have to use <config folder>\\scripts\n\nNever copy or install a new mpv.net version over a old mpv.net version.");
+                        Msg.ShowError("Failed to load script", scriptPath + "\n\nOnly scripts that ship with mpv.net are allowed in <startup>\\scripts\n\nUser scripts have to use <config folder>\\scripts\n\nNever copy or install a new mpv.net version over a old mpv.net version.");
                 }
             }
 
             if (Directory.Exists(ConfigFolder + "scripts"))
                 foreach (string scriptPath in Directory.GetFiles(ConfigFolder + "scripts"))
                     if (scriptPath.EndsWith(".py"))
-                        Task.Run(() => PythonScripts.Add(new PythonScript(File.ReadAllText(scriptPath))));
+                        Task.Run(() => PythonScripts.Add(new PythonScript(scriptPath)));
                     else if (scriptPath.EndsWith(".ps1"))
                         Task.Run(() => PowerShellScript.Init(scriptPath));
         }
