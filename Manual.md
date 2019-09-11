@@ -1,4 +1,4 @@
-# mpv.net manual aaaaaaaaaaaaaaaaaaaaaaaaaaaa
+# mpv.net manual
 
 ## Table of contents
 
