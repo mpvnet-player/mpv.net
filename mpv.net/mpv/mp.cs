@@ -606,9 +606,12 @@ namespace mpvnet
                         }
                         else if (!preInit && !preInitProperties.Contains(left))
                         {
-                            mp.ProcessProperty(left, right);
-                            if (!App.ProcessProperty(left, right))
-                                set_property_string(left, right, true);
+                            if (!PrintCommandLineArgument(arg))
+                            {
+                                mp.ProcessProperty(left, right);
+                                if (!App.ProcessProperty(left, right))
+                                    set_property_string(left, right, true);
+                            }
                         }
                     }
                     catch (Exception e)
@@ -640,6 +643,20 @@ namespace mpvnet
                     VideoSizeAutoResetEvent.Set();
                 }
             }
+        }
+
+        static bool PrintCommandLineArgument(string argument)
+        {
+            switch (argument)
+            {
+                case "--list-properties=yes":
+                    var list = get_property_string("property-list").Split(',').ToList();
+                    list.Sort();
+                    Console.WriteLine(string.Join("\r\n", list.ToArray()));
+                    return true;
+            }
+
+            return false;
         }
 
         public static DateTime LastLoad;

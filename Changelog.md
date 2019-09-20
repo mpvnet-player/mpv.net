@@ -1,3 +1,5 @@
+TODO: fix volume/mute being initialized muted
+
 ###
 
 - the [scripting wiki page](https://github.com/stax76/mpv.net/wiki/Scripting#powershell) was improved
