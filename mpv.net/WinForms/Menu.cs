@@ -3,7 +3,6 @@ using System.Linq;
 using System.ComponentModel;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
-using Microsoft.Win32;
 using System.Windows.Forms;
 using System.Drawing;
 

@@ -151,6 +151,7 @@
  Ctrl+r script-message-to repl type ""              #menu: Tools > Show REPL
  l      ab-loop                                     #menu: Tools > Set/clear A-B loop points
  L      cycle-values loop-file "inf" "no"           #menu: Tools > Toggle infinite file looping
+ _      cycle shuffle                               #menu: Tools > Toggle Shuffle
  Ctrl+h cycle-values hwdec "auto" "no"              #menu: Tools > Toggle Hardware Decoding
  _ script-message mpv.net show-setup-dialog         #menu: Tools > OS Setup...
 
