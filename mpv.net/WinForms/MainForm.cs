@@ -571,7 +571,6 @@ namespace mpvnet
             ContextMenuStrip = ContextMenu;
             WPF.WPF.Init();
             System.Windows.Application.Current.ShutdownMode = System.Windows.ShutdownMode.OnExplicitShutdown;
-            CheckClipboardForURL();
             Cursor.Position = new Point(Cursor.Position.X + 1, Cursor.Position.Y);
             WasShown = true;
             mp.LoadScripts();
@@ -660,10 +659,11 @@ namespace mpvnet
                     !clipboard.Contains(" ") && clipboard.Contains(url.ToLower().Trim()) &&
                     RegHelp.GetString(App.RegPath, "LastURL") != clipboard && Visible)
                 {
-                    RegHelp.SetObject(App.RegPath, "LastURL", clipboard);
-
                     if (Msg.ShowQuestion("Play URL?", clipboard) == MsgResult.OK)
                         mp.Load(new[] { clipboard }, true, Control.ModifierKeys.HasFlag(Keys.Control));
+
+                    RegHelp.SetObject(App.RegPath, "LastURL", clipboard);
+                    break;
                 }
             }
         }

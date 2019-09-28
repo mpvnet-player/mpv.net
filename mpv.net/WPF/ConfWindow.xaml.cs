@@ -200,8 +200,7 @@ namespace mpvnet
 
         private void FilterListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (e.AddedItems.Count > 0)
-                SearchControl.Text = e.AddedItems[0].ToString() + ":"; // TODO: remove ToString()
+            if (e.AddedItems.Count > 0) SearchControl.Text = e.AddedItems[0] + ":";
         }
 
         private void OpenSettingsTextBlock_MouseUp(object sender, MouseButtonEventArgs e)

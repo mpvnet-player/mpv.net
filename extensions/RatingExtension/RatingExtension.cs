@@ -35,8 +35,8 @@ namespace RatingExtension // the assembly name must end with 'Extension'
                 string basename = Path.GetFileNameWithoutExtension(filepath);
 
                 for (int x = 0; x < 6; x++)
-                    if (basename.Contains(" (" + x.ToString() + "stars)"))
-                        basename = basename.Replace(" (" + x.ToString() + "stars)", "");
+                    if (basename.Contains(" (" + x + "stars)"))
+                        basename = basename.Replace(" (" + x + "stars)", "");
 
                 basename += $" ({rating}stars)";
                 string newPath = Path.Combine(Path.GetDirectoryName(filepath), basename + Path.GetExtension(filepath));

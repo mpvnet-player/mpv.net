@@ -631,7 +631,6 @@ namespace mpvnet
                         i.Contains(":\\") || i.StartsWith("\\\\") || File.Exists(i)))
                     {
                         files.Add(i);
-                        if (i.Contains("://")) RegHelp.SetObject(App.RegPath, "LastURL", i);
                     }
                 }
 

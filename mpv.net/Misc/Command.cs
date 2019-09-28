@@ -176,7 +176,7 @@ namespace mpvnet
                     $"{width} x {height}\n";
 
                 if (fileSize > 0)
-                    text += Convert.ToInt32(fileSize / 1024.0 / 1024.0).ToString() + " MB\n";
+                    text += Convert.ToInt32(fileSize / 1024.0 / 1024.0) + " MB\n";
 
                 text += $"{videoFormat}\n{audioCodec}";
 

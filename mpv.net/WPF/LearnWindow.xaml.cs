@@ -44,7 +44,7 @@ namespace mpvnet
                 } catch {}
 
             for (int i = 0; i < 13; i++)
-                if ("D" + i.ToString() == text)
+                if ("D" + i == text)
                     text = text.Substring(1);
 
             switch (e.KeyCode)
@@ -59,7 +59,7 @@ namespace mpvnet
                 case WF.Keys.NumPad7:
                 case WF.Keys.NumPad8:
                 case WF.Keys.NumPad9:
-                    text = "KP" + e.KeyCode.ToString()[6].ToString(); break;
+                    text = "KP" + e.KeyCode.ToString()[6]; break;
                 case WF.Keys.Space:
                     text = "Space"; break;
                 case WF.Keys.Enter:
