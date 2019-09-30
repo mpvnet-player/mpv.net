@@ -73,8 +73,8 @@ namespace mpvnet
         {
             if (RememberVolume)
             {
-                mp.set_property_int("volume", RegHelp.GetInt(App.RegPath, "Volume"));
-                mp.set_property_string("mute", RegHelp.GetString(App.RegPath, "Mute"));
+                mp.set_property_int("volume", RegHelp.GetInt(App.RegPath, "Volume", 70));
+                mp.set_property_string("mute", RegHelp.GetString(App.RegPath, "Mute", "no"));
             }
         }
 

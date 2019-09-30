@@ -381,7 +381,7 @@ namespace mpvnet
 
             BeginInvoke(new Action(() => {
                 if (path.Contains("://"))
-                    Text = path + " - mpv.net " + Application.ProductVersion;
+                    Text = mp.get_property_string("media-title") + " - mpv.net " + Application.ProductVersion;
                 else if (path.Contains(":\\") || path.StartsWith("\\\\"))
                     Text = path.FileName() + " - mpv.net " + Application.ProductVersion;
                 else

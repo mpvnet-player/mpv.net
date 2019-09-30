@@ -111,25 +111,25 @@ namespace mpvnet
                 rk.SetValue(name, value);
         }
 
-        public static string GetString(string path, string name)
+        public static string GetString(string path, string name, string defaultValue = "")
         {
-            object val = GetObject(path, name);
+            object val = GetObject(path, name, defaultValue);
             if (val == null || !(val is string)) return "";
             return val.ToString();
         }
 
-        public static int GetInt(string path, string name)
+        public static int GetInt(string path, string name, int defaultValue = 0)
         {
-            object val = GetObject(path, name);
+            object val = GetObject(path, name, defaultValue);
             if (val == null || !(val is int)) return 0;
             return (int)val;
         }
 
-        public static object GetObject(string path, string name)
+        public static object GetObject(string path, string name, object defaultValue = null)
         {
             using (RegistryKey rk = GetRootKey(path).OpenSubKey(path.Substring(5)))
                 if (rk != null)
-                    return rk.GetValue(name, "");
+                    return rk.GetValue(name, defaultValue);
                 else
                     return null;
         }

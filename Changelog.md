@@ -1,9 +1,11 @@
-TODO: fix volume/mute being initialized muted
-
 ###
 
-- the [scripting wiki page](https://github.com/stax76/mpv.net/wiki/Scripting#powershell) was improved
-- Toggle Shuffle has been added to the menu defaults
+- new: the [scripting wiki page](https://github.com/stax76/mpv.net/wiki/Scripting#powershell) was improved
+- new: Toggle Shuffle has been added to the menu defaults
+- new: for URLs the media title is shown in the title bar and the info command
+  instead of displaying the URL
+- fix: on the very first start volume was set to 0 and mute was set to yes,
+  now reasonable defaults are set, volume = 70, mute = no
 
 ### 5.4.1.1
 

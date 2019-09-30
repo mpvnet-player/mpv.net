@@ -116,6 +116,10 @@ namespace mpvnet
                 string performer, title, album, genre, date, duration, text = "";
                 long fileSize = 0;
                 string path = mp.get_property_string("path");
+
+                if (path.Contains("://"))
+                    path = mp.get_property_string("media-title");
+
                 int width = mp.get_property_int("video-params/w");
                 int height = mp.get_property_int("video-params/h");
 
