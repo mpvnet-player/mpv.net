@@ -3,9 +3,14 @@
 - new: the [scripting wiki page](https://github.com/stax76/mpv.net/wiki/Scripting#powershell) was improved
 - new: Toggle Shuffle has been added to the menu defaults
 - new: for URLs the media title is shown in the title bar and the info command
-  instead of displaying the URL
+  instead of displaying the URL, mpv.conf defaults were changed to use
+  [protocol.https] osd-playing-msg = '${media-title}'
 - fix: on the very first start volume was set to 0 and mute was set to yes,
   now reasonable defaults are set, volume = 70, mute = no
+- fix: there was a issue fixed with the URL clipboard monitoring
+- fix: there was a sound when closed from taskbar due to a exception
+- update: libmpv shinchiro 2019-09-22
+- update: youtube-dl 2019-10-01
 
 ### 5.4.1.1
 

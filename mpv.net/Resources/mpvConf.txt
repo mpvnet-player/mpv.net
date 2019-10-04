@@ -10,3 +10,6 @@ cscale = spline36
 dscale = spline36
 scale = spline36
 hwdec = yes
+
+[protocol.https]
+osd-playing-msg = '${media-title}'

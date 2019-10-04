@@ -581,8 +581,6 @@ namespace mpvnet
         {
             base.OnActivated(e);
             CheckClipboardForURL();
-            Message m = new Message() { Msg = 0x0202 }; // WM_LBUTTONUP
-            Native.SendMessage(Handle, m.Msg, m.WParam, m.LParam);
         }
 
         protected override void OnResize(EventArgs e)
