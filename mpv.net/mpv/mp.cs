@@ -16,7 +16,7 @@ using System.Windows.Forms;
 using WinForms = System.Windows.Forms;
 
 using static mpvnet.libmpv;
-using static mpvnet.Native;
+using static Native;
 
 namespace mpvnet
 {

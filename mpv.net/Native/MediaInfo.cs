@@ -10,7 +10,7 @@ public class MediaInfo : IDisposable
     {
         if (!Loaded)
         {
-            if (LoadLibrary("MediaInfo.dll") == IntPtr.Zero)
+            if (Native.LoadLibrary("MediaInfo.dll") == IntPtr.Zero)
                 throw new Exception("Failed to load MediaInfo.dll.");
 
             Loaded = true;
@@ -56,20 +56,26 @@ public class MediaInfo : IDisposable
 
     ~MediaInfo() { Dispose(); }
 
-    [DllImport("kernel32.dll", CharSet = CharSet.Unicode)]
-    static extern IntPtr LoadLibrary(string path);
+    [DllImport("kernel32.dll")]
+    public static extern IntPtr LoadLibrary(string path);
 
     [DllImport("MediaInfo.dll")]
     static extern IntPtr MediaInfo_New();
 
-    [DllImport("MediaInfo.dll")]
-    static extern void MediaInfo_Delete(IntPtr handle);
+    [DllImport("MediaInfo.dll", CharSet = CharSet.Unicode)]
+    static extern int MediaInfo_Open(IntPtr handle, string path);
 
     [DllImport("MediaInfo.dll", CharSet = CharSet.Unicode)]
-    static extern int MediaInfo_Open(IntPtr handle, string fileName);
+    static extern IntPtr MediaInfo_Option(IntPtr handle, string optionString, string value);
+
+    [DllImport("MediaInfo.dll")]
+    static extern IntPtr MediaInfo_Inform(IntPtr handle, int reserved);
 
     [DllImport("MediaInfo.dll")]
     static extern int MediaInfo_Close(IntPtr handle);
+
+    [DllImport("MediaInfo.dll")]
+    static extern void MediaInfo_Delete(IntPtr handle);
 
     [DllImport("MediaInfo.dll", CharSet = CharSet.Unicode)]
     static extern IntPtr MediaInfo_Get(IntPtr handle,
