@@ -12,7 +12,6 @@ namespace mpvnet
         public static string[] AudioTypes { get; } = "mp3 mp2 ac3 ogg opus flac wav w64 m4a dts dtsma dtshr dtshd eac3 thd thd+ac3 mka aac mpa".Split(' ');
         public static string[] ImageTypes { get; } = {"jpg", "bmp", "gif", "png"};
         public static string[] SubtitleTypes { get; } = { "srt", "ass", "idx", "sup", "ttxt", "ssa", "smi" };
-        public static string[] UrlWhitelist { get; set; } = { "tube", "vimeo", "ard", "zdf" };
 
         public static string RegPath { get; } = @"HKCU\Software\" + Application.ProductName;
         public static string ConfPath { get => mp.ConfigFolder + "mpvnet.conf"; }
@@ -116,7 +115,6 @@ namespace mpvnet
                 case "debug-mode": DebugMode = value == "yes"; return true;
                 case "dark-color": DarkColor = value.Trim('\'', '"'); return true;
                 case "light-color": LightColor = value.Trim('\'', '"'); return true;
-                case "url-whitelist": UrlWhitelist = value.Split(' ', ',', ';'); return true;
                 case "remember-volume": RememberVolume = value == "yes"; return true;
                 case "start-threshold": StartThreshold = value.Int(); return true;
                 case "minimum-aspect-ratio": MinimumAspectRatio = value.Float(); return true;

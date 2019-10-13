@@ -577,12 +577,6 @@ namespace mpvnet
             Task.Run(() => App.Extension = new Extension());
         }
 
-        protected override void OnActivated(EventArgs e)
-        {
-            base.OnActivated(e);
-            CheckClipboardForURL();
-        }
-
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
@@ -645,25 +639,6 @@ namespace mpvnet
         {
             base.OnLostFocus(e);
             CursorHelp.Show();
-        }
-
-        void CheckClipboardForURL()
-        {
-            string clipboard = Clipboard.GetText();
-
-            foreach (string url in App.UrlWhitelist)
-            {
-                if (clipboard.Contains("://") && !clipboard.Contains("\n") &&
-                    !clipboard.Contains(" ") && clipboard.Contains(url.ToLower().Trim()) &&
-                    RegHelp.GetString(App.RegPath, "LastURL") != clipboard && Visible)
-                {
-                    if (Msg.ShowQuestion("Play URL?", clipboard) == MsgResult.OK)
-                        mp.Load(new[] { clipboard }, true, Control.ModifierKeys.HasFlag(Keys.Control));
-
-                    RegHelp.SetObject(App.RegPath, "LastURL", clipboard);
-                    break;
-                }
-            }
         }
     }
 }

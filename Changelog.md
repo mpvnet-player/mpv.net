@@ -10,6 +10,7 @@
 - fix: there was a issue fixed with the URL clipboard monitoring
 - fix: there was a sound when closed from taskbar due to a exception
 - fix: the log feature was not working
+- fix: clipboard monitoring feature removed because it was causing to many issues
 
 - update: libmpv shinchiro 2019-10-06
 - update: youtube-dl 2019-10-01

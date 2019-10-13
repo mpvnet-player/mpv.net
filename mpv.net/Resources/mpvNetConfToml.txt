@@ -1,11 +1,4 @@
 ﻿[[settings]]
-name = "url-whitelist"
-filter = "General"
-type = "string"
-help = "Whitelist setting to monitor the clipboard for URLs to play. (mpv.net specific setting)\n\nDefault: tube vimeo ard zdf\n\nHow to start mpv.net directly from Google Chrome is described in the manual:"
-url = "https://github.com/stax76/mpv.net/blob/master/Manual.md#chrome-extension"
-
-[[settings]]
 name = "process-instance"
 default = "single"
 filter = "General"
