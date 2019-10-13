@@ -49,7 +49,8 @@ namespace mpvnet
                 mp.observe_property_string("vid", PropChangeVid);
                 mp.observe_property_int("edition", PropChangeEdition);
                 
-                if (mp.GPUAPI != "vulkan") mp.ProcessCommandLine(false);
+                if (mp.GPUAPI != "vulkan")
+                    mp.ProcessCommandLine(false);
 
                 AppDomain.CurrentDomain.UnhandledException += (sender, e) => Msg.ShowError(e.ExceptionObject.ToString());
                 Application.ThreadException += (sender, e) => Msg.ShowException(e.Exception);
@@ -68,11 +69,18 @@ namespace mpvnet
                 ContextMenu.Opened += ContextMenu_Opened;
                 ContextMenu.Opening += ContextMenu_Opening;
 
-                if (mp.Screen == -1) mp.Screen = Array.IndexOf(Screen.AllScreens, Screen.PrimaryScreen);
+                if (mp.Screen == -1)
+                    mp.Screen = Array.IndexOf(Screen.AllScreens, Screen.PrimaryScreen);
+
                 int targetIndex = mp.Screen;
                 Screen[] screens = Screen.AllScreens;
-                if (targetIndex < 0) targetIndex = 0;
-                if (targetIndex > screens.Length - 1) targetIndex = screens.Length - 1;
+
+                if (targetIndex < 0)
+                    targetIndex = 0;
+
+                if (targetIndex > screens.Length - 1)
+                    targetIndex = screens.Length - 1;
+
                 Screen screen = screens[Array.IndexOf(screens, screens[targetIndex])];
                 Rectangle target = screen.Bounds;
                 Left = target.X + (target.Width - Width) / 2;
@@ -87,7 +95,8 @@ namespace mpvnet
                     Top = posY - Height / 2;
                 }
 
-                if (App.Maximized) WindowState = FormWindowState.Maximized;
+                if (App.Maximized)
+                    WindowState = FormWindowState.Maximized;
             }
             catch (Exception ex)
             {
@@ -205,8 +214,10 @@ namespace mpvnet
             if (recent != null)
             {
                 recent.DropDownItems.Clear();
+
                 foreach (string path in RecentFiles)
                     MenuItem.Add(recent.DropDownItems, path, () => mp.Load(new[] { path }, true, Control.ModifierKeys.HasFlag(Keys.Control)));
+               
                 recent.DropDownItems.Add(new ToolStripSeparator());
                 MenuItem mi = new MenuItem("Clear List");
                 mi.Action = () => RecentFiles.Clear();
@@ -409,7 +420,7 @@ namespace mpvnet
 
         protected override void WndProc(ref Message m)
         {
-            //Debug.WriteLine(m);
+            Debug.WriteLine(m);
 
             switch (m.Msg)
             {
@@ -445,9 +456,14 @@ namespace mpvnet
                     }
                     break;
                 case 0x02E0: // WM_DPICHANGED
-                    if (!WasShown) break;
+                    if (!WasShown)
+                        break;
                     var r2 = Marshal.PtrToStructure<Native.RECT>(m.LParam);
                     Native.SetWindowPos(Handle, IntPtr.Zero, r2.Left, r2.Top, r2.Width, r2.Height, 0);
+                    break;
+                case 0x112: // WM_SYSCOMMAND
+                    if (m.WParam.ToInt32() == 0xf120) // SC_RESTORE
+                        SetFormPosAndSize();
                     break;
                 case 0x0214: // WM_SIZING
                     var rc = Marshal.PtrToStructure<Native.RECT>(m.LParam);
@@ -455,14 +471,16 @@ namespace mpvnet
                     NativeHelp.SubtractWindowBorders(Handle, ref r);
                     int c_w = r.Right - r.Left, c_h = r.Bottom - r.Top;
                     Size s = mp.VideoSize;
-                    if (s == Size.Empty) s = new Size(16, 9);
+                    if (s == Size.Empty)
+                        s = new Size(16, 9);
                     float aspect = s.Width / (float)s.Height;
                     int d_w = Convert.ToInt32(c_h * aspect - c_w);
                     int d_h = Convert.ToInt32(c_w / aspect - c_h);
                     int[] d_corners = { d_w, d_h, -d_w, -d_h };
                     int[] corners = { rc.Left, rc.Top, rc.Right, rc.Bottom };
                     int corner = NativeHelp.GetResizeBorder(m.WParam.ToInt32());
-                    if (corner >= 0) corners[corner] -= d_corners[corner];
+                    if (corner >= 0)
+                        corners[corner] -= d_corners[corner];
                     Marshal.StructureToPtr<Native.RECT>(new Native.RECT(corners[0], corners[1], corners[2], corners[3]), m.LParam, false);
                     m.Result = new IntPtr(1);
                     return;
@@ -580,7 +598,9 @@ namespace mpvnet
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
-            if (mp.IsLogoVisible) mp.ShowLogo();
+
+            if (mp.IsLogoVisible)
+                mp.ShowLogo();
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
