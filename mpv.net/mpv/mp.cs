@@ -148,7 +148,7 @@ namespace mpvnet
             get {
                 if (_ConfigFolder == null)
                 {
-                    string portableFolder = PathHelp.StartupPath + "portable_config\\";
+                    string portableFolder = Folder.Startup + "portable_config\\";
                     _ConfigFolder = portableFolder;
 
                     if (!Directory.Exists(_ConfigFolder))
@@ -189,7 +189,7 @@ namespace mpvnet
                         }
                     }
 
-                    if (PathHelp.StartupPath == _ConfigFolder)
+                    if (Folder.Startup == _ConfigFolder)
                     {
                         Msg.ShowError("Startup folder and config folder cannot be identical, using portable_config instead.");
                         _ConfigFolder = portableFolder;
@@ -236,9 +236,9 @@ namespace mpvnet
 
         public static void LoadMpvScripts()
         {
-            if (Directory.Exists(PathHelp.StartupPath + "Scripts"))
+            if (Directory.Exists(Folder.Startup + "Scripts"))
             {
-                string[] startupScripts = Directory.GetFiles(PathHelp.StartupPath + "Scripts");
+                string[] startupScripts = Directory.GetFiles(Folder.Startup + "Scripts");
 
                 foreach (string path in startupScripts)
                     if ((path.EndsWith(".lua") || path.EndsWith(".js")) && KnownScripts.Contains(Path.GetFileName(path)))
@@ -250,9 +250,9 @@ namespace mpvnet
 
         public static void LoadScripts()
         {
-            if (Directory.Exists(PathHelp.StartupPath + "Scripts"))
+            if (Directory.Exists(Folder.Startup + "Scripts"))
             {
-                foreach (string scriptPath in Directory.GetFiles(PathHelp.StartupPath + "Scripts"))
+                foreach (string scriptPath in Directory.GetFiles(Folder.Startup + "Scripts"))
                 {
                     if (KnownScripts.Contains(Path.GetFileName(scriptPath)))
                     {
@@ -329,7 +329,10 @@ namespace mpvnet
                             }
                             VideoSizeAutoResetEvent.Set();
                             Task.Run(new Action(() => ReadMetaData()));
-                            WriteHistory(get_property_string("path"));
+                            string path = mp.get_property_string("path");
+                            if (path.Contains("://"))
+                                path = mp.get_property_string("media-title");
+                            WriteHistory(path);
                             FileLoaded?.Invoke();
                             break;
                         case mpv_event_id.MPV_EVENT_TRACKS_CHANGED:
@@ -750,12 +753,14 @@ namespace mpvnet
 
         static void WriteHistory(string path)
         {
-            if (!File.Exists(ConfigFolder + "history.txt") || !File.Exists(path)) return;
+            if (!File.Exists(ConfigFolder + "history.txt"))
+                return;
+
             int totalMinutes = Convert.ToInt32((DateTime.Now - LastHistoryStartDateTime).TotalMinutes);
 
-            if (File.Exists(LastHistoryPath) && totalMinutes > 1)
+            if (PathHelp.GetBaseName(LastHistoryPath) != "" && totalMinutes > 1)
                 File.AppendAllText(ConfigFolder + "history.txt", DateTime.Now.ToString().Substring(0, 16) +
-                    " " + totalMinutes.ToString().PadLeft(3) + " " + Path.GetFileNameWithoutExtension(LastHistoryPath) + "\r\n");
+                    " " + totalMinutes.ToString().PadLeft(3) + " " + PathHelp.GetBaseName(LastHistoryPath) + "\r\n");
 
             LastHistoryPath = path;
             LastHistoryStartDateTime = DateTime.Now;

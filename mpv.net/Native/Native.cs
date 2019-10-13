@@ -7,7 +7,7 @@ public class Native
     [DllImport("kernel32.dll")]
     public static extern bool AttachConsole(int dwProcessId);
 
-    [DllImport("kernel32.dll", SetLastError = true)]
+    [DllImport("kernel32.dll")]
     public static extern bool FreeConsole();
 
     [DllImport("kernel32.dll")]
@@ -22,7 +22,7 @@ public class Native
     [DllImport("user32.dll", CharSet = CharSet.Unicode)]
     public static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wParam, ref COPYDATASTRUCT lParam);
 
-    [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+    [DllImport("user32.dll", CharSet = CharSet.Unicode)]
     public static extern IntPtr PostMessage(IntPtr hWnd, int Msg, IntPtr wParam, IntPtr lParam);
 
     [DllImport("user32.dll", CharSet = CharSet.Unicode)]
@@ -37,7 +37,7 @@ public class Native
     [DllImport("user32.dll")]
     public static extern bool AdjustWindowRect(ref RECT lpRect, uint dwStyle, bool bMenu);
 
-    [DllImport("user32.dll", SetLastError = true)]
+    [DllImport("user32.dll")]
     public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, int uFlags);
 
     [DllImport("user32.dll", EntryPoint = "GetWindowLong")]
@@ -78,7 +78,7 @@ public class Native
             Bottom = bottom;
         }
 
-        public Rectangle ToRectangle() { return Rectangle.FromLTRB(Left, Top, Right, Bottom); }
+        public Rectangle ToRectangle() => Rectangle.FromLTRB(Left, Top, Right, Bottom);
         public Size Size => new Size(Right - Left, Bottom - Top);
         public int Width => Right - Left;
         public int Height => Bottom - Top;

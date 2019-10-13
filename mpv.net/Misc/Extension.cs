@@ -19,7 +19,7 @@ namespace mpvnet
             try
             {
                 AggregateCatalog catalog = new AggregateCatalog();
-                string dir = PathHelp.StartupPath + "Extensions";
+                string dir = Folder.Startup + "Extensions";
 
                 if (Directory.Exists(dir))
                 {

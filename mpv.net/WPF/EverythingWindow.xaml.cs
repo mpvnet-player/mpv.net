@@ -134,7 +134,6 @@ namespace mpvnet
                     StringBuilder buf = new StringBuilder(bufsize);
                     Everything_SetSearch(searchtext);
                     Everything_SetRequestFlags(EVERYTHING_REQUEST_FILE_NAME | EVERYTHING_REQUEST_PATH);
-                    Everything_SetSort(EVERYTHING_SORT_SIZE_DESCENDING);
                     Everything_Query(true);
 
                     for (i = 0; i < Everything_GetNumResults(); i++)
