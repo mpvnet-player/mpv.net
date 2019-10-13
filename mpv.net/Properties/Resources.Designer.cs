@@ -62,19 +62,18 @@ namespace mpvnet.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to 
-        /// # This file defines the input (keys and mouse) bindings of mpv and mpv.net
-        /// # and it also defines the context menu of mpv.net. mpv.net has an input
-        /// # editor and an config editor as alternative to editing conf text files.
-        /// # The input and config editor can be found in mpv.net&apos;s context menu at:
-        ///
-        /// # Settings &gt; Show Config Editor
-        /// # Settings &gt; Show Input Editor
-        ///
-        /// # The defaults of this file can be found at:
+        /// # This file defines the key and mouse bindings and the context menu
+        /// # of mpv.net. A input and config editor can be found in mpv.net&apos;s
+        /// # context menu under &apos;Settings&apos;. The defaults of this file can be found at:
         ///
         /// # https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt
         ///
-        /// # th [rest of string was truncated]&quot;;.
+        /// # The defaults of mpv can be found at:
+        ///
+        /// # https://github.com/mpv-player/mpv/blob/master/etc/input.conf
+        ///
+        /// # mpv.net&apos;s defaults of mpv.conf contain: &apos;input-default-bindings = no&apos;
+        /// # which disables mpv&apos;s  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string inputConf {
             get {
@@ -83,21 +82,21 @@ namespace mpvnet.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 
-        ///# manual: https://mpv.io/manual/master/
-        ///
-        ///# defaults: https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/mpvConf.txt
-        ///
+        ///   Looks up a localized string similar to input-default-bindings = no
         ///input-ar-delay = 500
         ///input-ar-rate = 20
-        ///volume = 50
-        ///hwdec = yes
         ///keep-open = yes
         ///keep-open-pause = no
         ///osd-playing-msg = &apos;${filename}&apos;
+        ///script-opts=osc-scalewindowed=1.5
         ///screenshot-directory = &apos;~~desktop/&apos;
-        ///input-default-bindings = no
-        ///script-opts=osc-scalewindowed=1.5.
+        ///cscale = spline36
+        ///dscale = spline36
+        ///scale = spline36
+        ///hwdec = yes
+        ///
+        ///[protocol.https]
+        ///osd-playing-msg = &apos;${media-title}&apos;.
         /// </summary>
         internal static string mpvConf {
             get {
@@ -143,24 +142,11 @@ namespace mpvnet.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to [[settings]]
-        ///name = &quot;dark-mode&quot;
-        ///default = &quot;always&quot;
+        ///name = &quot;process-instance&quot;
+        ///default = &quot;single&quot;
         ///filter = &quot;General&quot;
-        ///help = &quot;Enables a dark theme. (mpv.net specific setting)&quot;
-        ///options = [{ name = &quot;always&quot; },
-        ///           { name = &quot;system&quot; , help = &quot;Available on Windows 10 or higher&quot; },
-        ///		   { name = &quot;never&quot; }]
-        ///
-        ///[[settings]]
-        ///name = &quot;dark-color&quot;
-        ///type = &quot;color&quot;
-        ///filter = &quot;General&quot;
-        ///help = &quot;Theme color used in dark-mode. Leave empty to use OS theme. (mpv.net specific setting)&quot;
-        ///
-        ///[[settings]]
-        ///name = &quot;light-color&quot;
-        ///type = &quot;color&quot;
-        ///filter = &quot;General&quot; [rest of string was truncated]&quot;;.
+        ///help = &quot;Defines if more then one mpv.net process is allowed. (mpv.net specific setting)\n\nTip: Whenever the control key is pressed when files or URLs are opened, the playlist is not cleared but the files or URLs are appended to the playlist. This not only works on process startup but in all mpv.net features that open files and URLs.&quot;
+        ///options = [{ name = &quot;multi&quot;,  help = &quot;Create a new process everytime the shell starts mpv.net [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string mpvNetConfToml {
             get {

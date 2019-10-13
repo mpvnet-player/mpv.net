@@ -2,7 +2,7 @@
 name = "process-instance"
 default = "single"
 filter = "General"
-help = "Defines if more then one mpv.net process is allowed. (mpv.net specific setting)\n\nTip: Whenever the control key is pressed when files or URLs are opened, the playlist is not cleared but the files or URLs are appended to the playlist. This not only works on process startup but in all mpv.net features that open files."
+help = "Defines if more then one mpv.net process is allowed. (mpv.net specific setting)\n\nTip: Whenever the control key is pressed when files or URLs are opened, the playlist is not cleared but the files or URLs are appended to the playlist. This not only works on process startup but in all mpv.net features that open files and URLs."
 options = [{ name = "multi",  help = "Create a new process everytime the shell starts mpv.net" },
            { name = "single", help = "Force a single process everytime the shell starts mpv.net" },
 		   { name = "queue",  help = "Force a single process and add files to playlist" }]

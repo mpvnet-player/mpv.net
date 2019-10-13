@@ -1,4 +1,4 @@
-###
+### 5.4.2
 
 - new: the [scripting wiki page](https://github.com/stax76/mpv.net/wiki/Scripting#powershell) was improved
 - new: Toggle Shuffle has been added to the menu defaults
