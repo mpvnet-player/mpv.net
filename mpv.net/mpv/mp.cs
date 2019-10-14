@@ -117,7 +117,8 @@ namespace mpvnet
 
         public static void ProcessProperty(string name, string value)
         {
-            if (name.Any(char.IsUpper)) Msg.ShowError("Uppercase char detected: " + name, "mpv properties using the command line and the mpv.conf config file are required to be lowercase.");
+            if (name.Any(char.IsUpper))
+                Msg.ShowError("Uppercase char detected: " + name, "mpv properties using the command line and the mpv.conf config file are required to be lowercase.");
 
             switch (name)
             {
@@ -637,7 +638,7 @@ namespace mpvnet
                     }
                 }
 
-                Load(files.ToArray(), App.ProcessInstance != "queue", Control.ModifierKeys.HasFlag(Keys.Control));
+                Load(files.ToArray(), !App.Queue, Control.ModifierKeys.HasFlag(Keys.Control) || App.Queue);
 
                 if (files.Count == 0 || files[0].Contains("://"))
                 {
@@ -665,7 +666,9 @@ namespace mpvnet
 
         public static void Load(string[] files, bool loadFolder, bool append)
         {
-            if (files is null || files.Length == 0) return;
+            if (files is null || files.Length == 0)
+                return;
+
             HideLogo();
 
             if ((DateTime.Now - LastLoad).TotalMilliseconds < 500)
@@ -685,15 +688,18 @@ namespace mpvnet
             if (string.IsNullOrEmpty(get_property_string("path")))
                 set_property_int("playlist-pos", 0);
 
-            if (loadFolder && !append) Task.Run(() => LoadFolder()); // user reported race condition
+            if (loadFolder && !append)
+                Task.Run(() => LoadFolder()); // user reported race condition
         }
 
         public static void LoadFolder()
         {
-            if (!App.AutoLoadFolder) return;
+            if (!App.AutoLoadFolder || Control.ModifierKeys.HasFlag(Keys.Shift))
+                return;
             Thread.Sleep(200); // user reported race condition
             string path = get_property_string("path");
-            if (!File.Exists(path) || get_property_int("playlist-count") != 1) return;
+            if (!File.Exists(path) || get_property_int("playlist-count") != 1)
+                return;
             List<string> files = Directory.GetFiles(Path.GetDirectoryName(path)).ToList();
             files = files.Where(file =>
                 App.VideoTypes.Contains(file.ShortExt()) ||
@@ -704,7 +710,8 @@ namespace mpvnet
             files.Remove(path);
             foreach (string i in files)
                 commandv("loadfile", i, "append");
-            if (index > 0) commandv("playlist-move", "0", (index + 1).ToString());
+            if (index > 0)
+                commandv("playlist-move", "0", (index + 1).ToString());
         }
 
         public static IntPtr AllocateUtf8IntPtrArrayWithSentinel(string[] arr, out IntPtr[] byteArrayPointers)

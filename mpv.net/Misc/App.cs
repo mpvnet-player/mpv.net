@@ -28,6 +28,7 @@ namespace mpvnet
         public static bool RememberVolume { get; set; } = true;
         public static bool AutoLoadFolder { get; set; } = true;
         public static bool ThemedMenu { get; set; }
+        public static bool Queue { get; set; }
 
         public static int StartThreshold { get; set; } = 1500;
         public static int RecentCount { get; set; } = 15;
@@ -121,6 +122,7 @@ namespace mpvnet
                 case "auto-load-folder": AutoLoadFolder = value == "yes"; return true;
                 case "themed-menu": ThemedMenu = value == "yes"; return true;
                 case "recent-count": RecentCount = value.Int(); return true;
+                case "queue": Queue = value == "yes"; return true;
             }
             return false;
         }

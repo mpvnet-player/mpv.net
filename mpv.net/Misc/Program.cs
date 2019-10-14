@@ -40,8 +40,12 @@ namespace mpvnet
                     files.Add(App.ProcessInstance);
 
                     foreach (string arg in args)
+                    {
                         if (!arg.StartsWith("--") && (arg == "-" || arg.Contains("://") || arg.Contains(":\\") || arg.StartsWith("\\\\")))
                             files.Add(arg);
+                        else if (arg == "--queue")
+                            files[0] = "queue";
+                    }
 
                     Process[] procs = Process.GetProcessesByName("mpvnet");
 

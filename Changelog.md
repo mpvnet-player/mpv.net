@@ -1,3 +1,11 @@
+###
+
+- pressing shift key suppresses auto-load-folder
+- switch --queue added, this will not clear the playlist but append
+  and it will suppress auto-load-folder. The installer adds
+  a 'Add to mpv.net playlist' context menu item, people with
+  portable download might use [Open with++](https://github.com/stax76/OpenWithPlusPlus#add-to-mpvnet-playlist)
+
 ### 5.4.2
 
 - new: the [scripting wiki page](https://github.com/stax76/mpv.net/wiki/Scripting#powershell) was improved

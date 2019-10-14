@@ -58,7 +58,7 @@ options = [{ name = "yes" },
 name = "auto-load-folder"
 default = "yes"
 filter = "Playback"
-help = "For single files automatically load the entire directory into the playlist. (mpv.net specific setting)"
+help = "For single files automatically load the entire directory into the playlist. Can be suppressed via shift key. (mpv.net specific setting)"
 options = [{ name = "yes" },
            { name = "no" }]
 
