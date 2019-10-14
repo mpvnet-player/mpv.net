@@ -2,9 +2,10 @@
 
 - pressing shift key suppresses auto-load-folder
 - switch --queue added, this will not clear the playlist but append
-  and it will suppress auto-load-folder. The installer adds
-  a 'Add to mpv.net playlist' context menu item, people with
-  portable download might use [Open with++](https://github.com/stax76/OpenWithPlusPlus#add-to-mpvnet-playlist)
+  and it will suppress auto-load-folder. To get a 'Add to mpv.net playlist'
+  context menu item in explorer with multi selection support use my
+  [Open with++](https://github.com/stax76/OpenWithPlusPlus#add-to-mpvnet-playlist) shell extension, as far as I know multi selection
+  can not be done using the Registry
 
 ### 5.4.2
 

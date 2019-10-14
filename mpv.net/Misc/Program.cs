@@ -2,7 +2,6 @@
 using System.Windows.Forms;
 using System.Linq;
 using System.Collections.Generic;
-using System.IO;
 using System.Threading;
 using System.Diagnostics;
 
@@ -41,7 +40,9 @@ namespace mpvnet
 
                     foreach (string arg in args)
                     {
-                        if (!arg.StartsWith("--") && (arg == "-" || arg.Contains("://") || arg.Contains(":\\") || arg.StartsWith("\\\\")))
+                        if (!arg.StartsWith("--") && (arg == "-" || arg.Contains("://") ||
+                            arg.Contains(":\\") || arg.StartsWith("\\\\")))
+
                             files.Add(arg);
                         else if (arg == "--queue")
                             files[0] = "queue";
