@@ -373,10 +373,12 @@ namespace mpvnet
             if (!content.Contains("#menu:"))
             {
                 var defaultItems = CommandItem.GetItems(Properties.Resources.inputConf);
+
                 foreach (CommandItem item in items)
                     foreach (CommandItem defaultItem in defaultItems)
                         if (item.Command == defaultItem.Command)
                             defaultItem.Input = item.Input;
+
                 items = defaultItems;
             }
 
@@ -384,7 +386,9 @@ namespace mpvnet
             {
                 if (string.IsNullOrEmpty(item.Path))
                     continue;
+
                 string path = item.Path.Replace("&", "&&");
+
                 MenuItem menuItem = ContextMenu.Add(path, () => {
                     try {
                         mp.command(item.Command);
@@ -392,6 +396,7 @@ namespace mpvnet
                         Msg.ShowException(ex);
                     }
                 });
+
                 if (menuItem != null)
                     menuItem.ShortcutKeyDisplayString = item.Input + "    ";
             }
@@ -489,16 +494,20 @@ namespace mpvnet
                     NativeHelp.SubtractWindowBorders(Handle, ref r);
                     int c_w = r.Right - r.Left, c_h = r.Bottom - r.Top;
                     Size s = mp.VideoSize;
+
                     if (s == Size.Empty)
                         s = new Size(16, 9);
+
                     float aspect = s.Width / (float)s.Height;
                     int d_w = Convert.ToInt32(c_h * aspect - c_w);
                     int d_h = Convert.ToInt32(c_w / aspect - c_h);
                     int[] d_corners = { d_w, d_h, -d_w, -d_h };
                     int[] corners = { rc.Left, rc.Top, rc.Right, rc.Bottom };
                     int corner = NativeHelp.GetResizeBorder(m.WParam.ToInt32());
+
                     if (corner >= 0)
                         corners[corner] -= d_corners[corner];
+
                     Marshal.StructureToPtr<Native.RECT>(new Native.RECT(corners[0], corners[1], corners[2], corners[3]), m.LParam, false);
                     m.Result = new IntPtr(1);
                     return;
@@ -581,6 +590,7 @@ namespace mpvnet
                 {
                     if (mp.Border && FormBorderStyle == FormBorderStyle.None)
                         FormBorderStyle = FormBorderStyle.Sizable;
+
                     if (!mp.Border && FormBorderStyle == FormBorderStyle.Sizable)
                         FormBorderStyle = FormBorderStyle.None;
                 }
@@ -608,7 +618,10 @@ namespace mpvnet
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
-            if (mp.GPUAPI == "vulkan") mp.ProcessCommandLine(false);
+
+            if (mp.GPUAPI == "vulkan")
+                mp.ProcessCommandLine(false);
+
             var wpfColor = WPF.WPF.ThemeColor;
             Color color = Color.FromArgb(wpfColor.A, wpfColor.R, wpfColor.G, wpfColor.B);
             ToolStripRendererEx.InitColors(color, App.IsDarkMode, App.ThemedMenu);
@@ -669,6 +682,7 @@ namespace mpvnet
         protected override void OnDragEnter(DragEventArgs e)
         {
             base.OnDragEnter(e);
+
             if (e.Data.GetDataPresent(DataFormats.FileDrop) || e.Data.GetDataPresent(DataFormats.Text))
                 e.Effect = DragDropEffects.Copy;
         }
@@ -676,8 +690,10 @@ namespace mpvnet
         protected override void OnDragDrop(DragEventArgs e)
         {
             base.OnDragDrop(e);
+
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
                 mp.Load(e.Data.GetData(DataFormats.FileDrop) as String[], true, Control.ModifierKeys.HasFlag(Keys.Control));
+          
             if (e.Data.GetDataPresent(DataFormats.Text))
                 mp.Load(new[] { e.Data.GetData(DataFormats.Text).ToString() }, true, Control.ModifierKeys.HasFlag(Keys.Control));
         }

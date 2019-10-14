@@ -201,7 +201,7 @@ this decision was made to keep the code simple and lightweight.
 
 Python scripting is implemented with IronPython which uses Python 2.7.
 
-The main window is WinForms based and uses less than 600 lines of code,
+The main window is WinForms based and uses less than 750 lines of code,
 all other windows are WPF based and use even less code.
 
 The config editor adds it's controls dynamically and uses [TOML](https://en.wikipedia.org/wiki/TOML) to define it's

@@ -119,7 +119,8 @@ namespace mpvnet
         public static void ProcessProperty(string name, string value)
         {
             if (name.Any(char.IsUpper))
-                Msg.ShowError("Uppercase char detected: " + name, "mpv properties using the command line and the mpv.conf config file are required to be lowercase.");
+                Msg.ShowError("Uppercase char detected: " + name,
+                    "mpv properties using the command line and the mpv.conf config file are required to be lowercase.");
 
             switch (name)
             {
