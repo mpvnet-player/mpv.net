@@ -6,6 +6,7 @@
   context menu item in explorer with multi selection support use my
   [Open with++](https://github.com/stax76/OpenWithPlusPlus#add-to-mpvnet-playlist) shell extension, as far as I know multi selection
   can not be done using the Registry
+- window-size mpv property support added
 
 ### 5.4.2
 

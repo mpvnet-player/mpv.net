@@ -134,6 +134,8 @@
 
  Ctrl+t set ontop yes                             #menu: View > On Top > Enable
  Ctrl+T set ontop no                              #menu: View > On Top > Disable
+ Alt++  no-osd set window-scale 1.2               #menu: View > Window Size > Enlarge
+ Alt+-  no-osd set window-scale 0.8               #menu: View > Window Size > Shrink
  b      cycle border                              #menu: View > Toggle Border
  i      script-message mpv.net show-info          #menu: View > File/Stream Info
  t      script-binding stats/display-stats        #menu: View > Show Statistics

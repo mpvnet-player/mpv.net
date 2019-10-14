@@ -103,7 +103,7 @@ mpv.net is meant to be a small single person project, it's designed to be mpv co
 
 The target audience of mpv.net are programmers, nerds and software enthusiasts that need something more advanced than typical media players.
 
-Furthermore mpv.net is well suited for users who are interested to learn mpv, Linux, portable apps and the command line.
+Furthermore mpv.net is well suited for people who are interested to learn mpv and the command line.
 
 ## Requirements
 
@@ -154,6 +154,8 @@ When mpv.net is started from a terminal such as PowerShell, mpv.net attaches to 
 A third way is to drag and drop files on the main window.
 
 Whenever the control key is pressed when files or URLs are opened, the playlist is not cleared but the files or URLs are appended to the playlist. This works in all mpv.net features that open files or URLs.
+
+Pressing the shift key while opening a single file will suppress loading all files in the folder.
 
 ### Open > Open URL
 

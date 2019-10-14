@@ -30,6 +30,13 @@ namespace mpvnet
 
             try
             {
+                object recent = RegHelp.GetObject(App.RegPath, "Recent");
+
+                if (recent is string[] r)
+                    RecentFiles = new List<string>(r);
+                else
+                    RecentFiles = new List<string>();
+
                 Instance = this;
                 Hwnd = Handle;
                 mp.Init();
@@ -48,6 +55,7 @@ namespace mpvnet
                 mp.observe_property_string("aid", PropChangeAid);
                 mp.observe_property_string("vid", PropChangeVid);
                 mp.observe_property_int("edition", PropChangeEdition);
+                mp.observe_property_double("window-scale", PropChangeWindowScale);
                 
                 if (mp.GPUAPI != "vulkan")
                     mp.ProcessCommandLine(false);
@@ -58,13 +66,6 @@ namespace mpvnet
                 Text = "mpv.net " + Application.ProductVersion;
                 TaskbarButtonCreatedMessage = Native.RegisterWindowMessage("TaskbarButtonCreated");
                 
-                object recent = RegHelp.GetObject(App.RegPath, "Recent");
-
-                if (recent is string[] r)
-                    RecentFiles = new List<string>(r);
-                else
-                    RecentFiles = new List<string>();
-
                 ContextMenu = new ContextMenuStripEx(components);
                 ContextMenu.Opened += ContextMenu_Opened;
                 ContextMenu.Opening += ContextMenu_Opening;
@@ -233,6 +234,7 @@ namespace mpvnet
                 {
                     if (mi.Text.StartsWith(text) && mi.Text.Trim() == text)
                         return mi;
+
                     if (mi.DropDownItems.Count > 0)
                     {
                         MenuItem val = FindMenuItem(text, mi.DropDownItems);
@@ -245,7 +247,7 @@ namespace mpvnet
 
         bool WasInitialSizeSet;
 
-        void SetFormPosAndSize()
+        void SetFormPosAndSize(double scale = 1)
         {
             if (WindowState == FormWindowState.Maximized)
                 return;
@@ -265,7 +267,6 @@ namespace mpvnet
                 mp.VideoSize = new Size((int)(autoFitHeight * (16 / 9.0)), autoFitHeight);
 
             Size size = mp.VideoSize;
-
             int height = size.Height;
 
             if (App.RememberHeight)
@@ -279,6 +280,7 @@ namespace mpvnet
                 }
             }
 
+            height = Convert.ToInt32(height * scale);
             int width = Convert.ToInt32(height * size.Width / (double)size.Height);
 
             if (height > screen.WorkingArea.Height * 0.9)
@@ -317,10 +319,17 @@ namespace mpvnet
             int minTop = screens.Select(val => val.WorkingArea.Y).Min();
             int maxBottom = screens.Select(val => val.WorkingArea.Bottom).Max();
 
-            if (left < minLeft) left = minLeft;
-            if (left + rect.Width > maxRight) left = maxRight - rect.Width;
-            if (top < minTop) top = minTop;
-            if (top + rect.Height > maxBottom) top = maxBottom - rect.Height;
+            if (left < minLeft)
+                left = minLeft;
+
+            if (left + rect.Width > maxRight)
+                left = maxRight - rect.Width;
+
+            if (top < minTop)
+                top = minTop;
+
+            if (top + rect.Height > maxBottom)
+                top = maxBottom - rect.Height;
 
             Native.SetWindowPos(Handle, IntPtr.Zero /* HWND_TOP */, left, top, rect.Width, rect.Height, 4 /* SWP_NOZORDER */);
         }
@@ -373,7 +382,8 @@ namespace mpvnet
 
             foreach (CommandItem item in items)
             {
-                if (string.IsNullOrEmpty(item.Path)) continue;
+                if (string.IsNullOrEmpty(item.Path))
+                    continue;
                 string path = item.Path.Replace("&", "&&");
                 MenuItem menuItem = ContextMenu.Add(path, () => {
                     try {
@@ -382,7 +392,8 @@ namespace mpvnet
                         Msg.ShowException(ex);
                     }
                 });
-                if (menuItem != null) menuItem.ShortcutKeyDisplayString = item.Input + "    ";
+                if (menuItem != null)
+                    menuItem.ShortcutKeyDisplayString = item.Input + "    ";
             }
         }
 
@@ -405,9 +416,13 @@ namespace mpvnet
                 UpdateProgressBar();
             }));
 
-            if (RecentFiles.Contains(path)) RecentFiles.Remove(path);
+            if (RecentFiles.Contains(path))
+                RecentFiles.Remove(path);
+
             RecentFiles.Insert(0, path);
-            while (RecentFiles.Count > App.RecentCount) RecentFiles.RemoveAt(App.RecentCount);
+
+            while (RecentFiles.Count > App.RecentCount)
+                RecentFiles.RemoveAt(App.RecentCount);
         }
 
         protected override CreateParams CreateParams {
@@ -420,7 +435,7 @@ namespace mpvnet
 
         protected override void WndProc(ref Message m)
         {
-            Debug.WriteLine(m);
+            //Debug.WriteLine(m);
 
             switch (m.Msg)
             {
@@ -463,7 +478,10 @@ namespace mpvnet
                     break;
                 case 0x112: // WM_SYSCOMMAND
                     if (m.WParam.ToInt32() == 0xf120) // SC_RESTORE
-                        SetFormPosAndSize();
+                    {
+                        CycleFullscreen(true);
+                        CycleFullscreen(false);
+                    }
                     break;
                 case 0x0214: // WM_SIZING
                     var rc = Marshal.PtrToStructure<Native.RECT>(m.LParam);
@@ -545,6 +563,15 @@ namespace mpvnet
         void PropChangeVid(string value) => mp.Vid = value;
 
         void PropChangeEdition(int value) => mp.Edition = value;
+        
+        void PropChangeWindowScale(double value)
+        {
+            if (value != 1)
+            {
+                BeginInvoke(new Action(() => SetFormPosAndSize(value)));
+                mp.command("no-osd set window-scale 1");
+            }
+        }
 
         void PropChangeBorder(bool enabled) {
             mp.Border = enabled;
@@ -659,6 +686,12 @@ namespace mpvnet
         {
             base.OnLostFocus(e);
             CursorHelp.Show();
+        }
+
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            e.SuppressKeyPress = true; // prevent beep using alt key
+            base.OnKeyDown(e);
         }
     }
 }

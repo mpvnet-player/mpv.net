@@ -58,6 +58,7 @@ namespace mpvnet
 
         public static List<KeyValuePair<string, Action<bool>>> BoolPropChangeActions { get; set; } = new List<KeyValuePair<string, Action<bool>>>();
         public static List<KeyValuePair<string, Action<int>>> IntPropChangeActions { get; set; } = new List<KeyValuePair<string, Action<int>>>();
+        public static List<KeyValuePair<string, Action<double>>> DoublePropChangeActions { get; set; } = new List<KeyValuePair<string, Action<double>>>();
         public static List<KeyValuePair<string, Action<string>>> StringPropChangeActions { get; set; } = new List<KeyValuePair<string, Action<string>>>();
         public static List<MediaTrack> MediaTracks { get; set; } = new List<MediaTrack>();
         public static List<KeyValuePair<string, double>> Chapters { get; set; } = new List<KeyValuePair<string, double>>();
@@ -382,22 +383,33 @@ namespace mpvnet
                             var propData = (mpv_event_property)Marshal.PtrToStructure(evt.data, typeof(mpv_event_property));
 
                             if (propData.format == mpv_format.MPV_FORMAT_FLAG)
+                            {
                                 lock (BoolPropChangeActions)
                                     foreach (var i in BoolPropChangeActions)
                                         if (i.Key== propData.name)
                                             i.Value.Invoke(Marshal.PtrToStructure<int>(propData.data) == 1);
-
-                            if (propData.format == mpv_format.MPV_FORMAT_STRING)
+                            }
+                            else if (propData.format == mpv_format.MPV_FORMAT_STRING)
+                            {
                                 lock (StringPropChangeActions)
                                     foreach (var i in StringPropChangeActions)
                                         if (i.Key == propData.name)
                                             i.Value.Invoke(StringFromNativeUtf8(Marshal.PtrToStructure<IntPtr>(propData.data)));
-
-                            if (propData.format == mpv_format.MPV_FORMAT_INT64)
+                            }
+                            else if(propData.format == mpv_format.MPV_FORMAT_INT64)
+                            {
                                 lock (IntPropChangeActions)
                                     foreach (var i in IntPropChangeActions)
                                         if (i.Key == propData.name)
                                             i.Value.Invoke(Marshal.PtrToStructure<int>(propData.data));
+                            }
+                            else if (propData.format == mpv_format.MPV_FORMAT_DOUBLE)
+                            {
+                                lock (DoublePropChangeActions)
+                                    foreach (var i in DoublePropChangeActions)
+                                        if (i.Key == propData.name)
+                                            i.Value.Invoke(Marshal.PtrToStructure<double>(propData.data));
+                            }
                             break;
                         case mpv_event_id.MPV_EVENT_PLAYBACK_RESTART:
                             PlaybackRestart?.Invoke();
@@ -555,6 +567,17 @@ namespace mpvnet
             else
                 lock (IntPropChangeActions)
                     IntPropChangeActions.Add(new KeyValuePair<string, Action<int>>(name, action));
+        }
+
+        public static void observe_property_double(string name, Action<double> action)
+        {
+            int err = mpv_observe_property(Handle, (ulong)action.GetHashCode(), name, mpv_format.MPV_FORMAT_DOUBLE);
+
+            if (err < 0)
+                throw new Exception($"{name}: {(mpv_error)err}");
+            else
+                lock (DoublePropChangeActions)
+                    DoublePropChangeActions.Add(new KeyValuePair<string, Action<double>>(name, action));
         }
 
         public static void observe_property_bool(string name, Action<bool> action)
