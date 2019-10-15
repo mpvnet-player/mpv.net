@@ -1,4 +1,4 @@
-###
+### 5.4.2.1
 
 - pressing shift key suppresses auto-load-folder
 - switch --queue added, this will not clear the playlist but append
@@ -7,6 +7,8 @@
   [Open with++](https://github.com/stax76/OpenWithPlusPlus#add-to-mpvnet-playlist) shell extension, as far as I know multi selection
   can not be done using the Registry but only via shell extension
 - window-size mpv property support added ([default bindings](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt#L137))
+- the config editor keeps profiles and comments in mpv.conf intact!
+- the options in the config editor are better organized
 
 ### 5.4.2
 

@@ -100,7 +100,7 @@ namespace mpvnet
             return string.Join("", SettingsDefinitions.Select(item => item.Name + item.Value).ToArray());
         }
 
-        string SectionComment;
+        Dictionary<string, string> SectionComment = new Dictionary<string, string>();
 
         void LoadConf(string file)
         {
@@ -127,8 +127,8 @@ namespace mpvnet
                 {
                     section = line.Substring(0, line.IndexOf("]") + 1);
 
-                    if (SectionComment == null)
-                        SectionComment = comment;
+                    if (!SectionComment.ContainsKey(file))
+                        SectionComment[file] = comment;
 
                     comment = "";
                     isSectionItem = true;
@@ -211,11 +211,11 @@ namespace mpvnet
                 }
             }
 
-            if (SectionComment != "")
-                sb.Append(SectionComment);
+            if (SectionComment.ContainsKey(name) && SectionComment[name] != "\r\n")
+                sb.Append(SectionComment[name]);
 
-            if (!sb.ToString().Contains("\r\n# Editor"))
-                sb.AppendLine("\r\n# Editor");
+            if (!sb.ToString().Contains("# Editor"))
+                sb.AppendLine("# Editor");
 
             foreach (SettingBase setting in SettingsDefinitions)
             {
