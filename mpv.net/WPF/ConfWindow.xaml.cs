@@ -100,8 +100,6 @@ namespace mpvnet
             return string.Join("", SettingsDefinitions.Select(item => item.Name + item.Value).ToArray());
         }
 
-        Dictionary<string, string> SectionComment = new Dictionary<string, string>();
-
         void LoadConf(string file)
         {
             if (!File.Exists(file))
@@ -109,7 +107,7 @@ namespace mpvnet
 
             string comment = "";
             string section = "";
-            bool isSectionItem = false; ;
+            bool isSectionItem = false;
 
             foreach (string currentLine in File.ReadAllLines(file))
             {
@@ -125,11 +123,11 @@ namespace mpvnet
                 }
                 else if (line.StartsWith("[") && line.Contains("]"))
                 {
+                    if (!isSectionItem && comment != "" && comment != "\r\n")
+                        ConfItems.Add(new ConfItem() {
+                            Comment = comment, File = Path.GetFileNameWithoutExtension(file)});
+
                     section = line.Substring(0, line.IndexOf("]") + 1);
-
-                    if (!SectionComment.ContainsKey(file))
-                        SectionComment[file] = comment;
-
                     comment = "";
                     isSectionItem = true;
                 }
@@ -166,14 +164,14 @@ namespace mpvnet
             }
         }
 
-        string GetContent(string name)
+        string GetContent(string filename)
         {
             StringBuilder sb = new StringBuilder();
             List<string> namesWritten = new List<string>();
 
             foreach (ConfItem item in ConfItems)
             {
-                if (name != item.File || item.Section != "" || item.IsSectionItem)
+                if (filename != item.File || item.Section != "" || item.IsSectionItem)
                     continue;
 
                 if (item.Comment != "")
@@ -181,13 +179,16 @@ namespace mpvnet
 
                 if (item.SettingBase == null)
                 {
-                    sb.Append(item.Name + " = " + item.Value);
+                    if (item.Name != "")
+                    {
+                        sb.Append(item.Name + " = " + item.Value);
 
-                    if (item.LineComment != "")
-                        sb.Append(" " + item.LineComment);
+                        if (item.LineComment != "")
+                            sb.Append(" " + item.LineComment);
 
-                    sb.AppendLine();
-                    namesWritten.Add(item.Name);
+                        sb.AppendLine();
+                        namesWritten.Add(item.Name);
+                    }
                 }
                 else if ((item.SettingBase.Value ?? "") != item.SettingBase.Default)
                 {
@@ -211,15 +212,12 @@ namespace mpvnet
                 }
             }
 
-            if (SectionComment.ContainsKey(name) && SectionComment[name] != "\r\n")
-                sb.Append(SectionComment[name]);
-
             if (!sb.ToString().Contains("# Editor"))
                 sb.AppendLine("# Editor");
 
             foreach (SettingBase setting in SettingsDefinitions)
             {
-                if (name != setting.File || namesWritten.Contains(setting.Name))
+                if (filename != setting.File || namesWritten.Contains(setting.Name))
                     continue;
 
                 if ((setting.Value ?? "") != setting.Default)
@@ -240,7 +238,7 @@ namespace mpvnet
 
             foreach (ConfItem item in ConfItems)
             {
-                if (name != item.File || (item.Section == "" && !item.IsSectionItem))
+                if (filename != item.File || (item.Section == "" && !item.IsSectionItem))
                     continue;
 
                 if (item.Section != "")
