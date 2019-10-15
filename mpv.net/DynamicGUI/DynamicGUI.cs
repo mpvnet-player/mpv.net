@@ -15,8 +15,10 @@ namespace DynamicGUI
         public static List<SettingBase> LoadSettings(string content)
         {
             TomlTable table;
+
             using (StringReader reader = new StringReader(content))
                 table = TOML.Parse(reader);
+
             List<SettingBase> settingsList = new List<SettingBase>(); 
 
             foreach (TomlTable setting in table["settings"])
@@ -34,12 +36,15 @@ namespace DynamicGUI
                     {
                         var opt = new OptionSettingOption();
                         opt.Name = option["name"];
+
                         if (option.HasKey("help"))
                             opt.Help = option["help"];
+
                         if (option.HasKey("text"))
                             opt.Text = option["text"];
                         else if (opt.Name == optionSetting.Default)
                             opt.Text = opt.Name + " (Default)";
+
                         opt.OptionSetting = optionSetting;
                         optionSetting.Options.Add(opt);
                     }
@@ -52,6 +57,7 @@ namespace DynamicGUI
                 }
 
                 baseSetting.Name = setting["name"];
+                baseSetting.File = setting["file"];
                 baseSetting.Filter = setting["filter"];
 
                 if (setting.HasKey("help")) baseSetting.Help = setting["help"];
@@ -65,9 +71,22 @@ namespace DynamicGUI
         }
     }
 
+    public class ConfItem
+    {
+        public string Name { get; set; } = "";
+        public string Value { get; set; } = "";
+        public string Comment { get; set; } = "";
+        public string LineComment { get; set; } = "";
+        public string Section { get; set; } = "";
+        public string File { get; set; } = "";
+        public bool IsSectionItem { get; set; }
+        public SettingBase SettingBase { get; set; }
+    }
+
     public abstract class SettingBase
     {
         public string Name { get; set; }
+        public string File { get; set; }
         public string Value { get; set; }
         public string Help { get; set; }
         public string Default { get; set; }
@@ -75,6 +94,7 @@ namespace DynamicGUI
         public string Filter { get; set; }
         public string Type { get; set; }
         public int Width { get; set; }
+        public ConfItem ConfItem { get; set; }
     }
 
     public class StringSetting : SettingBase
@@ -104,7 +124,10 @@ namespace DynamicGUI
         public bool Checked
         {
             get => OptionSetting.Value == Name ;
-            set { if (value) OptionSetting.Value = Name; }
+            set {
+                if (value)
+                    OptionSetting.Value = Name;
+            }
         }
 
         public Visibility Visibility

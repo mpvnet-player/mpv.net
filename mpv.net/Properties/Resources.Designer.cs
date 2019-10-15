@@ -61,6 +61,23 @@ namespace mpvnet.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to [[settings]]
+        ///name = &quot;hwdec&quot;
+        ///file = &quot;mpv&quot;
+        ///default = &quot;no&quot;
+        ///filter = &quot;Video&quot;
+        ///url = &quot;https://mpv.io/manual/master/#options-hwdec&quot;
+        ///help = &quot;Specify the hardware video decoding API that should be used if possible. Whether hardware decoding is actually done depends on the video codec. If hardware decoding is not possible, mpv will fall back on software decoding.\n\nFor more information visit:&quot;
+        ///options = [{ name = &quot;no&quot;,           help = &quot;always use software decoding&quot; },
+        ///           { name = &quot;auto&quot;,         hel [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string ConfToml {
+            get {
+                return ResourceManager.GetString("ConfToml", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 
         /// # This file defines the key and mouse bindings and the context menu
         /// # of mpv.net. A input and config editor can be found in mpv.net&apos;s
@@ -105,22 +122,6 @@ namespace mpvnet.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to [[settings]]
-        ///name = &quot;hwdec&quot;
-        ///default = &quot;no&quot;
-        ///filter = &quot;Video&quot;
-        ///url = &quot;https://mpv.io/manual/master/#options-hwdec&quot;
-        ///help = &quot;Specify the hardware video decoding API that should be used if possible. Whether hardware decoding is actually done depends on the video codec. If hardware decoding is not possible, mpv will fall back on software decoding.\n\nFor more information visit:&quot;
-        ///options = [{ name = &quot;no&quot;,           help = &quot;always use software decoding&quot; },
-        ///           { name = &quot;auto&quot;,         help = &quot;enable be [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string mpvConfToml {
-            get {
-                return ResourceManager.GetString("mpvConfToml", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap mpvnet {
@@ -137,20 +138,6 @@ namespace mpvnet.Properties {
         internal static string mpvNetConf {
             get {
                 return ResourceManager.GetString("mpvNetConf", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to [[settings]]
-        ///name = &quot;process-instance&quot;
-        ///default = &quot;single&quot;
-        ///filter = &quot;General&quot;
-        ///help = &quot;Defines if more then one mpv.net process is allowed. (mpv.net specific setting)\n\nTip: Whenever the control key is pressed when files or URLs are opened, the playlist is not cleared but the files or URLs are appended to the playlist. This not only works on process startup but in all mpv.net features that open files and URLs.&quot;
-        ///options = [{ name = &quot;multi&quot;,  help = &quot;Create a new process everytime the shell starts mpv.net [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string mpvNetConfToml {
-            get {
-                return ResourceManager.GetString("mpvNetConfToml", resourceCulture);
             }
         }
     }

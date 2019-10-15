@@ -4,7 +4,7 @@ input-ar-rate = 20
 keep-open = yes
 keep-open-pause = no
 osd-playing-msg = '${filename}'
-script-opts=osc-scalewindowed=1.5
+script-opts = osc-scalewindowed=1.5
 screenshot-directory = '~~desktop/'
 cscale = spline36
 dscale = spline36
