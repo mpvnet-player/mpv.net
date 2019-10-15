@@ -81,7 +81,7 @@ Table of contents
 - File history feature to log time and filename
 - A-B loop feature
 - Watch later feature to save the position
-- Files can be added to the playlist from Windows File Explorer using the shell extension [Open with++](https://github.com/stax76/OpenWithPlusPlus#add-to-mpvnet-playlist) and the --queue switch
+- Files can be enqueued from Explorer using the shell extension [Open with++](https://github.com/stax76/OpenWithPlusPlus#add-to-mpvnet-playlist) and the --queue switch
 - [Manual](#manual)
 
 ### Screenshots
