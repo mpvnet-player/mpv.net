@@ -1,4 +1,4 @@
-### 5.4.2.1
+### 5.4.2.1 Beta
 
 - pressing shift key suppresses auto-load-folder
 - switch --queue added, this will not clear the playlist but append
