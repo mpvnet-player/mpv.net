@@ -97,7 +97,10 @@ namespace mpvnet
                 }
 
                 if (App.Maximized)
+                {
+                    SetFormPosAndSize(1, true);
                     WindowState = FormWindowState.Maximized;
+                }
             }
             catch (Exception ex)
             {
@@ -247,17 +250,20 @@ namespace mpvnet
 
         bool WasInitialSizeSet;
 
-        void SetFormPosAndSize(double scale = 1)
+        void SetFormPosAndSize(double scale = 1, bool force = false)
         {
-            if (WindowState == FormWindowState.Maximized)
-                return;
-
-            if (mp.Fullscreen)
+            if (!force)
             {
-                CycleFullscreen(true);
-                return;
-            }
+                if (WindowState == FormWindowState.Maximized)
+                    return;
 
+                if (mp.Fullscreen)
+                {
+                    CycleFullscreen(true);
+                    return;
+                }
+            }
+            
             Screen screen = Screen.FromControl(this);
             int autoFitHeight = Convert.ToInt32(screen.WorkingArea.Height * mp.Autofit);
 
@@ -480,13 +486,6 @@ namespace mpvnet
                         break;
                     var r2 = Marshal.PtrToStructure<Native.RECT>(m.LParam);
                     Native.SetWindowPos(Handle, IntPtr.Zero, r2.Left, r2.Top, r2.Width, r2.Height, 0);
-                    break;
-                case 0x112: // WM_SYSCOMMAND
-                    if (m.WParam.ToInt32() == 0xf120) // SC_RESTORE
-                    {
-                        CycleFullscreen(true);
-                        CycleFullscreen(false);
-                    }
                     break;
                 case 0x0214: // WM_SIZING
                     var rc = Marshal.PtrToStructure<Native.RECT>(m.LParam);

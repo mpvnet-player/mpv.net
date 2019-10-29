@@ -20,7 +20,10 @@ namespace mpvnet
         public static bool IsDarkTheme {
             get {
                 object value = Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", 1);
-                if (value is null) value = 1;
+            
+                if (value is null)
+                    value = 1;
+
                 return (int)value == 0;
             }
         }
@@ -62,43 +65,52 @@ namespace mpvnet
         {
             Types = types;
 
-            RegHelp.SetObject($"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\App Paths\\{ExeFilename}", null, ExePath);
-            RegHelp.SetObject($"HKCR\\Applications\\{ExeFilename}", "FriendlyAppName", "mpv.net media player");
-            RegHelp.SetObject($"HKCR\\Applications\\{ExeFilename}\\shell\\open\\command", null, $"\"{ExePath}\" \"%1\"");
+            RegHelp.SetObject(@"HKCU\Software\Microsoft\Windows\CurrentVersion\App Paths\" + ExeFilename, null, ExePath);
+            RegHelp.SetObject(@"HKCR\Applications\" + ExeFilename, "FriendlyAppName", "mpv.net media player");
+            RegHelp.SetObject($@"HKCR\Applications\{ExeFilename}\shell\open\command", null, $"\"{ExePath}\" \"%1\"");
             RegHelp.SetObject(@"HKLM\SOFTWARE\Clients\Media\mpv.net\Capabilities", "ApplicationDescription", "mpv.net media player");
             RegHelp.SetObject(@"HKLM\SOFTWARE\Clients\Media\mpv.net\Capabilities", "ApplicationName", "mpv.net");
-            RegHelp.SetObject($"HKCR\\SystemFileAssociations\\video\\OpenWithList\\{ExeFilename}", null, "");
-            RegHelp.SetObject($"HKCR\\SystemFileAssociations\\audio\\OpenWithList\\{ExeFilename}", null, "");
+            RegHelp.SetObject(@"HKCR\SystemFileAssociations\video\OpenWithList\" + ExeFilename, null, "");
+            RegHelp.SetObject(@"HKCR\SystemFileAssociations\audio\OpenWithList\" + ExeFilename, null, "");
             RegHelp.SetObject(@"HKLM\SOFTWARE\RegisteredApplications", "mpv.net", @"SOFTWARE\Clients\Media\mpv.net\Capabilities");
 
             foreach (string ext in Types)
             {
-                RegHelp.SetObject($"HKCR\\Applications\\{ExeFilename}\\SupportedTypes", "." + ext, "");
-                RegHelp.SetObject($"HKCR\\" + "." + ext, null, ExeFilenameNoExt + "." + ext);
-                RegHelp.SetObject($"HKCR\\" + "." + ext + "\\OpenWithProgIDs", ExeFilenameNoExt + "." + ext, "");
-                if (App.VideoTypes.Contains(ext)) RegHelp.SetObject($"HKCR\\" + "." + ext, "PerceivedType", "video");
-                if (App.AudioTypes.Contains(ext)) RegHelp.SetObject($"HKCR\\" + "." + ext, "PerceivedType", "audio");
-                if (App.ImageTypes.Contains(ext)) RegHelp.SetObject($"HKCR\\" + "." + ext, "PerceivedType", "image");
-                RegHelp.SetObject($"HKCR\\" + ExeFilenameNoExt + "." + ext + "\\shell\\open", null, "Play with " +  Application.ProductName);
-                RegHelp.SetObject($"HKCR\\" + ExeFilenameNoExt + "." + ext + "\\shell\\open\\command", null, $"\"{ExePath}\" \"%1\"");
+                RegHelp.SetObject($@"HKCR\Applications\{ExeFilename}\SupportedTypes", "." + ext, "");
+                RegHelp.SetObject($@"HKCR\" + "." + ext, null, ExeFilenameNoExt + "." + ext);
+                RegHelp.SetObject($@"HKCR\" + "." + ext + @"\OpenWithProgIDs", ExeFilenameNoExt + "." + ext, "");
+
+                if (App.VideoTypes.Contains(ext))
+                    RegHelp.SetObject(@"HKCR\" + "." + ext, "PerceivedType", "video");
+
+                if (App.AudioTypes.Contains(ext))
+                    RegHelp.SetObject(@"HKCR\" + "." + ext, "PerceivedType", "audio");
+
+                if (App.ImageTypes.Contains(ext))
+                    RegHelp.SetObject(@"HKCR\" + "." + ext, "PerceivedType", "image");
+
+                RegHelp.SetObject($@"HKCR\" + ExeFilenameNoExt + "." + ext + @"\shell\open", null, "Play with " +  Application.ProductName);
+                RegHelp.SetObject($@"HKCR\" + ExeFilenameNoExt + "." + ext + @"\shell\open\command", null, $"\"{ExePath}\" \"%1\"");
                 RegHelp.SetObject(@"HKLM\SOFTWARE\Clients\Media\mpv.net\Capabilities\FileAssociations", "." + ext, ExeFilenameNoExt + "." + ext);
             }
         }
 
         public static void Unregister()
         {
-            RegHelp.RemoveKey($"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\App Paths\\{ExeFilename}");
-            RegHelp.RemoveKey($"HKCR\\Applications\\{ExeFilename}");
-            RegHelp.RemoveKey($"HKLM\\SOFTWARE\\Clients\\Media\\mpv.net");
-            RegHelp.RemoveKey($"HKCR\\SystemFileAssociations\\video\\OpenWithList\\{ExeFilename}");
-            RegHelp.RemoveKey($"HKCR\\SystemFileAssociations\\audio\\OpenWithList\\{ExeFilename}");
+            RegHelp.RemoveKey($@"HKCU\Software\Microsoft\Windows\CurrentVersion\App Paths\" + ExeFilename);
+            RegHelp.RemoveKey($@"HKCR\Applications\" + ExeFilename);
+            RegHelp.RemoveKey($@"HKLM\SOFTWARE\Clients\Media\mpv.net");
+            RegHelp.RemoveKey($@"HKCR\SystemFileAssociations\video\OpenWithList\" + ExeFilename);
+            RegHelp.RemoveKey($@"HKCR\SystemFileAssociations\audio\OpenWithList\" + ExeFilename);
             RegHelp.RemoveValue(@"HKLM\SOFTWARE\RegisteredApplications", "mpv.net");
 
             foreach (string id in Registry.ClassesRoot.GetSubKeyNames())
             {
-                if (id.StartsWith(ExeFilenameNoExt + ".")) Registry.ClassesRoot.DeleteSubKeyTree(id);
-                RegHelp.RemoveValue($"HKCR\\Software\\Classes\\" + id + "\\OpenWithProgIDs", ExeFilenameNoExt + id);
-                RegHelp.RemoveValue($"HKLM\\Software\\Classes\\" + id + "\\OpenWithProgIDs", ExeFilenameNoExt + id);
+                if (id.StartsWith(ExeFilenameNoExt + "."))
+                    Registry.ClassesRoot.DeleteSubKeyTree(id);
+
+                RegHelp.RemoveValue($@"HKCR\Software\Classes\{id}\OpenWithProgIDs", ExeFilenameNoExt + id);
+                RegHelp.RemoveValue($@"HKLM\Software\Classes\{id}\OpenWithProgIDs", ExeFilenameNoExt + id);
             }
         }
     }
@@ -107,46 +119,43 @@ namespace mpvnet
     {
         public static void SetObject(string path, string name, object value)
         {
-            using (RegistryKey rk = GetRootKey(path).CreateSubKey(path.Substring(5), RegistryKeyPermissionCheck.ReadWriteSubTree))
-                rk.SetValue(name, value);
+            using (RegistryKey regKey = GetRootKey(path).CreateSubKey(path.Substring(5), RegistryKeyPermissionCheck.ReadWriteSubTree))
+                regKey.SetValue(name, value);
         }
 
         public static string GetString(string path, string name, string defaultValue = "")
         {
-            object val = GetObject(path, name, defaultValue);
-            if (val == null || !(val is string)) return "";
-            return val.ToString();
+            object value = GetObject(path, name, defaultValue);
+            return !(value is string) ? defaultValue : value.ToString();
         }
 
         public static int GetInt(string path, string name, int defaultValue = 0)
         {
-            object val = GetObject(path, name, defaultValue);
-            if (val == null || !(val is int)) return 0;
-            return (int)val;
+            object value = GetObject(path, name, defaultValue);
+            return !(value is int) ? defaultValue : (int)value;
         }
 
         public static object GetObject(string path, string name, object defaultValue = null)
         {
-            using (RegistryKey rk = GetRootKey(path).OpenSubKey(path.Substring(5)))
-                if (rk != null)
-                    return rk.GetValue(name, defaultValue);
-                else
-                    return null;
+            using (RegistryKey regKey = GetRootKey(path).OpenSubKey(path.Substring(5)))
+                return regKey == null ? null : regKey.GetValue(name, defaultValue);
         }
 
         public static void RemoveKey(string path)
         {
-            try {
+            try
+            {
                 GetRootKey(path).DeleteSubKeyTree(path.Substring(5), false);
             } catch { }
         }
 
         public static void RemoveValue(string path, string name)
         {
-            try {
-                using (RegistryKey rk = GetRootKey(path).OpenSubKey(path.Substring(5), true))
-                    if (!(rk is null))
-                        rk.DeleteValue(name, false);
+            try
+            {
+                using (RegistryKey regKey = GetRootKey(path).OpenSubKey(path.Substring(5), true))
+                    if (regKey != null)
+                        regKey.DeleteValue(name, false);
             } catch {}
         }
 

@@ -116,7 +116,7 @@
   <ItemGroup>
     <Compile Include="Misc\App.cs" />
     <Compile Include="Misc\Extension.cs" />
-    <Page Include="Controls\SearchTextBoxUserControl.xaml">
+    <Page Include="WPF\SearchTextBoxUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -140,7 +140,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Compile Include="Controls\SearchTextBoxUserControl.xaml.cs">
+    <Compile Include="WPF\SearchTextBoxUserControl.xaml.cs">
       <DependentUpon>SearchTextBoxUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="DynamicGUI\DynamicGUI.cs" />

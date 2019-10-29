@@ -56,9 +56,6 @@ public class MediaInfo : IDisposable
 
     ~MediaInfo() { Dispose(); }
 
-    [DllImport("kernel32.dll")]
-    public static extern IntPtr LoadLibrary(string path);
-
     [DllImport("MediaInfo.dll")]
     static extern IntPtr MediaInfo_New();
 

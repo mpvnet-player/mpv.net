@@ -1,3 +1,7 @@
+###
+
+- fix: window restore was broken
+
 ### 5.4.2.1 Beta
 
 - pressing shift key suppresses auto-load-folder
