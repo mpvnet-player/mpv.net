@@ -695,7 +695,7 @@ namespace mpvnet
 
             HideLogo();
 
-            if ((DateTime.Now - LastLoad).TotalMilliseconds < 500)
+            if ((DateTime.Now - LastLoad).TotalMilliseconds < 1000)
                 append = true;
 
             LastLoad = DateTime.Now;
@@ -713,27 +713,34 @@ namespace mpvnet
                 set_property_int("playlist-pos", 0);
 
             if (loadFolder && !append)
-                Task.Run(() => LoadFolder()); // user reported race condition
+                Task.Run(() => LoadFolder());
         }
 
         public static void LoadFolder()
         {
             if (!App.AutoLoadFolder || Control.ModifierKeys.HasFlag(Keys.Shift))
                 return;
-            Thread.Sleep(200); // user reported race condition
+
+            Thread.Sleep(1000);
             string path = get_property_string("path");
+
             if (!File.Exists(path) || get_property_int("playlist-count") != 1)
                 return;
+
             List<string> files = Directory.GetFiles(Path.GetDirectoryName(path)).ToList();
+
             files = files.Where(file =>
                 App.VideoTypes.Contains(file.ShortExt()) ||
                 App.AudioTypes.Contains(file.ShortExt()) ||
                 App.ImageTypes.Contains(file.ShortExt())).ToList();
+
             files.Sort(new StringLogicalComparer());
             int index = files.IndexOf(path);
             files.Remove(path);
+
             foreach (string i in files)
                 commandv("loadfile", i, "append");
+
             if (index > 0)
                 commandv("playlist-move", "0", (index + 1).ToString());
         }
