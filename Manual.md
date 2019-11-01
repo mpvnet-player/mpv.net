@@ -91,7 +91,7 @@
 * [External Tools](#external-tools)
   + [Play with mpv](#play-with-mpv)
   + [External Application Button](#external-application-button)
-  + [Open with++](#openwith)
+  + [Open with++](#open-with)
   + [MediaInfo.NET](#mediainfonet)  
 * [Command Line Interface](#command-line-interface)
 * [Color Theme](#color-theme)
