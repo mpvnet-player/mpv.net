@@ -91,7 +91,7 @@
 * [External Tools](#external-tools)
   + [Play with mpv](#play-with-mpv)
   + [External Application Button](#external-application-button)
-  + [Open with++](#openwith++)
+  + [Open with++](#openwith)
   + [MediaInfo.NET](#mediainfonet)  
 * [Command Line Interface](#command-line-interface)
 * [Color Theme](#color-theme)
@@ -133,11 +133,11 @@ File Associations can be created using the setup or with the context menu under 
 
 Windows 10 prevents apps to register as the default app, to define the default video or audio player app in Windows 10 go to the Windows settings under 'Settings > Apps > Default apps' or shell execute 'ms-settings:defaultapps'.
 
-It's also possible to change the default application using the Open With feature of the context menu in Windows File Explorer.
+It's also possible to change the default application using the 'Open with' feature of the context menu in Windows File Explorer.
 
 ## Context Menu
 
-The most important part of the user interface in mpv.net is the context menu, the menu can be customized as it is defined in the same file where the key bindings are defined.
+The most important part of the user interface in mpv.net is the context menu, the menu can be customized as it's defined in the same file where the key bindings are defined.
 
 ### Open > Open Files
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -213,26 +214,38 @@ namespace mpvnet
                 foreach (string line in content.Split('\r', '\n'))
                 {
                     string val = line.Trim();
-                    if (val.StartsWith("#")) continue;
-                    if (!val.Contains(" ")) continue;
+
+                    if (val.StartsWith("#"))
+                        continue;
+
+                    if (!val.Contains(" "))
+                        continue;
+
                     CommandItem item = new CommandItem();
                     item.Input = val.Substring(0, val.IndexOf(" "));
-                    if (item.Input == "_") item.Input = "";
+
+                    if (item.Input == "_")
+                        item.Input = "";
+
                     val = val.Substring(val.IndexOf(" ") + 1);
 
                     if (val.Contains("#menu:"))
                     {
                         item.Path = val.Substring(val.IndexOf("#menu:") + 6).Trim();
                         val = val.Substring(0, val.IndexOf("#menu:"));
+
                         if (item.Path.Contains(";"))
                             item.Path = item.Path.Substring(item.Path.IndexOf(";") + 1).Trim();
                     }
 
                     item.Command = val.Trim();
+
                     if (item.Command == "")
                         continue;
+
                     if (item.Command.ToLower() == "ignore")
                         item.Command = "";
+
                     MigrateCommands(item);
                     items.Add(item);
                 }
@@ -246,6 +259,7 @@ namespace mpvnet
             get {
                 if (_Items is null)
                     _Items = GetItems(File.ReadAllText(mp.InputConfPath));
+
                 return _Items;
             }
         }

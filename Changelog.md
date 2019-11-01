@@ -1,6 +1,11 @@
-###
+
+### 5.4.3.0
 
 - new: the color themes can now be customized ([manual](https://github.com/stax76/mpv.net/blob/master/Manual.md#color-theme))
+- new: three new sections were added to the [manual](https://github.com/stax76/mpv.net/blob/master/Manual.md):
+       1. [Color Theme](https://github.com/stax76/mpv.net/blob/master/Manual.md#color-theme)
+       2. [Hidden and secret features](https://github.com/stax76/mpv.net/blob/master/Manual.md#hidden-and-secret-features)
+       3. [External Tools](https://github.com/stax76/mpv.net/blob/master/Manual.md#external-tools)
 
 - fix: window restore from maximized and from minimized was broken
 - fix: it's possible to multi select files in File Explorer and press
