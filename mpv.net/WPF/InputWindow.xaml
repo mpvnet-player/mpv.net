@@ -21,7 +21,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type DataGridCell}">
-                        <Grid>
+                        <Grid Background="{TemplateBinding Background}">
                             <ContentPresenter VerticalAlignment="Center" />
                         </Grid>
                     </ControlTemplate>
