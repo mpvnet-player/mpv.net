@@ -7,7 +7,7 @@
 * [Requirements](#requirements)
 * [Installation](#installation)
   + [File Associations](#file-associations)
-  [Chrome Extensions](#chrome-extensions)
+* [Chrome Extensions](#chrome-extensions)
   + [Play with mpv](#play-with-mpv)
   + [External Application Button](#external-application-button)
 * [Context Menu](#context-menu)
