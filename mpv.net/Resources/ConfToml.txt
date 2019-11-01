@@ -537,24 +537,13 @@ options = [{ name = "always" },
 		   { name = "never" }]
 
 [[settings]]
-name = "dark-color"
+name = "dark-theme"
 file = "mpvnet"
-type = "color"
 filter = "UI"
-help = "Theme color used in dark-mode. Leave empty to use OS theme. (mpv.net specific setting)"
+help = "Color theme used in dark mode. Default: dark"
 
 [[settings]]
-name = "light-color"
+name = "light-theme"
 file = "mpvnet"
-type = "color"
 filter = "UI"
-help = "Theme color used when dark-mode is disabled. Leave empty to use OS theme. (mpv.net specific setting)"
-
-[[settings]]
-name = "themed-menu"
-file = "mpvnet"
-default = "no"
-filter = "UI"
-help = "Follow theme color in context menu. (mpv.net specific setting)"
-options = [{ name = "yes" },
-           { name = "no" }]
+help = "Color theme used in light mode. Default: light"

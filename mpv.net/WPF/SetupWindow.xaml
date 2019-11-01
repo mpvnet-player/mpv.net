@@ -3,17 +3,31 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:UI="clr-namespace:UI"
         mc:Ignorable="d"
-        Title="mpv.net OS Setup" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterOwner">
+        
+        Title="mpv.net OS Setup"
+        FontSize="13"
+        Foreground="{x:Static UI:Theme.Foreground}"
+        Background="{x:Static UI:Theme.Background}"
+        SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterOwner" >
+
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Padding" Value="10"></Setter>
+            <Setter Property="Margin" Value="5"></Setter>
+        </Style>
+    </Window.Resources>
+    
     <Grid>
-        <StackPanel>
-            <Button Name="RegisterVideo" Margin="5" Click="RegisterVideo_Click">Register video file extensions (requires elevated privileges)</Button>
-            <Button Name="RegisterAudio" Margin="5" Click="RegisterAudio_Click">Register audio file extensions (requires elevated privileges)</Button>
-            <Button Name="RegisterImage" Margin="5" Click="RegisterImage_Click">Register image file extensions (requires elevated privileges)</Button>
-            <Button Name="AddToPathEnvVar" Margin="5" Click="AddToPathEnvVar_Click">Add mpv.net to Path environment variable</Button>
-            <Button Name="ManageDefaultApps" Margin="5" Click="ManageDefaultApps_Click">Manage Default Apps (Win 10 or higher)</Button>
-            <Button Name="UnregisterFileAssociations" Margin="5,20,5,5" Click="UnregisterFileAssociations_Click">Unregister file extensions (requires elevated privileges)</Button>
-            <Button Name="RemoveFromPathEnvVar" Margin="5" Click="RemoveFromPathEnvVar_Click">Remove mpv.net from Path environment variable</Button>
+        <StackPanel Margin="10">
+            <Button Name="RegisterVideo" Click="RegisterVideo_Click">Register video file extensions (requires elevated privileges)</Button>
+            <Button Name="RegisterAudio" Click="RegisterAudio_Click">Register audio file extensions (requires elevated privileges)</Button>
+            <Button Name="RegisterImage" Click="RegisterImage_Click">Register image file extensions (requires elevated privileges)</Button>
+            <Button Name="UnregisterFileAssociations" Click="UnregisterFileAssociations_Click">Unregister file extensions (requires elevated privileges)</Button>
+            <Button Name="AddToPathEnvVar" Click="AddToPathEnvVar_Click">Add mpv.net to Path environment variable</Button>
+            <Button Name="RemoveFromPathEnvVar" Click="RemoveFromPathEnvVar_Click">Remove mpv.net from Path environment variable</Button>
         </StackPanel>
     </Grid>
 </Window>

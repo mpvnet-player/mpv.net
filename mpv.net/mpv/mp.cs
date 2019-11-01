@@ -209,10 +209,8 @@ namespace mpvnet
 
                     if (!File.Exists(_ConfigFolder + "mpv.conf"))
                         File.WriteAllText(_ConfigFolder + "mpv.conf", Properties.Resources.mpvConf);
-
-                    if (!File.Exists(_ConfigFolder + "mpvnet.conf"))
-                        File.WriteAllText(_ConfigFolder + "mpvnet.conf", Properties.Resources.mpvNetConf);
                 }
+
                 return _ConfigFolder;
             }
         }

@@ -3,21 +3,47 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:UI="clr-namespace:UI"
         mc:Ignorable="d"
-        Title="Learn Input" Height="200" Width="400" WindowStartupLocation="CenterOwner"
-        ResizeMode="NoResize" Loaded="Window_Loaded" Background="Black" MouseWheel="Window_MouseWheel" MouseUp="Window_MouseUp" MouseDoubleClick="Window_MouseDoubleClick" TextInput="Window_TextInput">
+        
+        Title="Learn Input"
+        Height="200"
+        Width="400"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        Loaded="Window_Loaded"
+        Foreground="{x:Static UI:Theme.Foreground}"
+        Background="{x:Static UI:Theme.Background}"
+        MouseWheel="Window_MouseWheel"
+        MouseUp="Window_MouseUp"
+        MouseDoubleClick="Window_MouseDoubleClick"
+        TextInput="Window_TextInput">
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="40" />
         </Grid.RowDefinitions>
+        
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <TextBlock x:Name="MenuTextBlock" Grid.ColumnSpan="2" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16"></TextBlock>
-        <TextBlock x:Name="KeyTextBlock" Grid.Row="1" Grid.ColumnSpan="2" Foreground="White" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="16"></TextBlock>
+        
+        <TextBlock x:Name="MenuTextBlock"
+                   Grid.ColumnSpan="2"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"
+                   FontSize="16"></TextBlock>
+
+        <TextBlock x:Name="KeyTextBlock"
+                   Grid.Row="1"
+                   Grid.ColumnSpan="2"
+                   VerticalAlignment="Top"
+                   HorizontalAlignment="Center"
+                   FontSize="16" />
+        
         <Button x:Name="ConfirmButton" Grid.Row="2" Click="ConfirmButton_Click">Confirm</Button>
         <Button x:Name="ClearButton" Grid.Row="2" Click="ClearButton_Click" Grid.Column="1">Clear</Button>
     </Grid>

@@ -3,9 +3,19 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:UI="clr-namespace:UI"
         mc:Ignorable="d"
-        Title="About mpv.net" Height="230" Width="400" FontSize="16" ShowInTaskbar="False"
-        WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
+        
+        Title="About mpv.net"
+        Height="230"
+        Width="400"
+        FontSize="16"
+        ShowInTaskbar="False"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        Foreground="{x:Static UI:Theme.Foreground}"
+        Background="{x:Static UI:Theme.Background}">
+    
     <Grid>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock FontSize="48" HorizontalAlignment="Center" Margin="0,0,0,10">mpv.net</TextBlock>

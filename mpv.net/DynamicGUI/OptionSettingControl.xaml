@@ -4,22 +4,58 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DynamicGUI"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             xmlns:UI="clr-namespace:UI"
+             mc:Ignorable="d"
+             
+             d:DesignHeight="450"
+             d:DesignWidth="800">
+    
     <Grid Margin="20,0">
         <StackPanel>
-            <TextBox x:Name="TitleTextBox" FontSize="24" Margin="0,10" BorderThickness="0" IsReadOnly="True" Foreground="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}" Background="{Binding Path=Background, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"></TextBox>
+            <TextBox x:Name="TitleTextBox"
+                     FontSize="24"
+                     Margin="0,10"
+                     BorderThickness="0"
+                     IsReadOnly="True"
+                     Foreground="{x:Static UI:Theme.Heading}"
+                     Background="{x:Static UI:Theme.Background}" />
+
             <ItemsControl x:Name="ItemsControl">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <WrapPanel Orientation="Vertical">
-                            <RadioButton x:Name="RadioButton" VerticalContentAlignment="Center" IsChecked="{Binding Checked}" GroupName="{Binding OptionSetting.Name}" Content="{Binding Text}" FontSize="16" FontWeight="Normal" VerticalAlignment="Top" Foreground="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"></RadioButton>
-                            <TextBox x:Name="ItemHelpTextBox" TextWrapping="WrapWithOverflow" Text="{Binding Help}" Visibility="{Binding Visibility}" Margin="10,0,0,0" BorderThickness="0" IsReadOnly="True" Padding="7,0,0,0" MinHeight="0" Foreground="{Binding Path=Foreground2, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}" Background="{Binding Path=Background, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"></TextBox>
+                            <RadioButton x:Name="RadioButton"
+                                         VerticalContentAlignment="Center"
+                                         IsChecked="{Binding Checked}"
+                                         GroupName="{Binding OptionSetting.Name}"
+                                         Content="{Binding Text}"
+                                         FontSize="16"
+                                         FontWeight="Normal"
+                                         VerticalAlignment="Top"
+                                         Foreground="{x:Static UI:Theme.Foreground}"/>
+
+                            <TextBox x:Name="ItemHelpTextBox"
+                                     TextWrapping="WrapWithOverflow"
+                                     Text="{Binding Help}"
+                                     Visibility="{Binding Visibility}"
+                                     Margin="10,0,0,0" BorderThickness="0"
+                                     IsReadOnly="True" Padding="7,0,0,0"
+                                     MinHeight="0"
+                                     Foreground="{x:Static UI:Theme.Foreground2}"
+                                     Background="{x:Static UI:Theme.Background}"/>
+
                         </WrapPanel>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
-            <TextBox x:Name="HelpTextBox" TextWrapping="WrapWithOverflow" BorderThickness="0" IsReadOnly="True" Margin="0,10,0,0" Foreground="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}" Background="{Binding Path=Background, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"></TextBox>
+
+            <TextBox x:Name="HelpTextBox"
+                     TextWrapping="WrapWithOverflow"
+                     BorderThickness="0"
+                     IsReadOnly="True"
+                     Margin="0,10,0,0"
+                     Foreground="{x:Static UI:Theme.Foreground}"
+                     Background="{x:Static UI:Theme.Background}"/>
             <TextBlock x:Name="LinkTextBlock" Margin="0,10">
                 <local:HyperlinkEx x:Name="Link"></local:HyperlinkEx>
             </TextBlock>

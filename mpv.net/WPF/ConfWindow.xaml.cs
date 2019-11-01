@@ -1,26 +1,26 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Linq;
 
 using DynamicGUI;
-using System.Text;
 
 namespace mpvnet
 {
     public partial class ConfWindow : Window
     {
-        private List<SettingBase> SettingsDefinitions = Settings.LoadSettings(Properties.Resources.ConfToml);
-        private List<ConfItem> ConfItems = new List<ConfItem>();
+        List<SettingBase> SettingsDefinitions = Settings.LoadSettings(Properties.Resources.confToml);
+        List<ConfItem> ConfItems = new List<ConfItem>();
         public ObservableCollection<string> FilterStrings { get; } = new ObservableCollection<string>();
         string InitialContent;
-        
+
         public ConfWindow()
         {
             InitializeComponent();
@@ -31,22 +31,7 @@ namespace mpvnet
             LoadSettings();
             InitialContent = GetCompareString();
             SearchControl.Text = RegHelp.GetString(App.RegPath, "ConfigEditorSearch");
-
-            if (App.IsDarkMode)
-            {
-                Foreground = Brushes.White;
-                Foreground2 = Brushes.Silver;
-                Background = Brushes.Black;
-            }
         }
-
-        public Brush Foreground2 {
-            get { return (Brush)GetValue(Foreground2Property); }
-            set { SetValue(Foreground2Property, value); }
-        }
-
-        public static readonly DependencyProperty Foreground2Property =
-            DependencyProperty.Register("Foreground2", typeof(Brush), typeof(ConfWindow), new PropertyMetadata(Brushes.DarkSlateGray));
 
         private void LoadSettings()
         {
@@ -70,12 +55,10 @@ namespace mpvnet
                 {
                     case StringSetting s:
                         var sc = new StringSettingControl(s);
-                        sc.TitleTextBox.Foreground = WPF.WPF.ThemeBrush;
                         MainStackPanel.Children.Add(sc);
                         break;
                     case OptionSetting s:
                         var oc = new OptionSettingControl(s);
-                        oc.TitleTextBox.Foreground = WPF.WPF.ThemeBrush;
                         MainStackPanel.Children.Add(oc);
                         break;
                 }

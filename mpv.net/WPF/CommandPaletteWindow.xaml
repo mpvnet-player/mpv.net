@@ -3,21 +3,41 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:UI="clr-namespace:UI"
         mc:Ignorable="d"
-        Title="Command Palette" Height="295" Width="400" ResizeMode="NoResize"
-        WindowStartupLocation="CenterOwner" Loaded="Window_Loaded" FontSize="13">
+        
+        Title="Command Palette"
+        Height="295"
+        Width="400"
+        FontSize="13"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner"
+        Loaded="Window_Loaded">
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBox Name="FilterTextBox" PreviewKeyDown="FilterTextBox_PreviewKeyDown" TextChanged="FilterTextBox_TextChanged"></TextBox>
-        <ListView Name="ListView" Grid.Row="1" MouseUp="ListView_MouseUp">
+
+        <TextBox Name="FilterTextBox"
+                 Foreground="{x:Static UI:Theme.Foreground}"
+                 Background="{x:Static UI:Theme.Background}"
+                 PreviewKeyDown="FilterTextBox_PreviewKeyDown"
+                 TextChanged="FilterTextBox_TextChanged"/>
+        
+        <ListView Name="ListView"
+                  Grid.Row="1"
+                  Foreground="{x:Static UI:Theme.Foreground}"
+                  Background="{x:Static UI:Theme.Background}"
+                  MouseUp="ListView_MouseUp">
+            
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
                 </Style>
             </ListView.ItemContainerStyle>
+            
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid>
@@ -25,8 +45,12 @@
                             <ColumnDefinition />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
+                        
                         <TextBlock Text="{Binding Path}"></TextBlock>
-                        <TextBlock Grid.Column="1" Text="{Binding Input}" HorizontalAlignment="Right"></TextBlock>
+                        
+                        <TextBlock Grid.Column="1"
+                                   Text="{Binding Input}"
+                                   HorizontalAlignment="Right"></TextBlock>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

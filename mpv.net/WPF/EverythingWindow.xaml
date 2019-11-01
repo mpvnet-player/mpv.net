@@ -3,21 +3,42 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:UI="clr-namespace:UI"
         mc:Ignorable="d"
-        Title="Media File Search" Height="300" Width="600" ResizeMode="NoResize"
-        WindowStartupLocation="CenterOwner" Loaded="Window_Loaded" FontSize="13">
+        
+        Title="Media File Search"
+        FontSize="13"
+        Height="300"
+        Width="600"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner"
+        Loaded="Window_Loaded">
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBox Name="FilterTextBox" PreviewKeyDown="FilterTextBox_PreviewKeyDown" TextChanged="FilterTextBox_TextChanged"></TextBox>
-        <ListView Name="ListView" Grid.Row="1" MouseUp="ListView_MouseUp" PreviewKeyDown="ListView_PreviewKeyDown">
+
+        <TextBox Name="FilterTextBox"
+                 Foreground="{x:Static UI:Theme.Foreground}"
+                 Background="{x:Static UI:Theme.Background}"
+                 PreviewKeyDown="FilterTextBox_PreviewKeyDown"
+                 TextChanged="FilterTextBox_TextChanged"/>
+
+        <ListView Name="ListView"
+                  Foreground="{x:Static UI:Theme.Foreground}"
+                  Background="{x:Static UI:Theme.Background}"
+                  Grid.Row="1"
+                  MouseUp="ListView_MouseUp"
+                  PreviewKeyDown="ListView_PreviewKeyDown">
+            
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
                 </Style>
             </ListView.ItemContainerStyle>
+            
         </ListView>        
     </Grid>
 </Window>

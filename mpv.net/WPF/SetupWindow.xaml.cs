@@ -1,7 +1,9 @@
-﻿using System;
+﻿
+using System;
 using System.Diagnostics;
 using System.Windows;
-using WF = System.Windows.Forms;
+
+using WinForms = System.Windows.Forms;
 
 namespace mpvnet
 {
@@ -11,24 +13,29 @@ namespace mpvnet
 
         void RegisterFileAssociations(string value)
         {
-            using (var proc = new Process())
+            try
             {
-                proc.StartInfo.FileName = System.Windows.Forms.Application.ExecutablePath;
-                proc.StartInfo.Arguments = "--reg-file-assoc " + value;
-                proc.StartInfo.Verb = "runas";
-                try { proc.Start(); } catch { }
-            }
+                using (var proc = new Process())
+                {
+                    proc.StartInfo.FileName = WinForms.Application.ExecutablePath;
+                    proc.StartInfo.Arguments = "--reg-file-assoc " + value;
+                    proc.StartInfo.Verb = "runas";
+                    proc.Start();
+                }
+
+                Process.Start("ms-settings:defaultapps");
+            } catch {}
         }
 
         private void RegisterVideo_Click(object sender, RoutedEventArgs e) => RegisterFileAssociations("video");
         private void RegisterAudio_Click(object sender, RoutedEventArgs e) => RegisterFileAssociations("audio");
         private void RegisterImage_Click(object sender, RoutedEventArgs e) => RegisterFileAssociations("image");
+
         private void UnregisterFileAssociations_Click(object sender, RoutedEventArgs e) => RegisterFileAssociations("unreg");
-        private void ManageDefaultApps_Click(object sender, RoutedEventArgs e) => Process.Start("ms-settings:defaultapps");
 
         private void AddToPathEnvVar_Click(object sender, RoutedEventArgs e)
         {
-            string var = WF.Application.StartupPath + ";";
+            string var = WinForms.Application.StartupPath + ";";
             string path = Environment.GetEnvironmentVariable("Path", EnvironmentVariableTarget.User);
 
             if (path.Contains(var))
@@ -42,7 +49,7 @@ namespace mpvnet
 
         private void RemoveFromPathEnvVar_Click(object sender, RoutedEventArgs e)
         {
-            string var = WF.Application.StartupPath + ";";
+            string var = WinForms.Application.StartupPath + ";";
             string path = Environment.GetEnvironmentVariable("Path", EnvironmentVariableTarget.User);
 
             if (path.Contains(var))

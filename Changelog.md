@@ -1,11 +1,14 @@
 ###
 
-- fix: window restore was broken
+- fix: window restore from maximized and from minimized was broken
 - fix: it's possible to multi select files in File Explorer and press
        enter to open the files, this did however only work when the
 	   auto load folder feature was disabled or the shift key was
 	   pressed (blocks auto load folder). Now it should also work
 	   without shift key and with auto load folder being enabled.
+
+- update: libmpv shinchiro 2019-10-27
+- update: youtube-dl 2019-10-31
 
 ### 5.4.2.1 Beta
 

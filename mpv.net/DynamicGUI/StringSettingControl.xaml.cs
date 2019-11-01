@@ -61,18 +61,20 @@ namespace DynamicGUI
                     }
                     break;
                 case "color":
-                    using (var d = new WinForms.ColorDialog())
+                    using (var dialog = new WinForms.ColorDialog())
                     {
-                        d.FullOpen = true;
+                        dialog.FullOpen = true;
+
                         try {
                             if (!string.IsNullOrEmpty(ValueTextBox.Text))
                             {
                                 Color col = GetColor(ValueTextBox.Text);
-                                d.Color = System.Drawing.Color.FromArgb(col.A, col.R, col.G, col.B); 
+                                dialog.Color = System.Drawing.Color.FromArgb(col.A, col.R, col.G, col.B); 
                             }
                         } catch {}
-                        if (d.ShowDialog() == WinForms.DialogResult.OK)
-                            ValueTextBox.Text = "#" + d.Color.ToArgb().ToString("X8");
+
+                        if (dialog.ShowDialog() == WinForms.DialogResult.OK)
+                            ValueTextBox.Text = "#" + dialog.Color.ToArgb().ToString("X8");
                     }
                     break;
             }

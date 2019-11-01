@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -9,6 +10,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using UI;
 
 namespace mpvnet
 {
@@ -610,7 +612,10 @@ namespace mpvnet
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            if (mp.GPUAPI != "vulkan") mp.VideoSizeAutoResetEvent.WaitOne(App.StartThreshold);
+
+            if (mp.GPUAPI != "vulkan")
+                mp.VideoSizeAutoResetEvent.WaitOne(App.StartThreshold);
+
             SetFormPosAndSize();
         }
 
@@ -621,9 +626,12 @@ namespace mpvnet
             if (mp.GPUAPI == "vulkan")
                 mp.ProcessCommandLine(false);
 
-            var wpfColor = WPF.WPF.ThemeColor;
-            Color color = Color.FromArgb(wpfColor.A, wpfColor.R, wpfColor.G, wpfColor.B);
-            ToolStripRendererEx.InitColors(color, App.IsDarkMode, App.ThemedMenu);
+            ToolStripRendererEx.ForegroundColor = Theme.Current.GetWinFormsColor("menu-foreground");
+            ToolStripRendererEx.BackgroundColor = Theme.Current.GetWinFormsColor("menu-background");
+            ToolStripRendererEx.SelectionColor = Theme.Current.GetWinFormsColor("menu-highlight");
+            ToolStripRendererEx.BorderColor = Theme.Current.GetWinFormsColor("menu-border");
+            ToolStripRendererEx.CheckedColor = Theme.Current.GetWinFormsColor("menu-checked");
+
             BuildMenu();
             ContextMenuStrip = ContextMenu;
             WPF.WPF.Init();

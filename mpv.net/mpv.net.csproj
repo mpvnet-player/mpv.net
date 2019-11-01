@@ -116,6 +116,7 @@
   <ItemGroup>
     <Compile Include="Misc\App.cs" />
     <Compile Include="Misc\Extension.cs" />
+    <Content Include="Resources\theme.txt" />
     <Page Include="WPF\SearchTextBoxUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -140,6 +141,8 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Compile Include="Misc\Help.cs" />
+    <Compile Include="Misc\Theme.cs" />
     <Compile Include="WPF\SearchTextBoxUserControl.xaml.cs">
       <DependentUpon>SearchTextBoxUserControl.xaml</DependentUpon>
     </Compile>
@@ -239,10 +242,9 @@
     </Content>
     <Content Include="mpvnet.ico" />
     <Content Include="Resources\mpvConf.txt" />
-    <Content Include="Resources\ConfToml.txt" />
+    <Content Include="Resources\confToml.txt" />
     <None Include="Resources\mpvnet.ico" />
     <None Include="Resources\mpvnet.png" />
-    <None Include="Resources\mpvNetConf.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

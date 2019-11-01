@@ -71,9 +71,9 @@ namespace mpvnet.Properties {
         ///options = [{ name = &quot;no&quot;,           help = &quot;always use software decoding&quot; },
         ///           { name = &quot;auto&quot;,         hel [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string ConfToml {
+        internal static string confToml {
             get {
-                return ResourceManager.GetString("ConfToml", resourceCulture);
+                return ResourceManager.GetString("confToml", resourceCulture);
             }
         }
         
@@ -105,7 +105,7 @@ namespace mpvnet.Properties {
         ///keep-open = yes
         ///keep-open-pause = no
         ///osd-playing-msg = &apos;${filename}&apos;
-        ///script-opts=osc-scalewindowed=1.5
+        ///script-opts = osc-scalewindowed=1.5
         ///screenshot-directory = &apos;~~desktop/&apos;
         ///cscale = spline36
         ///dscale = spline36
@@ -132,12 +132,37 @@ namespace mpvnet.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to dark-color = &apos;#1E90FF&apos;
-        ///light-color = &apos;#28394F&apos;.
+        ///   Looks up a localized string similar to 
+        ///[dark]
+        ///
+        ///heading = #1E90FF
+        ///foreground = #FFFFFF
+        ///foreground2 = #C0C0C0
+        ///background = #323232
+        ///
+        ///menu-foreground = #FFFFFF
+        ///menu-background = #323232
+        ///menu-highlight  = #505050
+        ///menu-border     = #FFFFFF
+        ///menu-checked    = #5A5A5A
+        ///
+        ///[light]
+        ///
+        ///heading = #0068B2
+        ///foreground = #000000
+        ///foreground2 = #4C4C4C
+        ///background = #F7F7F7
+        ///
+        ///menu-foreground = #000000
+        ///menu-background = #DFDFDF
+        ///menu-highlight  = #BFBFBF
+        ///menu-border     = #6A6A6A
+        ///menu-checked    = #AAAAAA
+        ///.
         /// </summary>
-        internal static string mpvNetConf {
+        internal static string theme {
             get {
-                return ResourceManager.GetString("mpvNetConf", resourceCulture);
+                return ResourceManager.GetString("theme", resourceCulture);
             }
         }
     }

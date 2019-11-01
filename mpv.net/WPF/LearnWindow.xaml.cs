@@ -1,9 +1,11 @@
-﻿using System;
+﻿
+using System;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
-using WF = System.Windows.Forms;
+
+using WinForms = System.Windows.Forms;
 
 namespace mpvnet
 {
@@ -17,7 +19,7 @@ namespace mpvnet
 
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            WF.Message m = new WF.Message();
+            WinForms.Message m = new WinForms.Message();
             m.HWnd = hwnd;
             m.Msg = msg;
             m.WParam = wParam;
@@ -26,10 +28,10 @@ namespace mpvnet
             return m.Result;
         }
 
-        void OnKeyUp(WF.KeyEventArgs e)
+        void OnKeyUp(WinForms.KeyEventArgs e)
         {
-            if (e.KeyCode == WF.Keys.ControlKey || e.KeyCode == WF.Keys.ShiftKey ||
-                e.KeyCode == WF.Keys.Menu || e.KeyCode == WF.Keys.None)
+            if (e.KeyCode == WinForms.Keys.ControlKey || e.KeyCode == WinForms.Keys.ShiftKey ||
+                e.KeyCode == WinForms.Keys.Menu || e.KeyCode == WinForms.Keys.None)
 
                 return;
 
@@ -49,70 +51,70 @@ namespace mpvnet
 
             switch (e.KeyCode)
             {
-                case WF.Keys.NumPad0:
-                case WF.Keys.NumPad1:
-                case WF.Keys.NumPad2:
-                case WF.Keys.NumPad3:
-                case WF.Keys.NumPad4:
-                case WF.Keys.NumPad5:
-                case WF.Keys.NumPad6:
-                case WF.Keys.NumPad7:
-                case WF.Keys.NumPad8:
-                case WF.Keys.NumPad9:
+                case WinForms.Keys.NumPad0:
+                case WinForms.Keys.NumPad1:
+                case WinForms.Keys.NumPad2:
+                case WinForms.Keys.NumPad3:
+                case WinForms.Keys.NumPad4:
+                case WinForms.Keys.NumPad5:
+                case WinForms.Keys.NumPad6:
+                case WinForms.Keys.NumPad7:
+                case WinForms.Keys.NumPad8:
+                case WinForms.Keys.NumPad9:
                     text = "KP" + e.KeyCode.ToString()[6]; break;
-                case WF.Keys.Space:
+                case WinForms.Keys.Space:
                     text = "Space"; break;
-                case WF.Keys.Enter:
+                case WinForms.Keys.Enter:
                     text = "Enter"; break;
-                case WF.Keys.Tab:
+                case WinForms.Keys.Tab:
                     text = "TAB"; break;
-                case WF.Keys.Back:
+                case WinForms.Keys.Back:
                     text = "BS"; break;
-                case WF.Keys.Delete:
+                case WinForms.Keys.Delete:
                     text = "DEL"; break;
-                case WF.Keys.Insert:
+                case WinForms.Keys.Insert:
                     text = "INS"; break;
-                case WF.Keys.Home:
+                case WinForms.Keys.Home:
                     text = "Home"; break;
-                case WF.Keys.End:
+                case WinForms.Keys.End:
                     text = "END"; break;
-                case WF.Keys.PageUp:
+                case WinForms.Keys.PageUp:
                     text = "PGUP"; break;
-                case WF.Keys.PageDown:
+                case WinForms.Keys.PageDown:
                     text = "PGDWN"; break;
-                case WF.Keys.Escape:
+                case WinForms.Keys.Escape:
                     text = "ESC"; break;
-                case WF.Keys.PrintScreen:
+                case WinForms.Keys.PrintScreen:
                     text = "Print"; break;
-                case WF.Keys.Play:
+                case WinForms.Keys.Play:
                     text = "Play"; break;
-                case WF.Keys.Pause:
+                case WinForms.Keys.Pause:
                     text = "Pause"; break;
-                case WF.Keys.MediaPlayPause:
+                case WinForms.Keys.MediaPlayPause:
                     text = "PlayPause"; break;
-                case WF.Keys.MediaStop:
+                case WinForms.Keys.MediaStop:
                     text = "Stop"; break;
-                case WF.Keys.MediaNextTrack:
+                case WinForms.Keys.MediaNextTrack:
                     text = "Next"; break;
-                case WF.Keys.MediaPreviousTrack:
+                case WinForms.Keys.MediaPreviousTrack:
                     text = "Prev"; break;
-                case WF.Keys.VolumeUp:
+                case WinForms.Keys.VolumeUp:
                     text = "Volume_Up"; break;
-                case WF.Keys.VolumeDown:
+                case WinForms.Keys.VolumeDown:
                     text = "Volume_Down"; break;
-                case WF.Keys.VolumeMute:
+                case WinForms.Keys.VolumeMute:
                     text = "Mute"; break;
-                case WF.Keys.BrowserHome:
+                case WinForms.Keys.BrowserHome:
                     text = "Homepage"; break;
-                case WF.Keys.LaunchMail:
+                case WinForms.Keys.LaunchMail:
                     text = "Mail"; break;
-                case WF.Keys.BrowserFavorites:
+                case WinForms.Keys.BrowserFavorites:
                     text = "Favorites"; break;
-                case WF.Keys.BrowserSearch:
+                case WinForms.Keys.BrowserSearch:
                     text = "Search"; break;
-                case WF.Keys.Sleep:
+                case WinForms.Keys.Sleep:
                     text = "Sleep"; break;
-                case WF.Keys.Cancel:
+                case WinForms.Keys.Cancel:
                     text = "Cancel"; break;
             }
 
@@ -130,9 +132,14 @@ namespace mpvnet
 
             if (text == "#") text = "SHARP";
 
-            if (isAlt   && !wasModified) text = "ALT+" + text;
-            if (isShift && !wasModified) text = "SHIFT+" + text;
-            if (isCtrl  && !wasModified) text = "CTRL+" + text;
+            if (isAlt   && !wasModified)
+                text = "ALT+" + text;
+
+            if (isShift && !wasModified)
+                text = "SHIFT+" + text;
+
+            if (isCtrl  && !wasModified)
+                text = "CTRL+" + text;
 
             if (!string.IsNullOrEmpty(text))
                 SetKey(text);
@@ -151,25 +158,29 @@ namespace mpvnet
         [DllImport("user32.dll")]
         static extern uint MapVirtualKey(uint uCode, uint uMapType);
 
-        public static WF.Keys ModifierKeys {
+        public static WinForms.Keys ModifierKeys {
             get {
-                WF.Keys keys = WF.Keys.None;
+                WinForms.Keys keys = WinForms.Keys.None;
+
                 if (GetKeyState(17) < (short)0)
-                    keys |= WF.Keys.Control;
+                    keys |= WinForms.Keys.Control;
+
                 if (GetKeyState(16) < (short)0)
-                    keys |= WF.Keys.Shift;
+                    keys |= WinForms.Keys.Shift;
+
                 if (GetKeyState(18) < (short)0)
-                    keys |= WF.Keys.Alt;
+                    keys |= WinForms.Keys.Alt;
+
                 return keys;
             }
         }
 
-        void ProcessKeyEventArgs(ref WF.Message m)
+        void ProcessKeyEventArgs(ref WinForms.Message m)
         {
             int WM_KEYUP = 0x0101, WM_SYSKEYUP = 0x0105, WM_APPCOMMAND = 0x0319;
 
             if (m.Msg == WM_KEYUP || m.Msg == WM_SYSKEYUP)
-                OnKeyUp(new WF.KeyEventArgs((WF.Keys)(unchecked((int)(long)m.WParam)) | ModifierKeys));
+                OnKeyUp(new WinForms.KeyEventArgs((WinForms.Keys)(unchecked((int)(long)m.WParam)) | ModifierKeys));
             else if (m.Msg == WM_APPCOMMAND)
             {
                 var value = (AppCommand)(m.LParam.ToInt64() >> 16 & ~0xf000);

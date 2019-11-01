@@ -94,20 +94,24 @@ namespace mpvnet
 
             public void Output_DataReady(object sender, EventArgs e)
             {
-                if (!WriteStandard) return;
+                if (!WriteStandard)
+                    return;
+
                 var output = sender as PipelineReader<PSObject>;
+
                 while (output.Count > 0)
                     Console.WriteLine("[" + ModuleName + "] " + output.Read().ToString());
             }
 
             public void Error_DataReady(object sender, EventArgs e)
             {
-                if (!WriteError) return;
+                if (!WriteError)
+                    return;
+
                 var output = sender as PipelineReader<Object>;
-                Console.ForegroundColor = ConsoleColor.Red;
+
                 while (output.Count > 0)
-                    Console.WriteLine("[" + ModuleName + "] " + output.Read().ToString());
-                Console.ResetColor();
+                    ConsoleHelp.WriteError("[" + ModuleName + "] " + output.Read().ToString());
             }
         }
     }

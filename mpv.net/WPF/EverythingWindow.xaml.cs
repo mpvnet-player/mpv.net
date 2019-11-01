@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -8,7 +9,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
-using System.Windows.Media;
 
 namespace mpvnet
 {
@@ -17,19 +17,10 @@ namespace mpvnet
         public EverythingWindow()
         {
             InitializeComponent();
-
-            if (App.IsDarkMode)
-            {
-                ListView.Foreground = Brushes.White;
-                ListView.Background = Brushes.Black;
-                FilterTextBox.Foreground = Brushes.White;
-                FilterTextBox.Background = Brushes.Black;
-            }
         }
 
         const int EVERYTHING_REQUEST_FILE_NAME = 0x00000001;
         const int EVERYTHING_REQUEST_PATH = 0x00000002;
-        const int EVERYTHING_SORT_SIZE_DESCENDING = 6;
 
         [DllImport("Everything.dll", CharSet = CharSet.Unicode)]
         public static extern int Everything_SetSearch(string lpSearchString);
@@ -69,6 +60,7 @@ namespace mpvnet
         {
             if (msg == 0x200 /*WM_MOUSEMOVE*/ && Mouse.LeftButton != MouseButtonState.Pressed)
                 handled = true;
+
             return IntPtr.Zero;
         }
 
@@ -101,14 +93,18 @@ namespace mpvnet
 
         private void ListView_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Escape) Close();
-            if (e.Key == Key.Enter) Execute();
+            if (e.Key == Key.Escape)
+                Close();
+
+            if (e.Key == Key.Enter)
+                Execute();
         }
 
         void Execute()
         {
             if (ListView.SelectedItem != null)
                 mp.Load(new[] { ListView.SelectedItem as string }, true, Keyboard.Modifiers == ModifierKeys.Control);
+
             Keyboard.Focus(FilterTextBox);
         }
 

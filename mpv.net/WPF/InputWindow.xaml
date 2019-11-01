@@ -3,15 +3,25 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:UI="clr-namespace:UI"
         mc:Ignorable="d"
-        Title="Input Editor" Height="500" Width="750" FontSize="13"
-        Loaded="Window_Loaded" Closed="Window_Closed" ShowInTaskbar="False">
+        
+        Title="Input Editor"
+        Height="500"
+        Width="750"
+        FontSize="13"
+        ShowInTaskbar="False"
+        Foreground="{x:Static UI:Theme.Foreground}"
+        Background="{x:Static UI:Theme.Background}"
+        Loaded="Window_Loaded"
+        Closed="Window_Closed">
+    
     <Window.Resources>
         <Style x:Key="DataGrid_Font_Centering" TargetType="{x:Type DataGridCell}">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type DataGridCell}">
-                        <Grid Background="{TemplateBinding Background}">
+                        <Grid>
                             <ContentPresenter VerticalAlignment="Center" />
                         </Grid>
                     </ControlTemplate>
@@ -19,15 +29,29 @@
             </Setter>
         </Style>
     </Window.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Controls:SearchTextBoxUserControl HintText="Type ? to get help." x:Name="SearchControl" Width="300" Margin="0,20,0,20" Grid.ColumnSpan="2" />
-        <DataGrid Grid.Row="1" x:Name="DataGrid" CommandManager.PreviewCanExecute="DataGrid_PreviewCanExecute" AutoGenerateColumns="False" CellStyle="{StaticResource DataGrid_Font_Centering}">
+        
+        <Controls:SearchTextBoxUserControl
+            HintText="Type ? to get help."
+            x:Name="SearchControl"
+            Width="300"
+            Margin="0,20,0,20"
+            Grid.ColumnSpan="2" />
+
+        <DataGrid x:Name="DataGrid"
+                  Grid.Row="1"
+                  CommandManager.PreviewCanExecute="DataGrid_PreviewCanExecute"
+                  AutoGenerateColumns="False"
+                  CellStyle="{StaticResource DataGrid_Font_Centering}" >
+            
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Menu"  Binding="{Binding Path}"/>
+                
                 <DataGridTemplateColumn Header="Input">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -37,7 +61,9 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
+                
                 <DataGridTextColumn Header="Command" Binding="{Binding Command}" MaxWidth="330" />
+                
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

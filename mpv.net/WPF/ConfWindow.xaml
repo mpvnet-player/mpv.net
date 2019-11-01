@@ -3,35 +3,63 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:WPF="clr-namespace:WPF"
+        xmlns:UI="clr-namespace:UI"
         mc:Ignorable="d"
-        Height="530" Width="700" Loaded="ConfWindow1_Loaded" ShowInTaskbar="False"
-        WindowStartupLocation="CenterScreen" Title="Config Editor">
+        
+        Title="Config Editor"
+        Height="530"
+        Width="700"
+        Foreground="{x:Static UI:Theme.Foreground}"
+        Background="{x:Static UI:Theme.Background}"
+        ShowInTaskbar="False"
+        WindowStartupLocation="CenterScreen"
+        Loaded="ConfWindow1_Loaded">
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+        
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Controls:SearchTextBoxUserControl HintText="Find a setting" x:Name="SearchControl" Width="250" Margin="0,20,0,0" Grid.ColumnSpan="2"/>
-        <ScrollViewer x:Name="MainScrollViewer" VerticalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="2" Margin="0,0,0,10">
+        
+        <Controls:SearchTextBoxUserControl HintText="Find a setting"
+                                           x:Name="SearchControl"
+                                           Width="250"
+                                           Margin="0,20,0,0"
+                                           Grid.ColumnSpan="2"/>
+        
+        <ScrollViewer x:Name="MainScrollViewer"
+                      VerticalScrollBarVisibility="Auto"
+                      Grid.Row="1"
+                      Grid.Column="2" 
+                      Margin="0,0,0,10">
+            
             <StackPanel x:Name="MainStackPanel"></StackPanel>
         </ScrollViewer>
+        
         <StackPanel Margin="20,0,0,0" Grid.Row="1">
-            <ListBox x:Name="FilterListBox" ItemsSource="{Binding FilterStrings}" BorderThickness="0" SelectionChanged="FilterListBox_SelectionChanged" Foreground="{x:Static WPF:WPF.ThemeBrush}" Background="{Binding Path=Background, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}">
+            <ListBox x:Name="FilterListBox"
+                     ItemsSource="{Binding FilterStrings}"
+                     BorderThickness="0"
+                     SelectionChanged="FilterListBox_SelectionChanged"
+                     Foreground="{x:Static UI:Theme.Heading}"
+                     Background="{x:Static UI:Theme.Background}">
+                
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding}" FontSize="16" />
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <TextBlock x:Name="OpenSettingsTextBlock" Margin="0,30,0,0" Cursor="Hand" TextWrapping="WrapWithOverflow" Foreground="{x:Static WPF:WPF.ThemeBrush}" MouseUp="OpenSettingsTextBlock_MouseUp">Open config folder</TextBlock>
-            <TextBlock x:Name="PreviewTextBlock" Margin="0,15,0,0" Cursor="Hand" TextWrapping="WrapWithOverflow" Foreground="{x:Static WPF:WPF.ThemeBrush}" MouseUp="PreviewTextBlock_MouseUp">Preview mpv.conf</TextBlock>
-            <TextBlock x:Name="ShowManualTextBlock" Margin="0,15,0,0" Cursor="Hand" TextWrapping="WrapWithOverflow" Foreground="{x:Static WPF:WPF.ThemeBrush}" MouseUp="ShowManualTextBlock_MouseUp">Show mpv manual</TextBlock>
-            <TextBlock x:Name="SupportTextBlock" Margin="0,15,0,0" Cursor="Hand" TextWrapping="WrapWithOverflow" Foreground="{x:Static WPF:WPF.ThemeBrush}" MouseUp="SupportTextBlock_MouseUp">Show support forum</TextBlock>
+
+            <TextBlock x:Name="OpenSettingsTextBlock" Margin="0,30,0,0" Cursor="Hand" TextWrapping="WrapWithOverflow" Foreground="{x:Static UI:Theme.Heading}" MouseUp="OpenSettingsTextBlock_MouseUp">Open config folder</TextBlock>
+            <TextBlock x:Name="PreviewTextBlock" Margin="0,15,0,0" Cursor="Hand" TextWrapping="WrapWithOverflow" Foreground="{x:Static UI:Theme.Heading}" MouseUp="PreviewTextBlock_MouseUp">Preview mpv.conf</TextBlock>
+            <TextBlock x:Name="ShowManualTextBlock" Margin="0,15,0,0" Cursor="Hand" TextWrapping="WrapWithOverflow" Foreground="{x:Static UI:Theme.Heading}" MouseUp="ShowManualTextBlock_MouseUp">Show mpv manual</TextBlock>
+            <TextBlock x:Name="SupportTextBlock" Margin="0,15,0,0" Cursor="Hand" TextWrapping="WrapWithOverflow" Foreground="{x:Static UI:Theme.Heading}" MouseUp="SupportTextBlock_MouseUp">Show support forum</TextBlock>
         </StackPanel>
     </Grid>
 </Window>

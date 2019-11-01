@@ -90,6 +90,7 @@
   + [Exit](#exit)
   + [Exit Watch Later](#exit-watch-later)
 * [Command Line Interface](#command-line-interface)
+* [Theme](#theme)
 
 ## About mpv.net
 
@@ -819,8 +820,17 @@ Exits mpv.net and remembers the position in the file using the following command
 
 ## Command Line Interface
 
-mpvnet implements a basic CLI to set mpv commands.
+mpvnet implements a command line interface to set mpv commands.
+
+Supported are all mpv properties which are documented at:
+
+<https://mpv.io/manual/master>
 
 Example:
 
 mpvnet --mute=yes <file|URL>
+
+## Theme
+
+mpv.net supports custom themes, the definition of the built-in themes can be found at:
+

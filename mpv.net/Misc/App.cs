@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
+using UI;
 
 namespace mpvnet
 {
@@ -15,10 +16,10 @@ namespace mpvnet
 
         public static string RegPath { get; } = @"HKCU\Software\" + Application.ProductName;
         public static string ConfPath { get => mp.ConfigFolder + "mpvnet.conf"; }
-        public static string DarkMode { get; set; } = "always";
         public static string ProcessInstance { get; set; } = "single";
-        public static string DarkColor { get; set; }
-        public static string LightColor { get; set; }
+        public static string DarkMode { get; set; } = "always";
+        public static string DarkTheme { get; set; } = "dark";
+        public static string LightTheme { get; set; } = "light";
 
         public static bool RememberHeight { get; set; } = true;
         public static bool RememberPosition { get; set; }
@@ -27,7 +28,6 @@ namespace mpvnet
         public static bool IsStartedFromTerminal { get; } = Environment.GetEnvironmentVariable("_started_from_console") == "yes";
         public static bool RememberVolume { get; set; } = true;
         public static bool AutoLoadFolder { get; set; } = true;
-        public static bool ThemedMenu { get; set; }
         public static bool Queue { get; set; }
 
         public static int StartThreshold { get; set; } = 1500;
@@ -64,6 +64,16 @@ namespace mpvnet
                     Msg.ShowException(e);
                 }
             }
+
+            string themeContent = null;
+
+            if (File.Exists(mp.ConfigFolder + "theme.conf"))
+                themeContent = File.ReadAllText(mp.ConfigFolder + "theme.conf");
+
+            Theme.Init(
+                themeContent,
+                Properties.Resources.theme,
+                IsDarkMode ? DarkTheme : LightTheme);
 
             mp.Shutdown += Shutdown;
             mp.Initialized += Initialized;
@@ -114,15 +124,14 @@ namespace mpvnet
                 case "process-instance": ProcessInstance = value; return true;
                 case "dark-mode": DarkMode = value; return true;
                 case "debug-mode": DebugMode = value == "yes"; return true;
-                case "dark-color": DarkColor = value.Trim('\'', '"'); return true;
-                case "light-color": LightColor = value.Trim('\'', '"'); return true;
                 case "remember-volume": RememberVolume = value == "yes"; return true;
                 case "start-threshold": StartThreshold = value.Int(); return true;
                 case "minimum-aspect-ratio": MinimumAspectRatio = value.Float(); return true;
                 case "auto-load-folder": AutoLoadFolder = value == "yes"; return true;
-                case "themed-menu": ThemedMenu = value == "yes"; return true;
                 case "recent-count": RecentCount = value.Int(); return true;
                 case "queue": Queue = value == "yes"; return true;
+                case "dark-theme": DarkTheme = value.Trim('\'', '"'); return true;
+                case "light-theme": LightTheme = value.Trim('\'', '"'); return true;
             }
             return false;
         }

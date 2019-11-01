@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -6,7 +7,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Windows.Media;
 
 namespace mpvnet
 {
@@ -26,22 +26,7 @@ namespace mpvnet
             var yourCostumFilter = new Predicate<object>(item => Filter((CommandItem)item));
             CollectionView.Filter = yourCostumFilter;
             DataGrid.ItemsSource = CollectionView;
-
-            if (App.IsDarkMode)
-            {
-                Foreground = Brushes.White;
-                Foreground2 = Brushes.Silver;
-                Background = Brushes.Black;
-            }
         }
-
-        public Brush Foreground2 {
-            get { return (Brush)GetValue(Foreground2Property); }
-            set { SetValue(Foreground2Property, value); }
-        }
-
-        public static readonly DependencyProperty Foreground2Property =
-            DependencyProperty.Register("Foreground2", typeof(Brush), typeof(InputWindow), new PropertyMetadata(Brushes.DarkSlateGray));
 
         private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {

@@ -130,49 +130,29 @@ public class MenuItem : ToolStripMenuItem
 
 public class ToolStripRendererEx : ToolStripSystemRenderer
 {
-    public static Color ColorForeground { get; set; } = Color.Black;
-    public static Color ColorTheme { get; set; }
-    public static Color ColorChecked { get; set; }
-    public static Color ColorBorder { get; set; }
-    public static Color ColorTop { get; set; }
-    public static Color ColorSelection { get; set; }
-    public static Color ColorBackground { get; set; }
+    public static Color ForegroundColor { get; set; }
+    public static Color BackgroundColor { get; set; }
+    public static Color SelectionColor { get; set; }
+    public static Color CheckedColor { get; set; }
+    public static Color BorderColor { get; set; }
 
     int TextOffset;
 
-    public static void InitColors(Color themeColor, bool darkMode, bool themed)
+    public static void SetDefaultColors()
     {
-        if (darkMode)
-        {
-            ColorBorder = Color.White;
-            ColorBackground = Color.FromArgb(50, 50, 50);
-            ColorSelection = Color.FromArgb(80, 80, 80);
-
-            if (themed)
-                ColorForeground = themeColor;
-            else
-                ColorForeground = Color.White;
-
-            ColorChecked = Color.FromArgb(90, 90, 90);
-        }
-        else
-        {
-            if (!themed) themeColor = Color.FromArgb(238, 238, 238);
-
-            ColorBorder = HSLColor.Convert(themeColor).ToColorSetLuminosity(100);
-            ColorChecked = HSLColor.Convert(themeColor).ToColorSetLuminosity(160);
-            ColorSelection = HSLColor.Convert(themeColor).ToColorSetLuminosity(180);
-            ColorBackground = HSLColor.Convert(themeColor).ToColorSetLuminosity(210);
-            ColorTop = HSLColor.Convert(themeColor).ToColorSetLuminosity(240);
-        }
+        ForegroundColor = Color.FromArgb(unchecked((int)0xFF000000));
+        BackgroundColor = Color.FromArgb(unchecked((int)0xFFDFDFDF));
+        SelectionColor = Color.FromArgb(unchecked((int)0xFFBFBFBF));
+        CheckedColor = Color.FromArgb(unchecked((int)0xFFAAAAAA));
+        BorderColor = Color.FromArgb(unchecked((int)0xFF6A6A6A));
     }
 
     protected override void OnRenderToolStripBorder(ToolStripRenderEventArgs e)
     {
         Rectangle r = e.AffectedBounds;
         r.Inflate(-1, -1);
-        ControlPaint.DrawBorder(e.Graphics, r, ColorBackground, ButtonBorderStyle.Solid);
-        ControlPaint.DrawBorder(e.Graphics, e.AffectedBounds, ColorBorder, ButtonBorderStyle.Solid);
+        ControlPaint.DrawBorder(e.Graphics, r, BackgroundColor, ButtonBorderStyle.Solid);
+        ControlPaint.DrawBorder(e.Graphics, e.AffectedBounds, BorderColor, ButtonBorderStyle.Solid);
     }
 
     protected override void OnRenderItemText(ToolStripItemTextRenderEventArgs e)
@@ -189,7 +169,7 @@ public class ToolStripRendererEx : ToolStripSystemRenderer
             else
                 TextOffset = Convert.ToInt32(e.Item.Height * 0.2);
 
-            e.TextColor = ColorForeground;
+            e.TextColor = ForegroundColor;
             e.TextRectangle = new Rectangle(TextOffset, Convert.ToInt32((e.Item.Height - rect.Height) / 2.0), rect.Width, rect.Height);
         }
 
@@ -201,14 +181,14 @@ public class ToolStripRendererEx : ToolStripSystemRenderer
         Rectangle rect = new Rectangle(Point.Empty, e.Item.Size);
 
         if (!(e.Item.Owner is MenuStrip))
-            e.Graphics.Clear(ColorBackground);
+            e.Graphics.Clear(BackgroundColor);
 
         if (e.Item.Selected && e.Item.Enabled)
         {
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
             rect = new Rectangle(rect.X + 2, rect.Y, rect.Width - 4, rect.Height - 1);
             rect.Inflate(-1, -1);
-            using (SolidBrush b = new SolidBrush(ColorSelection))
+            using (SolidBrush b = new SolidBrush(SelectionColor))
                 e.Graphics.FillRectangle(b, rect);
         }
     }
@@ -224,7 +204,7 @@ public class ToolStripRendererEx : ToolStripSystemRenderer
         float y3 = e.Item.Height * 0.75f;
         e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
 
-        using (Brush b = new SolidBrush(ColorForeground))
+        using (Brush b = new SolidBrush(ForegroundColor))
         {
             using (Pen p = new Pen(b, Control.DefaultFont.Height / 20f))
             {
@@ -250,7 +230,7 @@ public class ToolStripRendererEx : ToolStripSystemRenderer
         rect = new Rectangle(rect.X + 2, rect.Y, rect.Height - 1, rect.Height - 1);
         rect.Inflate(-1, -1);
 
-        using (Brush brush = new SolidBrush(ColorChecked))
+        using (Brush brush = new SolidBrush(CheckedColor))
             e.Graphics.FillRectangle(brush, rect);
 
         float ellipseWidth = rect.Height / 3f;
@@ -260,17 +240,17 @@ public class ToolStripRendererEx : ToolStripSystemRenderer
                                           ellipseWidth,
                                           ellipseWidth);
 
-        using (Brush brush = new SolidBrush(ColorForeground))
+        using (Brush brush = new SolidBrush(ForegroundColor))
             e.Graphics.FillEllipse(brush, rectF);
     }
 
     protected override void OnRenderSeparator(ToolStripSeparatorRenderEventArgs e)
     {
-        e.Graphics.Clear(ColorBackground);
+        e.Graphics.Clear(BackgroundColor);
         int top = e.Item.Height / 2;
         top -= 1;
         int offset = Convert.ToInt32(e.Item.Font.Height * 0.7);
-        using (Pen p = new Pen(ColorBorder))
+        using (Pen p = new Pen(BorderColor))
             e.Graphics.DrawLine(p,
                 new Point(offset, top),
                 new Point(e.Item.Width - offset, top));

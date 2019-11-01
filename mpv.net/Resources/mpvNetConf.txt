@@ -1,2 +1,0 @@
-﻿dark-color = '#1E90FF'
-light-color = '#28394F'
