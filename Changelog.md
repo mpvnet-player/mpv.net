@@ -1,11 +1,13 @@
 ###
 
+- new: the color themes can now be customized ([manual](https://github.com/stax76/mpv.net/blob/master/Manual.md#color-theme))
+
 - fix: window restore from maximized and from minimized was broken
 - fix: it's possible to multi select files in File Explorer and press
        enter to open the files, this did however only work when the
 	   auto load folder feature was disabled or the shift key was
 	   pressed (blocks auto load folder). Now it should also work
-	   without shift key and with auto load folder being enabled.
+	   without shift key and with auto load folder being enabled
 
 - update: libmpv shinchiro 2019-10-27
 - update: youtube-dl 2019-10-31

@@ -124,13 +124,15 @@ x86 should though still be well supported and work but it's not as well tested t
 
 ### File Associations
 
-File Associations can be created using the setup or from within the apps context menu under 'Tools > Manage File Associations'.
+File Associations can be created using the setup or with the context menu under 'Tools > OS Setup'.
 
 Windows 10 prevents apps to register as the default app, to define the default video or audio player app in Windows 10 go to the Windows settings under 'Settings > Apps > Default apps' or shell execute 'ms-settings:defaultapps'.
 
 It's also possible to change the default application using the Open With feature of the context menu in Windows File Explorer.
 
-### Chrome Extension
+##  Chrome Extensions
+
+### Play with mpv
 
 In order to play videos from sites such as YouTube the Chrome Extension [Play with mpv](https://chrome.google.com/webstore/detail/play-with-mpv/hahklcmnfgffdlchjigehabfbiigleji) can be used.
 
@@ -139,6 +141,10 @@ Due to Chrome Extensions not being able to start a app, another app that communi
 `C:\Users\%username%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup`
 
 This will start the app on system start and have it running in the background. When the file association registration of mpv.net was executed then the app should find the location of mpv.net, alternativly the mpv.net folder can be added to the PATH environment variable.
+
+### External Application Button
+
+Alternatively the Chrome extension [External Application Button](https://github.com/stax76/mpv.net/issues/106#event-2719011598) can be used.
 
 ## Context Menu
 
@@ -840,6 +846,6 @@ Custom themes can be saved at:
 
 \<conf folder\>\theme.conf
 
-The theme.conf file can contain an unlimited amount of themes.
+The theme.conf file may contain an unlimited amount of themes.
 
 In the config editor under UI there are the settings dark-theme and light-theme to define the themes used in dark and in light mode.
