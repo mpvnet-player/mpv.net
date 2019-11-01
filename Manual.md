@@ -90,7 +90,7 @@
   + [Exit](#exit)
   + [Exit Watch Later](#exit-watch-later)
 * [Command Line Interface](#command-line-interface)
-* [Theme](#theme)
+* [Color Theme](#color-theme)
 
 ## About mpv.net
 
@@ -830,7 +830,16 @@ Example:
 
 mpvnet --mute=yes <file|URL>
 
-## Theme
+## Color Theme
 
-mpv.net supports custom themes, the definition of the built-in themes can be found at:
+mpv.net supports custom color themes, the definition of the built-in themes can be found at:
 
+<https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/theme.txt>
+
+Custom themes can be saved at:
+
+\<conf folder\>\theme.conf
+
+The theme.conf file can contain an unlimited amount of themes.
+
+In the config editor under UI there are the settings dark-theme and light-theme to define the themes used in dark and in light mode.
