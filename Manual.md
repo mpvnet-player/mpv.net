@@ -849,11 +849,11 @@ To start a external application mpv has the run input command (it does not use t
 
 If the path has spaces then it must be enclosed in quotes and then double backslashes must be used for escaping or alternatively forward slashes.
 
- _ run D:\Software\MediaInfoNET.exe "${path}" #menu: Tools > Open file with MediaInfo.NET
+ `_ run D:\Software\MediaInfoNET.exe "${path}" #menu: Tools > Open file with MediaInfo.NET`
 
- _ run "D:\\Soft ware\\MediaInfoNET.exe" "${path}" #menu: Tools > Open file with MediaInfo.NET
+ `_ run "D:\\Soft ware\\MediaInfoNET.exe" "${path}" #menu: Tools > Open file with MediaInfo.NET`
 
- _ run "D:/Soft ware/MediaInfoNET.exe" "${path}" #menu: Tools > Open file with MediaInfo.NET
+ `_ run "D:/Soft ware/MediaInfoNET.exe" "${path}" #menu: Tools > Open file with MediaInfo.NET`
 
 ## Command Line Interface
 
@@ -865,7 +865,7 @@ Supported are all mpv properties which are documented at:
 
 Example:
 
-mpvnet --mute=yes <file|URL>
+`mpvnet --mute=yes <file|URL>`
 
 ## Color Theme
 
@@ -875,7 +875,7 @@ mpv.net supports custom color themes, the definition of the built-in themes can 
 
 Custom themes can be saved at:
 
-\<conf folder\>\theme.conf
+`<conf folder>\theme.conf`
 
 The theme.conf file may contain an unlimited amount of themes.
 
