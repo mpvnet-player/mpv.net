@@ -7,9 +7,6 @@
 * [Requirements](#requirements)
 * [Installation](#installation)
   + [File Associations](#file-associations)
-* [Chrome Extensions](#chrome-extensions)
-  + [Play with mpv](#play-with-mpv)
-  + [External Application Button](#external-application-button)
 * [Context Menu](#context-menu)
   + [Open > Open Files](#open--open-files)
   + [Open > Open URL](#open--open-url)
@@ -91,8 +88,14 @@
   + [Help > About mpv.net](#help--about-mpvnet)
   + [Exit](#exit)
   + [Exit Watch Later](#exit-watch-later)
+* [External Tools](#external-tools)
+  + [Play with mpv](#play-with-mpv)
+  + [External Application Button](#external-application-button)
+  + [Open with++](#openwithplusplus)
+  + [MediaInfo.NET](#mediainfo.net)  
 * [Command Line Interface](#command-line-interface)
 * [Color Theme](#color-theme)
+* [Hidden and secret features](#hidden-and-secret-features)
 
 ## About mpv.net
 
@@ -131,22 +134,6 @@ File Associations can be created using the setup or with the context menu under 
 Windows 10 prevents apps to register as the default app, to define the default video or audio player app in Windows 10 go to the Windows settings under 'Settings > Apps > Default apps' or shell execute 'ms-settings:defaultapps'.
 
 It's also possible to change the default application using the Open With feature of the context menu in Windows File Explorer.
-
-##  Chrome Extensions
-
-### Play with mpv
-
-In order to play videos from sites such as YouTube the Chrome Extension [Play with mpv](https://chrome.google.com/webstore/detail/play-with-mpv/hahklcmnfgffdlchjigehabfbiigleji) can be used.
-
-Due to Chrome Extensions not being able to start a app, another app that communicates with the extension is required, this app can be downloaded [here](http://www.mediafire.com/file/lezj8lwqt5zf75v/play-with-mpvnet-server.7z/file). The extension works only when the app is running, to have the app always running a link can be created in the auto start folder located at:
-
-`C:\Users\%username%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup`
-
-This will start the app on system start and have it running in the background. When the file association registration of mpv.net was executed then the app should find the location of mpv.net, alternativly the mpv.net folder can be added to the PATH environment variable.
-
-### External Application Button
-
-Alternatively the Chrome extension [External Application Button](https://github.com/stax76/mpv.net/issues/106) can be used.
 
 ## Context Menu
 
@@ -826,6 +813,48 @@ Exits mpv.net and remembers the position in the file using the following command
 
 [quit-watch-later command](https://mpv.io/manual/master/#command-interface-quit-watch-later)
 
+##  External Tools
+
+### Play with mpv
+
+In order to play videos from sites such as YouTube the Chrome Extension [Play with mpv](https://chrome.google.com/webstore/detail/play-with-mpv/hahklcmnfgffdlchjigehabfbiigleji) can be used.
+
+Due to Chrome Extensions not being able to start a app, another app that communicates with the extension is required, this app can be downloaded [here](http://www.mediafire.com/file/lezj8lwqt5zf75v/play-with-mpvnet-server.7z/file). The extension works only when the app is running, to have the app always running a link can be created in the auto start folder located at:
+
+`C:\Users\%username%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup`
+
+This will start the app on system start and have it running in the background. When the file association registration of mpv.net was executed then the app should find the location of mpv.net, alternativly the mpv.net folder can be added to the PATH environment variable.
+
+### External Application Button
+
+Alternatively the Chrome extension [External Application Button](https://github.com/stax76/mpv.net/issues/106) can be used.
+
+### OpenWithPlusPlus
+
+Open with++ allows to customize the File Explorer context menu for instance to add a 'Add to mpv.net playlist' menu item.
+
+https://github.com/stax76/OpenWithPlusPlus
+
+https://github.com/stax76/OpenWithPlusPlus#mpvnet
+
+https://github.com/stax76/OpenWithPlusPlus#add-to-mpvnet-playlist
+
+### MediaInfo.NET
+
+MediaInfo.NET is a media info GUI.
+
+https://github.com/stax76/MediaInfo.NET
+
+To start a external application mpv has the run input command (it does not use the shell).
+
+If the path has spaces then it must be enclosed in quotes and then double backslashes must be used for escaping or alternatively forward slashes.
+
+ _ run D:\Software\MediaInfoNET.exe "${path}" #menu: Tools > Open file with MediaInfo.NET
+
+ _ run "D:\\Soft ware\\MediaInfoNET.exe" "${path}" #menu: Tools > Open file with MediaInfo.NET
+
+ _ run "D:/Soft ware/MediaInfoNET.exe" "${path}" #menu: Tools > Open file with MediaInfo.NET
+
 ## Command Line Interface
 
 mpvnet implements a command line interface to set mpv commands.
@@ -851,3 +880,11 @@ Custom themes can be saved at:
 The theme.conf file may contain an unlimited amount of themes.
 
 In the config editor under UI there are the settings dark-theme and light-theme to define the themes used in dark and in light mode.
+
+## Hidden and secret features
+
+Selecting multiple files in File Explorer and pressing enter will open the files in mpv.net. Explorer restricts this to maximum 15 files and the order will be random.
+
+Whenever the control key is pressed when files or URLs are opened, the playlist is not cleared but the files or URLs are appended to the playlist. This works in all mpv.net features that open files or URLs.
+
+Pressing the shift key while opening a single file will suppress loading all files in the folder.
