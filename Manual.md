@@ -106,11 +106,11 @@ mpv.net is meant to be a small single person project, it's designed to be mpv co
 
 The target audience of mpv.net are programmers, nerds and software enthusiasts that need something more advanced than typical media players.
 
-Furthermore mpv.net is well suited for people who are interested to learn mpv and the command line.
+Furthermore mpv.net is well suited for people who are interested to learn mpv.
 
 ## Requirements
 
-mpv.net is based on the .NET Framework and requires Windows 7 as minimum version of the Windows operating system. As of the writing of this manual the minimum required .NET Framework version is 4.7.2.
+mpv.net is based on the .NET Framework and requires Windows 7 as minimum version of the Windows operating system. As of the writing of this manual the minimum required .NET Framework version is 4.8.
 
 For optimal results a modern graphics card is recommended.
 
@@ -146,7 +146,7 @@ This will start the app on system start and have it running in the background. W
 
 ### External Application Button
 
-Alternatively the Chrome extension [External Application Button](https://github.com/stax76/mpv.net/issues/106#event-2719011598) can be used.
+Alternatively the Chrome extension [External Application Button](https://github.com/stax76/mpv.net/issues/106) can be used.
 
 ## Context Menu
 
