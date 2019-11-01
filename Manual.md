@@ -91,8 +91,8 @@
 * [External Tools](#external-tools)
   + [Play with mpv](#play-with-mpv)
   + [External Application Button](#external-application-button)
-  + [Open with++](#openwithplusplus)
-  + [MediaInfo.NET](#mediainfo.net)  
+  + [Open with++](#openwith++)
+  + [MediaInfo.NET](#mediainfonet)  
 * [Command Line Interface](#command-line-interface)
 * [Color Theme](#color-theme)
 * [Hidden and secret features](#hidden-and-secret-features)
@@ -829,7 +829,7 @@ This will start the app on system start and have it running in the background. W
 
 Alternatively the Chrome extension [External Application Button](https://github.com/stax76/mpv.net/issues/106) can be used.
 
-### OpenWithPlusPlus
+### Open with++
 
 Open with++ allows to customize the File Explorer context menu for instance to add a 'Add to mpv.net playlist' menu item.
 
