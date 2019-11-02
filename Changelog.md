@@ -1,4 +1,6 @@
 
+- fix: often the OSC was shown when fullscreen was entered
+
 ### 5.4.3.0
 
 - new: the color themes can now be customized ([manual](https://github.com/stax76/mpv.net/blob/master/Manual.md#color-theme))

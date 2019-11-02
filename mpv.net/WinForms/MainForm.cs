@@ -10,6 +10,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Diagnostics;
 using System.Threading.Tasks;
+
 using UI;
 
 namespace mpvnet
@@ -23,7 +24,8 @@ namespace mpvnet
         int    LastCursorChangedTickCount;
         int    TaskbarButtonCreatedMessage;
         bool   WasShown;
-        Taskbar Taskbar;
+        DateTime LastCycleFullscreen;
+        Taskbar  Taskbar;
         List<string> RecentFiles;
 
         public MainForm()
@@ -344,6 +346,7 @@ namespace mpvnet
 
         public void CycleFullscreen(bool enabled)
         {
+            LastCycleFullscreen = DateTime.Now;
             mp.Fullscreen = enabled;
 
             if (enabled)
@@ -469,9 +472,14 @@ namespace mpvnet
                     break;
                 case 0x0200: // WM_MOUSEMOVE
                     {
-                        Point pos = PointToClient(Cursor.Position);
-                        mp.command($"mouse {pos.X} {pos.Y}");
-                        if (CursorHelp.IsPosDifferent(LastCursorPosChanged)) CursorHelp.Show();
+                        if ((DateTime.Now - LastCycleFullscreen).TotalMilliseconds > 100)
+                        {
+                            Point pos = PointToClient(Cursor.Position);
+                            mp.command($"mouse {pos.X} {pos.Y}");
+                        }
+
+                        if (CursorHelp.IsPosDifferent(LastCursorPosChanged))
+                            CursorHelp.Show();
                     }
                     break;
                 case 0x2a3: // WM_MOUSELEAVE
