@@ -269,4 +269,4 @@ scoop bucket add extras
 scoop install mpv.net
 ```
 Alternatively, Chocolatey can also be used
-`choco install mpv.net`
+`choco install mpvnet.install`
