@@ -44,7 +44,7 @@ Table of contents
 - [Support](#support)
 - [Links](#links)
 - [Changelog](#changelog)
-- [Download](#download)
+- [Installation](#installation)
 
 ### Features
 
@@ -258,6 +258,15 @@ If you want to support the development of mpv.net or express your appreciation y
 
 [Changelog](Changelog.md)
 
-### Download
+### Installation
 
+Stable releases are compiled from the source and can be downloaded from the releases tab
 <https://github.com/stax76/mpv.net/releases>
+
+Scoop can be used to install and update it
+```
+scoop bucket add extras
+scoop install mpv.net
+```
+Alternatively, Chocolatey can also be used
+`choco install mpv.net`
