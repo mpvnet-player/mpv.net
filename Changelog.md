@@ -1,5 +1,8 @@
 
+- new: install via Scoop and Chocolatey added to readme/website (Restia666Ashdoll)
+
 - fix: often the OSC was shown when fullscreen was entered
+       or on app startup, this is now suppressed
 
 ### 5.4.3.0
 

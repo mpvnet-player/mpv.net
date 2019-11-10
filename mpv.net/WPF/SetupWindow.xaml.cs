@@ -15,7 +15,7 @@ namespace mpvnet
         {
             try
             {
-                using (var proc = new Process())
+                using (Process proc = new Process())
                 {
                     proc.StartInfo.FileName = WinForms.Application.ExecutablePath;
                     proc.StartInfo.Arguments = "--reg-file-assoc " + value;

@@ -14,7 +14,7 @@
  # space character to make it easier to do a text search, so if you want to know
  # if 'o' has already a binding you can make a text search on ' o '.
 
- # mpv input commands: https://github.com/stax76/mpv.net/wiki/mpv-input-commands
+ # mpv input commands: https://mpv.io/manual/master/#list-of-input-commands
 
  # mpv input keys:     https://github.com/stax76/mpv.net/wiki/mpv-input-keys
 
@@ -157,21 +157,14 @@
  Ctrl+h cycle-values hwdec "auto" "no"              #menu: Tools > Toggle Hardware Decoding
  _ script-message mpv.net show-setup-dialog         #menu: Tools > OS Setup...
 
- _ script-message mpv.net shell-execute https://github.com/stax76/mpv.net/blob/master/Manual.md      #menu: Help > mpv.net Manual
- _ script-message mpv.net shell-execute https://github.com/stax76/mpv.net                            #menu: Help > mpv.net GitHub
- _ script-message mpv.net shell-execute https://github.com/stax76/mpv.net/wiki                       #menu: Help > mpv.net Wiki
- _ script-message mpv.net shell-execute https://github.com/stax76/mpv.net#support                    #menu: Help > mpv.net Support
- _ script-message mpv.net shell-execute https://github.com/stax76/mpv.net/releases                   #menu: Help > mpv.net Download
- _ script-message mpv.net shell-execute https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt #menu: Help > mpv.net Default Key Bindings
- _ ignore                                                                                            #menu: Help > -
- _ script-message mpv.net shell-execute https://mpv.io/manual/stable/                                #menu: Help > mpv Manual
- _ script-message mpv.net shell-execute https://github.com/mpv-player/mpv/wiki                       #menu: Help > mpv Wiki
- _ script-message mpv.net shell-execute https://github.com/mpv-player/mpv/wiki/User-Scripts          #menu: Help > mpv User Scripts
- _ script-message mpv.net shell-execute https://mpv.io/bug-reports/                                  #menu: Help > mpv Bugs and Requests
- _ script-message mpv.net shell-execute https://mpv.io/installation/                                 #menu: Help > mpv Download
- _ script-message mpv.net shell-execute https://github.com/mpv-player/mpv/blob/master/etc/input.conf #menu: Help > mpv Default Key Bindings
- _ ignore                                                                                            #menu: Help > -
- _ script-message mpv.net show-about                                                                 #menu: Help > About mpv.net
+ _ script-message mpv.net shell-execute https://mpv.io                    #menu: Help > Website mpv
+ _ script-message mpv.net shell-execute https://github.com/stax76/mpv.net #menu: Help > Website mpv.net
+ _ ignore                                                                 #menu: Help > -
+ _ script-message mpv.net shell-execute https://mpv.io/manual/stable/     #menu: Help > Manual mpv
+ _ script-message mpv.net shell-execute https://github.com/stax76/mpv.net/blob/master/Manual.md #menu: Help > Manual mpv.net
+ _ ignore                                                                 #menu: Help > -
+ _ script-message mpv.net update-check                                    #menu: Help > Check for Updates
+ _ script-message mpv.net show-about                                      #menu: Help > About mpv.net
 
  _ ignore           #menu: -
  Esc quit           #menu: Exit

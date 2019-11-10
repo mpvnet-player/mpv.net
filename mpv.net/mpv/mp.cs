@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -155,7 +156,7 @@ namespace mpvnet
                     _ConfigFolder = portableFolder;
 
                     if (!Directory.Exists(_ConfigFolder))
-                        _ConfigFolder = RegHelp.GetString(App.RegPath, "ConfigFolder");
+                        _ConfigFolder = RegistryHelp.GetString(App.RegPath, "ConfigFolder");
 
                     if (!Directory.Exists(_ConfigFolder))
                     {
@@ -202,7 +203,7 @@ namespace mpvnet
                         Directory.CreateDirectory(_ConfigFolder);
 
                     if (!_ConfigFolder.Contains("portable_config"))
-                        RegHelp.SetObject(App.RegPath, "ConfigFolder", _ConfigFolder);
+                        RegistryHelp.SetValue(App.RegPath, "ConfigFolder", _ConfigFolder);
 
                     if (!File.Exists(_ConfigFolder + "input.conf"))
                         File.WriteAllText(_ConfigFolder + "input.conf", Properties.Resources.inputConf);

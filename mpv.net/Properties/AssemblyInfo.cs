@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("mpv.net")]
-[assembly: AssemblyDescription("media player")]
+[assembly: AssemblyDescription("mpv based media player")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Frank Skare (stax76)")]
 [assembly: AssemblyProduct("mpv.net")]
-[assembly: AssemblyCopyright("Copyright 2017-2019 Frank Skare (stax76)")]
+[assembly: AssemblyCopyright("Copyright © 2017-2019 Frank Skare (stax76)")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

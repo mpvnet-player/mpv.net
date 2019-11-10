@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace mpvnet
             switch (id)
             {
                 case "open-files": OpenFiles(args); break;
+                case "update-check": UpdateCheck.CheckOnline(true); break;
                 case "open-url": OpenURL(); break;
                 case "open-optical-media": Open_DVD_Or_BD_Folder(); break;
                 case "manage-file-associations": // deprecated 2019
@@ -201,9 +203,9 @@ namespace mpvnet
         public static void ExecuteMpvCommand() // deprecated 2019
         {
             InvokeOnMainThread(new Action(() => {
-                string command = VB.Interaction.InputBox("Enter a mpv command to be executed.", "Execute Command", RegHelp.GetString(App.RegPath, "RecentExecutedCommand"));
+                string command = VB.Interaction.InputBox("Enter a mpv command to be executed.", "Execute Command", RegistryHelp.GetString(App.RegPath, "RecentExecutedCommand"));
                 if (string.IsNullOrEmpty(command)) return;
-                RegHelp.SetObject(App.RegPath, "RecentExecutedCommand", command);
+                RegistryHelp.SetValue(App.RegPath, "RecentExecutedCommand", command);
                 mp.command(command, false);
             }));
         }

@@ -503,6 +503,15 @@ filter = "Input"
 help = "Number of key presses to generate per second on autorepeat."
 
 [[settings]]
+name = "update-check"
+file = "mpvnet"
+default = "no"
+filter = "General"
+help = "Daily check for new version. (mpv.net specific setting)"
+options = [{ name = "yes" },
+           { name = "no" }]
+
+[[settings]]
 name = "process-instance"
 file = "mpvnet"
 default = "single"

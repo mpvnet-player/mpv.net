@@ -34,7 +34,7 @@ namespace mpvnet
 
             try
             {
-                object recent = RegHelp.GetObject(App.RegPath, "Recent");
+                object recent = RegistryHelp.GetValue(App.RegPath, "Recent");
 
                 if (recent is string[] r)
                     RecentFiles = new List<string>(r);
@@ -91,8 +91,8 @@ namespace mpvnet
                 Left = target.X + (target.Width - Width) / 2;
                 Top = target.Y + (target.Height - Height) / 2;
 
-                int posX = RegHelp.GetInt(App.RegPath, "PosX");
-                int posY = RegHelp.GetInt(App.RegPath, "PosY");
+                int posX = RegistryHelp.GetInt(App.RegPath, "PosX");
+                int posY = RegistryHelp.GetInt(App.RegPath, "PosY");
 
                 if (posX != 0 && posY != 0 && App.RememberPosition)
                 {
@@ -472,7 +472,7 @@ namespace mpvnet
                     break;
                 case 0x0200: // WM_MOUSEMOVE
                     {
-                        if ((DateTime.Now - LastCycleFullscreen).TotalMilliseconds > 100)
+                        if ((DateTime.Now - LastCycleFullscreen).TotalMilliseconds > 500)
                         {
                             Point pos = PointToClient(Cursor.Position);
                             mp.command($"mouse {pos.X} {pos.Y}");
@@ -483,61 +483,69 @@ namespace mpvnet
                     }
                     break;
                 case 0x2a3: // WM_MOUSELEAVE
-                    mp.command("mouse 1 1"); // osc won't always auto hide
+                    // osc won't always auto hide
+                    mp.command("mouse 1 1");
                     break;
-                case 0x203: // Native.WM.LBUTTONDBLCLK
+                case 0x203: // WM_LBUTTONDBLCLK
                     {
                         Point pos = PointToClient(Cursor.Position);
                         mp.command($"mouse {pos.X} {pos.Y} 0 double");
                     }
                     break;
                 case 0x02E0: // WM_DPICHANGED
-                    if (!WasShown)
-                        break;
-                    var r2 = Marshal.PtrToStructure<Native.RECT>(m.LParam);
-                    Native.SetWindowPos(Handle, IntPtr.Zero, r2.Left, r2.Top, r2.Width, r2.Height, 0);
+                    {
+                        if (!WasShown)
+                            break;
+
+                        Native.RECT rect = Marshal.PtrToStructure<Native.RECT>(m.LParam);
+                        Native.SetWindowPos(Handle, IntPtr.Zero, rect.Left, rect.Top, rect.Width, rect.Height, 0);
+                    }
                     break;
                 case 0x0214: // WM_SIZING
-                    var rc = Marshal.PtrToStructure<Native.RECT>(m.LParam);
-                    var r = rc;
-                    NativeHelp.SubtractWindowBorders(Handle, ref r);
-                    int c_w = r.Right - r.Left, c_h = r.Bottom - r.Top;
-                    Size s = mp.VideoSize;
+                    {
+                        var rc = Marshal.PtrToStructure<Native.RECT>(m.LParam);
+                        var r = rc;
+                        NativeHelp.SubtractWindowBorders(Handle, ref r);
+                        int c_w = r.Right - r.Left, c_h = r.Bottom - r.Top;
+                        Size s = mp.VideoSize;
 
-                    if (s == Size.Empty)
-                        s = new Size(16, 9);
+                        if (s == Size.Empty)
+                            s = new Size(16, 9);
 
-                    float aspect = s.Width / (float)s.Height;
-                    int d_w = Convert.ToInt32(c_h * aspect - c_w);
-                    int d_h = Convert.ToInt32(c_w / aspect - c_h);
-                    int[] d_corners = { d_w, d_h, -d_w, -d_h };
-                    int[] corners = { rc.Left, rc.Top, rc.Right, rc.Bottom };
-                    int corner = NativeHelp.GetResizeBorder(m.WParam.ToInt32());
+                        float aspect = s.Width / (float)s.Height;
+                        int d_w = Convert.ToInt32(c_h * aspect - c_w);
+                        int d_h = Convert.ToInt32(c_w / aspect - c_h);
+                        int[] d_corners = { d_w, d_h, -d_w, -d_h };
+                        int[] corners = { rc.Left, rc.Top, rc.Right, rc.Bottom };
+                        int corner = NativeHelp.GetResizeBorder(m.WParam.ToInt32());
 
-                    if (corner >= 0)
-                        corners[corner] -= d_corners[corner];
+                        if (corner >= 0)
+                            corners[corner] -= d_corners[corner];
 
-                    Marshal.StructureToPtr<Native.RECT>(new Native.RECT(corners[0], corners[1], corners[2], corners[3]), m.LParam, false);
-                    m.Result = new IntPtr(1);
+                        Marshal.StructureToPtr<Native.RECT>(new Native.RECT(corners[0], corners[1], corners[2], corners[3]), m.LParam, false);
+                        m.Result = new IntPtr(1);
+                    }
                     return;
                 case 0x004A: // WM_COPYDATA
-                    var copyData = (Native.COPYDATASTRUCT)m.GetLParam(typeof(Native.COPYDATASTRUCT));
-                    string[] files = copyData.lpData.Split('\n');
-                    string mode = files[0];
-                    files = files.Skip(1).ToArray();
-
-                    switch (mode)
                     {
-                        case "single":
-                            mp.Load(files, true, Control.ModifierKeys.HasFlag(Keys.Control));
-                            break;
-                        case "queue":
-                            foreach (string file in files)
-                                mp.commandv("loadfile", file, "append");
-                            break;
-                    }
+                        var copyData = (Native.COPYDATASTRUCT)m.GetLParam(typeof(Native.COPYDATASTRUCT));
+                        string[] files = copyData.lpData.Split('\n');
+                        string mode = files[0];
+                        files = files.Skip(1).ToArray();
 
-                    Activate();
+                        switch (mode)
+                        {
+                            case "single":
+                                mp.Load(files, true, Control.ModifierKeys.HasFlag(Keys.Control));
+                                break;
+                            case "queue":
+                                foreach (string file in files)
+                                    mp.commandv("loadfile", file, "append");
+                                break;
+                        }
+
+                        Activate();
+                    }
                     return;
             }
 
@@ -624,6 +632,7 @@ namespace mpvnet
             if (mp.GPUAPI != "vulkan")
                 mp.VideoSizeAutoResetEvent.WaitOne(App.StartThreshold);
 
+            LastCycleFullscreen = DateTime.Now;
             SetFormPosAndSize();
         }
 
@@ -645,9 +654,10 @@ namespace mpvnet
             WPF.WPF.Init();
             System.Windows.Application.Current.ShutdownMode = System.Windows.ShutdownMode.OnExplicitShutdown;
             Cursor.Position = new Point(Cursor.Position.X + 1, Cursor.Position.Y);
-            WasShown = true;
+            UpdateCheck.DailyCheck();
             mp.LoadScripts();
             Task.Run(() => App.Extension = new Extension());
+            WasShown = true;
         }
 
         protected override void OnResize(EventArgs e)
@@ -664,11 +674,11 @@ namespace mpvnet
 
             if (WindowState == FormWindowState.Normal)
             {
-                RegHelp.SetObject(App.RegPath, "PosX", Left + Width / 2);
-                RegHelp.SetObject(App.RegPath, "PosY", Top + Height / 2);
+                RegistryHelp.SetValue(App.RegPath, "PosX", Left + Width / 2);
+                RegistryHelp.SetValue(App.RegPath, "PosY", Top + Height / 2);
             }
 
-            RegHelp.SetObject(App.RegPath, "Recent", RecentFiles.ToArray());
+            RegistryHelp.SetValue(App.RegPath, "Recent", RecentFiles.ToArray());
 
             if (mp.IsQuitNeeded)
                 mp.commandv("quit");

@@ -30,7 +30,7 @@ namespace mpvnet
             LoadConf(App.ConfPath);
             LoadSettings();
             InitialContent = GetCompareString();
-            SearchControl.Text = RegHelp.GetString(App.RegPath, "ConfigEditorSearch");
+            SearchControl.Text = RegistryHelp.GetString(App.RegPath, "ConfigEditorSearch");
         }
 
         private void LoadSettings()
@@ -68,7 +68,7 @@ namespace mpvnet
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
-            RegHelp.SetObject(App.RegPath, "ConfigEditorSearch", SearchControl.Text);
+            RegistryHelp.SetValue(App.RegPath, "ConfigEditorSearch", SearchControl.Text);
             
             if (InitialContent == GetCompareString())
                 return;

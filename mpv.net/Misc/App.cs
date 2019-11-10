@@ -29,6 +29,7 @@ namespace mpvnet
         public static bool RememberVolume { get; set; } = true;
         public static bool AutoLoadFolder { get; set; } = true;
         public static bool Queue { get; set; }
+        public static bool UpdateCheck { get; set; }
 
         public static int StartThreshold { get; set; } = 1500;
         public static int RecentCount { get; set; } = 15;
@@ -83,8 +84,8 @@ namespace mpvnet
         {
             if (RememberVolume)
             {
-                mp.set_property_int("volume", RegHelp.GetInt(App.RegPath, "Volume", 70));
-                mp.set_property_string("mute", RegHelp.GetString(App.RegPath, "Mute", "no"));
+                mp.set_property_int("volume", RegistryHelp.GetInt(App.RegPath, "Volume", 70));
+                mp.set_property_string("mute", RegistryHelp.GetString(App.RegPath, "Mute", "no"));
             }
         }
 
@@ -92,8 +93,8 @@ namespace mpvnet
         {
             if (RememberVolume)
             {
-                RegHelp.SetObject(App.RegPath, "Volume", mp.get_property_int("volume"));
-                RegHelp.SetObject(App.RegPath, "Mute", mp.get_property_string("mute"));
+                RegistryHelp.SetValue(App.RegPath, "Volume", mp.get_property_int("volume"));
+                RegistryHelp.SetValue(App.RegPath, "Mute", mp.get_property_string("mute"));
             }
         }
 
@@ -120,16 +121,17 @@ namespace mpvnet
             {
                 case "remember-position": RememberPosition = value == "yes"; return true;
                 case "maximized": Maximized = value == "yes"; return true;
+                case "debug-mode": DebugMode = value == "yes"; return true;
+                case "remember-volume": RememberVolume = value == "yes"; return true;
+                case "queue": Queue = value == "yes"; return true;
+                case "auto-load-folder": AutoLoadFolder = value == "yes"; return true;
+                case "update-check": UpdateCheck = value == "yes"; return true;
                 case "start-size": RememberHeight = value == "previous"; return true;
                 case "process-instance": ProcessInstance = value; return true;
                 case "dark-mode": DarkMode = value; return true;
-                case "debug-mode": DebugMode = value == "yes"; return true;
-                case "remember-volume": RememberVolume = value == "yes"; return true;
                 case "start-threshold": StartThreshold = value.Int(); return true;
-                case "minimum-aspect-ratio": MinimumAspectRatio = value.Float(); return true;
-                case "auto-load-folder": AutoLoadFolder = value == "yes"; return true;
                 case "recent-count": RecentCount = value.Int(); return true;
-                case "queue": Queue = value == "yes"; return true;
+                case "minimum-aspect-ratio": MinimumAspectRatio = value.Float(); return true;
                 case "dark-theme": DarkTheme = value.Trim('\'', '"'); return true;
                 case "light-theme": LightTheme = value.Trim('\'', '"'); return true;
             }
