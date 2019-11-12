@@ -794,7 +794,7 @@ The update routine requires PowerShell 5 and curl, an up to date Windows 10 syst
 
 ### Help > About mpv.net
 
-Shows the mpv.net about dialog.
+Shows the mpv.net about dialog which shows a copyright notice, the versions of mpv.net and libmpv and a license notice (MIT).
 
 ### Exit
 

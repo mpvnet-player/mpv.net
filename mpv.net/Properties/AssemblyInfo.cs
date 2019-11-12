@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Frank Skare (stax76)")]
 [assembly: AssemblyProduct("mpv.net")]
-[assembly: AssemblyCopyright("Copyright © 2017-2019 Frank Skare (stax76)")]
+[assembly: AssemblyCopyright("Copyright (c) 2017-2019 Frank Skare (stax76)")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
