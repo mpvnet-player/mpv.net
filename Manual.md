@@ -78,8 +78,8 @@
   + [Tools > Show History](#tools--show-history)
   + [Tools > Set/clear A-B loop points](#tools--set-clear-a-b-loop-points)
   + [Tools > Toggle infinite file looping](#tools--toggle-infinite-file-looping)
-  + [Tools > Cycle Hardware Decoding](#tools--cycle-hardware-decoding)
-  + [Tools > Execute mpv command](#tools--execute-mpv-command)
+  + [Tools > Toggle Hardware Decoding](#tools--toggle-hardware-decoding)
+  + [Tools > Show REPL](#tools--show-repl)
   + [Tools > OS Setup](#tools--os-setup)
   + [Help > Show mpv manual](#help--show-mpv-manual)
   + [Help > Show mpv.net manual](#help--show-mpvnet-manual)
@@ -754,7 +754,7 @@ cycle-values loop-file "inf" "no"
 
 [loop-file command](https://mpv.io/manual/master/#options-loop)
 
-### Tools > Cycle Hardware Decoding
+### Tools > Toggle Hardware Decoding
 
 Cycles the hwdec property to enable/disable hardware decoding using the following command:
 
@@ -763,6 +763,12 @@ Cycles the hwdec property to enable/disable hardware decoding using the followin
 [cycle-values command](https://mpv.io/manual/master/#command-interface-cycle-values)
 
 [hwdec property](https://mpv.io/manual/master/#options-hwdec)
+
+### Tools > Show REPL
+
+Shows a on screen REPL.
+
+https://github.com/rossy/mpv-repl
 
 ### Tools > OS Setup
 
