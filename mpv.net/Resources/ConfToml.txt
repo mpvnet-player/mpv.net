@@ -507,7 +507,7 @@ name = "update-check"
 file = "mpvnet"
 default = "no"
 filter = "General"
-help = "Daily check for new version. (mpv.net specific setting)"
+help = "Daily check for new version. (requires PowerShell 5 and curl. mpv.net specific setting)"
 options = [{ name = "yes" },
            { name = "no" }]
 

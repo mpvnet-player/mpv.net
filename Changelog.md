@@ -1,5 +1,11 @@
 
-- new: install via Scoop and Chocolatey added to readme/website (Restia666Ashdoll)
+###
+
+- new: install via Scoop and Chocolatey added to readme/website (maintained by Restia666Ashdoll)
+- new: update check, it must be enabled first in the conf editor under General
+- new: update feature, requires PowerShell 5 and curl,
+       an up to date Windows 10 system has both included.
+       Main menu (input.conf) must be reset or updated manually ([defaults](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt))
 
 - fix: often the OSC was shown when fullscreen was entered
        or on app startup, this is now suppressed

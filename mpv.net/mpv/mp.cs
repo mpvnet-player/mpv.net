@@ -152,7 +152,7 @@ namespace mpvnet
             get {
                 if (_ConfigFolder == null)
                 {
-                    string portableFolder = Folder.Startup + "portable_config\\";
+                    string portableFolder = Folder.Startup + @"portable_config\";
                     _ConfigFolder = portableFolder;
 
                     if (!Directory.Exists(_ConfigFolder))
@@ -160,15 +160,13 @@ namespace mpvnet
 
                     if (!Directory.Exists(_ConfigFolder))
                     {
-                        string appdataFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv.net\\";
-                        string appdataFolderMpv = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\mpv\\";
+                        string appdataFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\mpv.net\";
 
                         using (TaskDialog<string> td = new TaskDialog<string>())
                         {
                             td.MainInstruction = "Choose a settings folder.";
                             td.AddCommandLink(@"AppData\Roaming\mpv.net", appdataFolder, appdataFolder);
-                            td.AddCommandLink(@"AppData\Roaming\mpv", appdataFolderMpv, appdataFolderMpv);
-                            td.AddCommandLink("<startup>\\portable_config", portableFolder, portableFolder);
+                            td.AddCommandLink(@"<startup>\portable_config", portableFolder, portableFolder);
                             td.AddCommandLink("Choose custom folder", "custom");
                             _ConfigFolder = td.Show();
                         }
@@ -186,7 +184,7 @@ namespace mpvnet
                                 d.Description = "Choose a folder.";
 
                                 if (d.ShowDialog() == WinForms.DialogResult.OK)
-                                    _ConfigFolder = d.SelectedPath + "\\";
+                                    _ConfigFolder = d.SelectedPath + @"\";
                                 else
                                     _ConfigFolder = appdataFolder;
                             }

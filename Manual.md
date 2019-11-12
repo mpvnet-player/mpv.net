@@ -85,6 +85,7 @@
   + [Help > Show mpv default keys](#help--show-mpv-default-keys)
   + [Help > Show mpv.net default keys](#help--show-mpvnet-default-keys)
   + [Help > Show mpv.net manual](#help--show-mpvnet-manual)
+  + [Help > Check for Updates](#help--check-for-updates)
   + [Help > About mpv.net](#help--about-mpvnet)
   + [Exit](#exit)
   + [Exit Watch Later](#exit-watch-later)
@@ -765,11 +766,7 @@ Cycles the hwdec property to enable/disable hardware decoding using the followin
 
 [hwdec property](https://mpv.io/manual/master/#options-hwdec)
 
-### Tools > Execute mpv command
-
-Allows to execute mpv commands.
-
-### Tools > Manage File Associations
+### Tools > OS Setup
 
 Allows to manage file associations.
 
@@ -777,21 +774,19 @@ Allows to manage file associations.
 
 Shows the [mpv manual](https://mpv.io/manual/stable/).
 
-### Help > Show mpv default keys
+### Help > Show mpv.net web site
 
-Shows the [mpv default keys](https://github.com/mpv-player/mpv/blob/master/etc/input.conf)
-
-### Help > Show mpv.net default keys
-
-Shows the [mpv.net default keys](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt)
-
-Help > Show mpv.net web site
-
-Shows the [mpv.net web site](https://mpv-net.github.io/mpv.net-web-site/)
+Shows the [mpv.net web site](https://mpv-net.github.io/mpv.net-web-site/).
 
 ### Help > Show mpv.net manual
 
-Shows the [mpv.net manual](https://github.com/stax76/mpv.net/blob/master/Manual.md)
+Shows the [mpv.net manual](https://github.com/stax76/mpv.net/blob/master/Manual.md).
+
+### Help > Check for Updates
+
+Checks for updates and allows to execute the update routine.
+
+The update routine requires PowerShell 5 and curl, an up to date Windows 10 system has both included.
 
 ### Help > About mpv.net
 

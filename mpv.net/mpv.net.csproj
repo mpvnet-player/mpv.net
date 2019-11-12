@@ -218,15 +218,12 @@
     </EmbeddedResource>
     <None Include="..\Changelog.md">
       <Link>Changelog.md</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="..\Manual.md">
       <Link>Manual.md</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="..\README.md">
       <Link>README.md</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="app.manifest" />
     <None Include="packages.config" />
