@@ -141,11 +141,11 @@ Alternatively, Chocolatey can also be used:
 
 File Associations can be created using the setup or with the context menu under 'Tools > OS Setup'.
 
-After the file associations were registered go to the Windows settings under 'Settings > Apps > Default apps' or shell execute `ms-settings:defaultapps` and choose mpv.net as default app.
+After the file associations were registered go to the Windows settings under 'Settings > Apps > Default apps' or shell execute `ms-settings:defaultapps` and choose mpv.net as default app for Video and optionally for Audio and Images.
 
 It's also possible to change the default application using the 'Open with' feature of the context menu in File Explorer.
 
-Open with++ can be used to extend the File Explorer context menu to get menu items for 'Play with mpv.net' and 'Add to mpv.net playlist'.
+[Open with++](#open-with) can be used to extend the File Explorer context menu to get menu items for 'Play with mpv.net' and 'Add to mpv.net playlist'.
 
 ##  External Tools
 
