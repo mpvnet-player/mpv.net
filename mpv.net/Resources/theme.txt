@@ -2,11 +2,11 @@
 [dark]
 
 heading = #1E90FF
-foreground = #FFFFFF
-foreground2 = #C0C0C0
+foreground = #DDDDDD
+foreground2 = #AAAAAA
 background = #323232
 
-menu-foreground = #FFFFFF
+menu-foreground = #DDDDDD
 menu-background = #323232
 menu-highlight  = #505050
 menu-border     = #FFFFFF

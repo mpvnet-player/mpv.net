@@ -1,6 +1,8 @@
 
 ###
 
+- new: forecolors in the dark theme are slightly darker now
+- new: readme/website and manual were improved
 - new: install via Scoop and Chocolatey added to readme/website (maintained by Restia666Ashdoll)
 - new: update check, it must be enabled first in the conf editor under General
 - new: update feature, requires PowerShell 5 and curl,
@@ -232,7 +234,7 @@
 - fix for middle mouse button not working
 - fix of logo overlay using a huge amount of memory (thx for the [ghacks article](https://www.ghacks.net/2019/07/05/a-look-at-mpv-net-a-mpv-frontend-with-everything-integration/))
 - fix config dialog showing a message about app restart without reason
-- when multiple files are selected in Windows File Explorer and enter is
+- when multiple files are selected in File Explorer and enter is
   pressed, the files are opened as selected, the order is random though
   because Explorer starts multiple mpv.net processes concurrently
 - libmpv was updated to shinchiro 2019-06-30
@@ -247,7 +249,7 @@
 
 - opening a URL manually no longer uses a input box but uses the clipboard directly
 - the manifest was missing the company attribute which caused
-  mpv.net not appearing in the 'Open with' menu of the Windows File Explorer,
+  mpv.net not appearing in the 'Open with' menu of the File Explorer,
   thanks to 44vince44 for pointing this out!!!
 - new Python and C# script examples were added to the wiki and the scripting and
   extension documentation was improved

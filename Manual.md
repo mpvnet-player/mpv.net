@@ -232,13 +232,13 @@ Pressing the shift key while opening a single file will suppress loading all fil
 
 ## Context Menu
 
-The most important part of the user interface in mpv.net is the context menu, the menu can be customized as it's defined in the same file where the key bindings are defined.
+The most important part of the user interface in mpv.net is the context menu, the menu can be customized as it's defined in the same file where the key and mouse bindings are defined (input.conf).
 
 ### Open > Open Files
 
 The Open Files menu entry is one way to open files in mpv.net, it supports multi selection.
 
-Another way to open files is the command line, it is used by the Windows File Explorer if file associations exist.
+Another way to open files is the command line, it is used by the File Explorer if file associations exist.
 
 When mpv.net is started from a terminal such as PowerShell, mpv.net attaches to the terminal and outputs status and debug messages. 
 
@@ -820,13 +820,13 @@ mpv.conf file containing mpv settings
 
 mpvnet.conf file containing mpv.net settings
 
-input.conf containing mpv key bindings
+input.conf containing mpv key and mouse bindings
 
 User scripts and user extensions
 
 ### Tools > Command Palette
 
-Shows the command palette window which allows to find mpv.net commands, it shows the command's location in the context menu and the key shortcut.
+Shows the command palette window which allows to quickly find and execute commands and key shortcuts.
 
 ### Tools > Show History
 
