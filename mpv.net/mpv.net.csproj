@@ -119,6 +119,10 @@
   <ItemGroup>
     <Compile Include="Misc\App.cs" />
     <Compile Include="Misc\Extension.cs" />
+    <Content Include="..\License.txt">
+      <Link>License.txt</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\theme.txt" />
     <None Include="Update.ps1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -241,10 +245,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Content Include="..\LICENSE.txt">
-      <Link>LICENSE.txt</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="mpvnet.ico" />
     <Content Include="Resources\mpvConf.txt" />
     <Content Include="Resources\confToml.txt" />
