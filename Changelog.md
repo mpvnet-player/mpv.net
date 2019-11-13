@@ -4,7 +4,7 @@
 - new: forecolors in the dark theme are slightly darker now
 - new: readme/website and manual were improved
 - new: source code includes now the release script to build the archives and setup files
-- new: install via Scoop and Chocolatey added to readme/website (maintained by Restia666Ashdoll)
+- new: install via Scoop and Chocolatey added to readme/website
 - new: update check, it must be enabled first in the conf editor under General
 - new: update feature, requires PowerShell 5 and curl,
        an up to date Windows 10 system has both included.
