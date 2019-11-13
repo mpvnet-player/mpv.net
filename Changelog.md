@@ -9,6 +9,8 @@
 
 - fix: often the OSC was shown when fullscreen was entered
        or on app startup, this is now suppressed
+- fix: the file association routine uses no longer 'Play with mpv.net'
+       for the default open verb because it doesn't support multi selection.
 
 ### 5.4.3.0
 

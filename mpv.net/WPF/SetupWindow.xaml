@@ -22,10 +22,10 @@
     
     <Grid>
         <StackPanel Margin="10">
-            <Button Name="RegisterVideo" Click="RegisterVideo_Click">Register video file extensions (requires elevated privileges)</Button>
-            <Button Name="RegisterAudio" Click="RegisterAudio_Click">Register audio file extensions (requires elevated privileges)</Button>
-            <Button Name="RegisterImage" Click="RegisterImage_Click">Register image file extensions (requires elevated privileges)</Button>
-            <Button Name="UnregisterFileAssociations" Click="UnregisterFileAssociations_Click">Unregister file extensions (requires elevated privileges)</Button>
+            <Button Name="RegisterVideo" Click="RegisterVideo_Click">Register video file extensions (requires admin rights)</Button>
+            <Button Name="RegisterAudio" Click="RegisterAudio_Click">Register audio file extensions (requires admin rights)</Button>
+            <Button Name="RegisterImage" Click="RegisterImage_Click">Register image file extensions (requires admin rights)</Button>
+            <Button Name="UnregisterFileAssociations" Click="UnregisterFileAssociations_Click">Unregister file extensions (requires admin rights)</Button>
             <Button Name="AddToPathEnvVar" Click="AddToPathEnvVar_Click">Add mpv.net to Path environment variable</Button>
             <Button Name="RemoveFromPathEnvVar" Click="RemoveFromPathEnvVar_Click">Remove mpv.net from Path environment variable</Button>
         </StackPanel>

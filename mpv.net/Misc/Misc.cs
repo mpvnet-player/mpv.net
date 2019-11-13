@@ -28,20 +28,6 @@ namespace mpvnet
                 return (int)value == 0;
             }
         }
-
-        public static bool IsDirectoryWritable(string dirPath)
-        {
-            try
-            {
-                using (FileStream fs = File.Create(Path.Combine(dirPath,
-                    Path.GetRandomFileName()), 1, FileOptions.DeleteOnClose))
-                { }
-                return true;
-            }
-            catch
-            { }
-            return false;
-        }
     }
 
     public class StringLogicalComparer : IComparer, IComparer<string>
@@ -90,7 +76,6 @@ namespace mpvnet
                 if (App.ImageTypes.Contains(ext))
                     RegistryHelp.SetValue(@"HKCR\" + "." + ext, "PerceivedType", "image");
 
-                RegistryHelp.SetValue($@"HKCR\" + ExeFilenameNoExt + "." + ext + @"\shell\open", null, "Play with " +  Application.ProductName);
                 RegistryHelp.SetValue($@"HKCR\" + ExeFilenameNoExt + "." + ext + @"\shell\open\command", null, $"\"{ExePath}\" \"%1\"");
                 RegistryHelp.SetValue(@"HKLM\SOFTWARE\Clients\Media\mpv.net\Capabilities\FileAssociations", "." + ext, ExeFilenameNoExt + "." + ext);
             }
@@ -208,6 +193,7 @@ namespace mpvnet
             }
         }
 
+        // last change 2019
         public static void MigrateCommands(CommandItem item)
         {
             switch (item.Command)

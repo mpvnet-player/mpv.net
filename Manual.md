@@ -7,6 +7,14 @@
 * [Requirements](#requirements)
 * [Installation](#installation)
   + [File Associations](#file-associations)
+* [External Tools](#external-tools)
+  + [Play with mpv](#play-with-mpv)
+  + [External Application Button](#external-application-button)
+  + [Open with++](#open-with)
+  + [MediaInfo.NET](#mediainfonet)  
+* [Command Line Interface](#command-line-interface)
+* [Color Theme](#color-theme)
+* [Hidden and secret features](#hidden-and-secret-features)
 * [Context Menu](#context-menu)
   + [Open > Open Files](#open--open-files)
   + [Open > Open URL](#open--open-url)
@@ -87,18 +95,10 @@
   + [Help > About mpv.net](#help--about-mpvnet)
   + [Exit](#exit)
   + [Exit Watch Later](#exit-watch-later)
-* [External Tools](#external-tools)
-  + [Play with mpv](#play-with-mpv)
-  + [External Application Button](#external-application-button)
-  + [Open with++](#open-with)
-  + [MediaInfo.NET](#mediainfonet)  
-* [Command Line Interface](#command-line-interface)
-* [Color Theme](#color-theme)
-* [Hidden and secret features](#hidden-and-secret-features)
 
 ## About mpv.net
 
-mpv.net is a modern media player for Windows. mpv is similar to VLC not based on DirectShow like MPC, mpv.net is based on libmpv which in return is based on ffmpeg.
+mpv.net is a modern desktop media player for Windows. mpv is similar to VLC not based on DirectShow like MPC, mpv.net is based on libmpv which in return is based on ffmpeg.
 
 libmpv provides the majority of the features of the mpv media player, a fork of mplayer. mpv focuses on the usage of the command line interface, mpv.net retains the ability to be used from the command line and adds a modern GUI on top of it.
 
@@ -106,33 +106,122 @@ mpv.net is meant to be a small single person project, it's designed to be mpv co
 
 ### Target Audience
 
-The target audience of mpv.net are programmers, nerds and software enthusiasts that need something more advanced than typical media players.
-
-Furthermore mpv.net is well suited for people who are interested to learn mpv.
+The target audience of mpv and mpv.net are programmers, nerds and software enthusiasts that need a desktop player that is more advanced than a normal desktop player. mpv.net is very similar to mpv so it's well suited to learn mpv.
 
 ## Requirements
 
-mpv.net is based on the .NET Framework and requires Windows 7 as minimum version of the Windows operating system. As of the writing of this manual the minimum required .NET Framework version is 4.8.
-
-For optimal results a modern graphics card is recommended.
+mpv.net requires minimum .NET Framework 4.8 and Windows 7. For optimal results a modern graphics card is recommended.
 
 ## Installation
 
-mpv.net is available as setup and as portable download in the 7zip and zip archive format, to unpack the portable download 7zip can be used, it is available at www.7-zip.org.
+mpv.net is available as setup and as portable download in the 7zip and Zip archive format, to unpack the portable download 7zip can be used, it is available at www.7-zip.org.
 
 If you are new to mpv.net the portable download is recommended, for regular mpv.net users the setup is typically more easy to use.
 
-The x64 editions require more memory and have the advantage of decoders being typically first and better optimized for x64.
+The x64 editions require more memory and have the advantage of being typically first and better optimized for x64.
 
-x86 should though still be well supported and work but it's not as well tested than x64.
+x86 (32-bit) is not recommended but should still be well supported and work but it's not as well tested as x64.
+
+Stable releases are compiled from the source and can be downloaded from the releases tab:
+
+<https://github.com/stax76/mpv.net/releases>
+
+Scoop can be used to install and update it:
+
+```
+scoop bucket add extras
+scoop install mpv.net
+```
+
+Alternatively, Chocolatey can also be used:
+
+`choco install mpvnet.install`
 
 ### File Associations
 
 File Associations can be created using the setup or with the context menu under 'Tools > OS Setup'.
 
-Windows 10 prevents apps to register as the default app, to define the default video or audio player app in Windows 10 go to the Windows settings under 'Settings > Apps > Default apps' or shell execute 'ms-settings:defaultapps'.
+After the file associations were registered go to the Windows settings under 'Settings > Apps > Default apps' or shell execute `ms-settings:defaultapps` and choose mpv.net as default app.
 
-It's also possible to change the default application using the 'Open with' feature of the context menu in Windows File Explorer.
+It's also possible to change the default application using the 'Open with' feature of the context menu in File Explorer.
+
+Open with++ can be used to extend the File Explorer context menu to get menu items for 'Play with mpv.net' and 'Add to mpv.net playlist'.
+
+##  External Tools
+
+### Play with mpv
+
+In order to play videos from sites such as YouTube the Chrome Extension [Play with mpv](https://chrome.google.com/webstore/detail/play-with-mpv/hahklcmnfgffdlchjigehabfbiigleji) can be used.
+
+Due to Chrome Extensions not being able to start a app, another app that communicates with the extension is required, this app can be downloaded [here](http://www.mediafire.com/file/lezj8lwqt5zf75v/play-with-mpvnet-server.7z/file). The extension works only when the app is running, to have the app always running a link can be created in the auto start folder located at:
+
+`C:\Users\%username%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup`
+
+This will start the app on system start and have it running in the background. When the file association registration of mpv.net was executed then the app should find the location of mpv.net, alternativly the mpv.net folder can be added to the PATH environment variable.
+
+### External Application Button
+
+Alternatively the Chrome extension [External Application Button](https://github.com/stax76/mpv.net/issues/106) can be used.
+
+### Open with++
+
+Open with++ allows to customize the File Explorer context menu to add menu items 'Play with mpv.net' and 'Add to mpv.net playlist'.
+
+https://github.com/stax76/OpenWithPlusPlus
+
+https://github.com/stax76/OpenWithPlusPlus#mpvnet
+
+https://github.com/stax76/OpenWithPlusPlus#add-to-mpvnet-playlist
+
+### MediaInfo.NET
+
+MediaInfo.NET is a media info GUI.
+
+https://github.com/stax76/MediaInfo.NET
+
+To start a external application mpv has the run input command (it does not use the shell).
+
+If the path has spaces then it must be enclosed in quotes and then double backslashes must be used for escaping or alternatively forward slashes.
+
+ `_ run D:\Software\MediaInfoNET.exe "${path}" #menu: Tools > Open file with MediaInfo.NET`
+
+ `_ run "D:\\Soft ware\\MediaInfoNET.exe" "${path}" #menu: Tools > Open file with MediaInfo.NET`
+
+ `_ run "D:/Soft ware/MediaInfoNET.exe" "${path}" #menu: Tools > Open file with MediaInfo.NET`
+
+## Command Line Interface
+
+mpvnet implements a command line interface to set mpv commands.
+
+Supported are all mpv properties which are documented at:
+
+<https://mpv.io/manual/master>
+
+Example:
+
+`mpvnet --mute=yes <file|URL>`
+
+## Color Theme
+
+mpv.net supports custom color themes, the definition of the built-in themes can be found at:
+
+<https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/theme.txt>
+
+Custom themes can be saved at:
+
+`<conf folder>\theme.conf`
+
+The theme.conf file may contain an unlimited amount of themes.
+
+In the config editor under UI there are the settings dark-theme and light-theme to define the themes used in dark and in light mode.
+
+## Hidden and secret features
+
+Selecting multiple files in File Explorer and pressing enter will open the files in mpv.net. Explorer restricts this to maximum 15 files and the order will be random.
+
+Whenever the control key is pressed when files or URLs are opened, the playlist is not cleared but the files or URLs are appended to the playlist. This works in all mpv.net features that open files or URLs.
+
+Pressing the shift key while opening a single file will suppress loading all files in the folder.
 
 ## Context Menu
 
@@ -811,79 +900,3 @@ Exits mpv.net and remembers the position in the file using the following command
 `quit-watch-later`
 
 [quit-watch-later command](https://mpv.io/manual/master/#command-interface-quit-watch-later)
-
-##  External Tools
-
-### Play with mpv
-
-In order to play videos from sites such as YouTube the Chrome Extension [Play with mpv](https://chrome.google.com/webstore/detail/play-with-mpv/hahklcmnfgffdlchjigehabfbiigleji) can be used.
-
-Due to Chrome Extensions not being able to start a app, another app that communicates with the extension is required, this app can be downloaded [here](http://www.mediafire.com/file/lezj8lwqt5zf75v/play-with-mpvnet-server.7z/file). The extension works only when the app is running, to have the app always running a link can be created in the auto start folder located at:
-
-`C:\Users\%username%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup`
-
-This will start the app on system start and have it running in the background. When the file association registration of mpv.net was executed then the app should find the location of mpv.net, alternativly the mpv.net folder can be added to the PATH environment variable.
-
-### External Application Button
-
-Alternatively the Chrome extension [External Application Button](https://github.com/stax76/mpv.net/issues/106) can be used.
-
-### Open with++
-
-Open with++ allows to customize the File Explorer context menu for instance to add a 'Add to mpv.net playlist' menu item.
-
-https://github.com/stax76/OpenWithPlusPlus
-
-https://github.com/stax76/OpenWithPlusPlus#mpvnet
-
-https://github.com/stax76/OpenWithPlusPlus#add-to-mpvnet-playlist
-
-### MediaInfo.NET
-
-MediaInfo.NET is a media info GUI.
-
-https://github.com/stax76/MediaInfo.NET
-
-To start a external application mpv has the run input command (it does not use the shell).
-
-If the path has spaces then it must be enclosed in quotes and then double backslashes must be used for escaping or alternatively forward slashes.
-
- `_ run D:\Software\MediaInfoNET.exe "${path}" #menu: Tools > Open file with MediaInfo.NET`
-
- `_ run "D:\\Soft ware\\MediaInfoNET.exe" "${path}" #menu: Tools > Open file with MediaInfo.NET`
-
- `_ run "D:/Soft ware/MediaInfoNET.exe" "${path}" #menu: Tools > Open file with MediaInfo.NET`
-
-## Command Line Interface
-
-mpvnet implements a command line interface to set mpv commands.
-
-Supported are all mpv properties which are documented at:
-
-<https://mpv.io/manual/master>
-
-Example:
-
-`mpvnet --mute=yes <file|URL>`
-
-## Color Theme
-
-mpv.net supports custom color themes, the definition of the built-in themes can be found at:
-
-<https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/theme.txt>
-
-Custom themes can be saved at:
-
-`<conf folder>\theme.conf`
-
-The theme.conf file may contain an unlimited amount of themes.
-
-In the config editor under UI there are the settings dark-theme and light-theme to define the themes used in dark and in light mode.
-
-## Hidden and secret features
-
-Selecting multiple files in File Explorer and pressing enter will open the files in mpv.net. Explorer restricts this to maximum 15 files and the order will be random.
-
-Whenever the control key is pressed when files or URLs are opened, the playlist is not cleared but the files or URLs are appended to the playlist. This works in all mpv.net features that open files or URLs.
-
-Pressing the shift key while opening a single file will suppress loading all files in the folder.

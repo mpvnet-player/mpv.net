@@ -48,17 +48,22 @@ namespace mpvnet
             var dummy2 = mp.Conf;
 
             foreach (var i in Conf)
-                ProcessProperty(i.Key, i.Value);
+                ProcessProperty(i.Key, i.Value, true);
 
             if (App.DebugMode)
             {
                 try
                 {
                     string filePath = mp.ConfigFolder + "mpvnet-debug.log";
-                    if (File.Exists(filePath)) File.Delete(filePath);
+
+                    if (File.Exists(filePath))
+                        File.Delete(filePath);
+
                     Trace.Listeners.Add(new TextWriterTraceListener(filePath));
                     Trace.AutoFlush = true;
-                    //if (App.DebugMode) Trace.WriteLine("");
+
+                    //if (App.DebugMode)
+                    //    Trace.WriteLine("");
                 }
                 catch (Exception e)
                 {
@@ -115,7 +120,7 @@ namespace mpvnet
             }
         }
 
-        public static bool ProcessProperty(string name, string value)
+        public static bool ProcessProperty(string name, string value, bool writeError = false)
         {
             switch (name)
             {
@@ -134,8 +139,11 @@ namespace mpvnet
                 case "minimum-aspect-ratio": MinimumAspectRatio = value.Float(); return true;
                 case "dark-theme": DarkTheme = value.Trim('\'', '"'); return true;
                 case "light-theme": LightTheme = value.Trim('\'', '"'); return true;
+                default:
+                    if (writeError)
+                        ConsoleHelp.WriteError($"unknown mpvnet.conf property: {name}");
+                    return false;
             }
-            return false;
         }
     }
 }
