@@ -13,6 +13,7 @@
   + [Open with++](#open-with)
   + [MediaInfo.NET](#mediainfonet)  
 * [Command Line Interface](#command-line-interface)
+* [Terminal](#terminal)
 * [Color Theme](#color-theme)
 * [Hidden and secret features](#hidden-and-secret-features)
 * [Context Menu](#context-menu)
@@ -157,7 +158,7 @@ Due to Chrome Extensions not being able to start a app, another app that communi
 
 `C:\Users\%username%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup`
 
-This will start the app on system start and have it running in the background. When the file association registration of mpv.net was executed then the app should find the location of mpv.net, alternativly the mpv.net folder can be added to the PATH environment variable.
+This will start the app on system start and have it running in the background. When the file association registration of mpv.net was executed then the app should find the location of mpv.net, alternativly the mpv.net folder can be added to the Path environment variable.
 
 ### External Application Button
 
@@ -200,6 +201,12 @@ Supported are all mpv properties which are documented at:
 Example:
 
 `mpvnet --mute=yes <file|URL>`
+
+## Terminal
+
+When mpv.net is started from a PowerShell terminal it will attach to the terminal and print status and debug messages.
+
+Certain error and debug messages are only visible on the terminal, JavaScript and Lua scripts must be debugged with the terminal as there is no support for a debugger.
 
 ## Color Theme
 
