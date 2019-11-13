@@ -3,6 +3,7 @@
 
 - new: forecolors in the dark theme are slightly darker now
 - new: readme/website and manual were improved
+- new: source code includes now the release script to build the archives and setup files
 - new: install via Scoop and Chocolatey added to readme/website (maintained by Restia666Ashdoll)
 - new: update check, it must be enabled first in the conf editor under General
 - new: update feature, requires PowerShell 5 and curl,
@@ -13,6 +14,8 @@
        or on app startup, this is now suppressed
 - fix: the file association routine uses no longer 'Play with mpv.net'
        for the default open verb because it doesn't support multi selection.
+- fix: x86 builds had an older version included because
+       of a misconfiguration in the solution file
 
 ### 5.4.3.0
 
