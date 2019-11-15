@@ -248,30 +248,4 @@ namespace mpvnet
     {
         public static string Startup { get; } = Application.StartupPath + @"\";
     }
-
-    public class PathHelp
-    {
-        public static string GetBaseName(string value)
-        {
-            if (string.IsNullOrEmpty(value))
-                return "";
-
-            int index = value.IndexOf("/");
-
-            if (index > -1)
-                value = value.Substring(index + 1);
-
-            index = value.IndexOf("\\");
-
-            if (index > -1)
-                value = value.Substring(index + 1);
-
-            index = value.LastIndexOf(".");
-
-            if (index > -1)
-                value = value.Substring(0, index);
-
-            return value;
-        }
-    }
 }

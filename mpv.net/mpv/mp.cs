@@ -93,7 +93,6 @@ namespace mpvnet
 
         public static void Init()
         {
-            LoadLibrary("mpv-1.dll");
             Handle = mpv_create();
             Task.Run(() => EventLoop());
 
@@ -793,9 +792,9 @@ namespace mpvnet
 
             int totalMinutes = Convert.ToInt32((DateTime.Now - LastHistoryStartDateTime).TotalMinutes);
 
-            if (PathHelp.GetBaseName(LastHistoryPath) != "" && totalMinutes > 1)
+            if (LastHistoryPath != null && totalMinutes > 1)
                 File.AppendAllText(ConfigFolder + "history.txt", DateTime.Now.ToString().Substring(0, 16) +
-                    " " + totalMinutes.ToString().PadLeft(3) + " " + PathHelp.GetBaseName(LastHistoryPath) + "\r\n");
+                    " " + totalMinutes.ToString().PadLeft(3) + " " + LastHistoryPath + "\r\n");
 
             LastHistoryPath = path;
             LastHistoryStartDateTime = DateTime.Now;

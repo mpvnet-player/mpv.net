@@ -4,16 +4,21 @@
 - new: forecolors in the dark theme are slightly darker now
 - new: readme/website and manual were improved
 - new: source code includes now the release script to build the archives and setup files
+- new: the history feature now uses the full path
 - new: install via Scoop and Chocolatey added to readme/website (maintained by Restia666Ashdoll)
 - new: update check, it must be enabled first in the conf editor under General
 - new: update feature, requires PowerShell 5 and curl,
        an up to date Windows 10 system has both included.
        Main menu (input.conf) must be reset or updated manually ([defaults](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt))
 
+- update: libmpv shinchiro 2019-11-10 
+
 - fix: often the OSC was shown when fullscreen was entered
        or on app startup, this is now suppressed
-- fix: the file association routine uses no longer 'Play with mpv.net'
-       for the default open verb because it doesn't support multi selection.
+- fix: the file association routine uses no longer 'Play with mpv.net' for the
+       default open verb caption because it doesn't support multi selection,
+       it shows now only Open, the manual explains how to get multi selection
+       in File Explorer, read about it [here](https://github.com/stax76/mpv.net/blob/master/Manual.md#open-with)
 - fix: x86 builds had an older version included because
        of a misconfiguration in the solution file
 
