@@ -5,11 +5,11 @@ $targetFile = $targetDir + '.7z'
 
 Write-Host 'Download new version' -ForegroundColor Green
 curl.exe $args[0] --location --output $targetFile
-if (-not $?) { throw "curl error: $LastExitCode" }
+if ($LastExitCode) { throw $LastExitCode }
 
 Write-Host 'Unpack new version' -ForegroundColor Green
 & ($args[1] + '\7z\7za.exe') x -y $targetFile -o"$targetDir"
-if (-not $?) { throw "7zip error: $LastExitCode" }
+if ($LastExitCode) { throw $LastExitCode }
 
 Write-Host 'Delete downloaded file' -ForegroundColor Green
 Remove-Item $targetFile -Force -Recurse
