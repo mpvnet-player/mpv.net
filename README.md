@@ -76,7 +76,7 @@ Table of contents
 - Very fast startup performance, video is usally ready to play in less then a second
 - Usable as video player, audio player and image viewer with a wide range of supported formats
 - All decoders are built-in, no external codecs have to be installed
-- Setup and portable download options, setup is recommended but not required
+- Setup as x64, x86, installer, portable, Chocolatey and Scoop ([Manual](Manual.md#installation))
 - Build-in media streaming via youtube-dl
 - x64 and x86 Support (64-bit and 32-bit)
 - File associations can be created by the setup and from the player
