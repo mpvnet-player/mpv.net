@@ -1,3 +1,4 @@
+
 #define MyAppName "mpv.net"
 #define MyAppExeName "mpvnet.exe"
 
@@ -18,9 +19,11 @@ AppId={{9AA2B100-BEF3-44D0-B819-D8FC3C4D557D}}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 AppPublisher=Frank Skare (stax76)
+
 #if arch == "x64"
   ArchitecturesInstallIn64BitMode=x64
 #endif
+
 Compression=lzma2
 DefaultDirName={commonpf}\{#MyAppName}
 OutputBaseFilename=mpv.net-setup-{#arch}-{#MyAppVersion}
@@ -34,7 +37,7 @@ Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
 
 [Files]
 Source: "{#MyAppSourceDir}\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppSourceDir}\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs; Excludes: "System.Management.Automation.xml"
+Source: "{#MyAppSourceDir}\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs;
 
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "Associate video file extensions?"; Flags: postinstall unchecked runascurrentuser runhidden nowait; Parameters: "--reg-file-assoc video"

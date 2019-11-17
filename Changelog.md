@@ -1,5 +1,5 @@
 
-###
+### 5.4.4.0
 
 - new: forecolors in the dark theme are slightly darker now
 - new: readme/website and manual were improved
