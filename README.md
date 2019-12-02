@@ -213,7 +213,7 @@ with libmpv.
 The player does not contain any feature that was more work than 1-2 days or
 was difficult to build, the hard parts are totally covered by libmpv.
 
-mpv.net is written in C# 7 and runs on .NET 4.7, I've not yet decided
+mpv.net is written in C# 7 and runs on .NET 4.8, I've not yet decided
 if I will port it to C# 8 and .NET 5 once available.
 
 The Extension implementation is based on the [Managed Extensibility Framework](https://docs.microsoft.com/en-us/dotnet/framework/mef/).
@@ -224,13 +224,13 @@ this decision was made to keep the code simple and lightweight.
 
 Python scripting is implemented with IronPython which uses Python 2.7.
 
-The main window is WinForms based and uses less than 750 lines of code,
+The main window is WinForms based and uses less than 800 lines of code,
 all other windows are WPF based and use even less code.
 
 The config editor adds it's controls dynamically and uses [TOML](https://en.wikipedia.org/wiki/TOML) to define it's
 content, there are only two simple types, StringSetting and OptionSetting.
 
-mpv.net was started 2017 and consists of about 6000 lines of code and markup.
+mpv.net was started 2017 and consists of about 7000 lines of code and markup.
 
 IDE, Editor: Visual Studio, Visual Studio Code.
 

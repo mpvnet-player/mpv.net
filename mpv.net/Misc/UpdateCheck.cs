@@ -49,8 +49,10 @@ namespace mpvnet
 
                         using (Process proc = new Process())
                         {
+                            proc.StartInfo.UseShellExecute = true;
+                            proc.StartInfo.WorkingDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
                             proc.StartInfo.FileName = "PowerShell";
-                            proc.StartInfo.Arguments = $"-NoLogo -NoExit -File \"{Folder.Startup + "Update.ps1"}\" \"{url}\" \"{Application.StartupPath}\"";
+                            proc.StartInfo.Arguments = $"-NoLogo -NoExit -File \"{Folder.Startup + "Update.ps1"}\" \"{url}\" \"{Application.StartupPath.TrimEnd('\\')}\"";
 
                             if (Folder.Startup.Contains("Program Files"))
                                 proc.StartInfo.Verb = "runas";

@@ -1,4 +1,8 @@
 
+###
+
+- fix: update routine did only work when mpv.net was located in 'Program Files'
+
 ### 5.4.4.0
 
 - new: forecolors in the dark theme are slightly darker now
