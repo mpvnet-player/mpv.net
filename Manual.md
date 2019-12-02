@@ -162,7 +162,7 @@ This will start the app on system start and have it running in the background. W
 
 ### External Application Button
 
-Alternatively the Chrome extension [External Application Button](https://github.com/stax76/mpv.net/issues/106) can be used.
+Alternatively Chrome/Firefox extension [External Application Button](https://github.com/stax76/mpv.net/issues/106) can be used.
 
 ### Open with++
 
