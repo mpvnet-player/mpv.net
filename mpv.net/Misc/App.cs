@@ -83,7 +83,10 @@ namespace mpvnet
 
             mp.Shutdown += Shutdown;
             mp.Initialized += Initialized;
+            mp.LogMessage += LogMessage;
         }
+
+        private static void LogMessage(string msg) => Msg.ShowError(msg);
 
         private static void Initialized()
         {

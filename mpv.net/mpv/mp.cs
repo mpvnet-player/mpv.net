@@ -9,15 +9,14 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using WinForms = System.Windows.Forms;
 
-using static mpvnet.libmpv;
-using static Native;
+using static libmpv;
+using static WinAPI;
 
 namespace mpvnet
 {
@@ -30,7 +29,7 @@ namespace mpvnet
 
                                                               //                    MPV_EVENT_NONE
         public static event Action Shutdown;                  // shutdown           MPV_EVENT_SHUTDOWN
-        public static event Action LogMessage;                // log-message        MPV_EVENT_LOG_MESSAGE
+        public static event Action <string>LogMessage;                // log-message        MPV_EVENT_LOG_MESSAGE
         public static event Action GetPropertyReply;          // get-property-reply MPV_EVENT_GET_PROPERTY_REPLY
         public static event Action SetPropertyReply;          // set-property-reply MPV_EVENT_SET_PROPERTY_REPLY
         public static event Action CommandReply;              // command-reply      MPV_EVENT_COMMAND_REPLY
@@ -94,6 +93,11 @@ namespace mpvnet
         public static void Init()
         {
             Handle = mpv_create();
+
+            if (Handle == IntPtr.Zero)
+                throw new Exception("error mpv_create");
+
+            mpv_request_log_messages(Handle, "error");
             Task.Run(() => EventLoop());
 
             if (App.IsStartedFromTerminal)
@@ -111,7 +115,11 @@ namespace mpvnet
             set_property_string("config", "yes");
 
             ProcessCommandLine(true);
-            mpv_initialize(Handle);
+            mpv_error err = mpv_initialize(Handle);
+
+            if (err < 0)
+                throw new Exception("mpv_initialize error\n\n" + GetError(err));
+
             Initialized?.Invoke();
             LoadMpvScripts();
         }
@@ -296,7 +304,10 @@ namespace mpvnet
                             ShutdownAutoResetEvent.Set();
                             return;
                         case mpv_event_id.MPV_EVENT_LOG_MESSAGE:
-                            LogMessage?.Invoke();
+                            {
+                                var data = (mpv_event_log_message)Marshal.PtrToStructure(evt.data, typeof(mpv_event_log_message));
+                                LogMessage?.Invoke($"[{data.prefix}] {data.text}");
+                            }
                             break;
                         case mpv_event_id.MPV_EVENT_GET_PROPERTY_REPLY:
                             GetPropertyReply?.Invoke();
@@ -311,28 +322,33 @@ namespace mpvnet
                             StartFile?.Invoke();
                             break;
                         case mpv_event_id.MPV_EVENT_END_FILE:
-                            var end_fileData = (mpv_event_end_file)Marshal.PtrToStructure(evt.data, typeof(mpv_event_end_file));
-                            EndFileEventMode reason = (EndFileEventMode)end_fileData.reason;
-                            EndFile?.Invoke(reason);
+                            {
+                                var data = (mpv_event_end_file)Marshal.PtrToStructure(evt.data, typeof(mpv_event_end_file));
+                                EndFileEventMode reason = (EndFileEventMode)data.reason;
+                                EndFile?.Invoke(reason);
+                            }
                             break;
                         case mpv_event_id.MPV_EVENT_FILE_LOADED:
-                            HideLogo();
-                            Duration = TimeSpan.FromSeconds(get_property_number("duration"));
-                            Size vidSize = new Size(get_property_int("width"), get_property_int("height"));
-                            if (vidSize.Width == 0 || vidSize.Height == 0)
-                                vidSize = new Size(1, 1);
-                            if (VideoSize != vidSize)
                             {
-                                VideoSize = vidSize;
-                                VideoSizeChanged?.Invoke();
+                                HideLogo();
+                                Duration = TimeSpan.FromSeconds(get_property_number("duration"));
+                                Size vidSize = new Size(get_property_int("width"), get_property_int("height"));
+                                if (vidSize.Width == 0 || vidSize.Height == 0)
+                                    vidSize = new Size(1, 1);
+                                if (VideoSize != vidSize)
+                                {
+                                    VideoSize = vidSize;
+                                    VideoSizeChanged?.Invoke();
+                                }
+                                VideoSizeAutoResetEvent.Set();
+                                Task.Run(new Action(() => ReadMetaData()));
+                                string path = mp.get_property_string("path");
+                                if (path.Contains("://"))
+                                    path = mp.get_property_string("media-title");
+                                WriteHistory(path);
+                                FileLoaded?.Invoke();
                             }
-                            VideoSizeAutoResetEvent.Set();
-                            Task.Run(new Action(() => ReadMetaData()));
-                            string path = mp.get_property_string("path");
-                            if (path.Contains("://"))
-                                path = mp.get_property_string("media-title");
-                            WriteHistory(path);
-                            FileLoaded?.Invoke();
+
                             break;
                         case mpv_event_id.MPV_EVENT_TRACKS_CHANGED:
                             TracksChanged?.Invoke();
@@ -357,12 +373,14 @@ namespace mpvnet
                             ScriptInputDispatch?.Invoke();
                             break;
                         case mpv_event_id.MPV_EVENT_CLIENT_MESSAGE:
-                            var client_messageData = (mpv_event_client_message)Marshal.PtrToStructure(evt.data, typeof(mpv_event_client_message));
-                            string[] args = NativeUtf8StrArray2ManagedStrArray(client_messageData.args, client_messageData.num_args);
-                            if (args.Length > 1 && args[0] == "mpv.net")
-                                Command.Execute(args[1], args.Skip(2).ToArray());
-                            else if (args.Length > 0)
-                                ClientMessage?.Invoke(args);
+                            {
+                                var data = (mpv_event_client_message)Marshal.PtrToStructure(evt.data, typeof(mpv_event_client_message));
+                                string[] args = ConvertFromUtf8Strings(data.args, data.num_args);
+                                if (args.Length > 1 && args[0] == "mpv.net")
+                                    Command.Execute(args[1], args.Skip(2).ToArray());
+                                else if (args.Length > 0)
+                                    ClientMessage?.Invoke(args);
+                            }
                             break;
                         case mpv_event_id.MPV_EVENT_VIDEO_RECONFIG:
                             VideoReconfig?.Invoke();
@@ -377,35 +395,37 @@ namespace mpvnet
                             Seek?.Invoke();
                             break;
                         case mpv_event_id.MPV_EVENT_PROPERTY_CHANGE:
-                            var propData = (mpv_event_property)Marshal.PtrToStructure(evt.data, typeof(mpv_event_property));
+                            {
+                                var data = (mpv_event_property)Marshal.PtrToStructure(evt.data, typeof(mpv_event_property));
 
-                            if (propData.format == mpv_format.MPV_FORMAT_FLAG)
-                            {
-                                lock (BoolPropChangeActions)
-                                    foreach (var i in BoolPropChangeActions)
-                                        if (i.Key== propData.name)
-                                            i.Value.Invoke(Marshal.PtrToStructure<int>(propData.data) == 1);
-                            }
-                            else if (propData.format == mpv_format.MPV_FORMAT_STRING)
-                            {
-                                lock (StringPropChangeActions)
-                                    foreach (var i in StringPropChangeActions)
-                                        if (i.Key == propData.name)
-                                            i.Value.Invoke(StringFromNativeUtf8(Marshal.PtrToStructure<IntPtr>(propData.data)));
-                            }
-                            else if(propData.format == mpv_format.MPV_FORMAT_INT64)
-                            {
-                                lock (IntPropChangeActions)
-                                    foreach (var i in IntPropChangeActions)
-                                        if (i.Key == propData.name)
-                                            i.Value.Invoke(Marshal.PtrToStructure<int>(propData.data));
-                            }
-                            else if (propData.format == mpv_format.MPV_FORMAT_DOUBLE)
-                            {
-                                lock (DoublePropChangeActions)
-                                    foreach (var i in DoublePropChangeActions)
-                                        if (i.Key == propData.name)
-                                            i.Value.Invoke(Marshal.PtrToStructure<double>(propData.data));
+                                if (data.format == mpv_format.MPV_FORMAT_FLAG)
+                                {
+                                    lock (BoolPropChangeActions)
+                                        foreach (var i in BoolPropChangeActions)
+                                            if (i.Key== data.name)
+                                                i.Value.Invoke(Marshal.PtrToStructure<int>(data.data) == 1);
+                                }
+                                else if (data.format == mpv_format.MPV_FORMAT_STRING)
+                                {
+                                    lock (StringPropChangeActions)
+                                        foreach (var i in StringPropChangeActions)
+                                            if (i.Key == data.name)
+                                                i.Value.Invoke(ConvertFromUtf8(Marshal.PtrToStructure<IntPtr>(data.data)));
+                                }
+                                else if(data.format == mpv_format.MPV_FORMAT_INT64)
+                                {
+                                    lock (IntPropChangeActions)
+                                        foreach (var i in IntPropChangeActions)
+                                            if (i.Key == data.name)
+                                                i.Value.Invoke(Marshal.PtrToStructure<int>(data.data));
+                                }
+                                else if (data.format == mpv_format.MPV_FORMAT_DOUBLE)
+                                {
+                                    lock (DoublePropChangeActions)
+                                        foreach (var i in DoublePropChangeActions)
+                                            if (i.Key == data.name)
+                                                i.Value.Invoke(Marshal.PtrToStructure<double>(data.data));
+                                }
                             }
                             break;
                         case mpv_event_id.MPV_EVENT_PLAYBACK_RESTART:
@@ -472,62 +492,74 @@ namespace mpvnet
                 if (eventObjects.PythonFunction == pyFunc)
                     eventObjects.EventInfo.RemoveEventHandler(eventObjects, eventObjects.Delegate);
         }
-
+            
         public static void commandv(params string[] args)
         {
-            if (Handle == IntPtr.Zero) return;
-            IntPtr mainPtr = AllocateUtf8IntPtrArrayWithSentinel(args, out IntPtr[] byteArrayPointers);
-            int err = mpv_command(Handle, mainPtr);
-            if (err < 0) throw new Exception($"{(mpv_error)err}");
-            foreach (var ptr in byteArrayPointers)
+            IntPtr mainPtr = AllocateUtf8ArrayWithSentinel(args, out IntPtr[] byteArrayPointers);
+            mpv_error err = mpv_command(Handle, mainPtr);
+
+            foreach (IntPtr ptr in byteArrayPointers)
                 Marshal.FreeHGlobal(ptr);
+
             Marshal.FreeHGlobal(mainPtr);
+
+            if (err < 0)
+                throw new Exception("error executing command:\n\n" +
+                    string.Join("\n", args) + "\r\n\r\n" + GetError(err));
         }
 
         public static void command(string command, bool throwException = false)
         {
-            if (Handle == IntPtr.Zero) return;
-            int err = mpv_command_string(Handle, command);
-            if (err < 0 && throwException) throw new Exception($"{(mpv_error)err}\n\n" + command);
+            mpv_error err = mpv_command_string(Handle, command);
+
+            if (err < 0 && throwException)
+                throw new Exception("error executing command:\n\n" + command + "\r\n\r\n" + GetError(err));
         }
 
         public static void set_property_string(string name, string value, bool throwOnException = false)
         {
             byte[] bytes = GetUtf8Bytes(value);
-            int err = mpv_set_property(Handle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_STRING, ref bytes);
-            if (err < 0 && throwOnException) throw new Exception($"{name}: {(mpv_error)err}");
+            mpv_error err = mpv_set_property(Handle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_STRING, ref bytes);
+
+            if (err < 0 && throwOnException)
+                throw new Exception($"error setting property: {name} = " + value + "\r\n\r\n" + GetError(err));
         }
 
         public static string get_property_string(string name, bool throwOnException = false)
         {
             try
             {
-                int err = mpv_get_property(Handle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_STRING, out IntPtr lpBuffer);
+                mpv_error err = mpv_get_property(Handle, GetUtf8Bytes(name),
+                    mpv_format.MPV_FORMAT_STRING, out IntPtr lpBuffer);
 
                 if (err < 0)
                 {
-                    if (throwOnException) throw new Exception($"{name}: {(mpv_error)err}");
+                    if (throwOnException)
+                        throw new Exception($"error getting property: {name}\n\n" + GetError(err));
                     return "";
                 }
 
-                string ret = StringFromNativeUtf8(lpBuffer);
+                string ret = ConvertFromUtf8(lpBuffer);
                 mpv_free(lpBuffer);
                 return ret;
             }
             catch (Exception e)
             {
-                if (throwOnException) throw e;
+                if (throwOnException)
+                    throw e;
                 return "";
             }
         }
 
         public static int get_property_int(string name, bool throwOnException = false)
         {
-            int err = mpv_get_property(Handle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_INT64, out IntPtr lpBuffer);
+            mpv_error err = mpv_get_property(Handle, GetUtf8Bytes(name),
+                mpv_format.MPV_FORMAT_INT64, out IntPtr lpBuffer);
 
             if (err < 0)
             {
-                if (throwOnException) throw new Exception($"{name}: {(mpv_error)err}");
+                if (throwOnException)
+                    throw new Exception($"error getting property: {name}\n\n" + GetError(err));
                 return 0;
             }
 
@@ -536,31 +568,35 @@ namespace mpvnet
 
         public static double get_property_number(string name, bool throwOnException = false)
         {
-            double val = 0;
-            int err = mpv_get_property(Handle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_DOUBLE, ref val);
+            mpv_error err = mpv_get_property(Handle, GetUtf8Bytes(name),
+                mpv_format.MPV_FORMAT_DOUBLE, out double value);
 
             if (err < 0)
             {
-                if (throwOnException) throw new Exception($"{name}: {(mpv_error)err}");
+                if (throwOnException)
+                    throw new Exception($"error getting property: {name}\n\n" + GetError(err));
                 return 0;
             }
 
-            return val;
+            return value;
         }
 
         public static void set_property_int(string name, int value, bool throwOnException = false)
         {
             Int64 val = value;
-            int err = mpv_set_property(Handle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_INT64, ref val);
-            if (err < 0 && throwOnException) throw new Exception($"{name}: {(mpv_error)err}");
+            mpv_error err = mpv_set_property(Handle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_INT64, ref val);
+          
+            if (err < 0 && throwOnException)
+                throw new Exception($"error setting property: {name} = {value}\n\n" + GetError(err));
         }
 
         public static void observe_property_int(string name, Action<int> action)
         {
-            int err = mpv_observe_property(Handle, (ulong)action.GetHashCode(), name, mpv_format.MPV_FORMAT_INT64);
+            mpv_error err = mpv_observe_property(Handle, (ulong)action.GetHashCode(),
+                name, mpv_format.MPV_FORMAT_INT64);
 
             if (err < 0)
-                throw new Exception($"{name}: {(mpv_error)err}");
+                throw new Exception($"error observing property: {name}\n\n" + GetError(err));
             else
                 lock (IntPropChangeActions)
                     IntPropChangeActions.Add(new KeyValuePair<string, Action<int>>(name, action));
@@ -568,10 +604,11 @@ namespace mpvnet
 
         public static void observe_property_double(string name, Action<double> action)
         {
-            int err = mpv_observe_property(Handle, (ulong)action.GetHashCode(), name, mpv_format.MPV_FORMAT_DOUBLE);
+            mpv_error err = mpv_observe_property(Handle, (ulong)action.GetHashCode(),
+                name, mpv_format.MPV_FORMAT_DOUBLE);
 
             if (err < 0)
-                throw new Exception($"{name}: {(mpv_error)err}");
+                throw new Exception($"error observing property: {name}\n\n" + GetError(err));
             else
                 lock (DoublePropChangeActions)
                     DoublePropChangeActions.Add(new KeyValuePair<string, Action<double>>(name, action));
@@ -579,10 +616,11 @@ namespace mpvnet
 
         public static void observe_property_bool(string name, Action<bool> action)
         {
-            int err = mpv_observe_property(Handle, (ulong)action.GetHashCode(), name, mpv_format.MPV_FORMAT_FLAG);
+            mpv_error err = mpv_observe_property(Handle, (ulong)action.GetHashCode(),
+                name, mpv_format.MPV_FORMAT_FLAG);
 
             if (err < 0)
-                throw new Exception($"{name}: {(mpv_error)err}");
+                throw new Exception($"error observing property: {name}\n\n" + GetError(err));
             else
                 lock (BoolPropChangeActions)
                     BoolPropChangeActions.Add(new KeyValuePair<string, Action<bool>>(name, action));
@@ -590,10 +628,11 @@ namespace mpvnet
 
         public static void observe_property_string(string name, Action<string> action)
         {
-            int err = mpv_observe_property(Handle, (ulong)action.GetHashCode(), name, mpv_format.MPV_FORMAT_STRING);
+            mpv_error err = mpv_observe_property(Handle, (ulong)action.GetHashCode(),
+                name, mpv_format.MPV_FORMAT_STRING);
 
             if (err < 0)
-                throw new Exception($"{name}: {(mpv_error)err}");
+                throw new Exception($"error observing property: {name}\n\n" + GetError(err));
             else
                 lock (StringPropChangeActions)
                     StringPropChangeActions.Add(new KeyValuePair<string, Action<string>>(name, action));
@@ -615,12 +654,14 @@ namespace mpvnet
                 {
                     try
                     {
-                        if (!arg.Contains("=")) arg += "=yes";
+                        if (!arg.Contains("="))
+                            arg += "=yes";
 
                         string left = arg.Substring(2, arg.IndexOf("=") - 2);
                         string right = arg.Substring(left.Length + 3);
 
-                        if (left == "script") left = "scripts";
+                        if (left == "script")
+                            left = "scripts";
 
                         if (preInit && preInitProperties.Contains(left))
                         {
@@ -740,47 +781,6 @@ namespace mpvnet
             if (index > 0)
                 commandv("playlist-move", "0", (index + 1).ToString());
         }
-
-        public static IntPtr AllocateUtf8IntPtrArrayWithSentinel(string[] arr, out IntPtr[] byteArrayPointers)
-        {
-            int numberOfStrings = arr.Length + 1; // add extra element for extra null pointer last (sentinel)
-            byteArrayPointers = new IntPtr[numberOfStrings];
-            IntPtr rootPointer = Marshal.AllocCoTaskMem(IntPtr.Size * numberOfStrings);
-
-            for (int index = 0; index < arr.Length; index++)
-            {
-                var bytes = GetUtf8Bytes(arr[index]);
-                IntPtr unmanagedPointer = Marshal.AllocHGlobal(bytes.Length);
-                Marshal.Copy(bytes, 0, unmanagedPointer, bytes.Length);
-                byteArrayPointers[index] = unmanagedPointer;
-            }
-
-            Marshal.Copy(byteArrayPointers, 0, rootPointer, numberOfStrings);
-            return rootPointer;
-        }
-
-        public static string[] NativeUtf8StrArray2ManagedStrArray(IntPtr unmanagedStringArray, int StringCount)
-        {
-            IntPtr[] intPtrArray = new IntPtr[StringCount];
-            string[] stringArray = new string[StringCount];
-            Marshal.Copy(unmanagedStringArray, intPtrArray, 0, StringCount);
-
-            for (int i = 0; i < StringCount; i++)
-                stringArray[i] = StringFromNativeUtf8(intPtrArray[i]);
-
-            return stringArray;
-        }
-
-        public static string StringFromNativeUtf8(IntPtr nativeUtf8)
-        {
-            int len = 0;
-            while (Marshal.ReadByte(nativeUtf8, len) != 0) ++len;
-            byte[] buffer = new byte[len];
-            Marshal.Copy(nativeUtf8, buffer, 0, buffer.Length);
-            return Encoding.UTF8.GetString(buffer);
-        }
-
-        public static byte[] GetUtf8Bytes(string s) => Encoding.UTF8.GetBytes(s + "\0");
 
         static string LastHistoryPath;
         static DateTime LastHistoryStartDateTime;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Runtime.InteropServices;
 
 public class Taskbar
@@ -9,9 +10,8 @@ public class Taskbar
 
     public Taskbar(IntPtr handle) => Handle = handle;
 
-    [ComImportAttribute]
-    [InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
-    [GuidAttribute("ea1afb91-9e28-4b86-90e9-9e9f8a5eefaf")]
+    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+    [Guid("EA1AFB91-9E28-4B86-90E9-9E9F8A5EEFAF")]
     private interface ITaskbarList3
     {
         // ITaskbarList
@@ -27,9 +27,9 @@ public class Taskbar
         [PreserveSig] void SetProgressState(IntPtr hwnd, TaskbarStates state);
     }
 
-    [ComImportAttribute]
-    [ClassInterfaceAttribute(ClassInterfaceType.None)]
-    [GuidAttribute("56FDF344-FD6D-11d0-958A-006097C9A090")]
+    [ComImport]
+    [ClassInterface(ClassInterfaceType.None)]
+    [Guid("56FDF344-FD6D-11d0-958A-006097C9A090")]
     private class TaskBarCommunication { }
 
     public void SetState(TaskbarStates taskbarState)

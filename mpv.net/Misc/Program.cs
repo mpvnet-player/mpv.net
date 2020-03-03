@@ -19,7 +19,7 @@ namespace mpvnet
                 Application.SetCompatibleTextRenderingDefault(false);
 
                 if (App.IsStartedFromTerminal)
-                    Native.AttachConsole(-1 /*ATTACH_PARENT_PROCESS*/);
+                    WinAPI.AttachConsole(-1 /*ATTACH_PARENT_PROCESS*/);
 
                 if (mp.ConfigFolder == "")
                     return;
@@ -61,15 +61,15 @@ namespace mpvnet
                         {
                             if (proc.MainWindowHandle != IntPtr.Zero)
                             {
-                                Native.AllowSetForegroundWindow(proc.Id);
-                                var data = new Native.COPYDATASTRUCT();
+                                WinAPI.AllowSetForegroundWindow(proc.Id);
+                                var data = new WinAPI.COPYDATASTRUCT();
                                 data.lpData = string.Join("\n", files.ToArray());
                                 data.cbData = data.lpData.Length * 2 + 1;
-                                Native.SendMessage(proc.MainWindowHandle, 0x004A /*WM_COPYDATA*/, IntPtr.Zero, ref data);
+                                WinAPI.SendMessage(proc.MainWindowHandle, 0x004A /*WM_COPYDATA*/, IntPtr.Zero, ref data);
                                 mutex.Dispose();
 
                                 if (App.IsStartedFromTerminal)
-                                    Native.FreeConsole();
+                                    WinAPI.FreeConsole();
 
                                 return;
                             }
@@ -85,7 +85,7 @@ namespace mpvnet
                 Application.Run(new MainForm());
 
                 if (App.IsStartedFromTerminal)
-                    Native.FreeConsole();
+                    WinAPI.FreeConsole();
 
                 mutex.Dispose();
             }

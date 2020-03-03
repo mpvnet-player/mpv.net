@@ -10,7 +10,7 @@ public class MediaInfo : IDisposable
     {
         if (!Loaded)
         {
-            if (Native.LoadLibrary("MediaInfo.dll") == IntPtr.Zero)
+            if (WinAPI.LoadLibrary("MediaInfo.dll") == IntPtr.Zero)
                 throw new Exception("Failed to load MediaInfo.dll.");
 
             Loaded = true;

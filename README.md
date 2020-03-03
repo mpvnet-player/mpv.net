@@ -50,7 +50,7 @@ Table of contents
 - [Links](#links)
 - [Changelog](#changelog)
 
-### Features
+## Features
 
 - Very high degree of mpv compatibility, almost all mpv features are available
 - Great usability due to everything in the application being searchable
@@ -88,7 +88,7 @@ Table of contents
 - Update check and update routine ([Manual](Manual.md#help--check-for-updates))
 - [Manual](#manual)
 
-### Screenshots
+## Screenshots
 
 #### Main Window Screenshot
 
@@ -131,7 +131,7 @@ Media search feature powered by [Everything](https://www.voidtools.com) to find 
 
 ![Media Search](https://raw.githubusercontent.com/stax76/mpv.net/master/img/MediaSearch.png)
 
-### Installation
+## Installation
 
 mpv.net requires minimum .NET Framework 4.8 and Windows 7. For optimal results a modern graphics card is recommended.
 
@@ -150,11 +150,11 @@ Alternatively, Chocolatey can also be used:
 
 `choco install mpvnet.install`
 
-### Manual
+## Manual
 
 [Manual](Manual.md)
 
-### Context Menu
+## Context Menu
 
 The context menu can be customized via input.conf file located in the config directory:
 
@@ -168,7 +168,7 @@ if it's missing mpv.net generates it with the following defaults:
 
 input.conf defines mpv's key and mouse bindings and mpv.net uses comments to define the context menu.
 
-### Settings
+## Settings
 
 When mpv.net finds no config folder on startup it will ask for a location.
 
@@ -196,46 +196,26 @@ mpv.net supports almost all mpv settings and features,
 
 The config folder can be opened from the context menu.
 
-### Scripting
+## Scripting
 
 [Scripting wiki page](https://github.com/stax76/mpv.net/wiki/Scripting)
 
-### Extensions
+## Extensions
 
 [Extensions wiki page](https://github.com/stax76/mpv.net/wiki/Extensions)
 
-### Architecture
+## Architecture
 
-Coding mpv.net was great fun because libmpv is such a awesome
-library with a very clever design, I'm having a great experience
-with libmpv.
-
-The player does not contain any feature that was more work than 1-2 days or
-was difficult to build, the hard parts are totally covered by libmpv.
-
-mpv.net is written in C# 7 and runs on .NET 4.8, I've not yet decided
-if I will port it to C# 8 and .NET 5 once available.
+mpv.net is written in C# and runs on the .NET Framework
 
 The Extension implementation is based on the [Managed Extensibility Framework](https://docs.microsoft.com/en-us/dotnet/framework/mef/).
 
-There are no specific extension or scripting interfaces but instead everyting
-is accessible for .NET compatible languages (C#, VB.NET, F#, Python, PowerShell),
-this decision was made to keep the code simple and lightweight.
-
 Python scripting is implemented with IronPython which uses Python 2.7.
 
-The main window is WinForms based and uses less than 800 lines of code,
-all other windows are WPF based and use even less code.
+The main window is WinForms based, WinForms allows better libmpv integration compared to WPF, all other windows are WPF based.
 
 The config editor adds it's controls dynamically and uses [TOML](https://en.wikipedia.org/wiki/TOML) to define it's
 content, there are only two simple types, StringSetting and OptionSetting.
-
-mpv.net was started 2017 and consists of about 7000 lines of code and markup.
-
-IDE, Editor: Visual Studio, Visual Studio Code.
-
-Due to mpv.net being my first WPF app and mpv.net never meant to be a large
-application best practices and design pattern are not always applied.
 
 Third party components:
 
@@ -246,7 +226,7 @@ Third party components:
 - [CS-Script, scripting with C#](http://www.csscript.net/)
 - [Everything, a blazing fast file search service](https://www.voidtools.com)
 
-### Support
+## Support
 
 [Support thread in Doom9 forum](https://forum.doom9.org/showthread.php?t=174841)
 
@@ -262,21 +242,26 @@ If you want to support the development of mpv.net or express your appreciation y
 
 <https://www.paypal.me/stax76>
 
-### Links
+## Links
 
-- mpv.net wiki: <https://github.com/stax76/mpv.net/wiki>
-- mpv.net default key bindings: <https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt>
-- mpv.net download: <https://github.com/stax76/mpv.net/releases>
-- mpv.net bugs and requests: <https://github.com/stax76/mpv.net/issues>
-- mpv website: <https://mpv.io/>
-- mpv manual: <https://mpv.io/manual/master/>
-- mpv wiki: <https://github.com/mpv-player/mpv/wiki>
-- mpv apps: <https://github.com/mpv-player/mpv/wiki/Applications-using-mpv>
-- mpv user scripts: <https://github.com/mpv-player/mpv/wiki/User-Scripts>
-- mpv default key bindings: <https://github.com/mpv-player/mpv/blob/master/etc/input.conf>
-- mpv download: <https://mpv.io/installation/>
-- mpv bugs and requests: <https://mpv.io/bug-reports/>
+#### mpv.net
 
-### Changelog
+- wiki: <https://github.com/stax76/mpv.net/wiki>
+- default key bindings: <https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt>
+- download: <https://github.com/stax76/mpv.net/releases>
+- bugs and requests: <https://github.com/stax76/mpv.net/issues>
+
+#### mpv
+
+- website: <https://mpv.io/>
+- manual: <https://mpv.io/manual/master/>
+- wiki: <https://github.com/mpv-player/mpv/wiki>
+- apps: <https://github.com/mpv-player/mpv/wiki/Applications-using-mpv>
+- user scripts: <https://github.com/mpv-player/mpv/wiki/User-Scripts>
+- default key bindings: <https://github.com/mpv-player/mpv/blob/master/etc/input.conf>
+- download: <https://mpv.io/installation/>
+- bugs and requests: <https://mpv.io/bug-reports/>
+
+## Changelog
 
 [Changelog](Changelog.md)

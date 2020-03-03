@@ -43,7 +43,7 @@ namespace mpvnet
 
             MainForm.Instance.BeginInvoke(new Action(() => {
                 Message m = new Message() { Msg = 0x0202 }; // WM_LBUTTONUP
-                Native.SendMessage(MainForm.Instance.Handle, m.Msg, m.WParam, m.LParam);           
+                WinAPI.SendMessage(MainForm.Instance.Handle, m.Msg, m.WParam, m.LParam);           
             }));
         }
 
@@ -229,11 +229,15 @@ namespace mpvnet
                 using (var d = new OpenFileDialog())
                 {
                     string path = mp.get_property_string("path");
-                    if (File.Exists(path)) d.InitialDirectory = Path.GetDirectoryName(path);
+
+                    if (File.Exists(path))
+                        d.InitialDirectory = Path.GetDirectoryName(path);
+
                     d.Multiselect = true;
+
                     if (d.ShowDialog() == DialogResult.OK)
-                        foreach (string i in d.FileNames)
-                            mp.commandv("sub-add", i);
+                        foreach (string filename in d.FileNames)
+                            mp.commandv("sub-add", filename);
                 }
             }));
         }

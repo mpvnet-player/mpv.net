@@ -1,8 +1,9 @@
-﻿using System;
+﻿
+using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
 
-public class Native
+public class WinAPI
 {
     [DllImport("kernel32.dll")]
     public static extern bool AttachConsole(int dwProcessId);

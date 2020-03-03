@@ -68,7 +68,7 @@ namespace mpvnet
                 Application.ThreadException += (sender, e) => Msg.ShowException(e.Exception);
                 Msg.SupportURL = "https://github.com/stax76/mpv.net#support";
                 Text = "mpv.net " + Application.ProductVersion;
-                TaskbarButtonCreatedMessage = Native.RegisterWindowMessage("TaskbarButtonCreated");
+                TaskbarButtonCreatedMessage = WinAPI.RegisterWindowMessage("TaskbarButtonCreated");
                 
                 ContextMenu = new ContextMenuStripEx(components);
                 ContextMenu.Opened += ContextMenu_Opened;
@@ -318,7 +318,7 @@ namespace mpvnet
             }
 
             Point middlePos = new Point(Left + Width / 2, Top + Height / 2);
-            var rect = new Native.RECT(new Rectangle(screen.Bounds.X, screen.Bounds.Y, width, height));
+            var rect = new WinAPI.RECT(new Rectangle(screen.Bounds.X, screen.Bounds.Y, width, height));
             NativeHelp.AddWindowBorders(Handle, ref rect);
             int left = middlePos.X - rect.Width / 2;
             int top = middlePos.Y - rect.Height / 2;
@@ -341,7 +341,7 @@ namespace mpvnet
             if (top + rect.Height > maxBottom)
                 top = maxBottom - rect.Height;
 
-            Native.SetWindowPos(Handle, IntPtr.Zero /* HWND_TOP */, left, top, rect.Width, rect.Height, 4 /* SWP_NOZORDER */);
+            WinAPI.SetWindowPos(Handle, IntPtr.Zero /* HWND_TOP */, left, top, rect.Width, rect.Height, 4 /* SWP_NOZORDER */);
         }
 
         public void CycleFullscreen(bool enabled)
@@ -468,7 +468,7 @@ namespace mpvnet
                 case 0x0105: // WM_SYSKEYUP
                 case 0x319:  // WM_APPCOMMAND
                     if (mp.WindowHandle != IntPtr.Zero)
-                        Native.SendMessage(mp.WindowHandle, m.Msg, m.WParam, m.LParam);
+                        WinAPI.SendMessage(mp.WindowHandle, m.Msg, m.WParam, m.LParam);
                     break;
                 case 0x0200: // WM_MOUSEMOVE
                     {
@@ -497,13 +497,13 @@ namespace mpvnet
                         if (!WasShown)
                             break;
 
-                        Native.RECT rect = Marshal.PtrToStructure<Native.RECT>(m.LParam);
-                        Native.SetWindowPos(Handle, IntPtr.Zero, rect.Left, rect.Top, rect.Width, rect.Height, 0);
+                        WinAPI.RECT rect = Marshal.PtrToStructure<WinAPI.RECT>(m.LParam);
+                        WinAPI.SetWindowPos(Handle, IntPtr.Zero, rect.Left, rect.Top, rect.Width, rect.Height, 0);
                     }
                     break;
                 case 0x0214: // WM_SIZING
                     {
-                        var rc = Marshal.PtrToStructure<Native.RECT>(m.LParam);
+                        var rc = Marshal.PtrToStructure<WinAPI.RECT>(m.LParam);
                         var r = rc;
                         NativeHelp.SubtractWindowBorders(Handle, ref r);
                         int c_w = r.Right - r.Left, c_h = r.Bottom - r.Top;
@@ -522,13 +522,13 @@ namespace mpvnet
                         if (corner >= 0)
                             corners[corner] -= d_corners[corner];
 
-                        Marshal.StructureToPtr<Native.RECT>(new Native.RECT(corners[0], corners[1], corners[2], corners[3]), m.LParam, false);
+                        Marshal.StructureToPtr<WinAPI.RECT>(new WinAPI.RECT(corners[0], corners[1], corners[2], corners[3]), m.LParam, false);
                         m.Result = new IntPtr(1);
                     }
                     return;
                 case 0x004A: // WM_COPYDATA
                     {
-                        var copyData = (Native.COPYDATASTRUCT)m.GetLParam(typeof(Native.COPYDATASTRUCT));
+                        var copyData = (WinAPI.COPYDATASTRUCT)m.GetLParam(typeof(WinAPI.COPYDATASTRUCT));
                         string[] files = copyData.lpData.Split('\n');
                         string mode = files[0];
                         files = files.Skip(1).ToArray();
@@ -574,6 +574,7 @@ namespace mpvnet
 
         private void ProgressTimer_Tick(object sender, EventArgs e) => UpdateProgressBar();
 
+        // TODO: why is this in mainform?
         void UpdateProgressBar()
         {
             if (mp.TaskbarProgress && Taskbar != null)
@@ -696,8 +697,8 @@ namespace mpvnet
                 e.Y < ClientSize.Height * 0.9)
             {
                 var HTCAPTION = new IntPtr(2);
-                Native.ReleaseCapture();
-                Native.PostMessage(Handle, 0xA1 /* WM_NCLBUTTONDOWN */, HTCAPTION, IntPtr.Zero);
+                WinAPI.ReleaseCapture();
+                WinAPI.PostMessage(Handle, 0xA1 /* WM_NCLBUTTONDOWN */, HTCAPTION, IntPtr.Zero);
             }
 
             if (Width - e.Location.X < 10 && e.Location.Y < 10)

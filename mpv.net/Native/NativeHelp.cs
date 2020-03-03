@@ -20,9 +20,9 @@ namespace mpvnet
             }
         }
 
-        public static void SubtractWindowBorders(IntPtr hwnd, ref Native.RECT rc)
+        public static void SubtractWindowBorders(IntPtr hwnd, ref WinAPI.RECT rc)
         {
-            var b = new Native.RECT(0, 0, 0, 0);
+            var b = new WinAPI.RECT(0, 0, 0, 0);
             AddWindowBorders(hwnd, ref b);
             rc.Left -= b.Left;
             rc.Top -= b.Top;
@@ -30,9 +30,9 @@ namespace mpvnet
             rc.Bottom -= b.Bottom;
         }
 
-        public static void AddWindowBorders(IntPtr hwnd, ref Native.RECT rc)
+        public static void AddWindowBorders(IntPtr hwnd, ref WinAPI.RECT rc)
         {
-            Native.AdjustWindowRect(ref rc, (uint)Native.GetWindowLong(hwnd, -16 /* GWL_STYLE */), false);
+            WinAPI.AdjustWindowRect(ref rc, (uint)WinAPI.GetWindowLong(hwnd, -16 /* GWL_STYLE */), false);
         }
     }
 }

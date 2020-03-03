@@ -33,15 +33,16 @@ namespace mpvnet
                     Version onlineVersion = Version.Parse(match.Groups[1].Value);
                     Version currentVersion = Assembly.GetEntryAssembly().GetName().Version;
 
-                    if (onlineVersion == currentVersion)
+                    if (onlineVersion <= currentVersion)
                     {
                         if (showUpToDateMessage)
                             Msg.Show($"{Application.ProductName} is up to date.");
+
                         return;
                     }
 
-                    if (RegistryHelp.GetString(RegistryHelp.ApplicationKey, "UpdateCheckVersion")
-                        != onlineVersion.ToString() && Msg.ShowQuestion(
+                    if ((RegistryHelp.GetString(RegistryHelp.ApplicationKey, "UpdateCheckVersion")
+                        != onlineVersion.ToString() || showUpToDateMessage) && Msg.ShowQuestion(
                             $"New version {onlineVersion} is available, update now?") == MsgResult.OK)
                     {
                         string arch = IntPtr.Size == 8 ? "64" : "86";
