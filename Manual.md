@@ -89,7 +89,7 @@
   + [Tools > Toggle infinite file looping](#tools--toggle-infinite-file-looping)
   + [Tools > Toggle Hardware Decoding](#tools--toggle-hardware-decoding)
   + [Tools > Show REPL](#tools--show-repl)
-  + [Tools > OS Setup](#tools--os-setup)
+  + [Tools > Setup](#tools--setup)
   + [Help > Show mpv manual](#help--show-mpv-manual)
   + [Help > Show mpv.net manual](#help--show-mpvnet-manual)
   + [Help > Check for Updates](#help--check-for-updates)
@@ -140,7 +140,7 @@ Alternatively, Chocolatey can also be used:
 
 ### File Associations
 
-File Associations can be created using the setup or with the context menu under 'Tools > OS Setup'.
+File Associations can be created using the setup or with the context menu under 'Tools > Setup'.
 
 After the file associations were registered go to the Windows settings under 'Settings > Apps > Default apps' or shell execute `ms-settings:defaultapps` and choose mpv.net as default app for Video and optionally for Audio and Images.
 
@@ -204,9 +204,11 @@ Example:
 
 ## Terminal
 
-When mpv.net is started from a PowerShell terminal it will attach to the terminal and print status and debug messages.
+When mpv.net is started from a terminal it will attach to the terminal and print status debug and error messages to the terminal.
 
-Certain error and debug messages are only visible on the terminal, JavaScript and Lua scripts must be debugged with the terminal as there is no support for a debugger.
+In the context menu under 'Tools > Setup' a button can be found to add mpv.net to the path environment variable, mpv.net is than available in the terminal via mpvnet command.
+
+JavaScript and Lua scripts must be debugged with the terminal as there is no debugger support available.
 
 ## Color Theme
 
@@ -866,7 +868,7 @@ Shows a on screen REPL.
 
 https://github.com/rossy/mpv-repl
 
-### Tools > OS Setup
+### Tools > Setup
 
 Allows to manage file associations.
 

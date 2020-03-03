@@ -1,6 +1,8 @@
 
 ###
 
+- new: menu item 'View > Show Progress' (p key) to show progress bar
+
 - fix: update routine did only work when mpv.net was located in 'Program Files'
 - fix: errors were just ignored and only seen printed in the terminal in case mpv.net
        was started from the terminal, now for every error a message box is shown
