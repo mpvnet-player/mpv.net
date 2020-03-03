@@ -145,6 +145,9 @@ Scoop can be used to install and update it:
 scoop bucket add extras
 scoop install mpv.net
 ```
+If you instead use AppGet:
+
+`appget install mpv-net`
 
 Alternatively, Chocolatey can also be used:
 
