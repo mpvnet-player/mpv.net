@@ -2,6 +2,8 @@
 ###
 
 - new: menu item 'View > Show Progress' (p key) to show progress bar
+- new: `script-message mpv.net playlist-first`, unlike mpv does not
+       restart if the first file is already active
 
 - fix: update routine did only work when mpv.net was located in 'Program Files'
 - fix: errors were just ignored and only seen printed in the terminal in case mpv.net

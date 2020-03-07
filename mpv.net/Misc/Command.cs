@@ -36,6 +36,7 @@ namespace mpvnet
                 case "open-conf-folder": Process.Start(mp.ConfigFolder); break;
                 case "shell-execute": Process.Start(args[0]); break;
                 case "show-info": ShowInfo(); break;
+                case "playlist-first": PlaylistFirst(); break;
                 case "playlist-last": PlaylistLast(); break;
                 case "add-files-to-playlist": OpenFiles("append"); break; // deprecated 2019
                 default: Msg.ShowError($"No command '{id}' found."); break;
@@ -101,7 +102,22 @@ namespace mpvnet
             }));
         }
 
-        public static void PlaylistLast() => mp.set_property_int("playlist-pos", mp.get_property_int("playlist-count") - 1);
+        public static void PlaylistFirst()
+        {
+            int pos = mp.get_property_int("playlist-pos");
+
+            if (pos != 0)
+                mp.set_property_int("playlist-pos", 0);
+        }
+
+        public static void PlaylistLast()
+        {
+            int pos = mp.get_property_int("playlist-pos");
+            int count = mp.get_property_int("playlist-count");
+
+            if (pos < count - 1)
+                mp.set_property_int("playlist-pos", count - 1);
+        }
 
         public static void ShowHistory()
         {

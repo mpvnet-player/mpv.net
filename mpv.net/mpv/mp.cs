@@ -97,7 +97,7 @@ namespace mpvnet
             if (Handle == IntPtr.Zero)
                 throw new Exception("error mpv_create");
 
-            mpv_request_log_messages(Handle, "error");
+            mpv_request_log_messages(Handle, "fatal");
             Task.Run(() => EventLoop());
 
             if (App.IsStartedFromTerminal)
