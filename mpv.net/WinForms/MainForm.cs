@@ -279,9 +279,9 @@ namespace mpvnet
             Size size = mp.VideoSize;
             int height = size.Height;
 
-            if (App.RememberHeight)
+            if (App.RememberHeight || scale != 1)
             {
-                if (WasInitialSizeSet)
+                if (WasInitialSizeSet || scale != 1)
                     height = ClientSize.Height;
                 else
                 {
@@ -595,7 +595,7 @@ namespace mpvnet
         {
             if (value != 1)
             {
-                BeginInvoke(new Action(() => SetFormPosAndSize(value)));
+                Invoke(new Action(() => SetFormPosAndSize(value)));
                 mp.command("no-osd set window-scale 1");
             }
         }

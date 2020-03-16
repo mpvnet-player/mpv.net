@@ -172,9 +172,9 @@ namespace mpvnet
                         using (TaskDialog<string> td = new TaskDialog<string>())
                         {
                             td.MainInstruction = "Choose a settings folder.";
-                            td.AddCommandLink(@"AppData\Roaming\mpv.net", appdataFolder, appdataFolder);
-                            td.AddCommandLink(@"<startup>\portable_config", portableFolder, portableFolder);
-                            td.AddCommandLink("Choose custom folder", "custom");
+                            td.AddCommand(@"AppData\Roaming\mpv.net", appdataFolder, appdataFolder);
+                            td.AddCommand(@"<startup>\portable_config", portableFolder, portableFolder);
+                            td.AddCommand("Choose custom folder", "custom");
                             _ConfigFolder = td.Show();
                         }
 
@@ -712,10 +712,12 @@ namespace mpvnet
             switch (argument)
             {
                 case "--list-properties=yes":
-                    var list = get_property_string("property-list").Split(',').ToList();
-                    list.Sort();
-                    Console.WriteLine(string.Join("\r\n", list.ToArray()));
-                    return true;
+                    {
+                        var list = get_property_string("property-list").Split(',').ToList();
+                        list.Sort();
+                        Console.WriteLine(string.Join("\n", list.ToArray()));
+                        return true;
+                    }
             }
 
             return false;

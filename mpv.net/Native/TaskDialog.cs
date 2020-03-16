@@ -358,7 +358,7 @@ public class TaskDialog<T> : TaskDialogNative, IDisposable
         return value;
     }
 
-    public void AddCommandLink(string text, T value)
+    public void AddCommand(string text, T value)
     {
         int n = 1000 + IdValueDic.Count + 1;
         IdValueDic[n] = value;
@@ -367,7 +367,7 @@ public class TaskDialog<T> : TaskDialogNative, IDisposable
         Config.dwFlags |= TaskDialogNative.TASKDIALOG_FLAGS.TDF_USE_COMMAND_LINKS;
     }
 
-    public void AddCommandLink(string text, string description, T value, bool setShield = false)
+    public void AddCommand(string text, string description, T value, bool setShield = false)
     {
         int n = 1000 + IdValueDic.Count + 1;
         IdValueDic[n] = value;

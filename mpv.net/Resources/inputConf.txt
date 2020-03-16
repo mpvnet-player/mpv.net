@@ -1,6 +1,6 @@
 
  # This file defines the key and mouse bindings and the context menu
- # of mpv.net. A input and config editor can be found in mpv.net's
+ # of mpv.net. A input and config editor can be found in mpv.nets
  # context menu under 'Settings'. The defaults of this file can be found at:
 
  # https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt
@@ -12,7 +12,7 @@
  # mpv.net's defaults of mpv.conf contain: 'input-default-bindings = no'
  # which disables mpv's input defaults. Every line in this file begins with a
  # space character to make it easier to do a text search, so if you want to know
- # if 'o' has already a binding you can make a text search on ' o '.
+ # if 'o' has already a binding you can do a text search on ' o '.
 
  # mpv input commands: https://mpv.io/manual/master/#list-of-input-commands
 

@@ -11,6 +11,8 @@
 - fix: update routine did only work when mpv.net was located in 'Program Files'
 - fix: errors were just ignored and only seen printed in the terminal in case mpv.net
        was started from the terminal, now for every error a message box is shown
+- fix: when start-size=video was used then enlarging or shrinking the window
+       size was broken
 
 ### 5.4.4.0
 
