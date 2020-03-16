@@ -1,6 +1,7 @@
 
 ###
 
+- new: blue color in dark theme is now less intense
 - new: menu item 'View > Show Progress' (p key) to show progress bar
 - new: `script-message mpv.net playlist-first`, unlike mpv does not
        restart if the first file is already active
