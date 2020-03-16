@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 using UI;
+using static libmpv;
 
 namespace mpvnet
 {
@@ -86,7 +87,11 @@ namespace mpvnet
             mp.LogMessage += LogMessage;
         }
 
-        private static void LogMessage(string msg) => Msg.ShowError(msg);
+        private static void LogMessage(mpv_log_level level, string msg)
+        {
+            if (!App.IsStartedFromTerminal && level == mpv_log_level.MPV_LOG_LEVEL_FATAL)
+                Msg.ShowError(msg);
+        }
 
         private static void Initialized()
         {

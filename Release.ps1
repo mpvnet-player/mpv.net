@@ -2,15 +2,15 @@
 $ErrorActionPreference = 'Stop'
 
 $desktopDir = [Environment]::GetFolderPath('Desktop')
-$exePath    = (Get-Location).Path + '\mpv.net\bin\x64\mpvnet.exe'
+$exePath    = $PSScriptRoot + '\mpv.net\bin\x64\mpvnet.exe'
 $version    = [Reflection.Assembly]::LoadFile($exePath).GetName().Version
 $msbuild    = 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\MSBuild.exe'
-$iscc       = 'C:\Program Files (x86)\Inno Setup 6\ISCC.exe'
+$inno       = 'C:\Program Files (x86)\Inno Setup 6\ISCC.exe'
 $7z         = 'C:\Program Files\7-Zip\7z.exe'
 
 if ($version.Revision -ne 0)
 {
-    & $msbuild mpv.net.sln /p:Configuration=Debug /p:Platform=x64
+    & $msbuild mpv.net.sln -t:Rebuild -p:Configuration=Debug -p:Platform=x64
     if ($LastExitCode) { throw $LastExitCode }
 
     $targetDir = "$desktopDir\mpv.net-portable-x64-$version-beta"
@@ -38,10 +38,10 @@ else
     & $msbuild mpv.net.sln /p:Configuration=Debug /p:Platform=x86
     if ($LastExitCode) { throw $LastExitCode }
 
-    & $iscc /Darch=x64 setup.iss
+    & $inno /Darch=x64 setup.iss
     if ($LastExitCode) { throw $LastExitCode }
 
-    & $iscc /Darch=x86 setup.iss
+    & $inno /Darch=x86 setup.iss
     if ($LastExitCode) { throw $LastExitCode }
 
     $targetDir = $desktopDir + "\mpv.net-portable-x64-$version"

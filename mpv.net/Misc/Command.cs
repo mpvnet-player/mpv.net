@@ -278,7 +278,9 @@ namespace mpvnet
         public static void CycleAudio()
         {
             string path = mp.get_property_string("path");
-            if (!File.Exists(path)) return;
+
+            if (!File.Exists(path))
+                return;
 
             using (MediaInfo mi = new MediaInfo(path))
             {
