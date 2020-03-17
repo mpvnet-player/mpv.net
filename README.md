@@ -39,6 +39,7 @@ Table of contents
 
 - [Features](#features)
 - [Screenshots](#screenshots)
+- [Download](#download)
 - [Installation](#installation)
 - [Manual](#manual)
 - [Context Menu](#context-menu)
@@ -66,8 +67,7 @@ Table of contents
 - Language agnostic JSON IPC to control the player with a external programs
 - On Screen Controler (OSC, play control buttons) ([Screenshot](#main-window-screenshot))
 - [Command Line Interface](https://mpv.io/manual/master/#options)
-- If started from a PowerShell terminal mpv.net will attach to the terminal and print status and debug output ([Screenshot](#terminal-and-repl-screenshot))
-- [OSD REPL](https://github.com/rossy/mpv-repl)
+- If started from a PowerShell terminal mpv.net will attach to the terminal and print status and debug output ([Screenshot](#terminal-screenshot))
 - DXVA2 video decoding acceleration
 - OpenGL based video output capable of features loved by videophiles, such as video scaling with popular high quality algorithms, color management, frame timing, interpolation, HDR, and more
 - Search feature powered by [Everything](https://www.voidtools.com) to find and play media ([Screenshot](#media-search-screenshot))
@@ -106,9 +106,9 @@ A searchable config editor as alternative to edit the mpv.conf file manually.
 
 ![](https://raw.githubusercontent.com/stax76/mpv.net/master/img/ConfEditor.png)
 
-#### Terminal and REPL Screenshot
+#### Terminal Screenshot
 
-mpv.net attached to a PowerShell terminal showing the [OSD REPL](https://github.com/rossy/mpv-repl).
+mpv.net attached to a PowerShell terminal showing the OSD console.
 
 ![](https://raw.githubusercontent.com/stax76/mpv.net/master/img/Terminal.png)
 
@@ -130,6 +130,12 @@ Just press F1 and find it easily in the searchable command palette.
 Media search feature powered by [Everything](https://www.voidtools.com) to find and play media.
 
 ![Media Search](https://raw.githubusercontent.com/stax76/mpv.net/master/img/MediaSearch.png)
+
+## Download
+
+Stable releases can be downloaded from the [Release page](releases)
+
+Newer Beta version can be downloaded from [OneDrive](https://1drv.ms/u/s!ArwKS_ZUR01g1ldoLA90tX9DzKTj?e=xITXbC) and [DropBox](https://www.dropbox.com/sh/t54p9igdwvllbpl/AADKyWpaFnIhdyosxyP5d3_xa?dl=0).
 
 ## Installation
 
@@ -231,17 +237,15 @@ Third party components:
 
 ## Support
 
+Before making a support request for a particular issue, please try if it was already addressed in a newer [beta version](#download).
+
 [Support thread in Doom9 forum](https://forum.doom9.org/showthread.php?t=174841)
 
 [Support thread in VideoHelp forum](https://forum.videohelp.com/threads/392514-mpv-net-a-extendable-media-player-for-windows)
 
-[Issue tracker](https://github.com/stax76/mpv.net/issues), feel free to use for anything mpv.net related
+[Issue tracker](https://github.com/stax76/mpv.net/issues), feel free to use for anything mpv.net related.
 
-[frank.skare.de@gmail.com](mailto:frank.skare.de@gmail.com?Subject=mpv.net%20support)
-
-Please click on the star at the top of the page and like mpv.net at [alternativeto.net](https://alternativeto.net/software/mpv-net/).
-
-If you want to support the development of mpv.net or express your appreciation you can do so with a donation:
+Supporting the development of mpv.net possible via PayPal donation:
 
 <https://www.paypal.me/stax76>
 

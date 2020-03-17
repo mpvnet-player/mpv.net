@@ -1,6 +1,7 @@
 
-###
+### 5.4.4.1
 
+- new: external console replaced with internal console
 - new: blue color in dark theme is now less intense
 - new: menu item 'View > Show Progress' (p key) to show progress bar
 - new: `script-message mpv.net playlist-first`, unlike mpv does not
@@ -9,8 +10,8 @@
        then the error is printed to the terminal instead of shown
        with a message box
 - fix: update routine did only work when mpv.net was located in 'Program Files'
-- fix: errors were just ignored and only seen printed in the terminal in case mpv.net
-       was started from the terminal, now for every error a message box is shown
+- fix: errors were ignored and only seen in the terminal,
+       now a message box is shown
 - fix: when start-size=video was used then enlarging or shrinking the window
        size was broken
 
@@ -137,7 +138,6 @@
 
 ### 5.1
 
-- 'Tools > Execute mpv command' was replaced with [mpv-repl](https://github.com/rossy/mpv-repl)
 - many [wiki pages](https://github.com/stax76/mpv.net/wiki) were improved
 - the logo/icon had a very small cosmetic change
 - the help in the context menu was improved,

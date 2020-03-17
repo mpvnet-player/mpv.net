@@ -1,7 +1,7 @@
 ﻿
 [dark]
 
-heading     = #6099C1
+heading     = #3C8CC8
 foreground  = #DDDDDD
 foreground2 = #AAAAAA
 background  = #323232

@@ -595,7 +595,7 @@ namespace mpvnet
         {
             if (value != 1)
             {
-                Invoke(new Action(() => SetFormPosAndSize(value)));
+                BeginInvoke(new Action(() => SetFormPosAndSize(value)));
                 mp.command("no-osd set window-scale 1");
             }
         }

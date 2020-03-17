@@ -144,14 +144,14 @@
  F8     script-binding show-playlist              #menu: View > Show Playlist
  F9     show-text ${track-list} 5000              #menu: View > Show Audio/Video/Subtitle List
  p      show-progress                             #menu: View > Show Progress
- 
+ `      script-binding console/enable             #menu: View > Show REPL
+
  c      script-message mpv.net show-conf-editor   #menu: Settings > Show Config Editor
  Ctrl+i script-message mpv.net show-input-editor  #menu: Settings > Show Input Editor
  Ctrl+f script-message mpv.net open-conf-folder   #menu: Settings > Open Config Folder
 
  F1     script-message mpv.net show-command-palette #menu: Tools > Show All Commands
  h      script-message mpv.net show-history         #menu: Tools > Show History
- Ctrl+r script-message-to repl type ""              #menu: Tools > Show REPL
  l      ab-loop                                     #menu: Tools > Set/clear A-B loop points
  L      cycle-values loop-file "inf" "no"           #menu: Tools > Toggle infinite file looping
  _      cycle shuffle                               #menu: Tools > Toggle Shuffle

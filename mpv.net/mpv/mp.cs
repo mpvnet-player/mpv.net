@@ -253,7 +253,7 @@ namespace mpvnet
             }
         }
 
-        public static string[] KnownScripts { get; } = { "osc-visibility.js", "show-playlist.js", "seek-show-position.py", "repl.lua" };
+        public static string[] KnownScripts { get; } = { "osc-visibility.js", "show-playlist.js", "seek-show-position.py" };
 
         public static void LoadScripts()
         {
