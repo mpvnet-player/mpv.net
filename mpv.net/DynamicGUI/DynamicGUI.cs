@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -113,7 +114,7 @@ namespace DynamicGUI
 
         public OptionSetting OptionSetting { get; set; }
 
-        private string _Text;
+        string _Text;
 
         public string Text
         {
@@ -144,7 +145,7 @@ namespace DynamicGUI
 
     public class HyperlinkEx : Hyperlink
     {
-        private void HyperLinkEx_RequestNavigate(object sender, RequestNavigateEventArgs e)
+        void HyperLinkEx_RequestNavigate(object sender, RequestNavigateEventArgs e)
         {
             Process.Start(e.Uri.AbsoluteUri);
         }

@@ -4,15 +4,15 @@ using System.Runtime.InteropServices;
 
 public class Taskbar
 {
-    private ITaskbarList3 Instance = (ITaskbarList3)new TaskBarCommunication();
-
     public IntPtr Handle { get; set; }
 
     public Taskbar(IntPtr handle) => Handle = handle;
+ 
+    ITaskbarList3 Instance = (ITaskbarList3)new TaskBarCommunication();
 
     [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     [Guid("EA1AFB91-9E28-4B86-90E9-9E9F8A5EEFAF")]
-    private interface ITaskbarList3
+    interface ITaskbarList3
     {
         // ITaskbarList
         [PreserveSig] void HrInit();
@@ -30,7 +30,9 @@ public class Taskbar
     [ComImport]
     [ClassInterface(ClassInterfaceType.None)]
     [Guid("56FDF344-FD6D-11d0-958A-006097C9A090")]
-    private class TaskBarCommunication { }
+    class TaskBarCommunication
+    {
+    }
 
     public void SetState(TaskbarStates taskbarState)
     {

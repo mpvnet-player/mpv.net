@@ -119,12 +119,12 @@ namespace mpvnet
 
         public CommandItem(SerializationInfo info, StreamingContext context) { }
 
-        private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+        void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private string _Input = "";
+        string _Input = "";
 
         public string Input {
             get => _Input;
@@ -175,14 +175,13 @@ namespace mpvnet
                     if (item.Command.ToLower() == "ignore")
                         item.Command = "";
 
-                    MigrateCommands(item);
                     items.Add(item);
                 }
             }
             return items;
         }
 
-        private static ObservableCollection<CommandItem> _Items;
+        static ObservableCollection<CommandItem> _Items;
 
         public static ObservableCollection<CommandItem> Items {
             get {
@@ -190,26 +189,6 @@ namespace mpvnet
                     _Items = GetItems(File.ReadAllText(mp.InputConfPath));
 
                 return _Items;
-            }
-        }
-
-        // last change 2019
-        public static void MigrateCommands(CommandItem item)
-        {
-            switch (item.Command)
-            {
-                case "script-message mpv.net show-prefs":
-                    item.Command = "script-message mpv.net show-conf-editor";
-                    break;
-                case "script-message mpv.net show-keys":
-                    item.Command = "script-message mpv.net show-input-editor";
-                    break;
-                case "script-message mpv.net history":
-                    item.Command = "script-message mpv.net show-history";
-                    break;
-                case "script-message mpv.net open-config-folder":
-                    item.Command = "script-message open-conf-folder";
-                    break;
             }
         }
     }

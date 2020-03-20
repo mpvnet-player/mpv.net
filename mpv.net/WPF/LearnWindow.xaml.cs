@@ -17,7 +17,7 @@ namespace mpvnet
 
         public LearnWindow() => InitializeComponent();
 
-        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             WinForms.Message m = new WinForms.Message();
             m.HWnd = hwnd;
@@ -317,26 +317,26 @@ namespace mpvnet
                                   out uint lpChar,
                                   uint     flags);
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        void Window_Loaded(object sender, RoutedEventArgs e)
         {
             HwndSource source = HwndSource.FromHwnd(new WindowInteropHelper(this).Handle);
             source.AddHook(new HwndSourceHook(WndProc));
             SetKey(InputItem.Input);
         }
 
-        private void ConfirmButton_Click(object sender, RoutedEventArgs e)
+        void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
             InputItem.Input = NewKey;
             Close();
         }
 
-        private void ClearButton_Click(object sender, RoutedEventArgs e)
+        void ClearButton_Click(object sender, RoutedEventArgs e)
         {
             InputItem.Input = "_";
             Close();
         }
 
-        private void Window_MouseWheel(object sender, MouseWheelEventArgs e)
+        void Window_MouseWheel(object sender, MouseWheelEventArgs e)
         {
             if (e.Delta > 0)
                 SetKey("WHEEL_UP");
@@ -344,7 +344,7 @@ namespace mpvnet
                 SetKey("WHEEL_DOWN");
         }
 
-        private void Window_MouseUp(object sender, MouseButtonEventArgs e)
+        void Window_MouseUp(object sender, MouseButtonEventArgs e)
         {
             switch (e.ChangedButton)
             {
@@ -368,7 +368,7 @@ namespace mpvnet
 
         bool BlockMBTN_LEFT;
 
-        private void Window_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        void Window_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
             {
@@ -377,7 +377,7 @@ namespace mpvnet
             }
         }
 
-        private void Window_TextInput(object sender, TextCompositionEventArgs e)
+        void Window_TextInput(object sender, TextCompositionEventArgs e)
         {
             KeyChar = e.Text;
         }

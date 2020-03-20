@@ -42,10 +42,10 @@ public class WinAPI
     public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, int uFlags);
 
     [DllImport("user32.dll", EntryPoint = "GetWindowLong")]
-    private static extern IntPtr GetWindowLong32(IntPtr hWnd, int nIndex);
+    static extern IntPtr GetWindowLong32(IntPtr hWnd, int nIndex);
 
     [DllImport("user32.dll", EntryPoint = "GetWindowLongPtr")]
-    private static extern IntPtr GetWindowLong64(IntPtr hWnd, int nIndex);
+    static extern IntPtr GetWindowLong64(IntPtr hWnd, int nIndex);
 
     public static IntPtr GetWindowLong(IntPtr hWnd, int nIndex)
     {

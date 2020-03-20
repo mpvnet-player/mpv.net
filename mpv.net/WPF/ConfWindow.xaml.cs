@@ -33,7 +33,7 @@ namespace mpvnet
             SearchControl.Text = RegistryHelp.GetString(App.RegPath, "ConfigEditorSearch");
         }
 
-        private void LoadSettings()
+        void LoadSettings()
         {
             foreach (SettingBase setting in SettingsDefinitions)
             {
@@ -247,7 +247,7 @@ namespace mpvnet
             return "\r\n" + sb.ToString().Trim() + "\r\n";
         }
 
-        private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             string activeFilter = "";
 
@@ -275,7 +275,7 @@ namespace mpvnet
             MainScrollViewer.ScrollToTop();
         }
         
-        private void ConfWindow1_Loaded(object sender, RoutedEventArgs e)
+        void ConfWindow1_Loaded(object sender, RoutedEventArgs e)
         {
             SearchControl.SearchTextBox.SelectAll();
             Keyboard.Focus(SearchControl.SearchTextBox);
@@ -284,27 +284,27 @@ namespace mpvnet
                 i.Update();
         }
 
-        private void FilterListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        void FilterListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.AddedItems.Count > 0) SearchControl.Text = e.AddedItems[0] + ":";
         }
 
-        private void OpenSettingsTextBlock_MouseUp(object sender, MouseButtonEventArgs e)
+        void OpenSettingsTextBlock_MouseUp(object sender, MouseButtonEventArgs e)
         {
             Process.Start(Path.GetDirectoryName(mp.ConfPath));
         }
 
-        private void PreviewTextBlock_MouseUp(object sender, MouseButtonEventArgs e)
+        void PreviewTextBlock_MouseUp(object sender, MouseButtonEventArgs e)
         {
             Msg.Show("mpv.conf Preview", GetContent("mpv"));
         }
 
-        private void ShowManualTextBlock_MouseUp(object sender, MouseButtonEventArgs e)
+        void ShowManualTextBlock_MouseUp(object sender, MouseButtonEventArgs e)
         {
             Process.Start("https://mpv.io/manual/master/");
         }
 
-        private void SupportTextBlock_MouseUp(object sender, MouseButtonEventArgs e)
+        void SupportTextBlock_MouseUp(object sender, MouseButtonEventArgs e)
         {
             Process.Start("https://github.com/stax76/mpv.net#Support");
         }

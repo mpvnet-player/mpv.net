@@ -1,10 +1,15 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
+
 using UI;
+
 using static libmpv;
+using static Common;
+using System.Threading.Tasks;
 
 namespace mpvnet
 {
@@ -84,16 +89,48 @@ namespace mpvnet
 
             mp.Shutdown += Shutdown;
             mp.Initialized += Initialized;
-            mp.LogMessage += LogMessage;
+            mp.LogMessage += ShowFatalError;
         }
 
-        private static void LogMessage(mpv_log_level level, string msg)
+        static void ShowFatalError(mpv_log_level level, string msg)
         {
             if (!App.IsStartedFromTerminal && level == mpv_log_level.MPV_LOG_LEVEL_FATAL)
                 Msg.ShowError(msg);
         }
 
-        private static void Initialized()
+        public static void RunAction(Action action)
+        {
+            Task.Run(() => {
+                try
+                {
+                    action.Invoke();
+                }
+                catch (Exception e)
+                {
+                    ShowException(e);
+                }
+            });
+        }
+
+        public static void ShowException(object obj)
+        {
+            if (obj is Exception e)
+            {
+                if (App.IsStartedFromTerminal)
+                    ConsoleHelp.WriteError(e.ToString(), "mpv.net");
+                else
+                    Msg.ShowException(e);
+            }
+            else
+            {
+                if (App.IsStartedFromTerminal)
+                    ConsoleHelp.WriteError(obj.ToString(), "mpv.net");
+                else
+                    Msg.ShowError(obj.ToString());
+            }
+        }
+
+        static void Initialized()
         {
             if (RememberVolume)
             {
@@ -102,7 +139,7 @@ namespace mpvnet
             }
         }
 
-        private static void Shutdown()
+        static void Shutdown()
         {
             if (RememberVolume)
             {
@@ -149,7 +186,7 @@ namespace mpvnet
                 case "light-theme": LightTheme = value.Trim('\'', '"'); return true;
                 default:
                     if (writeError)
-                        ConsoleHelp.WriteError($"unknown mpvnet.conf property: {name}");
+                        ConsoleHelp.WriteError($"unknown mpvnet.conf property: {name}", "mpv.net");
                     return false;
             }
         }

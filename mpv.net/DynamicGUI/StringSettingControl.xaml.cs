@@ -1,5 +1,5 @@
-﻿using System;
-using System.Diagnostics;
+﻿
+using System;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
@@ -10,7 +10,7 @@ namespace DynamicGUI
 {
     public partial class StringSettingControl : UserControl, ISettingControl
     {
-        private StringSetting StringSetting;
+        StringSetting StringSetting;
         
         public StringSettingControl(StringSetting stringSetting)
         {
@@ -19,21 +19,26 @@ namespace DynamicGUI
             TitleTextBox.Text = stringSetting.Name;
             HelpTextBox.Text = stringSetting.Help;
             ValueTextBox.Text = StringSetting.Value;
+
             if (StringSetting.Width > 0)
                 ValueTextBox.Width = StringSetting.Width;
+
             if (StringSetting.Type != "folder" && StringSetting.Type != "color")
                 Button.Visibility = Visibility.Hidden;
+
             Link.SetURL(StringSetting.URL);
+
             if (string.IsNullOrEmpty(stringSetting.URL))
                 LinkTextBlock.Visibility = Visibility.Collapsed;
         }
 
-        private string _SearchableText;
+        string _SearchableText;
 
         public string SearchableText {
             get {
                 if (_SearchableText is null)
                     _SearchableText = (TitleTextBox.Text + HelpTextBox.Text +ValueTextBox.Text).ToLower();
+
                 return _SearchableText;
             }
         }
@@ -47,7 +52,7 @@ namespace DynamicGUI
             set => StringSetting.Value = value;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        void Button_Click(object sender, RoutedEventArgs e)
         {
             switch (StringSetting.Type)
             {
@@ -56,6 +61,7 @@ namespace DynamicGUI
                     {
                         d.Description = "Choose a folder.";
                         d.SelectedPath = ValueTextBox.Text;
+
                         if (d.ShowDialog() == WinForms.DialogResult.OK)
                             ValueTextBox.Text = d.SelectedPath;
                     }
@@ -65,7 +71,8 @@ namespace DynamicGUI
                     {
                         dialog.FullOpen = true;
 
-                        try {
+                        try
+                        {
                             if (!string.IsNullOrEmpty(ValueTextBox.Text))
                             {
                                 Color col = GetColor(ValueTextBox.Text);
@@ -80,7 +87,7 @@ namespace DynamicGUI
             }
         }
 
-        private void ValueTextBox_TextChanged(object sender, TextChangedEventArgs e) => Update();
+        void ValueTextBox_TextChanged(object sender, TextChangedEventArgs e) => Update();
 
         Color GetColor(string value)
         {
@@ -104,7 +111,10 @@ namespace DynamicGUI
             if (StringSetting.Type == "color")
             {
                 Color c = Colors.Transparent;
-                if (ValueTextBox.Text != "") try { c = GetColor(ValueTextBox.Text); } catch {}
+
+                if (ValueTextBox.Text != "")
+                    try { c = GetColor(ValueTextBox.Text); } catch {}
+
                 ValueTextBox.Background = new SolidColorBrush(c);
             }
         }

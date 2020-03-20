@@ -1,4 +1,11 @@
 
+### 5.4.4.2
+
+- new: flag cli switches support now --no-flag in addition to --flag=no
+- new: cli switches can also start with single - instead of double --
+- new: the PowerShell script host was completely rewritten, events can
+       can be assigned to using `Register-ObjectEvent`
+
 ### 5.4.4.1
 
 - new: external console replaced with internal console

@@ -43,6 +43,7 @@ namespace mpvnet
 
                 Instance = this;
                 Hwnd = Handle;
+                ConsoleHelp.Padding = 60;
                 mp.Init();
 
                 mp.Shutdown += Shutdown;
@@ -64,8 +65,8 @@ namespace mpvnet
                 if (mp.GPUAPI != "vulkan")
                     mp.ProcessCommandLine(false);
 
-                AppDomain.CurrentDomain.UnhandledException += (sender, e) => Msg.ShowError(e.ExceptionObject.ToString());
-                Application.ThreadException += (sender, e) => Msg.ShowException(e.Exception);
+                AppDomain.CurrentDomain.UnhandledException += (sender, e) => App.ShowException(e.ExceptionObject);
+                Application.ThreadException += (sender, e) => App.ShowException(e.Exception);
                 Msg.SupportURL = "https://github.com/stax76/mpv.net#support";
                 Text = "mpv.net " + Application.ProductVersion;
                 TaskbarButtonCreatedMessage = WinAPI.RegisterWindowMessage("TaskbarButtonCreated");
@@ -413,7 +414,7 @@ namespace mpvnet
             }
         }
 
-        private void FileLoaded()
+        void FileLoaded()
         {
             string path = mp.get_property_string("path");
 
@@ -572,9 +573,8 @@ namespace mpvnet
                 CursorHelp.Hide();
         }
 
-        private void ProgressTimer_Tick(object sender, EventArgs e) => UpdateProgressBar();
+        void ProgressTimer_Tick(object sender, EventArgs e) => UpdateProgressBar();
 
-        // TODO: why is this in mainform?
         void UpdateProgressBar()
         {
             if (mp.TaskbarProgress && Taskbar != null)
@@ -686,6 +686,9 @@ namespace mpvnet
 
             if (!mp.ShutdownAutoResetEvent.WaitOne(10000))
                 Msg.ShowError("Shutdown thread failed to complete within 10 seconds.");
+
+            //foreach (var i in PowerShell1.Instances)
+            //    i.RS.Close();
         }
 
         protected override void OnMouseDown(MouseEventArgs e)

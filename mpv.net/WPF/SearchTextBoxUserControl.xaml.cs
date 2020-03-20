@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -13,7 +14,7 @@ namespace Controls
 
         public string Text { get => SearchTextBox.Text; set => SearchTextBox.Text = value; }
 
-        private string _HintText;
+        string _HintText;
 
         public string HintText {
             get => _HintText;
@@ -23,13 +24,13 @@ namespace Controls
             }
         }
 
-        private void SearchClearButton_Click(object sender, RoutedEventArgs e)
+        void SearchClearButton_Click(object sender, RoutedEventArgs e)
         {
             SearchTextBox.Text = "";
             Keyboard.Focus(SearchTextBox);
         }
 
-        private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             UpdateControls();
         }

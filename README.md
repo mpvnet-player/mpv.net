@@ -245,7 +245,7 @@ Before making a support request for a particular issue, please try if it was alr
 
 [Issue tracker](https://github.com/stax76/mpv.net/issues), feel free to use for anything mpv.net related.
 
-Supporting the development of mpv.net possible via PayPal donation:
+You can support the development of mpv.net with a PayPal donation:
 
 <https://www.paypal.me/stax76>
 

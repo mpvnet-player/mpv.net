@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 public class Msg
 {
-    private static string ShownMessages;
+    static string ShownMessages;
 
     public static string SupportURL { get; set; }
 
@@ -67,7 +67,7 @@ public class Msg
                 td.MainInstruction = exception.GetType().Name;
                 td.Content = exception.Message;
                 td.MainIcon = MsgIcon.Error;
-                td.ExpandedInformation = exception.ToString();
+                td.ExpandedInformation = exception.StackTrace;
                 td.Footer = "[Copy Message](copymsg)";
 
                 if (!string.IsNullOrEmpty(Msg.SupportURL))
@@ -78,8 +78,7 @@ public class Msg
         }
         catch (Exception e)
         {
-            MessageBox.Show(e.GetType().Name + "\n\n" + e.Message + "\n\n" + e,
-                Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(e.ToString(), Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 
@@ -96,24 +95,24 @@ public class Msg
         Msg.ShownMessages += mainInstruction + content;
     }
 
-    public static MsgResult ShowQuestion(string mainInstruction,
-                                         MsgButtons buttons = MsgButtons.OkCancel)
+    public static MsgResult ShowQuestion(
+        string mainInstruction, MsgButtons buttons = MsgButtons.OkCancel)
     {
         return Msg.Show(mainInstruction, null, MsgIcon.None, buttons, MsgResult.None);
     }
 
-    public static MsgResult ShowQuestion(string mainInstruction,
-                                         string content,
-                                         MsgButtons buttons = MsgButtons.OkCancel)
+    public static MsgResult ShowQuestion(
+        string mainInstruction, string content, MsgButtons buttons = MsgButtons.OkCancel)
     {
         return Msg.Show(mainInstruction, content, MsgIcon.None, buttons, MsgResult.None);
     }
 
-    public static MsgResult Show(string mainInstruction,
-                                 string content,
-                                 MsgIcon icon,
-                                 MsgButtons buttons,
-                                 MsgResult defaultButton = MsgResult.None)
+    public static MsgResult Show(
+        string mainInstruction,
+        string content,
+        MsgIcon icon,
+        MsgButtons buttons,
+        MsgResult defaultButton = MsgResult.None)
     {
         try
         {
@@ -155,14 +154,20 @@ public class Msg
 
 public class TaskDialog<T> : TaskDialogNative, IDisposable
 {
-    private Dictionary<int, T> IdValueDic;
-    private Dictionary<int, string> IdTextDic;
-    private List<int> CommandLinkShieldList;
-    private IntPtr ButtonArray;
-    private IntPtr RadioButtonArray;
-    private List<TaskDialogNative.TASKDIALOG_BUTTON> Buttons;
-    private List<TaskDialogNative.TASKDIALOG_BUTTON> RadioButtons;
-    private TaskDialogNative.TASKDIALOGCONFIG Config;
+    Dictionary<int, T>      IdValueDic;
+    Dictionary<int, string> IdTextDic;
+    List<int> CommandLinkShieldList;
+    IntPtr ButtonArray;
+    IntPtr RadioButtonArray;
+    T      SelectedValueValue;
+    string SelectedTextValue;
+    int    TimeoutValue;
+    int    ExitTickCount;
+    bool   Disposed;
+    List<TaskDialogNative.TASKDIALOG_BUTTON> Buttons;
+    List<TaskDialogNative.TASKDIALOG_BUTTON> RadioButtons;
+    TaskDialogNative.TASKDIALOGCONFIG        Config;
+
     const int TDE_CONTENT = 0;
     const int TDE_EXPANDED_INFORMATION = 1;
     const int TDE_FOOTER = 2;
@@ -193,11 +198,6 @@ public class TaskDialog<T> : TaskDialogNative, IDisposable
     const int TDM_UPDATE_ELEMENT_TEXT = 1138;
     const int TDM_SET_BUTTON_ELEVATION_REQUIRED_STATE = 1139;
     const int TDM_UPDATE_ICON = 1140;
-    private T SelectedValueValue;
-    private string SelectedTextValue;
-    private int TimeoutValue;
-    private int ExitTickCount;
-    private bool disposed;
 
     public TaskDialog()
     {
@@ -285,13 +285,14 @@ public class TaskDialog<T> : TaskDialogNative, IDisposable
         set => Config.MainIcon = new TaskDialogNative.TASKDIALOGCONFIG_ICON_UNION((int)value);
     }
 
-    private int _SelectedID;
+    int _SelectedID;
 
     public int SelectedID {
         get => _SelectedID;
         set {
             foreach (var i in IdValueDic)
-                if (i.Key == value) _SelectedID = value;
+                if (i.Key == value)
+                    _SelectedID = value;
         }
     }
 
@@ -299,6 +300,7 @@ public class TaskDialog<T> : TaskDialogNative, IDisposable
         get {
             if (IdValueDic.ContainsKey(SelectedID))
                 return IdValueDic[SelectedID];
+
             return SelectedValueValue;
         }
         set => SelectedValueValue = value;
@@ -308,13 +310,15 @@ public class TaskDialog<T> : TaskDialogNative, IDisposable
         get {
             if (IdTextDic.ContainsKey(SelectedID))
                 return IdTextDic[SelectedID];
+
             return SelectedTextValue;
         }
         set => SelectedTextValue = value;
     }
 
     public bool CheckBoxChecked {
-        get => (Config.dwFlags & TaskDialogNative.TASKDIALOG_FLAGS.TDF_VERIFICATION_FLAG_CHECKED) == TaskDialogNative.TASKDIALOG_FLAGS.TDF_VERIFICATION_FLAG_CHECKED;
+        get => (Config.dwFlags & TaskDialogNative.TASKDIALOG_FLAGS.TDF_VERIFICATION_FLAG_CHECKED)
+            == TaskDialogNative.TASKDIALOG_FLAGS.TDF_VERIFICATION_FLAG_CHECKED;
         set {
             if (value)
                 Config.dwFlags |= TaskDialogNative.TASKDIALOG_FLAGS.TDF_VERIFICATION_FLAG_CHECKED;
@@ -355,6 +359,7 @@ public class TaskDialog<T> : TaskDialogNative, IDisposable
                 value = regex.Replace(value, "<a href=\"$2\">$1</a>");
             }
         }
+
         return value;
     }
 
@@ -371,8 +376,13 @@ public class TaskDialog<T> : TaskDialogNative, IDisposable
     {
         int n = 1000 + IdValueDic.Count + 1;
         IdValueDic[n] = value;
-        if (setShield) CommandLinkShieldList.Add(n);
-        if (!string.IsNullOrEmpty(description)) text += "\n" + description;
+
+        if (setShield)
+            CommandLinkShieldList.Add(n);
+
+        if (!string.IsNullOrEmpty(description))
+            text += "\n" + description;
+
         Buttons.Add(new TaskDialogNative.TASKDIALOG_BUTTON(n, text));
         Config.dwFlags |= TaskDialogNative.TASKDIALOG_FLAGS.TDF_USE_COMMAND_LINKS;
     }
@@ -388,10 +398,17 @@ public class TaskDialog<T> : TaskDialogNative, IDisposable
     {
         MarshalDialogControlStructs();
         TaskDialogNative.TASKDIALOGCONFIG config = Config;
-        int errorCode = TaskDialogNative.TaskDialogIndirect(config, out int dummy1, out int dummy2, out bool isChecked);
-        if (errorCode < 0) Marshal.ThrowExceptionForHR(errorCode);
+        int hr = TaskDialogNative.TaskDialogIndirect(
+            config, out int dummy1, out int dummy2, out bool isChecked);
+
+        if (hr < 0)
+            Marshal.ThrowExceptionForHR(hr);
+
         CheckBoxChecked = isChecked;
-        if (SelectedValue is MsgResult) SelectedValue = (T)(object)SelectedID;
+
+        if (SelectedValue is MsgResult)
+            SelectedValue = (T)(object)SelectedID;
+
         return SelectedValue;
     }
 
@@ -412,8 +429,10 @@ public class TaskDialog<T> : TaskDialogNative, IDisposable
                 break;
             case 3: //TDN_HYPERLINK_CLICKED
                 string stringUni = Marshal.PtrToStringUni(lParam);
+
                 if (stringUni.StartsWith("mailto") || stringUni.StartsWith("http"))
                     Process.Start(stringUni);
+
                 if (stringUni == "copymsg")
                 {
                     Thread thread = new Thread((ThreadStart)(() => {
@@ -475,8 +494,10 @@ public class TaskDialog<T> : TaskDialogNative, IDisposable
 
     protected void Dispose(bool disposing)
     {
-        if (disposed) return;
-        disposed = true;
+        if (Disposed)
+            return;
+
+        Disposed = true;
 
         if (ButtonArray != IntPtr.Zero)
         {
@@ -493,36 +514,27 @@ public class TaskDialog<T> : TaskDialogNative, IDisposable
 }
 
 public delegate int PFTASKDIALOGCALLBACK(
-    IntPtr hwnd,
-    uint msg,
-    IntPtr wParam,
-    IntPtr lParam,
-    IntPtr lpRefData);
+    IntPtr hwnd, uint msg, IntPtr wParam, IntPtr lParam, IntPtr lpRefData);
 
 public class TaskDialogNative
 {
     [DllImport("comctl32", CharSet = CharSet.Unicode, SetLastError = true)]
     public static extern int TaskDialogIndirect(
-        [In] TaskDialogNative.TASKDIALOGCONFIG pTaskConfig,
+        TaskDialogNative.TASKDIALOGCONFIG pTaskConfig,
         out int pnButton,
         out int pnRadioButton,
-        [MarshalAs(UnmanagedType.Bool)] out bool pVerificationFlagChecked);
+        out bool pVerificationFlagChecked);
 
     [DllImport("user32.dll")]
     public static extern IntPtr GetForegroundWindow();
 
     [DllImport("user32.dll", CharSet = CharSet.Unicode)]
     public static extern uint GetWindowModuleFileName(
-        IntPtr hwnd,
-        StringBuilder lpszFileName,
-        uint cchFileNameMax);
+        IntPtr hwnd, StringBuilder lpszFileName, uint cchFileNameMax);
 
     [DllImport("user32.dll")]
     public static extern IntPtr SendMessage(
-        IntPtr handle,
-        int message,
-        IntPtr wParam,
-        IntPtr lParam);
+        IntPtr handle, int message, IntPtr wParam, IntPtr lParam);
 
     [StructLayout(LayoutKind.Sequential, Pack = 4, CharSet = CharSet.Unicode)]
     public class TASKDIALOGCONFIG
@@ -532,12 +544,9 @@ public class TaskDialogNative
         public IntPtr hInstance;
         public TaskDialogNative.TASKDIALOG_FLAGS dwFlags;
         public MsgButtons dwCommonButtons;
-        [MarshalAs(UnmanagedType.LPWStr)]
         public string pszWindowTitle;
         public TaskDialogNative.TASKDIALOGCONFIG_ICON_UNION MainIcon;
-        [MarshalAs(UnmanagedType.LPWStr)]
         public string pszMainInstruction;
-        [MarshalAs(UnmanagedType.LPWStr)]
         public string pszContent;
         public uint cButtons;
         public IntPtr pButtons;
@@ -545,16 +554,11 @@ public class TaskDialogNative
         public uint cRadioButtons;
         public IntPtr pRadioButtons;
         public int nDefaultRadioButton;
-        [MarshalAs(UnmanagedType.LPWStr)]
         public string pszVerificationText;
-        [MarshalAs(UnmanagedType.LPWStr)]
         public string pszExpandedInformation;
-        [MarshalAs(UnmanagedType.LPWStr)]
         public string pszExpandedControlText;
-        [MarshalAs(UnmanagedType.LPWStr)]
         public string pszCollapsedControlText;
         public TaskDialogNative.TASKDIALOGCONFIG_ICON_UNION FooterIcon;
-        [MarshalAs(UnmanagedType.LPWStr)]
         public string pszFooter;
         public PFTASKDIALOGCALLBACK pfCallback;
         public IntPtr lpCallbackData;

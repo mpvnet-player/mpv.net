@@ -27,13 +27,13 @@ namespace mpvnet
             } catch {}
         }
 
-        private void RegisterVideo_Click(object sender, RoutedEventArgs e) => RegisterFileAssociations("video");
-        private void RegisterAudio_Click(object sender, RoutedEventArgs e) => RegisterFileAssociations("audio");
-        private void RegisterImage_Click(object sender, RoutedEventArgs e) => RegisterFileAssociations("image");
+        void RegisterVideo_Click(object sender, RoutedEventArgs e) => RegisterFileAssociations("video");
+        void RegisterAudio_Click(object sender, RoutedEventArgs e) => RegisterFileAssociations("audio");
+        void RegisterImage_Click(object sender, RoutedEventArgs e) => RegisterFileAssociations("image");
 
-        private void UnregisterFileAssociations_Click(object sender, RoutedEventArgs e) => RegisterFileAssociations("unreg");
+        void UnregisterFileAssociations_Click(object sender, RoutedEventArgs e) => RegisterFileAssociations("unreg");
 
-        private void AddToPathEnvVar_Click(object sender, RoutedEventArgs e)
+        void AddToPathEnvVar_Click(object sender, RoutedEventArgs e)
         {
             string var = WinForms.Application.StartupPath + ";";
             string path = Environment.GetEnvironmentVariable("Path", EnvironmentVariableTarget.User);
@@ -47,7 +47,7 @@ namespace mpvnet
             }
         }
 
-        private void RemoveFromPathEnvVar_Click(object sender, RoutedEventArgs e)
+        void RemoveFromPathEnvVar_Click(object sender, RoutedEventArgs e)
         {
             string var = WinForms.Application.StartupPath + ";";
             string path = Environment.GetEnvironmentVariable("Path", EnvironmentVariableTarget.User);

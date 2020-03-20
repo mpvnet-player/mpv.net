@@ -28,7 +28,7 @@ namespace mpvnet
             DataGrid.ItemsSource = CollectionView;
         }
 
-        private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             CollectionView.Refresh();
 
@@ -70,7 +70,7 @@ namespace mpvnet
             return false;
         }
 
-        private void ButtonClick(object sender, RoutedEventArgs e)
+        void ButtonClick(object sender, RoutedEventArgs e)
         {
             CommandItem item = ((Button)e.Source).DataContext as CommandItem;
             if (item is null) return;
@@ -88,7 +88,7 @@ namespace mpvnet
                     items[i.Input] = i;
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e) => Keyboard.Focus(SearchControl.SearchTextBox);
+        void Window_Loaded(object sender, RoutedEventArgs e) => Keyboard.Focus(SearchControl.SearchTextBox);
 
         string GetInputConfContent()
         {
@@ -120,14 +120,14 @@ namespace mpvnet
             return text;
         }
 
-        private void Window_Closed(object sender, EventArgs e)
+        void Window_Closed(object sender, EventArgs e)
         {
             if (InitialInputConfContent == GetInputConfContent()) return;
             File.WriteAllText(mp.InputConfPath, GetInputConfContent());
             Msg.Show("Changes will be available on next mpv.net startup.");
         }
 
-        private void DataGrid_PreviewCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        void DataGrid_PreviewCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             DataGrid grid = (DataGrid)sender;
 

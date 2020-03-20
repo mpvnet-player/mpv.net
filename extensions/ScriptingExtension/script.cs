@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿
+using System.IO;
 
 using mpvnet;
 
@@ -9,7 +10,7 @@ class Script
         mp.Shutdown += Shutdown;
     }
 
-    private void Shutdown()
+    void Shutdown()
     {
         foreach (string file in Directory.GetFiles(@"C:\Users\frank\Desktop\aaa"))
             File.Delete(file);

@@ -13,10 +13,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using ScriptHost;
+
 using WinForms = System.Windows.Forms;
 
 using static libmpv;
 using static WinAPI;
+using static Common;
 
 namespace mpvnet
 {
@@ -86,9 +89,9 @@ namespace mpvnet
         public static int Screen { get; set; } = -1;
         public static int Edition { get; set; }
 
-        public static float Autofit { get; set; } = 0.5f;
-        public static float AutofitSmaller { get; set; } = 0.4f;
-        public static float AutofitLarger { get; set; } = 0.75f;
+        public static float Autofit { get; set; } = 0.6f;
+        public static float AutofitSmaller { get; set; } = 0.3f;
+        public static float AutofitLarger { get; set; } = 0.8f;
 
         public static void Init()
         {
@@ -253,7 +256,7 @@ namespace mpvnet
             }
         }
 
-        public static string[] KnownScripts { get; } = { "osc-visibility.js", "show-playlist.js", "seek-show-position.py" };
+        public static string[] KnownScripts { get; } = { "show-playlist.js", "seek-show-position.py" };
 
         public static void LoadScripts()
         {
@@ -264,21 +267,36 @@ namespace mpvnet
                     if (KnownScripts.Contains(Path.GetFileName(scriptPath)))
                     {
                         if (scriptPath.EndsWith(".py"))
-                            Task.Run(() => PythonScripts.Add(new PythonScript(scriptPath)));
+                            App.RunAction(() => PythonScripts.Add(new PythonScript(scriptPath)));
                         else if (scriptPath.EndsWith(".ps1"))
-                            Task.Run(() => PowerShellScript.Init(scriptPath));
+                            App.RunAction(() => InvokePowerShellScript(scriptPath));
                     }
                     else
-                        Msg.ShowError("Failed to load script", scriptPath + "\n\nOnly scripts that ship with mpv.net are allowed in <startup>\\scripts\n\nUser scripts have to use <config folder>\\scripts\n\nNever copy or install a new mpv.net version over a old mpv.net version.");
+                        Msg.ShowError("Failed to load script", scriptPath + BR + "Only scripts that ship with mpv.net are allowed in <startup>\\scripts\n\nUser scripts have to use <config folder>\\scripts\n\nNever copy or install a new mpv.net version over a old mpv.net version.");
                 }
             }
-
+            
             if (Directory.Exists(ConfigFolder + "scripts"))
                 foreach (string scriptPath in Directory.GetFiles(ConfigFolder + "scripts"))
                     if (scriptPath.EndsWith(".py"))
-                        Task.Run(() => PythonScripts.Add(new PythonScript(scriptPath)));
+                        App.RunAction(() => PythonScripts.Add(new PythonScript(scriptPath)));
                     else if (scriptPath.EndsWith(".ps1"))
-                        Task.Run(() => PowerShellScript.Init(scriptPath));
+                        App.RunAction(() => InvokePowerShellScript(scriptPath));
+        }
+
+        public static void InvokePowerShellScript(string file)
+        {
+            PowerShell ps = new PowerShell();
+            ps.Scripts.Add("Using namespace mpvnet" + BR +
+                "[Reflection.Assembly]::LoadWithPartialName('mpvnet')" + BR);
+            ps.Scripts.Add(File.ReadAllText(file));
+            ps.Module = Path.GetFileName(file);
+            ps.Print = true;
+
+            lock (PowerShell.Instances)
+                PowerShell.Instances.Add(ps);
+
+            ps.Invoke();
         }
 
         public static void EventLoop()
@@ -626,10 +644,10 @@ namespace mpvnet
             if (throwException)
             {
                 foreach (string msg in messages)
-                    ConsoleHelp.WriteError(msg);
+                    ConsoleHelp.WriteError(msg, "mpv.net");
 
-                ConsoleHelp.WriteError(GetError(err));
-                throw new Exception(string.Join("\r\r", messages) + "\r\r"+ GetError(err));
+                ConsoleHelp.WriteError(GetError(err), "mpv.net");
+                throw new Exception(string.Join(BR2, messages) + BR2 + GetError(err));
             }
         }
 
@@ -637,20 +655,30 @@ namespace mpvnet
         {
             var args = Environment.GetCommandLineArgs().Skip(1);
 
-            //Msg.Show(string.Join("\n", args));
-
-            string[] preInitProperties = { "input-terminal", "terminal", "input-file", "config", "config-dir", "input-conf", "load-scripts", "scripts", "player-operation-mode" };
+            string[] preInitProperties = { "input-terminal", "terminal", "input-file", "config",
+                "config-dir", "input-conf", "load-scripts", "scripts", "player-operation-mode" };
 
             foreach (string i in args)
             {
                 string arg = i;
 
-                if (arg.StartsWith("--"))
+                if (arg.StartsWith("-"))
                 {
                     try
                     {
+                        if (!arg.StartsWith("--"))
+                            arg = "-" + arg;
+
                         if (!arg.Contains("="))
-                            arg += "=yes";
+                        {
+                            if (arg.Contains("--no-"))
+                            {
+                                arg = arg.Replace("--no-", "--");
+                                arg += "=no";
+                            }
+                            else
+                                arg += "=yes";
+                        }
 
                         string left = arg.Substring(2, arg.IndexOf("=") - 2);
                         string right = arg.Substring(left.Length + 3);
@@ -667,13 +695,10 @@ namespace mpvnet
                         }
                         else if (!preInit && !preInitProperties.Contains(left))
                         {
-                            if (!PrintCommandLineArgument(arg))
-                            {
-                                mp.ProcessProperty(left, right);
+                            mp.ProcessProperty(left, right);
 
-                                if (!App.ProcessProperty(left, right))
-                                    set_property_string(left, right, true);
-                            }
+                            if (!App.ProcessProperty(left, right))
+                                set_property_string(left, right, true);
                         }
                     }
                     catch (Exception e)
@@ -705,22 +730,6 @@ namespace mpvnet
                     VideoSizeAutoResetEvent.Set();
                 }
             }
-        }
-
-        static bool PrintCommandLineArgument(string argument)
-        {
-            switch (argument)
-            {
-                case "--list-properties=yes":
-                    {
-                        var list = get_property_string("property-list").Split(',').ToList();
-                        list.Sort();
-                        Console.WriteLine(string.Join("\n", list.ToArray()));
-                        return true;
-                    }
-            }
-
-            return false;
         }
 
         public static DateTime LastLoad;

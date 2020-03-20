@@ -118,6 +118,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Misc\App.cs" />
+    <Compile Include="Misc\Common.cs" />
     <Compile Include="Misc\Extension.cs" />
     <Content Include="..\License.txt">
       <Link>License.txt</Link>
@@ -155,6 +156,7 @@
     <Compile Include="Misc\UpdateCheck.cs" />
     <Compile Include="Misc\RegistryHelp.cs" />
     <Compile Include="Misc\Theme.cs" />
+    <Compile Include="Scripting\PowerShell.cs" />
     <Compile Include="WPF\SearchTextBoxUserControl.xaml.cs">
       <DependentUpon>SearchTextBoxUserControl.xaml</DependentUpon>
     </Compile>
@@ -172,7 +174,6 @@
     <Compile Include="WinForms\Menu.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripting\PowerShellScript.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

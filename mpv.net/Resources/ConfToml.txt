@@ -295,13 +295,13 @@ help = "<int> Initial window height in percent. Default: 50"
 name = "autofit-smaller"
 file = "mpv"
 filter = "Screen"
-help = "<int> Minimum window height in percent. Default: 40"
+help = "<int> Minimum window height in percent. Default: 30"
 
 [[settings]]
 name = "autofit-larger"
 file = "mpv"
 filter = "Screen"
-help = "<int> Maximum window height in percent. Default: 75"
+help = "<int> Maximum window height in percent. Default: 80"
 
 [[settings]]
 name = "start-size"

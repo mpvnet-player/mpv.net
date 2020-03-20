@@ -43,7 +43,7 @@ namespace mpvnet
         [DllImport("Everything.dll")]
         public static extern UInt32 Everything_GetNumResults();
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        void Window_Loaded(object sender, RoutedEventArgs e)
         {
             HwndSource source = HwndSource.FromHwnd(new WindowInteropHelper(this).Handle);
             source.AddHook(new HwndSourceHook(WndProc));
@@ -56,7 +56,7 @@ namespace mpvnet
                 ListView.SelectedIndex = 0;
         }
 
-        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             if (msg == 0x200 /*WM_MOUSEMOVE*/ && Mouse.LeftButton != MouseButtonState.Pressed)
                 handled = true;
@@ -64,7 +64,7 @@ namespace mpvnet
             return IntPtr.Zero;
         }
 
-        private void FilterTextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        void FilterTextBox_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             switch (e.Key)
             {
@@ -91,7 +91,7 @@ namespace mpvnet
             }
         }
 
-        private void ListView_PreviewKeyDown(object sender, KeyEventArgs e)
+        void ListView_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
                 Close();
@@ -108,9 +108,9 @@ namespace mpvnet
             Keyboard.Focus(FilterTextBox);
         }
 
-        private void ListView_MouseUp(object sender, MouseButtonEventArgs e) => Execute();
+        void ListView_MouseUp(object sender, MouseButtonEventArgs e) => Execute();
 
-        private void FilterTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        void FilterTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             string searchtext = FilterTextBox.Text;
             Task.Run(() => Search(searchtext));
