@@ -8,6 +8,10 @@ using System.Windows.Forms;
 using System.Windows.Interop;
 
 using VB = Microsoft.VisualBasic;
+using ScriptHost;
+
+using static Common;
+using System.Collections.Generic;
 
 namespace mpvnet
 {
@@ -38,6 +42,7 @@ namespace mpvnet
                 case "show-info": ShowInfo(); break;
                 case "playlist-first": PlaylistFirst(); break;
                 case "playlist-last": PlaylistLast(); break;
+                case "show-profiles": ShowProfiles(); break;
                 case "add-files-to-playlist": OpenFiles("append"); break; // deprecated 2019
                 default: Msg.ShowError($"No command '{id}' found."); break;
             }
@@ -292,6 +297,33 @@ namespace mpvnet
                 mp.commandv("set", "aid", aid.ToString());
                 mp.commandv("show-text", audTracks[aid - 1].Text.Substring(3), "5000");
             }
+        }
+
+        private static void ShowProfiles()
+        {
+            string psCode = @"
+                foreach ($item in ($mpvjson | ConvertFrom-Json))
+                {
+                    $item.name
+                    ''
+
+                    foreach ($option in $item.options)
+                    {
+                        '   ' + $option.key + ' = ' + $option.value
+                    }
+
+                    ''
+                }";
+
+            string json = mp.get_property_string("profile-list");
+            PowerShell ps = new PowerShell();
+            ps.Print = false;
+            ps.Scripts.Add(psCode);
+            string file = Path.GetTempPath() + @"\mpv profiles.txt";
+            File.WriteAllText(file, BR + string.Join("\r\n", (ps.Invoke("mpvjson", json)
+                as IEnumerable<object>).Select(x => x.ToString())).ToString());
+            Process.Start(file);
+            ps.Runspace.Dispose();
         }
     }
 }

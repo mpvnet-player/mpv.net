@@ -1,14 +1,13 @@
-﻿input-default-bindings = no
+﻿
+input-default-bindings = no
 input-ar-delay = 500
 input-ar-rate = 20
 keep-open = yes
 keep-open-pause = no
+osd-duration = 2000
 osd-playing-msg = '${filename}'
-script-opts = osc-scalewindowed=1.5
+script-opts = osc-scalewindowed=1.5,osc-hidetimeout=2000,console-scale=1
 screenshot-directory = '~~desktop/'
-cscale = spline36
-dscale = spline36
-scale = spline36
 hwdec = yes
 
 [protocol.https]

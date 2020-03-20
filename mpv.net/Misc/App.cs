@@ -9,6 +9,7 @@ using UI;
 
 using static libmpv;
 using static Common;
+
 using System.Threading.Tasks;
 
 namespace mpvnet

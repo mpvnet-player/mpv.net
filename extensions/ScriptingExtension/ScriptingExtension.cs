@@ -1,3 +1,4 @@
+
 // This extension implements the C# scripting feature of mpv.net which
 // is based on CS-Script (https://www.cs-script.net).
 
@@ -13,7 +14,8 @@ using System.IO;
 using mpvnet;
 using CSScriptLibrary;
 
-namespace ScriptingExtension // the file name of extensions must end with 'Extension'
+// the file name of extensions must end with 'Extension'
+namespace ScriptingExtension
 {
     [Export(typeof(IExtension))]
     public class ScriptingExtension : IExtension
@@ -23,24 +25,29 @@ namespace ScriptingExtension // the file name of extensions must end with 'Exten
         public ScriptingExtension()
         {
             //Script = new Script();
-            List<string> scriptFiles = new List<string>();
+            List<string> files = new List<string>();
 
-            if (Directory.Exists(mp.ConfigFolder + "scripts"))
-                scriptFiles.AddRange(Directory.GetFiles(mp.ConfigFolder + "scripts", "*.cs"));
+            if (Directory.Exists(mp.ConfigFolder + "scripts-cs"))
+                files.AddRange(Directory.GetFiles(mp.ConfigFolder + "scripts-cs", "*.cs"));
 
             if (Directory.Exists(Folder.Startup + "scripts"))
                 foreach (string path in Directory.GetFiles(Folder.Startup + "scripts", "*.cs"))
-                    scriptFiles.AddRange(Directory.GetFiles(Folder.Startup + "scripts", "*.cs"));
+                    files.AddRange(Directory.GetFiles(Folder.Startup + "scripts", "*.cs"));
 
-            if (scriptFiles.Count == 0) return;
+            if (files.Count == 0)
+                return;
+
             CSScriptLibrary.CSScript.EvaluatorConfig.Engine = EvaluatorEngine.CodeDom;
 
-            foreach (var i in scriptFiles)
+            foreach (string file in files)
             {
-                try {
-                    CSScriptLibrary.CSScript.Evaluator.LoadCode(File.ReadAllText(i));
-                } catch (Exception e) {
-                    Msg.ShowException(e);
+                try
+                {
+                    CSScriptLibrary.CSScript.Evaluator.LoadCode(File.ReadAllText(file));
+                }
+                catch (Exception e)
+                {
+                    App.ShowException(e);
                 }
             }
         }

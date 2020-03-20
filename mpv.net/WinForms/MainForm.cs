@@ -12,6 +12,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 
 using UI;
+using ScriptHost;
 
 namespace mpvnet
 {
@@ -294,18 +295,6 @@ namespace mpvnet
             height = Convert.ToInt32(height * scale);
             int width = Convert.ToInt32(height * size.Width / (double)size.Height);
 
-            if (height > screen.WorkingArea.Height * 0.9)
-            {
-                height = Convert.ToInt32(screen.WorkingArea.Height * 0.9);
-                width = Convert.ToInt32(height * size.Width / (double)size.Height);
-            }
-
-            if (width > screen.WorkingArea.Width * 0.9)
-            {
-                width = Convert.ToInt32(screen.WorkingArea.Width * 0.9);
-                height = Convert.ToInt32(width * size.Height / (double)size.Width);
-            }
-
             if (height < screen.WorkingArea.Height * mp.AutofitSmaller)
             {
                 height = Convert.ToInt32(screen.WorkingArea.Height * mp.AutofitSmaller);
@@ -316,6 +305,18 @@ namespace mpvnet
             {
                 height = Convert.ToInt32(screen.WorkingArea.Height * mp.AutofitLarger);
                 width = Convert.ToInt32(height * size.Width / (double)size.Height);
+            }
+
+            if (height > screen.WorkingArea.Height * 0.95)
+            {
+                height = Convert.ToInt32(screen.WorkingArea.Height * 0.95);
+                width = Convert.ToInt32(height * size.Width / (double)size.Height);
+            }
+
+            if (width > screen.WorkingArea.Width * 0.95)
+            {
+                width = Convert.ToInt32(screen.WorkingArea.Width * 0.95);
+                height = Convert.ToInt32(width * size.Height / (double)size.Width);
             }
 
             Point middlePos = new Point(Left + Width / 2, Top + Height / 2);
@@ -687,8 +688,8 @@ namespace mpvnet
             if (!mp.ShutdownAutoResetEvent.WaitOne(10000))
                 Msg.ShowError("Shutdown thread failed to complete within 10 seconds.");
 
-            //foreach (var i in PowerShell1.Instances)
-            //    i.RS.Close();
+            foreach (PowerShell ps in PowerShell.Instances)
+                ps.Runspace.Dispose();
         }
 
         protected override void OnMouseDown(MouseEventArgs e)

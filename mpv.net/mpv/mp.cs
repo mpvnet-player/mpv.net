@@ -170,7 +170,8 @@ namespace mpvnet
 
                     if (!Directory.Exists(_ConfigFolder))
                     {
-                        string appdataFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\mpv.net\";
+                        string appdataFolder = Environment.GetFolderPath(
+                            Environment.SpecialFolder.ApplicationData) + @"\mpv.net\";
 
                         using (TaskDialog<string> td = new TaskDialog<string>())
                         {
@@ -217,7 +218,17 @@ namespace mpvnet
                         File.WriteAllText(_ConfigFolder + "input.conf", Properties.Resources.inputConf);
 
                     if (!File.Exists(_ConfigFolder + "mpv.conf"))
-                        File.WriteAllText(_ConfigFolder + "mpv.conf", Properties.Resources.mpvConf);
+                    {
+                        string conf = Properties.Resources.mpvConf;
+                        Graphics gx = Graphics.FromHwnd(IntPtr.Zero);
+                        float scale = GetDeviceCaps(gx.GetHdc(), 88 /*LOGPIXELSX*/) / 96.0f;
+
+                        if (scale != 1)
+                            conf = conf.Replace("console-scale=1", "console-scale=" + scale);
+
+                        gx.Dispose();
+                        File.WriteAllText(_ConfigFolder + "mpv.conf", conf);
+                    }
                 }
 
                 return _ConfigFolder;
@@ -262,26 +273,29 @@ namespace mpvnet
         {
             if (Directory.Exists(Folder.Startup + "Scripts"))
             {
-                foreach (string scriptPath in Directory.GetFiles(Folder.Startup + "Scripts"))
+                foreach (string file in Directory.GetFiles(Folder.Startup + "Scripts"))
                 {
-                    if (KnownScripts.Contains(Path.GetFileName(scriptPath)))
+                    if (KnownScripts.Contains(Path.GetFileName(file)))
                     {
-                        if (scriptPath.EndsWith(".py"))
-                            App.RunAction(() => PythonScripts.Add(new PythonScript(scriptPath)));
-                        else if (scriptPath.EndsWith(".ps1"))
-                            App.RunAction(() => InvokePowerShellScript(scriptPath));
+                        if (file.EndsWith(".py"))
+                            App.RunAction(() => PythonScripts.Add(new PythonScript(file)));
+                        else if (file.EndsWith(".ps1"))
+                            App.RunAction(() => InvokePowerShellScript(file));
                     }
                     else
-                        Msg.ShowError("Failed to load script", scriptPath + BR + "Only scripts that ship with mpv.net are allowed in <startup>\\scripts\n\nUser scripts have to use <config folder>\\scripts\n\nNever copy or install a new mpv.net version over a old mpv.net version.");
+                        Msg.ShowError("Failed to load script", file + BR2 +
+                            "Only scripts that ship with mpv.net are allowed in <startup>\\scripts" + BR2 +
+                            "Never copy or install a new mpv.net version over a old mpv.net version.");
                 }
             }
             
-            if (Directory.Exists(ConfigFolder + "scripts"))
-                foreach (string scriptPath in Directory.GetFiles(ConfigFolder + "scripts"))
-                    if (scriptPath.EndsWith(".py"))
-                        App.RunAction(() => PythonScripts.Add(new PythonScript(scriptPath)));
-                    else if (scriptPath.EndsWith(".ps1"))
-                        App.RunAction(() => InvokePowerShellScript(scriptPath));
+            if (Directory.Exists(ConfigFolder + "scripts-py"))
+                foreach (string scriptPath in Directory.GetFiles(ConfigFolder + "scripts-py", "*.py"))
+                    App.RunAction(() => PythonScripts.Add(new PythonScript(scriptPath)));
+
+            if (Directory.Exists(ConfigFolder + "scripts-ps"))
+                foreach (string file in Directory.GetFiles(ConfigFolder + "scripts-ps", "*.ps1"))
+                    App.RunAction(() => InvokePowerShellScript(file));
         }
 
         public static void InvokePowerShellScript(string file)
@@ -396,6 +410,7 @@ namespace mpvnet
                             {
                                 var data = (mpv_event_client_message)Marshal.PtrToStructure(evt.data, typeof(mpv_event_client_message));
                                 string[] args = ConvertFromUtf8Strings(data.args, data.num_args);
+
                                 if (args.Length > 1 && args[0] == "mpv.net")
                                     Command.Execute(args[1], args.Skip(2).ToArray());
                                 else if (args.Length > 0)

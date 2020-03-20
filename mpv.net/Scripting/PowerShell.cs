@@ -20,7 +20,9 @@ namespace ScriptHost
 
         string BR = Environment.NewLine;
 
-        public object Invoke()
+        public object Invoke() => Invoke(null, null);
+
+        public object Invoke(string variable, object obj)
         {
             try
             {
@@ -38,6 +40,9 @@ namespace ScriptHost
                             command.Parameters.Add(null, param);
 
                 Runspace.SessionStateProxy.SetVariable("ScriptHost", this);
+
+                if (!string.IsNullOrEmpty(variable))
+                    Runspace.SessionStateProxy.SetVariable(variable, obj);
 
                 if (Print)
                 {
@@ -65,7 +70,7 @@ namespace ScriptHost
             var output = sender as PipelineReader<PSObject>;
 
             while (output.Count > 0)
-                ConsoleHelp.Write(output.Read().ToString(), Module);
+                ConsoleHelp.Write(output.Read(), Module);
         }
 
         public void Error_DataReady(object sender, EventArgs e)
@@ -73,7 +78,7 @@ namespace ScriptHost
             var output = sender as PipelineReader<Object>;
 
             while (output.Count > 0)
-                ConsoleHelp.WriteError(output.Read().ToString(), Module);
+                ConsoleHelp.WriteError(output.Read(), Module);
         }
 
         public void RedirectEventJobStreams(PSEventJob job)

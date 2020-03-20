@@ -55,6 +55,9 @@ public class WinAPI
             return GetWindowLong32(hWnd, nIndex);
     }
 
+    [DllImport("gdi32.dll")]
+    public static extern int GetDeviceCaps(IntPtr hdc, int nIndex);
+
     [StructLayout(LayoutKind.Sequential)]
     public struct RECT
     {

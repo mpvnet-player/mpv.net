@@ -1,10 +1,15 @@
 
 ### 5.4.4.2
 
-- new: flag cli switches support now --no-flag in addition to --flag=no
-- new: cli switches can also start with single - instead of double --
+- new: flag cli switches support now `--no-flag` in addition to `--flag=no`
+- new: cli switches can also start with single `-` instead of double `--`
 - new: the PowerShell script host was completely rewritten, events can
-       can be assigned to using `Register-ObjectEvent`
+       can be assigned to using `Register-ObjectEvent`, the scripting
+       wiki page was updated
+- new: Context Menu > View > Show Profiles
+- new: default mpv.conf is now generated with `osd-duration=2000` and
+       `script-opts=...,console-scale=<DPI scale>` to
+       workaround mpv using broken High DPI defaults
 
 ### 5.4.4.1
 
