@@ -243,7 +243,7 @@ Before making a support request for a particular issue, please try if it was alr
 
 [Support thread in VideoHelp forum](https://forum.videohelp.com/threads/392514-mpv-net-a-extendable-media-player-for-windows)
 
-[Issue tracker](https://github.com/stax76/mpv.net/issues), feel free to use for anything mpv.net related.
+[Issue tracker](https://github.com/stax76/mpv.net/issues), feel free to use for anything mpv(.net) related.
 
 You can support the development of mpv.net with a PayPal donation:
 

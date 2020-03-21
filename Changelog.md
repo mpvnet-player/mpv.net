@@ -5,7 +5,7 @@
 - update: youtube-dl
 
 - new: d3d11va-zero-copy setting added to conf editor
-- new: hdr-compute-peak setting added to conf editor
+- new: hdr-compute-peak  setting added to conf editor
 - new: flag cli switches support now `--no-flag` in addition to `--flag=no`
        https://mpv.io/manual/master/#usage
 - new: cli switches can also start with single `-` instead of double `--`
@@ -22,7 +22,8 @@
 - new: config editor tab is now remembered
 - new: osd-duration setting added to config editor and default mpv.conf
 - new: external console replaced with internal console, in case mpv.conf is missing it's
-       generated with correct Hight DPI font settings: `script-opts=console-scale=<dpiscale>`
+       generated with correct Hight DPI font size scale settings.
+       `script-opts=console-scale=<dpiscale>`
        https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt#L150
        https://mpv.io/manual/master/#console
 - new: blue color in dark theme is now less intense
