@@ -19,7 +19,7 @@
     <Grid>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock FontSize="48" HorizontalAlignment="Center" Margin="0,0,0,10">mpv.net</TextBlock>
-            <TextBlock HorizontalAlignment="Center">Copyright (c) 2017-2019 Frank Skare (stax76)</TextBlock>
+            <TextBlock HorizontalAlignment="Center">Copyright (C) 2017-2020 Frank Skare (stax76)</TextBlock>
             <TextBlock Name="Version" HorizontalAlignment="Center" />
             <TextBlock Name="mpvVersion" HorizontalAlignment="Center" />
             <TextBlock HorizontalAlignment="Center" Margin="0,0,0,20">MIT License</TextBlock>

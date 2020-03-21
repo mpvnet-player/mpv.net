@@ -5,7 +5,6 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -32,6 +31,7 @@ namespace mpvnet
             LoadSettings();
             InitialContent = GetCompareString();
             SearchControl.Text = RegistryHelp.GetString(App.RegPath, "ConfigEditorSearch");
+            FilterListBox.SelectedItem = SearchControl.Text.TrimEnd(':');
         }
 
         void LoadSettings()
@@ -287,7 +287,8 @@ namespace mpvnet
 
         void FilterListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (e.AddedItems.Count > 0) SearchControl.Text = e.AddedItems[0] + ":";
+            if (e.AddedItems.Count > 0)
+                SearchControl.Text = e.AddedItems[0] + ":";
         }
 
         void OpenSettingsTextBlock_MouseUp(object sender, MouseButtonEventArgs e)

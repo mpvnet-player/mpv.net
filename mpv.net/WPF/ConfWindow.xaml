@@ -26,13 +26,14 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         
-        <Controls:SearchTextBoxUserControl HintText="Find a setting"
-                                           x:Name="SearchControl"
-                                           Width="250"
-                                           Margin="0,20,0,0"
-                                           Grid.ColumnSpan="2"/>
+        <Controls:SearchTextBoxUserControl
+            x:Name="SearchControl"
+            HintText="Find a setting"
+            Width="250"
+            Margin="0,20,0,0"
+            Grid.ColumnSpan="2"/>
         
-        <ScrollViewer x:Name="MainScrollViewer"
+        <ScrollViewer Name="MainScrollViewer"
                       VerticalScrollBarVisibility="Auto"
                       Grid.Row="1"
                       Grid.Column="2" 
@@ -42,7 +43,7 @@
         </ScrollViewer>
         
         <StackPanel Margin="20,0,0,0" Grid.Row="1">
-            <ListBox x:Name="FilterListBox"
+            <ListBox Name="FilterListBox"
                      ItemsSource="{Binding FilterStrings}"
                      BorderThickness="0"
                      SelectionChanged="FilterListBox_SelectionChanged"
@@ -56,10 +57,10 @@
                 </ListBox.ItemTemplate>
             </ListBox>
 
-            <TextBlock x:Name="OpenSettingsTextBlock" Margin="0,30,0,0" Cursor="Hand" TextWrapping="WrapWithOverflow" Foreground="{x:Static UI:Theme.Heading}" MouseUp="OpenSettingsTextBlock_MouseUp">Open config folder</TextBlock>
-            <TextBlock x:Name="PreviewTextBlock" Margin="0,15,0,0" Cursor="Hand" TextWrapping="WrapWithOverflow" Foreground="{x:Static UI:Theme.Heading}" MouseUp="PreviewTextBlock_MouseUp">Preview mpv.conf</TextBlock>
-            <TextBlock x:Name="ShowManualTextBlock" Margin="0,15,0,0" Cursor="Hand" TextWrapping="WrapWithOverflow" Foreground="{x:Static UI:Theme.Heading}" MouseUp="ShowManualTextBlock_MouseUp">Show mpv manual</TextBlock>
-            <TextBlock x:Name="SupportTextBlock" Margin="0,15,0,0" Cursor="Hand" TextWrapping="WrapWithOverflow" Foreground="{x:Static UI:Theme.Heading}" MouseUp="SupportTextBlock_MouseUp">Show support forum</TextBlock>
+            <TextBlock Name="OpenSettingsTextBlock" Margin="0,30,0,0" Cursor="Hand" TextWrapping="WrapWithOverflow" Foreground="{x:Static UI:Theme.Heading}" MouseUp="OpenSettingsTextBlock_MouseUp">Open config folder</TextBlock>
+            <TextBlock Name="PreviewTextBlock"      Margin="0,15,0,0" Cursor="Hand" TextWrapping="WrapWithOverflow" Foreground="{x:Static UI:Theme.Heading}" MouseUp="PreviewTextBlock_MouseUp">Preview mpv.conf</TextBlock>
+            <TextBlock Name="ShowManualTextBlock"   Margin="0,15,0,0" Cursor="Hand" TextWrapping="WrapWithOverflow" Foreground="{x:Static UI:Theme.Heading}" MouseUp="ShowManualTextBlock_MouseUp">Show mpv manual</TextBlock>
+            <TextBlock Name="SupportTextBlock"      Margin="0,15,0,0" Cursor="Hand" TextWrapping="WrapWithOverflow" Foreground="{x:Static UI:Theme.Heading}" MouseUp="SupportTextBlock_MouseUp">Show support forum</TextBlock>
         </StackPanel>
     </Grid>
 </Window>

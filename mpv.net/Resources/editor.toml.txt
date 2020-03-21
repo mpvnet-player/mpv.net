@@ -153,6 +153,25 @@ options = [{ name = "yes" },
            { name = "no" }]
 
 [[settings]]
+name = "d3d11va-zero-copy"
+file = "mpv"
+default = "no"
+filter = "Video"
+help = "By default, when using hardware decoding with --gpu-api=d3d11, the video image will be copied (GPU-to-GPU) from the decoder surface to a shader resource. Set this option to avoid that copy by sampling directly from the decoder image. This may increase performance and reduce power usage, but can cause the image to be sampled incorrectly on the bottom and right edges due to padding, and may invoke driver bugs, since Direct3D 11 technically does not allow sampling from a decoder surface (though most drivers support it.)"
+options = [{ name = "yes" },
+           { name = "no" }]
+
+[[settings]]
+name = "hdr-compute-peak"
+file = "mpv"
+default = "auto"
+filter = "Video"
+help = "Compute the HDR peak and frame average brightness per-frame instead of relying on tagged metadata. These values are averaged over local regions as well as over several frames to prevent the value from jittering around too much. This option basically gives you dynamic, per-scene tone mapping. Requires compute shaders, which is a fairly recent OpenGL feature, and will probably also perform horribly on some drivers, so enable at your own risk. The special value auto (default) will enable HDR peak computation automatically if compute shaders and SSBOs are supported."
+options = [{ name = "auto" },
+           { name = "yes" },
+           { name = "no" }]
+
+[[settings]]
 name = "volume"
 file = "mpv"
 filter = "Audio"
@@ -277,6 +296,12 @@ filter = "Screen"
 help = "Specify the OSD font size. See sub-font-size for details. Default: 55"
 
 [[settings]]
+name = "osd-duration"
+file = "mpv"
+filter = "Screen"
+help = "Set the duration of the OSD messages in ms. Default: 1000"
+
+[[settings]]
 name = "osd-scale-by-window"
 file = "mpv"
 default = "yes"
@@ -310,7 +335,7 @@ default = "previous"
 filter = "Screen"
 help = "Setting to remember the window height in the current session, otherwise the video's native resolution is used. (mpv.net specific setting)"
 options = [{ name = "video", help = "Window size is set to native video resolution" },
-           { name = "previous", help = "Window size is remembered but only from the current session" }]
+           { name = "previous", help = "Window size is remembered but only in the current session" }]
 
 [[settings]]
 name = "start-threshold"

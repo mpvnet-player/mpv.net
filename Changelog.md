@@ -1,21 +1,29 @@
 
 ### 5.4.4.2
 
+- update: libmpv shinchiro 0.32.0-258-g281f5c63c1
+- update: youtube-dl
+
+- new: d3d11va-zero-copy setting added to conf editor
+- new: hdr-compute-peak setting added to conf editor
 - new: flag cli switches support now `--no-flag` in addition to `--flag=no`
        https://mpv.io/manual/master/#usage
 - new: cli switches can also start with single `-` instead of double `--`
        https://mpv.io/manual/master/#legacy-option-syntax
-- new: the PowerShell script host was completely rewritten, events can be assigned
-       to using `Register-ObjectEvent`, the scripting wiki page was updated
+- new: PowerShell script host was completely rewritten, events can be assigned
+       by using `Register-ObjectEvent`, the scripting wiki page was updated
        https://github.com/stax76/mpv.net/wiki/Scripting#powershell
 - new: Context Menu > View > Show Profiles
        https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt#L147
-- new: various default were improved
-       https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/mpv.conf.txt
-
-### 5.4.4.1
-
-- new: external OSD console replaced with internal OSD console
+- new: Context Menu > View > Show Properties
+       https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt#L148
+- new: Context Menu > View > Show Commands
+       https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt#L149
+- new: config editor tab is now remembered
+- new: osd-duration setting added to config editor and default mpv.conf
+- new: external console replaced with internal console, in case mpv.conf is missing it's
+       generated with correct Hight DPI font settings: `script-opts=console-scale=<dpiscale>`
+       https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt#L150
        https://mpv.io/manual/master/#console
 - new: blue color in dark theme is now less intense
        https://github.com/stax76/mpv.net/blob/master/Manual.md#color-theme
