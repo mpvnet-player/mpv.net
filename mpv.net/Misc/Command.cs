@@ -10,8 +10,7 @@ using System.Windows.Interop;
 using VB = Microsoft.VisualBasic;
 using ScriptHost;
 
-using static Common;
-using System.Collections.Generic;
+using static NewLine;
 
 namespace mpvnet
 {
@@ -43,6 +42,8 @@ namespace mpvnet
                 case "playlist-first": PlaylistFirst(); break;
                 case "playlist-last": PlaylistLast(); break;
                 case "show-profiles": ShowProfiles(); break;
+                case "show-properties": ShowProperties(); break;
+                case "show-commands": ShowCommands(); break;
                 case "add-files-to-playlist": OpenFiles("append"); break; // deprecated 2019
                 default: Msg.ShowError($"No command '{id}' found."); break;
             }
@@ -299,10 +300,10 @@ namespace mpvnet
             }
         }
 
-        private static void ShowProfiles()
+        static void ShowProfiles()
         {
-            string psCode = @"
-                foreach ($item in ($mpvjson | ConvertFrom-Json))
+            string code = @"
+                foreach ($item in ($json | ConvertFrom-Json | foreach { $_ } | sort name))
                 {
                     $item.name
                     ''
@@ -316,14 +317,44 @@ namespace mpvnet
                 }";
 
             string json = mp.get_property_string("profile-list");
-            PowerShell ps = new PowerShell();
-            ps.Print = false;
-            ps.Scripts.Add(psCode);
-            string file = Path.GetTempPath() + @"\mpv profiles.txt";
-            File.WriteAllText(file, BR + string.Join("\r\n", (ps.Invoke("mpvjson", json)
-                as IEnumerable<object>).Select(x => x.ToString())).ToString());
+            string file = Path.GetTempPath() + @"\mpv profile-list.txt";
+            File.WriteAllText(file, BR + PowerShell.InvokeAndReturnString(code, "json", json));
             Process.Start(file);
-            ps.Runspace.Dispose();
+        }
+
+        static void ShowCommands()
+        {
+            string code = @"
+                foreach ($item in ($json | ConvertFrom-Json | foreach { $_ } | sort name))
+                {
+                    ''
+                    $item.name
+
+                    foreach ($arg in $item.args)
+                    {
+                        $value = $arg.name + ' <' + $arg.type.ToLower() + '>'
+
+                        if ($arg.optional -eq $true)
+                        {
+                            $value = '[' + $value + ']'
+                        }
+
+                        '    ' + $value
+                    }
+                }";
+
+            string json = mp.get_property_string("command-list");
+            string file = Path.GetTempPath() + @"\mpv command-list.txt";
+            File.WriteAllText(file, PowerShell.InvokeAndReturnString(code, "json", json) + BR);
+            Process.Start(file);
+        }
+
+        static void ShowProperties()
+        {
+            string file = Path.GetTempPath() + @"\mpv property-list.txt";
+            var props = mp.get_property_string("property-list").Split(',').OrderBy(prop => prop);
+            File.WriteAllText(file, BR + string.Join(BR, props) + BR);
+            Process.Start(file);
         }
     }
 }

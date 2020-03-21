@@ -385,7 +385,7 @@ namespace mpvnet
 
             if (!content.Contains("#menu:"))
             {
-                var defaultItems = CommandItem.GetItems(Properties.Resources.inputConf);
+                var defaultItems = CommandItem.GetItems(Properties.Resources.input_conf);
 
                 foreach (CommandItem item in items)
                     foreach (CommandItem defaultItem in defaultItems)

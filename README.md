@@ -56,9 +56,9 @@ Table of contents
 - Very high degree of mpv compatibility, almost all mpv features are available
 - Great usability due to everything in the application being searchable
 - Open source built with modern tools
-- Customizable context menu defined in the same file as the key bindings ([Screenshot](#context-menu-screenshot), [Defaults](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt))
-- Searchable config dialog ([Screenshot](#config-editor-screenshot), [Defaults](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/mpvConf.txt))
-- Searchable input (key/mouse) binding editor ([Screenshot](#input-editor-screenshot), [Defaults](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt))
+- Customizable context menu defined in the same file as the key bindings ([Screenshot](#context-menu-screenshot), [Defaults](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt))
+- Searchable config dialog ([Screenshot](#config-editor-screenshot), [Defaults](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/mpv.conf.txt))
+- Searchable input (key/mouse) binding editor ([Screenshot](#input-editor-screenshot), [Defaults](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt))
 - Configuration files that are easy to read and edit ([Manual](https://mpv.io/manual/master/#configuration-files))
 - Searchable command palette to quickly find commands and keys ([Screenshot](#command-palette-screenshot))
 - Modern graphical user interface with customizable color themes ([Screenshot](#config-editor-screenshot))
@@ -173,7 +173,7 @@ C:\Users\%username%\AppData\Roaming\mpv\input.conf
 
 if it's missing mpv.net generates it with the following defaults:
 
-<https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt>
+<https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt>
 
 input.conf defines mpv's key and mouse bindings and mpv.net uses comments to define the context menu.
 
@@ -191,14 +191,14 @@ all config will be loaded from this folder only.
 mpv specific settings are stored in the file mpv.conf, if no mpv.conf file exists
 mpv.net generates it with the following defaults:
 
-<https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/mpvConf.txt>
+<https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/mpv.conf.txt>
 
 mpv.net specific settings are stored in the file mpvnet.conf
 
 The input (key/mouse) bindings and the context menu definitions are stored in the
 input.conf file, if it's missing mpv.net generates it with the following defaults:
 
-<https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt>
+<https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt>
 
 mpv.net supports almost all mpv settings and features,
 [limitations are listed in the wiki](https://github.com/stax76/mpv.net/wiki/Limitations).
@@ -254,7 +254,7 @@ You can support the development of mpv.net with a PayPal donation:
 #### mpv.net
 
 - wiki: <https://github.com/stax76/mpv.net/wiki>
-- default key bindings: <https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt>
+- default key bindings: <https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt>
 - download: <https://github.com/stax76/mpv.net/releases>
 - bugs and requests: <https://github.com/stax76/mpv.net/issues>
 

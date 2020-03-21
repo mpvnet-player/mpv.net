@@ -19,7 +19,7 @@ using WinForms = System.Windows.Forms;
 
 using static libmpv;
 using static WinAPI;
-using static Common;
+using static NewLine;
 
 namespace mpvnet
 {
@@ -215,11 +215,11 @@ namespace mpvnet
                         RegistryHelp.SetValue(App.RegPath, "ConfigFolder", _ConfigFolder);
 
                     if (!File.Exists(_ConfigFolder + "input.conf"))
-                        File.WriteAllText(_ConfigFolder + "input.conf", Properties.Resources.inputConf);
+                        File.WriteAllText(_ConfigFolder + "input.conf", Properties.Resources.input_conf);
 
                     if (!File.Exists(_ConfigFolder + "mpv.conf"))
                     {
-                        string conf = Properties.Resources.mpvConf;
+                        string conf = Properties.Resources.mpv_conf;
                         Graphics gx = Graphics.FromHwnd(IntPtr.Zero);
                         float scale = GetDeviceCaps(gx.GetHdc(), 88 /*LOGPIXELSX*/) / 96.0f;
 

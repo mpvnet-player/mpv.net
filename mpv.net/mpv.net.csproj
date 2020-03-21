@@ -118,7 +118,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Misc\App.cs" />
-    <Compile Include="Misc\Common.cs" />
+    <Compile Include="Misc\NewLine.cs" />
     <Compile Include="Misc\Extension.cs" />
     <Content Include="..\License.txt">
       <Link>License.txt</Link>
@@ -179,7 +179,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Scripting\PythonScript.cs" />
+    <Compile Include="Scripting\IronPython.cs" />
     <Compile Include="mpv\libmpv.cs" />
     <Compile Include="WinForms\MainForm.cs">
       <SubType>Form</SubType>
@@ -247,8 +247,8 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Content Include="mpvnet.ico" />
-    <Content Include="Resources\mpvConf.txt" />
-    <Content Include="Resources\confToml.txt" />
+    <Content Include="Resources\mpv.conf.txt" />
+    <Content Include="Resources\editor.toml.txt" />
     <None Include="Resources\mpvnet.ico" />
     <None Include="Resources\mpvnet.png" />
   </ItemGroup>
@@ -256,7 +256,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\inputConf.txt" />
+    <Content Include="Resources\input.conf.txt" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="DynamicGUI\OptionSettingControl.xaml">

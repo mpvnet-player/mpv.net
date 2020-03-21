@@ -3,7 +3,7 @@
  # of mpv.net. A input and config editor can be found in mpv.nets
  # context menu under 'Settings'. The defaults of this file can be found at:
 
- # https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt
+ # https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt
 
  # The defaults of mpv can be found at:
 
@@ -132,32 +132,34 @@
  _   ignore                         #menu: Extensions > Rating > -
  _   script-message rate-file about #menu: Extensions > Rating > About
 
- Ctrl+t set ontop yes                             #menu: View > On Top > Enable
- Ctrl+T set ontop no                              #menu: View > On Top > Disable
- Alt++  no-osd set window-scale 1.2               #menu: View > Window Size > Enlarge
- Alt+-  no-osd set window-scale 0.8               #menu: View > Window Size > Shrink
- b      cycle border                              #menu: View > Toggle Border
- i      script-message mpv.net show-info          #menu: View > File/Stream Info
- t      script-binding stats/display-stats        #menu: View > Show Statistics
- T      script-binding stats/display-stats-toggle #menu: View > Toggle Statistics
- Del    script-binding osc/visibility             #menu: View > Toggle OSC Visibility
- F8     script-binding show-playlist              #menu: View > Show Playlist
- F9     show-text ${track-list} 5000              #menu: View > Show Audio/Video/Subtitle List
- p      show-progress                             #menu: View > Show Progress
- Ctrl+p script-message mpv.net show-profiles      #menu: View > Show Profiles
- `      script-binding console/enable             #menu: View > Show REPL
+ Ctrl+t  set ontop yes                               #menu: View > On Top > Enable
+ Ctrl+T  set ontop no                                #menu: View > On Top > Disable
+ Alt++   no-osd set window-scale 1.2                 #menu: View > Window Size > Enlarge
+ Alt+-   no-osd set window-scale 0.8                 #menu: View > Window Size > Shrink
+ b       cycle border                                #menu: View > Toggle Border
+ i       script-message mpv.net show-info            #menu: View > File/Stream Info
+ t       script-binding stats/display-stats          #menu: View > Show Statistics
+ T       script-binding stats/display-stats-toggle   #menu: View > Toggle Statistics
+ Del     script-binding osc/visibility               #menu: View > Toggle OSC Visibility
+ F8      script-binding show-playlist                #menu: View > Show Playlist
+ F9      show-text ${track-list} 5000                #menu: View > Show Audio/Video/Subtitle List
+ p       show-progress                               #menu: View > Show Progress
+ Ctrl+p  script-message mpv.net show-profiles        #menu: View > Show Profiles
+ Shift+p script-message mpv.net show-properties      #menu: View > Show Properties
+ Shift+c script-message mpv.net show-commands        #menu: View > Show Commands
+ `       script-binding console/enable               #menu: View > Show Console
 
- c      script-message mpv.net show-conf-editor   #menu: Settings > Show Config Editor
- Ctrl+i script-message mpv.net show-input-editor  #menu: Settings > Show Input Editor
- Ctrl+f script-message mpv.net open-conf-folder   #menu: Settings > Open Config Folder
+ c       script-message mpv.net show-conf-editor     #menu: Settings > Show Config Editor
+ Ctrl+i  script-message mpv.net show-input-editor    #menu: Settings > Show Input Editor
+ Ctrl+f  script-message mpv.net open-conf-folder     #menu: Settings > Open Config Folder
 
- F1     script-message mpv.net show-command-palette #menu: Tools > Show All Commands
- h      script-message mpv.net show-history         #menu: Tools > Show History
- l      ab-loop                                     #menu: Tools > Set/clear A-B loop points
- L      cycle-values loop-file "inf" "no"           #menu: Tools > Toggle infinite file looping
- _      cycle shuffle                               #menu: Tools > Toggle Shuffle
- Ctrl+h cycle-values hwdec "auto" "no"              #menu: Tools > Toggle Hardware Decoding
- _ script-message mpv.net show-setup-dialog         #menu: Tools > Setup...
+ F1      script-message mpv.net show-command-palette #menu: Tools > Show All Commands
+ h       script-message mpv.net show-history         #menu: Tools > Show History
+ l       ab-loop                                     #menu: Tools > Set/clear A-B loop points
+ L       cycle-values loop-file "inf" "no"           #menu: Tools > Toggle infinite file looping
+ _       cycle shuffle                               #menu: Tools > Toggle Shuffle
+ Ctrl+h  cycle-values hwdec "auto" "no"              #menu: Tools > Toggle Hardware Decoding
+ _ script-message mpv.net show-setup-dialog          #menu: Tools > Setup...
 
  _ script-message mpv.net shell-execute https://mpv.io                    #menu: Help > Website mpv
  _ script-message mpv.net shell-execute https://github.com/stax76/mpv.net #menu: Help > Website mpv.net

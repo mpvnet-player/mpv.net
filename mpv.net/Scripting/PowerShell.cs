@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Management.Automation;
 using System.Management.Automation.Runspaces;
 using System.Threading;
@@ -63,6 +64,16 @@ namespace ScriptHost
             {
                 throw e;
             }        
+        }
+
+        public static string InvokeAndReturnString(string code, string varName, object varValue)
+        {
+            PowerShell ps = new PowerShell() { Print = false };
+            ps.Scripts.Add(code);
+            string ret = string.Join(Environment.NewLine, (ps.Invoke(varName, varValue)
+                as IEnumerable<object>).Select(item => item.ToString())).ToString();
+            ps.Runspace.Dispose();
+            return ret;
         }
 
         public void Output_DataReady(object sender, EventArgs e)

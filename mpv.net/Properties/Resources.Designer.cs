@@ -61,7 +61,8 @@ namespace mpvnet.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to [[settings]]
+        ///   Looks up a localized string similar to 
+        ///[[settings]]
         ///name = &quot;hwdec&quot;
         ///file = &quot;mpv&quot;
         ///default = &quot;no&quot;
@@ -69,18 +70,18 @@ namespace mpvnet.Properties {
         ///url = &quot;https://mpv.io/manual/master/#options-hwdec&quot;
         ///help = &quot;Specify the hardware video decoding API that should be used if possible. Whether hardware decoding is actually done depends on the video codec. If hardware decoding is not possible, mpv will fall back on software decoding.\n\nFor more information visit:&quot;
         ///options = [{ name = &quot;no&quot;,           help = &quot;always use software decoding&quot; },
-        ///           { name = &quot;auto&quot;,         hel [rest of string was truncated]&quot;;.
+        ///           { name = &quot;auto&quot;,         h [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string confToml {
+        internal static string editor_toml {
             get {
-                return ResourceManager.GetString("confToml", resourceCulture);
+                return ResourceManager.GetString("editor_toml", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to 
         /// # This file defines the key and mouse bindings and the context menu
-        /// # of mpv.net. A input and config editor can be found in mpv.net&apos;s
+        /// # of mpv.net. A input and config editor can be found in mpv.nets
         /// # context menu under &apos;Settings&apos;. The defaults of this file can be found at:
         ///
         /// # https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt
@@ -90,34 +91,34 @@ namespace mpvnet.Properties {
         /// # https://github.com/mpv-player/mpv/blob/master/etc/input.conf
         ///
         /// # mpv.net&apos;s defaults of mpv.conf contain: &apos;input-default-bindings = no&apos;
-        /// # which disables mpv&apos;s  [rest of string was truncated]&quot;;.
+        /// # which disables mpv&apos;s i [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string inputConf {
+        internal static string input_conf {
             get {
-                return ResourceManager.GetString("inputConf", resourceCulture);
+                return ResourceManager.GetString("input_conf", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to input-default-bindings = no
+        ///   Looks up a localized string similar to 
+        ///input-default-bindings = no
         ///input-ar-delay = 500
         ///input-ar-rate = 20
         ///keep-open = yes
         ///keep-open-pause = no
+        ///osd-duration = 2000
         ///osd-playing-msg = &apos;${filename}&apos;
-        ///script-opts = osc-scalewindowed=1.5
+        ///script-opts = osc-scalewindowed=1.5,osc-hidetimeout=2000,console-scale=1
         ///screenshot-directory = &apos;~~desktop/&apos;
-        ///cscale = spline36
-        ///dscale = spline36
-        ///scale = spline36
         ///hwdec = yes
         ///
         ///[protocol.https]
-        ///osd-playing-msg = &apos;${media-title}&apos;.
+        ///osd-playing-msg = &apos;${media-title}&apos;
+        ///.
         /// </summary>
-        internal static string mpvConf {
+        internal static string mpv_conf {
             get {
-                return ResourceManager.GetString("mpvConf", resourceCulture);
+                return ResourceManager.GetString("mpv_conf", resourceCulture);
             }
         }
         
@@ -135,23 +136,24 @@ namespace mpvnet.Properties {
         ///   Looks up a localized string similar to 
         ///[dark]
         ///
-        ///heading = #1E90FF
-        ///foreground = #FFFFFF
-        ///foreground2 = #C0C0C0
-        ///background = #323232
+        ///heading     = #3C8CC8
+        ///foreground  = #DDDDDD
+        ///foreground2 = #AAAAAA
+        ///background  = #323232
         ///
-        ///menu-foreground = #FFFFFF
+        ///menu-foreground = #DDDDDD
         ///menu-background = #323232
         ///menu-highlight  = #505050
         ///menu-border     = #FFFFFF
         ///menu-checked    = #5A5A5A
         ///
+        ///
         ///[light]
         ///
-        ///heading = #0068B2
-        ///foreground = #000000
+        ///heading     = #0068B2
+        ///foreground  = #000000
         ///foreground2 = #4C4C4C
-        ///background = #F7F7F7
+        ///background  = #F7F7F7
         ///
         ///menu-foreground = #000000
         ///menu-background = #DFDFDF

@@ -94,7 +94,7 @@ namespace mpvnet
         {
             string text = null;
 
-            foreach (string line in Properties.Resources.inputConf.Split(new[] { "\r\n" }, StringSplitOptions.None))
+            foreach (string line in Properties.Resources.input_conf.Split(new[] { "\r\n" }, StringSplitOptions.None))
             {
                 string test = line.Trim();
                 if (test == "" || test.StartsWith("#")) text += test + "\r\n";

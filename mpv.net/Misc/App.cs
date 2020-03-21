@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using UI;
 
 using static libmpv;
-using static Common;
+using static NewLine;
 
 using System.Threading.Tasks;
 

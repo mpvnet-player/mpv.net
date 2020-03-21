@@ -2,30 +2,33 @@
 ### 5.4.4.2
 
 - new: flag cli switches support now `--no-flag` in addition to `--flag=no`
+       https://mpv.io/manual/master/#usage
 - new: cli switches can also start with single `-` instead of double `--`
-- new: the PowerShell script host was completely rewritten, events can
-       can be assigned to using `Register-ObjectEvent`, the scripting
-       wiki page was updated
+       https://mpv.io/manual/master/#legacy-option-syntax
+- new: the PowerShell script host was completely rewritten, events can be assigned
+       to using `Register-ObjectEvent`, the scripting wiki page was updated
+       https://github.com/stax76/mpv.net/wiki/Scripting#powershell
 - new: Context Menu > View > Show Profiles
-- new: default mpv.conf is now generated with `osd-duration=2000` and
-       `script-opts=...,console-scale=<DPI scale>` to
-       workaround mpv using broken High DPI defaults
+       https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt#L147
+- new: various default were improved
+       https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/mpv.conf.txt
 
 ### 5.4.4.1
 
-- new: external console replaced with internal console
+- new: external OSD console replaced with internal OSD console
+       https://mpv.io/manual/master/#console
 - new: blue color in dark theme is now less intense
+       https://github.com/stax76/mpv.net/blob/master/Manual.md#color-theme
 - new: menu item 'View > Show Progress' (p key) to show progress bar
+       https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt#L146
 - new: `script-message mpv.net playlist-first`, unlike mpv does not
        restart if the first file is already active
-- new: if mpv.net is started from the terminal and an error happens
-       then the error is printed to the terminal instead of shown
-       with a message box
+       https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt#L44
+- new: if mpv.net is started from the terminal and an error happens then the error
+       is printed to the terminal instead of shown with a message box
 - fix: update routine did only work when mpv.net was located in 'Program Files'
-- fix: errors were ignored and only seen in the terminal,
-       now a message box is shown
-- fix: when start-size=video was used then enlarging or shrinking the window
-       size was broken
+- fix: fatal errors were ignored and only seen in the terminal, now a message box is shown
+- fix: when start-size=video was used then enlarging or shrinking the window size was broken
 
 ### 5.4.4.0
 
@@ -37,7 +40,7 @@
 - new: update check, it must be enabled first in the conf editor under General
 - new: update feature, requires PowerShell 5 and curl,
        an up to date Windows 10 system has both included.
-       Main menu (input.conf) must be reset or updated manually ([defaults](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt))
+       Main menu (input.conf) must be reset or updated manually ([defaults](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt))
 
 - update: libmpv shinchiro 2019-11-10 
 
@@ -76,7 +79,7 @@
   context menu item in explorer with multi selection support use my
   [Open with++](https://github.com/stax76/OpenWithPlusPlus#add-to-mpvnet-playlist) shell extension, as far as I know multi selection
   can not be done using the Registry but only via shell extension
-- window-size mpv property support added ([default bindings](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt#L137))
+- window-size mpv property support added ([default bindings](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt#L137))
 - the config editor keeps profiles and comments in mpv.conf intact!
 - the options in the config editor are better organized
 
@@ -273,7 +276,7 @@
   pressed, the files are opened as selected, the order is random though
   because Explorer starts multiple mpv.net processes concurrently
 - libmpv was updated to shinchiro 2019-06-30
-- the [mpv.conf defaults](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/mpvConf.txt) were changed to show a larger OSC
+- the [mpv.conf defaults](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/mpv.conf.txt) were changed to show a larger OSC
 - in case a file is opened that has a aspect ratio smaller then 1.2 then
   the window size will use a aspect ratio of 1.8
 - new JavaScript script osc-visibility.js included in the distribution
@@ -312,7 +315,7 @@
 - the default key binding of the Everything media search was changed to F3
 - support for the mpv property 'border' was added to the config editor
   to show/hide the window decoration (titlebar, border). A toggle menu item and
-  key binding (b) was added as well ([Default Binding](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt#L135))
+  key binding (b) was added as well ([Default Binding](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt#L135))
 
 ### 4.3.1
 
@@ -327,7 +330,7 @@
 - the help and layout in the config editor was improved
 - clipboard monitoring for URLs can be disabled in the settings
 - the context menu has a new feature: Open > Add files to playlist,
-  it appends files to the playlist [(Default binding)](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt#L33)
+  it appends files to the playlist [(Default binding)](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt#L33)
 - a setting was added to force using a single mpv.net process instance
 
 ### 4.1
@@ -369,7 +372,7 @@
 - there was a bug that caused underscores beeing removed from input like MBTN_LEFT_DBL
 - the search clear button in the input editor had a render issue in dark mode
 - new search feature added to search and play media files, requires
-  [Everything](https://www.voidtools.com) to be installed. [Default Binding](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt#L29)
+  [Everything](https://www.voidtools.com) to be installed. [Default Binding](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt#L29)
 
 ### 3.5
 
@@ -382,6 +385,6 @@
 
 ### 3.4
 
-- new feature added to manage file associations from within the app. It can be found in the menu at: Tools > Manage... [Default Binding](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt#L149)
+- new feature added to manage file associations from within the app. It can be found in the menu at: Tools > Manage... [Default Binding](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt#L149)
 - new zip download option added
 - new x86 download option added

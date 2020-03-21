@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,7 +17,7 @@ namespace mpvnet
 {
     public partial class ConfWindow : Window
     {
-        List<SettingBase> SettingsDefinitions = Settings.LoadSettings(Properties.Resources.confToml);
+        List<SettingBase> SettingsDefinitions = Settings.LoadSettings(Properties.Resources.editor_toml);
         List<ConfItem> ConfItems = new List<ConfItem>();
         public ObservableCollection<string> FilterStrings { get; } = new ObservableCollection<string>();
         string InitialContent;
