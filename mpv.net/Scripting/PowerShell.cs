@@ -19,7 +19,7 @@ namespace ScriptHost
 
         public static List<PowerShell> Instances { get; } = new List<PowerShell>();
 
-        string BR = Environment.NewLine;
+        string NL = Environment.NewLine;
 
         public object Invoke() => Invoke(null, null);
 
@@ -55,8 +55,8 @@ namespace ScriptHost
             }
             catch (RuntimeException e)
             {
-                string message = e.Message + BR + BR + e.ErrorRecord.ScriptStackTrace.Replace(
-                    " <ScriptBlock>, <No file>", "") + BR + BR + Module + BR;
+                string message = e.Message + NL + NL + e.ErrorRecord.ScriptStackTrace.Replace(
+                    " <ScriptBlock>, <No file>", "") + NL + NL + Module + NL;
 
                 throw new PowerShellException(message);
             }

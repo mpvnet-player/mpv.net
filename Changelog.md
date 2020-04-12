@@ -1,4 +1,8 @@
 
+### 5.4.4.3
+
+- update: MediaInfo 20.03
+
 ### 5.4.4.2
 
 - update: libmpv shinchiro 0.32.0-258-g281f5c63c1
