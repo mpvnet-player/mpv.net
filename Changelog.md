@@ -1,7 +1,14 @@
 
-### 5.4.4.3
+5.4.4.3
+=======
 
-- update: MediaInfo 20.03
+new
+---
+- update MediaInfo 20.03
+- mpv property window-maximized support added, cycling it from input.conf
+  might not be 100% reliable, it's likely a bug in the mpv client API and
+  will be further investigated soon
+
 
 ### 5.4.4.2
 

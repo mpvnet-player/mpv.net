@@ -53,13 +53,16 @@ namespace mpvnet
                 mp.Idle += Idle;
                 mp.Seek += () => UpdateProgressBar();
 
+                mp.observe_property_bool("window-maximized", PropChangeWindowMaximized);
                 mp.observe_property_bool("pause", PropChangePause);
                 mp.observe_property_bool("fullscreen", PropChangeFullscreen);
                 mp.observe_property_bool("ontop", PropChangeOnTop);
                 mp.observe_property_bool("border", PropChangeBorder);
+
                 mp.observe_property_string("sid", PropChangeSid);
                 mp.observe_property_string("aid", PropChangeAid);
                 mp.observe_property_string("vid", PropChangeVid);
+
                 mp.observe_property_int("edition", PropChangeEdition);
                 mp.observe_property_double("window-scale", PropChangeWindowScale);
                 
@@ -102,7 +105,7 @@ namespace mpvnet
                     Top = posY - Height / 2;
                 }
 
-                if (App.Maximized)
+                if (mp.WindowMaximized)
                 {
                     SetFormPosAndSize(1, true);
                     WindowState = FormWindowState.Maximized;
@@ -599,6 +602,22 @@ namespace mpvnet
                 BeginInvoke(new Action(() => SetFormPosAndSize(value)));
                 mp.command("no-osd set window-scale 1");
             }
+        }
+
+        void PropChangeWindowMaximized(bool enabled)
+        {
+            //TODO: this might not be reliable
+            if (!WasShown)
+                return;
+
+            mp.WindowMaximized = enabled;
+
+            Invoke(new Action(() => {
+                if (mp.WindowMaximized && WindowState != FormWindowState.Maximized)
+                    WindowState = FormWindowState.Maximized;
+                else if (!mp.WindowMaximized && WindowState == FormWindowState.Maximized)
+                    WindowState = FormWindowState.Normal;
+            }));
         }
 
         void PropChangeBorder(bool enabled) {

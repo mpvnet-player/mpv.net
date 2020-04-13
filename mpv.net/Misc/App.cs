@@ -30,7 +30,6 @@ namespace mpvnet
 
         public static bool RememberHeight { get; set; } = true;
         public static bool RememberPosition { get; set; }
-        public static bool Maximized { get; set; }
         public static bool DebugMode { get; set; }
         public static bool IsStartedFromTerminal { get; } = Environment.GetEnvironmentVariable("_started_from_console") == "yes";
         public static bool RememberVolume { get; set; } = true;
@@ -171,7 +170,6 @@ namespace mpvnet
             switch (name)
             {
                 case "remember-position": RememberPosition = value == "yes"; return true;
-                case "maximized": Maximized = value == "yes"; return true;
                 case "debug-mode": DebugMode = value == "yes"; return true;
                 case "remember-volume": RememberVolume = value == "yes"; return true;
                 case "queue": Queue = value == "yes"; return true;

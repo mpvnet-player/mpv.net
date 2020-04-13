@@ -59,10 +59,11 @@ namespace mpvnet
 
         public static event Action Initialized;
 
-        public static List<KeyValuePair<string, Action<bool>>> BoolPropChangeActions { get; set; } = new List<KeyValuePair<string, Action<bool>>>();
-        public static List<KeyValuePair<string, Action<int>>> IntPropChangeActions { get; set; } = new List<KeyValuePair<string, Action<int>>>();
+        public static List<KeyValuePair<string, Action<bool>>>     BoolPropChangeActions { get; set; } = new List<KeyValuePair<string, Action<bool>>>();
+        public static List<KeyValuePair<string, Action<int>>>       IntPropChangeActions { get; set; } = new List<KeyValuePair<string, Action<int>>>();
         public static List<KeyValuePair<string, Action<double>>> DoublePropChangeActions { get; set; } = new List<KeyValuePair<string, Action<double>>>();
         public static List<KeyValuePair<string, Action<string>>> StringPropChangeActions { get; set; } = new List<KeyValuePair<string, Action<string>>>();
+    
         public static List<MediaTrack> MediaTracks { get; set; } = new List<MediaTrack>();
         public static List<KeyValuePair<string, double>> Chapters { get; set; } = new List<KeyValuePair<string, double>>();
         public static IntPtr Handle { get; set; }
@@ -80,11 +81,12 @@ namespace mpvnet
         public static string Vid { get; set; } = "";
         public static string GPUAPI { get; set; } = "auto";
 
+        public static bool Border { get; set; } = true;
+        public static bool Fullscreen { get; set; }
         public static bool IsLogoVisible { set; get; }
         public static bool IsQuitNeeded { set; get; } = true;
-        public static bool Fullscreen { get; set; }
-        public static bool Border { get; set; } = true;
         public static bool TaskbarProgress { get; set; } = true;
+        public static bool WindowMaximized { get; set; }
 
         public static int Screen { get; set; } = -1;
         public static int Edition { get; set; }
@@ -150,6 +152,7 @@ namespace mpvnet
                 case "fs":
                 case "fullscreen": Fullscreen = value == "yes"; break;
                 case "border": Border = value == "yes"; break;
+                case "window-maximized": WindowMaximized = value == "yes"; break;
                 case "taskbar-progress": TaskbarProgress = value == "yes"; break;
                 case "screen": Screen = Convert.ToInt32(value); break;
                 case "gpu-api": GPUAPI = value; break;
@@ -251,6 +254,7 @@ namespace mpvnet
                     foreach (var i in _Conf)
                         ProcessProperty(i.Key, i.Value);
                 }
+
                 return _Conf;
             }
         }

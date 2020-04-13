@@ -359,11 +359,11 @@ options = [{ name = "yes" },
            { name = "no" }]
 
 [[settings]]
-name = "maximized"
-file = "mpvnet"
+name = "window-maximized"
+file = "mpv"
 default = "no"
 filter = "Screen"
-help = "Start with a maximized window. (mpv.net specific setting)"
+help = "Start with a maximized window."
 options = [{ name = "yes" },
            { name = "no" }]
 
