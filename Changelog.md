@@ -1,10 +1,4 @@
 
-To Do
-=====
-
-add vpy support to docs
-
-
 5.4.4.3 Beta (not yet released)
 ============
 

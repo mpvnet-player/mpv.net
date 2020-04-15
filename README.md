@@ -1,3 +1,4 @@
+
 ![](https://raw.githubusercontent.com/stax76/mpv.net/master/img/mpvnet.png)
 
 ![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/stax76/mpv.net) ![GitHub closed issues](https://img.shields.io/github/issues-closed/stax76/mpv.net) ![GitHub All Releases](https://img.shields.io/github/downloads/stax76/mpv.net/total) ![GitHub tag (latest by date)](https://img.shields.io/github/tag-date/stax76/mpv.net) ![GitHub stars](https://img.shields.io/github/stars/stax76/mpv.net) [![PayPal donate button](https://img.shields.io/badge/paypal-donate-yellow.svg)](https://www.paypal.me/stax76)
@@ -62,7 +63,7 @@ Table of contents
 - Configuration files that are easy to read and edit ([Manual](https://mpv.io/manual/master/#configuration-files))
 - Searchable command palette to quickly find commands and keys ([Screenshot](#command-palette-screenshot))
 - Modern graphical user interface with customizable color themes ([Screenshot](#config-editor-screenshot))
-- [Extension API for .NET languages (C#, VB.NET and F#)](https://github.com/stax76/mpv.net/wiki/Extensions)
+- Extension API for .NET languages (C#, VB.NET and F#)
 - Scripting API for Python, C#, Lua, JavaScript and PowerShell ([Wiki](https://github.com/stax76/mpv.net/wiki/Scripting))
 - Language agnostic JSON IPC to control the player with a external programs
 - On Screen Controler (OSC, play control buttons) ([Screenshot](#main-window-screenshot))
@@ -211,7 +212,7 @@ The config folder can be opened from the context menu.
 
 ## Extensions
 
-[Extensions wiki page](https://github.com/stax76/mpv.net/wiki/Extensions)
+[Extensions](Manual.md#extensions)
 
 ## Architecture
 
