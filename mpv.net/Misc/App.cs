@@ -27,8 +27,8 @@ namespace mpvnet
         public static string DarkMode { get; set; } = "always";
         public static string DarkTheme { get; set; } = "dark";
         public static string LightTheme { get; set; } = "light";
+        public static string StartSize { get; set; } = "previous";
 
-        public static bool RememberHeight { get; set; } = true;
         public static bool RememberPosition { get; set; }
         public static bool DebugMode { get; set; }
         public static bool IsStartedFromTerminal { get; } = Environment.GetEnvironmentVariable("_started_from_console") == "yes";
@@ -40,7 +40,7 @@ namespace mpvnet
         public static int StartThreshold { get; set; } = 1500;
         public static int RecentCount { get; set; } = 15;
 
-        public static float MinimumAspectRatio { get; set; } = 1.3f;
+        public static float MinimumAspectRatio { get; set; } = 1.2f;
 
         public static Extension Extension { get; set; }
 
@@ -175,7 +175,7 @@ namespace mpvnet
                 case "queue": Queue = value == "yes"; return true;
                 case "auto-load-folder": AutoLoadFolder = value == "yes"; return true;
                 case "update-check": UpdateCheck = value == "yes"; return true;
-                case "start-size": RememberHeight = value == "previous"; return true;
+                case "start-size": StartSize = value; return true;
                 case "process-instance": ProcessInstance = value; return true;
                 case "dark-mode": DarkMode = value; return true;
                 case "start-threshold": StartThreshold = value.Int(); return true;

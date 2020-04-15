@@ -71,8 +71,8 @@ namespace mpvnet
         public static List<PythonScript> PythonScripts { get; set; } = new List<PythonScript>();
         public static Size VideoSize { get; set; }
         public static TimeSpan Duration;
-        public static AutoResetEvent ShutdownAutoResetEvent { get; set; } = new AutoResetEvent(false);
-        public static AutoResetEvent VideoSizeAutoResetEvent { get; set; } = new AutoResetEvent(false);
+        public static AutoResetEvent ShutdownAutoResetEvent { get; } = new AutoResetEvent(false);
+        public static AutoResetEvent VideoSizeAutoResetEvent { get; } = new AutoResetEvent(false);
 
         public static string InputConfPath { get => ConfigFolder + "input.conf"; }
         public static string ConfPath      { get => ConfigFolder + "mpv.conf"; }
@@ -368,7 +368,8 @@ namespace mpvnet
                             {
                                 HideLogo();
                                 Duration = TimeSpan.FromSeconds(get_property_number("duration"));
-                                Size vidSize = new Size(get_property_int("width"), get_property_int("height"));
+                                Size vidSize = new Size(get_property_int("dwidth"), get_property_int("dheight"));
+
                                 if (vidSize.Width == 0 || vidSize.Height == 0)
                                     vidSize = new Size(1, 1);
                                 if (VideoSize != vidSize)
@@ -376,6 +377,7 @@ namespace mpvnet
                                     VideoSize = vidSize;
                                     VideoSizeChanged?.Invoke();
                                 }
+
                                 VideoSizeAutoResetEvent.Set();
                                 Task.Run(new Action(() => ReadMetaData()));
                                 string path = mp.get_property_string("path");

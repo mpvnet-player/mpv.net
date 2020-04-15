@@ -287,13 +287,19 @@ namespace mpvnet
             Size size = mp.VideoSize;
             int height = size.Height;
 
-            if (App.RememberHeight || scale != 1)
+            if (App.StartSize == "previous" || App.StartSize == "always" || scale != 1)
             {
                 if (WasInitialSizeSet || scale != 1)
                     height = ClientSize.Height;
                 else
                 {
-                    height = autoFitHeight;
+                    int savedHeight = RegistryHelp.GetInt(App.RegPath, "Height");
+
+                    if (App.StartSize == "always" && savedHeight != 0)
+                        height = savedHeight;
+                    else
+                        height = autoFitHeight;
+
                     WasInitialSizeSet = true;
                 }
             }
@@ -380,6 +386,7 @@ namespace mpvnet
                         FormBorderStyle = FormBorderStyle.None;                      
 
                     SetFormPosAndSize();
+                    SaveWindowProperties();
                 }
             }
         }
@@ -697,10 +704,7 @@ namespace mpvnet
             base.OnFormClosing(e);
 
             if (WindowState == FormWindowState.Normal)
-            {
-                RegistryHelp.SetValue(App.RegPath, "PosX", Left + Width / 2);
-                RegistryHelp.SetValue(App.RegPath, "PosY", Top + Height / 2);
-            }
+                SaveWindowProperties();
 
             RegistryHelp.SetValue(App.RegPath, "Recent", RecentFiles.ToArray());
 
@@ -712,6 +716,16 @@ namespace mpvnet
 
             foreach (PowerShell ps in PowerShell.Instances)
                 ps.Runspace.Dispose();
+        }
+
+        void SaveWindowProperties()
+        {
+            if (WindowState == FormWindowState.Normal)
+            {
+                RegistryHelp.SetValue(App.RegPath, "PosX", Left + Width / 2);
+                RegistryHelp.SetValue(App.RegPath, "PosY", Top + Height / 2);
+                RegistryHelp.SetValue(App.RegPath, "Height", ClientSize.Height);
+            }
         }
 
         protected override void OnMouseDown(MouseEventArgs e)

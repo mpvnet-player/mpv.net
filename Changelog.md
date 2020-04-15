@@ -1,13 +1,18 @@
 
+To Do
+=====
+
+add vpy support to docs
+
+
 5.4.4.3 Beta (not yet released)
 ============
 
-new
----
-
 - update MediaInfo 20.03
-- mpv property window-maximized support added, cycling it from input.conf
+- update libmpv 2020-04-12, it supports vpy playback, ask in forum for configuration
+- mpv property `window-maximized` support added, cycling it from input.conf
   might not be 100% reliable, use native Windows shortcuts Win+Up, Win+Down
+- the mpv.net `start-size` property supports `always` to always remember the window height
 
 
 ### 5.4.4.2

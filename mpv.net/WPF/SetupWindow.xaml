@@ -6,7 +6,7 @@
         xmlns:UI="clr-namespace:UI"
         mc:Ignorable="d"
         
-        Title="mpv.net OS Setup"
+        Title="mpv.net Setup"
         FontSize="13"
         Foreground="{x:Static UI:Theme.Foreground}"
         Background="{x:Static UI:Theme.Background}"
