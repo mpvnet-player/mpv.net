@@ -1,13 +1,13 @@
 
-5.4.4.3
-=======
+5.4.4.3 Beta (not yet released)
+============
 
 new
 ---
+
 - update MediaInfo 20.03
 - mpv property window-maximized support added, cycling it from input.conf
-  might not be 100% reliable, it's likely a bug in the mpv client API and
-  will be further investigated soon
+  might not be 100% reliable, use native Windows shortcuts Win+Up, Win+Down
 
 
 ### 5.4.4.2

@@ -327,7 +327,7 @@ namespace mpvnet
                 if (WindowHandle == IntPtr.Zero)
                     WindowHandle = FindWindowEx(MainForm.Hwnd, IntPtr.Zero, "mpv", null);
 
-                // Debug.WriteLine(evt.event_id.ToString());
+                //Debug.WriteLine(evt.event_id.ToString());
 
                 try
                 {
@@ -436,6 +436,7 @@ namespace mpvnet
                         case mpv_event_id.MPV_EVENT_PROPERTY_CHANGE:
                             {
                                 var data = (mpv_event_property)Marshal.PtrToStructure(evt.data, typeof(mpv_event_property));
+                                //Debug.WriteLine(data.name);
 
                                 if (data.format == mpv_format.MPV_FORMAT_FLAG)
                                 {

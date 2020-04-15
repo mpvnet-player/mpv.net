@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 
 using UI;
 using ScriptHost;
+using System.Threading;
 
 namespace mpvnet
 {
@@ -24,10 +25,10 @@ namespace mpvnet
         Point  LastCursorPosChanged;
         int    LastCursorChangedTickCount;
         int    TaskbarButtonCreatedMessage;
-        bool   WasShown;
         DateTime LastCycleFullscreen;
         Taskbar  Taskbar;
         List<string> RecentFiles;
+        int ShownTickCount;
 
         public MainForm()
         {
@@ -125,6 +126,8 @@ namespace mpvnet
         {
             BeginInvoke(new Action(() => Text = "mpv.net " + Application.ProductVersion));
         }
+
+        bool WasShown() => ShownTickCount != 0 && Environment.TickCount > ShownTickCount + 500;
 
         void CM_Popup(object sender, EventArgs e) => CursorHelp.Show();
 
@@ -499,7 +502,7 @@ namespace mpvnet
                     break;
                 case 0x02E0: // WM_DPICHANGED
                     {
-                        if (!WasShown)
+                        if (!WasShown())
                             break;
 
                         WinAPI.RECT rect = Marshal.PtrToStructure<WinAPI.RECT>(m.LParam);
@@ -606,13 +609,13 @@ namespace mpvnet
 
         void PropChangeWindowMaximized(bool enabled)
         {
-            //TODO: this might not be reliable
-            if (!WasShown)
+            if (!WasShown())
                 return;
 
             mp.WindowMaximized = enabled;
 
-            Invoke(new Action(() => {
+            BeginInvoke(new Action(() =>
+            {
                 if (mp.WindowMaximized && WindowState != FormWindowState.Maximized)
                     WindowState = FormWindowState.Maximized;
                 else if (!mp.WindowMaximized && WindowState == FormWindowState.Maximized)
@@ -678,7 +681,7 @@ namespace mpvnet
             UpdateCheck.DailyCheck();
             mp.LoadScripts();
             Task.Run(() => App.Extension = new Extension());
-            WasShown = true;
+            ShownTickCount = Environment.TickCount;
         }
 
         protected override void OnResize(EventArgs e)
