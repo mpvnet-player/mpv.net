@@ -1,14 +1,22 @@
 
-5.4.4.3 Beta (not yet released)
+5.4.4.4 Beta (not yet released)
+============
+
+
+5.4.4.3 Beta
 ============
 
 - update MediaInfo 20.03
-- update libmpv 2020-04-12, it supports vpy playback, ask in forum for configuration
+- update libmpv 2020-04-12, it supports vpy playback, read manual or ask in forum
 - mpv property `window-maximized` support added, cycling it from input.conf
-  might not be 100% reliable, use native Windows shortcuts Win+Up, Win+Down
-- the mpv.net `start-size` property supports `always` to always remember the window height
+  is not recommended, use native Windows shortcuts Win+Up, Win+Down
+- the mpv.net `start-size` option supports `always` to always remember the window height
 - if the window was maximized before fullscreen was entered, it's now set to
-  maximized after fullscreen was left (it was requested on the tracker)
+  maximized after fullscreen was left
+- with `border=no` the OSC did not auto hide after the mouse curser left the window
+- the script that modified the seek OSD was removed, it still can be found in the mpv wiki
+- certain videos were showed with black bars
+
 
 ### 5.4.4.2
 
