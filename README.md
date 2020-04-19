@@ -141,9 +141,14 @@ Media search feature powered by [Everything](https://www.voidtools.com) to find 
 Download
 --------
 
+### Stable
+
 Stable releases can be downloaded from the [Release page](releases).
 
-Newer Beta versions can be downloaded from [OneDrive](https://1drv.ms/u/s!ArwKS_ZUR01g1ldoLA90tX9DzKTj?e=xITXbC) and [DropBox](https://www.dropbox.com/sh/t54p9igdwvllbpl/AADKyWpaFnIhdyosxyP5d3_xa?dl=0).
+
+### Beta
+
+Beta versions can be downloaded from [OneDrive](https://1drv.ms/u/s!ArwKS_ZUR01g1ldoLA90tX9DzKTj?e=xITXbC) and [DropBox](https://www.dropbox.com/sh/t54p9igdwvllbpl/AADKyWpaFnIhdyosxyP5d3_xa?dl=0).
 
 
 Installation
