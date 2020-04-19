@@ -13,7 +13,6 @@ using System.Threading.Tasks;
 
 using UI;
 using ScriptHost;
-using System.Threading;
 
 namespace mpvnet
 {
@@ -371,9 +370,6 @@ namespace mpvnet
             {
                 if (WindowState != FormWindowState.Maximized || FormBorderStyle != FormBorderStyle.None)
                 {
-                    if (WindowState == FormWindowState.Maximized)
-                        WindowState = FormWindowState.Minimized;
-
                     FormBorderStyle = FormBorderStyle.None;
                     WindowState = FormWindowState.Maximized;
                 }
@@ -382,7 +378,10 @@ namespace mpvnet
             {
                 if (WindowState == FormWindowState.Maximized && FormBorderStyle == FormBorderStyle.None)
                 {
-                    WindowState = FormWindowState.Normal;
+                    if (WasMaximized)
+                        WindowState = FormWindowState.Maximized;
+                    else
+                        WindowState = FormWindowState.Normal;
 
                     if (mp.Border)
                         FormBorderStyle = FormBorderStyle.Sizable;
@@ -701,7 +700,14 @@ namespace mpvnet
 
             if (mp.IsLogoVisible)
                 mp.ShowLogo();
+
+            if (WindowState == FormWindowState.Maximized && FormBorderStyle != FormBorderStyle.None)
+                WasMaximized = true;
+            else if (WindowState == FormWindowState.Normal && FormBorderStyle != FormBorderStyle.None)
+                WasMaximized = false;
         }
+
+        bool WasMaximized;
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {

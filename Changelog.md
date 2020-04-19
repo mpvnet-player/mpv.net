@@ -7,7 +7,8 @@
 - mpv property `window-maximized` support added, cycling it from input.conf
   might not be 100% reliable, use native Windows shortcuts Win+Up, Win+Down
 - the mpv.net `start-size` property supports `always` to always remember the window height
-
+- if the window was maximized before fullscreen was entered, it's now set to
+  maximized after fullscreen was left (it was requested on the tracker)
 
 ### 5.4.4.2
 
