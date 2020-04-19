@@ -10,16 +10,18 @@ Table of contents
 * [Requirements](#requirements)
 * [Installation](#installation)
   + [File Associations](#file-associations)
+* [Settings](#settings)
+* [Command Line Interface](#command-line-interface)
+* [Terminal](#terminal)
 * [External Tools](#external-tools)
   + [Play with mpv](#play-with-mpv)
   + [External Application Button](#external-application-button)
   + [Open with++](#open-with)
   + [MediaInfo.NET](#mediainfonet)  
-* [Command Line Interface](#command-line-interface)
-* [Terminal](#terminal)
 * [Extensions](#extensions)
 * [Color Theme](#color-theme)
 * [Hidden and secret features](#hidden-and-secret-features)
+* [Limitations](#limitations)
 * [Context Menu](#context-menu)
   + [Open > Open Files](#open--open-files)
   + [Open > Open URL](#open--open-url)
@@ -143,8 +145,7 @@ Alternatively, Chocolatey can also be used:
 `choco install mpvnet.install`
 
 
-File Associations
------------------
+### File Associations
 
 File Associations can be created using the setup or with the context menu under 'Tools > Setup'.
 
@@ -153,6 +154,78 @@ After the file associations were registered go to the Windows settings under 'Se
 It's also possible to change the default application using the 'Open with' feature of the context menu in File Explorer.
 
 [Open with++](#open-with) can be used to extend the File Explorer context menu to get menu items for 'Play with mpv.net' and 'Add to mpv.net playlist'.
+
+
+Settings
+--------
+
+When mpv.net finds no config folder on startup it will ask for a location.
+
+If a folder named portable_config next to the mpvnet.exe exists,
+all config will be loaded from this folder only.
+
+```Text
+<startup>\portable_config\
+```
+
+mpv specific settings are stored in the file mpv.conf, if no mpv.conf file exists
+mpv.net generates it with the following defaults:
+
+<https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/mpv.conf.txt>
+
+mpv.net specific settings are stored in the file mpvnet.conf
+
+The input (key/mouse) bindings and the context menu definitions are stored in the
+input.conf file, if it's missing mpv.net generates it with the following defaults:
+
+<https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt>
+
+mpv.net supports almost all mpv settings and features,
+[limitations are described in the manual](manual.md#limitations).
+
+The config folder can be opened from the context menu.
+
+
+Command Line Interface
+----------------------
+
+`mpvnet --mute=yes <file|URL>`
+
+
+mpv properties can be set with the same syntax as mpv, that is:
+
+
+To enable the border property:
+
+`--border` or `--border=yes`
+
+
+To disable the border property:
+
+`--no-boder` or `--border=no`
+
+
+Supported are all mpv properties, they are documented here:
+
+<https://mpv.io/manual/master/#properties>
+
+
+mpv.net has a feature to list all properties:
+
+Context Menu > View > Show Properties
+
+
+Non property switches are generally not supported in mpv.net!
+
+
+Terminal
+--------
+
+When mpv.net is started from a terminal it will output status, error and debug messages to the terminal and accept input keys from the terminal.
+
+In the context menu under 'Tools > Setup' a button can be found to add mpv.net to the path environment variable, mpv.net is than available in the terminal via mpvnet command.
+
+JavaScript and Lua scripts must be debugged with the terminal as there is no debugger support available.
 
 
 External Tools
@@ -202,35 +275,10 @@ If the path has spaces then it must be enclosed in quotes and then double backsl
  `_ run "D:/Soft ware/MediaInfoNET.exe" "${path}" #menu: Tools > Open file with MediaInfo.NET`
 
 
-Command Line Interface
-----------------------
-
-mpvnet implements a command line interface to set mpv commands.
-
-Supported are all mpv properties which are documented at:
-
-<https://mpv.io/manual/master>
-
-Example:
-
-`mpvnet --mute=yes <file|URL>`
-
-
-Terminal
---------
-
-When mpv.net is started from a terminal it will attach to the terminal and print status debug and error messages to the terminal.
-
-In the context menu under 'Tools > Setup' a button can be found to add mpv.net to the path environment variable, mpv.net is than available in the terminal via mpvnet command.
-
-JavaScript and Lua scripts must be debugged with the terminal as there is no debugger support available.
-
-
 Extensions
-==========
+----------
 
-Walkthrough creating an extension
----------------------------------
+### Walkthrough creating an extension
 
 - Download and install [Visual Studio Community](https://visualstudio.microsoft.com).
 - Create a new project of type **Class Library .NET Framework** and ensure the project name ends with **Extension**.
@@ -240,10 +288,9 @@ Walkthrough creating an extension
 - Also in the project properties choose the option **Start external program** in the Debug tab and define the path to mpvnet.exe. In the Debug tab you may also define command line arguments like a video file to be played when you start debugging.
 
 
-Sample Code
------------
+### Sample Code
 
-### ScriptingExtension
+#### ScriptingExtension
 
 The ScriptingExtension implements the C# scripting host using [CS-Script](https://www.cs-script.net/).
 
@@ -252,7 +299,7 @@ I use this extension as well to develop and debug all my C# scripts. Once the co
 <https://github.com/stax76/mpv.net/blob/master/extensions/ScriptingExtension/ScriptingExtension.cs>
 
 
-### RatingExtension
+#### RatingExtension
 
 This extension writes a rating to the filename of rated videos when mpv.net shuts down.
 
@@ -300,6 +347,43 @@ Selecting multiple files in File Explorer and pressing enter will open the files
 Whenever the control key is pressed when files or URLs are opened, the playlist is not cleared but the files or URLs are appended to the playlist. This works in all mpv.net features that open files or URLs.
 
 Pressing the shift key while opening a single file will suppress loading all files in the folder.
+
+
+Limitations
+-----------
+
+mpv.net was designed to work exactly like mpv, there are few limitations:
+
+
+### Window Limitations
+
+mpv.net implements an own main window and because of that all window related features of mpv are not available unless mpv.net has an own implementation. Find the documentation of mpvs window related features here:
+
+<https://mpv.io/manual/master/#window>
+
+
+mpv.net has currently implemented the following window related features:
+
+[screen](https://mpv.io/manual/master/#options-screen)
+
+[fullscreen](https://mpv.io/manual/master/#options-fullscreen)
+
+[ontop](https://mpv.io/manual/master/#options-ontop)
+
+[border](https://mpv.io/manual/master/#options-border)
+
+[autofit](https://mpv.io/manual/master/#options-autofit) (only partly implemented)
+
+[autofit-smaller](https://mpv.io/manual/master/#options-autofit-smaller) (only partly implemented)
+
+[autofit-larger](https://mpv.io/manual/master/#options-autofit-larger) (only partly implemented)
+
+[window-maximized](https://mpv.io/manual/master/#options-window-maximized) (don't use input.conf, use Win+Up, Win+Down instead)
+
+
+### Command Line Limitations
+
+mpv.net supports only property switches, it does not support non property switches.
 
 
 Context Menu

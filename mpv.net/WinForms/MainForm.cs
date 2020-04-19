@@ -139,7 +139,11 @@ namespace mpvnet
 
         bool IsFullscreen => WindowState == FormWindowState.Maximized && FormBorderStyle == FormBorderStyle.None;
 
-        bool IsMouseInOSC() => PointToClient(Control.MousePosition).Y > ClientSize.Height * 0.9;
+        bool IsMouseInOSC()
+        {
+            Point pos = PointToClient(Control.MousePosition);
+            return pos.Y > ClientSize.Height * 0.9 || pos.Y < ClientSize.Height * 0.05;
+        }
 
         void ContextMenu_Opening(object sender, CancelEventArgs e)
         {
@@ -498,8 +502,8 @@ namespace mpvnet
                     }
                     break;
                 case 0x2a3: // WM_MOUSELEAVE
-                    // osc won't always auto hide
-                    mp.command("mouse 1 1");
+                    //osc won't auto hide after mouse left window in borderless mode
+                    mp.command($"mouse {ClientSize.Width / 2} {ClientSize.Height / 3}");
                     break;
                 case 0x203: // WM_LBUTTONDBLCLK
                     {

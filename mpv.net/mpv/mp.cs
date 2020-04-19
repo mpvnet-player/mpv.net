@@ -262,16 +262,12 @@ namespace mpvnet
         public static void LoadMpvScripts()
         {
             if (Directory.Exists(Folder.Startup + "Scripts"))
-            {
-                string[] startupScripts = Directory.GetFiles(Folder.Startup + "Scripts");
-
-                foreach (string path in startupScripts)
+                foreach (string path in Directory.GetFiles(Folder.Startup + "Scripts"))
                     if ((path.EndsWith(".lua") || path.EndsWith(".js")) && KnownScripts.Contains(Path.GetFileName(path)))
                         commandv("load-script", $"{path}");
-            }
         }
 
-        public static string[] KnownScripts { get; } = { "show-playlist.js", "seek-show-position.py" };
+        public static string[] KnownScripts { get; } = { "show-playlist.js", "seek-show-position.js" };
 
         public static void LoadScripts()
         {
@@ -287,9 +283,9 @@ namespace mpvnet
                             App.RunAction(() => InvokePowerShellScript(file));
                     }
                     else
-                        Msg.ShowError("Failed to load script", file + BR2 +
-                            "Only scripts that ship with mpv.net are allowed in <startup>\\scripts" + BR2 +
-                            "Never copy or install a new mpv.net version over a old mpv.net version.");
+                        ConsoleHelp.WriteError("Failed to load script:" + BR + file + BR +
+                            "Only scripts that ship with mpv.net are allowed in <startup>\\scripts." + BR +
+                            "Never copy or install a new mpv.net version on top of a old mpv.net version.");
                 }
             }
             
