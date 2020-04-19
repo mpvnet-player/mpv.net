@@ -16,8 +16,6 @@
 
  # mpv input commands: https://mpv.io/manual/master/#list-of-input-commands
 
- # mpv input keys:     https://github.com/stax76/mpv.net/wiki/mpv-input-keys
-
  # run mpv.net in input test mode with: mpvnet --input-test
 
  o           script-message mpv.net open-files         #menu: Open > Open Files...
@@ -50,14 +48,14 @@
  .           frame-step             #menu: Navigate > Jump Next Frame
  ,           frame-back-step        #menu: Navigate > Jump Previous Frame
  _           ignore                 #menu: Navigate > -
- Right       no-osd seek  7         #menu: Navigate > Jump 7 sec forward
- Left        no-osd seek -7         #menu: Navigate > Jump 7 sec backward
+ Right       seek  7                #menu: Navigate > Jump 7 sec forward
+ Left        seek -7                #menu: Navigate > Jump 7 sec backward
  _           ignore                 #menu: Navigate > -
- Up          no-osd seek  40        #menu: Navigate > Jump 40 sec forward
- Down        no-osd seek -40        #menu: Navigate > Jump 40 sec backward
+ Up          seek  40               #menu: Navigate > Jump 40 sec forward
+ Down        seek -40               #menu: Navigate > Jump 40 sec backward
  _           ignore                 #menu: Navigate > -
- Ctrl+Right  no-osd seek  300       #menu: Navigate > Jump 5 min forward
- Ctrl+Left   no-osd seek -300       #menu: Navigate > Jump 5 min backward
+ Ctrl+Right  seek  300              #menu: Navigate > Jump 5 min forward
+ Ctrl+Left   seek -300              #menu: Navigate > Jump 5 min backward
  _           ignore                 #menu: Navigate > -
  _           ignore                 #menu: Navigate > Chapters
 

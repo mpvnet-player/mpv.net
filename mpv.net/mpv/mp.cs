@@ -267,7 +267,7 @@ namespace mpvnet
                         commandv("load-script", $"{path}");
         }
 
-        public static string[] KnownScripts { get; } = { "show-playlist.js", "seek-show-position.js" };
+        public static string[] KnownScripts { get; } = { "show-playlist.js"};
 
         public static void LoadScripts()
         {
