@@ -242,9 +242,9 @@ Due to Chrome Extensions not being able to start a app, another app that communi
 This will start the app on system start and have it running in the background. When the file association registration of mpv.net was executed then the app should find the location of mpv.net, alternativly the mpv.net folder can be added to the Path environment variable.
 
 
-### External Application Button
+### Open With
 
-Alternatively Chrome/Firefox extension [External Application Button](https://github.com/stax76/mpv.net/issues/106) can be used.
+Alternatively Chrome/Firefox extension [Open With](https://github.com/stax76/mpv.net/issues/119) can be used.
 
 
 ### Open with++
