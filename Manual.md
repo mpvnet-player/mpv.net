@@ -378,9 +378,9 @@ mpv.net has currently implemented the following window related features:
 
 [autofit-larger](https://mpv.io/manual/master/#options-autofit-larger) (only partly implemented)
 
-[window-maximized](https://mpv.io/manual/master/#options-window-maximized) (only partly implemented, use Win+Up and Win+Down)
-
 [window-minimized](https://mpv.io/manual/master/#options-window-minimized) (only partly implemented, use Win+Up and Win+Down)
+
+[window-maximized](https://mpv.io/manual/master/#options-window-maximized) (only partly implemented, use Win+Up and Win+Down)
 
 
 ### Command Line Limitations
