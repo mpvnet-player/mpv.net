@@ -364,13 +364,14 @@ namespace mpvnet
                             {
                                 HideLogo();
                                 Duration = TimeSpan.FromSeconds(get_property_number("duration"));
-                                Size vidSize = new Size(get_property_int("dwidth"), get_property_int("dheight"));
+                                Size size = new Size(get_property_int("width"), get_property_int("height"));
 
-                                if (vidSize.Width == 0 || vidSize.Height == 0)
-                                    vidSize = new Size(1, 1);
-                                if (VideoSize != vidSize)
+                                if (size.Width == 0 || size.Height == 0)
+                                    size = new Size(1, 1);
+
+                                if (VideoSize != size)
                                 {
-                                    VideoSize = vidSize;
+                                    VideoSize = size;
                                     VideoSizeChanged?.Invoke();
                                 }
 
@@ -384,7 +385,6 @@ namespace mpvnet
                                 WriteHistory(path);
                                 FileLoaded?.Invoke();
                             }
-
                             break;
                         case mpv_event_id.MPV_EVENT_TRACKS_CHANGED:
                             TracksChanged?.Invoke();
@@ -420,7 +420,16 @@ namespace mpvnet
                             }
                             break;
                         case mpv_event_id.MPV_EVENT_VIDEO_RECONFIG:
-                            VideoReconfig?.Invoke();
+                            {
+                                VideoReconfig?.Invoke();
+                                Size size = new Size(get_property_int("dwidth"), get_property_int("dheight"));
+
+                                if (size.Width != 0 && size.Height != 0 && VideoSize != size)
+                                {
+                                    VideoSize = size;
+                                    VideoSizeChanged?.Invoke();
+                                }
+                            }
                             break;
                         case mpv_event_id.MPV_EVENT_AUDIO_RECONFIG:
                             AudioReconfig?.Invoke();
@@ -740,7 +749,7 @@ namespace mpvnet
                     }
                 }
 
-                Load(files.ToArray(), !App.Queue, Control.ModifierKeys.HasFlag(Keys.Control) || App.Queue);
+                LoadFiles(files.ToArray(), !App.Queue, Control.ModifierKeys.HasFlag(Keys.Control) || App.Queue);
 
                 if (files.Count == 0 || files[0].Contains("://"))
                 {
@@ -752,7 +761,7 @@ namespace mpvnet
 
         public static DateTime LastLoad;
 
-        public static void Load(string[] files, bool loadFolder, bool append)
+        public static void LoadFiles(string[] files, bool loadFolder, bool append)
         {
             if (files is null || files.Length == 0)
                 return;
@@ -765,13 +774,17 @@ namespace mpvnet
             LastLoad = DateTime.Now;
 
             for (int i = 0; i < files.Length; i++)
-                if (App.SubtitleTypes.Contains(files[i].ShortExt()))
-                    commandv("sub-add", files[i]);
+            {
+                string file = files[i];
+
+                if (App.SubtitleTypes.Contains(file.ShortExt()))
+                    commandv("sub-add", file);
                 else
                     if (i == 0 && !append)
-                        commandv("loadfile", files[i]);
+                        commandv("loadfile", file);
                     else
-                        commandv("loadfile", files[i], "append");
+                        commandv("loadfile", file, "append");
+            }
 
             if (string.IsNullOrEmpty(get_property_string("path")))
                 set_property_int("playlist-pos", 0);

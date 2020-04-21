@@ -21,7 +21,7 @@ Table of contents
 * [Extensions](#extensions)
 * [Color Theme](#color-theme)
 * [Hidden and secret features](#hidden-and-secret-features)
-* [Limitations](#limitations)
+* [Differences](#differences)
 * [Context Menu](#context-menu)
   + [Open > Open Files](#open--open-files)
   + [Open > Open URL](#open--open-url)
@@ -181,7 +181,7 @@ input.conf file, if it's missing mpv.net generates it with the following default
 <https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt>
 
 mpv.net supports almost all mpv settings and features,
-[limitations are described in the manual](manual.md#limitations).
+[limitations are described in the manual](manual.md#differences).
 
 The config folder can be opened from the context menu.
 
@@ -349,7 +349,7 @@ Whenever the control key is pressed when files or URLs are opened, the playlist 
 Pressing the shift key while opening a single file will suppress loading all files in the folder.
 
 
-Limitations
+Differences
 -----------
 
 mpv.net was designed to work exactly like mpv, there are few limitations:
@@ -378,7 +378,9 @@ mpv.net has currently implemented the following window related features:
 
 [autofit-larger](https://mpv.io/manual/master/#options-autofit-larger) (only partly implemented)
 
-[window-maximized](https://mpv.io/manual/master/#options-window-maximized) (don't use input.conf, use Win+Up, Win+Down instead)
+[window-maximized](https://mpv.io/manual/master/#options-window-maximized) (only partly implemented, use Win+Up and Win+Down)
+
+[window-minimized](https://mpv.io/manual/master/#options-window-minimized) (only partly implemented, use Win+Up and Win+Down)
 
 
 ### Command Line Limitations

@@ -2,6 +2,10 @@
 5.4.4.4 Beta (not yet released)
 ============
 
+- with `border=no` the osc top bar window buttons min, max, close did not work.
+- some anamorphic videos were shown with black bars
+- crash fixed when PowerShell 5.1 is not available
+
 
 5.4.4.3 Beta
 ============

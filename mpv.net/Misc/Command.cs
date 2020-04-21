@@ -79,7 +79,7 @@ namespace mpvnet
             InvokeOnMainThread(new Action(() => {
                 using (var d = new OpenFileDialog() { Multiselect = true })
                     if (d.ShowDialog() == DialogResult.OK)
-                        mp.Load(d.FileNames, loadFolder, append);
+                        mp.LoadFiles(d.FileNames, loadFolder, append);
             }));
         }
 
@@ -96,12 +96,12 @@ namespace mpvnet
                         if (Directory.Exists(d.SelectedPath + "\\BDMV"))
                         {
                             mp.set_property_string("bluray-device", d.SelectedPath);
-                            mp.Load(new[] { @"bd://" }, false, false);
+                            mp.LoadFiles(new[] { @"bd://" }, false, false);
                         }
                         else
                         {
                             mp.set_property_string("dvd-device", d.SelectedPath);
-                            mp.Load(new[] { @"dvd://" }, false, false);
+                            mp.LoadFiles(new[] { @"dvd://" }, false, false);
                         }
                     }
                 }
@@ -241,7 +241,7 @@ namespace mpvnet
                     Msg.ShowError("The clipboard does not contain a valid URL or file, URLs have to contain :// and are not allowed to contain a newline character.");
                     return;
                 }
-                mp.Load(new [] { clipboard }, false, Control.ModifierKeys.HasFlag(Keys.Control));
+                mp.LoadFiles(new [] { clipboard }, false, Control.ModifierKeys.HasFlag(Keys.Control));
             }));
         }
 

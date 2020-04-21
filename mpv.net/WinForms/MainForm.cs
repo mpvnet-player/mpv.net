@@ -24,10 +24,11 @@ namespace mpvnet
         Point  LastCursorPosChanged;
         int    LastCursorChangedTickCount;
         int    TaskbarButtonCreatedMessage;
+        int    ShownTickCount;
         DateTime LastCycleFullscreen;
         Taskbar  Taskbar;
         List<string> RecentFiles;
-        int ShownTickCount;
+        bool WasMaximized;
 
         public MainForm()
         {
@@ -54,6 +55,7 @@ namespace mpvnet
                 mp.Seek += () => UpdateProgressBar();
 
                 mp.observe_property_bool("window-maximized", PropChangeWindowMaximized);
+                mp.observe_property_bool("window-minimized", PropChangeWindowMinimized);
                 mp.observe_property_bool("pause", PropChangePause);
                 mp.observe_property_bool("fullscreen", PropChangeFullscreen);
                 mp.observe_property_bool("ontop", PropChangeOnTop);
@@ -141,7 +143,12 @@ namespace mpvnet
         bool IsMouseInOSC()
         {
             Point pos = PointToClient(Control.MousePosition);
-            return pos.Y > ClientSize.Height * 0.9 || pos.Y < ClientSize.Height * 0.05;
+            float top = 0;
+
+            if (FormBorderStyle == FormBorderStyle.None)
+                top = ClientSize.Height * 0.1f;
+
+            return pos.Y > ClientSize.Height * 0.85 || pos.Y < top;
         }
 
         void ContextMenu_Opening(object sender, CancelEventArgs e)
@@ -235,7 +242,7 @@ namespace mpvnet
                 recent.DropDownItems.Clear();
 
                 foreach (string path in RecentFiles)
-                    MenuItem.Add(recent.DropDownItems, path, () => mp.Load(new[] { path }, true, Control.ModifierKeys.HasFlag(Keys.Control)));
+                    MenuItem.Add(recent.DropDownItems, path, () => mp.LoadFiles(new[] { path }, true, Control.ModifierKeys.HasFlag(Keys.Control)));
                
                 recent.DropDownItems.Add(new ToolStripSeparator());
                 MenuItem mi = new MenuItem("Clear List");
@@ -554,7 +561,7 @@ namespace mpvnet
                         switch (mode)
                         {
                             case "single":
-                                mp.Load(files, true, Control.ModifierKeys.HasFlag(Keys.Control));
+                                mp.LoadFiles(files, true, Control.ModifierKeys.HasFlag(Keys.Control));
                                 break;
                             case "queue":
                                 foreach (string file in files)
@@ -633,6 +640,20 @@ namespace mpvnet
             }));
         }
 
+        void PropChangeWindowMinimized(bool enabled)
+        {
+            if (!WasShown())
+                return;
+
+            BeginInvoke(new Action(() =>
+            {
+                if (enabled && WindowState != FormWindowState.Minimized)
+                    WindowState = FormWindowState.Minimized;
+                else if (!enabled && WindowState == FormWindowState.Minimized)
+                    WindowState = FormWindowState.Normal;
+            }));
+        }
+
         void PropChangeBorder(bool enabled) {
             mp.Border = enabled;
 
@@ -707,8 +728,6 @@ namespace mpvnet
                 WasMaximized = false;
         }
 
-        bool WasMaximized;
-
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             base.OnFormClosing(e);
@@ -724,8 +743,10 @@ namespace mpvnet
             if (!mp.ShutdownAutoResetEvent.WaitOne(10000))
                 Msg.ShowError("Shutdown thread failed to complete within 10 seconds.");
 
-            foreach (PowerShell ps in PowerShell.Instances)
-                ps.Runspace.Dispose();
+            try { // PowerShell 5.1 might not be available
+                foreach (PowerShell ps in PowerShell.Instances)
+                    ps.Runspace.Dispose();
+            } catch {}
         }
 
         void SaveWindowProperties()
@@ -743,8 +764,7 @@ namespace mpvnet
             base.OnMouseDown(e);
 
             if (WindowState == FormWindowState.Normal &&
-                e.Button == MouseButtons.Left &&
-                e.Y < ClientSize.Height * 0.9)
+                e.Button == MouseButtons.Left && !IsMouseInOSC())
             {
                 var HTCAPTION = new IntPtr(2);
                 WinAPI.ReleaseCapture();
@@ -768,10 +788,10 @@ namespace mpvnet
             base.OnDragDrop(e);
 
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
-                mp.Load(e.Data.GetData(DataFormats.FileDrop) as String[], true, Control.ModifierKeys.HasFlag(Keys.Control));
+                mp.LoadFiles(e.Data.GetData(DataFormats.FileDrop) as String[], true, Control.ModifierKeys.HasFlag(Keys.Control));
           
             if (e.Data.GetDataPresent(DataFormats.Text))
-                mp.Load(new[] { e.Data.GetData(DataFormats.Text).ToString() }, true, Control.ModifierKeys.HasFlag(Keys.Control));
+                mp.LoadFiles(new[] { e.Data.GetData(DataFormats.Text).ToString() }, true, Control.ModifierKeys.HasFlag(Keys.Control));
         }
 
         protected override void OnLostFocus(EventArgs e)

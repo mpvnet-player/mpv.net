@@ -103,7 +103,7 @@ namespace mpvnet
         void Execute()
         {
             if (ListView.SelectedItem != null)
-                mp.Load(new[] { ListView.SelectedItem as string }, true, Keyboard.Modifiers == ModifierKeys.Control);
+                mp.LoadFiles(new[] { ListView.SelectedItem as string }, true, Keyboard.Modifiers == ModifierKeys.Control);
 
             Keyboard.Focus(FilterTextBox);
         }
