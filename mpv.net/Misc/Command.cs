@@ -47,11 +47,6 @@ namespace mpvnet
                 case "add-files-to-playlist": OpenFiles("append"); break; // deprecated 2019
                 default: Msg.ShowError($"No command '{id}' found."); break;
             }
-
-            MainForm.Instance.BeginInvoke(new Action(() => {
-                Message m = new Message() { Msg = 0x0202 }; // WM_LBUTTONUP
-                WinAPI.SendMessage(MainForm.Instance.Handle, m.Msg, m.WParam, m.LParam);           
-            }));
         }
 
         public static void InvokeOnMainThread(Action action) => MainForm.Instance.Invoke(action);

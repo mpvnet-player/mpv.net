@@ -715,6 +715,13 @@ namespace mpvnet
             ShownTickCount = Environment.TickCount;
         }
 
+        protected override void OnActivated(EventArgs e)
+        {
+            base.OnActivated(e);
+            Message m = new Message() { Msg = 0x0202 }; // WM_LBUTTONUP
+            WinAPI.SendMessage(MainForm.Instance.Handle, m.Msg, m.WParam, m.LParam);
+        }
+
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
