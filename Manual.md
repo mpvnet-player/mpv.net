@@ -363,7 +363,7 @@ The ScriptingExtension implements the C# scripting host using [CS-Script](https:
 
 I use this extension as well to develop and debug all my C# scripts. Once the code was developed and debugged, I move the code from the extension to a standalone script.
 
-<extensions/ScriptingExtension/ScriptingExtension.cs>
+[Source Code](extensions)
 
 
 #### RatingExtension
@@ -372,7 +372,7 @@ This extension writes a rating to the filename of rated videos when mpv.net shut
 
 The input.conf defaults contain key bindings for this extension to set ratings.
 
-<extensions/RatingExtension/RatingExtension.cs>
+[Source Code](extensions)
 
 
 Color Theme
