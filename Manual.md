@@ -351,7 +351,7 @@ mpv.net does not define extension interfaces but instead exposed its complete in
 - Create a new project of type **Class Library .NET Framework** and ensure the project name ends with **Extension**.
 - Add a reference to **System.ComponentModel.Composition**.
 - Add a reference to mpvnet.exe, select the mpvnet reference in the Solution Explorer, open the Properties window and set **Copy Local** to false to prevent mpvnet.exe being copied to the output directory when the project is built.
-- Now open the project properties and set the output path in the Build tab, extensions are like scripts located in your config folder, example: `C:\Users\\%username%\AppData\Roaming\mpv.net\Extensions\ExampleExtension\ExampleExtension.dll`
+- Now open the project properties and set the output path in the Build tab, extensions are like scripts located in your config folder, example: `<config folder>\extensions\ExampleExtension\ExampleExtension.dll`
 - Also in the project properties choose the option **Start external program** in the Debug tab and define the path to mpvnet.exe. In the Debug tab you may also define command line arguments like a video file to be played when you start debugging.
 
 
@@ -363,7 +363,7 @@ The ScriptingExtension implements the C# scripting host using [CS-Script](https:
 
 I use this extension as well to develop and debug all my C# scripts. Once the code was developed and debugged, I move the code from the extension to a standalone script.
 
-<https://github.com/stax76/mpv.net/blob/master/extensions/ScriptingExtension/ScriptingExtension.cs>
+<extensions/ScriptingExtension/ScriptingExtension.cs>
 
 
 #### RatingExtension
@@ -372,7 +372,7 @@ This extension writes a rating to the filename of rated videos when mpv.net shut
 
 The input.conf defaults contain key bindings for this extension to set ratings.
 
-<https://github.com/stax76/mpv.net/blob/master/extensions/RatingExtension/RatingExtension.cs>
+<extensions/RatingExtension/RatingExtension.cs>
 
 
 Color Theme
