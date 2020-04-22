@@ -1,5 +1,6 @@
 
-// Draws text on screen when full screen property changes.
+// This script observes the fullscreen property and
+// draws text on screen when the property changes.
 
 using mpvnet;
 
@@ -12,6 +13,6 @@ class Script
 
     void FullscreenChange(bool value)
     {
-        mp.commandv("show-text", "fullscreen: " + value.ToString());
+        mp.commandv("show-text", "fullscreen: " + value);
     }
 }

@@ -1,4 +1,6 @@
 
+// This script adds a key binding.
+
 using System.Reflection;
 
 using mpvnet;

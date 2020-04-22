@@ -16,7 +16,8 @@ Table of contents
   + [Play with mpv](#play-with-mpv)
   + [External Application Button](#external-application-button)
   + [Open with++](#open-with)
-  + [MediaInfo.NET](#mediainfonet)  
+  + [MediaInfo.NET](#mediainfonet)
+* [Scripting](#scripting)
 * [Extensions](#extensions)
 * [Color Theme](#color-theme)
 * [Hidden and secret features](#hidden-and-secret-features)
@@ -224,9 +225,9 @@ Terminal
 
 When mpv.net is started from a terminal it will output status, error and debug messages to the terminal and accept input keys from the terminal.
 
-In the context menu under 'Tools > Setup' a button can be found to add mpv.net to the path environment variable, mpv.net is than available in the terminal via mpvnet command.
+In the context menu under 'Tools > Setup' a button can be found to add mpv.net to the path environment variable.
 
-JavaScript and Lua scripts must be debugged with the terminal as there is no debugger support available.
+A common task for the terminal is debugging scripts.
 
 
 External Tools
@@ -276,8 +277,73 @@ If the path has spaces then it must be enclosed in quotes and then double backsl
  `_ run "D:/Soft ware/MediaInfoNET.exe" "${path}" #menu: Tools > Open file with MediaInfo.NET`
 
 
+Scripting
+---------
+
+There is no debugger support available for the scripting hosts, mpv.net can be started from a terminal, 
+script errors and debug messages are printed then on the terminal.
+
+
+#### Lua
+
+File Type: `lua`
+
+Location: `<config folder>\scripts`
+
+Lua and JavaScript scripts are loaded before the first media file loads.
+
+[mpv Lua documentation](https://mpv.io/manual/master/#lua-scripting)
+
+[mpv user scripts](https://github.com/mpv-player/mpv/wiki/User-Scripts)
+
+
+#### JavaScript
+
+File Type: `js`
+
+Location: `<config folder>\scripts`
+
+Lua and JavaScript scripts are loaded before the first media file loads.
+
+[mpv JavaScript documentation](https://mpv.io/manual/master/#javascript)
+
+[mpv user scripts](https://github.com/mpv-player/mpv/wiki/User-Scripts)
+
+
+#### C#
+
+File Type: `cs`
+
+Location: `<config folder>\scripts-cs`
+
+C# scripting in mpv.net is implemented with a C# [extension](Extensions) and [CS-Script](https://www.cs-script.net/).
+
+mpv.net does not define scripting interfaces but instead exposed its complete internals, there are no compatibility guaranties.
+
+Script code can be written within a C# [extension](Extensions), that way full code completion and debugger support is available. Once the code was developed and debugged, the code can be moved from the extension to a lightweight standalone script.
+
+The C# scripting host is like [extensions](Extensions) not initialized before media files are loaded.
+
+[Example Scripts](scripts/examples)
+
+
+#### PowerShell
+
+File Type: `ps1`
+
+Location: `<config folder>\scripts-ps`
+
+The PowerShell scripting host is like extensions not initialized before media files are loaded.
+
+mpv.net does not define scripting interfaces but instead exposed its complete internals, there are no compatibility guaranties.
+
+[Example Scripts](scripts/examples)
+
+
 Extensions
 ----------
+
+mpv.net does not define extension interfaces but instead exposed its complete internals, there are no compatibility guaranties.
 
 ### Walkthrough creating an extension
 

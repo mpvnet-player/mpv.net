@@ -1,5 +1,5 @@
 
-// creates context menu items dynamically
+// This script creates context menu items dynamically.
 
 using mpvnet;
 using System.ComponentModel;
