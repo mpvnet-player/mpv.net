@@ -190,8 +190,8 @@ The config folder can be opened from the context menu.
 Command Line Interface
 ----------------------
 
-mpvnet [options] [file|URL|PLAYLIST|-]
-mpvnet [options] files
+**mpvnet** [options] [file|URL|PLAYLIST|-]
+**mpvnet** [options] files
 
 
 mpv properties can be set with the same syntax as mpv, that is:

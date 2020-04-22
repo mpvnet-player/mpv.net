@@ -16,7 +16,7 @@ Modern GUI that supports customizable color themes.
 
 #### Command Line Interface
 
-mpv.net supports mpvs property based [command line switches](https://mpv.io/manual/master/#options).
+mpv.net supports mpvs property based [command line switches](manual.md#command-line-interface).
 
 
 #### High quality video output
