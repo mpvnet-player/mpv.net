@@ -21,10 +21,11 @@ namespace mpvnet
         public static MainForm Instance { get; set; }
         public static IntPtr Hwnd { get; set; }
         public new ContextMenuStripEx ContextMenu { get; set; }
-        Point  LastCursorPosChanged;
-        int    LastCursorChangedTickCount;
+        Point  LastCursorPosition;
+        int    LastCursorChanged;
         int    TaskbarButtonCreatedMessage;
         int    ShownTickCount;
+
         DateTime LastCycleFullscreen;
         Taskbar  Taskbar;
         List<string> RecentFiles;
@@ -54,8 +55,8 @@ namespace mpvnet
                 mp.Idle += Idle;
                 mp.Seek += () => UpdateProgressBar();
 
-                mp.observe_property_bool("window-maximized", PropChangeWindowMaximized);
-                mp.observe_property_bool("window-minimized", PropChangeWindowMinimized);
+                mp.observe_property("window-maximized", PropChangeWindowMaximized);
+                mp.observe_property("window-minimized", PropChangeWindowMinimized);
                 mp.observe_property_bool("pause", PropChangePause);
                 mp.observe_property_bool("fullscreen", PropChangeFullscreen);
                 mp.observe_property_bool("ontop", PropChangeOnTop);
@@ -112,6 +113,15 @@ namespace mpvnet
                     SetFormPosAndSize(1, true);
                     WindowState = FormWindowState.Maximized;
                 }
+
+                if (mp.WindowMinimized)
+                {
+                    SetFormPosAndSize(1, true);
+                    WindowState = FormWindowState.Minimized;
+                }
+
+                if (!mp.Border)
+                    FormBorderStyle = FormBorderStyle.None;
             }
             catch (Exception ex)
             {
@@ -276,7 +286,7 @@ namespace mpvnet
         {
             if (!force)
             {
-                if (WindowState == FormWindowState.Maximized)
+                if (WindowState == FormWindowState.Maximized || WindowState == FormWindowState.Minimized)
                     return;
 
                 if (mp.Fullscreen)
@@ -379,6 +389,14 @@ namespace mpvnet
                 {
                     FormBorderStyle = FormBorderStyle.None;
                     WindowState = FormWindowState.Maximized;
+
+                    if (WasMaximized)
+                    {
+                        Rectangle b = Screen.FromControl(this).Bounds;
+                        uint SWP_SHOWWINDOW = 0x0040;
+                        IntPtr HWND_TOP= IntPtr.Zero;
+                        WinAPI.SetWindowPos(Handle, HWND_TOP, b.X, b.Y, b.Width, b.Height, SWP_SHOWWINDOW);
+                    }
                 }
             }
             else
@@ -466,6 +484,16 @@ namespace mpvnet
                 RecentFiles.RemoveAt(App.RecentCount);
         }
 
+        void SaveWindowProperties()
+        {
+            if (WindowState == FormWindowState.Normal)
+            {
+                RegistryHelp.SetValue(App.RegPath, "PosX", Left + Width / 2);
+                RegistryHelp.SetValue(App.RegPath, "PosY", Top + Height / 2);
+                RegistryHelp.SetValue(App.RegPath, "Height", ClientSize.Height);
+            }
+        }
+
         protected override CreateParams CreateParams {
             get {
                 CreateParams cp = base.CreateParams;
@@ -503,7 +531,7 @@ namespace mpvnet
                             mp.command($"mouse {pos.X} {pos.Y}");
                         }
 
-                        if (CursorHelp.IsPosDifferent(LastCursorPosChanged))
+                        if (CursorHelp.IsPosDifferent(LastCursorPosition))
                             CursorHelp.Show();
                     }
                     break;
@@ -585,12 +613,12 @@ namespace mpvnet
 
         void CursorTimer_Tick(object sender, EventArgs e)
         {
-            if (CursorHelp.IsPosDifferent(LastCursorPosChanged))
+            if (CursorHelp.IsPosDifferent(LastCursorPosition))
             {
-                LastCursorPosChanged = Control.MousePosition;
-                LastCursorChangedTickCount = Environment.TickCount;
+                LastCursorPosition = Control.MousePosition;
+                LastCursorChanged = Environment.TickCount;
             }
-            else if (Environment.TickCount - LastCursorChangedTickCount > 1500 &&
+            else if (Environment.TickCount - LastCursorChanged > 1500 &&
                 !IsMouseInOSC() && ClientRectangle.Contains(PointToClient(MousePosition)) &&
                 Form.ActiveForm == this && !ContextMenu.Visible)
 
@@ -624,15 +652,15 @@ namespace mpvnet
             }
         }
 
-        void PropChangeWindowMaximized(bool enabled)
+        void PropChangeWindowMaximized()
         {
             if (!WasShown())
                 return;
 
-            mp.WindowMaximized = enabled;
-
             BeginInvoke(new Action(() =>
             {
+                mp.WindowMaximized = mp.get_property_bool("window-maximized");
+
                 if (mp.WindowMaximized && WindowState != FormWindowState.Maximized)
                     WindowState = FormWindowState.Maximized;
                 else if (!mp.WindowMaximized && WindowState == FormWindowState.Maximized)
@@ -640,16 +668,18 @@ namespace mpvnet
             }));
         }
 
-        void PropChangeWindowMinimized(bool enabled)
+        void PropChangeWindowMinimized()
         {
             if (!WasShown())
                 return;
 
             BeginInvoke(new Action(() =>
             {
-                if (enabled && WindowState != FormWindowState.Minimized)
+                mp.WindowMinimized = mp.get_property_bool("window-minimized");
+
+                if (mp.WindowMinimized && WindowState != FormWindowState.Minimized)
                     WindowState = FormWindowState.Minimized;
-                else if (!enabled && WindowState == FormWindowState.Minimized)
+                else if (!mp.WindowMinimized && WindowState == FormWindowState.Minimized)
                     WindowState = FormWindowState.Normal;
             }));
         }
@@ -729,10 +759,30 @@ namespace mpvnet
             if (mp.IsLogoVisible)
                 mp.ShowLogo();
 
-            if (WindowState == FormWindowState.Maximized && FormBorderStyle != FormBorderStyle.None)
-                WasMaximized = true;
-            else if (WindowState == FormWindowState.Normal && FormBorderStyle != FormBorderStyle.None)
-                WasMaximized = false;
+            if (FormBorderStyle != FormBorderStyle.None)
+            {
+                if (WindowState == FormWindowState.Maximized)
+                    WasMaximized = true;
+                else if (WindowState == FormWindowState.Normal)
+                    WasMaximized = false;
+            }
+
+            if (WasShown())
+            {
+                if (WindowState == FormWindowState.Minimized)
+                {
+                    mp.set_property_string("window-minimized", "yes");
+                }
+                else if (WindowState == FormWindowState.Normal)
+                {
+                    mp.set_property_string("window-maximized", "no");
+                    mp.set_property_string("window-minimized", "no");
+                }
+                else if (WindowState == FormWindowState.Maximized)
+                {
+                    mp.set_property_string("window-maximized", "yes");
+                }
+            }
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
@@ -754,16 +804,6 @@ namespace mpvnet
                 foreach (PowerShell ps in PowerShell.Instances)
                     ps.Runspace.Dispose();
             } catch {}
-        }
-
-        void SaveWindowProperties()
-        {
-            if (WindowState == FormWindowState.Normal)
-            {
-                RegistryHelp.SetValue(App.RegPath, "PosX", Left + Width / 2);
-                RegistryHelp.SetValue(App.RegPath, "PosY", Top + Height / 2);
-                RegistryHelp.SetValue(App.RegPath, "Height", ClientSize.Height);
-            }
         }
 
         protected override void OnMouseDown(MouseEventArgs e)

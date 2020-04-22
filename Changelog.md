@@ -2,9 +2,10 @@
 5.4.4.4 Beta (not yet released)
 ============
 
-- with `border=no` the osc top bar window buttons min, max, close did not work.
-- some anamorphic videos were shown with black bars
-- crash fixed when PowerShell 5.1 is not available
+- with `border=no` the OSC top bar window buttons min, max and close are supported.
+- anamorphic videos are shown without black bars, the window is resized according to the ascpect ratio.
+- PowerShell 5.1 was made optional.
+- full implementation for `window-minimized` and `window-maximized`
 
 
 5.4.4.3 Beta

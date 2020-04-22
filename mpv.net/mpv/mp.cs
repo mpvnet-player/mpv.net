@@ -59,6 +59,7 @@ namespace mpvnet
 
         public static event Action Initialized;
 
+        public static List<KeyValuePair<string, Action>>               PropChangeActions { get; set; } = new List<KeyValuePair<string, Action>>();
         public static List<KeyValuePair<string, Action<bool>>>     BoolPropChangeActions { get; set; } = new List<KeyValuePair<string, Action<bool>>>();
         public static List<KeyValuePair<string, Action<int>>>       IntPropChangeActions { get; set; } = new List<KeyValuePair<string, Action<int>>>();
         public static List<KeyValuePair<string, Action<double>>> DoublePropChangeActions { get; set; } = new List<KeyValuePair<string, Action<double>>>();
@@ -87,6 +88,7 @@ namespace mpvnet
         public static bool IsQuitNeeded { set; get; } = true;
         public static bool TaskbarProgress { get; set; } = true;
         public static bool WindowMaximized { get; set; }
+        public static bool WindowMinimized { get; set; }
 
         public static int Screen { get; set; } = -1;
         public static int Edition { get; set; }
@@ -153,6 +155,7 @@ namespace mpvnet
                 case "fullscreen": Fullscreen = value == "yes"; break;
                 case "border": Border = value == "yes"; break;
                 case "window-maximized": WindowMaximized = value == "yes"; break;
+                case "window-minimized": WindowMinimized = value == "yes"; break;
                 case "taskbar-progress": TaskbarProgress = value == "yes"; break;
                 case "screen": Screen = Convert.ToInt32(value); break;
                 case "gpu-api": GPUAPI = value; break;
@@ -466,6 +469,13 @@ namespace mpvnet
                                             if (i.Key == data.name)
                                                 i.Value.Invoke(Marshal.PtrToStructure<int>(data.data));
                                 }
+                                else if (data.format == mpv_format.MPV_FORMAT_NONE)
+                                {
+                                    lock (PropChangeActions)
+                                        foreach (var i in PropChangeActions)
+                                            if (i.Key == data.name)
+                                                i.Value.Invoke();
+                                }
                                 else if (data.format == mpv_format.MPV_FORMAT_DOUBLE)
                                 {
                                     lock (DoublePropChangeActions)
@@ -598,6 +608,17 @@ namespace mpvnet
             return lpBuffer.ToInt32();
         }
 
+        public static bool get_property_bool(string name, bool throwException = false)
+        {
+            mpv_error err = mpv_get_property(Handle, GetUtf8Bytes(name),
+                mpv_format.MPV_FORMAT_FLAG, out IntPtr lpBuffer);
+
+            if (err < 0)
+                HandleError(err, throwException, $"error getting property: {name}");
+
+            return lpBuffer.ToInt32() != 0;
+        }
+
         public static double get_property_number(string name, bool throwException = false)
         {
             mpv_error err = mpv_get_property(Handle, GetUtf8Bytes(name),
@@ -664,6 +685,18 @@ namespace mpvnet
             else
                 lock (StringPropChangeActions)
                     StringPropChangeActions.Add(new KeyValuePair<string, Action<string>>(name, action));
+        }
+
+        public static void observe_property(string name, Action action)
+        {
+            mpv_error err = mpv_observe_property(Handle, (ulong)action.GetHashCode(),
+                name, mpv_format.MPV_FORMAT_NONE);
+
+            if (err < 0)
+                HandleError(err, true, $"error observing property: {name}");
+            else
+                lock (PropChangeActions)
+                    PropChangeActions.Add(new KeyValuePair<string, Action>(name, action));
         }
 
         public static void HandleError(mpv_error err, bool throwException, params string[] messages)

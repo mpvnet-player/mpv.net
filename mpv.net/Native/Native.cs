@@ -39,7 +39,7 @@ public class WinAPI
     public static extern bool AdjustWindowRect(ref RECT lpRect, uint dwStyle, bool bMenu);
 
     [DllImport("user32.dll")]
-    public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, int uFlags);
+    public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int x, int y, int cx, int cy, uint uFlags);
 
     [DllImport("user32.dll", EntryPoint = "GetWindowLong")]
     static extern IntPtr GetWindowLong32(IntPtr hWnd, int nIndex);

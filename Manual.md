@@ -102,8 +102,9 @@ Table of contents
   + [Exit](#exit)
   + [Exit Watch Later](#exit-watch-later)
 
-About mpv.net
--------------
+
+Description
+-----------
 
 mpv.net is a modern desktop media player for Windows. mpv is similar to VLC not based on DirectShow like MPC, mpv.net is based on libmpv which in return is based on ffmpeg.
 
@@ -189,7 +190,8 @@ The config folder can be opened from the context menu.
 Command Line Interface
 ----------------------
 
-`mpvnet --mute=yes <file|URL>`
+mpvnet [options] [file|URL|PLAYLIST|-]
+mpvnet [options] files
 
 
 mpv properties can be set with the same syntax as mpv, that is:
@@ -352,17 +354,21 @@ Pressing the shift key while opening a single file will suppress loading all fil
 Differences
 -----------
 
-mpv.net was designed to work exactly like mpv, there are few limitations:
+mpv.net is designed to work exactly like mpv, there are a few limitations:
 
 
 ### Window Limitations
 
-mpv.net implements an own main window and because of that all window related features of mpv are not available unless mpv.net has an own implementation. Find the documentation of mpvs window related features here:
+mpv.net implements an own main window which means only mpv window features are supported that have an own implementation in mpv.net.
+
+A window free mode is currently not supported.
+
+The documentation of mpvs window features can be found here:
 
 <https://mpv.io/manual/master/#window>
 
 
-mpv.net has currently implemented the following window related features:
+mpv.net has currently implemented the following window features:
 
 [screen](https://mpv.io/manual/master/#options-screen)
 
@@ -372,15 +378,18 @@ mpv.net has currently implemented the following window related features:
 
 [border](https://mpv.io/manual/master/#options-border)
 
-[autofit](https://mpv.io/manual/master/#options-autofit) (only partly implemented)
+[window-minimized](https://mpv.io/manual/master/#options-window-minimized)
 
-[autofit-smaller](https://mpv.io/manual/master/#options-autofit-smaller) (only partly implemented)
+[window-maximized](https://mpv.io/manual/master/#options-window-maximized)
 
-[autofit-larger](https://mpv.io/manual/master/#options-autofit-larger) (only partly implemented)
 
-[window-minimized](https://mpv.io/manual/master/#options-window-minimized) (only partly implemented, use Win+Up and Win+Down)
+**Partly implemented are:**
 
-[window-maximized](https://mpv.io/manual/master/#options-window-maximized) (only partly implemented, use Win+Up and Win+Down)
+[autofit](https://mpv.io/manual/master/#options-autofit)
+
+[autofit-smaller](https://mpv.io/manual/master/#options-autofit-smaller)
+
+[autofit-larger](https://mpv.io/manual/master/#options-autofit-larger)
 
 
 ### Command Line Limitations
