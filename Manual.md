@@ -20,7 +20,7 @@ Table of contents
 * [Scripting](#scripting)
 * [Extensions](#extensions)
 * [Color Theme](#color-theme)
-* [Hidden and secret features](#hidden-and-secret-features)
+* [Advanced Features](#advanced-features)
 * [Differences](#differences)
 * [Context Menu](#context-menu)
   + [Open > Open Files](#open--open-files)
@@ -316,13 +316,13 @@ File Type: `cs`
 
 Location: `<config folder>\scripts-cs`
 
-C# scripting in mpv.net is implemented with a C# [extension](Extensions) and [CS-Script](https://www.cs-script.net/).
+C# scripting in mpv.net is implemented with a C# [extension](#extensions) and [CS-Script](https://www.cs-script.net/).
 
 mpv.net does not define scripting interfaces but instead exposed its complete internals, there are no compatibility guaranties.
 
-Script code can be written within a C# [extension](Extensions), that way full code completion and debugger support is available. Once the code was developed and debugged, the code can be moved from the extension to a lightweight standalone script.
+Script code can be written within a C# [extension](#extensions), that way full code completion and debugger support is available. Once the code was developed and debugged, the code can be moved from the extension to a lightweight standalone script.
 
-The C# scripting host is like [extensions](Extensions) not initialized before media files are loaded.
+The C# scripting host is like [extensions](#extensions) not initialized before media files are loaded.
 
 [Example Scripts](scripts/examples)
 
