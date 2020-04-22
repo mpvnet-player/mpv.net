@@ -572,6 +572,24 @@ namespace mpvnet
                 HandleError(err, throwException, "error executing command:", command);
         }
 
+        public static void set_property_int(string name, int value, bool throwException = false)
+        {
+            Int64 val = value;
+            mpv_error err = mpv_set_property(Handle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_INT64, ref val);
+
+            if (err < 0)
+                HandleError(err, throwException, $"error setting property: {name} = {value}");
+        }
+
+        public static void set_property_bool(string name, bool value, bool throwException = false)
+        {
+            Int64 val = (value) ? 1 : 0;
+            mpv_error err = mpv_set_property(Handle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_FLAG, ref val);
+
+            if (err < 0)
+                HandleError(err, throwException, $"error setting property: {name} = {value}");
+        }
+
         public static void set_property_string(string name, string value, bool throwException = false)
         {
             byte[] bytes = GetUtf8Bytes(value);
@@ -628,15 +646,6 @@ namespace mpvnet
                 HandleError(err, throwException, $"error getting property: {name}");
 
             return value;
-        }
-
-        public static void set_property_int(string name, int value, bool throwException = false)
-        {
-            Int64 val = value;
-            mpv_error err = mpv_set_property(Handle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_INT64, ref val);
-          
-            if (err < 0)
-                HandleError(err, throwException, $"error setting property: {name} = {value}");
         }
 
         public static void observe_property_int(string name, Action<int> action)

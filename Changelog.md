@@ -1,11 +1,18 @@
 
-5.4.4.4 Beta (not yet released)
+5.4.4.5 Beta (not yet released)
 ============
 
-- with `border=no` the OSC top bar window buttons min, max and close are supported.
+- 
+
+5.4.4.4 Beta
+============
+
+- with `border=no` the OSC top bar window buttons min, max and close are fully supported.
 - anamorphic videos are shown without black bars, the window is resized according to the ascpect ratio.
 - PowerShell 5.1 was made optional.
-- full implementation for `window-minimized` and `window-maximized`
+- full implementation for `window-minimized` and `window-maximized`,
+  scripts that depend on this like pause-when-minimize.lua are now fully supported.
+- fix cycling from maximized to fullscreen and back.
 
 
 5.4.4.3 Beta

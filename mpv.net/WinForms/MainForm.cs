@@ -99,6 +99,9 @@ namespace mpvnet
                 Left = target.X + (target.Width - Width) / 2;
                 Top = target.Y + (target.Height - Height) / 2;
 
+                if (!mp.Border)
+                    FormBorderStyle = FormBorderStyle.None;
+
                 int posX = RegistryHelp.GetInt(App.RegPath, "PosX");
                 int posY = RegistryHelp.GetInt(App.RegPath, "PosY");
 
@@ -119,9 +122,6 @@ namespace mpvnet
                     SetFormPosAndSize(1, true);
                     WindowState = FormWindowState.Minimized;
                 }
-
-                if (!mp.Border)
-                    FormBorderStyle = FormBorderStyle.None;
             }
             catch (Exception ex)
             {

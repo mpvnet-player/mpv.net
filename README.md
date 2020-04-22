@@ -8,29 +8,36 @@
 
 mpv.net is a modern media player for Windows that works just like [mpv](https://mpv.io).
 
+
 #### Graphical User Interface
 
 Modern GUI that supports customizable color themes.
 
+
 #### Command Line Interface
 
-mpv.net has the [CLI of mpv](https://mpv.io/manual/master/#options).
+mpv.net supports mpvs property based [command line switches](https://mpv.io/manual/master/#options).
+
 
 #### High quality video output
 
-libmpv has an OpenGL based video output that is capable of many features loved by videophiles, such as video scaling with popular high quality algorithms, color management, frame timing, interpolation, HDR, and more.
+libmpv has an video output that is capable of many features loved by videophiles, such as video scaling with popular high quality algorithms, color management, frame timing, interpolation, HDR, and more.
+
 
 #### On Screen Controller
 
 The OSC of libmpv offers play controls with a modern flat design. ([Screenshot](#main-window-screenshot))
 
+
 #### GPU video decoding
 
 libmpv leverages the FFmpeg hwaccel APIs to support DXVA2 video decoding acceleration.
 
+
 #### Active development
 
 mpv.net is under active development. Want a feature? Post a [patch](https://github.com/stax76/mpv.net/pulls) or [request it](https://github.com/stax76/mpv.net/issues)!
+
 
 #### Based on libmpv
 
@@ -57,17 +64,17 @@ Table of contents
 Features
 --------
 
+- Open source
 - High degree of mpv compatibility, almost all mpv features are available
-- Great usability due to everything in the application being searchable
-- Open source built with modern tools
 - Customizable context menu defined in the same file as the key bindings ([Screenshot](#context-menu-screenshot), [Defaults](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt))
-- Searchable config dialog ([Screenshot](#config-editor-screenshot), [Defaults](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/mpv.conf.txt))
-- Searchable input (key/mouse) binding editor ([Screenshot](#input-editor-screenshot), [Defaults](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt))
+- Config (settings) dialog ([Screenshot](#config-editor-screenshot), [Defaults](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/mpv.conf.txt))
+- Input (key/mouse) binding editor ([Screenshot](#input-editor-screenshot), [Defaults](https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt))
+- Many features like the config editor and shortcut key editor are fully searchable
 - Configuration files that are easy to read and edit ([Manual](https://mpv.io/manual/master/#configuration-files))
 - Searchable command palette to quickly find commands and keys ([Screenshot](#command-palette-screenshot))
 - Modern graphical user interface with customizable color themes ([Screenshot](#config-editor-screenshot))
 - Extension API for .NET languages (C#, VB.NET and F#)
-- Scripting API for Python, C#, Lua, JavaScript and PowerShell ([Wiki](https://github.com/stax76/mpv.net/wiki/Scripting))
+- Scripting API for C#, Lua, JavaScript and PowerShell ([Wiki](https://github.com/stax76/mpv.net/wiki/Scripting))
 - Language agnostic JSON IPC to control the player with a external programs
 - On Screen Controler (OSC, play control buttons) ([Screenshot](#main-window-screenshot))
 - [Command Line Interface](https://mpv.io/manual/master/#options)
@@ -244,7 +251,7 @@ Before making a support request for a particular issue, please try if it was alr
 
 [Issue tracker](https://github.com/stax76/mpv.net/issues), feel free to use for anything mpv(.net) related.
 
-You can support the development of mpv.net with a PayPal donation:
+You can support my work with a PayPal donation. The input hardware support in mpv.net is not 100% mpv compatible, people use all kind of weird input hardware and sometimes I have to buy those to support them.
 
 <https://www.paypal.me/stax76>
 
