@@ -5,8 +5,7 @@ mpv.net manual
 Table of contents
 -----------------
 
-* [About mpv.net](#about-mpvnet)
-  + [Target Audience](#target-audience)
+* [Description](#description)
 * [Requirements](#requirements)
 * [Installation](#installation)
   + [File Associations](#file-associations)
