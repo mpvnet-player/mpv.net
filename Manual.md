@@ -494,6 +494,13 @@ mpv.net has currently implemented the following window features:
 mpv.net supports only property switches, it does not support non property switches.
 
 
+### mpv.net specific options
+
+Options that are specific to mpv.net can be found by entering _mpv.net_ in the search field of the config editor.
+
+mpv.net specific options are saved in the file mpvnet.conf and are just as mpv properties available on the command line.
+
+
 Technical Overview
 ------------------
 
