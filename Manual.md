@@ -21,7 +21,8 @@ Table of contents
 * [Technical Overview](#technical-overview)
 * [Context Menu](#context-menu)
   + [Open > Open Files](#open--open-files)
-  + [Open > Open URL](#open--open-url)
+  + [Open > Open URL or file path from clipboard](#open--open-url-or-file-path-from-clipboard)
+  + [Open > Open DVD/Blu-ray Drive/Folder](#open--open-dvd-blu-ray-drive-folder)
   + [Open > Show media search](#open--show-media-search)
   + [Open > Load external audio files](#open--load-external-audio-files)
   + [Open > Load external subtitle files](#open--load-external-subtitle-files)
@@ -366,7 +367,14 @@ mpv.net does not define scripting interfaces but instead exposed its complete in
 Extensions
 ----------
 
+Extensions are located in the config folder and the filename must end with 'Extension.dll':
+
+```Text
+<config folder>\Extensions\ExampleExtension\ExampleExtension.dll
+```
+
 mpv.net does not define extension interfaces but instead exposed its complete internals, there are no compatibility guaranties.
+
 
 ### Walkthrough creating an extension
 
@@ -526,7 +534,7 @@ The Open Files menu entry is one way to open files in mpv.net, it supports multi
 
 Another way to open files is the command line, it is used by the File Explorer if file associations exist.
 
-When mpv.net is started from a terminal such as PowerShell, mpv.net attaches to the terminal and outputs status and debug messages. 
+When mpv.net is started from a terminal, mpv.net outputs status and debug messages on the terminal. 
 
 A third way is to drag and drop files on the main window.
 
@@ -535,20 +543,19 @@ Whenever the control key is pressed when files or URLs are opened, the playlist 
 Pressing the shift key while opening a single file will suppress loading all files in the folder.
 
 
-### Open > Open URL
+### Open > Open URL or file path from clipboard
 
-The Open URL menu entry can be used to open URLs for example from YouTube.
+Opens files and URLs from the clipboard. How to open URLs directly from the browser from sites like YouTube is described in the [External Tools section](#external-tools).
 
-mpv.net monitors the Windows clipboard and ask if URLs should be played in case it finds a URL in the clipboard. This feature uses a keyword whitelist that can be configured in the config editor. 
 
-When mpv.net is started from a terminal such as PowerShell, mpv.net attaches to the terminal and outputs status and debug messages. 
+### Open > Open DVD/Blu-ray Drive/Folder
 
-Whenever the control key is pressed when files or URLs are opened, the playlist is not cleared but the files or URLs are appended to the playlist. This works in all mpv.net features that open files or URLs.
+Opens a DVD/Blu-ray Drive/Folder.
 
 
 ### Open > Show media search
 
-mpv.net supports system wide media searches using the Everything indexing service installed by the popular file search tool Everything (www.voidtools.com).
+mpv.net supports system wide media searches using the Everything indexing service installed by the popular file search tool [Everything](www.voidtools.com).
 
 
 ### Open > Load external audio files
@@ -567,7 +574,7 @@ Play/Pause using the command:
 
 `cycle pause`
 
-[cycle command](https://mpv.io/manual/master/#command-interface-cycle-%3Cproperty%3E-[up|down])
+[cycle command](https://mpv.io/manual/master/#command-interface-cycle-%3Cname%3E-[%3Cvalue%3E])
 
 [pause property](https://mpv.io/manual/master/#options-pause)
 
@@ -587,7 +594,7 @@ Toggles fullscreen using the command:
 
 `cycle fullscreen`
 
-[cycle command](https://mpv.io/manual/master/#command-interface-cycle-%3Cproperty%3E-[up|down])
+[cycle command](https://mpv.io/manual/master/#command-interface-cycle-%3Cname%3E-[%3Cvalue%3E])
 
 [fullscreen property](https://mpv.io/manual/master/#options-fs)
 
@@ -616,7 +623,7 @@ Navigates to the next chapter using the command:
 
 `add chapter 1`
 
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
 
 [chapter property](https://mpv.io/manual/master/#command-interface-chapter)
 
@@ -627,7 +634,7 @@ Navigates to the previous chapter using the command:
 
 `add chapter -1`
 
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
 
 [chapter property](https://mpv.io/manual/master/#command-interface-chapter)
 
@@ -663,7 +670,7 @@ time format.
 
 [no-osd command prefix](https://mpv.io/manual/master/#command-interface-no-osd)
 
-[seek command](https://mpv.io/manual/master/#command-interface-[relative|absolute|absolute-percent|relative-percent|exact|keyframes])
+[seek command](https://mpv.io/manual/master/#command-interface-seek-%3Ctarget%3E-[%3Cflags%3E])
 
 
 ### Pan & Scan > Increase Size
@@ -672,7 +679,7 @@ Adds video zoom using the command:
 
 `add video-zoom  0.1`
 
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
 
 [video-zoom property](https://mpv.io/manual/master/#options-video-zoom)
 
@@ -683,7 +690,7 @@ Adds negative video zoom using the command:
 
 `add video-zoom  -0.1`
 
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
 
 [video-zoom property](https://mpv.io/manual/master/#options-video-zoom)
 
@@ -692,7 +699,7 @@ Adds negative video zoom using the command:
 
 `add video-pan-x -0.01`
 
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
 
 [video-pan-x, video-pan-y property](https://mpv.io/manual/master/#options-video-pan-y)
 
@@ -701,7 +708,7 @@ Adds negative video zoom using the command:
 
 `add video-pan-x 0.01`
 
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
 
 [video-pan-x, video-pan-y property](https://mpv.io/manual/master/#options-video-pan-y)
 
@@ -710,7 +717,7 @@ Adds negative video zoom using the command:
 
 `add video-pan-y -0.01`
 
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
 
 [video-pan-x, video-pan-y property](https://mpv.io/manual/master/#options-video-pan-y)
 
@@ -719,7 +726,7 @@ Adds negative video zoom using the command:
 
 `add video-pan-y 0.01`
 
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
 
 [video-pan-x, video-pan-y property](https://mpv.io/manual/master/#options-video-pan-y)
 
@@ -728,7 +735,7 @@ Adds negative video zoom using the command:
 
 `add panscan -0.1`
 
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
 
 [panscan property](https://mpv.io/manual/master/#options-panscan)
 
@@ -737,7 +744,7 @@ Adds negative video zoom using the command:
 
 `add panscan  0.1`
 
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
 
 [panscan property](https://mpv.io/manual/master/#options-panscan)
 
@@ -759,7 +766,7 @@ Decreases contrast with the following command:
 
 `add contrast -1`
 
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
 
 [contrast property](https://mpv.io/manual/master/#options-contrast)
 
@@ -770,7 +777,7 @@ Increases contrast with the following command:
 
 `add contrast 1`
 
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
 
 [contrast property](https://mpv.io/manual/master/#options-contrast)
 
@@ -781,7 +788,7 @@ Decreases brightness using the following command:
 
 `add brightness -1`
 
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
 
 [brightness property](https://mpv.io/manual/master/#options-brightness)
 
@@ -792,7 +799,7 @@ Increases brightness using the following command:
 
 `add brightness 1`
 
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
 
 [brightness property](https://mpv.io/manual/master/#options-brightness)
 
@@ -803,7 +810,7 @@ Decreases gamma using the following command:
 
 `add gamma -1`
 
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
 
 [gamma property](https://mpv.io/manual/master/#options-gamma)
 
@@ -814,7 +821,7 @@ Increases gamma using the following command:
 
 `add gamma 1`
 
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
 
 [gamma property](https://mpv.io/manual/master/#options-gamma)
 
@@ -825,7 +832,7 @@ Decreases saturation using the following command:
 
 `add saturation -1`
 
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
 
 [saturation property](https://mpv.io/manual/master/#options-saturation)
 
@@ -836,7 +843,7 @@ Increases saturation using the following command:
 
 `add saturation 1`
 
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
 
 [saturation property](https://mpv.io/manual/master/#options-saturation)
 
@@ -847,7 +854,7 @@ Increases saturation using the following command:
 
 [async command prefix](https://mpv.io/manual/master/#command-interface-async)
 
-[screenshot command](https://mpv.io/manual/master/#command-interface-[subtitles|video|window|single|each-frame])
+[screenshot command](https://mpv.io/manual/master/#command-interface-screenshot-%3Cflags%3E)
 
 
 ### Video > Toggle Deinterlace
@@ -856,7 +863,7 @@ Cycles the deinterlace property using the following command:
 
 `cycle deinterlace`
 
-[cycle command](https://mpv.io/manual/master/#command-interface-cycle-%3Cproperty%3E-[up|down])
+[cycle command](https://mpv.io/manual/master/#command-interface-cycle-%3Cname%3E-[%3Cvalue%3E])
 
 [deinterlace property](https://mpv.io/manual/master/#options-deinterlace)
 
@@ -869,7 +876,7 @@ Cycles the aspect ratio using the following command:
 
 [cycle-values command](https://mpv.io/manual/master/#command-interface-cycle-values)
 
-[video-aspect property](https://mpv.io/manual/master/#options-video-aspect)
+[video-aspect property](https://mpv.io/manual/master/#command-interface-video-aspect)
 
 
 ### Audio > Cycle/Next
@@ -884,7 +891,7 @@ Adds a audio delay using the following command:
 
 `add audio-delay 0.1`
 
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
 
 [audio-delay property](https://mpv.io/manual/master/#options-audio-delay)
 
@@ -895,7 +902,7 @@ Adds a negative audio delay using the following command:
 
 `add audio-delay -0.1`
 
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
 
 [audio-delay property](https://mpv.io/manual/master/#options-audio-delay)
 
@@ -906,7 +913,7 @@ Shows the next subtitle track using the following command:
 
 `cycle sub`
 
-[cycle command](https://mpv.io/manual/master/#command-interface-cycle-%3Cproperty%3E-[up|down])
+[cycle command](https://mpv.io/manual/master/#command-interface-cycle-%3Cname%3E-[%3Cvalue%3E])
 
 [sub/sid property](https://mpv.io/manual/master/#options-sid)
 
@@ -917,7 +924,7 @@ Cycles the subtitle visibility using the following command:
 
 `cycle sub-visibility`
 
-[cycle command](https://mpv.io/manual/master/#command-interface-cycle-%3Cproperty%3E-[up|down])
+[cycle command](https://mpv.io/manual/master/#command-interface-cycle-%3Cname%3E-[%3Cvalue%3E])
 
 [sub-visibility property](https://mpv.io/manual/master/#options-no-sub-visibility)
 
@@ -928,7 +935,7 @@ Adds a negative subtitle delay using the following command:
 
 `add sub-delay -0.1`
 
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
 
 [sub-delay property](https://mpv.io/manual/master/#options-sub-delay)
 
@@ -939,7 +946,7 @@ Adds a positive subtitle delay using the following command:
 
 `add sub-delay 0.1`
 
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
 
 [sub-delay property](https://mpv.io/manual/master/#options-sub-delay)
 
@@ -950,7 +957,7 @@ Moves the subtitle up using the following command:
 
 `add sub-pos -1`
 
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
 
 [sub-pos property](https://mpv.io/manual/master/#options-sub-pos)
 
@@ -961,7 +968,7 @@ Moves the subtitle down using the following command:
 
 `add sub-pos 1`
 
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
 
 [sub-pos property](https://mpv.io/manual/master/#options-sub-pos)
 
@@ -972,7 +979,7 @@ Decreases the subtitle font size using the following command:
 
 `add sub-scale -0.1`
 
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
 
 [sub-scale property](https://mpv.io/manual/master/#options-sub-scale)
 
@@ -983,7 +990,7 @@ Increases the subtitle font size using the following command:
 
 `add sub-scale 0.1`
 
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
 
 [sub-scale property](https://mpv.io/manual/master/#options-sub-scale)
 
@@ -994,7 +1001,7 @@ Increases the volume using the following command:
 
 `add volume 10`
 
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
 
 [volume property](https://mpv.io/manual/master/#options-volume)
 
@@ -1005,7 +1012,7 @@ Decreases the volume using the following command:
 
 `add volume -10`
 
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cproperty%3E-[%3Cvalue%3E])
+[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
 
 [volume property](https://mpv.io/manual/master/#options-volume)
 
@@ -1016,7 +1023,7 @@ Cycles the mute property using the following command:
 
 `cycle mute`
 
-[cycle command](https://mpv.io/manual/master/#command-interface-cycle-%3Cproperty%3E-[up|down])
+[cycle command](https://mpv.io/manual/master/#command-interface-cycle-%3Cname%3E-[%3Cvalue%3E])
 
 [mute property](https://mpv.io/manual/master/#options-mute)
 
@@ -1027,7 +1034,7 @@ Decreases the speed by 10% using the following command:
 
 `multiply speed 1/1.1`
 
-[multiply command](https://mpv.io/manual/master/#command-interface-multiply-%3Cproperty%3E-%3Cfactor%3E)
+[multiply command](https://mpv.io/manual/master/#command-interface-multiply-%3Cname%3E-%3Cvalue%3E)
 
 [speed property](https://mpv.io/manual/master/#options-speed)
 
@@ -1038,7 +1045,7 @@ Increases the speed by 10% using the following command:
 
 `multiply speed 1.1`
 
-[multiply command](https://mpv.io/manual/master/#command-interface-multiply-%3Cproperty%3E-%3Cfactor%3E)
+[multiply command](https://mpv.io/manual/master/#command-interface-multiply-%3Cname%3E-%3Cvalue%3E)
 
 [speed property](https://mpv.io/manual/master/#options-speed)
 
@@ -1049,7 +1056,7 @@ Halfs the speed using the following command:
 
 `multiply speed 0.5`
 
-[multiply command](https://mpv.io/manual/master/#command-interface-multiply-%3Cproperty%3E-%3Cfactor%3E)
+[multiply command](https://mpv.io/manual/master/#command-interface-multiply-%3Cname%3E-%3Cvalue%3E)
 
 [speed property](https://mpv.io/manual/master/#options-speed)
 
@@ -1060,7 +1067,7 @@ Doubles the speed using the following command:
 
 `multiply speed 2`
 
-[multiply command](https://mpv.io/manual/master/#command-interface-multiply-%3Cproperty%3E-%3Cfactor%3E)
+[multiply command](https://mpv.io/manual/master/#command-interface-multiply-%3Cname%3E-%3Cvalue%3E)
 
 [speed property](https://mpv.io/manual/master/#options-speed)
 
@@ -1071,7 +1078,7 @@ Resets the speed using the following command:
 
 `set speed 1`
 
-[set command](https://mpv.io/manual/master/#command-interface-set-%3Cproperty%3E-%22%3Cvalue%3E%22)
+[set command](https://mpv.io/manual/master/#command-interface-set-%3Cname%3E-%3Cvalue%3E)
 
 [speed property](https://mpv.io/manual/master/#options-speed)
 
@@ -1087,7 +1094,7 @@ Forces the player to stay on top of other windows using the following command:
 
 `set ontop yes`
 
-[set command](https://mpv.io/manual/master/#command-interface-set-%3Cproperty%3E-%22%3Cvalue%3E%22)
+[set command](https://mpv.io/manual/master/#command-interface-set-%3Cname%3E-%3Cvalue%3E)
 
 [ontop property](https://mpv.io/manual/master/#options-ontop)
 
@@ -1098,7 +1105,7 @@ Disables the player to stay on top of other windows using the following command:
 
 `set ontop no`
 
-[set command](https://mpv.io/manual/master/#command-interface-set-%3Cproperty%3E-%22%3Cvalue%3E%22)
+[set command](https://mpv.io/manual/master/#command-interface-set-%3Cname%3E-%3Cvalue%3E)
 
 [ontop property](https://mpv.io/manual/master/#options-ontop)
 
@@ -1265,14 +1272,3 @@ Exits mpv.net and remembers the position in the file using the following command
 `quit-watch-later`
 
 [quit-watch-later command](https://mpv.io/manual/master/#command-interface-quit-watch-later)
-
-
-Extensions are located in the config folder and the filename must end with 'Extension.dll':
-
-```Text
-<config folder>\Extensions\ExampleExtension\ExampleExtension.dll
-```
-
-The config folder can be opened with the context menu at:
-
-`Settings > Open Config Folder`
