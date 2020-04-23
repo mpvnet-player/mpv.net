@@ -119,7 +119,7 @@ Download
 
 ### Stable
 
-[Release page](releases)
+[Release page](https://github.com/stax76/mpv.net/releases)
 
 
 ### Beta
