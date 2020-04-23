@@ -2,7 +2,8 @@
 5.4.4.5 Beta (not yet released)
 ============
 
-- all content of the wiki was moved to the [Manual](Manual.md)
+- all content of the wiki was moved to the [manual](Manual.md)
+- the [manual](Manual.md) was improved
 
 
 5.4.4.4 Beta

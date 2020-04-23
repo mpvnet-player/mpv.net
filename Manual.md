@@ -5,23 +5,20 @@ mpv.net manual
 Table of contents
 -----------------
 
-* [Description](#description)
-* [Requirements](#requirements)
+* [About](#about)
+* [Download](#download)
 * [Installation](#installation)
-  + [File Associations](#file-associations)
+* [Support](#support)
 * [Settings](#settings)
 * [Command Line Interface](#command-line-interface)
 * [Terminal](#terminal)
 * [External Tools](#external-tools)
-  + [Play with mpv](#play-with-mpv)
-  + [Open with](#open-with)
-  + [Open with++](#open-with-1)
-  + [MediaInfo.NET](#mediainfonet)
 * [Scripting](#scripting)
 * [Extensions](#extensions)
 * [Color Theme](#color-theme)
 * [Advanced Features](#advanced-features)
 * [Differences](#differences)
+* [Technical Overview](#technical-overview)
 * [Context Menu](#context-menu)
   + [Open > Open Files](#open--open-files)
   + [Open > Open URL](#open--open-url)
@@ -103,58 +100,85 @@ Table of contents
   + [Exit Watch Later](#exit-watch-later)
 
 
-Description
------------
+About
+-----
 
-mpv.net is a modern desktop media player for Windows. mpv is similar to VLC not based on DirectShow like MPC, mpv.net is based on libmpv which in return is based on ffmpeg.
+mpv.net is a modern desktop media player for Windows based on mpv. mpv is a media player based on MPlayer and mplayer2.
 
-libmpv provides the majority of the features of the mpv media player, a fork of mplayer. mpv focuses on the usage of the command line interface, mpv.net retains the ability to be used from the command line and adds a modern GUI on top of it.
+libmpv provides the majority of the features of the mpv player. mpv focuses on the usage of the command line interface, mpv.net retains the ability to be used from the command line and adds a modern Windows GUI on top of it.
 
 mpv.net is designed to be mpv compatible, almost all mpv features are available because they are all contained in libmpv, this means the official [mpv manual](https://mpv.io/manual/master/) applies to mpv.net.
 
 
-Requirements
-------------
+Download
+--------
 
-mpv.net requires minimum .NET Framework 4.8 and Windows 7. For optimal results a modern graphics card is recommended.
+[Changelog](Changelog.md)
+
+
+### Stable
+
+[Release page](releases)
+
+
+### Beta
+
+[OneDrive](https://1drv.ms/u/s!ArwKS_ZUR01g1ldoLA90tX9DzKTj?e=xITXbC)
+
+[DropBox](https://www.dropbox.com/sh/t54p9igdwvllbpl/AADKyWpaFnIhdyosxyP5d3_xa?dl=0)
 
 
 Installation
 ------------
 
-mpv.net is available as setup and as portable download in the 7zip and Zip archive format, to unpack the portable download 7zip can be used, it is available at www.7-zip.org.
+mpv.net requires the .NET Framework 4.8 and Windows 7 or 10 and a modern graphics card.
 
-If you are new to mpv.net the portable download is recommended, for regular mpv.net users the setup is typically more easy to use.
+There is a setup and a portable download in the 7zip and Zip archive format.
 
-The x64 editions require more memory and have the advantage of being typically first and better optimized for x64.
+x64 editions have the advantage of being typically better optimized and tested.
 
-x86 (32-bit) is not recommended but should still be well supported and work but it's not as well tested as x64.
 
-Stable releases are compiled from the source and can be downloaded from the releases tab:
-
-<https://github.com/stax76/mpv.net/releases>
-
-Scoop can be used to install and update it:
+### Scoop
 
 ```
 scoop bucket add extras
 scoop install mpv.net
 ```
 
-Alternatively, Chocolatey can also be used:
+
+### AppGet
+
+`appget install mpv-net`
+
+
+### Chocolatey
 
 `choco install mpvnet.install`
 
 
-### File Associations
+#### File Associations
 
 File Associations can be created using the setup or with the context menu under 'Tools > Setup'.
 
-After the file associations were registered go to the Windows settings under 'Settings > Apps > Default apps' or shell execute `ms-settings:defaultapps` and choose mpv.net as default app for Video and optionally for Audio and Images.
+After the file associations were registered, go to the Windows settings under 'Settings > Apps > Default apps' or shell execute `ms-settings:defaultapps` and choose mpv.net as default app for Video and optionally for Audio and Images.
 
-It's also possible to change the default application using the 'Open with' feature of the context menu in File Explorer.
+It's possible to change the default application using the 'Open with' feature of the context menu in File Explorer.
 
 [Open with++](#open-with) can be used to extend the File Explorer context menu to get menu items for 'Play with mpv.net' and 'Add to mpv.net playlist'.
+
+
+Support
+-------
+
+Before making a support request, please try a newer [beta version](#beta) first.
+
+[Support thread in VideoHelp forum](https://forum.videohelp.com/threads/392514-mpv-net-a-extendable-media-player-for-windows)
+
+[Issue tracker](https://github.com/stax76/mpv.net/issues), feel free to use for anything mpv.net related.
+
+You can support my work with a PayPal donation. The input hardware support in mpv.net is not 100% mpv compatible, people use all kind of weird input hardware and sometimes I have to buy those to support them.
+
+<https://www.paypal.me/stax76>
 
 
 Settings
@@ -174,17 +198,16 @@ mpv.net generates it with the following defaults:
 
 <https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/mpv.conf.txt>
 
-mpv.net specific settings are stored in the file mpvnet.conf
+mpv.net specific settings are stored in the file mpvnet.conf.
 
 The input (key/mouse) bindings and the context menu definitions are stored in the
 input.conf file, if it's missing mpv.net generates it with the following defaults:
 
 <https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt>
 
-mpv.net supports almost all mpv settings and features,
-[limitations are described in the manual](manual.md#differences).
+mpv.net supports almost all mpv settings and features.
 
-The config folder can be opened from the context menu.
+The config folder can be opened from the context menu (`Settings > Open Config Folder`).
 
 
 Command Line Interface
@@ -214,7 +237,7 @@ Supported are all mpv properties, they are documented here:
 
 mpv.net has a feature to list all properties:
 
-Context Menu > View > Show Properties
+_Context Menu > View > Show Properties_
 
 
 Non property switches are generally not supported in mpv.net!
@@ -246,7 +269,7 @@ This will start the app on system start and have it running in the background. W
 
 ### Open With
 
-Alternatively Chrome/Firefox extension [Open With](https://github.com/stax76/mpv.net/issues/119) can be used.
+Alternatively he Chrome/Firefox extension [Open With](https://github.com/stax76/mpv.net/issues/119) can be used.
 
 
 ### Open with++
@@ -266,7 +289,7 @@ MediaInfo.NET is a media info GUI.
 
 https://github.com/stax76/MediaInfo.NET
 
-To start a external application mpv has the run input command (it does not use the shell).
+To start a external application mpv has the run input command (it does not use shell execute).
 
 If the path has spaces then it must be enclosed in quotes and then double backslashes must be used for escaping or alternatively forward slashes.
 
@@ -361,7 +384,7 @@ mpv.net does not define extension interfaces but instead exposed its complete in
 
 The ScriptingExtension implements the C# scripting host using [CS-Script](https://www.cs-script.net/).
 
-I use this extension as well to develop and debug all my C# scripts. Once the code was developed and debugged, I move the code from the extension to a standalone script.
+I use this extension as well to develop and debug C# scripts. Once the code was developed and debugged, I move the code from the extension to a standalone script.
 
 [Source Code](extensions)
 
@@ -381,6 +404,7 @@ Color Theme
 mpv.net supports custom color themes, the definition of the built-in themes can be found at:
 
 <https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/theme.txt>
+
 
 Custom themes can be saved at:
 
@@ -462,10 +486,39 @@ mpv.net has currently implemented the following window features:
 mpv.net supports only property switches, it does not support non property switches.
 
 
+Technical Overview
+------------------
+
+mpv.net is written in C# 7 and runs on the .NET Framework 4.8.
+
+The Extension implementation is based on the [Managed Extensibility Framework](https://docs.microsoft.com/en-us/dotnet/framework/mef/).
+
+The main window is WinForms based because WinForms allows better libmpv integration compared to WPF, all other windows are WPF based.
+
+The config editor adds it's controls dynamically and uses [TOML](https://en.wikipedia.org/wiki/TOML) to define it's
+content.
+
+
+Third party components:
+
+- [libmpv provides the core functionality](https://mpv.io/)
+- [MediaInfo](https://mediaarea.net/en/MediaInfo)
+- [Tommy, a single file TOML parser](https://github.com/dezhidki/Tommy)
+- [CS-Script, scripting with C#](http://www.csscript.net/)
+- [Everything, a fast file search service](https://www.voidtools.com)
+
+
 Context Menu
 ------------
 
-The most important part of the user interface in mpv.net is the context menu, the menu can be customized as it's defined in the same file where the key and mouse bindings are defined (input.conf).
+The context menu of mpv.net is defined in the file input.conf which is located in the config directory.
+
+If the input.conf file does not exists mpv.net generates it with the following defaults:
+
+<https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt>
+
+input.conf defines mpvs key and mouse bindings and mpv.net uses comments to define the context menu.
+
 
 ### Open > Open Files
 
