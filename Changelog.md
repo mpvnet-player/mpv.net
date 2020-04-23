@@ -2,8 +2,7 @@
 5.4.4.5 Beta (not yet released)
 ============
 
-- all content of the wiki was moved to the [manual](Manual.md)
-- the [manual](Manual.md) was improved
+- overhaul of the [webpage](README.md) and the [manual](Manual.md).
 
 
 5.4.4.4 Beta

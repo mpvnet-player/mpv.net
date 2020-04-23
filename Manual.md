@@ -334,6 +334,19 @@ Lua and JavaScript scripts are loaded before the first media file loads.
 [mpv user scripts](https://github.com/mpv-player/mpv/wiki/User-Scripts)
 
 
+#### PowerShell
+
+File Type: `ps1`
+
+Location: `<config folder>\scripts-ps`
+
+The PowerShell scripting host is like extensions not initialized before media files are loaded.
+
+mpv.net does not define scripting interfaces but instead exposed its complete internals, there are no compatibility guaranties.
+
+[Example Scripts](scripts/examples)
+
+
 #### C#
 
 File Type: `cs`
@@ -347,19 +360,6 @@ mpv.net does not define scripting interfaces but instead exposed its complete in
 Script code can be written within a C# [extension](#extensions), that way full code completion and debugger support is available. Once the code was developed and debugged, the code can be moved from the extension to a lightweight standalone script.
 
 The C# scripting host is like [extensions](#extensions) not initialized before media files are loaded.
-
-[Example Scripts](scripts/examples)
-
-
-#### PowerShell
-
-File Type: `ps1`
-
-Location: `<config folder>\scripts-ps`
-
-The PowerShell scripting host is like extensions not initialized before media files are loaded.
-
-mpv.net does not define scripting interfaces but instead exposed its complete internals, there are no compatibility guaranties.
 
 [Example Scripts](scripts/examples)
 

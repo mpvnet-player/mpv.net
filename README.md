@@ -92,9 +92,17 @@ Features
 
 ## [Support](Manual.md#support)
 
+[Support section of the manual.](Manual.md#support)
+
+
 ## [Download](Manual.md#download)
 
+[Download section of the manual.](Manual.md#download)
+
+
 ## [Manual](Manual.md)
+
+[The mpv.net documentation.](Manual.md)
 
 
 Screenshots
