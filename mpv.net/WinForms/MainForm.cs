@@ -23,10 +23,10 @@ namespace mpvnet
         public new ContextMenuStripEx ContextMenu { get; set; }
         Point  LastCursorPosition;
         int    LastCursorChanged;
+        int    LastCycleFullscreen;
         int    TaskbarButtonCreatedMessage;
         int    ShownTickCount;
 
-        DateTime LastCycleFullscreen;
         Taskbar  Taskbar;
         List<string> RecentFiles;
         bool WasMaximized;
@@ -380,7 +380,7 @@ namespace mpvnet
 
         public void CycleFullscreen(bool enabled)
         {
-            LastCycleFullscreen = DateTime.Now;
+            LastCycleFullscreen = Environment.TickCount;
             mp.Fullscreen = enabled;
 
             if (enabled)
@@ -517,23 +517,23 @@ namespace mpvnet
                 case 0x020A: // WM_MOUSEWHEEL
                 case 0x0100: // WM_KEYDOWN
                 case 0x0101: // WM_KEYUP
+                case 0x0102: // WM_CHAR
                 case 0x0104: // WM_SYSKEYDOWN
                 case 0x0105: // WM_SYSKEYUP
+                case 0x0106: // WM_SYSCHAR
                 case 0x319:  // WM_APPCOMMAND
                     if (mp.WindowHandle != IntPtr.Zero)
-                        WinAPI.SendMessage(mp.WindowHandle, m.Msg, m.WParam, m.LParam);
+                        m.Result = WinAPI.SendMessage(mp.WindowHandle, m.Msg, m.WParam, m.LParam);
                     break;
                 case 0x0200: // WM_MOUSEMOVE
+                    if (Environment.TickCount - LastCycleFullscreen > 500)
                     {
-                        if ((DateTime.Now - LastCycleFullscreen).TotalMilliseconds > 500)
-                        {
-                            Point pos = PointToClient(Cursor.Position);
-                            mp.command($"mouse {pos.X} {pos.Y}");
-                        }
-
-                        if (CursorHelp.IsPosDifferent(LastCursorPosition))
-                            CursorHelp.Show();
+                        Point pos = PointToClient(Cursor.Position);
+                        mp.command($"mouse {pos.X} {pos.Y}");
                     }
+
+                    if (CursorHelp.IsPosDifferent(LastCursorPosition))
+                        CursorHelp.Show();
                     break;
                 case 0x2a3: // WM_MOUSELEAVE
                     //osc won't auto hide after mouse left window in borderless mode
@@ -717,7 +717,7 @@ namespace mpvnet
             if (mp.GPUAPI != "vulkan")
                 mp.VideoSizeAutoResetEvent.WaitOne(App.StartThreshold);
 
-            LastCycleFullscreen = DateTime.Now;
+            LastCycleFullscreen = Environment.TickCount;
             SetFormPosAndSize();
         }
 
