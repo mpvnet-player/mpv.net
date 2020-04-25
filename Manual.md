@@ -119,7 +119,7 @@ Download
 
 ### Stable
 
-[Release page](releases)
+[Release page](../../releases)
 
 
 ### Beta
