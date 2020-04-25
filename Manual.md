@@ -104,11 +104,11 @@ Table of contents
 About
 -----
 
-mpv.net is a modern desktop media player for Windows based on mpv. mpv is a media player based on MPlayer and mplayer2.
-
-libmpv provides the majority of the features of the mpv player. mpv focuses on the usage of the command line interface, mpv.net retains the ability to be used from the command line and adds a modern Windows GUI on top of it.
+mpv.net is a modern desktop media player for Windows based on the popular mpv player.
 
 mpv.net is designed to be mpv compatible, almost all mpv features are available because they are all contained in libmpv, this means the official [mpv manual](https://mpv.io/manual/master/) applies to mpv.net.
+
+mpv focuses on the usage of the command line and the terminal, mpv.net retains the ability to be used from the command line and the terminal and adds a modern Windows GUI on top of it.
 
 
 Download
@@ -245,7 +245,7 @@ Terminal
 
 When mpv.net is started from a terminal it will output status, error and debug messages to the terminal and accept input keys from the terminal.
 
-In the context menu under 'Tools > Setup' a button can be found to add mpv.net to the path environment variable.
+In the context menu under _Tools > Setup_ a button can be found to add mpv.net to the path environment variable.
 
 A common task for the terminal is debugging scripts.
 
@@ -510,7 +510,7 @@ The config editor adds it's controls dynamically and uses [TOML](https://en.wiki
 content.
 
 
-Third party components:
+Third party components are:
 
 - [libmpv provides the core functionality](https://mpv.io/)
 - [MediaInfo](https://mediaarea.net/en/MediaInfo)
