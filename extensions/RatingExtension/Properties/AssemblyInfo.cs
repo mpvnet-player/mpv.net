@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("RatingExtension")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("RatingExtension")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Frank Skare (stax76)")]
 [assembly: AssemblyProduct("RatingExtension")]
-[assembly: AssemblyCopyright("Copyright © 2017-2019 Frank Skare (stax76)")]
+[assembly: AssemblyCopyright("Copyright (C) 2017-2020 Frank Skare (stax76)")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
