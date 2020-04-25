@@ -280,13 +280,11 @@ namespace mpvnet
             return null;
         }
 
-        bool WasInitialSizeSet;
-
         void SetFormPosAndSize(double scale = 1, bool force = false)
         {
             if (!force)
             {
-                if (WindowState == FormWindowState.Maximized || WindowState == FormWindowState.Minimized)
+                if (WindowState != FormWindowState.Normal)
                     return;
 
                 if (mp.Fullscreen)
@@ -304,51 +302,45 @@ namespace mpvnet
 
                 mp.VideoSize = new Size((int)(autoFitHeight * (16 / 9.0)), autoFitHeight);
 
-            Size size = mp.VideoSize;
-            int height = size.Height;
+            Size videoSize = mp.VideoSize;
+            int height = videoSize.Height;
 
-            if (App.StartSize == "previous" || App.StartSize == "always" || scale != 1)
+            if (mp.WasInitialSizeSet || scale != 1)
+                height = ClientSize.Height;
+            else
             {
-                if (WasInitialSizeSet || scale != 1)
-                    height = ClientSize.Height;
-                else
-                {
-                    int savedHeight = RegistryHelp.GetInt(App.RegPath, "Height");
+                int savedHeight = RegistryHelp.GetInt(App.RegPath, "Height");
 
-                    if (App.StartSize == "always" && savedHeight != 0)
-                        height = savedHeight;
-                    else
+                if (App.StartSize == "always" && savedHeight != 0)
+                    height = savedHeight;
+                else
+                    if (App.StartSize != "video")
                         height = autoFitHeight;
 
-                    WasInitialSizeSet = true;
-                }
+                mp.WasInitialSizeSet = true;
             }
 
             height = Convert.ToInt32(height * scale);
-            int width = Convert.ToInt32(height * size.Width / (double)size.Height);
+            int width = Convert.ToInt32(height * videoSize.Width / (double)videoSize.Height);
+            int maxHeight = screen.WorkingArea.Height - (Height - ClientSize.Height);
+            int maxWidth = screen.WorkingArea.Width - (Width - ClientSize.Width);
 
-            if (height < screen.WorkingArea.Height * mp.AutofitSmaller)
+            if (height < maxHeight * mp.AutofitSmaller)
             {
-                height = Convert.ToInt32(screen.WorkingArea.Height * mp.AutofitSmaller);
-                width = Convert.ToInt32(height * size.Width / (double)size.Height);
+                height = Convert.ToInt32(maxHeight * mp.AutofitSmaller);
+                width = Convert.ToInt32(height * videoSize.Width / (double)videoSize.Height);
             }
 
-            if (height > screen.WorkingArea.Height * mp.AutofitLarger)
+            if (height > maxHeight * mp.AutofitLarger)
             {
-                height = Convert.ToInt32(screen.WorkingArea.Height * mp.AutofitLarger);
-                width = Convert.ToInt32(height * size.Width / (double)size.Height);
+                height = Convert.ToInt32(maxHeight * mp.AutofitLarger);
+                width = Convert.ToInt32(height * videoSize.Width / (double)videoSize.Height);
             }
 
-            if (height > screen.WorkingArea.Height * 0.95)
+            if (width > maxWidth)
             {
-                height = Convert.ToInt32(screen.WorkingArea.Height * 0.95);
-                width = Convert.ToInt32(height * size.Width / (double)size.Height);
-            }
-
-            if (width > screen.WorkingArea.Width * 0.95)
-            {
-                width = Convert.ToInt32(screen.WorkingArea.Width * 0.95);
-                height = Convert.ToInt32(width * size.Height / (double)size.Width);
+                width = maxWidth;
+                height = Convert.ToInt32(width * videoSize.Height / (double)videoSize.Width);
             }
 
             Point middlePos = new Point(Left + Width / 2, Top + Height / 2);
@@ -375,7 +367,8 @@ namespace mpvnet
             if (top + rect.Height > maxBottom)
                 top = maxBottom - rect.Height;
 
-            WinAPI.SetWindowPos(Handle, IntPtr.Zero /* HWND_TOP */, left, top, rect.Width, rect.Height, 4 /* SWP_NOZORDER */);
+            WinAPI.SetWindowPos(Handle, IntPtr.Zero /* HWND_TOP */,
+                left, top, rect.Width, rect.Height, 4 /* SWP_NOZORDER */);
         }
 
         public void CycleFullscreen(bool enabled)
@@ -508,20 +501,20 @@ namespace mpvnet
 
             switch (m.Msg)
             {
-                case 0x0201: // WM_LBUTTONDOWN
-                case 0x0202: // WM_LBUTTONUP
-                case 0x0207: // WM_MBUTTONDOWN
-                case 0x0208: // WM_MBUTTONUP
-                case 0x020b: // WM_XBUTTONDOWN
-                case 0x020c: // WM_XBUTTONUP
-                case 0x020A: // WM_MOUSEWHEEL
-                case 0x0100: // WM_KEYDOWN
-                case 0x0101: // WM_KEYUP
-                case 0x0102: // WM_CHAR
-                case 0x0104: // WM_SYSKEYDOWN
-                case 0x0105: // WM_SYSKEYUP
-                case 0x0106: // WM_SYSCHAR
-                case 0x319:  // WM_APPCOMMAND
+                case 0x201: // WM_LBUTTONDOWN
+                case 0x202: // WM_LBUTTONUP
+                case 0x207: // WM_MBUTTONDOWN
+                case 0x208: // WM_MBUTTONUP
+                case 0x20b: // WM_XBUTTONDOWN
+                case 0x20c: // WM_XBUTTONUP
+                case 0x20A: // WM_MOUSEWHEEL
+                case 0x100: // WM_KEYDOWN
+                case 0x101: // WM_KEYUP
+                case 0x102: // WM_CHAR
+                case 0x104: // WM_SYSKEYDOWN
+                case 0x105: // WM_SYSKEYUP
+                case 0x106: // WM_SYSCHAR
+                case 0x319: // WM_APPCOMMAND
                     if (mp.WindowHandle != IntPtr.Zero)
                         m.Result = WinAPI.SendMessage(mp.WindowHandle, m.Msg, m.WParam, m.LParam);
                     break;
@@ -730,9 +723,9 @@ namespace mpvnet
 
             ToolStripRendererEx.ForegroundColor = Theme.Current.GetWinFormsColor("menu-foreground");
             ToolStripRendererEx.BackgroundColor = Theme.Current.GetWinFormsColor("menu-background");
-            ToolStripRendererEx.SelectionColor = Theme.Current.GetWinFormsColor("menu-highlight");
-            ToolStripRendererEx.BorderColor = Theme.Current.GetWinFormsColor("menu-border");
-            ToolStripRendererEx.CheckedColor = Theme.Current.GetWinFormsColor("menu-checked");
+            ToolStripRendererEx.SelectionColor  = Theme.Current.GetWinFormsColor("menu-highlight");
+            ToolStripRendererEx.BorderColor     = Theme.Current.GetWinFormsColor("menu-border");
+            ToolStripRendererEx.CheckedColor    = Theme.Current.GetWinFormsColor("menu-checked");
 
             BuildMenu();
             ContextMenuStrip = ContextMenu;
@@ -788,10 +781,7 @@ namespace mpvnet
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             base.OnFormClosing(e);
-
-            if (WindowState == FormWindowState.Normal)
-                SaveWindowProperties();
-
+            SaveWindowProperties();
             RegistryHelp.SetValue(App.RegPath, "Recent", RecentFiles.ToArray());
 
             if (mp.IsQuitNeeded)

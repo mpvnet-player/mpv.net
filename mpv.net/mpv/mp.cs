@@ -72,7 +72,7 @@ namespace mpvnet
         public static List<PythonScript> PythonScripts { get; set; } = new List<PythonScript>();
         public static Size VideoSize { get; set; }
         public static TimeSpan Duration;
-        public static AutoResetEvent ShutdownAutoResetEvent { get; } = new AutoResetEvent(false);
+        public static AutoResetEvent ShutdownAutoResetEvent  { get; } = new AutoResetEvent(false);
         public static AutoResetEvent VideoSizeAutoResetEvent { get; } = new AutoResetEvent(false);
 
         public static string InputConfPath { get => ConfigFolder + "input.conf"; }
@@ -82,6 +82,7 @@ namespace mpvnet
         public static string Vid { get; set; } = "";
         public static string GPUAPI { get; set; } = "auto";
 
+        public static bool WasInitialSizeSet;
         public static bool Border { get; set; } = true;
         public static bool Fullscreen { get; set; }
         public static bool IsLogoVisible { set; get; }
@@ -160,6 +161,9 @@ namespace mpvnet
                 case "screen": Screen = Convert.ToInt32(value); break;
                 case "gpu-api": GPUAPI = value; break;
             }
+
+            if (AutofitLarger > 1)
+                AutofitLarger = 1;
         }
 
         static string _ConfigFolder;
@@ -367,6 +371,10 @@ namespace mpvnet
                             {
                                 HideLogo();
                                 Duration = TimeSpan.FromSeconds(get_property_number("duration"));
+
+                                if (App.StartSize == "video")
+                                    mp.WasInitialSizeSet = false;
+                                
                                 Size size = new Size(get_property_int("width"), get_property_int("height"));
 
                                 if (size.Width == 0 || size.Height == 0)

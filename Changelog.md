@@ -1,8 +1,17 @@
 
-5.4.4.6 Beta (not yet released)
+5.4.4.7 Beta (not yet released)
 ============
 
+- 
 
+
+5.4.4.6 Beta
+============
+
+- using start-size=video the window size was not remembered
+  after fullscreen mode was left.
+- using start-size=video the window can now use the entire
+  working area using autofit-larger=100
 
 
 5.4.4.5 Beta

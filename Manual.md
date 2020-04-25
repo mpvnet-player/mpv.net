@@ -177,10 +177,6 @@ Before making a support request, please try a newer [beta version](#beta) first.
 
 [Issue tracker](https://github.com/stax76/mpv.net/issues), feel free to use for anything mpv.net related.
 
-You can support my work with a PayPal donation. The input hardware support in mpv.net is not 100% mpv compatible, people use all kind of weird input hardware and sometimes I have to buy those to support them.
-
-<https://www.paypal.me/stax76>
-
 
 Settings
 --------
