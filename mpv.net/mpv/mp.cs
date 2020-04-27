@@ -44,7 +44,6 @@ namespace mpvnet
         public static event Action Idle;                      // idle               MPV_EVENT_IDLE
         public static event Action Pause;                     //                    MPV_EVENT_PAUSE
         public static event Action Unpause;                   //                    MPV_EVENT_UNPAUSE
-        public static event Action Tick;                      // tick               MPV_EVENT_TICK
         public static event Action ScriptInputDispatch;       //                    MPV_EVENT_SCRIPT_INPUT_DISPATCH
         public static event Action<string[]> ClientMessage;   // client-message     MPV_EVENT_CLIENT_MESSAGE
         public static event Action VideoReconfig;             // video-reconfig     MPV_EVENT_VIDEO_RECONFIG
@@ -412,9 +411,6 @@ namespace mpvnet
                             break;
                         case mpv_event_id.MPV_EVENT_UNPAUSE:
                             Unpause?.Invoke();
-                            break;
-                        case mpv_event_id.MPV_EVENT_TICK:
-                            Tick?.Invoke();
                             break;
                         case mpv_event_id.MPV_EVENT_SCRIPT_INPUT_DISPATCH:
                             ScriptInputDispatch?.Invoke();

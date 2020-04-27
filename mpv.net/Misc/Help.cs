@@ -8,7 +8,7 @@ public static class ConsoleHelp
 
     public static void WriteError(object obj, string module = null) => Write(obj, module, ConsoleColor.Red, false);    
 
-    public static void Write(object obj, string module)
+    public static void Write(object obj, string module = "mpv.net")
     {
         Write(obj, module, ConsoleColor.Black, true);
     }

@@ -286,10 +286,16 @@ namespace mpvnet
             using (MediaInfo mi = new MediaInfo(path))
             {
                 MediaTrack[] audTracks = mp.MediaTracks.Where(track => track.Type == "a").ToArray();
-                if (audTracks.Length < 2) return;
+
+                if (audTracks.Length < 2)
+                    return;
+
                 int aid = mp.get_property_int("aid");
                 aid += 1;
-                if (aid > audTracks.Length) aid = 1;
+
+                if (aid > audTracks.Length)
+                    aid = 1;
+
                 mp.commandv("set", "aid", aid.ToString());
                 mp.commandv("show-text", audTracks[aid - 1].Text.Substring(3), "5000");
             }
