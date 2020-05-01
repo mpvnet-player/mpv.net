@@ -17,6 +17,7 @@ Table of contents
 * [Extensions](#extensions)
 * [Color Theme](#color-theme)
 * [Advanced Features](#advanced-features)
+* [Hidden Features](#hidden-features)
 * [Differences](#differences)
 * [Technical Overview](#technical-overview)
 * [Context Menu](#context-menu)
@@ -442,6 +443,8 @@ Selecting multiple files in File Explorer and pressing enter will open the files
 Whenever the control key is pressed when files or URLs are opened, the playlist is not cleared but the files or URLs are appended to the playlist. This works in all mpv.net features that open files or URLs.
 
 Pressing the shift key while opening a single file will suppress loading all files in the folder.
+
+In fullscreen mode clicking the top right corner closes the player.
 
 
 Differences
