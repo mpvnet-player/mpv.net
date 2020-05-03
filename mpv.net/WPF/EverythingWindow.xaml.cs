@@ -10,6 +10,8 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 
+using static mpvnet.Core;
+
 namespace mpvnet
 {
     public partial class EverythingWindow : Window
@@ -103,7 +105,7 @@ namespace mpvnet
         void Execute()
         {
             if (ListView.SelectedItem != null)
-                mp.LoadFiles(new[] { ListView.SelectedItem as string }, true, Keyboard.Modifiers == ModifierKeys.Control);
+                core.LoadFiles(new[] { ListView.SelectedItem as string }, true, Keyboard.Modifiers == ModifierKeys.Control);
 
             Keyboard.Focus(FilterTextBox);
         }

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 
 using mpvnet;
+using static mpvnet.Core;
 
 namespace RatingExtension // the assembly name must end with 'Extension'
 {
@@ -19,8 +20,8 @@ namespace RatingExtension // the assembly name must end with 'Extension'
 
         public RatingExtension() // plugin initialization
         {
-            mp.ClientMessage += ClientMessage; //handles keys defined in input.conf
-            mp.Shutdown += Shutdown; // handles MPV_EVENT_SHUTDOWN
+            core.ClientMessage += ClientMessage; //handles keys defined in input.conf
+            core.Shutdown += Shutdown; // handles MPV_EVENT_SHUTDOWN
         }
 
         // handles MPV_EVENT_SHUTDOWN
@@ -53,10 +54,10 @@ namespace RatingExtension // the assembly name must end with 'Extension'
 
             if (int.TryParse(args[1], out int rating))
             {
-                string path = mp.get_property_string("path");
+                string path = core.get_property_string("path");
                 if (!File.Exists(path)) return;
                 Dic[path] = rating;
-                mp.commandv("show-text", $"Rating: {rating}");
+                core.commandv("show-text", $"Rating: {rating}");
             }
             else if (args[1] == "about")
                 Msg.Show("Rating Extension", "This extension writes a rating to the filename of rated videos when mpv.net shuts down.\n\nThe input.conf defaults contain key bindings for this extension to set ratings.");

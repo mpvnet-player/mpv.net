@@ -2,12 +2,13 @@
 using System.IO;
 
 using mpvnet;
+using static mpvnet.Core;
 
 class Script
 {
     public Script()
     {
-        mp.Shutdown += Shutdown;
+        core.Shutdown += Shutdown;
     }
 
     void Shutdown()

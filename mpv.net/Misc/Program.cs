@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Diagnostics;
 
+using static mpvnet.Core;
+
 namespace mpvnet
 {
     static class Program
@@ -21,7 +23,7 @@ namespace mpvnet
                 if (App.IsStartedFromTerminal)
                     WinAPI.AttachConsole(-1 /*ATTACH_PARENT_PROCESS*/);
 
-                if (mp.ConfigFolder == "")
+                if (core.ConfigFolder == "")
                     return;
 
                 string[] args = Environment.GetCommandLineArgs().Skip(1).ToArray();

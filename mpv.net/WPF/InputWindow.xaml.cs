@@ -8,6 +8,8 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 
+using static mpvnet.Core;
+
 namespace mpvnet
 {
     public partial class InputWindow : Window
@@ -123,7 +125,7 @@ namespace mpvnet
         void Window_Closed(object sender, EventArgs e)
         {
             if (InitialInputConfContent == GetInputConfContent()) return;
-            File.WriteAllText(mp.InputConfPath, GetInputConfContent());
+            File.WriteAllText(core.InputConfPath, GetInputConfContent());
             Msg.Show("Changes will be available on next mpv.net startup.");
         }
 

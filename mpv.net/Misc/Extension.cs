@@ -1,9 +1,12 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.IO;
 using System.Linq;
+
+using static mpvnet.Core;
 
 namespace mpvnet
 {
@@ -25,20 +28,23 @@ namespace mpvnet
                 {
                     string[] knownExtensions = { "RatingExtension", "ScriptingExtension" };
 
-                    foreach (string path in Directory.GetDirectories(dir))
+                    foreach (string extDir in Directory.GetDirectories(dir))
                     {
-                        if (knownExtensions.Contains(Path.GetFileName(path)))
-                            catalog.Catalogs.Add(new DirectoryCatalog(path, "*Extension.dll"));
+                        if (knownExtensions.Contains(Path.GetFileName(extDir)))
+                            catalog.Catalogs.Add(new DirectoryCatalog(extDir, Path.GetFileName(extDir) + ".dll"));
                         else
-                            Msg.ShowError("Failed to load extension", path + "\n\nOnly extensions that ship with mpv.net are allowed in <startup>\\extensions\n\nUser extensions have to use <config folder>\\extensions\n\nNever copy or install a new mpv.net version over a old mpv.net version.");
+                            ConsoleHelp.WriteError("Failed to load extension:\n\n" +  extDir +
+                                "\n\nOnly extensions that ship with mpv.net are allowed in <startup>\\extensions" +
+                                "\n\nUser extensions have to use <config folder>\\extensions" +
+                                "\n\nNever copy or install a new mpv.net version over a old mpv.net version.");
                     }
                 }
 
-                dir = mp.ConfigFolder + "extensions";
+                dir = core.ConfigFolder + "extensions";
 
                 if (Directory.Exists(dir))
-                    foreach (string i in Directory.GetDirectories(dir))
-                        catalog.Catalogs.Add(new DirectoryCatalog(i, "*Extension.dll"));
+                    foreach (string extDir in Directory.GetDirectories(dir))
+                        catalog.Catalogs.Add(new DirectoryCatalog(extDir, Path.GetFileName(extDir) + ".dll"));
 
                 if (catalog.Catalogs.Count > 0)
                 {
@@ -48,7 +54,7 @@ namespace mpvnet
             }
             catch (Exception ex)
             {
-                Msg.ShowException(ex);
+                App.ShowException(ex);
             }
         }
     }

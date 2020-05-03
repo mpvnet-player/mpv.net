@@ -8,13 +8,13 @@ using System.Windows.Forms;
 using System.Windows.Interop;
 
 using VB = Microsoft.VisualBasic;
-using ScriptHost;
 
 using static NewLine;
+using static mpvnet.Core;
 
 namespace mpvnet
 {
-    public class Command
+    public class Commands
     {
         public static void Execute(string id, string[] args)
         {
@@ -36,7 +36,7 @@ namespace mpvnet
                 case "show-about": ShowDialog(typeof(AboutWindow)); break;
                 case "show-conf-editor": ShowDialog(typeof(ConfWindow)); break;
                 case "show-input-editor": ShowDialog(typeof(InputWindow)); break;
-                case "open-conf-folder": Process.Start(mp.ConfigFolder); break;
+                case "open-conf-folder": Process.Start(core.ConfigFolder); break;
                 case "shell-execute": Process.Start(args[0]); break;
                 case "show-info": ShowInfo(); break;
                 case "playlist-first": PlaylistFirst(); break;
@@ -49,7 +49,7 @@ namespace mpvnet
             }
         }
 
-        public static void InvokeOnMainThread(Action action) => MainForm.Instance.Invoke(action);
+        public static void InvokeOnMainThread(Action action) => MainForm.Instance.BeginInvoke(action);
 
         public static void ShowDialog(Type winType)
         {
@@ -74,7 +74,7 @@ namespace mpvnet
             InvokeOnMainThread(new Action(() => {
                 using (var d = new OpenFileDialog() { Multiselect = true })
                     if (d.ShowDialog() == DialogResult.OK)
-                        mp.LoadFiles(d.FileNames, loadFolder, append);
+                        core.LoadFiles(d.FileNames, loadFolder, append);
             }));
         }
 
@@ -90,13 +90,13 @@ namespace mpvnet
                     {
                         if (Directory.Exists(d.SelectedPath + "\\BDMV"))
                         {
-                            mp.set_property_string("bluray-device", d.SelectedPath);
-                            mp.LoadFiles(new[] { @"bd://" }, false, false);
+                            core.set_property_string("bluray-device", d.SelectedPath);
+                            core.LoadFiles(new[] { @"bd://" }, false, false);
                         }
                         else
                         {
-                            mp.set_property_string("dvd-device", d.SelectedPath);
-                            mp.LoadFiles(new[] { @"dvd://" }, false, false);
+                            core.set_property_string("dvd-device", d.SelectedPath);
+                            core.LoadFiles(new[] { @"dvd://" }, false, false);
                         }
                     }
                 }
@@ -105,31 +105,31 @@ namespace mpvnet
 
         public static void PlaylistFirst()
         {
-            int pos = mp.get_property_int("playlist-pos");
+            int pos = core.get_property_int("playlist-pos");
 
             if (pos != 0)
-                mp.set_property_int("playlist-pos", 0);
+                core.set_property_int("playlist-pos", 0);
         }
 
         public static void PlaylistLast()
         {
-            int pos = mp.get_property_int("playlist-pos");
-            int count = mp.get_property_int("playlist-count");
+            int pos = core.get_property_int("playlist-pos");
+            int count = core.get_property_int("playlist-count");
 
             if (pos < count - 1)
-                mp.set_property_int("playlist-pos", count - 1);
+                core.set_property_int("playlist-pos", count - 1);
         }
 
         public static void ShowHistory()
         {
-            if (File.Exists(mp.ConfigFolder + "history.txt"))
-                Process.Start(mp.ConfigFolder + "history.txt");
+            if (File.Exists(core.ConfigFolder + "history.txt"))
+                Process.Start(core.ConfigFolder + "history.txt");
             else
             {
                 if (Msg.ShowQuestion("Create history.txt file in config folder?",
                     "mpv.net will write the date, time and filename of opened files to it.") == MsgResult.OK)
 
-                    File.WriteAllText(mp.ConfigFolder + "history.txt", "");
+                    File.WriteAllText(core.ConfigFolder + "history.txt", "");
             }
         }
 
@@ -139,13 +139,13 @@ namespace mpvnet
             {
                 string performer, title, album, genre, date, duration, text = "";
                 long fileSize = 0;
-                string path = mp.get_property_string("path");
+                string path = core.get_property_string("path");
 
                 if (path.Contains("://"))
-                    path = mp.get_property_string("media-title");
+                    path = core.get_property_string("media-title");
 
-                int width = mp.get_property_int("video-params/w");
-                int height = mp.get_property_int("video-params/h");
+                int width = core.get_property_int("video-params/w");
+                int height = core.get_property_int("video-params/h");
 
                 if (File.Exists(path))
                 {
@@ -171,7 +171,7 @@ namespace mpvnet
                             text += "Size: " + mediaInfo.GetInfo(MediaInfoStreamKind.General, "FileSize/String") + "\n";
                             text += "Type: " + path.ShortExt().ToUpper();
 
-                            mp.commandv("show-text", text, "5000");
+                            core.commandv("show-text", text, "5000");
                             return;
                         }
                     }
@@ -185,16 +185,16 @@ namespace mpvnet
                                 "Size: " + mediaInfo.GetInfo(MediaInfoStreamKind.General, "FileSize/String") + "\n" +
                                 "Type: " + path.ShortExt().ToUpper();
 
-                            mp.commandv("show-text", text, "5000");
+                            core.commandv("show-text", text, "5000");
                             return;
                         }
                     }
                 }
 
-                TimeSpan position = TimeSpan.FromSeconds(mp.get_property_number("time-pos"));
-                TimeSpan duration2 = TimeSpan.FromSeconds(mp.get_property_number("duration"));
-                string videoFormat = mp.get_property_string("video-format").ToUpper();
-                string audioCodec = mp.get_property_string("audio-codec-name").ToUpper();
+                TimeSpan position = TimeSpan.FromSeconds(core.get_property_number("time-pos"));
+                TimeSpan duration2 = TimeSpan.FromSeconds(core.get_property_number("duration"));
+                string videoFormat = core.get_property_string("video-format").ToUpper();
+                string audioCodec = core.get_property_string("audio-codec-name").ToUpper();
 
                 text = path.FileName() + "\n" +
                     FormatTime(position.TotalMinutes) + ":" +
@@ -208,12 +208,12 @@ namespace mpvnet
 
                 text += $"{videoFormat}\n{audioCodec}";
 
-                mp.commandv("show-text", text, "5000");
+                core.commandv("show-text", text, "5000");
                 string FormatTime(double value) => ((int)value).ToString("00");
             }
             catch (Exception e)
             {
-                Msg.ShowException(e);
+                App.ShowException(e);
             }
         }
 
@@ -221,9 +221,12 @@ namespace mpvnet
         {
             InvokeOnMainThread(new Action(() => {
                 string command = VB.Interaction.InputBox("Enter a mpv command to be executed.", "Execute Command", RegistryHelp.GetString(App.RegPath, "RecentExecutedCommand"));
-                if (string.IsNullOrEmpty(command)) return;
+             
+                if (string.IsNullOrEmpty(command))
+                    return;
+
                 RegistryHelp.SetValue(App.RegPath, "RecentExecutedCommand", command);
-                mp.command(command, false);
+                core.command(command, false);
             }));
         }
         
@@ -231,12 +234,14 @@ namespace mpvnet
         {
             InvokeOnMainThread(new Action(() => {
                 string clipboard = System.Windows.Forms.Clipboard.GetText();
+
                 if (string.IsNullOrEmpty(clipboard) || (!clipboard.Contains("://") && !File.Exists(clipboard)) || clipboard.Contains("\n"))
                 {
-                    Msg.ShowError("The clipboard does not contain a valid URL or file, URLs have to contain :// and are not allowed to contain a newline character.");
+                    App.ShowError("No URL found", "The clipboard does not contain a valid URL or file.");
                     return;
                 }
-                mp.LoadFiles(new [] { clipboard }, false, Control.ModifierKeys.HasFlag(Keys.Control));
+
+                core.LoadFiles(new [] { clipboard }, false, Control.ModifierKeys.HasFlag(Keys.Control));
             }));
         }
 
@@ -245,7 +250,7 @@ namespace mpvnet
             InvokeOnMainThread(new Action(() => {
                 using (var d = new OpenFileDialog())
                 {
-                    string path = mp.get_property_string("path");
+                    string path = core.get_property_string("path");
 
                     if (File.Exists(path))
                         d.InitialDirectory = Path.GetDirectoryName(path);
@@ -254,7 +259,7 @@ namespace mpvnet
 
                     if (d.ShowDialog() == DialogResult.OK)
                         foreach (string filename in d.FileNames)
-                            mp.commandv("sub-add", filename);
+                            core.commandv("sub-add", filename);
                 }
             }));
         }
@@ -264,40 +269,40 @@ namespace mpvnet
             InvokeOnMainThread(new Action(() => {
                 using (var d = new OpenFileDialog())
                 {
-                    string path = mp.get_property_string("path");
+                    string path = core.get_property_string("path");
                     if (File.Exists(path))
                         d.InitialDirectory = Path.GetDirectoryName(path);
                     d.Multiselect = true;
 
                     if (d.ShowDialog() == DialogResult.OK)
                         foreach (string i in d.FileNames)
-                            mp.commandv("audio-add", i);
+                            core.commandv("audio-add", i);
                 }
             }));
         }
 
         public static void CycleAudio()
         {
-            string path = mp.get_property_string("path");
+            string path = core.get_property_string("path");
 
             if (!File.Exists(path))
                 return;
 
             using (MediaInfo mi = new MediaInfo(path))
             {
-                MediaTrack[] audTracks = mp.MediaTracks.Where(track => track.Type == "a").ToArray();
+                MediaTrack[] audTracks = core.MediaTracks.Where(track => track.Type == "a").ToArray();
 
                 if (audTracks.Length < 2)
                     return;
 
-                int aid = mp.get_property_int("aid");
+                int aid = core.get_property_int("aid");
                 aid += 1;
 
                 if (aid > audTracks.Length)
                     aid = 1;
 
-                mp.commandv("set", "aid", aid.ToString());
-                mp.commandv("show-text", audTracks[aid - 1].Text.Substring(3), "5000");
+                core.commandv("set", "aid", aid.ToString());
+                core.commandv("show-text", audTracks[aid - 1].Text.Substring(3), "5000");
             }
         }
 
@@ -317,7 +322,7 @@ namespace mpvnet
                     ''
                 }";
 
-            string json = mp.get_property_string("profile-list");
+            string json = core.get_property_string("profile-list");
             string file = Path.GetTempPath() + @"\mpv profile-list.txt";
             File.WriteAllText(file, BR + PowerShell.InvokeAndReturnString(code, "json", json));
             Process.Start(file);
@@ -344,7 +349,7 @@ namespace mpvnet
                     }
                 }";
 
-            string json = mp.get_property_string("command-list");
+            string json = core.get_property_string("command-list");
             string file = Path.GetTempPath() + @"\mpv command-list.txt";
             File.WriteAllText(file, PowerShell.InvokeAndReturnString(code, "json", json) + BR);
             Process.Start(file);
@@ -353,7 +358,7 @@ namespace mpvnet
         static void ShowProperties()
         {
             string file = Path.GetTempPath() + @"\mpv property-list.txt";
-            var props = mp.get_property_string("property-list").Split(',').OrderBy(prop => prop);
+            var props = core.get_property_string("property-list").Split(',').OrderBy(prop => prop);
             File.WriteAllText(file, BR + string.Join(BR, props) + BR);
             Process.Start(file);
         }

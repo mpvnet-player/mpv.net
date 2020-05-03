@@ -11,6 +11,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 
 using DynamicGUI;
+using static mpvnet.Core;
 
 namespace mpvnet
 {
@@ -26,7 +27,7 @@ namespace mpvnet
             InitializeComponent();
             DataContext = this;
             SearchControl.SearchTextBox.TextChanged += SearchTextBox_TextChanged;
-            LoadConf(mp.ConfPath);
+            LoadConf(core.ConfPath);
             LoadConf(App.ConfPath);
             LoadSettings();
             InitialContent = GetCompareString();
@@ -74,7 +75,7 @@ namespace mpvnet
             if (InitialContent == GetCompareString())
                 return;
             
-            File.WriteAllText(mp.ConfPath, GetContent("mpv"));
+            File.WriteAllText(core.ConfPath, GetContent("mpv"));
             File.WriteAllText(App.ConfPath, GetContent("mpvnet"));
             Msg.Show("Changes will be available on next mpv.net startup.");            
         }
@@ -293,7 +294,7 @@ namespace mpvnet
 
         void OpenSettingsTextBlock_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            Process.Start(Path.GetDirectoryName(mp.ConfPath));
+            Process.Start(Path.GetDirectoryName(core.ConfPath));
         }
 
         void PreviewTextBlock_MouseUp(object sender, MouseButtonEventArgs e)

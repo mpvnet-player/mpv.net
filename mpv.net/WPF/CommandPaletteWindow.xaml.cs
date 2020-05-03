@@ -6,6 +6,8 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Interop;
 
+using static mpvnet.Core;
+
 namespace mpvnet
 {
     public partial class CommandPaletteWindow : Window
@@ -106,7 +108,7 @@ namespace mpvnet
             {
                 CommandItem item = ListView.SelectedItem as CommandItem;
                 Close();
-                mp.command(item.Command);
+                core.command(item.Command);
             }
         }
 

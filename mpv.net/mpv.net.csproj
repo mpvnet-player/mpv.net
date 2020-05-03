@@ -76,29 +76,6 @@
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="IKVM.Reflection, Version=7.2.4630.5, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>IronPython\IKVM.Reflection.dll</HintPath>
-    </Reference>
-    <Reference Include="IronPython, Version=2.7.9.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>IronPython\IronPython.dll</HintPath>
-    </Reference>
-    <Reference Include="IronPython.Modules, Version=2.7.9.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>IronPython\IronPython.Modules.dll</HintPath>
-    </Reference>
-    <Reference Include="IronPythonAddon">
-      <HintPath>IronPython\IronPythonAddon.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Dynamic, Version=1.2.2.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>IronPython\Microsoft.Dynamic.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Scripting, Version=1.2.2.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>IronPython\Microsoft.Scripting.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -156,7 +133,7 @@
     <Compile Include="Misc\UpdateCheck.cs" />
     <Compile Include="Misc\RegistryHelp.cs" />
     <Compile Include="Misc\Theme.cs" />
-    <Compile Include="Scripting\PowerShell.cs" />
+    <Compile Include="Misc\PowerShell.cs" />
     <Compile Include="WPF\SearchTextBoxUserControl.xaml.cs">
       <DependentUpon>SearchTextBoxUserControl.xaml</DependentUpon>
     </Compile>
@@ -179,7 +156,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Scripting\IronPython.cs" />
     <Compile Include="mpv\libmpv.cs" />
     <Compile Include="WinForms\MainForm.cs">
       <SubType>Form</SubType>
@@ -188,8 +164,8 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Misc\Misc.cs" />
-    <Compile Include="mpv\mp.cs" />
-    <Compile Include="Misc\Command.cs" />
+    <Compile Include="mpv\Core.cs" />
+    <Compile Include="Misc\Commands.cs" />
     <Compile Include="Native\Native.cs" />
     <Compile Include="Native\NativeHelp.cs" />
     <Compile Include="Misc\Program.cs" />

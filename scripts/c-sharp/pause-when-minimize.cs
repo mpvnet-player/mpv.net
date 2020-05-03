@@ -9,12 +9,14 @@ using mpvnet;
 class Script
 {
     MainForm Form;
+    Core core;
 
     bool WasPlaying;
     bool WasPaused;
 
     public Script()
     {
+        core = Core.core;
         Form = MainForm.Instance;
         Form.Resize += Form_Resize;
     }
@@ -23,11 +25,11 @@ class Script
     {
         if (Form.WindowState == FormWindowState.Minimized)
         {
-            WasPlaying = !mp.get_property_bool("pause");
+            WasPlaying = !core.get_property_bool("pause");
 
             if (WasPlaying)
             {
-                mp.set_property_bool("pause", true, true);
+                core.set_property_bool("pause", true, true);
                 WasPaused = true;
             }
         }
@@ -35,7 +37,7 @@ class Script
         {
             if (WasPaused)
             {
-                mp.set_property_bool("pause", false, true);
+                core.set_property_bool("pause", false, true);
                 WasPaused = false;
             }
         }

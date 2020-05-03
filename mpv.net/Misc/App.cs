@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using UI;
 
 using static libmpv;
+using static mpvnet.Core;
 
 using System.Threading.Tasks;
 
@@ -21,7 +22,7 @@ namespace mpvnet
         public static string[] SubtitleTypes { get; } = { "srt", "ass", "idx", "sup", "ttxt", "ssa", "smi" };
 
         public static string RegPath { get; } = @"HKCU\Software\" + Application.ProductName;
-        public static string ConfPath { get => mp.ConfigFolder + "mpvnet.conf"; }
+        public static string ConfPath { get => core.ConfigFolder + "mpvnet.conf"; }
         public static string ProcessInstance { get; set; } = "single";
         public static string DarkMode { get; set; } = "always";
         public static string DarkTheme { get; set; } = "dark";
@@ -49,8 +50,8 @@ namespace mpvnet
 
         public static void Init()
         {
-            string dummy = mp.ConfigFolder;
-            var dummy2 = mp.Conf;
+            string dummy = core.ConfigFolder;
+            var dummy2 = core.Conf;
 
             foreach (var i in Conf)
                 ProcessProperty(i.Key, i.Value, true);
@@ -59,7 +60,7 @@ namespace mpvnet
             {
                 try
                 {
-                    string filePath = mp.ConfigFolder + "mpvnet-debug.log";
+                    string filePath = core.ConfigFolder + "mpvnet-debug.log";
 
                     if (File.Exists(filePath))
                         File.Delete(filePath);
@@ -78,17 +79,17 @@ namespace mpvnet
 
             string themeContent = null;
 
-            if (File.Exists(mp.ConfigFolder + "theme.conf"))
-                themeContent = File.ReadAllText(mp.ConfigFolder + "theme.conf");
+            if (File.Exists(core.ConfigFolder + "theme.conf"))
+                themeContent = File.ReadAllText(core.ConfigFolder + "theme.conf");
 
             Theme.Init(
                 themeContent,
                 Properties.Resources.theme,
                 IsDarkMode ? DarkTheme : LightTheme);
 
-            mp.Shutdown += Shutdown;
-            mp.Initialized += Initialized;
-            mp.LogMessage += ShowFatalError;
+            core.Shutdown += Shutdown;
+            core.Initialized += Initialized;
+            core.LogMessage += ShowFatalError;
         }
 
         static void ShowFatalError(mpv_log_level level, string msg)
@@ -103,6 +104,7 @@ namespace mpvnet
                 try
                 {
                     action.Invoke();
+                    Debug.WriteLine(Environment.TickCount);
                 }
                 catch (Exception e)
                 {
@@ -116,25 +118,36 @@ namespace mpvnet
             if (obj is Exception e)
             {
                 if (App.IsStartedFromTerminal)
-                    ConsoleHelp.WriteError(e.ToString(), "mpv.net");
+                    ConsoleHelp.WriteError(e.ToString());
                 else
                     Msg.ShowException(e);
             }
             else
             {
                 if (App.IsStartedFromTerminal)
-                    ConsoleHelp.WriteError(obj.ToString(), "mpv.net");
+                    ConsoleHelp.WriteError(obj.ToString());
                 else
                     Msg.ShowError(obj.ToString());
             }
+        }
+
+        public static void ShowError(string title, string msg)
+        {
+            if (App.IsStartedFromTerminal)
+            {
+                ConsoleHelp.WriteError(title);
+                ConsoleHelp.WriteError(msg);
+            }
+            else
+                Msg.ShowError(title, msg);
         }
 
         static void Initialized()
         {
             if (RememberVolume)
             {
-                mp.set_property_int("volume", RegistryHelp.GetInt(App.RegPath, "Volume", 70));
-                mp.set_property_string("mute", RegistryHelp.GetString(App.RegPath, "Mute", "no"));
+                core.set_property_int("volume", RegistryHelp.GetInt(App.RegPath, "Volume", 70));
+                core.set_property_string("mute", RegistryHelp.GetString(App.RegPath, "Mute", "no"));
             }
         }
 
@@ -142,8 +155,8 @@ namespace mpvnet
         {
             if (RememberVolume)
             {
-                RegistryHelp.SetValue(App.RegPath, "Volume", mp.get_property_int("volume"));
-                RegistryHelp.SetValue(App.RegPath, "Mute", mp.get_property_string("mute"));
+                RegistryHelp.SetValue(App.RegPath, "Volume", core.get_property_int("volume"));
+                RegistryHelp.SetValue(App.RegPath, "Mute", core.get_property_string("mute"));
             }
         }
 
@@ -184,7 +197,7 @@ namespace mpvnet
                 case "light-theme": LightTheme = value.Trim('\'', '"'); return true;
                 default:
                     if (writeError)
-                        ConsoleHelp.WriteError($"unknown mpvnet.conf property: {name}", "mpv.net");
+                        ConsoleHelp.WriteError($"unknown mpvnet.conf property: {name}");
                     return false;
             }
         }

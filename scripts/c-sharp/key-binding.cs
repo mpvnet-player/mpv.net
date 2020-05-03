@@ -11,9 +11,10 @@ class Script
     {
         string content = "ctrl+w script-message my-message-1 my-argument-1";
         string sectionName = Assembly.GetExecutingAssembly().GetName().Name;
-        mp.commandv("define-section", sectionName, content, "force");
-        mp.commandv("enable-section", sectionName);
-        mp.ClientMessage += ClientMessage;
+        Core core = Core.core;
+        core.commandv("define-section", sectionName, content, "force");
+        core.commandv("enable-section", sectionName);
+        core.ClientMessage += ClientMessage;
     }
 
     void ClientMessage(string[] args)

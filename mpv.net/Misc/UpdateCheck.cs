@@ -6,6 +6,8 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
+using static mpvnet.Core;
+
 namespace mpvnet
 {
     class UpdateCheck
@@ -61,7 +63,7 @@ namespace mpvnet
                             proc.Start();
                         }
 
-                        mp.command("quit");
+                        core.command("quit");
                     }
 
                     RegistryHelp.SetValue(RegistryHelp.ApplicationKey, "UpdateCheckVersion", onlineVersion.ToString());

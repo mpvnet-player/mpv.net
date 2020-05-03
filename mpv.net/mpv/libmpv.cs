@@ -45,6 +45,9 @@ public class libmpv
     public static extern mpv_error mpv_set_property(IntPtr mpvHandle, byte[] name, mpv_format format, ref Int64 data);
 
     [DllImport("mpv-1.dll", CallingConvention = CallingConvention.Cdecl)]
+    public static extern mpv_error mpv_set_property(IntPtr mpvHandle, byte[] name, mpv_format format, ref double data);
+
+    [DllImport("mpv-1.dll", CallingConvention = CallingConvention.Cdecl)]
     public static extern mpv_error mpv_observe_property(IntPtr mpvHandle, UInt64 reply_userdata, [MarshalAs(UnmanagedType.LPUTF8Str)] string name, mpv_format format);
 
     [DllImport("mpv-1.dll", CallingConvention = CallingConvention.Cdecl)]
@@ -149,9 +152,9 @@ public class libmpv
     [StructLayout(LayoutKind.Sequential)]
     public struct mpv_event_log_message
     {
-        public string prefix;
-        public string level;
-        public string text;
+        public IntPtr prefix;
+        public IntPtr level;
+        public IntPtr text;
         public mpv_log_level log_level;
     }
 

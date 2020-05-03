@@ -7,7 +7,6 @@ $include = @(
     '*.iss',
     '*.js',
     '*.lua',
-    '*.md',
     '*.ps1',
     '*.resx',
     '*.sln',

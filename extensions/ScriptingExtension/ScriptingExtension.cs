@@ -13,6 +13,7 @@ using System.IO;
 
 using mpvnet;
 using CSScriptLibrary;
+using static mpvnet.Core;
 
 // the file name of extensions must end with 'Extension'
 namespace ScriptingExtension
@@ -27,8 +28,8 @@ namespace ScriptingExtension
             //Script = new Script();
             List<string> files = new List<string>();
 
-            if (Directory.Exists(mp.ConfigFolder + "scripts-cs"))
-                files.AddRange(Directory.GetFiles(mp.ConfigFolder + "scripts-cs", "*.cs"));
+            if (Directory.Exists(core.ConfigFolder + "scripts-cs"))
+                files.AddRange(Directory.GetFiles(core.ConfigFolder + "scripts-cs", "*.cs"));
 
             if (Directory.Exists(Folder.Startup + "scripts"))
                 foreach (string path in Directory.GetFiles(Folder.Startup + "scripts", "*.cs"))

@@ -45,7 +45,7 @@ namespace UI
                         if (!theme.Dictionary.ContainsKey(key))
                         {
                             isKeyMissing = true;
-                            ConsoleHelp.WriteError($"Theme '{activeTheme}' misses '{key}'", "mpv.net");
+                            ConsoleHelp.WriteError($"Theme '{activeTheme}' misses '{key}'");
                             break;
                         }
                     }

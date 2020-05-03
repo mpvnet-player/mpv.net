@@ -341,7 +341,7 @@ The PowerShell scripting host is like extensions not initialized before media fi
 
 mpv.net does not define scripting interfaces but instead exposed its complete internals, there are no compatibility guaranties.
 
-[Example Scripts](scripts/examples)
+[Example Scripts](scripts)
 
 
 #### C#
@@ -358,16 +358,16 @@ Script code can be written within a C# [extension](#extensions), that way full c
 
 The C# scripting host is like [extensions](#extensions) not initialized before media files are loaded.
 
-[Example Scripts](scripts/examples)
+[Example Scripts](scripts)
 
 
 Extensions
 ----------
 
-Extensions are located in the config folder and the filename must end with 'Extension.dll':
+Extensions are located in a subfolder _extensions_ in the config folder and the filename must have the same name as the directory:
 
 ```Text
-<config folder>\Extensions\ExampleExtension\ExampleExtension.dll
+<config folder>\extensions\ExampleExtension\ExampleExtension.dll
 ```
 
 mpv.net does not define extension interfaces but instead exposed its complete internals, there are no compatibility guaranties.

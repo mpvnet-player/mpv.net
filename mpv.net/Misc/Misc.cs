@@ -14,6 +14,8 @@ using System.Windows.Forms;
 
 using Microsoft.Win32;
 
+using static mpvnet.Core;
+
 namespace mpvnet
 {
     public class Sys
@@ -186,7 +188,7 @@ namespace mpvnet
         public static ObservableCollection<CommandItem> Items {
             get {
                 if (_Items is null)
-                    _Items = GetItems(File.ReadAllText(mp.InputConfPath));
+                    _Items = GetItems(File.ReadAllText(core.InputConfPath));
 
                 return _Items;
             }

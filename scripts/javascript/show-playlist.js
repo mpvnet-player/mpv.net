@@ -3,7 +3,6 @@
 
 function showPlaylist()
 {
-
     // set font size
     mp.set_property_number("osd-font-size", 40);
 

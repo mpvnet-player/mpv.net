@@ -6,6 +6,7 @@ using System.Windows.Input;
 using System.Windows.Interop;
 
 using WinForms = System.Windows.Forms;
+using static mpvnet.Core;
 
 namespace mpvnet
 {
@@ -183,7 +184,7 @@ namespace mpvnet
                 OnKeyUp(new WinForms.KeyEventArgs((WinForms.Keys)(unchecked((int)(long)m.WParam)) | ModifierKeys));
             else if (m.Msg == WM_APPCOMMAND)
             {
-                if (!mp.get_property_bool("input-media-keys"))
+                if (!core.get_property_bool("input-media-keys"))
                     return;
 
                 var value = (AppCommand)(m.LParam.ToInt64() >> 16 & ~0xf000);

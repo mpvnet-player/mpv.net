@@ -1,8 +1,26 @@
 
-5.4.4.7 Beta (not yet released)
+5.4.5.2 Beta  (not yet released)
 ============
 
-- 
+
+
+
+5.4.5.1 Beta
+============
+
+- extensions no longer need to end with *Extension.dll but rather
+  the file name and the directory name must be identical
+- text encoding exception fix
+- the PowerShell script host is more feature complete, easier to use
+  and more efficient, there were however many PowerShell and C# breaking
+  changes requrired to make the core more robust and efficient
+- Python 2 script host removed, Python 3 support is planned for summer
+
+
+5.4.5.0
+=======
+
+stable release, no changes since the last beta
 
 
 5.4.4.6 Beta
