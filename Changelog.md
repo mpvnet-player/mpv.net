@@ -5,6 +5,13 @@
 
 
 
+5.4.6.0
+=======
+
+- youtube-dl update
+- auto update routine fix
+
+
 5.4.5.1 Beta
 ============
 
