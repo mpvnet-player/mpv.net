@@ -174,9 +174,9 @@ Support
 
 Before making a support request, please try a newer [beta version](#beta) first.
 
-[Support thread in VideoHelp forum](https://forum.videohelp.com/threads/392514-mpv-net-a-extendable-media-player-for-windows)
+Bugs and feature requests can be made on the github [issue tracker](https://github.com/stax76/mpv.net/issues), feel free to use for anything mpv related.
 
-[Issue tracker](https://github.com/stax76/mpv.net/issues), feel free to use for anything mpv.net related.
+Or use the [support thread](https://forum.videohelp.com/threads/392514-mpv-net-a-extendable-media-player-for-windows) in the VideoHelp forum.
 
 
 Settings
