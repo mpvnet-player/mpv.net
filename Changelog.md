@@ -1,8 +1,8 @@
 
-5.4.5.2 Beta  (not yet released)
+5.4.6.1 Beta  (not yet released)
 ============
 
-
+- log error fix
 
 
 5.4.6.0

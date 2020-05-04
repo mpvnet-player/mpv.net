@@ -89,13 +89,6 @@ namespace mpvnet
 
             core.Shutdown += Shutdown;
             core.Initialized += Initialized;
-            core.LogMessage += ShowFatalError;
-        }
-
-        static void ShowFatalError(mpv_log_level level, string msg)
-        {
-            if (!App.IsStartedFromTerminal && level == mpv_log_level.MPV_LOG_LEVEL_FATAL)
-                Msg.ShowError(msg);
         }
 
         public static void RunAction(Action action)

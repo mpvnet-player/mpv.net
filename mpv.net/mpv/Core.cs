@@ -396,10 +396,18 @@ namespace mpvnet
                         case mpv_event_id.MPV_EVENT_LOG_MESSAGE:
                             {
                                 var data = (mpv_event_log_message)Marshal.PtrToStructure(evt.data, typeof(mpv_event_log_message));
-                                mpv_log_level level = data.log_level;
-                                string msg = $"[{ConvertFromUtf8(data.prefix)}] {ConvertFromUtf8(data.text)}";
-                                InvokeAsync<mpv_log_level, string>(LogMessageAsync, level, msg);
-                                LogMessage?.Invoke(level, msg);
+
+                                if (LogMessage != null || LogMessageAsync != null ||
+                                    data.log_level == mpv_log_level.MPV_LOG_LEVEL_FATAL)
+                                {
+                                    string msg = $"[{ConvertFromUtf8(data.prefix)}] {ConvertFromUtf8(data.text)}";
+
+                                    if (data.log_level == mpv_log_level.MPV_LOG_LEVEL_FATAL)
+                                        App.RunAction(() => App.ShowError("Fatal Error", msg));
+
+                                    InvokeAsync<mpv_log_level, string>(LogMessageAsync, data.log_level, msg);
+                                    LogMessage?.Invoke(data.log_level, msg);
+                                }
                             }
                             break;
                         case mpv_event_id.MPV_EVENT_CLIENT_MESSAGE:
