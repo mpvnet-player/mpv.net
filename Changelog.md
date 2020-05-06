@@ -3,6 +3,7 @@
 ============
 
 - log error fix
+- workaround to support AviSynth portable (ffmpeg blocks loading AviSynth from path env var)
 
 
 5.4.6.0

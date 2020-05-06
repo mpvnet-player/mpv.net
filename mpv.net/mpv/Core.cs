@@ -974,6 +974,7 @@ namespace mpvnet
             for (int i = 0; i < files.Length; i++)
             {
                 string file = files[i];
+                LoadLibrary(file.ShortExt());
 
                 if (App.SubtitleTypes.Contains(file.ShortExt()))
                     commandv("sub-add", file);
@@ -1018,6 +1019,17 @@ namespace mpvnet
 
             if (index > 0)
                 commandv("playlist-move", "0", (index + 1).ToString());
+        }
+
+        bool wasAviSynthLoaded;
+
+        void LoadLibrary(string ext)
+        {
+            if (!wasAviSynthLoaded && ext == "avs")
+            {
+                WinAPI.LoadLibrary("AviSynth.dll");
+                wasAviSynthLoaded = true;
+            }
         }
 
         string LastHistoryPath;
