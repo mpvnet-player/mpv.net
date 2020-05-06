@@ -233,6 +233,12 @@ namespace mpvnet
             var error = sender as PSDataCollection<ErrorRecord>;
             ConsoleHelp.WriteError(error[e.Index], Module);
         }
+
+        public static void Shutdown()
+        {
+            foreach (PowerShell ps in Instances)
+                ps.Runspace.Dispose();
+        }
     }
 
     public class PowerShellException : Exception

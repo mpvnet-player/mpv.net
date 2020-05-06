@@ -520,6 +520,9 @@ namespace mpvnet
                 case 0x319: // WM_APPCOMMAND
                     if (core.WindowHandle != IntPtr.Zero)
                         m.Result = WinAPI.SendMessage(core.WindowHandle, m.Msg, m.WParam, m.LParam);
+
+                    if (m.Msg == 0x319) // WM_APPCOMMAND
+                        return;
                     break;
                 case 0x0200: // WM_MOUSEMOVE
                     if (Environment.TickCount - LastCycleFullscreen > 500)
@@ -793,10 +796,7 @@ namespace mpvnet
             if (!core.ShutdownAutoResetEvent.WaitOne(10000))
                 Msg.ShowError("Shutdown thread failed to complete within 10 seconds.");
 
-            try { // PowerShell 5.1 might not be available
-                foreach (PowerShell ps in PowerShell.Instances)
-                    ps.Runspace.Dispose();
-            } catch {}
+            PowerShell.Shutdown();
         }
 
         protected override void OnMouseDown(MouseEventArgs e)

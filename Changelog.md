@@ -1,9 +1,17 @@
 
-5.4.6.1 Beta  (not yet released)
+5.4.7.1 Beta  (not yet released)
 ============
+
+
+
+
+5.4.7.0
+=======
 
 - log error fix
 - workaround to support AviSynth portable (ffmpeg blocks loading AviSynth from path env var)
+- attempt to fix not reproducible volume input issue
+- attempt to fix exception caused by powershell being not available on Win 7
 
 
 5.4.6.0
