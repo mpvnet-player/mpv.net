@@ -117,7 +117,7 @@ namespace mpvnet
             if (Handle == IntPtr.Zero)
                 throw new Exception("error mpv_create");
 
-            mpv_request_log_messages(Handle, "info");
+            mpv_request_log_messages(Handle, "terminal-default");
 
             Task.Run(() => EventLoop());
 
@@ -397,14 +397,9 @@ namespace mpvnet
                             {
                                 var data = (mpv_event_log_message)Marshal.PtrToStructure(evt.data, typeof(mpv_event_log_message));
 
-                                if (LogMessage != null || LogMessageAsync != null ||
-                                    data.log_level == mpv_log_level.MPV_LOG_LEVEL_FATAL)
+                                if (LogMessage != null || LogMessageAsync != null)
                                 {
                                     string msg = $"[{ConvertFromUtf8(data.prefix)}] {ConvertFromUtf8(data.text)}";
-
-                                    if (data.log_level == mpv_log_level.MPV_LOG_LEVEL_FATAL)
-                                        App.RunAction(() => App.ShowError("Fatal Error", msg));
-
                                     InvokeAsync<mpv_log_level, string>(LogMessageAsync, data.log_level, msg);
                                     LogMessage?.Invoke(data.log_level, msg);
                                 }

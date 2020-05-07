@@ -1,8 +1,16 @@
 
-5.4.7.1 Beta  (not yet released)
+5.4.7.2 Beta  (not yet released)
 ============
 
 
+
+
+5.4.7.1 Beta
+============
+
+- log error fix, mpv.net does now ignore all log messages because libmpv already
+  prints the log messages to the the terminal
+- the release script now also outputs x86 beta versions so x86 users can test betas
 
 
 5.4.7.0
