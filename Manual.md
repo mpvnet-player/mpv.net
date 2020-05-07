@@ -166,7 +166,9 @@ After the file associations were registered, go to the Windows settings under 'S
 
 It's possible to change the default application using the 'Open with' feature of the context menu in File Explorer.
 
-[Open with++](#open-with) can be used to extend the File Explorer context menu to get menu items for 'Play with mpv.net' and 'Add to mpv.net playlist'.
+[Open with++](#open-with) can be used to extend the File Explorer context menu to get menu items for [Play with mpv.net](https://github.com/stax76/OpenWithPlusPlus#play-with-mpvnet) and [Add to mpv.net playlist](https://github.com/stax76/OpenWithPlusPlus#add-to-mpvnet-playlist).
+
+When multiple files are selected in File Explorer and enter is pressed then the files are opened in mpv.net in random order, this works with maximum 15 files.
 
 
 Support
@@ -272,30 +274,7 @@ Alternatively he Chrome/Firefox extension [Open With](https://github.com/stax76/
 
 ### Open with++
 
-Open with++ allows to customize the File Explorer context menu to add menu items 'Play with mpv.net' and 'Add to mpv.net playlist'.
-
-https://github.com/stax76/OpenWithPlusPlus
-
-https://github.com/stax76/OpenWithPlusPlus#mpvnet
-
-https://github.com/stax76/OpenWithPlusPlus#add-to-mpvnet-playlist
-
-
-### MediaInfo.NET
-
-MediaInfo.NET is a media info GUI.
-
-https://github.com/stax76/MediaInfo.NET
-
-To start a external application mpv has the run input command (it does not use shell execute).
-
-If the path has spaces then it must be enclosed in quotes and then double backslashes must be used for escaping or alternatively forward slashes.
-
- `_ run D:\Software\MediaInfoNET.exe "${path}" #menu: Tools > Open file with MediaInfo.NET`
-
- `_ run "D:\\Soft ware\\MediaInfoNET.exe" "${path}" #menu: Tools > Open file with MediaInfo.NET`
-
- `_ run "D:/Soft ware/MediaInfoNET.exe" "${path}" #menu: Tools > Open file with MediaInfo.NET`
+[Open with++](https://github.com/stax76/OpenWithPlusPlus) can be used to extend the File Explorer context menu to get menu items for [Play with mpv.net](https://github.com/stax76/OpenWithPlusPlus#play-with-mpvnet) and [Add to mpv.net playlist](https://github.com/stax76/OpenWithPlusPlus#add-to-mpvnet-playlist).
 
 
 Scripting
@@ -538,9 +517,7 @@ input.conf defines mpvs key and mouse bindings and mpv.net uses comments to defi
 
 The Open Files menu entry is one way to open files in mpv.net, it supports multi selection.
 
-Another way to open files is the command line, it is used by the File Explorer if file associations exist.
-
-When mpv.net is started from a terminal, mpv.net outputs status and debug messages on the terminal. 
+Another way to open files is the command line which is used by File Explorer for existing associations.
 
 A third way is to drag and drop files on the main window.
 

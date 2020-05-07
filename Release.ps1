@@ -42,6 +42,29 @@ $msBuild     = $vsDir + '\Community\MSBuild\Current\Bin\MSBuild.exe'
 $inno        = 'C:\Program Files (x86)\Inno Setup 6\ISCC.exe'
 $7z          = 'C:\Program Files\7-Zip\7z.exe'
 
+$cloudDirectories = 'C:\Users\frank\OneDrive\Public\mpv.net\',
+                    'C:\Users\frank\Dropbox\Public\mpv.net\'
+
+function UploadBeta($sourceFile)
+{
+    foreach ($cloudDirectory in $cloudDirectories)
+    {
+        if (-not (Test-Path $cloudDirectory))
+        {
+            throw $cloudDirectory
+        }
+
+        $targetFile = $cloudDirectory + (Split-Path $sourceFile -Leaf)
+
+        if (Test-Path $targetFile)
+        {
+            throw $targetFile
+        }
+
+        Copy-Item $sourceFile $targetFile
+    }
+}
+
 if ($versionInfo.FilePrivatePart -eq 0)
 {
     & $msBuild mpv.net.sln -t:Rebuild -p:Configuration=Debug -p:Platform=x64
@@ -83,36 +106,22 @@ else
     Copy-Item .\mpv.net\bin\x64 $targetDir -Recurse -Exclude System.Management.Automation.xml
     & $7z a -t7z -mx9 "$targetDir.7z" -r "$targetDir\*"
     if ($LastExitCode) { throw $LastExitCode }
+    UploadBeta "$targetDir.7z"
 
-    $targetDir = $desktopDir + "\mpv.net-portable-x86-$($versionInfo.FileVersion)"
+    $targetDir = $desktopDir + "\mpv.net-portable-x86-$($versionInfo.FileVersion)-beta"
     Copy-Item .\mpv.net\bin\x86 $targetDir -Recurse -Exclude System.Management.Automation.xml
     & $7z a -t7z -mx9 "$targetDir.7z" -r "$targetDir\*"
     if ($LastExitCode) { throw $LastExitCode }
-
-    $cloudDirectories = 'C:\Users\frank\OneDrive\Public\mpv.net\',
-                        'C:\Users\frank\Dropbox\Public\mpv.net\'
+    UploadBeta "$targetDir.7z"
 
     foreach ($cloudDirectory in $cloudDirectories)
     {
-        if (-not (Test-Path $cloudDirectory))
-        {
-            throw $cloudDirectory
-        }
-
-        $targetFile = $cloudDirectory + (Split-Path $targetDir -Leaf) + '.7z'
-
-        if (Test-Path $targetFile)
-        {
-            throw $targetFile
-        }
-
-        Copy-Item ($targetDir + '.7z') $targetFile
         Invoke-Item $cloudDirectory
-
-        Set-Clipboard ($versionInfo.FileVersion + " Beta`n`nChangelog:`n`n" +
-            'https://github.com/stax76/mpv.net/blob/master/Changelog.md' + "`n`nDownload:`n`n" +
-            'https://github.com/stax76/mpv.net/blob/master/Manual.md#beta')
     }
+
+    Set-Clipboard ($versionInfo.FileVersion + " Beta`n`nChangelog:`n`n" +
+        'https://github.com/stax76/mpv.net/blob/master/Changelog.md' + "`n`nDownload:`n`n" +
+        'https://github.com/stax76/mpv.net/blob/master/Manual.md#beta')
 }
 
 Write-Host 'successfully finished' -ForegroundColor Green

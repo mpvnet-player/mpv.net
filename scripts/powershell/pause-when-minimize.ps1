@@ -1,6 +1,4 @@
 
-Set-Variable wasPaused $false -Option AllScope
-
 $code = {
     $isMinimized = $args[0]
     $isPaused = $mp.get_property_bool('pause')
@@ -10,17 +8,17 @@ $code = {
         if (-not $isPaused)
         {
             $mp.set_property_bool('pause', $true)
-            $wasPaused = $true
+            $script:wasPaused = $true
         }
     }
     else
     {
-        if ($wasPaused -and $isPaused)
+        if ($script:wasPaused -and $isPaused)
         {
             $mp.set_property_bool('pause', $false)
         }
 
-        $wasPaused = $false
+        $script:wasPaused = $false
     }
 }
 
