@@ -1,10 +1,17 @@
 
-5.4.7.2 Beta  (not yet released)
+5.4.7.3 Beta  (not yet released)
 ============
 
-- WM_APPCOMMAND (mpv calls this media-keys) based input is no longer
-  directly passed to mpv but rather handled in mpv.net translating
-  the commands to mpv keys and sent via keypress input command to mpv
+- 
+
+
+5.4.7.2 Beta
+============
+
+- another attempt to fix a app command issue. WM_APPCOMMAND (mpv calls this media keys)
+  based input is no longer directly passed to mpv but rather handled in mpv.net directly
+  translating the native commands to mpv keys and sent via keypress input command to mpv
+- another attempt to fix a crash caused by powershell 5.1 not being installed
 
 
 5.4.7.1 Beta

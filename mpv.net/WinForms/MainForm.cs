@@ -811,8 +811,6 @@ namespace mpvnet
 
             if (!core.ShutdownAutoResetEvent.WaitOne(10000))
                 Msg.ShowError("Shutdown thread failed to complete within 10 seconds.");
-
-            PowerShell.Shutdown();
         }
 
         protected override void OnMouseDown(MouseEventArgs e)
