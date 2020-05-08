@@ -524,21 +524,28 @@ namespace mpvnet
                         if (core.WindowHandle != IntPtr.Zero && !skip)
                             m.Result = WinAPI.SendMessage(core.WindowHandle, m.Msg, m.WParam, m.LParam);
                     }
-
                     break;
                 case 0x319: // WM_APPCOMMAND
                     {
-                        string value = mpvHelp.WM_APPCOMMAND_to_mpv_key((int)(m.LParam.ToInt64() >> 16 & ~0xf000));
-
-                        if (value != null)
-                        {
-                            core.command("keypress " + value);
+                        if (App.MediaKeys == "discard") {
                             m.Result = new IntPtr(1);
-                            LastAppCommand = Environment.TickCount;
                             return;
+                        } else if (App.MediaKeys == "mpv") {
+                            if (core.WindowHandle != IntPtr.Zero) {
+                                m.Result = WinAPI.SendMessage(core.WindowHandle, m.Msg, m.WParam, m.LParam);
+                                if (m.Result != IntPtr.Zero)
+                                    return;
+                            }
+                        } else if (App.MediaKeys == "mpvnet") {
+                            string value = mpvHelp.WM_APPCOMMAND_to_mpv_key((int)(m.LParam.ToInt64() >> 16 & ~0xf000));
+                            if (value != null) {
+                                core.command("keypress " + value);
+                                m.Result = new IntPtr(1);
+                                LastAppCommand = Environment.TickCount;
+                                return;
+                            }
                         }
                     }
-
                     break;
                 case 0x0200: // WM_MOUSEMOVE
                     if (Environment.TickCount - LastCycleFullscreen > 500)

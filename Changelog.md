@@ -1,8 +1,14 @@
 
-5.4.7.3 Beta  (not yet released)
+5.4.7.4 Beta (not yet released)
 ============
 
 - 
+
+
+5.4.7.3 Beta
+============
+
+- new setting media-keys added, can be found in the config editor in the input tab.
 
 
 5.4.7.2 Beta
