@@ -102,6 +102,9 @@ else
     & $msBuild mpv.net.sln -t:Rebuild -p:Configuration=Debug -p:Platform=x64
     if ($LastExitCode) { throw $LastExitCode }
 
+    & $msBuild mpv.net.sln -t:Rebuild -p:Configuration=Debug -p:Platform=x86
+    if ($LastExitCode) { throw $LastExitCode }
+
     $targetDir = "$desktopDir\mpv.net-portable-x64-$($versionInfo.FileVersion)-beta"
     Copy-Item .\mpv.net\bin\x64 $targetDir -Recurse -Exclude System.Management.Automation.xml
     & $7z a -t7z -mx9 "$targetDir.7z" -r "$targetDir\*"
