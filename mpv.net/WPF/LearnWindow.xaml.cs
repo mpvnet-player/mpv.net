@@ -1,12 +1,12 @@
 ﻿
 using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
 
 using WinForms = System.Windows.Forms;
-using static mpvnet.Core;
 
 namespace mpvnet
 {
@@ -64,9 +64,9 @@ namespace mpvnet
                 case WinForms.Keys.NumPad9:
                     text = "KP" + e.KeyCode.ToString()[6]; break;
                 case WinForms.Keys.Space:
-                    text = "Space"; break;
+                    text = "SPACE"; break;
                 case WinForms.Keys.Enter:
-                    text = "Enter"; break;
+                    text = "ENTER"; break;
                 case WinForms.Keys.Tab:
                     text = "TAB"; break;
                 case WinForms.Keys.Back:
@@ -76,7 +76,7 @@ namespace mpvnet
                 case WinForms.Keys.Insert:
                     text = "INS"; break;
                 case WinForms.Keys.Home:
-                    text = "Home"; break;
+                    text = "HOME"; break;
                 case WinForms.Keys.End:
                     text = "END"; break;
                 case WinForms.Keys.PageUp:
@@ -86,37 +86,37 @@ namespace mpvnet
                 case WinForms.Keys.Escape:
                     text = "ESC"; break;
                 case WinForms.Keys.PrintScreen:
-                    text = "Print"; break;
+                    text = "PRINT"; break;
                 case WinForms.Keys.Play:
-                    text = "Play"; break;
+                    text = "PLAY"; break;
                 case WinForms.Keys.Pause:
-                    text = "Pause"; break;
+                    text = "PAUSE"; break;
                 case WinForms.Keys.MediaPlayPause:
-                    text = "PlayPause"; break;
+                    text = "PLAYPAUSE"; break;
                 case WinForms.Keys.MediaStop:
-                    text = "Stop"; break;
+                    text = "STOP"; break;
                 case WinForms.Keys.MediaNextTrack:
-                    text = "Next"; break;
+                    text = "NEXT"; break;
                 case WinForms.Keys.MediaPreviousTrack:
-                    text = "Prev"; break;
-                case WinForms.Keys.VolumeUp:
-                    text = "Volume_Up"; break;
-                case WinForms.Keys.VolumeDown:
-                    text = "Volume_Down"; break;
+                    text = "PREV"; break;
                 case WinForms.Keys.VolumeMute:
-                    text = "Mute"; break;
+                    text = "MUTE"; break;
                 case WinForms.Keys.BrowserHome:
-                    text = "Homepage"; break;
+                    text = "HOMEPAGE"; break;
                 case WinForms.Keys.LaunchMail:
-                    text = "Mail"; break;
+                    text = "MAIL"; break;
                 case WinForms.Keys.BrowserFavorites:
-                    text = "Favorites"; break;
+                    text = "FAVORITES"; break;
                 case WinForms.Keys.BrowserSearch:
-                    text = "Search"; break;
+                    text = "SEARCH"; break;
                 case WinForms.Keys.Sleep:
-                    text = "Sleep"; break;
+                    text = "SLEEP"; break;
                 case WinForms.Keys.Cancel:
-                    text = "Cancel"; break;
+                    text = "CANCEL"; break;
+                case WinForms.Keys.VolumeUp:
+                    text = ""; break;
+                case WinForms.Keys.VolumeDown:
+                    text = ""; break;
             }
 
             bool wasModified = false;
@@ -131,7 +131,8 @@ namespace mpvnet
                 wasModified = true;
             }
 
-            if (text == "#") text = "SHARP";
+            if (text == "#")
+                text = "SHARP";
 
             if (isAlt   && !wasModified)
                 text = "ALT+" + text;
@@ -146,14 +147,11 @@ namespace mpvnet
                 SetKey(text);
         }
 
-        DateTime LastKeyUp;
-
         void SetKey(string key)
         {
             NewKey = key;
             MenuTextBlock.Text = InputItem.Path;
             KeyTextBlock.Text = key;
-            LastKeyUp = DateTime.Now;
         }
 
         [DllImport("user32.dll")]
@@ -184,142 +182,15 @@ namespace mpvnet
                 OnKeyUp(new WinForms.KeyEventArgs((WinForms.Keys)(unchecked((int)(long)m.WParam)) | ModifierKeys));
             else if (m.Msg == WM_APPCOMMAND)
             {
-                if (!core.get_property_bool("input-media-keys"))
-                    return;
+                string value = mpvHelp.WM_APPCOMMAND_to_mpv_key((int)(m.LParam.ToInt64() >> 16 & ~0xf000));
 
-                var value = (AppCommand)(m.LParam.ToInt64() >> 16 & ~0xf000);
-
-                switch (value)
-                {
-                    case AppCommand.APPCOMMAND_MEDIA_CHANNEL_DOWN:
-                        SetKey("CHANNEL_DOWN");
-                        break;
-                    case AppCommand.APPCOMMAND_MEDIA_CHANNEL_UP:
-                        SetKey("CHANNEL_UP");
-                        break;
-                    case AppCommand.APPCOMMAND_MEDIA_FAST_FORWARD:
-                        SetKey("FORWARD");
-                        break;
-                    case AppCommand.APPCOMMAND_MEDIA_REWIND:
-                        SetKey("REWIND");
-                        break;
-                    case AppCommand.APPCOMMAND_MEDIA_PAUSE:
-                        SetKey("PAUSE");
-                        break;
-                    case AppCommand.APPCOMMAND_MEDIA_PLAY:
-                        SetKey("PLAY");
-                        break;
-                    case AppCommand.APPCOMMAND_MEDIA_PLAY_PAUSE:
-                        SetKey("PLAYPAUSE");
-                        break;
-                    case AppCommand.APPCOMMAND_MEDIA_NEXTTRACK:
-                        SetKey("NEXT");
-                        break;
-                    case AppCommand.APPCOMMAND_MEDIA_PREVIOUSTRACK:
-                        SetKey("PREV");
-                        break;
-                    case AppCommand.APPCOMMAND_MEDIA_RECORD:
-                        SetKey("RECORD");
-                        break;
-                    case AppCommand.APPCOMMAND_MEDIA_STOP:
-                        SetKey("STOP");
-                        break;
-                    case AppCommand.APPCOMMAND_VOLUME_UP:
-                        SetKey("VOLUME_UP");
-                        break;
-                    case AppCommand.APPCOMMAND_VOLUME_DOWN:
-                        SetKey("VOLUME_DOWN");
-                        break;
-                    case AppCommand.APPCOMMAND_VOLUME_MUTE:
-                        SetKey("MUTE");
-                        break;
-                    case AppCommand.APPCOMMAND_BROWSER_HOME:
-                        SetKey("HOMEPAGE");
-                        break;
-                    case AppCommand.APPCOMMAND_LAUNCH_MAIL:
-                        SetKey("MAIL");
-                        break;
-                    case AppCommand.APPCOMMAND_BROWSER_FAVORITES:
-                        SetKey("FAVORITES");
-                        break;
-                    case AppCommand.APPCOMMAND_BROWSER_SEARCH:
-                        SetKey("SEARCH");
-                        break;
-                    case AppCommand.APPCOMMAND_PRINT:
-                        SetKey("PRINT");
-                        break;
-                }
+                if (value != null)
+                    SetKey(value);
             }
-        }
-
-        internal enum AppCommand
-        {
-            APPCOMMAND_BASS_BOOST = 20,
-            APPCOMMAND_BASS_DOWN = 19,
-            APPCOMMAND_BASS_UP = 21,
-            APPCOMMAND_BROWSER_BACKWARD = 1,
-            APPCOMMAND_BROWSER_FAVORITES = 6,
-            APPCOMMAND_BROWSER_FORWARD = 2,
-            APPCOMMAND_BROWSER_HOME = 7,
-            APPCOMMAND_BROWSER_REFRESH = 3,
-            APPCOMMAND_BROWSER_SEARCH = 5,
-            APPCOMMAND_BROWSER_STOP = 4,
-            APPCOMMAND_CLOSE = 31,
-            APPCOMMAND_COPY = 36,
-            APPCOMMAND_CORRECTION_LIST = 45,
-            APPCOMMAND_CUT = 37,
-            APPCOMMAND_DICTATE_OR_COMMAND_CONTROL_TOGGLE = 43,
-            APPCOMMAND_FIND = 28,
-            APPCOMMAND_FORWARD_MAIL = 40,
-            APPCOMMAND_HELP = 27,
-            APPCOMMAND_LAUNCH_APP1 = 17,
-            APPCOMMAND_LAUNCH_APP2 = 18,
-            APPCOMMAND_LAUNCH_MAIL = 15,
-            APPCOMMAND_LAUNCH_MEDIA_SELECT = 16,
-            APPCOMMAND_MEDIA_CHANNEL_DOWN = 52,
-            APPCOMMAND_MEDIA_CHANNEL_UP = 51,
-            APPCOMMAND_MEDIA_FAST_FORWARD = 49,
-            APPCOMMAND_MEDIA_NEXTTRACK = 11,
-            APPCOMMAND_MEDIA_PAUSE = 47,
-            APPCOMMAND_MEDIA_PLAY = 46,
-            APPCOMMAND_MEDIA_PLAY_PAUSE = 14,
-            APPCOMMAND_MEDIA_PREVIOUSTRACK = 12,
-            APPCOMMAND_MEDIA_RECORD = 48,
-            APPCOMMAND_MEDIA_REWIND = 50,
-            APPCOMMAND_MEDIA_STOP = 13,
-            APPCOMMAND_MIC_ON_OFF_TOGGLE = 44,
-            APPCOMMAND_MICROPHONE_VOLUME_DOWN = 25,
-            APPCOMMAND_MICROPHONE_VOLUME_MUTE = 24,
-            APPCOMMAND_MICROPHONE_VOLUME_UP = 26,
-            APPCOMMAND_NEW = 29,
-            APPCOMMAND_OPEN = 30,
-            APPCOMMAND_PASTE = 38,
-            APPCOMMAND_PRINT = 33,
-            APPCOMMAND_REDO = 35,
-            APPCOMMAND_REPLY_TO_MAIL = 39,
-            APPCOMMAND_SAVE = 32,
-            APPCOMMAND_SEND_MAIL = 41,
-            APPCOMMAND_SPELL_CHECK = 42,
-            APPCOMMAND_TREBLE_DOWN = 22,
-            APPCOMMAND_TREBLE_UP = 23,
-            APPCOMMAND_UNDO = 34,
-            APPCOMMAND_VOLUME_DOWN = 9,
-            APPCOMMAND_VOLUME_MUTE = 8,
-            APPCOMMAND_VOLUME_UP = 10
         }
 
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         public static extern short GetKeyState(int keyCode);
-
-        [DllImport("user32.dll")]
-        static extern short VkKeyScan(char c);
-
-        [DllImport("user32.dll", SetLastError = true)]
-        static extern int ToAscii(uint     uVirtKey,
-                                  uint     uScanCode,
-                                  byte[]   lpKeyState,
-                                  out uint lpChar,
-                                  uint     flags);
 
         void Window_Loaded(object sender, RoutedEventArgs e)
         {

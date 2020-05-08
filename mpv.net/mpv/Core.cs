@@ -149,9 +149,11 @@ namespace mpvnet
 
         public void ProcessProperty(string name, string value)
         {
-            if (name.Any(char.IsUpper))
-                Msg.ShowError("Uppercase char detected: " + name,
-                    "mpv properties using the command line and the mpv.conf config file are required to be lowercase.");
+            foreach (char i in name)
+                if (char.IsUpper(i))
+                    Msg.ShowError("Uppercase char detected: " + name,
+                        "mpv properties using the command line and the mpv.conf " +
+                        "config file are required to be lowercase.");
 
             switch (name)
             {
@@ -169,7 +171,7 @@ namespace mpvnet
                     break;
                 case "fs":
                 case "fullscreen": Fullscreen = value == "yes"; break;
-                case "border": Border = value == "yes"; break;
+                case "border":     Border = value == "yes"; break;
                 case "window-maximized": WindowMaximized = value == "yes"; break;
                 case "window-minimized": WindowMinimized = value == "yes"; break;
                 case "taskbar-progress": TaskbarProgress = value == "yes"; break;

@@ -3,20 +3,20 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:UI="clr-namespace:UI"
+             xmlns:mpvnet="clr-namespace:mpvnet"
              mc:Ignorable="d" 
              d:DesignHeight="450"
              d:DesignWidth="800">
     
     <Grid Name="SearchTextBoxUserControl1"
-          Background="{x:Static UI:Theme.Background}">
+          Background="{x:Static mpvnet:Theme.Background}">
         
         <TextBlock Name="HintTextBlock"
                    Margin="5,2"
                    Text="Find a setting"
                    VerticalAlignment="Center"
-                   Foreground="{x:Static UI:Theme.Foreground2}"
-                   Background="{x:Static UI:Theme.Background}" />
+                   Foreground="{x:Static mpvnet:Theme.Foreground2}"
+                   Background="{x:Static mpvnet:Theme.Background}" />
         
         <TextBox Name="SearchTextBox"
                  Height="25"
@@ -24,8 +24,8 @@
                  BorderThickness="2"
                  Background="Transparent"
                  TextChanged="SearchTextBox_TextChanged"
-                 Foreground="{x:Static UI:Theme.Foreground}"
-                 CaretBrush="{x:Static UI:Theme.Foreground}" />
+                 Foreground="{x:Static mpvnet:Theme.Foreground}"
+                 CaretBrush="{x:Static mpvnet:Theme.Foreground}" />
         
         <Button Name="SearchClearButton"
                 Background="Transparent"
@@ -40,8 +40,8 @@
 
             <Button.Style>
                 <Style TargetType="Button">
-                    <Setter Property="Background" Value="{x:Static UI:Theme.Background}"/>
-                    <Setter Property="Foreground" Value="{x:Static UI:Theme.Foreground2}"/>
+                    <Setter Property="Background" Value="{x:Static mpvnet:Theme.Background}"/>
+                    <Setter Property="Foreground" Value="{x:Static mpvnet:Theme.Foreground2}"/>
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="Button">
@@ -58,7 +58,7 @@
                     
                     <Style.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Foreground" Value="{x:Static UI:Theme.Heading}"/>
+                            <Setter Property="Foreground" Value="{x:Static mpvnet:Theme.Heading}"/>
                         </Trigger>
                     </Style.Triggers>
                 </Style>

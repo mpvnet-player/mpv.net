@@ -11,7 +11,6 @@ using System.Globalization;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
-using UI;
 using static mpvnet.Core;
 
 namespace mpvnet
@@ -24,6 +23,7 @@ namespace mpvnet
         Point  LastCursorPosition;
         int    LastCursorChanged;
         int    LastCycleFullscreen;
+        int    LastAppCommand;
         int    TaskbarButtonCreatedMessage;
         int    ShownTickCount;
 
@@ -517,12 +517,28 @@ namespace mpvnet
                 case 0x101: // WM_KEYUP
                 case 0x104: // WM_SYSKEYDOWN
                 case 0x105: // WM_SYSKEYUP
-                case 0x319: // WM_APPCOMMAND
-                    if (core.WindowHandle != IntPtr.Zero)
-                        m.Result = WinAPI.SendMessage(core.WindowHandle, m.Msg, m.WParam, m.LParam);
+                    {
+                        bool skip = m.Msg == 0x100 && LastAppCommand != 0 &&
+                            (Environment.TickCount - LastAppCommand) < 1000;
 
-                    if (m.Msg == 0x319) // WM_APPCOMMAND
-                        return;
+                        if (core.WindowHandle != IntPtr.Zero && !skip)
+                            m.Result = WinAPI.SendMessage(core.WindowHandle, m.Msg, m.WParam, m.LParam);
+                    }
+
+                    break;
+                case 0x319: // WM_APPCOMMAND
+                    {
+                        string value = mpvHelp.WM_APPCOMMAND_to_mpv_key((int)(m.LParam.ToInt64() >> 16 & ~0xf000));
+
+                        if (value != null)
+                        {
+                            core.command("keypress " + value);
+                            m.Result = new IntPtr(1);
+                            LastAppCommand = Environment.TickCount;
+                            return;
+                        }
+                    }
+
                     break;
                 case 0x0200: // WM_MOUSEMOVE
                     if (Environment.TickCount - LastCycleFullscreen > 500)

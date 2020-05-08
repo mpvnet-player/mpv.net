@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DynamicGUI"
-             xmlns:UI="clr-namespace:UI"
+             xmlns:mpvnet="clr-namespace:mpvnet"
              mc:Ignorable="d"
              
              d:DesignHeight="450"
@@ -17,8 +17,8 @@
                      Margin="0,10"
                      BorderThickness="0"
                      IsReadOnly="True"
-                     Foreground="{x:Static UI:Theme.Heading}"
-                     Background="{x:Static UI:Theme.Background}" />
+                     Foreground="{x:Static mpvnet:Theme.Heading}"
+                     Background="{x:Static mpvnet:Theme.Background}" />
 
             <ItemsControl x:Name="ItemsControl">
                 <ItemsControl.ItemTemplate>
@@ -32,7 +32,7 @@
                                          FontSize="16"
                                          FontWeight="Normal"
                                          VerticalAlignment="Top"
-                                         Foreground="{x:Static UI:Theme.Foreground}"/>
+                                         Foreground="{x:Static mpvnet:Theme.Foreground}"/>
 
                             <TextBox x:Name="ItemHelpTextBox"
                                      TextWrapping="WrapWithOverflow"
@@ -41,8 +41,8 @@
                                      Margin="10,0,0,0" BorderThickness="0"
                                      IsReadOnly="True" Padding="7,0,0,0"
                                      MinHeight="0"
-                                     Foreground="{x:Static UI:Theme.Foreground2}"
-                                     Background="{x:Static UI:Theme.Background}"/>
+                                     Foreground="{x:Static mpvnet:Theme.Foreground2}"
+                                     Background="{x:Static mpvnet:Theme.Background}"/>
 
                         </WrapPanel>
                     </DataTemplate>
@@ -54,8 +54,8 @@
                      BorderThickness="0"
                      IsReadOnly="True"
                      Margin="0,10,0,0"
-                     Foreground="{x:Static UI:Theme.Foreground}"
-                     Background="{x:Static UI:Theme.Background}"/>
+                     Foreground="{x:Static mpvnet:Theme.Foreground}"
+                     Background="{x:Static mpvnet:Theme.Background}"/>
             <TextBlock x:Name="LinkTextBlock" Margin="0,10">
                 <local:HyperlinkEx x:Name="Link"></local:HyperlinkEx>
             </TextBlock>

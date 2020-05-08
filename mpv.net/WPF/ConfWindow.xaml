@@ -3,14 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:UI="clr-namespace:UI"
+        xmlns:mpvnet="clr-namespace:mpvnet"
         mc:Ignorable="d"
         
         Title="Config Editor"
         Height="530"
         Width="700"
-        Foreground="{x:Static UI:Theme.Foreground}"
-        Background="{x:Static UI:Theme.Background}"
+        Foreground="{x:Static mpvnet:Theme.Foreground}"
+        Background="{x:Static mpvnet:Theme.Background}"
         ShowInTaskbar="False"
         WindowStartupLocation="CenterScreen"
         Loaded="ConfWindow1_Loaded">
@@ -47,8 +47,8 @@
                      ItemsSource="{Binding FilterStrings}"
                      BorderThickness="0"
                      SelectionChanged="FilterListBox_SelectionChanged"
-                     Foreground="{x:Static UI:Theme.Heading}"
-                     Background="{x:Static UI:Theme.Background}">
+                     Foreground="{x:Static mpvnet:Theme.Heading}"
+                     Background="{x:Static mpvnet:Theme.Background}">
                 
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -57,10 +57,10 @@
                 </ListBox.ItemTemplate>
             </ListBox>
 
-            <TextBlock Name="OpenSettingsTextBlock" Margin="0,30,0,0" Cursor="Hand" TextWrapping="WrapWithOverflow" Foreground="{x:Static UI:Theme.Heading}" MouseUp="OpenSettingsTextBlock_MouseUp">Open config folder</TextBlock>
-            <TextBlock Name="PreviewTextBlock"      Margin="0,15,0,0" Cursor="Hand" TextWrapping="WrapWithOverflow" Foreground="{x:Static UI:Theme.Heading}" MouseUp="PreviewTextBlock_MouseUp">Preview mpv.conf</TextBlock>
-            <TextBlock Name="ShowManualTextBlock"   Margin="0,15,0,0" Cursor="Hand" TextWrapping="WrapWithOverflow" Foreground="{x:Static UI:Theme.Heading}" MouseUp="ShowManualTextBlock_MouseUp">Show mpv manual</TextBlock>
-            <TextBlock Name="SupportTextBlock"      Margin="0,15,0,0" Cursor="Hand" TextWrapping="WrapWithOverflow" Foreground="{x:Static UI:Theme.Heading}" MouseUp="SupportTextBlock_MouseUp">Show support forum</TextBlock>
+            <TextBlock Name="OpenSettingsTextBlock" Margin="0,30,0,0" Cursor="Hand" TextWrapping="WrapWithOverflow" Foreground="{x:Static mpvnet:Theme.Heading}" MouseUp="OpenSettingsTextBlock_MouseUp">Open config folder</TextBlock>
+            <TextBlock Name="PreviewTextBlock"      Margin="0,15,0,0" Cursor="Hand" TextWrapping="WrapWithOverflow" Foreground="{x:Static mpvnet:Theme.Heading}" MouseUp="PreviewTextBlock_MouseUp">Preview mpv.conf</TextBlock>
+            <TextBlock Name="ShowManualTextBlock"   Margin="0,15,0,0" Cursor="Hand" TextWrapping="WrapWithOverflow" Foreground="{x:Static mpvnet:Theme.Heading}" MouseUp="ShowManualTextBlock_MouseUp">Show mpv manual</TextBlock>
+            <TextBlock Name="SupportTextBlock"      Margin="0,15,0,0" Cursor="Hand" TextWrapping="WrapWithOverflow" Foreground="{x:Static mpvnet:Theme.Heading}" MouseUp="SupportTextBlock_MouseUp">Show support forum</TextBlock>
         </StackPanel>
     </Grid>
 </Window>

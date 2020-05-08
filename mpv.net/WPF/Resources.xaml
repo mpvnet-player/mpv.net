@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:UI="clr-namespace:UI">
+                    xmlns:mpvnet="clr-namespace:mpvnet">
     
     <Style TargetType="TextBox">
         <Setter Property="Template">
@@ -26,7 +26,7 @@
                             <Setter Property="BorderBrush" TargetName="border" Value="#FF7EB4EA"/>
                         </Trigger>
                         <Trigger Property="IsFocused" Value="true">
-                            <Setter Property="BorderBrush" TargetName="border" Value="{x:Static UI:Theme.Heading}"/>
+                            <Setter Property="BorderBrush" TargetName="border" Value="{x:Static mpvnet:Theme.Heading}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -49,8 +49,8 @@
                                 x:Name="normal"
                                 Width="18"
                                 Height="18"
-                                Fill="{x:Static UI:Theme.Background}"
-                                Stroke="{x:Static UI:Theme.Heading}"
+                                Fill="{x:Static mpvnet:Theme.Background}"
+                                Stroke="{x:Static mpvnet:Theme.Heading}"
                                 StrokeThickness="2" />
                             <Ellipse
                                 x:Name="Checked1"

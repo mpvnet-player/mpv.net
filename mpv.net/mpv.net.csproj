@@ -164,7 +164,7 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Misc\Misc.cs" />
-    <Compile Include="mpv\Core.cs" />
+    <Compile Include="mpv\core.cs" />
     <Compile Include="Misc\Commands.cs" />
     <Compile Include="Native\Native.cs" />
     <Compile Include="Native\NativeHelp.cs" />

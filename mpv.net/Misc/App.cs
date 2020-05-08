@@ -4,13 +4,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
-
-using UI;
-
-using static libmpv;
-using static mpvnet.Core;
-
 using System.Threading.Tasks;
+
+using static mpvnet.Core;
 
 namespace mpvnet
 {

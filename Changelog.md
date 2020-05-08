@@ -2,7 +2,9 @@
 5.4.7.2 Beta  (not yet released)
 ============
 
-
+- WM_APPCOMMAND (mpv calls this media-keys) based input is no longer
+  directly passed to mpv but rather handled in mpv.net translating
+  the commands to mpv keys and sent via keypress input command to mpv
 
 
 5.4.7.1 Beta

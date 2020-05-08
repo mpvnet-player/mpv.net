@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:UI="clr-namespace:UI"
+        xmlns:mpvnet="clr-namespace:mpvnet"
         mc:Ignorable="d"
         
         Title="Input Editor"
@@ -11,8 +11,8 @@
         Width="750"
         FontSize="13"
         ShowInTaskbar="False"
-        Foreground="{x:Static UI:Theme.Foreground}"
-        Background="{x:Static UI:Theme.Background}"
+        Foreground="{x:Static mpvnet:Theme.Foreground}"
+        Background="{x:Static mpvnet:Theme.Background}"
         Loaded="Window_Loaded"
         Closed="Window_Closed">
     

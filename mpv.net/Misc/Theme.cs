@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Media;
 
-namespace UI
+namespace mpvnet
 {
     public class Theme
     {
