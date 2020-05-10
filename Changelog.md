@@ -1,8 +1,15 @@
 
+5.4.7.5 Beta (not yet released)
+============
+
+
+
+
 5.4.7.4 Beta (not yet released)
 ============
 
-- 
+- the media key issue should now be fixed!
+- libmpv and youtube-dl update
 
 
 5.4.7.3 Beta

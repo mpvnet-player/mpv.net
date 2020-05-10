@@ -527,23 +527,14 @@ namespace mpvnet
                     break;
                 case 0x319: // WM_APPCOMMAND
                     {
-                        if (App.MediaKeys == "discard") {
+                        string value = mpvHelp.WM_APPCOMMAND_to_mpv_key((int)(m.LParam.ToInt64() >> 16 & ~0xf000));
+
+                        if (value != null)
+                        {
+                            core.command("keypress " + value);
                             m.Result = new IntPtr(1);
+                            LastAppCommand = Environment.TickCount;
                             return;
-                        } else if (App.MediaKeys == "mpv") {
-                            if (core.WindowHandle != IntPtr.Zero) {
-                                m.Result = WinAPI.SendMessage(core.WindowHandle, m.Msg, m.WParam, m.LParam);
-                                if (m.Result != IntPtr.Zero)
-                                    return;
-                            }
-                        } else if (App.MediaKeys == "mpvnet") {
-                            string value = mpvHelp.WM_APPCOMMAND_to_mpv_key((int)(m.LParam.ToInt64() >> 16 & ~0xf000));
-                            if (value != null) {
-                                core.command("keypress " + value);
-                                m.Result = new IntPtr(1);
-                                LastAppCommand = Environment.TickCount;
-                                return;
-                            }
                         }
                     }
                     break;
@@ -630,7 +621,9 @@ namespace mpvnet
                 ProgressTimer.Start();
             }
 
-            base.WndProc(ref m);
+            // beep sound when closed using taskbar due to exception
+            //if (!IsDisposed)
+                base.WndProc(ref m);
         }
 
         void CursorTimer_Tick(object sender, EventArgs e)
@@ -863,8 +856,9 @@ namespace mpvnet
 
         protected override void OnKeyDown(KeyEventArgs e)
         {
+            // prevent beep using alt key
             if (Control.ModifierKeys == Keys.Alt)
-                e.SuppressKeyPress = true; // prevent beep using alt key
+                e.SuppressKeyPress = true;
 
             base.OnKeyDown(e);
         }

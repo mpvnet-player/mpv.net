@@ -24,7 +24,6 @@ namespace mpvnet
         public static string DarkTheme { get; set; } = "dark";
         public static string LightTheme { get; set; } = "light";
         public static string StartSize { get; set; } = "previous";
-        public static string MediaKeys { get; set; } = "mpvnet";
 
         public static bool RememberPosition { get; set; }
         public static bool DebugMode { get; set; }
@@ -178,7 +177,6 @@ namespace mpvnet
                 case "auto-load-folder": AutoLoadFolder = value == "yes"; return true;
                 case "update-check": UpdateCheck = value == "yes"; return true;
                 case "start-size": StartSize = value; return true;
-                case "media-keys": MediaKeys = value; return true;
                 case "process-instance": ProcessInstance = value; return true;
                 case "dark-mode": DarkMode = value; return true;
                 case "start-threshold": StartThreshold = value.Int(); return true;

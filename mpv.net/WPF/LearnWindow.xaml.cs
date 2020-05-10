@@ -99,8 +99,6 @@ namespace mpvnet
                     text = "NEXT"; break;
                 case WinForms.Keys.MediaPreviousTrack:
                     text = "PREV"; break;
-                case WinForms.Keys.VolumeMute:
-                    text = "MUTE"; break;
                 case WinForms.Keys.BrowserHome:
                     text = "HOMEPAGE"; break;
                 case WinForms.Keys.LaunchMail:
@@ -114,8 +112,8 @@ namespace mpvnet
                 case WinForms.Keys.Cancel:
                     text = "CANCEL"; break;
                 case WinForms.Keys.VolumeUp:
-                    text = ""; break;
                 case WinForms.Keys.VolumeDown:
+                case WinForms.Keys.VolumeMute:
                     text = ""; break;
             }
 

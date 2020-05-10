@@ -1,22 +1,31 @@
 
- # This file defines the key and mouse bindings and the context menu
- # of mpv.net. A input and config editor can be found in mpv.nets
- # context menu under 'Settings'. The defaults of this file can be found at:
-
- # https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt
-
- # The defaults of mpv can be found at:
-
- # https://github.com/mpv-player/mpv/blob/master/etc/input.conf
-
- # mpv.net's defaults of mpv.conf contain: 'input-default-bindings = no'
- # which disables mpv's input defaults. Every line in this file begins with a
+ # This file defines the key and mouse bindings and the context menu of mpv.net.
+ 
+ # A convenient input and config editor can be found in the context menu of mpv.net
+ # under 'Settings'.
+ 
+ # The mpv.conf defaults of mpv.net contain: 'input-default-bindings = no'
+ # which disables the input defaults of mpv. Every line in this file begins with a
  # space character to make it easier to do a text search, so if you want to know
  # if 'o' has already a binding you can do a text search on ' o '.
 
- # mpv input commands: https://mpv.io/manual/master/#list-of-input-commands
+ # input test mode:
+ # mpvnet --input-test
 
- # run mpv.net in input test mode with: mpvnet --input-test
+ # input key list:
+ # mpv --input-keylist
+
+ # mpv.net input.conf defaults:
+ # https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt
+
+ # mpv input.conf defaults:
+ # https://github.com/mpv-player/mpv/blob/master/etc/input.conf
+
+ # mpv input commands:
+ # https://mpv.io/manual/master/#list-of-input-commands
+
+ # mpv input options:
+ # https://mpv.io/manual/master/#input
 
  o           script-message mpv.net open-files         #menu: Open > Open Files...
  u           script-message mpv.net open-url           #menu: Open > Open URL or file path from clipboard
@@ -180,9 +189,6 @@
  Stop         stop
  Forward      seek  60
  Rewind       seek -60
- Mute         cycle mute
- Volume_Up    add volume  10
- Volume_Down  add volume -10
  Wheel_Up     add volume  10
  Wheel_Down   add volume -10
  Wheel_Left   add volume -10

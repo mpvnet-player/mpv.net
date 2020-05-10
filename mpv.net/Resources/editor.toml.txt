@@ -314,7 +314,7 @@ options = [{ name = "yes" },
 name = "autofit"
 file = "mpv"
 filter = "Screen"
-help = "<int> Initial window height in percent. Default: 50"
+help = "<int> Initial window height in percent. Default: 60"
 
 [[settings]]
 name = "autofit-smaller"
@@ -527,17 +527,6 @@ name = "input-ar-rate"
 file = "mpv"
 filter = "Input"
 help = "Number of key presses to generate per second on autorepeat."
-
-[[settings]]
-name = "media-keys"
-file = "mpvnet"
-default = "mpvnet"
-filter = "Input"
-help = "Defines how WM_APPCOMMAND messages are handled. (mpv.net specific setting)"
-options = [{ name = "discard", help = "Blocks WM_APPCOMMAND messages, virtual key codes are still processed." },
-           { name = "pass",    help = "Let WM_APPCOMMAND messages pass to default handling." },
-           { name = "mpv",     help = "Forward WM_APPCOMMAND messages to libmpv." },
-		   { name = "mpvnet",  help = "Translate WM_APPCOMMAND messages to mpv keys and send as keypress command." }]
 
 [[settings]]
 name = "update-check"
