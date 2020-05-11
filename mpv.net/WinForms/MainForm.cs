@@ -300,7 +300,7 @@ namespace mpvnet
             if (core.VideoSize.Height == 0 || core.VideoSize.Width == 0 ||
                 core.VideoSize.Width / (float)core.VideoSize.Height < App.MinimumAspectRatio)
 
-                core.VideoSize = new Size((int)(autoFitHeight * (16 / 9.0)), autoFitHeight);
+                core.VideoSize = new Size((int)(autoFitHeight * (16 / 9f)), autoFitHeight);
 
             Size videoSize = core.VideoSize;
             int height = videoSize.Height;

@@ -348,7 +348,7 @@ help = "Threshold in milliseconds to wait for libmpv returning the video resolut
 name = "minimum-aspect-ratio"
 file = "mpvnet"
 filter = "Screen"
-help = "<float> Minimum aspect ratio for the window. Default: 1.2 (mpv.net specific setting)"
+help = "<float> Minimum aspect ratio, if the AR is smaller than the defined value then the window AR is set to 16/9. This avoids a square window for Music with cover art. Default: 1.2 (mpv.net specific setting)"
 
 [[settings]]
 name = "remember-position"

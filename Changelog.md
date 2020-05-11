@@ -1,9 +1,15 @@
 
-5.4.7.5 Beta (not yet released)
+5.4.8.1 Beta (not yet released)
 ============
 
-- fix in the learn window of input editor, whole day spent :-(
-- fix black one pixel bar on right side by truncating instead of rounding
+
+
+
+5.4.8.0
+=======
+
+- fix learn window of input editor (much work)
+- fix black one pixel bar on right side
 - fix beep sound when closed from taskbar
 
 
