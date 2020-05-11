@@ -1,39 +1,6 @@
 
 $ErrorActionPreference = 'Stop'
 
-$include = @(
-    '*.cs',
-    '*.csproj',
-    '*.iss',
-    '*.js',
-    '*.lua',
-    '*.ps1',
-    '*.resx',
-    '*.sln',
-    '*.txt',
-    '*.xaml'
-)
-
-$files = Get-ChildItem -Path $PSScriptRoot -Recurse -File -Include $include
-
-foreach ($file in $files)
-{
-    $lines = Get-Content $file
-
-    foreach ($line in $lines)
-    {
-        foreach ($char in $line.ToCharArray())
-        {
-            $codePoint = [int]$char
-
-            if ($codePoint -gt 127)
-            {
-                throw "Non ASCII char $char in file '$($file.FullName)' in line: $line"
-            }
-        }
-    }
-}
-
 $desktopDir  = [Environment]::GetFolderPath('Desktop')
 $exePath     = $PSScriptRoot + '\mpv.net\bin\x64\mpvnet.exe'
 $versionInfo = [Diagnostics.FileVersionInfo]::GetVersionInfo($exePath)
