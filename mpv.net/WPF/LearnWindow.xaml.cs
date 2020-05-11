@@ -2,11 +2,11 @@
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
-
-using WinForms = System.Windows.Forms;
+using System.Windows.Forms;
 
 namespace mpvnet
 {
@@ -14,13 +14,68 @@ namespace mpvnet
     {
         public CommandItem InputItem { get; set; }
         string NewKey = "";
-        string KeyChar = "";
+
+        uint MAPVK_VK_TO_VSC = 0;
+
+        int VK_MENU  = 0x12;
+        int VK_LMENU = 0xA4;
+        int VK_RMENU = 0xA5;
+
+        int VK_CONTROL  = 0x11;
+        int VK_LCONTROL = 0xA2;
+        int VK_RCONTROL = 0xA3;
 
         public LearnWindow() => InitializeComponent();
 
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        static extern short GetKeyState(int keyCode);
+
+        [DllImport("user32.dll")]
+        static extern uint MapVirtualKey(uint uCode, uint uMapType);
+
+        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+        static extern int ToUnicode(uint wVirtKey, uint wScanCode, byte[] lpKeyState,
+            StringBuilder pwszBuff, int cchBuff, uint wFlags);
+
+        [DllImport("user32.dll")]
+        static extern bool GetKeyboardState(byte[] lpKeyState);
+
+        string ToUnicode(uint vk)
+        {
+            byte[] keys = new byte[256];
+
+            if (!GetKeyboardState(keys))
+                return "";
+
+            if ((keys[VK_CONTROL] & 0x80) != 0 && (keys[VK_MENU] & 0x80) == 0)
+                keys[VK_LCONTROL] = keys[VK_RCONTROL] = keys[VK_CONTROL] = 0;
+
+            uint scanCode = MapVirtualKey(vk, MAPVK_VK_TO_VSC);
+
+            string ret = ToUnicode(vk, scanCode, keys);
+
+            if (ret.Length == 1 && (int)ret[0] < 32)
+                return "";
+
+            if (ret == "" && (keys[VK_MENU] & 0x80) != 0)
+            {
+                keys[VK_LMENU] = keys[VK_RMENU] = keys[VK_MENU] = 0;
+                ret = ToUnicode(vk, scanCode, keys);
+            }
+
+            return ret;
+        }
+
+        public string ToUnicode(uint vk, uint scanCode, byte[] keys)
+        {
+            StringBuilder sb = new StringBuilder(10);
+            ToUnicode(vk, scanCode, keys, sb, sb.Capacity, 0);
+            return sb.ToString();
+        }
+
         IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            WinForms.Message m = new WinForms.Message();
+            Message m = new Message();
             m.HWnd = hwnd;
             m.Msg = msg;
             m.WParam = wParam;
@@ -29,116 +84,86 @@ namespace mpvnet
             return m.Result;
         }
 
-        void OnKeyUp(WinForms.KeyEventArgs e)
+        void OnKeyDown(uint vk)
         {
-            if (e.KeyCode == WinForms.Keys.ControlKey || e.KeyCode == WinForms.Keys.ShiftKey ||
-                e.KeyCode == WinForms.Keys.Menu || e.KeyCode == WinForms.Keys.None)
+            Keys key = (Keys)vk;
+
+            if (key == Keys.ControlKey || key == Keys.ShiftKey ||
+                key == Keys.Menu || key == Keys.None)
 
                 return;
 
-            string text = "";
-            uint charValue = MapVirtualKey((uint)e.KeyCode, 2);
+            string text = ToUnicode(vk);
 
-            if (charValue == 0 || (charValue & 1 << 31) == 1 << 31)
-                text = e.KeyCode.ToString().Trim();
-            else
-                try {
-                    text = Convert.ToChar(charValue).ToString().ToLower().Trim();
-                } catch {}
+            if ((int)key > 111 && (int)key < 136)
+                text = "F" + ((int)key - 111);
 
-            for (int i = 0; i < 13; i++)
-                if ("D" + i == text)
-                    text = text.Substring(1);
+            if ((int)key > 95 && (int)key < 106)
+                text = "KP" + ((int)key - 96);
 
-            switch (e.KeyCode)
+            switch (text)
             {
-                case WinForms.Keys.NumPad0:
-                case WinForms.Keys.NumPad1:
-                case WinForms.Keys.NumPad2:
-                case WinForms.Keys.NumPad3:
-                case WinForms.Keys.NumPad4:
-                case WinForms.Keys.NumPad5:
-                case WinForms.Keys.NumPad6:
-                case WinForms.Keys.NumPad7:
-                case WinForms.Keys.NumPad8:
-                case WinForms.Keys.NumPad9:
-                    text = "KP" + e.KeyCode.ToString()[6]; break;
-                case WinForms.Keys.Space:
-                    text = "SPACE"; break;
-                case WinForms.Keys.Enter:
-                    text = "ENTER"; break;
-                case WinForms.Keys.Tab:
-                    text = "TAB"; break;
-                case WinForms.Keys.Back:
-                    text = "BS"; break;
-                case WinForms.Keys.Delete:
-                    text = "DEL"; break;
-                case WinForms.Keys.Insert:
-                    text = "INS"; break;
-                case WinForms.Keys.Home:
-                    text = "HOME"; break;
-                case WinForms.Keys.End:
-                    text = "END"; break;
-                case WinForms.Keys.PageUp:
-                    text = "PGUP"; break;
-                case WinForms.Keys.PageDown:
-                    text = "PGDWN"; break;
-                case WinForms.Keys.Escape:
-                    text = "ESC"; break;
-                case WinForms.Keys.PrintScreen:
-                    text = "PRINT"; break;
-                case WinForms.Keys.Play:
-                    text = "PLAY"; break;
-                case WinForms.Keys.Pause:
-                    text = "PAUSE"; break;
-                case WinForms.Keys.MediaPlayPause:
-                    text = "PLAYPAUSE"; break;
-                case WinForms.Keys.MediaStop:
-                    text = "STOP"; break;
-                case WinForms.Keys.MediaNextTrack:
-                    text = "NEXT"; break;
-                case WinForms.Keys.MediaPreviousTrack:
-                    text = "PREV"; break;
-                case WinForms.Keys.BrowserHome:
-                    text = "HOMEPAGE"; break;
-                case WinForms.Keys.LaunchMail:
-                    text = "MAIL"; break;
-                case WinForms.Keys.BrowserFavorites:
-                    text = "FAVORITES"; break;
-                case WinForms.Keys.BrowserSearch:
-                    text = "SEARCH"; break;
-                case WinForms.Keys.Sleep:
-                    text = "SLEEP"; break;
-                case WinForms.Keys.Cancel:
-                    text = "CANCEL"; break;
-                case WinForms.Keys.VolumeUp:
-                case WinForms.Keys.VolumeDown:
-                case WinForms.Keys.VolumeMute:
+                case "#":  text = "SHARP"; break;
+                case "´´": text = "´"; break;
+                case "``": text = "`"; break;
+                case "^^": text = "^"; break;
+            }
+
+            switch (key)
+            {
+                case Keys.Left:               text = "LEFT"; break;
+                case Keys.Up:                 text = "UP"; break;
+                case Keys.Right:              text = "RIGHT"; break;
+                case Keys.Down:               text = "DOWN"; break;
+                case Keys.Space:              text = "SPACE"; break;
+                case Keys.Enter:              text = "ENTER"; break;
+                case Keys.Tab:                text = "TAB"; break;
+                case Keys.Back:               text = "BS"; break;
+                case Keys.Delete:             text = "DEL"; break;
+                case Keys.Insert:             text = "INS"; break;
+                case Keys.Home:               text = "HOME"; break;
+                case Keys.End:                text = "END"; break;
+                case Keys.PageUp:             text = "PGUP"; break;
+                case Keys.PageDown:           text = "PGDWN"; break;
+                case Keys.Escape:             text = "ESC"; break;
+                case Keys.Sleep:              text = "SLEEP"; break;
+                case Keys.Cancel:             text = "CANCEL"; break;
+                case Keys.PrintScreen:        text = "PRINT"; break;
+                case Keys.BrowserFavorites:   text = "FAVORITES"; break;
+                case Keys.BrowserSearch:      text = "SEARCH"; break;
+                case Keys.BrowserHome:        text = "HOMEPAGE"; break;
+                case Keys.LaunchMail:         text = "MAIL"; break;
+                case Keys.Play:               text = "PLAY"; break;
+                case Keys.Pause:              text = "PAUSE"; break;
+                case Keys.MediaPlayPause:     text = "PLAYPAUSE"; break;
+                case Keys.MediaStop:          text = "STOP"; break;
+                case Keys.MediaNextTrack:     text = "NEXT"; break;
+                case Keys.MediaPreviousTrack: text = "PREV"; break;
+
+                case Keys.VolumeUp:
+                case Keys.VolumeDown:
+                case Keys.VolumeMute:
                     text = ""; break;
             }
 
-            bool wasModified = false;
+            bool isAlt   = GetKeyState(18) < 0;
+            bool isShift = GetKeyState(16) < 0;
+            bool isCtrl  = GetKeyState(17) < 0;
 
-            bool isAlt   = GetKeyState(18) < (short)0;
-            bool isShift = GetKeyState(16) < (short)0;
-            bool isCtrl  = GetKeyState(17) < (short)0;
+            bool isLetter = (int)key > 64 && (int)key < 91;
 
-            if (text.Length == 1 && KeyChar != text)
-            {
-                text = KeyChar;
-                wasModified = true;
-            }
+            if (isLetter && isShift)
+                text = text.ToUpper();
 
-            if (text == "#")
-                text = "SHARP";
+            string keyString = ToUnicode(vk);
 
-            if (isAlt   && !wasModified)
+            if (isAlt && !isCtrl)
                 text = "ALT+" + text;
 
-            if (isShift && !wasModified)
+            if (isShift && keyString == "")
                 text = "SHIFT+" + text;
 
-            if (isCtrl  && !wasModified)
+            if (isCtrl && !(keyString != "" && isCtrl && isAlt))
                 text = "CTRL+" + text;
 
             if (!string.IsNullOrEmpty(text))
@@ -152,32 +177,14 @@ namespace mpvnet
             KeyTextBlock.Text = key;
         }
 
-        [DllImport("user32.dll")]
-        static extern uint MapVirtualKey(uint uCode, uint uMapType);
-
-        public static WinForms.Keys ModifierKeys {
-            get {
-                WinForms.Keys keys = WinForms.Keys.None;
-
-                if (GetKeyState(17) < (short)0)
-                    keys |= WinForms.Keys.Control;
-
-                if (GetKeyState(16) < (short)0)
-                    keys |= WinForms.Keys.Shift;
-
-                if (GetKeyState(18) < (short)0)
-                    keys |= WinForms.Keys.Alt;
-
-                return keys;
-            }
-        }
-
-        void ProcessKeyEventArgs(ref WinForms.Message m)
+        void ProcessKeyEventArgs(ref Message m)
         {
-            int WM_KEYUP = 0x0101, WM_SYSKEYUP = 0x0105, WM_APPCOMMAND = 0x0319;
+            int WM_KEYDOWN    = 0x100;
+            int WM_SYSKEYDOWN = 0x104;
+            int WM_APPCOMMAND = 0x319;
 
-            if (m.Msg == WM_KEYUP || m.Msg == WM_SYSKEYUP)
-                OnKeyUp(new WinForms.KeyEventArgs((WinForms.Keys)(unchecked((int)(long)m.WParam)) | ModifierKeys));
+            if (m.Msg == WM_KEYDOWN || m.Msg == WM_SYSKEYDOWN)
+                OnKeyDown((uint)m.WParam.ToInt64());
             else if (m.Msg == WM_APPCOMMAND)
             {
                 string value = mpvHelp.WM_APPCOMMAND_to_mpv_key((int)(m.LParam.ToInt64() >> 16 & ~0xf000));
@@ -186,9 +193,6 @@ namespace mpvnet
                     SetKey(value);
             }
         }
-
-        [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        public static extern short GetKeyState(int keyCode);
 
         void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -250,9 +254,13 @@ namespace mpvnet
             }
         }
 
-        void Window_TextInput(object sender, TextCompositionEventArgs e)
+        void Window_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            KeyChar = e.Text;
+            if (e.Key == Key.Tab)
+            {
+                OnKeyDown((uint)Keys.Tab);
+                e.Handled = true;
+            }
         }
     }
 }

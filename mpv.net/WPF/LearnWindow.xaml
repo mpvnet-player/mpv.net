@@ -16,8 +16,7 @@
         Background="{x:Static mpvnet:Theme.Background}"
         MouseWheel="Window_MouseWheel"
         MouseUp="Window_MouseUp"
-        MouseDoubleClick="Window_MouseDoubleClick"
-        TextInput="Window_TextInput">
+        MouseDoubleClick="Window_MouseDoubleClick" PreviewKeyDown="Window_PreviewKeyDown">
     
     <Grid>
         <Grid.RowDefinitions>

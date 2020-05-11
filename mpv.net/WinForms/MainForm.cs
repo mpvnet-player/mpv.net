@@ -321,26 +321,26 @@ namespace mpvnet
             }
 
             height = Convert.ToInt32(height * scale);
-            int width = Convert.ToInt32(height * videoSize.Width / (double)videoSize.Height);
+            int width = height * videoSize.Width / videoSize.Height;
             int maxHeight = screen.WorkingArea.Height - (Height - ClientSize.Height);
             int maxWidth = screen.WorkingArea.Width - (Width - ClientSize.Width);
 
             if (height < maxHeight * core.AutofitSmaller)
             {
                 height = Convert.ToInt32(maxHeight * core.AutofitSmaller);
-                width = Convert.ToInt32(height * videoSize.Width / (double)videoSize.Height);
+                width = Convert.ToInt32(height * videoSize.Width / videoSize.Height);
             }
 
             if (height > maxHeight * core.AutofitLarger)
             {
                 height = Convert.ToInt32(maxHeight * core.AutofitLarger);
-                width = Convert.ToInt32(height * videoSize.Width / (double)videoSize.Height);
+                width = Convert.ToInt32(height * videoSize.Width / videoSize.Height);
             }
 
             if (width > maxWidth)
             {
                 width = maxWidth;
-                height = Convert.ToInt32(width * videoSize.Height / (double)videoSize.Width);
+                height = (int)Math.Ceiling(width * videoSize.Height / (double)videoSize.Width);
             }
 
             Point middlePos = new Point(Left + Width / 2, Top + Height / 2);
@@ -579,8 +579,18 @@ namespace mpvnet
                             s = new Size(16, 9);
 
                         float aspect = s.Width / (float)s.Height;
-                        int d_w = Convert.ToInt32(c_h * aspect - c_w);
-                        int d_h = Convert.ToInt32(c_w / aspect - c_h);
+                        int d_w = (int)(c_h * aspect - c_w);
+                        int d_h = (int)(c_w / aspect - c_h);
+
+                        Debug.WriteLine(d_w);
+                        Debug.WriteLine(d_h);
+
+                        int d_w2 = (int)(c_h * aspect - c_w);
+                        int d_h2 = (int)(c_w / aspect - c_h);
+
+                        Debug.WriteLine(d_w2);
+                        Debug.WriteLine(d_h2);
+
                         int[] d_corners = { d_w, d_h, -d_w, -d_h };
                         int[] corners = { rc.Left, rc.Top, rc.Right, rc.Bottom };
                         int corner = NativeHelp.GetResizeBorder(m.WParam.ToInt32());
