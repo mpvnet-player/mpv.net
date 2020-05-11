@@ -4,6 +4,7 @@
 
 - fix in the learn window of input editor, whole day spent :-(
 - fix black one pixel bar on right side by truncating instead of rounding
+- fix beep sound when closed from taskbar
 
 
 5.4.7.4 Beta (not yet released)

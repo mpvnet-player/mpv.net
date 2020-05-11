@@ -632,7 +632,7 @@ namespace mpvnet
             }
 
             // beep sound when closed using taskbar due to exception
-            //if (!IsDisposed)
+            if (!IsDisposed)
                 base.WndProc(ref m);
         }
 
