@@ -1,8 +1,14 @@
 
-5.4.8.1 Beta (not yet released)
+5.4.8.2 Beta (not yet released)
 ============
 
 
+
+
+5.4.8.1 Beta
+============
+
+- fix stdin support
 
 
 5.4.8.0

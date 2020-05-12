@@ -883,7 +883,7 @@ namespace mpvnet
             {
                 string arg = i;
 
-                if (arg.StartsWith("-"))
+                if (arg.StartsWith("-") && arg.Length > 1)
                 {
                     try
                     {
