@@ -142,20 +142,12 @@ x64 editions have the advantage of being typically better optimized and tested.
 
 ### Scoop
 
+If you use Scoop
+
 ```
 scoop bucket add extras
 scoop install mpv.net
 ```
-
-
-### AppGet
-
-`appget install mpv-net`
-
-
-### Chocolatey
-
-`choco install mpvnet.install`
 
 
 #### File Associations
