@@ -3,16 +3,19 @@ $ErrorActionPreference = 'Stop'
 
 if ($args.Length -ne 2) {
     Write-Host 'Invalid arguments' -ForegroundColor Red
+    pause
     exit
 }
 
 if (-not (Get-Command curl.exe)) {
     Write-Host 'Error using curl.exe' -ForegroundColor Red
+    pause
     exit
 }
 
 if ($PSVersionTable.PSVersion.Major -lt 5) {
     Write-Host 'PowerShell 5.1 not found' -ForegroundColor Red
+    pause
     exit
 }
 

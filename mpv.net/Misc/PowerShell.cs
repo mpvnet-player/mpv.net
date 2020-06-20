@@ -26,7 +26,7 @@ namespace mpvnet
         public List<KeyValuePair<string, ScriptBlock>> EventHandlers = new List<KeyValuePair<string, ScriptBlock>>();
         public List<KeyValuePair<string, ScriptBlock>> PropChangedHandlers = new List<KeyValuePair<string, ScriptBlock>>();
 
-        public static List<PowerShell> Instances { get; } = new List<PowerShell>();
+        public static List<PowerShell> References { get; } = new List<PowerShell>();
 
         public object Invoke() => Invoke(null, null);
 

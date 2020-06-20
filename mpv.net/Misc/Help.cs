@@ -45,7 +45,11 @@ namespace mpvnet
             if (Padding > 0 && value.Length < Padding)
                 value = value.PadRight(Padding);
 
-            Console.WriteLine(value);
+            if (color == ConsoleColor.Red)
+                Console.Error.WriteLine(value);
+            else
+                Console.WriteLine(value);
+
             Console.ResetColor();
             Trace.WriteLine(obj);
         }

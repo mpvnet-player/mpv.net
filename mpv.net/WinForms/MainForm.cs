@@ -582,15 +582,6 @@ namespace mpvnet
                         int d_w = (int)(c_h * aspect - c_w);
                         int d_h = (int)(c_w / aspect - c_h);
 
-                        Debug.WriteLine(d_w);
-                        Debug.WriteLine(d_h);
-
-                        int d_w2 = (int)(c_h * aspect - c_w);
-                        int d_h2 = (int)(c_w / aspect - c_h);
-
-                        Debug.WriteLine(d_w2);
-                        Debug.WriteLine(d_h2);
-
                         int[] d_corners = { d_w, d_h, -d_w, -d_h };
                         int[] corners = { rc.Left, rc.Top, rc.Right, rc.Bottom };
                         int corner = NativeHelp.GetResizeBorder(m.WParam.ToInt32());

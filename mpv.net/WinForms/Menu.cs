@@ -237,8 +237,7 @@ public class ToolStripRendererEx : ToolStripSystemRenderer
 
         RectangleF rectF = new RectangleF(rect.X + rect.Height / 2f - ellipseWidth / 2f,
                                           rect.Y + rect.Height / 2f - ellipseWidth / 2f,
-                                          ellipseWidth,
-                                          ellipseWidth);
+                                          ellipseWidth, ellipseWidth);
 
         using (Brush brush = new SolidBrush(ForegroundColor))
             e.Graphics.FillEllipse(brush, rectF);

@@ -366,8 +366,8 @@ namespace mpvnet
             ps.Module = Path.GetFileName(file);
             ps.Print = true;
 
-            lock (PowerShell.Instances)
-                PowerShell.Instances.Add(ps);
+            lock (PowerShell.References)
+                PowerShell.References.Add(ps);
 
             ps.Invoke();
         }
@@ -874,6 +874,7 @@ namespace mpvnet
 
         public void ProcessCommandLine(bool preInit)
         {
+            bool shuffle = false;
             var args = Environment.GetCommandLineArgs().Skip(1);
 
             string[] preInitProperties = { "input-terminal", "terminal", "input-file", "config",
@@ -919,7 +920,12 @@ namespace mpvnet
                             core.ProcessProperty(left, right);
 
                             if (!App.ProcessProperty(left, right))
+                            {
                                 set_property_string(left, right, true);
+
+                                if (left == "shuffle" && right == "yes")
+                                    shuffle = true;
+                            }
                         }
                     }
                     catch (Exception e)
@@ -935,15 +941,18 @@ namespace mpvnet
                 List<string> files = new List<string>();
 
                 foreach (string i in args)
-                {
                     if (!i.StartsWith("--") && (i == "-" || i.Contains("://") ||
                         i.Contains(":\\") || i.StartsWith("\\\\") || File.Exists(i)))
-                    {
+
                         files.Add(i);
-                    }
-                }
 
                 LoadFiles(files.ToArray(), !App.Queue, Control.ModifierKeys.HasFlag(Keys.Control) || App.Queue);
+
+                if (shuffle)
+                {
+                    core.command("playlist-shuffle");
+                    set_property_int("playlist-pos", 0);
+                }
 
                 if (files.Count == 0 || files[0].Contains("://"))
                 {

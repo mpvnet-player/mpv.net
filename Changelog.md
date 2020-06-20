@@ -2,7 +2,7 @@
 5.4.8.2 Beta (not yet released)
 ============
 
-
+- CLI --shuffle issue fix
 
 
 5.4.8.1 Beta

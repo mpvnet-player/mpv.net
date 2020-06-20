@@ -164,7 +164,7 @@
  h       script-message mpv.net show-history         #menu: Tools > Show History
  l       ab-loop                                     #menu: Tools > Set/clear A-B loop points
  L       cycle-values loop-file "inf" "no"           #menu: Tools > Toggle infinite file looping
- _       cycle shuffle                               #menu: Tools > Toggle Shuffle
+ _       playlist-shuffle                            #menu: Tools > Shuffle Playlist
  Ctrl+h  cycle-values hwdec "auto" "no"              #menu: Tools > Toggle Hardware Decoding
  _ script-message mpv.net show-setup-dialog          #menu: Tools > Setup...
 
