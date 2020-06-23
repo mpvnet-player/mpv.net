@@ -235,11 +235,11 @@ namespace mpvnet
                 {
                     chaptersMenuItem.DropDownItems.Clear();
 
-                    foreach (var i in core.Chapters)
+                    foreach (var pair in core.Chapters)
                     {
-                        MenuItem mi = new MenuItem(i.Key);
-                        mi.ShortcutKeyDisplayString = TimeSpan.FromSeconds(i.Value).ToString().Substring(0, 8) + "     ";
-                        mi.Action = () => core.commandv("seek", i.Value.ToString(CultureInfo.InvariantCulture), "absolute");
+                        MenuItem mi = new MenuItem(pair.Key);
+                        mi.ShortcutKeyDisplayString = TimeSpan.FromSeconds(pair.Value).ToString().Substring(0, 8) + "     ";
+                        mi.Action = () => core.commandv("seek", pair.Value.ToString(CultureInfo.InvariantCulture), "absolute");
                         chaptersMenuItem.DropDownItems.Add(mi);
                     }
                 }
@@ -258,6 +258,26 @@ namespace mpvnet
                 MenuItem mi = new MenuItem("Clear List");
                 mi.Action = () => RecentFiles.Clear();
                 recent.DropDownItems.Add(mi);
+            }
+
+            MenuItem titles = FindMenuItem("Titles");
+
+            if (titles != null)
+            {
+                titles.DropDownItems.Clear();
+
+                lock (core.BluRayTitles)
+                {
+                    for (int i = 0; i < core.BluRayTitles.Count; i++)
+                    {
+                        if (core.BluRayTitles[i] != "00:00:00")
+                        {
+                            int tmp = i;
+                            MenuItem.Add(titles.DropDownItems, $"{core.BluRayTitles[i]} ({i})",
+                                () => core.SetBluRayTitle(tmp));
+                        }
+                    }
+                }
             }
         }
 

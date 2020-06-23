@@ -179,9 +179,9 @@ namespace mpvnet
                 case "start-size": StartSize = value; return true;
                 case "process-instance": ProcessInstance = value; return true;
                 case "dark-mode": DarkMode = value; return true;
-                case "start-threshold": StartThreshold = value.Int(); return true;
-                case "recent-count": RecentCount = value.Int(); return true;
-                case "minimum-aspect-ratio": MinimumAspectRatio = value.Float(); return true;
+                case "start-threshold": StartThreshold = value.ToInt(); return true;
+                case "recent-count": RecentCount = value.ToInt(); return true;
+                case "minimum-aspect-ratio": MinimumAspectRatio = value.ToFloat(); return true;
                 case "dark-theme": DarkTheme = value.Trim('\'', '"'); return true;
                 case "light-theme": LightTheme = value.Trim('\'', '"'); return true;
                 default:

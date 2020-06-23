@@ -137,7 +137,7 @@ namespace mpvnet
                     for (i = 0; i < Everything_GetNumResults(); i++)
                     {
                         Everything_GetResultFullPathName(i, buf, bufsize);
-                        string ext = buf.ToString().ShortExt();
+                        string ext = buf.ToString().Ext();
 
                         if (App.AudioTypes.Contains(ext) || App.VideoTypes.Contains(ext)
                             || App.ImageTypes.Contains(ext))

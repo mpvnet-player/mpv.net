@@ -15,6 +15,7 @@ using System.Windows.Forms;
 using static libmpv;
 using static WinAPI;
 using static NewLine;
+using System.Globalization;
 
 namespace mpvnet
 {
@@ -79,10 +80,13 @@ namespace mpvnet
     
         public List<MediaTrack> MediaTracks { get; set; } = new List<MediaTrack>();
         public List<KeyValuePair<string, double>> Chapters { get; set; } = new List<KeyValuePair<string, double>>();
+        public List<string> BluRayTitles { get; } = new List<string>();
         public IntPtr Handle { get; set; }
         public IntPtr WindowHandle { get; set; }
+        
         public Size VideoSize { get; set; }
         public TimeSpan Duration;
+        
         public AutoResetEvent ShutdownAutoResetEvent  { get; } = new AutoResetEvent(false);
         public AutoResetEvent VideoSizeAutoResetEvent { get; } = new AutoResetEvent(false);
 
@@ -398,6 +402,14 @@ namespace mpvnet
                             {
                                 var data = (mpv_event_log_message)Marshal.PtrToStructure(evt.data, typeof(mpv_event_log_message));
 
+                                if (data.log_level == mpv_log_level.MPV_LOG_LEVEL_INFO)
+                                {
+                                    string prefix = ConvertFromUtf8(data.prefix);
+
+                                    if (prefix == "bd")
+                                        ProcessBluRayLogMessage(ConvertFromUtf8(data.text));
+                                }
+
                                 if (LogMessage != null || LogMessageAsync != null)
                                 {
                                     string msg = $"[{ConvertFromUtf8(data.prefix)}] {ConvertFromUtf8(data.text)}";
@@ -590,6 +602,26 @@ namespace mpvnet
                     App.ShowException(ex);
                 }
             }
+        }
+
+        void ProcessBluRayLogMessage(string msg)
+        {
+            lock (BluRayTitles)
+            {
+                if (msg.Contains(" 0 duration: "))
+                    BluRayTitles.Clear();
+
+                if (msg.Contains(" duration: "))
+                {
+                    int start = msg.IndexOf(" duration: ") + 11;
+                    BluRayTitles.Add(msg.Substring(start, 8));
+                }
+            }
+        }
+
+        public void SetBluRayTitle(int id)
+        {
+            core.LoadFiles(new[] { @"bd://" + id }, false, false);
         }
 
         void InvokeEvent(Action action, Action asyncAction)
@@ -979,9 +1011,11 @@ namespace mpvnet
             for (int i = 0; i < files.Length; i++)
             {
                 string file = files[i];
-                LoadLibrary(file.ShortExt());
+                LoadLibrary(file.Ext());
 
-                if (App.SubtitleTypes.Contains(file.ShortExt()))
+                if (file.Ext() == "iso")
+                    LoadISO(file);
+                else if(App.SubtitleTypes.Contains(file.Ext()))
                     commandv("sub-add", file);
                 else
                     if (i == 0 && !append)
@@ -995,6 +1029,24 @@ namespace mpvnet
 
             if (loadFolder && !append)
                 Task.Run(() => LoadFolder());
+        }
+
+        public void LoadISO(string path)
+        {
+            core.command("stop");
+            Thread.Sleep(500);
+            long gb = new FileInfo(path).Length / 1024 / 1024 / 1024;
+
+            if (gb < 10)
+            {
+                core.set_property_string("dvd-device", path);
+                core.LoadFiles(new[] { @"dvd://" }, false, false);
+            }
+            else
+            {
+                core.set_property_string("bluray-device", path);
+                core.LoadFiles(new[] { @"bd://" }, false, false);
+            }
         }
 
         public void LoadFolder()
@@ -1011,9 +1063,9 @@ namespace mpvnet
             List<string> files = Directory.GetFiles(Path.GetDirectoryName(path)).ToList();
 
             files = files.Where(file =>
-                App.VideoTypes.Contains(file.ShortExt()) ||
-                App.AudioTypes.Contains(file.ShortExt()) ||
-                App.ImageTypes.Contains(file.ShortExt())).ToList();
+                App.VideoTypes.Contains(file.Ext()) ||
+                App.AudioTypes.Contains(file.Ext()) ||
+                App.ImageTypes.Contains(file.Ext())).ToList();
 
             files.Sort(new StringLogicalComparer());
             int index = files.IndexOf(path);
@@ -1084,14 +1136,58 @@ namespace mpvnet
             }
         }
 
+        string GetLanguage(string id)
+        {
+            foreach (var ci in CultureInfo.GetCultures(CultureTypes.NeutralCultures))
+                if (ci.ThreeLetterISOLanguageName == id)
+                    return ci.EnglishName;
+
+            return id;
+        }
+
         void ReadMetaData()
         {
+            string path = get_property_string("path");
+
+            if (!path.StartsWithEx("bd://"))
+                lock (BluRayTitles)
+                    BluRayTitles.Clear();
+
             lock (MediaTracks)
             {
                 MediaTracks.Clear();
-                string path = get_property_string("path");
 
-                if (File.Exists(path))
+                if (path.StartsWithEx("bd://"))
+                {
+                    int count = core.get_property_int("track-list/count");
+
+                    for (int i = 0; i < count; i++)
+                    {
+                        string type = core.get_property_string($"track-list/{i}/type");
+
+                        if (type == "audio")
+                        {
+                            MediaTrack track = new MediaTrack();
+                            Add(track, GetLanguage(core.get_property_string($"track-list/{i}/lang")));
+                            Add(track, core.get_property_string($"track-list/{i}/codec").ToUpperEx());
+                            Add(track, core.get_property_int($"track-list/{i}/audio-channels") + " channels");
+                            track.Text = "A: " + track.Text.Trim(' ', ',');
+                            track.Type = "a";
+                            track.ID = core.get_property_int($"track-list/{i}/id");
+                            MediaTracks.Add(track);
+                        }
+                        else if (type == "sub")
+                        {
+                            MediaTrack track = new MediaTrack();
+                            Add(track, GetLanguage(core.get_property_string($"track-list/{i}/lang")));
+                            track.Text = "S: " + track.Text.Trim(' ', ',');
+                            track.Type = "s";
+                            track.ID = core.get_property_int($"track-list/{i}/id");
+                            MediaTracks.Add(track);
+                        }
+                    }
+                }
+                else if (File.Exists(path))
                 {
                     using (MediaInfo mi = new MediaInfo(path))
                     {
@@ -1161,12 +1257,6 @@ namespace mpvnet
                             track.ID = i;
                             MediaTracks.Add(track);
                         }
-
-                        void Add(MediaTrack track, string val)
-                        {
-                            if (!string.IsNullOrEmpty(val) && !(track.Text != null && track.Text.Contains(val)))
-                                track.Text += " " + val + ",";
-                        }
                     }
                 }
             }
@@ -1182,6 +1272,12 @@ namespace mpvnet
                     double time = get_property_number($"chapter-list/{x}/time");
                     Chapters.Add(new KeyValuePair<string, double>(text, time));
                 }
+            }
+
+            void Add(MediaTrack track, object value)
+            {
+                if (value != null && !(track.Text != null && track.Text.Contains(value.ToString())))
+                    track.Text += " " + value + ",";
             }
         }
     }

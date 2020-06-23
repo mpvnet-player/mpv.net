@@ -66,6 +66,7 @@
  Ctrl+Right  seek  300              #menu: Navigate > Jump 5 min forward
  Ctrl+Left   seek -300              #menu: Navigate > Jump 5 min backward
  _           ignore                 #menu: Navigate > -
+ _           ignore                 #menu: Navigate > Titles
  _           ignore                 #menu: Navigate > Chapters
 
  Ctrl++      add video-zoom  0.1    #menu: Pan & Scan > Increase Size
@@ -149,11 +150,12 @@
  T       script-binding stats/display-stats-toggle   #menu: View > Toggle Statistics
  Del     script-binding osc/visibility               #menu: View > Toggle OSC Visibility
  F8      script-binding show-playlist                #menu: View > Show Playlist
- F9      show-text ${track-list} 5000                #menu: View > Show Audio/Video/Subtitle List
+ F9      show-text ${track-list} 5000                #menu: View > Show Tracks
  p       show-progress                               #menu: View > Show Progress
  Ctrl+p  script-message mpv.net show-profiles        #menu: View > Show Profiles
  Shift+p script-message mpv.net show-properties      #menu: View > Show Properties
  Shift+c script-message mpv.net show-commands        #menu: View > Show Commands
+ _       script-message mpv.net show-keys            #menu: View > Show Keys
  `       script-binding console/enable               #menu: View > Show Console
 
  c       script-message mpv.net show-conf-editor     #menu: Settings > Show Config Editor

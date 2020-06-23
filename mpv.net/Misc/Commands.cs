@@ -44,6 +44,7 @@ namespace mpvnet
                 case "show-profiles": ShowProfiles(); break;
                 case "show-properties": ShowProperties(); break;
                 case "show-commands": ShowCommands(); break;
+                case "show-keys": ShowKeys(); break;
                 case "add-files-to-playlist": OpenFiles("append"); break; // deprecated 2019
                 default: Msg.ShowError($"No command '{id}' found."); break;
             }
@@ -151,7 +152,7 @@ namespace mpvnet
                 {
                     fileSize = new FileInfo(path).Length;
 
-                    if (App.AudioTypes.Contains(path.ShortExt()))
+                    if (App.AudioTypes.Contains(path.Ext()))
                     {
                         using (MediaInfo mediaInfo = new MediaInfo(path))
                         {
@@ -169,13 +170,13 @@ namespace mpvnet
                             if (date != "") text += "Year: " + date + "\n";
                             if (duration != "") text += "Length: " + duration + "\n";
                             text += "Size: " + mediaInfo.GetInfo(MediaInfoStreamKind.General, "FileSize/String") + "\n";
-                            text += "Type: " + path.ShortExt().ToUpper();
+                            text += "Type: " + path.Ext().ToUpper();
 
                             core.commandv("show-text", text, "5000");
                             return;
                         }
                     }
-                    else if (App.ImageTypes.Contains(path.ShortExt()))
+                    else if (App.ImageTypes.Contains(path.Ext()))
                     {
                         using (MediaInfo mediaInfo = new MediaInfo(path))
                         {
@@ -183,7 +184,7 @@ namespace mpvnet
                                 "Width: " + mediaInfo.GetInfo(MediaInfoStreamKind.Image, "Width") + "\n" +
                                 "Height: " + mediaInfo.GetInfo(MediaInfoStreamKind.Image, "Height") + "\n" +
                                 "Size: " + mediaInfo.GetInfo(MediaInfoStreamKind.General, "FileSize/String") + "\n" +
-                                "Type: " + path.ShortExt().ToUpper();
+                                "Type: " + path.Ext().ToUpper();
 
                             core.commandv("show-text", text, "5000");
                             return;
@@ -325,6 +326,14 @@ namespace mpvnet
             string json = core.get_property_string("profile-list");
             string file = Path.GetTempPath() + @"\mpv profile-list.txt";
             File.WriteAllText(file, BR + PowerShell.InvokeAndReturnString(code, "json", json));
+            Process.Start(file);
+        }
+
+        static void ShowKeys()
+        {
+            string txt = core.get_property_string("input-key-list");
+            string file = Path.GetTempPath() + @"\mpv input-key-list.txt";
+            File.WriteAllText(file, txt.Replace(",", BR) + BR);
             Process.Start(file);
         }
 

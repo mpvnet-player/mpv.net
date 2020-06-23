@@ -1,32 +1,70 @@
-﻿using System.Globalization;
+﻿
+using System.Globalization;
 using System.IO;
 
 public static class Extensions
 {
-    public static string FileName(this string path)
+    public static bool ContainsEx(this string instance, string value)
     {
-        if (string.IsNullOrEmpty(path)) return "";
-        int index = path.LastIndexOf('\\');
-        if (index > -1) return path.Substring(index + 1);
-        index = path.LastIndexOf('/');
-        if (index > -1) return path.Substring(index + 1);
-        return path;
+        if (instance != null && value != null)
+            return instance.Contains(value);
+
+        return false;
     }
 
-    public static string ShortExt(this string path)
+    public static bool StartsWithEx(this string instance, string value)
     {
-        return Path.GetExtension(path).ToLower().TrimStart('.');
+        if (instance != null && value != null)
+            return instance.StartsWith(value);
+
+        return false;
     }
 
-    public static int Int(this string value)
+    public static string ToUpperEx(this string instance)
     {
-        int.TryParse(value, out int result);
+        if (instance != null)
+            return instance.ToUpper();
+
+        return "";
+    }
+
+    public static string FileName(this string instance)
+    {
+        if (string.IsNullOrEmpty(instance))
+            return "";
+
+        int index = instance.LastIndexOf('\\');
+
+        if (index > -1)
+            return instance.Substring(index + 1);
+
+        index = instance.LastIndexOf('/');
+
+        if (index > -1)
+            return instance.Substring(index + 1);
+
+        return instance;
+    }
+
+    public static string Ext(this string instance)
+    {
+        if (instance == null)
+            return "";
+
+        return Path.GetExtension(instance).ToLower().TrimStart('.');
+    }
+
+    public static int ToInt(this string instance)
+    {
+        int.TryParse(instance, out int result);
         return result;
     }
 
-    public static float Float(this string value)
+    public static float ToFloat(this string instance)
     {
-        float.TryParse(value.Replace(",", "."), NumberStyles.Float, CultureInfo.InvariantCulture, out float result);
+        float.TryParse(instance.Replace(",", "."), NumberStyles.Float,
+            CultureInfo.InvariantCulture, out float result);
+
         return result;
     }
 }

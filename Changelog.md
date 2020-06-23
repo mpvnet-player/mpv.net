@@ -1,8 +1,17 @@
 
-5.4.8.2 Beta (not yet released)
+5.4.8.3 Beta (not yet released)
 ============
 
-- CLI --shuffle issue fix
+5.4.8.2 Beta
+============
+
+- CLI --shuffle issue fix.
+- ISO image files can be opened like any other files, files smaller
+  than 10 GB are handled as DVD and larger as BluRay.
+- Menu support for BluRay title, audio and subtitle selection.
+- Property input-key-list can be shown with: View > Show Keys
+- youtube-dl 2020.06.16.1
+- libmpv 2020-06-21 shinchiro
 
 
 5.4.8.1 Beta
