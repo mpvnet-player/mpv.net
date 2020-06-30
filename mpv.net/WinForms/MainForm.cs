@@ -537,6 +537,7 @@ namespace mpvnet
                 case 0x101: // WM_KEYUP
                 case 0x104: // WM_SYSKEYDOWN
                 case 0x105: // WM_SYSKEYUP
+                case 0x20e: // WM_MOUSEHWHEEL fix for #124
                     {
                         bool skip = m.Msg == 0x100 && LastAppCommand != 0 &&
                             (Environment.TickCount - LastAppCommand) < 1000;
