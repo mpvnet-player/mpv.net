@@ -82,22 +82,22 @@ namespace mpvnet
                 ContextMenu.Opened += ContextMenu_Opened;
                 ContextMenu.Opening += ContextMenu_Opening;
 
-                if (core.Screen == -1)
-                    core.Screen = Array.IndexOf(Screen.AllScreens, Screen.PrimaryScreen);
+                if (core.Screen > -1)
+                {
+                    int targetIndex = core.Screen;
+                    Screen[] screens = Screen.AllScreens;
 
-                int targetIndex = core.Screen;
-                Screen[] screens = Screen.AllScreens;
+                    if (targetIndex < 0)
+                        targetIndex = 0;
 
-                if (targetIndex < 0)
-                    targetIndex = 0;
+                    if (targetIndex > screens.Length - 1)
+                        targetIndex = screens.Length - 1;
 
-                if (targetIndex > screens.Length - 1)
-                    targetIndex = screens.Length - 1;
-
-                Screen screen = screens[Array.IndexOf(screens, screens[targetIndex])];
-                Rectangle target = screen.Bounds;
-                Left = target.X + (target.Width - Width) / 2;
-                Top = target.Y + (target.Height - Height) / 2;
+                    Screen screen = screens[Array.IndexOf(screens, screens[targetIndex])];
+                    Rectangle target = screen.Bounds;
+                    Left = target.X + (target.Width - Width) / 2;
+                    Top = target.Y + (target.Height - Height) / 2;
+                }
 
                 if (!core.Border)
                     FormBorderStyle = FormBorderStyle.None;
@@ -526,18 +526,18 @@ namespace mpvnet
 
             switch (m.Msg)
             {
-                case 0x201: // WM_LBUTTONDOWN
-                case 0x202: // WM_LBUTTONUP
-                case 0x207: // WM_MBUTTONDOWN
-                case 0x208: // WM_MBUTTONUP
-                case 0x20b: // WM_XBUTTONDOWN
-                case 0x20c: // WM_XBUTTONUP
-                case 0x20A: // WM_MOUSEWHEEL
                 case 0x100: // WM_KEYDOWN
                 case 0x101: // WM_KEYUP
                 case 0x104: // WM_SYSKEYDOWN
                 case 0x105: // WM_SYSKEYUP
-                case 0x20e: // WM_MOUSEHWHEEL fix for #124
+                case 0x201: // WM_LBUTTONDOWN
+                case 0x202: // WM_LBUTTONUP
+                case 0x207: // WM_MBUTTONDOWN
+                case 0x208: // WM_MBUTTONUP
+                case 0x20a: // WM_MOUSEWHEEL
+                case 0x20e: // WM_MOUSEHWHEEL
+                case 0x20b: // WM_XBUTTONDOWN
+                case 0x20c: // WM_XBUTTONUP
                     {
                         bool skip = m.Msg == 0x100 && LastAppCommand != 0 &&
                             (Environment.TickCount - LastAppCommand) < 1000;

@@ -2,6 +2,11 @@
 5.4.8.3 Beta (not yet released)
 ============
 
+- Support Wheel_Left and Wheel_Right. (arnesacnussem)
+- Default screen was changed from primary to OS default to start
+  from the same screen where the File Explorer window is located.
+
+
 5.4.8.2 Beta
 ============
 
