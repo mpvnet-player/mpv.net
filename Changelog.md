@@ -5,6 +5,8 @@
 - Support Wheel_Left and Wheel_Right. (arnesacnussem)
 - Default screen was changed from primary to OS default to start
   from the same screen where the File Explorer window is located.
+- When mpv.net was started maximized and next was invoked then the
+  window state was changed to normal instead of staying maximized.
 
 
 5.4.8.2 Beta

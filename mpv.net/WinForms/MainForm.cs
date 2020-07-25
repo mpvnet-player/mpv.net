@@ -762,6 +762,9 @@ namespace mpvnet
         {
             base.OnShown(e);
 
+            if (WindowState == FormWindowState.Maximized)
+                core.set_property_bool("window-maximized", true);
+
             if (core.GPUAPI == "vulkan")
                 core.ProcessCommandLine(false);
 
@@ -808,16 +811,16 @@ namespace mpvnet
             {
                 if (WindowState == FormWindowState.Minimized)
                 {
-                    core.set_property_string("window-minimized", "yes");
+                    core.set_property_bool("window-minimized", true);
                 }
                 else if (WindowState == FormWindowState.Normal)
                 {
-                    core.set_property_string("window-maximized", "no");
-                    core.set_property_string("window-minimized", "no");
+                    core.set_property_bool("window-maximized", false);
+                    core.set_property_bool("window-minimized", false);
                 }
                 else if (WindowState == FormWindowState.Maximized)
                 {
-                    core.set_property_string("window-maximized", "yes");
+                    core.set_property_bool("window-maximized", true);
                 }
             }
         }
