@@ -11,6 +11,7 @@ using VB = Microsoft.VisualBasic;
 
 using static NewLine;
 using static mpvnet.Core;
+using System.Threading;
 
 namespace mpvnet
 {
@@ -82,21 +83,24 @@ namespace mpvnet
         public static void Open_DVD_Or_BD_Folder()
         {
             InvokeOnMainThread(new Action(() => {
-                using (var d = new FolderBrowserDialog())
+                using (var dialog = new FolderBrowserDialog())
                 {
-                    d.Description = "Select a DVD or Blu-ray folder.";
-                    d.ShowNewFolderButton = false;
+                    dialog.Description = "Select a DVD or Blu-ray folder.";
+                    dialog.ShowNewFolderButton = false;
 
-                    if (d.ShowDialog() == DialogResult.OK)
+                    if (dialog.ShowDialog() == DialogResult.OK)
                     {
-                        if (Directory.Exists(d.SelectedPath + "\\BDMV"))
+                        core.command("stop");
+                        Thread.Sleep(500);
+
+                        if (Directory.Exists(dialog.SelectedPath + "\\BDMV"))
                         {
-                            core.set_property_string("bluray-device", d.SelectedPath);
+                            core.set_property_string("bluray-device", dialog.SelectedPath);
                             core.LoadFiles(new[] { @"bd://" }, false, false);
                         }
                         else
                         {
-                            core.set_property_string("dvd-device", d.SelectedPath);
+                            core.set_property_string("dvd-device", dialog.SelectedPath);
                             core.LoadFiles(new[] { @"dvd://" }, false, false);
                         }
                     }

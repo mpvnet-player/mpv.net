@@ -1020,6 +1020,13 @@ namespace mpvnet
                     LoadISO(file);
                 else if(App.SubtitleTypes.Contains(file.Ext()))
                     commandv("sub-add", file);
+                else if (file.Ext().Length != 3 && File.Exists(Path.Combine(file, "BDMV\\index.bdmv")))
+                {
+                    core.command("stop");
+                    Thread.Sleep(500);
+                    set_property_string("bluray-device", file);
+                    commandv("loadfile", @"bd://");
+                }
                 else
                     if (i == 0 && !append)
                         commandv("loadfile", file);
@@ -1141,7 +1148,7 @@ namespace mpvnet
 
         string GetLanguage(string id)
         {
-            foreach (var ci in CultureInfo.GetCultures(CultureTypes.NeutralCultures))
+            foreach (CultureInfo ci in CultureInfo.GetCultures(CultureTypes.NeutralCultures))
                 if (ci.ThreeLetterISOLanguageName == id)
                     return ci.EnglishName;
 

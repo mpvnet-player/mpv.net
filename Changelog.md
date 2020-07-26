@@ -3,7 +3,9 @@
 ============
 
 - BluRays with dozens of titles showed all titles in the menu
-  which was difficult to choose and also extremely slow.
+  which was difficult to choose and extremely slow.
+- BluRay folder paths are auto detected when received
+  from drag & drop and command line.
 
 
 5.4.8.3 Beta
