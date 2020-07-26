@@ -6,6 +6,7 @@
   which was difficult to choose and extremely slow.
 - BluRay folder paths are auto detected when received
   from drag & drop and command line.
+- Cycle audio was not working for BluRay.
 
 
 5.4.8.3 Beta

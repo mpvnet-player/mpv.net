@@ -288,27 +288,19 @@ namespace mpvnet
 
         public static void CycleAudio()
         {
-            string path = core.get_property_string("path");
+            MediaTrack[] audTracks = core.MediaTracks.Where(track => track.Type == "a").ToArray();
 
-            if (!File.Exists(path))
+            if (audTracks.Length < 2)
                 return;
 
-            using (MediaInfo mi = new MediaInfo(path))
-            {
-                MediaTrack[] audTracks = core.MediaTracks.Where(track => track.Type == "a").ToArray();
+            int aid = core.get_property_int("aid");
+            aid += 1;
 
-                if (audTracks.Length < 2)
-                    return;
+            if (aid > audTracks.Length)
+                aid = 1;
 
-                int aid = core.get_property_int("aid");
-                aid += 1;
-
-                if (aid > audTracks.Length)
-                    aid = 1;
-
-                core.commandv("set", "aid", aid.ToString());
-                core.commandv("show-text", audTracks[aid - 1].Text.Substring(3), "5000");
-            }
+            core.commandv("set", "aid", aid.ToString());
+            core.commandv("show-text", audTracks[aid - 1].Text.Substring(3), "5000");
         }
 
         static void ShowProfiles()
