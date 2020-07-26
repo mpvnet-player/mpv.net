@@ -80,7 +80,7 @@ namespace mpvnet
     
         public List<MediaTrack> MediaTracks { get; set; } = new List<MediaTrack>();
         public List<KeyValuePair<string, double>> Chapters { get; set; } = new List<KeyValuePair<string, double>>();
-        public List<string> BluRayTitles { get; } = new List<string>();
+        public List<TimeSpan> BluRayTitles { get; } = new List<TimeSpan>();
         public IntPtr Handle { get; set; }
         public IntPtr WindowHandle { get; set; }
         
@@ -614,7 +614,10 @@ namespace mpvnet
                 if (msg.Contains(" duration: "))
                 {
                     int start = msg.IndexOf(" duration: ") + 11;
-                    BluRayTitles.Add(msg.Substring(start, 8));
+                    BluRayTitles.Add(new TimeSpan(
+                        msg.Substring(start, 2).ToInt(),
+                        msg.Substring(start + 3, 2).ToInt(),
+                        msg.Substring(start + 6, 2).ToInt()));
                 }
             }
         }

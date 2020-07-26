@@ -2,6 +2,10 @@
 5.4.8.4 Beta (not yet released)
 ============
 
+- BluRays with dozens of titles showed all titles in the menu
+  which was difficult to choose and also extremely slow.
+
+
 5.4.8.3 Beta
 ============
 

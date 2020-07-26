@@ -268,15 +268,18 @@ namespace mpvnet
 
                 lock (core.BluRayTitles)
                 {
+                    List<(int Index, TimeSpan Len)> items = new List<(int Index, TimeSpan Len)>(); 
+
                     for (int i = 0; i < core.BluRayTitles.Count; i++)
-                    {
-                        if (core.BluRayTitles[i] != "00:00:00")
-                        {
-                            int tmp = i;
-                            MenuItem.Add(titles.DropDownItems, $"{core.BluRayTitles[i]} ({i})",
-                                () => core.SetBluRayTitle(tmp));
-                        }
-                    }
+                        items.Add((i, core.BluRayTitles[i]));
+
+                    var titleItems = items.OrderByDescending(item => item.Len)
+                        .Take(20).OrderBy(item => item.Index);
+
+                    foreach (var item in titleItems)
+                        if (item.Len != TimeSpan.Zero)
+                            MenuItem.Add(titles.DropDownItems, $"{item.Len} ({item.Index})",
+                                () => core.SetBluRayTitle(item.Index));
                 }
             }
         }
