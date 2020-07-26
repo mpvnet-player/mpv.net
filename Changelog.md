@@ -1,12 +1,16 @@
 
-5.4.8.4 Beta (not yet released)
+5.4.8.5 Beta (not yet released)
 ============
 
-- BluRays with dozens of titles showed all titles in the menu
+5.4.8.4 Beta
+============
+
+- Blu-rays with dozens of titles showed all titles in the menu
   which was difficult to choose and extremely slow.
-- BluRay folder paths are auto detected when received
+- Blu-ray folder paths are auto detected when received
   from drag & drop and command line.
-- Cycle audio was not working for BluRay.
+- Cycle audio was not working for Blu-ray.
+- Message asking if image is BD or DVD in case image is < 10 GB.
 
 
 5.4.8.3 Beta

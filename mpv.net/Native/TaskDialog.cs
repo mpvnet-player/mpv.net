@@ -363,6 +363,12 @@ public class TaskDialog<T> : TaskDialogNative, IDisposable
         return value;
     }
 
+    public void AddCommand(string text)
+    {
+        object obj = text;
+        AddCommand(text, (T)obj);
+    }
+
     public void AddCommand(string text, T value)
     {
         int n = 1000 + IdValueDic.Count + 1;

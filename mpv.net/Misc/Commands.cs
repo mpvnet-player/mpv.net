@@ -3,15 +3,15 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Windows;
+using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Interop;
+using System.Windows;
 
 using VB = Microsoft.VisualBasic;
 
 using static NewLine;
 using static mpvnet.Core;
-using System.Threading;
 
 namespace mpvnet
 {

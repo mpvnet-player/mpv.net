@@ -1043,17 +1043,37 @@ namespace mpvnet
 
         public void LoadISO(string path)
         {
-            core.command("stop");
-            Thread.Sleep(500);
             long gb = new FileInfo(path).Length / 1024 / 1024 / 1024;
 
             if (gb < 10)
             {
-                core.set_property_string("dvd-device", path);
-                core.LoadFiles(new[] { @"dvd://" }, false, false);
+                using (TaskDialog<string> td = new TaskDialog<string>())
+                {
+                    td.MainInstruction = "Blu-ray or DVD?";
+                    td.AddCommand("Blu-ray");
+                    td.AddCommand("DVD");
+
+                    switch (td.Show())
+                    {
+                        case "Blu-ray":
+                            core.command("stop");
+                            Thread.Sleep(500);
+                            core.set_property_string("bluray-device", path);
+                            core.LoadFiles(new[] { @"bd://" }, false, false);
+                            break;
+                        case "DVD":
+                            core.command("stop");
+                            Thread.Sleep(500);
+                            core.set_property_string("dvd-device", path);
+                            core.LoadFiles(new[] { @"dvd://" }, false, false);
+                            break;
+                    }
+                }
             }
             else
             {
+                core.command("stop");
+                Thread.Sleep(500);
                 core.set_property_string("bluray-device", path);
                 core.LoadFiles(new[] { @"bd://" }, false, false);
             }
