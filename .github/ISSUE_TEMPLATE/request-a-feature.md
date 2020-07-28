@@ -1,8 +1,8 @@
 ---
-name: Feature request
+name: Request a feature
 about: Suggest an idea for this project
 title: ''
-labels: enhancement
+labels: feature request
 assignees: stax76
 
 ---
