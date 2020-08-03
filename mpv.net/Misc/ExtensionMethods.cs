@@ -51,7 +51,7 @@ public static class Extensions
         if (instance == null)
             return "";
 
-        return Path.GetExtension(instance).ToLower().TrimStart('.');
+        return Path.GetExtension(instance).TrimStart('.').ToLower();
     }
 
     public static int ToInt(this string instance)

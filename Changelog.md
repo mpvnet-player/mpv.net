@@ -2,7 +2,9 @@
 5.4.8.5 Beta (not yet released)
 ============
 
--
+- Load AviSynth DLL from environment variable AviSynthDLL
+  in order to support AviSynth portable mode.
+
 
 5.4.8.4 Beta
 ============

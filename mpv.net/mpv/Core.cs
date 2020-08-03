@@ -13,7 +13,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using static libmpv;
-using static WinAPI;
 using static NewLine;
 using System.Globalization;
 
@@ -251,7 +250,7 @@ namespace mpvnet
                     {
                         string conf = Properties.Resources.mpv_conf;
                         Graphics gx = Graphics.FromHwnd(IntPtr.Zero);
-                        float scale = GetDeviceCaps(gx.GetHdc(), 88 /*LOGPIXELSX*/) / 96.0f;
+                        float scale = WinAPI.GetDeviceCaps(gx.GetHdc(), 88 /*LOGPIXELSX*/) / 96.0f;
 
                         if (scale != 1)
                             conf = conf.Replace("console-scale=1", "console-scale=" + scale);
@@ -384,7 +383,7 @@ namespace mpvnet
                 mpv_event evt = (mpv_event)Marshal.PtrToStructure(ptr, typeof(mpv_event));
 
                 if (WindowHandle == IntPtr.Zero)
-                    WindowHandle = FindWindowEx(MainForm.Hwnd, IntPtr.Zero, "mpv", null);
+                    WindowHandle = WinAPI.FindWindowEx(MainForm.Hwnd, IntPtr.Zero, "mpv", null);
 
                 //Debug.WriteLine(evt.event_id.ToString());
 
@@ -1014,7 +1013,9 @@ namespace mpvnet
             for (int i = 0; i < files.Length; i++)
             {
                 string file = files[i];
-                LoadLibrary(file.Ext());
+
+                if (file.Ext() == "avs")
+                    LoadAviSynth();
 
                 if (file.Ext() == "iso")
                     LoadISO(file);
@@ -1108,14 +1109,20 @@ namespace mpvnet
                 commandv("playlist-move", "0", (index + 1).ToString());
         }
 
-        bool wasAviSynthLoaded;
+        bool WasAviSynthLoaded;
 
-        void LoadLibrary(string ext)
+        void LoadAviSynth()
         {
-            if (!wasAviSynthLoaded && ext == "avs")
+            if (!WasAviSynthLoaded)
             {
-                WinAPI.LoadLibrary("AviSynth.dll");
-                wasAviSynthLoaded = true;
+                string dll = Environment.GetEnvironmentVariable("AviSynthDLL");
+
+                if (File.Exists(dll))
+                    WinAPI.LoadLibrary(dll);
+                else
+                    WinAPI.LoadLibrary("AviSynth.dll");
+
+                WasAviSynthLoaded = true;
             }
         }
 
