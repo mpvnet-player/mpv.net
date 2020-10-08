@@ -4,6 +4,7 @@
 
 - Load AviSynth DLL from environment variable AviSynthDLL
   in order to support AviSynth portable mode.
+- New option global-media-keys (next, previous, play/pause, stop)
 
 
 5.4.8.4 Beta
