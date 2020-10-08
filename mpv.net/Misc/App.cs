@@ -14,7 +14,7 @@ namespace mpvnet
     {
         public static string[] VideoTypes { get; } = "264 265 asf avc avi avs flv h264 h265 hevc m2ts m2v m4v mkv mov mp4 mpeg mpg mpv mts ts vob vpy webm wmv y4m".Split(' ');
         public static string[] AudioTypes { get; } = "mp3 mp2 ac3 ogg opus flac wav w64 m4a dts dtsma dtshr dtshd eac3 thd thd+ac3 mka aac mpa".Split(' ');
-        public static string[] ImageTypes { get; } = {"jpg", "bmp", "gif", "png"};
+        public static string[] ImageTypes { get; } = { "jpg", "bmp", "gif", "png" };
         public static string[] SubtitleTypes { get; } = { "srt", "ass", "idx", "sup", "ttxt", "ssa", "smi" };
 
         public static string RegPath { get; } = @"HKCU\Software\" + Application.ProductName;
@@ -32,6 +32,7 @@ namespace mpvnet
         public static bool AutoLoadFolder { get; set; } = true;
         public static bool Queue { get; set; }
         public static bool UpdateCheck { get; set; }
+        public static bool GlobalMediaKeys { get; set; }
 
         public static int StartThreshold { get; set; } = 1500;
         public static int RecentCount { get; set; } = 15;
@@ -52,7 +53,7 @@ namespace mpvnet
             foreach (var i in Conf)
                 ProcessProperty(i.Key, i.Value, true);
 
-            if (App.DebugMode)
+            if (DebugMode)
             {
                 try
                 {
@@ -106,14 +107,14 @@ namespace mpvnet
         {
             if (obj is Exception e)
             {
-                if (App.IsStartedFromTerminal)
+                if (IsStartedFromTerminal)
                     ConsoleHelp.WriteError(e.ToString());
                 else
                     Msg.ShowException(e);
             }
             else
             {
-                if (App.IsStartedFromTerminal)
+                if (IsStartedFromTerminal)
                     ConsoleHelp.WriteError(obj.ToString());
                 else
                     Msg.ShowError(obj.ToString());
@@ -122,7 +123,7 @@ namespace mpvnet
 
         public static void ShowError(string title, string msg)
         {
-            if (App.IsStartedFromTerminal)
+            if (IsStartedFromTerminal)
             {
                 ConsoleHelp.WriteError(title);
                 ConsoleHelp.WriteError(msg);
@@ -135,8 +136,8 @@ namespace mpvnet
         {
             if (RememberVolume)
             {
-                core.set_property_int("volume", RegistryHelp.GetInt(App.RegPath, "Volume", 70));
-                core.set_property_string("mute", RegistryHelp.GetString(App.RegPath, "Mute", "no"));
+                core.set_property_int("volume", RegistryHelp.GetInt(RegPath, "Volume", 70));
+                core.set_property_string("mute", RegistryHelp.GetString(RegPath, "Mute", "no"));
             }
         }
 
@@ -144,8 +145,8 @@ namespace mpvnet
         {
             if (RememberVolume)
             {
-                RegistryHelp.SetValue(App.RegPath, "Volume", core.get_property_int("volume"));
-                RegistryHelp.SetValue(App.RegPath, "Mute", core.get_property_string("mute"));
+                RegistryHelp.SetValue(RegPath, "Volume", core.get_property_int("volume"));
+                RegistryHelp.SetValue(RegPath, "Mute", core.get_property_string("mute"));
             }
         }
 
@@ -170,6 +171,7 @@ namespace mpvnet
         {
             switch (name)
             {
+                case "global-media-keys": GlobalMediaKeys = value == "yes"; return true;
                 case "remember-position": RememberPosition = value == "yes"; return true;
                 case "debug-mode": DebugMode = value == "yes"; return true;
                 case "remember-volume": RememberVolume = value == "yes"; return true;

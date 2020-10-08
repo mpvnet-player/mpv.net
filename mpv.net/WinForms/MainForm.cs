@@ -49,6 +49,9 @@ namespace mpvnet
                 ConsoleHelp.Padding = 60;
                 core.Init();
 
+                if (App.GlobalMediaKeys)
+                    RegisterGlobalMediaKeys();
+
                 core.Shutdown += Shutdown;
                 core.VideoSizeChanged += VideoSizeChanged;
                 core.FileLoaded += FileLoaded;
@@ -562,6 +565,23 @@ namespace mpvnet
                         }
                     }
                     break;
+                case 0x0312: // WM_HOTKEY
+                    switch (m.WParam.ToInt64())
+                    {
+                        case WinAPI.VK_MEDIA_NEXT_TRACK:
+                            core.command("keypress NEXT"); 
+                            break;
+                        case WinAPI.VK_MEDIA_PREV_TRACK:
+                            core.command("keypress PREV");
+                            break;
+                        case WinAPI.VK_MEDIA_PLAY_PAUSE:
+                            core.command("keypress PLAYPAUSE");
+                            break;
+                        case WinAPI.VK_MEDIA_STOP:
+                            core.command("keypress STOP");
+                            break;
+                    }
+                    break;
                 case 0x0200: // WM_MOUSEMOVE
                     if (Environment.TickCount - LastCycleFullscreen > 500)
                     {
@@ -748,6 +768,14 @@ namespace mpvnet
                 else
                     Taskbar.SetState(TaskbarStates.Normal);
             }
+        }
+
+        void RegisterGlobalMediaKeys()
+        {
+            WinAPI.RegisterHotKey(Handle, WinAPI.VK_MEDIA_NEXT_TRACK, 0, (uint)WinAPI.VK_MEDIA_NEXT_TRACK);
+            WinAPI.RegisterHotKey(Handle, WinAPI.VK_MEDIA_PREV_TRACK, 0, (uint)WinAPI.VK_MEDIA_PREV_TRACK);
+            WinAPI.RegisterHotKey(Handle, WinAPI.VK_MEDIA_PLAY_PAUSE, 0, (uint)WinAPI.VK_MEDIA_PLAY_PAUSE);
+            WinAPI.RegisterHotKey(Handle, WinAPI.VK_MEDIA_STOP, 0, (uint)WinAPI.VK_MEDIA_STOP);
         }
 
         protected override void OnLoad(EventArgs e)
