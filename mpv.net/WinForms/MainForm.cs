@@ -12,6 +12,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 
 using static mpvnet.Core;
+using static WinAPI;
 
 namespace mpvnet
 {
@@ -49,6 +50,14 @@ namespace mpvnet
                 ConsoleHelp.Padding = 60;
                 core.Init();
 
+                if (App.GlobalMediaKeys)
+                {
+                    RegisterGlobalKey(VK_MEDIA_NEXT_TRACK);
+                    RegisterGlobalKey(VK_MEDIA_PREV_TRACK);
+                    RegisterGlobalKey(VK_MEDIA_PLAY_PAUSE);
+                    RegisterGlobalKey(VK_MEDIA_STOP);
+                }
+
                 core.Shutdown += Shutdown;
                 core.VideoSizeChanged += VideoSizeChanged;
                 core.FileLoaded += FileLoaded;
@@ -76,7 +85,7 @@ namespace mpvnet
                 Application.ThreadException += (sender, e) => App.ShowException(e.Exception);
                 Msg.SupportURL = "https://github.com/stax76/mpv.net#support";
                 Text = "mpv.net " + Application.ProductVersion;
-                TaskbarButtonCreatedMessage = WinAPI.RegisterWindowMessage("TaskbarButtonCreated");
+                TaskbarButtonCreatedMessage = RegisterWindowMessage("TaskbarButtonCreated");
                 
                 ContextMenu = new ContextMenuStripEx(components);
                 ContextMenu.Opened += ContextMenu_Opened;
@@ -367,7 +376,7 @@ namespace mpvnet
             }
 
             Point middlePos = new Point(Left + Width / 2, Top + Height / 2);
-            var rect = new WinAPI.RECT(new Rectangle(screen.Bounds.X, screen.Bounds.Y, width, height));
+            var rect = new RECT(new Rectangle(screen.Bounds.X, screen.Bounds.Y, width, height));
             NativeHelp.AddWindowBorders(Handle, ref rect);
             int left = middlePos.X - rect.Width / 2;
             int top = middlePos.Y - rect.Height / 2;
@@ -390,7 +399,7 @@ namespace mpvnet
             if (top + rect.Height > maxBottom)
                 top = maxBottom - rect.Height;
 
-            WinAPI.SetWindowPos(Handle, IntPtr.Zero /* HWND_TOP */,
+            SetWindowPos(Handle, IntPtr.Zero /* HWND_TOP */,
                 left, top, rect.Width, rect.Height, 4 /* SWP_NOZORDER */);
         }
 
@@ -411,7 +420,7 @@ namespace mpvnet
                         Rectangle b = Screen.FromControl(this).Bounds;
                         uint SWP_SHOWWINDOW = 0x0040;
                         IntPtr HWND_TOP= IntPtr.Zero;
-                        WinAPI.SetWindowPos(Handle, HWND_TOP, b.X, b.Y, b.Width, b.Height, SWP_SHOWWINDOW);
+                        SetWindowPos(Handle, HWND_TOP, b.X, b.Y, b.Width, b.Height, SWP_SHOWWINDOW);
                     }
                 }
             }
@@ -546,7 +555,7 @@ namespace mpvnet
                             (Environment.TickCount - LastAppCommand) < 1000;
 
                         if (core.WindowHandle != IntPtr.Zero && !skip)
-                            m.Result = WinAPI.SendMessage(core.WindowHandle, m.Msg, m.WParam, m.LParam);
+                            m.Result = SendMessage(core.WindowHandle, m.Msg, m.WParam, m.LParam);
                     }
                     break;
                 case 0x319: // WM_APPCOMMAND
@@ -560,6 +569,23 @@ namespace mpvnet
                             LastAppCommand = Environment.TickCount;
                             return;
                         }
+                    }
+                    break;
+                case 0x0312: // WM_HOTKEY
+                    switch (m.WParam.ToInt64())
+                    {
+                        case VK_MEDIA_NEXT_TRACK:
+                            core.command("keypress NEXT"); 
+                            break;
+                        case VK_MEDIA_PREV_TRACK:
+                            core.command("keypress PREV");
+                            break;
+                        case VK_MEDIA_PLAY_PAUSE:
+                            core.command("keypress PLAYPAUSE");
+                            break;
+                        case VK_MEDIA_STOP:
+                            core.command("keypress STOP");
+                            break;
                     }
                     break;
                 case 0x0200: // WM_MOUSEMOVE
@@ -587,13 +613,13 @@ namespace mpvnet
                         if (!WasShown())
                             break;
 
-                        WinAPI.RECT rect = Marshal.PtrToStructure<WinAPI.RECT>(m.LParam);
-                        WinAPI.SetWindowPos(Handle, IntPtr.Zero, rect.Left, rect.Top, rect.Width, rect.Height, 0);
+                        RECT rect = Marshal.PtrToStructure<RECT>(m.LParam);
+                        SetWindowPos(Handle, IntPtr.Zero, rect.Left, rect.Top, rect.Width, rect.Height, 0);
                     }
                     break;
                 case 0x0214: // WM_SIZING
                     {
-                        var rc = Marshal.PtrToStructure<WinAPI.RECT>(m.LParam);
+                        var rc = Marshal.PtrToStructure<RECT>(m.LParam);
                         var r = rc;
                         NativeHelp.SubtractWindowBorders(Handle, ref r);
                         int c_w = r.Right - r.Left, c_h = r.Bottom - r.Top;
@@ -613,13 +639,13 @@ namespace mpvnet
                         if (corner >= 0)
                             corners[corner] -= d_corners[corner];
 
-                        Marshal.StructureToPtr<WinAPI.RECT>(new WinAPI.RECT(corners[0], corners[1], corners[2], corners[3]), m.LParam, false);
+                        Marshal.StructureToPtr<RECT>(new RECT(corners[0], corners[1], corners[2], corners[3]), m.LParam, false);
                         m.Result = new IntPtr(1);
                     }
                     return;
                 case 0x004A: // WM_COPYDATA
                     {
-                        var copyData = (WinAPI.COPYDATASTRUCT)m.GetLParam(typeof(WinAPI.COPYDATASTRUCT));
+                        var copyData = (COPYDATASTRUCT)m.GetLParam(typeof(COPYDATASTRUCT));
                         string[] files = copyData.lpData.Split('\n');
                         string mode = files[0];
                         files = files.Skip(1).ToArray();
@@ -672,6 +698,8 @@ namespace mpvnet
             if (core.TaskbarProgress && Taskbar != null)
                 Taskbar.SetValue(core.get_property_number("time-pos"), core.Duration.TotalSeconds);
         }
+
+        void RegisterGlobalKey(int key) => RegisterHotKey(Handle, key, 0, (uint)key);
 
         void PropChangeOnTop(bool value) => BeginInvoke(new Action(() => TopMost = value));
 
@@ -792,7 +820,7 @@ namespace mpvnet
         {
             base.OnActivated(e);
             Message m = new Message() { Msg = 0x0202 }; // WM_LBUTTONUP
-            WinAPI.SendMessage(MainForm.Instance.Handle, m.Msg, m.WParam, m.LParam);
+            SendMessage(MainForm.Instance.Handle, m.Msg, m.WParam, m.LParam);
         }
 
         protected override void OnResize(EventArgs e)
@@ -849,8 +877,8 @@ namespace mpvnet
                 e.Button == MouseButtons.Left && !IsMouseInOSC())
             {
                 var HTCAPTION = new IntPtr(2);
-                WinAPI.ReleaseCapture();
-                WinAPI.PostMessage(Handle, 0xA1 /* WM_NCLBUTTONDOWN */, HTCAPTION, IntPtr.Zero);
+                ReleaseCapture();
+                PostMessage(Handle, 0xA1 /* WM_NCLBUTTONDOWN */, HTCAPTION, IntPtr.Zero);
             }
 
             if (Width - e.Location.X < 10 && e.Location.Y < 10)

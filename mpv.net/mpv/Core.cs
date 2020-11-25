@@ -14,6 +14,7 @@ using System.Windows.Forms;
 
 using static libmpv;
 using static NewLine;
+
 using System.Globalization;
 
 namespace mpvnet

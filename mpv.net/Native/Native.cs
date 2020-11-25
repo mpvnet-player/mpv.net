@@ -5,6 +5,11 @@ using System.Runtime.InteropServices;
 
 public class WinAPI
 {
+    public const int VK_MEDIA_NEXT_TRACK = 0xB0;
+    public const int VK_MEDIA_PREV_TRACK = 0xB1;
+    public const int VK_MEDIA_STOP = 0xB2;
+    public const int VK_MEDIA_PLAY_PAUSE = 0xB3;
+
     [DllImport("kernel32.dll")]
     public static extern bool AttachConsole(int dwProcessId);
 
@@ -14,8 +19,12 @@ public class WinAPI
     [DllImport("kernel32.dll")]
     public static extern IntPtr LoadLibrary(string path);
 
+    [DllImport("user32")]
+    public static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
+
     [DllImport("user32.dll", CharSet = CharSet.Unicode)]
-    public static extern IntPtr FindWindowEx(IntPtr parentHandle, IntPtr childAfter, string lclassName, string windowTitle);
+    public static extern IntPtr FindWindowEx(
+        IntPtr parentHandle, IntPtr childAfter, string lclassName, string windowTitle);
 
     [DllImport("user32.dll", CharSet = CharSet.Unicode)]
     public static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam);
