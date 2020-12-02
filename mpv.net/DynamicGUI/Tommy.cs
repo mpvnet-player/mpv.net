@@ -381,7 +381,8 @@ namespace Tommy
 
         public override TomlNode this[string key] {
             get {
-                if (RawTable.TryGetValue(key, out var result)) return result;
+                if (RawTable.TryGetValue(key, out var result))
+                    return result;
 
                 var lazy = new TomlLazy(this);
                 RawTable[key] = lazy;

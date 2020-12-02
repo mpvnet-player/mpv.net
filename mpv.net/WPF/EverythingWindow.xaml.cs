@@ -120,29 +120,28 @@ namespace mpvnet
 
         object LockObject = new object();
 
-        void Search(string searchtext)
+        void Search(string searchText)
         {
             lock (LockObject)
             {
                 try
                 {
                     List<string> items = new List<string>();
-                    UInt32 i;
-                    const int bufsize = 500;
-                    StringBuilder buf = new StringBuilder(bufsize);
-                    Everything_SetSearch(searchtext);
+                    StringBuilder sb = new StringBuilder(500);
+                    Everything_SetSearch(searchText);
                     Everything_SetRequestFlags(EVERYTHING_REQUEST_FILE_NAME | EVERYTHING_REQUEST_PATH);
                     Everything_Query(true);
+                    uint count = Everything_GetNumResults();
 
-                    for (i = 0; i < Everything_GetNumResults(); i++)
+                    for (uint i = 0; i < count; i++)
                     {
-                        Everything_GetResultFullPathName(i, buf, bufsize);
-                        string ext = buf.ToString().Ext();
+                        Everything_GetResultFullPathName(i, sb, (uint)sb.Capacity);
+                        string ext = sb.ToString().Ext();
 
                         if (App.AudioTypes.Contains(ext) || App.VideoTypes.Contains(ext)
                             || App.ImageTypes.Contains(ext))
 
-                            items.Add(buf.ToString());
+                            items.Add(sb.ToString());
 
                         if (items.Count > 100)
                             break;

@@ -6,7 +6,7 @@ keep-open = yes
 keep-open-pause = no
 osd-duration = 2000
 osd-playing-msg = '${filename}'
-script-opts = osc-scalewindowed=1.5,osc-hidetimeout=2000,console-scale=1
+script-opts = osc-scalewindowed=1.5,osc-hidetimeout=2000,osc-greenandgrumpy=yes,console-scale=1
 screenshot-directory = '~~desktop/'
 
 [protocol.https]

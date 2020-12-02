@@ -800,6 +800,29 @@ namespace mpvnet
                 HandleError(err, throwException, $"error setting property: {name} = " + value);
         }
 
+        public string get_opt(string name, string defaultValue = "")
+        {
+            string value = get_property_string("script-opts");
+
+            if (string.IsNullOrEmpty(value))
+                return defaultValue;
+
+            string[] values = value.Split(',');
+
+            foreach (string item in values)
+            {
+                if (item.Contains("="))
+                {
+                    string optionName = item.Substring(0, item.IndexOf("="));
+
+                    if (optionName == name)
+                        return item.Substring(item.IndexOf("=") + 1);
+                }
+            }
+
+            return defaultValue;
+        }
+
         public void observe_property_int(string name, Action<int> action)
         {
             lock (IntPropChangeActions)

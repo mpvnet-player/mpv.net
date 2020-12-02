@@ -96,7 +96,7 @@ namespace RatingExtension // the assembly name must end with 'Extension'
             {
                 TimeSpan ts = DateTime.Now - DeleteTime;
 
-                if (FileToDelete == core.get_property_string("path") && ts.TotalSeconds < 5)
+                if (FileToDelete == core.get_property_string("path") && ts.TotalSeconds < 5 && File.Exists(FileToDelete))
                 {
                     core.command("playlist-remove current");
                     Thread.Sleep(2000);
