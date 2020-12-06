@@ -134,6 +134,7 @@
     <Compile Include="Misc\RegistryHelp.cs" />
     <Compile Include="Misc\Theme.cs" />
     <Compile Include="Misc\PowerShell.cs" />
+    <Compile Include="Native\StockIcon.cs" />
     <Compile Include="WPF\SearchTextBoxUserControl.xaml.cs">
       <DependentUpon>SearchTextBoxUserControl.xaml</DependentUpon>
     </Compile>

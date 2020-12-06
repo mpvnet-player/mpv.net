@@ -814,6 +814,9 @@ namespace mpvnet
             core.LoadScripts();
             Task.Run(() => App.Extension = new Extension());
             ShownTickCount = Environment.TickCount;
+
+            SetupWindow win = new SetupWindow();
+            win.Show();
         }
 
         protected override void OnActivated(EventArgs e)

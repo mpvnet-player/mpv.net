@@ -2,14 +2,33 @@
 using System;
 using System.Diagnostics;
 using System.Windows;
+using System.Windows.Media.Imaging;
+using System.Windows.Interop;
 
 using WinForms = System.Windows.Forms;
+
+using static StockIcon;
 
 namespace mpvnet
 {
     public partial class SetupWindow : Window
     {
         public SetupWindow() => InitializeComponent();
+
+        static BitmapSource _ShieldIcon;
+
+        public static BitmapSource ShieldIcon {
+            get {
+                if (_ShieldIcon == null)
+                {
+                    IntPtr icon = GetIcon(SHSTOCKICONID.Shield, SHSTOCKICONFLAGS.SHGSI_ICON);
+                    _ShieldIcon = Imaging.CreateBitmapSourceFromHIcon(
+                        icon, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+                    DestroyIcon(icon);
+                }
+                return _ShieldIcon;
+            }
+        }
 
         void RegisterFileAssociations(string value)
         {
@@ -59,6 +78,19 @@ namespace mpvnet
             }
             else
                 Msg.ShowWarning("Path was not containing mpv.net.");
+        }
+
+        void aaa()
+        {
+            BitmapSource shieldSource = null;
+            IntPtr icon = GetIcon(SHSTOCKICONID.Shield, SHSTOCKICONFLAGS.SHGSI_LARGEICON);
+            shieldSource = System.Windows.Interop.Imaging.CreateBitmapSourceFromHIcon(
+                icon, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+            DestroyIcon(icon);
+            //shieldSource = System.Windows.Interop.Imaging.CreateBitmapSourceFromHIcon(
+            //    System.Drawing.SystemIcons.Shield.Handle,
+            //    Int32Rect.Empty,
+            //    BitmapSizeOptions.FromEmptyOptions());
         }
     }
 }
