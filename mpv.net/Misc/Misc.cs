@@ -80,25 +80,6 @@ namespace mpvnet
                 RegistryHelp.SetValue(@"HKLM\SOFTWARE\Clients\Media\mpv.net\Capabilities\FileAssociations", "." + ext, ExeFilenameNoExt + "." + ext);
             }
         }
-
-        public static void Unregister()
-        {
-            RegistryHelp.RemoveKey($@"HKCU\Software\Microsoft\Windows\CurrentVersion\App Paths\" + ExeFilename);
-            RegistryHelp.RemoveKey($@"HKCR\Applications\" + ExeFilename);
-            RegistryHelp.RemoveKey($@"HKLM\SOFTWARE\Clients\Media\mpv.net");
-            RegistryHelp.RemoveKey($@"HKCR\SystemFileAssociations\video\OpenWithList\" + ExeFilename);
-            RegistryHelp.RemoveKey($@"HKCR\SystemFileAssociations\audio\OpenWithList\" + ExeFilename);
-            RegistryHelp.RemoveValue(@"HKLM\SOFTWARE\RegisteredApplications", "mpv.net");
-
-            foreach (string id in Registry.ClassesRoot.GetSubKeyNames())
-            {
-                if (id.StartsWith(ExeFilenameNoExt + "."))
-                    Registry.ClassesRoot.DeleteSubKeyTree(id);
-
-                RegistryHelp.RemoveValue($@"HKCR\Software\Classes\{id}\OpenWithProgIDs", ExeFilenameNoExt + id);
-                RegistryHelp.RemoveValue($@"HKLM\Software\Classes\{id}\OpenWithProgIDs", ExeFilenameNoExt + id);
-            }
-        }
     }
 
     public class MediaTrack

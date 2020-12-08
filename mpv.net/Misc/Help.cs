@@ -6,6 +6,33 @@ using System.Windows.Forms;
 
 namespace mpvnet
 {
+    public static class ProcessHelp
+    {
+        public static void Execute(string file, string arguments = null)
+        {
+            using (Process proc = new Process())
+            {
+                proc.StartInfo.FileName = file;
+                proc.StartInfo.Arguments = arguments;
+                // default is true in .NET Framework and false in .NET Core
+                proc.StartInfo.UseShellExecute = false;
+                proc.Start();
+            }
+        }
+
+        public static void ShellExecute(string file, string arguments = null)
+        {
+            using (Process proc = new Process())
+            {
+                proc.StartInfo.FileName = file;
+                proc.StartInfo.Arguments = arguments;
+                // default is true in .NET Framework and false in .NET Core
+                proc.StartInfo.UseShellExecute = true;
+                proc.Start();
+            }
+        }
+    }
+
     public static class ConsoleHelp
     {
         public static int Padding { get; set; }

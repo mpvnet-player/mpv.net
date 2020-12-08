@@ -1,9 +1,10 @@
 ﻿
 using System;
 using System.Diagnostics;
-using System.Windows;
-using System.Windows.Media.Imaging;
+using System.IO;
 using System.Windows.Interop;
+using System.Windows.Media.Imaging;
+using System.Windows;
 
 using WinForms = System.Windows.Forms;
 
@@ -39,22 +40,38 @@ namespace mpvnet
                     proc.StartInfo.FileName = WinForms.Application.ExecutablePath;
                     proc.StartInfo.Arguments = "--reg-file-assoc " + value;
                     proc.StartInfo.Verb = "runas";
+                    proc.StartInfo.UseShellExecute = true;
                     proc.Start();
                 }
 
-                Process.Start("ms-settings:defaultapps");
+                Msg.Show(value[0].ToString().ToUpper() + value.Substring(1) +
+                         " file associations successfully created.");
             } catch {}
         }
 
-        void RegisterVideo_Click(object sender, RoutedEventArgs e) => RegisterFileAssociations("video");
-        void RegisterAudio_Click(object sender, RoutedEventArgs e) => RegisterFileAssociations("audio");
-        void RegisterImage_Click(object sender, RoutedEventArgs e) => RegisterFileAssociations("image");
+        void AddVideo_Click(object sender, RoutedEventArgs e) => RegisterFileAssociations("video");
+        void AddAudio_Click(object sender, RoutedEventArgs e) => RegisterFileAssociations("audio");
+        void AddImage_Click(object sender, RoutedEventArgs e) => RegisterFileAssociations("image");
 
-        void UnregisterFileAssociations_Click(object sender, RoutedEventArgs e) => RegisterFileAssociations("unreg");
+        void RemoveFileAssociations_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                using (Process proc = new Process())
+                {
+                    proc.StartInfo.FileName = "powershell.exe";
+                    proc.StartInfo.Arguments = "-NoLogo -NoExit -ExecutionPolicy Unrestricted -File \"" +
+                        Folder.Startup + "Setup\\uninstall.ps1\"";
+                    proc.StartInfo.Verb = "runas";
+                    proc.StartInfo.UseShellExecute = true;
+                    proc.Start();
+                }
+            } catch { }
+        }
 
         void AddToPathEnvVar_Click(object sender, RoutedEventArgs e)
         {
-            string var = WinForms.Application.StartupPath + ";";
+            string var = Folder.Startup.TrimEnd(Path.DirectorySeparatorChar) + ";";
             string path = Environment.GetEnvironmentVariable("Path", EnvironmentVariableTarget.User);
 
             if (path.Contains(var))
@@ -68,7 +85,7 @@ namespace mpvnet
 
         void RemoveFromPathEnvVar_Click(object sender, RoutedEventArgs e)
         {
-            string var = WinForms.Application.StartupPath + ";";
+            string var = Folder.Startup.TrimEnd(Path.DirectorySeparatorChar) + ";";
             string path = Environment.GetEnvironmentVariable("Path", EnvironmentVariableTarget.User);
 
             if (path.Contains(var))
@@ -80,17 +97,29 @@ namespace mpvnet
                 Msg.ShowWarning("Path was not containing mpv.net.");
         }
 
-        void aaa()
+        void AddStartMenuShortcut_Click(object sender, RoutedEventArgs e)
         {
-            BitmapSource shieldSource = null;
-            IntPtr icon = GetIcon(SHSTOCKICONID.Shield, SHSTOCKICONFLAGS.SHGSI_LARGEICON);
-            shieldSource = System.Windows.Interop.Imaging.CreateBitmapSourceFromHIcon(
-                icon, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
-            DestroyIcon(icon);
-            //shieldSource = System.Windows.Interop.Imaging.CreateBitmapSourceFromHIcon(
-            //    System.Drawing.SystemIcons.Shield.Handle,
-            //    Int32Rect.Empty,
-            //    BitmapSizeOptions.FromEmptyOptions());
+            ExecutePowerShellScript(Folder.Startup + "Setup\\create start menu shortcut.ps1");
+        }
+
+        void RemoveStartMenuShortcut_Click(object sender, RoutedEventArgs e)
+        {
+            ExecutePowerShellScript(Folder.Startup + "Setup\\remove start menu shortcut.ps1");
+        }
+
+        void ShowEnvVarEditor_Click(object sender, RoutedEventArgs e)
+        {
+            ProcessHelp.Execute("rundll32.exe", "sysdm.cpl,EditEnvironmentVariables");
+        }
+
+        void ExecutePowerShellScript(string file)
+        {
+            ProcessHelp.Execute("powershell.exe", "-NoLogo -NoExit -ExecutionPolicy Unrestricted -File \"" + file + "\"");
+        }
+
+        private void EditDefaultApp_Click(object sender, RoutedEventArgs e)
+        {
+            ProcessHelp.ShellExecute("ms-settings:defaultapps");
         }
     }
 }

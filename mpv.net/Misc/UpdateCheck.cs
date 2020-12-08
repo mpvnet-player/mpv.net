@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Net.Http;
 using System.Reflection;
 using System.Text.RegularExpressions;
@@ -55,7 +56,7 @@ namespace mpvnet
                             proc.StartInfo.UseShellExecute = true;
                             proc.StartInfo.WorkingDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
                             proc.StartInfo.FileName = "PowerShell";
-                            proc.StartInfo.Arguments = $"-NoLogo -NoExit -File \"{Folder.Startup + "Update.ps1"}\" \"{url}\" \"{Application.StartupPath.TrimEnd('\\')}\"";
+                            proc.StartInfo.Arguments = $"-NoLogo -NoExit -File \"{Folder.Startup + "Update.ps1"}\" \"{url}\" \"{Folder.Startup.TrimEnd(Path.DirectorySeparatorChar)}\"";
 
                             if (Folder.Startup.Contains("Program Files"))
                                 proc.StartInfo.Verb = "runas";

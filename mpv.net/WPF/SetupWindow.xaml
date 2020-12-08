@@ -19,27 +19,51 @@
             <Setter Property="Height" Value="25"></Setter>
         </Style>
 
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14"></Setter>
+            <Setter Property="Margin" Value="3,0,0,0"></Setter>
+            <Setter Property="TextAlignment" Value="Center"></Setter>
+        </Style>
+        
         <ControlTemplate x:Key = "ShieldButtonTemplate" TargetType = "Button">
-            <Button Margin="0">
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="{x:Static mpvnet:SetupWindow.ShieldIcon}"
+            <Button Margin="0" HorizontalContentAlignment="Stretch">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.Column="0"
+                           Source="{x:Static mpvnet:SetupWindow.ShieldIcon}"
                            Width="18"
                            Height="18"
-                           Margin="0,0,3,0"/>
-                    <ContentPresenter/>
-                </StackPanel>
+                           Margin="3,0,0,0"/>
+                    <ContentPresenter Grid.Column="1" HorizontalAlignment="Center" />
+                </Grid>
             </Button>
         </ControlTemplate>
     </Window.Resources>
     
     <Grid>
-        <StackPanel Margin="10">
-            <Button Name="RegisterVideo" Click="RegisterVideo_Click" Template="{StaticResource ShieldButtonTemplate}">Register video file extensions</Button>
-            <Button Name="RegisterAudio" Click="RegisterAudio_Click" Template="{StaticResource ShieldButtonTemplate}">Register audio file extensions</Button>
-            <Button Name="RegisterImage" Click="RegisterImage_Click" Template="{StaticResource ShieldButtonTemplate}">Register image file extensions</Button>
-            <Button Name="UnregisterFileAssociations" Click="UnregisterFileAssociations_Click" Template="{StaticResource ShieldButtonTemplate}">Unregister file extensions</Button>
-            <Button Name="AddToPathEnvVar" Margin="3,15,3,3" Click="AddToPathEnvVar_Click">Add to Path environment variable</Button>
-            <Button Name="RemoveFromPathEnvVar" Padding="10,0,10,0" Click="RemoveFromPathEnvVar_Click">Remove from Path environment variable</Button>
+        <StackPanel Orientation="Horizontal">
+            <StackPanel Width="180" Margin="5">
+                <TextBlock>Start Menu Shortcut</TextBlock>
+                <Button Name="AddStartMenuShortcut" Click="AddStartMenuShortcut_Click">Add</Button>
+                <Button Name="RemoveStartMenuShortcut" Click="RemoveStartMenuShortcut_Click">Remove</Button>
+            </StackPanel>
+            <StackPanel Width="180" Margin="20,5,5,5">
+                <TextBlock>File Extensions</TextBlock>
+                <Button Name="AddVideo" Click="AddVideo_Click" Template="{StaticResource ShieldButtonTemplate}">Add Video</Button>
+                <Button Name="AddAudio" Click="AddAudio_Click" Template="{StaticResource ShieldButtonTemplate}">Add Audio</Button>
+                <Button Name="AddImage" Click="AddImage_Click" Template="{StaticResource ShieldButtonTemplate}">Add Image</Button>
+                <Button Name="RemoveFileAssociations" Click="RemoveFileAssociations_Click" Template="{StaticResource ShieldButtonTemplate}">Remove All</Button>
+                <Button Name="EditDefaultApp" Click="EditDefaultApp_Click">Edit Default App</Button>
+            </StackPanel>
+            <StackPanel Width="180" Margin="20,5,5,5">
+                <TextBlock>Path Environment Variable</TextBlock>
+                <Button Name="AddToPathEnvVar" Click="AddToPathEnvVar_Click">Add</Button>
+                <Button Name="RemoveFromPathEnvVar" Click="RemoveFromPathEnvVar_Click">Remove</Button>
+                <Button Name="ShowEnvVarEditor" Click="ShowEnvVarEditor_Click">Show Editor</Button>
+            </StackPanel>
         </StackPanel>
     </Grid>
 </Window>
