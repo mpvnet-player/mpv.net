@@ -60,8 +60,8 @@ namespace mpvnet
                 using (Process proc = new Process())
                 {
                     proc.StartInfo.FileName = "powershell.exe";
-                    proc.StartInfo.Arguments = "-NoLogo -NoExit -ExecutionPolicy Unrestricted -File \"" +
-                        Folder.Startup + "Setup\\uninstall.ps1\"";
+                    proc.StartInfo.Arguments = "-NoLogo -NoExit -ExecutionPolicy Bypass -File \"" +
+                        Folder.Startup + "Setup\\remove file associations.ps1\"";
                     proc.StartInfo.Verb = "runas";
                     proc.StartInfo.UseShellExecute = true;
                     proc.Start();
@@ -114,7 +114,7 @@ namespace mpvnet
 
         void ExecutePowerShellScript(string file)
         {
-            ProcessHelp.Execute("powershell.exe", "-NoLogo -NoExit -ExecutionPolicy Unrestricted -File \"" + file + "\"");
+            ProcessHelp.Execute("powershell.exe", "-NoLogo -NoExit -ExecutionPolicy Bypass -File \"" + file + "\"");
         }
 
         private void EditDefaultApp_Click(object sender, RoutedEventArgs e)

@@ -26,7 +26,7 @@ AppPublisher=Frank Skare (stax76)
 
 Compression=lzma2
 DefaultDirName={commonpf}\{#MyAppName}
-OutputBaseFilename=mpv.net-setup-{#arch}-{#MyAppVersion}
+OutputBaseFilename=mpv.net-{#MyAppVersion}-setup-{#arch}
 OutputDir={#GetEnv('USERPROFILE')}\Desktop
 DefaultGroupName={#MyAppName}
 SetupIconFile=mpv.net\mpvnet.ico
@@ -39,10 +39,6 @@ Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
 Source: "{#MyAppSourceDir}\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MyAppSourceDir}\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs;
 
-[Run]
-Filename: "{app}\{#MyAppExeName}"; Description: "Associate video file extensions?"; Flags: postinstall unchecked runascurrentuser runhidden nowait; Parameters: "--reg-file-assoc video"
-Filename: "{app}\{#MyAppExeName}"; Description: "Associate audio file extensions?"; Flags: postinstall unchecked runascurrentuser runhidden nowait; Parameters: "--reg-file-assoc audio"
-Filename: "{app}\{#MyAppExeName}"; Description: "Associate image file extensions?"; Flags: postinstall unchecked runascurrentuser runhidden nowait; Parameters: "--reg-file-assoc image"
-
 [UninstallRun]
-Filename: "{app}\{#MyAppExeName}"; Flags: runascurrentuser runhidden; Parameters: "--reg-file-assoc unreg"
+Filename: "powershell.exe"; Flags: runhidden; Parameters: "-ExecutionPolicy Bypass -File ""{app}\Setup\remove file associations.ps1"""
+Filename: "powershell.exe"; Flags: runhidden; Parameters: "-ExecutionPolicy Bypass -File ""{app}\Setup\remove start menu shortcut.ps1"""

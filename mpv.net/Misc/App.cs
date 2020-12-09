@@ -199,11 +199,9 @@ namespace mpvnet
 
             if (path != Folder.Startup)
             {
-                if (Msg.ShowQuestion("Would you like to setup mpv.net for the current startup location?",
-                    "Current startup location:\n\n" + Folder.Startup + "\n\n" +
+                if (Msg.ShowQuestion("Would you like to setup mpv.net?",
                     "The setup allows to create a start menu shortcut, file associations and " +
-                    "add mpv.net to the Path environment variable.\n\n" +
-                    "Show setup dialog?") == MsgResult.OK)
+                    "adding mpv.net to the Path environment variable.") == MsgResult.OK)
 
                     Commands.Execute("show-setup-dialog");
                 else
