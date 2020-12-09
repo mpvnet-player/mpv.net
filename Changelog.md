@@ -6,6 +6,7 @@
   in order to support AviSynth portable mode.
 - New option global-media-keys (next, previous, play/pause, stop).
 - Improved setup dialog.
+- Whenever there is a new startup location, the setup dialog is shown.
 - libmpv updated to shinshiro 2020-11-22.
 
 

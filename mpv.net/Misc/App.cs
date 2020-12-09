@@ -192,5 +192,25 @@ namespace mpvnet
                     return false;
             }
         }
+
+        public static void ShowSetup()
+        {
+            string path = RegistryHelp.GetString(RegistryHelp.ApplicationKey, "SetupDialog");
+
+            if (path != Folder.Startup)
+            {
+                if (Msg.ShowQuestion("Would you like to setup mpv.net for the current startup location?",
+                    "Current startup location:\n\n" + Folder.Startup + "\n\n" +
+                    "The setup allows to create a start menu shortcut, file associations and " +
+                    "add mpv.net to the Path environment variable.\n\n" +
+                    "Show setup dialog?") == MsgResult.OK)
+
+                    Commands.Execute("show-setup-dialog");
+                else
+                    Msg.Show("The setup dialog can be found in the context menu at:\n\nTools > Setup");
+
+                RegistryHelp.SetValue(RegistryHelp.ApplicationKey, "SetupDialog", Folder.Startup);
+            }
+        }
     }
 }

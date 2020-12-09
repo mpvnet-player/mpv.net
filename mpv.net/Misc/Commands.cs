@@ -17,7 +17,7 @@ namespace mpvnet
 {
     public class Commands
     {
-        public static void Execute(string id, string[] args)
+        public static void Execute(string id, string[] args = null)
         {
             switch (id)
             {
