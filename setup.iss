@@ -42,3 +42,4 @@ Source: "{#MyAppSourceDir}\*"; DestDir: "{app}"; Flags: ignoreversion recursesub
 [UninstallRun]
 Filename: "powershell.exe"; Flags: runhidden; Parameters: "-ExecutionPolicy Bypass -File ""{app}\Setup\remove file associations.ps1"""
 Filename: "powershell.exe"; Flags: runhidden; Parameters: "-ExecutionPolicy Bypass -File ""{app}\Setup\remove start menu shortcut.ps1"""
+Filename: "powershell.exe"; Flags: runhidden; Parameters: "-ExecutionPolicy Bypass -File ""{app}\Setup\remove environment variable.ps1"""

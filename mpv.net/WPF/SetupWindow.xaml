@@ -55,7 +55,7 @@
                 <Button Name="AddVideo" Click="AddVideo_Click" Template="{StaticResource ShieldButtonTemplate}">Add Video</Button>
                 <Button Name="AddAudio" Click="AddAudio_Click" Template="{StaticResource ShieldButtonTemplate}">Add Audio</Button>
                 <Button Name="AddImage" Click="AddImage_Click" Template="{StaticResource ShieldButtonTemplate}">Add Image</Button>
-                <Button Name="RemoveFileAssociations" Click="RemoveFileAssociations_Click" Template="{StaticResource ShieldButtonTemplate}">Remove All</Button>
+                <Button Name="RemoveFileAssociations" Margin="3,15,3,3" Click="RemoveFileAssociations_Click" Template="{StaticResource ShieldButtonTemplate}">Remove All</Button>
                 <Button Name="EditDefaultApp" Click="EditDefaultApp_Click">Edit Default App</Button>
             </StackPanel>
             <StackPanel Width="180" Margin="20,5,5,5">

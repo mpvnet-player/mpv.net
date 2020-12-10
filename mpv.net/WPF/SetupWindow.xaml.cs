@@ -71,30 +71,12 @@ namespace mpvnet
 
         void AddToPathEnvVar_Click(object sender, RoutedEventArgs e)
         {
-            string var = Folder.Startup.TrimEnd(Path.DirectorySeparatorChar) + ";";
-            string path = Environment.GetEnvironmentVariable("Path", EnvironmentVariableTarget.User);
-
-            if (path.Contains(var))
-                Msg.ShowWarning("Path was already containing mpv.net.");
-            else
-            {
-                Environment.SetEnvironmentVariable("Path", var + path, EnvironmentVariableTarget.User);
-                Msg.Show("mpv.net was successfully added to Path.", (var + path).Replace(";","\n"));
-            }
+            ExecutePowerShellScript(Folder.Startup + "Setup\\add environment variable.ps1");
         }
 
         void RemoveFromPathEnvVar_Click(object sender, RoutedEventArgs e)
         {
-            string var = Folder.Startup.TrimEnd(Path.DirectorySeparatorChar) + ";";
-            string path = Environment.GetEnvironmentVariable("Path", EnvironmentVariableTarget.User);
-
-            if (path.Contains(var))
-            {
-                Environment.SetEnvironmentVariable("Path", path.Replace(var, ""), EnvironmentVariableTarget.User);
-                Msg.Show("mpv.net was successfully removed from Path.");
-            }
-            else
-                Msg.ShowWarning("Path was not containing mpv.net.");
+            ExecutePowerShellScript(Folder.Startup + "Setup\\remove environment variable.ps1");
         }
 
         void AddStartMenuShortcut_Click(object sender, RoutedEventArgs e)
@@ -117,7 +99,7 @@ namespace mpvnet
             ProcessHelp.Execute("powershell.exe", "-NoLogo -NoExit -ExecutionPolicy Bypass -File \"" + file + "\"");
         }
 
-        private void EditDefaultApp_Click(object sender, RoutedEventArgs e)
+        void EditDefaultApp_Click(object sender, RoutedEventArgs e)
         {
             ProcessHelp.ShellExecute("ms-settings:defaultapps");
         }
