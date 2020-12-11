@@ -1,13 +1,21 @@
 
-5.4.8.5 Beta (not yet released)
+5.4.8.6 Beta (not yet released)
+============
+
+5.4.8.5 Beta
 ============
 
 - Load AviSynth DLL from environment variable AviSynthDLL
   in order to support AviSynth portable mode.
 - New option global-media-keys (next, previous, play/pause, stop).
-- Redesigned PowerShell based setup and setup dialog.
+- Redesigned PowerShell based setup and setup dialog, it was done
+  because of a bug and upcoming chocolately and winget integration.
+- Redesigned auto update using different file name, using zip instead
+  of 7zip format now, 7zip distribution will shortly get dropped.
 - Whenever there is a new startup location, the setup dialog is shown.
-- libmpv updated to shinshiro 2020-11-22.
+- libmpv updated to shinshiro 2020-12-06
+- youtube-dl is no longer included, users have to install it
+  on their own (put it in the startup or a PATH folder).
 
 
 5.4.8.4 Beta

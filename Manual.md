@@ -135,7 +135,7 @@ Installation
 
 mpv.net requires the .NET Framework 4.8 and Windows 7 or 10 and a modern graphics card.
 
-There is a setup and a portable download in the 7zip and Zip archive format.
+There is a setup exe and a portable zip file download.
 
 x64 editions have the advantage of being typically better optimized and tested.
 
