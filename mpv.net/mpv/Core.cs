@@ -800,6 +800,22 @@ namespace mpvnet
                 HandleError(err, throwException, $"error setting property: {name} = " + value);
         }
 
+        public string get_property_osd_string(string name, bool throwException = false)
+        {
+            mpv_error err = mpv_get_property(Handle, GetUtf8Bytes(name),
+                mpv_format.MPV_FORMAT_OSD_STRING, out IntPtr lpBuffer);
+
+            if (err == 0)
+            {
+                string ret = ConvertFromUtf8(lpBuffer);
+                mpv_free(lpBuffer);
+                return ret;
+            }
+
+            HandleError(err, throwException, $"error getting property: {name}");
+            return "";
+        }
+
         public string get_opt(string name, string defaultValue = "")
         {
             string value = get_property_string("script-opts");
@@ -918,6 +934,18 @@ namespace mpvnet
             }
         }
 
+        public void show_text(string text, int duration = 0, int fontSize = 0)
+        {
+            if (duration == 0)
+                duration = get_property_int("osd-duration");
+
+            if (fontSize == 0)
+                fontSize = get_property_int("osd-font-size");
+
+            core.command("show-text \"${osd-ass-cc/0}{\\\\fs" + fontSize +
+                "}${osd-ass-cc/1}" + text + "\" " + duration);
+        }
+
         public void HandleError(mpv_error err, bool throwException, params string[] messages)
         {
             if (throwException)
@@ -946,6 +974,27 @@ namespace mpvnet
                 {
                     try
                     {
+                        if (arg == "--profile=help")
+                        {
+                            ConsoleHelp.Write(mpvHelp.GetProfiles(), null);
+                            continue;
+                        }
+                        else if (arg == "--vd=help" || arg == "--ad=help")
+                        {
+                            ConsoleHelp.Write(mpvHelp.GetDecoders(), null);
+                            continue;
+                        }
+                        else if (arg == "--audio-device=help")
+                        {
+                            ConsoleHelp.Write(core.get_property_osd_string("audio-device-list"), null);
+                            continue;
+                        }
+                        else if (arg == "--input-keylist")
+                        {
+                            ConsoleHelp.Write(core.get_property_string("input-key-list").Replace(",", BR), null);
+                            continue;
+                        }
+
                         if (!arg.StartsWith("--"))
                             arg = "-" + arg;
 
@@ -1074,7 +1123,7 @@ namespace mpvnet
             {
                 using (TaskDialog<string> td = new TaskDialog<string>())
                 {
-                    td.MainInstruction = "Blu-ray or DVD?";
+                    td.MainInstruction = "Is this a Blu-ray or a DVD image?";
                     td.AddCommand("Blu-ray");
                     td.AddCommand("DVD");
 
@@ -1210,7 +1259,7 @@ namespace mpvnet
         {
             string path = get_property_string("path");
 
-            if (!path.StartsWithEx("bd://"))
+            if (!path.ToLowerEx().StartsWithEx("bd://"))
                 lock (BluRayTitles)
                     BluRayTitles.Clear();
 
@@ -1218,7 +1267,7 @@ namespace mpvnet
             {
                 MediaTracks.Clear();
 
-                if (path.StartsWithEx("bd://"))
+                if (path.ToLowerEx().StartsWithEx("bd://") || path.ToLowerEx().StartsWithEx("dvd://"))
                 {
                     int count = core.get_property_int("track-list/count");
 

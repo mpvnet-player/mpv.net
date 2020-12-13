@@ -294,7 +294,7 @@ namespace mpvnet
 
         void OpenSettingsTextBlock_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            Process.Start(Path.GetDirectoryName(core.ConfPath));
+            ProcessHelp.ShellExecute(Path.GetDirectoryName(core.ConfPath));
         }
 
         void PreviewTextBlock_MouseUp(object sender, MouseButtonEventArgs e)
@@ -304,12 +304,12 @@ namespace mpvnet
 
         void ShowManualTextBlock_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            Process.Start("https://mpv.io/manual/master/");
+            ProcessHelp.ShellExecute("https://mpv.io/manual/master/");
         }
 
         void SupportTextBlock_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            Process.Start("https://github.com/stax76/mpv.net#Support");
+            ProcessHelp.ShellExecute("https://github.com/stax76/mpv.net#Support");
         }
 
         protected override void OnKeyDown(KeyEventArgs e)

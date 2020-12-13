@@ -357,9 +357,10 @@ public struct HSLColor
     static double MoveIntoRange(double temp3)
     {
         if (temp3 < 0)
-            temp3 += 1;
+            temp3++;
         else if (temp3 > 1)
-            temp3 -= 1;
+            temp3--;
+
         return temp3;
     }
 

@@ -37,16 +37,20 @@ namespace mpvnet
                 case "show-about": ShowDialog(typeof(AboutWindow)); break;
                 case "show-conf-editor": ShowDialog(typeof(ConfWindow)); break;
                 case "show-input-editor": ShowDialog(typeof(InputWindow)); break;
-                case "open-conf-folder": Process.Start(core.ConfigFolder); break;
-                case "shell-execute": Process.Start(args[0]); break;
+                case "open-conf-folder": ProcessHelp.ShellExecute(core.ConfigFolder); break;
+                case "shell-execute": ProcessHelp.ShellExecute(args[0]); break;
                 case "show-info": ShowInfo(); break;
                 case "playlist-first": PlaylistFirst(); break;
                 case "playlist-last": PlaylistLast(); break;
-                case "show-profiles": ShowProfiles(); break;
+                case "show-profiles": ShowTextWithEditor("profile-list", mpvHelp.GetProfiles()); break;
                 case "show-properties": ShowProperties(); break;
                 case "show-commands": ShowCommands(); break;
-                case "show-keys": ShowKeys(); break;
+                case "show-keys": ShowTextWithEditor("input-key-list", core.get_property_string("input-key-list").Replace(",", BR)); break;
                 case "add-files-to-playlist": OpenFiles("append"); break; // deprecated 2019
+                case "show-audio-devices": ShowTextWithEditor("audio-device-list", core.get_property_osd_string("audio-device-list")); break;
+                case "show-decoders": ShowTextWithEditor("decoder-list", mpvHelp.GetDecoders()); break;
+                case "show-protocols": ShowTextWithEditor("protocol-list", mpvHelp.GetProtocols()); break;
+                case "show-demuxers": ShowTextWithEditor("demuxer-lavf-list", mpvHelp.GetDemuxers()); break;
                 default: Msg.ShowError($"No command '{id}' found."); break;
             }
         }
@@ -128,7 +132,7 @@ namespace mpvnet
         public static void ShowHistory()
         {
             if (File.Exists(core.ConfigFolder + "history.txt"))
-                Process.Start(core.ConfigFolder + "history.txt");
+                ProcessHelp.ShellExecute(core.ConfigFolder + "history.txt");
             else
             {
                 if (Msg.ShowQuestion("Create history.txt file in config folder?",
@@ -288,49 +292,18 @@ namespace mpvnet
 
         public static void CycleAudio()
         {
-            MediaTrack[] audTracks = core.MediaTracks.Where(track => track.Type == "a").ToArray();
+            MediaTrack[] tracks = core.MediaTracks.Where(track => track.Type == "a").ToArray();
 
-            if (audTracks.Length < 2)
+            if (tracks.Length < 2)
                 return;
 
             int aid = core.get_property_int("aid");
-            aid += 1;
 
-            if (aid > audTracks.Length)
+            if (++aid > tracks.Length)
                 aid = 1;
 
             core.commandv("set", "aid", aid.ToString());
-            core.commandv("show-text", audTracks[aid - 1].Text.Substring(3), "5000");
-        }
-
-        static void ShowProfiles()
-        {
-            string code = @"
-                foreach ($item in ($json | ConvertFrom-Json | foreach { $_ } | sort name))
-                {
-                    $item.name
-                    ''
-
-                    foreach ($option in $item.options)
-                    {
-                        '   ' + $option.key + ' = ' + $option.value
-                    }
-
-                    ''
-                }";
-
-            string json = core.get_property_string("profile-list");
-            string file = Path.GetTempPath() + @"\mpv profile-list.txt";
-            File.WriteAllText(file, BR + PowerShell.InvokeAndReturnString(code, "json", json));
-            Process.Start(file);
-        }
-
-        static void ShowKeys()
-        {
-            string txt = core.get_property_string("input-key-list");
-            string file = Path.GetTempPath() + @"\mpv input-key-list.txt";
-            File.WriteAllText(file, txt.Replace(",", BR) + BR);
-            Process.Start(file);
+            core.commandv("show-text", aid + ": " + tracks[aid - 1].Text.Substring(3), "5000");
         }
 
         static void ShowCommands()
@@ -355,17 +328,21 @@ namespace mpvnet
                 }";
 
             string json = core.get_property_string("command-list");
-            string file = Path.GetTempPath() + @"\mpv command-list.txt";
-            File.WriteAllText(file, PowerShell.InvokeAndReturnString(code, "json", json) + BR);
-            Process.Start(file);
+            ShowTextWithEditor("command-list", PowerShell.InvokeAndReturnString(code, "json", json));
         }
 
         static void ShowProperties()
         {
-            string file = Path.GetTempPath() + @"\mpv property-list.txt";
             var props = core.get_property_string("property-list").Split(',').OrderBy(prop => prop);
-            File.WriteAllText(file, BR + string.Join(BR, props) + BR);
-            Process.Start(file);
+            ShowTextWithEditor("property-list", string.Join(BR, props));
+        }
+
+        static void ShowTextWithEditor(string name, string text)
+        {
+            string file = Path.GetTempPath() + $"\\{name}.txt";
+            //UTF8 without BOM
+            File.WriteAllText(file, BR + text.Trim() + BR);
+            ProcessHelp.ShellExecute(file);
         }
     }
 }

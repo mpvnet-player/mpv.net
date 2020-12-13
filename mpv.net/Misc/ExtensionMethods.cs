@@ -28,6 +28,14 @@ public static class Extensions
         return "";
     }
 
+    public static string ToLowerEx(this string instance)
+    {
+        if (instance != null)
+            return instance.ToLower();
+
+        return "";
+    }
+
     public static string FileName(this string instance)
     {
         if (string.IsNullOrEmpty(instance))

@@ -1,19 +1,18 @@
 
  # This file defines the key and mouse bindings and the context menu of mpv.net.
  
- # A convenient input and config editor can be found in the context menu of mpv.net
- # under 'Settings'.
+ # A input and config editor can be found in the context menu under 'Settings'.
  
  # The mpv.conf defaults of mpv.net contain: 'input-default-bindings = no'
- # which disables the input defaults of mpv. Every line in this file begins with a
- # space character to make it easier to do a text search, so if you want to know
- # if 'o' has already a binding you can do a text search on ' o '.
+ # which disables the input defaults of mpv.
+ 
+ # Every line in this file begins with a space character to make search easier,
+ # if you want to know if 'o' has already a binding you can search for ' o '.
 
  # input test mode:
  # mpvnet --input-test
 
- # input key list:
- # mpv --input-keylist
+ # The input key list can be found in the context menu under: View > Show Keys
 
  # mpv.net input.conf defaults:
  # https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt
@@ -149,14 +148,18 @@
  t       script-binding stats/display-stats          #menu: View > Show Statistics
  T       script-binding stats/display-stats-toggle   #menu: View > Toggle Statistics
  Del     script-binding osc/visibility               #menu: View > Toggle OSC Visibility
- F8      script-binding show-playlist                #menu: View > Show Playlist
- F9      show-text ${track-list} 5000                #menu: View > Show Tracks
- p       show-progress                               #menu: View > Show Progress
- Ctrl+p  script-message mpv.net show-profiles        #menu: View > Show Profiles
- Shift+p script-message mpv.net show-properties      #menu: View > Show Properties
+ _       script-message mpv.net show-audio-devices   #menu: View > Show Audio Devices
  Shift+c script-message mpv.net show-commands        #menu: View > Show Commands
- _       script-message mpv.net show-keys            #menu: View > Show Keys
  `       script-binding console/enable               #menu: View > Show Console
+ _       script-message mpv.net show-decoders        #menu: View > Show Decoders
+ _       script-message mpv.net show-demuxers        #menu: View > Show Demuxers
+ _       script-message mpv.net show-keys            #menu: View > Show Keys
+ F8      script-binding show-playlist                #menu: View > Show Playlist
+ Ctrl+p  script-message mpv.net show-profiles        #menu: View > Show Profiles
+ p       show-progress                               #menu: View > Show Progress
+ Shift+p script-message mpv.net show-properties      #menu: View > Show Properties
+ _       script-message mpv.net show-protocols       #menu: View > Show Protocols
+ F9      show-text ${track-list} 5000                #menu: View > Show Tracks
 
  c       script-message mpv.net show-conf-editor     #menu: Settings > Show Config Editor
  Ctrl+i  script-message mpv.net show-input-editor    #menu: Settings > Show Input Editor

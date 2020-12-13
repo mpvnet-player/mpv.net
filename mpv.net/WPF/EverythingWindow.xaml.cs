@@ -73,8 +73,10 @@ namespace mpvnet
                 case Key.Up:
                     {
                         int index = ListView.SelectedIndex;
-                        index -= 1;
-                        if (index < 0) index = 0;
+
+                        if (--index < 0)
+                            index = 0;
+
                         ListView.SelectedIndex = index;
                         ListView.ScrollIntoView(ListView.SelectedItem);
                     }
@@ -82,8 +84,10 @@ namespace mpvnet
                 case Key.Down:
                     {
                         int index = ListView.SelectedIndex;
-                        index += 1;
-                        if (index > ListView.Items.Count - 1) index = ListView.Items.Count - 1;
+
+                        if (++index > ListView.Items.Count - 1)
+                            index = ListView.Items.Count - 1;
+
                         ListView.SelectedIndex = index;
                         ListView.ScrollIntoView(ListView.SelectedItem);
                     }

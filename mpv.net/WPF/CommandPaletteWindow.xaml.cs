@@ -84,9 +84,8 @@ namespace mpvnet
                 case Key.Down:
                     {
                         int index = ListView.SelectedIndex;
-                        index += 1;
 
-                        if (index > ListView.Items.Count - 1)
+                        if (++index > ListView.Items.Count - 1)
                             index = ListView.Items.Count - 1;
 
                         ListView.SelectedIndex = index;

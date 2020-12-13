@@ -205,6 +205,14 @@ options = [{ name = "no",    help = "Don't automatically load external audio fil
            { name = "all",   help = "Load all audio files in the current and audio-file-paths directories." }]
 
 [[settings]]
+name = "audio-device"
+file = "mpv"
+filter = "Audio"
+type = "string"
+url = "https://mpv.io/manual/master/#options-audio-device"
+help = "<name> Use the given audio device. This consists of the audio output name, e.g. alsa, followed by /, followed by the audio output specific device name. The default value for this option is auto, which tries every audio output in preference order with the default device.\nAvailable devices can be found in the mpv.net context menu under:\nView > Show Audio Devices"
+
+[[settings]]
 name = "slang"
 file = "mpv"
 filter = "Subtitle"

@@ -2,7 +2,11 @@
 using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
+
+using static mpvnet.Core;
+using static NewLine;
 
 namespace mpvnet
 {
@@ -137,6 +141,50 @@ namespace mpvnet
             }
 
             return null;
+        }
+
+        public static string GetProfiles()
+        {
+            string code = @"
+                foreach ($item in ($json | ConvertFrom-Json | foreach { $_ } | sort name))
+                {
+                    $item.name
+                    ''
+
+                    foreach ($option in $item.options)
+                    {
+                        '   ' + $option.key + ' = ' + $option.value
+                    }
+
+                    ''
+                }";
+
+            string json = core.get_property_string("profile-list");
+            return PowerShell.InvokeAndReturnString(code, "json", json).Trim();
+        }
+
+        public static string GetDecoders()
+        {
+            string code = @"
+                foreach ($item in ($json | ConvertFrom-Json | foreach { $_ } | sort codec))
+                {
+                    $item.codec + ' - ' + $item.description
+                }";
+
+            string json = core.get_property_string("decoder-list");
+            return PowerShell.InvokeAndReturnString(code, "json", json).Trim();
+        }
+
+        public static string GetProtocols()
+        {
+            string list = core.get_property_string("protocol-list");
+            return string.Join(BR, list.Split(',').OrderBy(a => a));
+        }
+
+        public static string GetDemuxers()
+        {
+            string list = core.get_property_string("demuxer-lavf-list");
+            return string.Join(BR, list.Split(',').OrderBy(a => a));
         }
     }
 }

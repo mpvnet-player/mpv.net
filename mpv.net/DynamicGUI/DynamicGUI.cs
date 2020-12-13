@@ -1,4 +1,5 @@
 ﻿
+using mpvnet;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -147,7 +148,7 @@ namespace DynamicGUI
     {
         void HyperLinkEx_RequestNavigate(object sender, RequestNavigateEventArgs e)
         {
-            Process.Start(e.Uri.AbsoluteUri);
+            ProcessHelp.ShellExecute(e.Uri.AbsoluteUri);
         }
 
         public void SetURL(string url)

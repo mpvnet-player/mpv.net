@@ -2,6 +2,17 @@
 5.4.8.6 Beta (not yet released)
 ============
 
+- Improved OSD message when cycling audio.
+- Finally support DVD audio and subtitle track selection.
+- Profiles can be shown on the command line with --profile=help
+- Decoders can be shown on the command line with --ad=help and --vd=help
+- Decoders can be shown in the menu under: View > Show Decoders
+- Demuxers can be shown in the menu under: View > Show Demuxers
+- Audio devices can be shown in the menu under: View > Show Audio Devices
+- Audio devices can be shown on the command line with --audio-device=help
+- Protocols can be shown in the menu under: View > Show Protocols
+
+
 5.4.8.5 Beta
 ============
 
