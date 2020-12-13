@@ -80,7 +80,7 @@ Features
 - Usable as video player, audio player and image viewer with a wide range of supported formats
 - Built-in decoders, no external codecs have to be installed
 - Setup as x64, x86, installer, portable, Chocolatey and Scoop
-- Build-in media streaming via youtube-dl
+- Build-in media streaming (requires youtube-dl being installed)
 - File associations can be created by the setup and from the player
 - External audio and subtitle files can be loaded manually or automatically
 - Screenshot feature
