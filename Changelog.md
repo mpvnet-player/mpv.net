@@ -2,6 +2,7 @@
 5.4.8.6 Beta (not yet released)
 ============
 
+- Filename not being always shown in title bar. (#214)
 - Improved OSD message when cycling audio.
 - Finally support DVD audio and subtitle track selection.
 - Profiles can be shown on the command line with --profile=help

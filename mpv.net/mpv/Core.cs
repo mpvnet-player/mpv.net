@@ -1164,7 +1164,12 @@ namespace mpvnet
             if (!File.Exists(path) || get_property_int("playlist-count") != 1)
                 return;
 
-            List<string> files = Directory.GetFiles(Path.GetDirectoryName(path)).ToList();
+            string dir = Environment.CurrentDirectory;
+
+            if (path.Contains(Path.DirectorySeparatorChar))
+                dir = Path.GetDirectoryName(path);
+
+            List<string> files = Directory.GetFiles(dir).ToList();
 
             files = files.Where(file =>
                 App.VideoTypes.Contains(file.Ext()) ||

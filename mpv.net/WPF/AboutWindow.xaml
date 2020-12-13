@@ -7,19 +7,18 @@
         mc:Ignorable="d"
         
         Title="About mpv.net"
-        Height="230"
-        Width="400"
         FontSize="16"
         ShowInTaskbar="False"
         WindowStartupLocation="CenterOwner"
         ResizeMode="NoResize"
+        SizeToContent="WidthAndHeight"
         Foreground="{x:Static mpvnet:Theme.Foreground}"
         Background="{x:Static mpvnet:Theme.Background}">
     
     <Grid>
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock FontSize="48" HorizontalAlignment="Center" Margin="0,0,0,10">mpv.net</TextBlock>
-            <TextBlock Name="ContentBlock" TextAlignment="Center"></TextBlock>
+        <StackPanel HorizontalAlignment="Center">
+            <TextBlock FontSize="30" TextAlignment="Center"  Margin="10,10,10,0">mpv.net</TextBlock>
+            <TextBlock Name="ContentBlock" TextAlignment="Center" Margin="20,10,20,20"></TextBlock>
         </StackPanel>
     </Grid>
 </Window>
