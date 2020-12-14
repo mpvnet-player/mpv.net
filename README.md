@@ -117,7 +117,7 @@ Screenshots
 
 Context menu using dark mode.
 
-![Context Menu](https://raw.githubusercontent.com/stax76/mpv.net/master/img/Menu.png)
+![Context Menu](https://raw.githubusercontent.com/stax76/mpv.net/master/img/Menu.jpg)
 
 
 #### Config Editor
