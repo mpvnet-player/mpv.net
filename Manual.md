@@ -60,6 +60,7 @@ There is a setup exe and a portable zip file download.
 
 x64 editions have the advantage of being typically better optimized and tested.
 
+For internet streaming youtube-dl must be downloaded and installed manually, meaning it must be located in the PATH environment variable or in the startup directory.
 
 ### Scoop
 
@@ -445,6 +446,7 @@ Blu-ray and DVD ISO image files are supported.
 
 Opens files and URLs from the clipboard. How to open URLs directly from the browser from sites like YouTube is described in the [External Tools section](#external-tools).
 
+For internet streaming youtube-dl must be downloaded and installed manually, meaning it must be located in the PATH environment variable or in the startup directory.
 
 ### Open > Open DVD/Blu-ray Drive/Folder
 
