@@ -25,12 +25,6 @@ public class RegistryHelp
         return !(value is int) ? defaultValue : (int)value;
     }
 
-    public static bool GetBool(string path, string name, bool defaultValue = false)
-    {
-        object val = GetValue(path, name, defaultValue);
-        return val is bool ? (bool)val : defaultValue;
-    }
-
     public static object GetValue(string path, string name, object defaultValue = null)
     {
         using (RegistryKey regKey = GetRootKey(path).OpenSubKey(path.Substring(5)))

@@ -195,9 +195,9 @@ namespace mpvnet
 
         public static void ShowSetup()
         {
-            string path = RegistryHelp.GetString(RegistryHelp.ApplicationKey, "SetupDialog");
+            int value = RegistryHelp.GetInt(RegistryHelp.ApplicationKey, Folder.Startup);
 
-            if (path != Folder.Startup)
+            if (value != 1)
             {
                 if (Msg.ShowQuestion("Would you like to setup mpv.net?",
                     "The setup allows to create a start menu shortcut, file associations and " +
@@ -207,7 +207,7 @@ namespace mpvnet
                 else
                     Msg.Show("The setup dialog can be found in the context menu at:\n\nTools > Setup");
 
-                RegistryHelp.SetValue(RegistryHelp.ApplicationKey, "SetupDialog", Folder.Startup);
+                RegistryHelp.SetValue(RegistryHelp.ApplicationKey, Folder.Startup, 1);
             }
         }
     }
