@@ -13,7 +13,7 @@
 - Audio devices can be shown on the command line with --audio-device=help
 - Protocols can be shown in the menu under: View > Show Protocols
 - Allow mpv.net to start from different startup locations
-  without showing the setup dialog.
+  without showing the setup dialog. (#218)
 
 
 5.4.8.5 Beta
