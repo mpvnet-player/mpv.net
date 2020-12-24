@@ -80,18 +80,20 @@ namespace mpvnet.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to 
-        /// # This file defines the key and mouse bindings and the context menu
-        /// # of mpv.net. A input and config editor can be found in mpv.nets
-        /// # context menu under &apos;Settings&apos;. The defaults of this file can be found at:
+        /// # This file defines the key and mouse bindings and the context menu of mpv.net.
+        /// 
+        /// # A input and config editor can be found in the context menu under &apos;Settings&apos;.
+        /// 
+        /// # The mpv.conf defaults of mpv.net contain: &apos;input-default-bindings = no&apos;
+        /// # which disables the input defaults of mpv.
+        /// 
+        /// # Every line in this file begins with a space character to make search easier,
+        /// # if you want to know if &apos;o&apos; has already a binding you can search for &apos; o &apos;.
         ///
-        /// # https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/inputConf.txt
+        /// # input test mode:
+        /// # mpvnet --input-test
         ///
-        /// # The defaults of mpv can be found at:
-        ///
-        /// # https://github.com/mpv-player/mpv/blob/master/etc/input.conf
-        ///
-        /// # mpv.net&apos;s defaults of mpv.conf contain: &apos;input-default-bindings = no&apos;
-        /// # which disables mpv&apos;s i [rest of string was truncated]&quot;;.
+        /// # The  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string input_conf {
             get {
@@ -108,9 +110,8 @@ namespace mpvnet.Properties {
         ///keep-open-pause = no
         ///osd-duration = 2000
         ///osd-playing-msg = &apos;${filename}&apos;
-        ///script-opts = osc-scalewindowed=1.5,osc-hidetimeout=2000,console-scale=1
+        ///script-opts = osc-scalewindowed=1.5,osc-hidetimeout=2000,osc-greenandgrumpy=yes,console-scale=1
         ///screenshot-directory = &apos;~~desktop/&apos;
-        ///hwdec = yes
         ///
         ///[protocol.https]
         ///osd-playing-msg = &apos;${media-title}&apos;
@@ -128,6 +129,16 @@ namespace mpvnet.Properties {
         internal static System.Drawing.Bitmap mpvnet {
             get {
                 object obj = ResourceManager.GetObject("mpvnet", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap mpvnet_santa {
+            get {
+                object obj = ResourceManager.GetObject("mpvnet_santa", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

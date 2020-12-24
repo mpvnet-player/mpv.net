@@ -2,6 +2,7 @@
 5.4.8.6 Beta (not yet released)
 ============
 
+- Santa hat shown in december. (#216)
 - Filename not being always shown in title bar. (#214)
 - Improved OSD message when cycling audio.
 - Finally support DVD audio and subtitle track selection.
@@ -14,6 +15,7 @@
 - Protocols can be shown in the menu under: View > Show Protocols
 - Allow mpv.net to start from different startup locations
   without showing the setup dialog. (#218)
+- libmpv updated to shinshiro 2020-12-20
 
 
 5.4.8.5 Beta

@@ -1227,8 +1227,10 @@ namespace mpvnet
             if (MainForm.Instance is null)
                 return;
 
+            bool december = DateTime.Now.Month == 12;
+
             Rectangle cr = MainForm.Instance.ClientRectangle;
-            int len = cr.Height / 5;
+            int len = Convert.ToInt32(cr.Height / (december ? 4.5 : 5));
 
             if (len == 0)
                 return;
@@ -1240,10 +1242,11 @@ namespace mpvnet
                     gx.InterpolationMode = InterpolationMode.HighQualityBicubic;
                     gx.Clear(Color.Black);
                     Rectangle rect = new Rectangle(0, 0, len, len);
-                    gx.DrawImage(Properties.Resources.mpvnet, rect);
+                    Bitmap bmp2 = december ? Properties.Resources.mpvnet_santa : Properties.Resources.mpvnet;
+                    gx.DrawImage(bmp2, rect);
                     BitmapData bd = bmp.LockBits(rect, ImageLockMode.ReadOnly, PixelFormat.Format32bppPArgb);
-                    int x = Convert.ToInt32((cr.Width - len) / 2.0);
-                    int y = Convert.ToInt32(((cr.Height - len) / 2.0) * 0.9);
+                    int x = Convert.ToInt32((cr.Width - len) / (december ? 1.95 : 2));
+                    int y = Convert.ToInt32(((cr.Height - len) / 2.0) * (december ? 0.85 : 0.9));
                     commandv("overlay-add", "0", $"{x}", $"{y}", "&" + bd.Scan0.ToInt64().ToString(), "0", "bgra", bd.Width.ToString(), bd.Height.ToString(), bd.Stride.ToString());
                     bmp.UnlockBits(bd);
                     IsLogoVisible = true;
