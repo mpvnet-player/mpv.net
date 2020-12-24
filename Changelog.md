@@ -1,17 +1,21 @@
 
-5.4.8.6 Beta (not yet released)
-============
+5.4.8.7 Beta (202?-??-??)
+=========================
+
+5.4.8.6 Beta (2020-12-24)
+=========================
 
 - Santa hat shown in december. (#216)
 - Filename not being always shown in title bar. (#214)
 - Improved OSD message when cycling audio.
-- Finally support DVD audio and subtitle track selection.
-- Profiles can be shown on the command line with --profile=help
-- Decoders can be shown on the command line with --ad=help and --vd=help
+- DVD audio and subtitle track selection.
+- Input keylist can be shown on the command-line with --input-keylist
+- Profiles can be shown on the command-line with --profile=help
+- Decoders can be shown on the command-line with --ad=help and --vd=help
 - Decoders can be shown in the menu under: View > Show Decoders
 - Demuxers can be shown in the menu under: View > Show Demuxers
 - Audio devices can be shown in the menu under: View > Show Audio Devices
-- Audio devices can be shown on the command line with --audio-device=help
+- Audio devices can be shown on the command-line with --audio-device=help
 - Protocols can be shown in the menu under: View > Show Protocols
 - Allow mpv.net to start from different startup locations
   without showing the setup dialog. (#218)
@@ -40,7 +44,7 @@
 - Blu-rays with dozens of titles showed all titles in the menu
   which was difficult to choose and extremely slow.
 - Blu-ray folder paths are auto detected when received
-  from drag & drop and command line.
+  from drag & drop and command-line.
 - Cycle audio was not working for Blu-ray.
 - Message asking if image is BD or DVD in case image is < 10 GB.
 
@@ -343,7 +347,7 @@ stable release, no changes since the last beta
 - libmpv was updated to shinchiro 2019-08-04
 - in case mpv.net was started from a terminal it sets now the mpv property input-terminal to yes,
   this means mpv.net will now receive and handle input keys from the terminal
-- certain command line properties didn't work (input-terminal, terminal, input-file,
+- certain command-line properties didn't work (input-terminal, terminal, input-file,
   config, config-dir, input-conf, load-scripts, script, scripts, player-operation-mode)
 - the about dialog shows now the mpv version and build date
 - the dialog that asks for a config folder has now a cancel option
@@ -354,7 +358,7 @@ stable release, no changes since the last beta
 - the logo/icon had a very small cosmetic change
 - the help in the context menu was improved,
   for quick access consider the command palette (F1 key)
-- config options specific to mpv.net are now available from the command line
+- config options specific to mpv.net are now available from the command-line
 - the input editor no longer has known limitations, 'alt gr' and ctrl+alt are working now
 - the help in the input editor was simplified and the filter logic was improved
 - fixed issue in file associations causing mpv.net not to appear in OS default apps
@@ -370,10 +374,10 @@ stable release, no changes since the last beta
 - the search field in the config editor was not always remembered
 - new setting remember-volume added, saves volume and mute on exit
   and restores it on start.
-- it's now enforced that mpv properties on the command line and in
+- it's now enforced that mpv properties on the command-line and in
   the mpv.conf config file are lowercase, if not a error is shown
 - gpu-api vulkan was not working if media files were opened via
-  command line (that included Explorer)
+  command-line (that included Explorer)
 - new setting minimum-aspect-ratio added, minimum aspect ratio for the window,
   this was previously hard coded to 1.3
 - new setting auto-load-folder added, for single files automatically load
@@ -488,7 +492,7 @@ stable release, no changes since the last beta
   thanks to 44vince44 for pointing this out!!!
 - new Python and C# script examples were added to the wiki and the scripting and
   extension documentation was improved
-- invalid command line arguments were ignored, now an error message is shown
+- invalid command-line arguments were ignored, now an error message is shown
 - a description on how to start mpv.net from Google Chrome was added to the
   manual, it's useful to play videos from sites like YouTube, find the
   description [here](https://github.com/stax76/mpv.net/blob/master/Manual.md#chrome-extension)
@@ -534,7 +538,7 @@ stable release, no changes since the last beta
 
 - drag & drop support for subtitles was added
 - libmpv was updated
-- command line support for stdin and URLs was added
+- command-line support for stdin and URLs was added
 - there was a crash happening when the player is
   minimized in the taskbar
 
@@ -547,7 +551,7 @@ stable release, no changes since the last beta
 - the info command (i key) shows the audio format
 - new options osd-font-size, sub-font, sub-font-size
 - new color options with dedicated GUI support: sub-color, sub-border-color, sub-back-color
-- the config editor no longer shows the command line switches
+- the config editor no longer shows the command-line switches
 - the github start page was greatly improved 
 - the setup.ps1 PowerShell script was greatly improved in regard of error handling and readability
 - a [manual to mpv.net](Manual.md) was created
