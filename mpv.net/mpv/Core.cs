@@ -123,7 +123,7 @@ namespace mpvnet
 
             mpv_request_log_messages(Handle, "terminal-default");
 
-            Task.Run(() => EventLoop());
+            App.RunAction(() => EventLoop());
 
             if (App.IsStartedFromTerminal)
             {
@@ -472,9 +472,9 @@ namespace mpvnet
 
                                 VideoSizeAutoResetEvent.Set();
 
-                                Task.Run(new Action(() => ReadMetaData()));
+                                App.RunAction(new Action(() => ReadMetaData()));
 
-                                Task.Run(new Action(() => {
+                                App.RunAction(new Action(() => {
                                     string path = core.get_property_string("path");
 
                                     if (path.Contains("://"))
@@ -652,16 +652,7 @@ namespace mpvnet
                 foreach (Action<T> a in action.GetInvocationList())
                 {
                     var a2 = a;
-                    Task.Run(() => {
-                        try
-                        {
-                            a2.Invoke(t);
-                        }
-                        catch (Exception e)
-                        {
-                            App.ShowException(e);
-                        }
-                    });
+                    App.RunAction(() => a2.Invoke(t));
                 }
             }
         }
@@ -673,16 +664,7 @@ namespace mpvnet
                 foreach (Action<T1, T2> a in action.GetInvocationList())
                 {
                     var a2 = a;
-                    Task.Run(() => {
-                        try
-                        {
-                            a2.Invoke(t1, t2);
-                        }
-                        catch (Exception e)
-                        {
-                            App.ShowException(e);
-                        }
-                    });
+                    App.RunAction(() => a2.Invoke(t1, t2));
                 }
             }
         }
@@ -1112,7 +1094,7 @@ namespace mpvnet
                 set_property_int("playlist-pos", 0);
 
             if (loadFolder && !append)
-                Task.Run(() => LoadFolder());
+                App.RunAction(() => LoadFolder());
         }
 
         public void LoadISO(string path)
@@ -1214,12 +1196,29 @@ namespace mpvnet
 
             int totalMinutes = Convert.ToInt32((DateTime.Now - LastHistoryStartDateTime).TotalMinutes);
 
-            if (LastHistoryPath != null && totalMinutes > 1)
+            if (LastHistoryPath != null && totalMinutes > 1 && !HistoryDiscard())
                 File.AppendAllText(ConfigFolder + "history.txt", DateTime.Now.ToString().Substring(0, 16) +
                     " " + totalMinutes.ToString().PadLeft(3) + " " + LastHistoryPath + "\r\n");
 
             LastHistoryPath = path;
             LastHistoryStartDateTime = DateTime.Now;
+        }
+
+        string HistoryDiscardOption;
+
+        bool HistoryDiscard()
+        {
+            if (HistoryDiscardOption == null)
+                HistoryDiscardOption = core.get_opt("history-discard");
+
+            if (string.IsNullOrEmpty(HistoryDiscardOption))
+                return false;
+
+            foreach (string i in HistoryDiscardOption.Split(';'))
+                if (LastHistoryPath.Contains(i))
+                    return true;
+
+            return false;
         }
 
         public void ShowLogo()

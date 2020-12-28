@@ -1090,8 +1090,14 @@ Shows the command palette window which allows to quickly find and execute comman
 
 ### Tools > Show History
 
-Shows a text file that contains the file history. If the file don't exist it asks if the file should be created in the settings folder. Once the file exist then the history is logged. It logges the playback history containing the time and filename.
+Shows a text file that contains the file history. If the file don't exist
+it asks if the file should be created in the settings folder. Once the file
+exist then the history is logged. It logges the playback history containing
+the time and filename.
 
+To ignore certain paths:
+
+script-opt = history-discard=path1;path2
 
 ### Tools > Set/clear A-B loop points
 

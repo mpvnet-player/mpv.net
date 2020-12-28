@@ -2,6 +2,10 @@
 5.4.8.7 Beta (202?-??-??)
 =========================
 
+- history feature can be configured to ingore defined paths/keywords:
+  script-opt = history-discard=path1;path2
+
+
 5.4.8.6 Beta (2020-12-24)
 =========================
 

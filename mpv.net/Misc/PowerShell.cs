@@ -138,19 +138,19 @@ namespace mpvnet
             switch (type)
             {
                 case "bool": case "boolean":
-                    core.observe_property_bool(name, (value) => Task.Run(() => PropertyChanged.Invoke(name, value)));
+                    core.observe_property_bool(name, (value) => App.RunAction(() => PropertyChanged.Invoke(name, value)));
                     break;
                 case "string":
-                    core.observe_property_string(name, (value) => Task.Run(() => PropertyChanged.Invoke(name, value)));
+                    core.observe_property_string(name, (value) => App.RunAction(() => PropertyChanged.Invoke(name, value)));
                     break;
                 case "int": case "integer":
-                    core.observe_property_int(name, (value) => Task.Run(() => PropertyChanged.Invoke(name, value)));
+                    core.observe_property_int(name, (value) => App.RunAction(() => PropertyChanged.Invoke(name, value)));
                     break;
                 case "float": case "double":
-                    core.observe_property_double(name, (value) => Task.Run(() => PropertyChanged.Invoke(name, value)));
+                    core.observe_property_double(name, (value) => App.RunAction(() => PropertyChanged.Invoke(name, value)));
                     break;
                 case "nil": case "none": case "native":
-                    core.observe_property(name, () => Task.Run(() => PropertyChanged.Invoke(name, null)));
+                    core.observe_property(name, () => App.RunAction(() => PropertyChanged.Invoke(name, null)));
                     break;
                 default:
                     App.ShowError("Invalid Type", "Valid types are: bool or boolean, string, int or integer, float or double, nil or none or native");

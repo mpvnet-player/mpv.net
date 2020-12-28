@@ -91,13 +91,9 @@ namespace mpvnet
         public static void RunAction(Action action)
         {
             Task.Run(() => {
-                try
-                {
+                try {
                     action.Invoke();
-                    Debug.WriteLine(Environment.TickCount);
-                }
-                catch (Exception e)
-                {
+                } catch (Exception e) {
                     ShowException(e);
                 }
             });
