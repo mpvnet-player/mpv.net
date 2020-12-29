@@ -997,6 +997,9 @@ namespace mpvnet
                         if (left == "script")
                             left = "scripts";
 
+                        if (left == "external-file")
+                            left = "external-files";
+
                         if (preInit && preInitProperties.Contains(left))
                         {
                             core.ProcessProperty(left, right);
@@ -1274,7 +1277,7 @@ namespace mpvnet
             {
                 MediaTracks.Clear();
 
-                if (path.ToLowerEx().StartsWithEx("bd://") || path.ToLowerEx().StartsWithEx("dvd://"))
+                if (path.ToLowerEx().Contains("://"))
                 {
                     int count = core.get_property_int("track-list/count");
 

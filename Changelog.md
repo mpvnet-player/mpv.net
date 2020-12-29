@@ -2,8 +2,9 @@
 5.4.8.7 Beta (202?-??-??)
 =========================
 
-- history feature can be configured to ingore defined paths/keywords:
-  script-opt = history-discard=path1;path2
+- history feature can be configured to ingore defined strings:
+  script-opt = history-discard=value1;value2
+- Web stream audio and subtitle track selection.
 
 
 5.4.8.6 Beta (2020-12-24)
