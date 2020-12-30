@@ -5,6 +5,7 @@
 - history feature can be configured to ingore defined strings:
   script-opt = history-discard=value1;value2
 - Web stream audio and subtitle track selection.
+- On Windows 10 the default code page was changed to UTF8.
 
 
 5.4.8.6 Beta (2020-12-24)
