@@ -1,7 +1,6 @@
 ﻿
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
@@ -9,7 +8,6 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using static libmpv;
@@ -956,25 +954,33 @@ namespace mpvnet
                 {
                     try
                     {
-                        if (arg == "--profile=help")
+                        if (!preInit)
                         {
-                            ConsoleHelp.Write(mpvHelp.GetProfiles(), null);
-                            continue;
-                        }
-                        else if (arg == "--vd=help" || arg == "--ad=help")
-                        {
-                            ConsoleHelp.Write(mpvHelp.GetDecoders(), null);
-                            continue;
-                        }
-                        else if (arg == "--audio-device=help")
-                        {
-                            ConsoleHelp.Write(core.get_property_osd_string("audio-device-list"), null);
-                            continue;
-                        }
-                        else if (arg == "--input-keylist")
-                        {
-                            ConsoleHelp.Write(core.get_property_string("input-key-list").Replace(",", BR), null);
-                            continue;
+                            if (arg == "--profile=help")
+                            {
+                                Console.WriteLine(mpvHelp.GetProfiles());
+                                continue;
+                            }
+                            else if (arg == "--vd=help" || arg == "--ad=help")
+                            {
+                                Console.WriteLine(mpvHelp.GetDecoders());
+                                continue;
+                            }
+                            else if (arg == "--audio-device=help")
+                            {
+                                Console.WriteLine(core.get_property_osd_string("audio-device-list"));
+                                continue;
+                            }
+                            else if (arg == "--version")
+                            {
+                                Console.WriteLine(App.Version);
+                                continue;
+                            }
+                            else if (arg == "--input-keylist")
+                            {
+                                Console.WriteLine(core.get_property_string("input-key-list").Replace(",", BR));
+                                continue;
+                            }
                         }
 
                         if (!arg.StartsWith("--"))

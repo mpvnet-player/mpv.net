@@ -12,7 +12,7 @@ namespace mpvnet
 {
     public static class App
     {
-        public static string[] VideoTypes { get; } = "264 265 asf avc avi avs dav flv h264 h265 hevc m2ts m2v m4v mkv mov mp4 mpeg mpg mpv mts ts vob vpy webm wmv y4m".Split(' ');
+        public static string[] VideoTypes { get; } = "264 265 asf avc avi avs dav flv h264 h265 hevc m2t m2ts m2v m4v mkv mov mp4 mpeg mpg mpv mts ts vob vpy webm wmv y4m".Split(' ');
         public static string[] AudioTypes { get; } = "mp3 mp2 ac3 ogg opus flac wav w64 m4a dts dtsma dtshr dtshd eac3 thd thd+ac3 mka aac mpa".Split(' ');
         public static string[] ImageTypes { get; } = { "jpg", "bmp", "gif", "png" };
         public static string[] SubtitleTypes { get; } = { "srt", "ass", "idx", "sup", "ttxt", "ssa", "smi" };
@@ -97,6 +97,14 @@ namespace mpvnet
                     ShowException(e);
                 }
             });
+        }
+
+        public static string Version {
+            get {
+                return "Copyright (C) 2000-2020 mpv.net/mpv/mplayer\n" +
+                    $"mpv.net {Application.ProductVersion} ({File.GetLastWriteTime(Application.ExecutablePath).ToShortDateString()})\n" +
+                    $"{core.get_property_string("mpv-version")} ({File.GetLastWriteTime(Folder.Startup + "mpv-1.dll").ToShortDateString()})\nffmpeg {core.get_property_string("ffmpeg-version")}\nMIT License";
+            }
         }
 
         public static void ShowException(object obj)
