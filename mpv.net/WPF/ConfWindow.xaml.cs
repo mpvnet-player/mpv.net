@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -11,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 
 using DynamicGUI;
+
 using static mpvnet.Core;
 
 namespace mpvnet
@@ -56,12 +56,10 @@ namespace mpvnet
                 switch (setting)
                 {
                     case StringSetting s:
-                        var sc = new StringSettingControl(s);
-                        MainStackPanel.Children.Add(sc);
+                        MainStackPanel.Children.Add(new StringSettingControl(s));
                         break;
                     case OptionSetting s:
-                        var oc = new OptionSettingControl(s);
-                        MainStackPanel.Children.Add(oc);
+                        MainStackPanel.Children.Add(new OptionSettingControl(s));
                         break;
                 }
             }

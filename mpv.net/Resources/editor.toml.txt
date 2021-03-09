@@ -571,6 +571,27 @@ filter = "General"
 help = "<int> Amount of recent files to be remembered. Default: 15 (mpv.net specific setting)"
 
 [[settings]]
+name = "video-file-extensions"
+file = "mpvnet"
+filter = "General"
+width = 500
+help = "Video file extensions used to create file associations and used by the auto-load-folder feature. (mpv.net specific setting)"
+
+[[settings]]
+name = "audio-file-extensions"
+file = "mpvnet"
+filter = "General"
+width = 500
+help = "Audio file extensions used to create file associations and used by the auto-load-folder feature. (mpv.net specific setting)"
+
+[[settings]]
+name = "image-file-extensions"
+file = "mpvnet"
+filter = "General"
+width = 500
+help = "Image file extensions used to create file associations and used by the auto-load-folder feature. (mpv.net specific setting)"
+
+[[settings]]
 name = "debug-mode"
 file = "mpvnet"
 default = "no"

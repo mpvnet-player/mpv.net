@@ -28,11 +28,17 @@ namespace mpvnet
 
                 string[] args = Environment.GetCommandLineArgs().Skip(1).ToArray();
 
-                if (args.Length == 2 && args[0] == "--reg-file-assoc")
+                if (args.Length >= 2 && args[0] == "--reg-file-assoc")
                 {
-                    if (args[1] == "audio") FileAssociation.Register(App.AudioTypes);
-                    if (args[1] == "video") FileAssociation.Register(App.VideoTypes);
-                    if (args[1] == "image") FileAssociation.Register(App.ImageTypes);
+                    if (args[1] == "audio")
+                        FileAssociation.Register(App.AudioTypes);
+                    else if (args[1] == "video")
+                        FileAssociation.Register(App.VideoTypes);
+                    else if (args[1] == "image")
+                        FileAssociation.Register(App.ImageTypes);
+                    else
+                        FileAssociation.Register(args.Skip(1).ToArray());
+
                     return;
                 }
 

@@ -1,7 +1,6 @@
 ﻿
 using System;
 using System.Diagnostics;
-using System.IO;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 using System.Windows;
@@ -31,27 +30,29 @@ namespace mpvnet
             }
         }
 
-        void RegisterFileAssociations(string value)
+        void RegFileAssoc(string[] extensions)
         {
             try
             {
                 using (Process proc = new Process())
                 {
                     proc.StartInfo.FileName = WinForms.Application.ExecutablePath;
-                    proc.StartInfo.Arguments = "--reg-file-assoc " + value;
+                    proc.StartInfo.Arguments = "--reg-file-assoc " + String.Join(" ", extensions);
                     proc.StartInfo.Verb = "runas";
                     proc.StartInfo.UseShellExecute = true;
                     proc.Start();
+                    proc.WaitForExit();
+
+                    if (proc.ExitCode == 0)
+                        Msg.Show("File associations successfully created.");
                 }
 
-                Msg.Show(value[0].ToString().ToUpper() + value.Substring(1) +
-                         " file associations successfully created.");
             } catch {}
         }
 
-        void AddVideo_Click(object sender, RoutedEventArgs e) => RegisterFileAssociations("video");
-        void AddAudio_Click(object sender, RoutedEventArgs e) => RegisterFileAssociations("audio");
-        void AddImage_Click(object sender, RoutedEventArgs e) => RegisterFileAssociations("image");
+        void AddVideo_Click(object sender, RoutedEventArgs e) => RegFileAssoc(App.VideoTypes);
+        void AddAudio_Click(object sender, RoutedEventArgs e) => RegFileAssoc(App.AudioTypes);
+        void AddImage_Click(object sender, RoutedEventArgs e) => RegFileAssoc(App.ImageTypes);
 
         void RemoveFileAssociations_Click(object sender, RoutedEventArgs e)
         {
@@ -60,7 +61,7 @@ namespace mpvnet
                 using (Process proc = new Process())
                 {
                     proc.StartInfo.FileName = "powershell.exe";
-                    proc.StartInfo.Arguments = "-NoLogo -NoExit -ExecutionPolicy Bypass -File \"" +
+                    proc.StartInfo.Arguments = "-NoLogo -NoExit -NoProfile -ExecutionPolicy Bypass -File \"" +
                         Folder.Startup + "Setup\\remove file associations.ps1\"";
                     proc.StartInfo.Verb = "runas";
                     proc.StartInfo.UseShellExecute = true;
@@ -96,7 +97,8 @@ namespace mpvnet
 
         void ExecutePowerShellScript(string file)
         {
-            ProcessHelp.Execute("powershell.exe", "-NoLogo -NoExit -ExecutionPolicy Bypass -File \"" + file + "\"");
+            ProcessHelp.Execute("powershell.exe",
+                "-NoLogo -NoExit -NoProfile -ExecutionPolicy Bypass -File \"" + file + "\"");
         }
 
         void EditDefaultApp_Click(object sender, RoutedEventArgs e)

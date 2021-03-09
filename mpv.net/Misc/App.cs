@@ -12,9 +12,9 @@ namespace mpvnet
 {
     public static class App
     {
-        public static string[] VideoTypes { get; } = "264 265 asf avc avi avs dav flv h264 h265 hevc m2t m2ts m2v m4v mkv mov mp4 mpeg mpg mpv mts ts vob vpy webm wmv y4m".Split(' ');
-        public static string[] AudioTypes { get; } = "mp3 mp2 ac3 ogg opus flac wav w64 m4a dts dtsma dtshr dtshd eac3 thd thd+ac3 mka aac mpa".Split(' ');
-        public static string[] ImageTypes { get; } = { "jpg", "bmp", "gif", "png" };
+        public static string[] VideoTypes { get; set; } = "264 265 asf avc avi avs dav flv h264 h265 hevc m2t m2ts m2v m4v mkv mov mp4 mpeg mpg mpv mts ts vob vpy webm wmv y4m".Split(' ');
+        public static string[] AudioTypes { get; set; } = "mp3 mp2 ac3 ogg opus flac wav w64 m4a dts dtsma dtshr dtshd eac3 thd thd+ac3 mka aac mpa".Split(' ');
+        public static string[] ImageTypes { get; set; } = { "jpg", "bmp", "gif", "png" };
         public static string[] SubtitleTypes { get; } = { "srt", "ass", "idx", "sup", "ttxt", "ssa", "smi" };
 
         public static string RegPath { get; } = @"HKCU\Software\" + Application.ProductName;
@@ -190,6 +190,9 @@ namespace mpvnet
                 case "minimum-aspect-ratio": MinimumAspectRatio = value.ToFloat(); return true;
                 case "dark-theme": DarkTheme = value.Trim('\'', '"'); return true;
                 case "light-theme": LightTheme = value.Trim('\'', '"'); return true;
+                case "video-file-extensions": VideoTypes = value.Split(" ,;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries); return true;
+                case "audio-file-extensions": AudioTypes = value.Split(" ,;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries); return true;
+                case "image-file-extensions": ImageTypes = value.Split(" ,;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries); return true;
                 default:
                     if (writeError)
                         ConsoleHelp.WriteError($"unknown mpvnet.conf property: {name}");
