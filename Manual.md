@@ -171,6 +171,10 @@ A common task for the terminal is debugging scripts.
 mpv.net specific options
 ------------------------
 
+All mpv.net specific options can be found in the conf editor searching for 'mpv.net'.
+
+The options are saved in the mpvnet.conf file.
+
 ## Audio
 
 ### --remember-volume=\<yes|no\>
@@ -297,14 +301,14 @@ Available on Windows 10 or higher.
 
 Color theme used in dark mode. Default: dark
 
-https://github.com/stax76/mpv.net/blob/master/Manual.md#color-theme
+[Color Themes](#color-theme)
 
 
 ### --light-theme=\<string\>
 
 Color theme used in light mode. Default: light
 
-https://github.com/stax76/mpv.net/blob/master/Manual.md#color-theme
+[Color Themes](#color-theme)
 
 
 External Tools
