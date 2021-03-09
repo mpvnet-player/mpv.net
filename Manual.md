@@ -12,6 +12,7 @@ Table of contents
 * [Settings](#settings)
 * [Command Line Interface](#command-line-interface)
 * [Terminal](#terminal)
+* [mpv.net specific options](#mpvnet-specific-options)
 * [External Tools](#external-tools)
 * [Scripting](#scripting)
 * [Extensions](#extensions)
@@ -165,6 +166,145 @@ When mpv.net is started from a terminal it will output status, error and debug m
 In the context menu under _Tools > Setup_ a button can be found to add mpv.net to the path environment variable.
 
 A common task for the terminal is debugging scripts.
+
+
+mpv.net specific options
+------------------------
+
+## Audio
+
+### --remember-volume=\<yes|no\>
+
+Save volume and mute on exit and restore it on start. Default: yes
+
+
+## Screen
+
+### --start-size=\<value\>
+
+Setting to remember the window height.
+
+**video**  
+Window size is set to video resolution.  
+
+**previous**  
+Window size is remembered but only in the current session. Default
+
+**always**  
+Window size is always remembered.
+
+
+### --start-threshold=\<milliseconds\>
+
+Threshold in milliseconds to wait for libmpv returning the video
+resolution before the window is shown, otherwise default dimensions
+are used as defined by autofit and start-size. Default: 1500
+
+
+### --minimum-aspect-ratio=\<float\>
+
+Minimum aspect ratio, if the AR is smaller than the defined value then
+the window AR is set to 16/9. This avoids a square window for Music
+with cover art. Default: 1.2
+
+
+### --remember-position=\<yes|no\>
+
+Save the window position on exit. Default: no
+
+
+## Playback
+
+### --auto-load-folder=\<yes|no\>
+
+For single files automatically load the entire directory into the playlist.
+Can be suppressed via shift key. Default: yes
+
+
+## Input
+
+### --global-media-keys=\<yes|no\>
+
+Enable global media keys next track, previous track, play/pause, stop. Default: no
+
+
+## General
+
+### --update-check=\<yes|no\>
+
+Daily check for new version. (requires PowerShell 5 and curl.) Default: no
+
+
+### --process-instance=\<value\>
+
+Defines if more then one mpv.net process is allowed.
+
+Tip: Whenever the control key is pressed when files or URLs are opened,
+the playlist is not cleared but the files or URLs are appended to the playlist.
+This not only works on process startup but in all mpv.net features that open files and URLs.
+
+**multi**  
+Create a new process everytime the shell starts mpv.net.
+
+**single**  
+Force a single process everytime the shell starts mpv.net. Default
+
+**queue**  
+Force a single process and add files to playlist.
+
+
+### --recent-count=\<int\>
+
+Amount of recent files to be remembered. Default: 15
+
+
+### --video-file-extensions=\<string\>
+
+Video file extensions used to create file associations and used by the auto-load-folder feature.
+
+
+### --audio-file-extensions=\<string\>
+
+Audio file extensions used to create file associations and used by the auto-load-folder feature.
+
+
+### --image-file-extensions=\<string\>
+
+Image file extensions used to create file associations and used by the auto-load-folder feature.
+
+
+### --debug-mode=\<yes|no\>
+
+Enable this only when a developer asks for it. Default: no
+
+
+## UI
+
+### --dark-mode=\<value\>
+
+Enables a dark theme.
+
+**always**  
+Default
+
+**system**  
+Available on Windows 10 or higher.
+
+**never**
+
+
+### ---dark-theme=\<string\>
+
+Color theme used in dark mode. Default: dark
+
+https://github.com/stax76/mpv.net/blob/master/Manual.md#color-theme
+
+
+### --light-theme=\<string\>
+
+Color theme used in light mode. Default: light
+
+https://github.com/stax76/mpv.net/blob/master/Manual.md#color-theme
 
 
 External Tools
