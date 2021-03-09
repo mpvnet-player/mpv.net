@@ -43,7 +43,7 @@ namespace mpvnet
 
         public static void WriteError(object obj, string module = "mpv.net")
         {
-            Write(obj, module, ConsoleColor.Red, false);    
+            Write(obj, module, ConsoleColor.DarkRed, false);    
         }
 
         public static void Write(object obj, string module = "mpv.net")
@@ -76,7 +76,7 @@ namespace mpvnet
             if (Padding > 0 && value.Length < Padding)
                 value = value.PadRight(Padding);
 
-            if (color == ConsoleColor.Red)
+            if (color == ConsoleColor.Red || color == ConsoleColor.DarkRed)
                 Console.Error.WriteLine(value);
             else
                 Console.WriteLine(value);

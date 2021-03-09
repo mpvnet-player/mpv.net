@@ -150,12 +150,6 @@ namespace mpvnet
 
         public void ProcessProperty(string name, string value)
         {
-            foreach (char i in name)
-                if (char.IsUpper(i))
-                    Msg.ShowError("Uppercase char detected: " + name,
-                        "mpv properties using the command line and the mpv.conf " +
-                        "config file are required to be lowercase.");
-
             switch (name)
             {
                 case "autofit":

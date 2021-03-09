@@ -1,7 +1,5 @@
 
-$ErrorActionPreference = 'Stop'
-
-$desktopDir  = [Environment]::GetFolderPath('Desktop')
+$tmpDir      = 'D:\Work'
 $exePath     = $PSScriptRoot + '\mpv.net\bin\x64\mpvnet.exe'
 $versionInfo = [Diagnostics.FileVersionInfo]::GetVersionInfo($exePath)
 $vsDir       = 'C:\Program Files (x86)\Microsoft Visual Studio\2019'
@@ -46,12 +44,12 @@ if ($versionInfo.FilePrivatePart -eq 0)
     & $inno /Darch=x86 setup.iss
     if ($LastExitCode) { throw $LastExitCode }
 
-    $targetDir = $desktopDir + "\mpv.net-portable-x64-$($versionInfo.FileVersion)"
+    $targetDir = $tmpDir + "\mpv.net-portable-x64-$($versionInfo.FileVersion)"
     Copy-Item .\mpv.net\bin\x64 $targetDir -Recurse -Exclude System.Management.Automation.xml
     & $7z a -tzip -mx9 "$targetDir.zip" -r "$targetDir\*"
     if ($LastExitCode) { throw $LastExitCode }
 
-    $targetDir = $desktopDir + "\mpv.net-portable-x86-$($versionInfo.FileVersion)"
+    $targetDir = $tmpDir + "\mpv.net-portable-x86-$($versionInfo.FileVersion)"
     Copy-Item .\mpv.net\bin\x86 $targetDir -Recurse -Exclude System.Management.Automation.xml
     & $7z a -tzip -mx9 "$targetDir.zip" -r "$targetDir\*"
     if ($LastExitCode) { throw $LastExitCode }
@@ -68,13 +66,13 @@ else
     & $msBuild mpv.net.sln -t:Rebuild -p:Configuration=Debug -p:Platform=x86
     if ($LastExitCode) { throw $LastExitCode }
 
-    $targetDir = "$desktopDir\mpv.net-portable-x64-$($versionInfo.FileVersion)-beta"
+    $targetDir = "$tmpDir\mpv.net-portable-x64-$($versionInfo.FileVersion)-beta"
     Copy-Item .\mpv.net\bin\x64 $targetDir -Recurse -Exclude System.Management.Automation.xml
     & $7z a -t7z -mx9 "$targetDir.7z" -r "$targetDir\*"
     if ($LastExitCode) { throw $LastExitCode }
     UploadBeta "$targetDir.7z"
 
-    $targetDir = $desktopDir + "\mpv.net-portable-x86-$($versionInfo.FileVersion)-beta"
+    $targetDir = $tmpDir + "\mpv.net-portable-x86-$($versionInfo.FileVersion)-beta"
     Copy-Item .\mpv.net\bin\x86 $targetDir -Recurse -Exclude System.Management.Automation.xml
     & $7z a -t7z -mx9 "$targetDir.7z" -r "$targetDir\*"
     if ($LastExitCode) { throw $LastExitCode }
