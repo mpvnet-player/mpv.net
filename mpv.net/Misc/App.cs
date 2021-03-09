@@ -101,7 +101,7 @@ namespace mpvnet
 
         public static string Version {
             get {
-                return "Copyright (C) 2000-2020 mpv.net/mpv/mplayer\n" +
+                return "Copyright (C) 2000-2021 mpv.net/mpv/mplayer\n" +
                     $"mpv.net {Application.ProductVersion} ({File.GetLastWriteTime(Application.ExecutablePath).ToShortDateString()})\n" +
                     $"{core.get_property_string("mpv-version")} ({File.GetLastWriteTime(Folder.Startup + "mpv-1.dll").ToShortDateString()})\nffmpeg {core.get_property_string("ffmpeg-version")}\nMIT License";
             }

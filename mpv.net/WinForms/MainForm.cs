@@ -466,9 +466,7 @@ namespace mpvnet
                 if (string.IsNullOrEmpty(item.Path))
                     continue;
 
-                string path = item.Path.Replace("&", "&&");
-
-                MenuItem menuItem = ContextMenu.Add(path, () => {
+                MenuItem menuItem = ContextMenu.Add(item.Path.Replace("&", "&&"), () => {
                     try {
                         core.command(item.Command);
                     } catch (Exception ex) {
@@ -477,7 +475,7 @@ namespace mpvnet
                 });
 
                 if (menuItem != null)
-                    menuItem.ShortcutKeyDisplayString = item.Input + "    ";
+                    menuItem.ShortcutKeyDisplayString = item.Input.Replace("&", "&&") + "    ";
             }
         }
 

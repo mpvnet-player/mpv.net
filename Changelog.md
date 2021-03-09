@@ -1,5 +1,5 @@
 
-5.4.8.7 Beta (2021-03-??)
+5.4.8.7 Beta (2021-03-09)
 =========================
 
 - History feature can be configured to ingore defined strings:
@@ -8,7 +8,8 @@
 - On Windows 10 1903 and later the default code page was changed to UTF-8.
 - Support of --version command.
 - File associations and auto-load-folder can be customized with
-  video-file-extensions, audio-file-extensions and image-file-extensions
+  video-file-extensions, audio-file-extensions and image-file-extensions.
+- Fix menu not showing key '&'.
 
 
 5.4.8.6 Beta (2020-12-24)

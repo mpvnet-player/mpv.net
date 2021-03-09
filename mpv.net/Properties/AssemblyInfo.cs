@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("mpv.net")]
 [assembly: AssemblyDescription("mpv based media player")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Frank Skare (stax76)")]
+[assembly: AssemblyCompany("mpv.net/mpv/mplayer")]
 [assembly: AssemblyProduct("mpv.net")]
-[assembly: AssemblyCopyright("Copyright (C) 2017-2020 Frank Skare (stax76)")]
+[assembly: AssemblyCopyright("Copyright (C) 2000-2021 mpv.net/mpv/mplayer")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("5.4.8.6")]
-[assembly: AssemblyFileVersion("5.4.8.6")]
+[assembly: AssemblyVersion("5.4.8.7")]
+[assembly: AssemblyFileVersion("5.4.8.7")]
