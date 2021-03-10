@@ -141,8 +141,9 @@
 
  Ctrl+t  set ontop yes                               #menu: View > On Top > Enable
  Ctrl+T  set ontop no                                #menu: View > On Top > Disable
- Alt++   script-message mpv.net scale-window 1.2     #menu: View > Window Size > Enlarge
- Alt+-   script-message mpv.net scale-window 0.8     #menu: View > Window Size > Shrink
+ Alt++   script-message mpv.net scale-window 1.2     #menu: View > Zoom > Enlarge
+ Alt+-   script-message mpv.net scale-window 0.8     #menu: View > Zoom > Shrink
+ _       ignore                                      #menu: View > Zoom > -
  Alt+0   set window-scale 0.5                        #menu: View > Zoom > 50 %
  Alt+1   set window-scale 1.0                        #menu: View > Zoom > 100 %
  Alt+2   set window-scale 2.0                        #menu: View > Zoom > 200 %

@@ -146,9 +146,12 @@ namespace mpvnet
             }
         }
 
-        void ScaleWindow(float value)
-        {
-            BeginInvoke(new Action(() => SetFormPosAndSize(value)));
+        void ScaleWindow(float value) {
+            BeginInvoke(new Action(() => {
+                if (value < 1 && (Width == MinimumSize.Width || Height == MinimumSize.Height))
+                    return;
+                SetFormPosAndSize(value, false, false, false);
+            }));
         }
 
         void WindowScale(double scale)
@@ -334,7 +337,10 @@ namespace mpvnet
             return null;
         }
 
-        void SetFormPosAndSize(double scale = 1, bool force = false)
+        void SetFormPosAndSize(double scale = 1,
+                               bool force = false,
+                               bool checkAutofitSmaller = true,
+                               bool checkAutofitLarger = true)
         {
             if (!force)
             {
@@ -375,7 +381,8 @@ namespace mpvnet
             }
 
             height = Convert.ToInt32(height * scale);
-            SetSize(new Size(height * videoSize.Width / videoSize.Height, height), videoSize, screen);
+            SetSize(new Size(height * videoSize.Width / videoSize.Height, height),
+                videoSize, screen, checkAutofitSmaller, checkAutofitLarger);
         }
 
         void SetSize(Size size,
@@ -842,6 +849,7 @@ namespace mpvnet
             WPF.WPF.Init();
             System.Windows.Application.Current.ShutdownMode = System.Windows.ShutdownMode.OnExplicitShutdown;
             Cursor.Position = new Point(Cursor.Position.X + 1, Cursor.Position.Y);
+            MinimumSize = new Size(FontHeight * 9, FontHeight * 9);
             UpdateCheck.DailyCheck();
             core.LoadScripts();
             Task.Run(() => App.Extension = new Extension());

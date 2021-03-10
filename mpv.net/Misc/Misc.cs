@@ -102,6 +102,7 @@ namespace mpvnet
 
         public string Path { get; set; } = "";
         public string Command { get; set; } = "";
+        public string Display { get { return string.IsNullOrEmpty(Path) ? Command : Path; } }
 
         public CommandItem() { }
 

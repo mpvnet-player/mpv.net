@@ -45,8 +45,8 @@
                             <ColumnDefinition />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        
-                        <TextBlock Text="{Binding Path}"></TextBlock>
+
+                        <TextBlock Text="{Binding Display}"></TextBlock>
                         
                         <TextBlock Grid.Column="1"
                                    Text="{Binding Input}"

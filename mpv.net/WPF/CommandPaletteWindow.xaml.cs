@@ -26,7 +26,7 @@ namespace mpvnet
 
         bool Filter(CommandItem item)
         {
-            if (item.Command == "" || item.Path == "")
+            if (item.Command == "")
                 return false;
 
             string filter = FilterTextBox.Text.ToLower();
