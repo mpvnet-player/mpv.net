@@ -50,9 +50,9 @@ namespace mpvnet
             } catch {}
         }
 
-        void AddVideo_Click(object sender, RoutedEventArgs e) => RegFileAssoc(App.VideoTypes);
-        void AddAudio_Click(object sender, RoutedEventArgs e) => RegFileAssoc(App.AudioTypes);
-        void AddImage_Click(object sender, RoutedEventArgs e) => RegFileAssoc(App.ImageTypes);
+        void AddVideo_Click(object sender, RoutedEventArgs e) => RegFileAssoc(Core.VideoTypes);
+        void AddAudio_Click(object sender, RoutedEventArgs e) => RegFileAssoc(Core.AudioTypes);
+        void AddImage_Click(object sender, RoutedEventArgs e) => RegFileAssoc(Core.ImageTypes);
 
         void RemoveFileAssociations_Click(object sender, RoutedEventArgs e)
         {

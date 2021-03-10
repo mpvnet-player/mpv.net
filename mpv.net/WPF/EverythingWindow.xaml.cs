@@ -142,7 +142,7 @@ namespace mpvnet
                         Everything_GetResultFullPathName(i, sb, (uint)sb.Capacity);
                         string ext = sb.ToString().Ext();
 
-                        if (App.AudioTypes.Contains(ext) || App.VideoTypes.Contains(ext) || App.ImageTypes.Contains(ext))
+                        if (Core.AudioTypes.Contains(ext) || Core.VideoTypes.Contains(ext) || Core.ImageTypes.Contains(ext))
                             items.Add(sb.ToString());
 
                         if (items.Count > 100)

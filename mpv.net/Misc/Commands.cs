@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -9,7 +10,7 @@ using System.Windows;
 
 using VB = Microsoft.VisualBasic;
 
-using static NewLine;
+using static mpvnet.NewLine;
 using static mpvnet.Core;
 
 namespace mpvnet
@@ -20,36 +21,37 @@ namespace mpvnet
         {
             switch (id)
             {
-                case "open-files": OpenFiles(args); break;
-                case "update-check": UpdateCheck.CheckOnline(true); break;
-                case "open-url": OpenURL(); break;
-                case "open-optical-media": Open_DVD_Or_BD_Folder(); break;
-                case "manage-file-associations": // deprecated 2019
-                case "show-setup-dialog": ShowDialog(typeof(SetupWindow)); break;
+                case "add-files-to-playlist": OpenFiles("append"); break; // deprecated 2019
                 case "cycle-audio": CycleAudio(); break;
+                case "execute-mpv-command": ExecuteMpvCommand(); break;
                 case "load-audio": LoadAudio(); break;
                 case "load-sub": LoadSubtitle(); break;
-                case "execute-mpv-command": ExecuteMpvCommand(); break;
-                case "show-history": ShowHistory(); break;
-                case "show-media-search": ShowDialog(typeof(EverythingWindow)); break;
-                case "show-command-palette": ShowDialog(typeof(CommandPaletteWindow)); break;
-                case "show-about": ShowDialog(typeof(AboutWindow)); break;
-                case "show-conf-editor": ShowDialog(typeof(ConfWindow)); break;
-                case "show-input-editor": ShowDialog(typeof(InputWindow)); break;
+                case "manage-file-associations": // deprecated 2019
                 case "open-conf-folder": ProcessHelp.ShellExecute(core.ConfigFolder); break;
-                case "shell-execute": ProcessHelp.ShellExecute(args[0]); break;
-                case "show-info": ShowInfo(); break;
+                case "open-files": OpenFiles(args); break;
+                case "open-optical-media": Open_DVD_Or_BD_Folder(); break;
+                case "open-url": OpenURL(); break;
                 case "playlist-first": PlaylistFirst(); break;
                 case "playlist-last": PlaylistLast(); break;
+                case "scale-window": ScaleWindow(float.Parse(args[0], CultureInfo.InvariantCulture)); break;
+                case "shell-execute": ProcessHelp.ShellExecute(args[0]); break;
+                case "show-about": ShowDialog(typeof(AboutWindow)); break;
+                case "show-audio-devices": ShowTextWithEditor("audio-device-list", core.get_property_osd_string("audio-device-list")); break;
+                case "show-command-palette": ShowDialog(typeof(CommandPaletteWindow)); break;
+                case "show-commands": ShowCommands(); break;
+                case "show-conf-editor": ShowDialog(typeof(ConfWindow)); break;
+                case "show-decoders": ShowTextWithEditor("decoder-list", mpvHelp.GetDecoders()); break;
+                case "show-demuxers": ShowTextWithEditor("demuxer-lavf-list", mpvHelp.GetDemuxers()); break;
+                case "show-history": ShowHistory(); break;
+                case "show-info": ShowInfo(); break;
+                case "show-input-editor": ShowDialog(typeof(InputWindow)); break;
+                case "show-keys": ShowTextWithEditor("input-key-list", core.get_property_string("input-key-list").Replace(",", BR)); break;
+                case "show-media-search": ShowDialog(typeof(EverythingWindow)); break;
                 case "show-profiles": ShowTextWithEditor("profile-list", mpvHelp.GetProfiles()); break;
                 case "show-properties": ShowProperties(); break;
-                case "show-commands": ShowCommands(); break;
-                case "show-keys": ShowTextWithEditor("input-key-list", core.get_property_string("input-key-list").Replace(",", BR)); break;
-                case "add-files-to-playlist": OpenFiles("append"); break; // deprecated 2019
-                case "show-audio-devices": ShowTextWithEditor("audio-device-list", core.get_property_osd_string("audio-device-list")); break;
-                case "show-decoders": ShowTextWithEditor("decoder-list", mpvHelp.GetDecoders()); break;
                 case "show-protocols": ShowTextWithEditor("protocol-list", mpvHelp.GetProtocols()); break;
-                case "show-demuxers": ShowTextWithEditor("demuxer-lavf-list", mpvHelp.GetDemuxers()); break;
+                case "show-setup-dialog": ShowDialog(typeof(SetupWindow)); break;
+                case "update-check": UpdateCheck.CheckOnline(true); break;
                 default: Msg.ShowError($"No command '{id}' found."); break;
             }
         }
@@ -159,7 +161,7 @@ namespace mpvnet
                 {
                     fileSize = new FileInfo(path).Length;
 
-                    if (App.AudioTypes.Contains(path.Ext()))
+                    if (Core.AudioTypes.Contains(path.Ext()))
                     {
                         using (MediaInfo mediaInfo = new MediaInfo(path))
                         {
@@ -183,7 +185,7 @@ namespace mpvnet
                             return;
                         }
                     }
-                    else if (App.ImageTypes.Contains(path.Ext()))
+                    else if (Core.ImageTypes.Contains(path.Ext()))
                     {
                         using (MediaInfo mediaInfo = new MediaInfo(path))
                         {
@@ -243,7 +245,8 @@ namespace mpvnet
             InvokeOnMainThread(new Action(() => {
                 string clipboard = System.Windows.Forms.Clipboard.GetText();
 
-                if (string.IsNullOrEmpty(clipboard) || (!clipboard.Contains("://") && !File.Exists(clipboard)) || clipboard.Contains("\n"))
+                if (string.IsNullOrEmpty(clipboard) || (!clipboard.Contains("://") && !File.Exists(clipboard)) ||
+                    clipboard.Contains("\n"))
                 {
                     App.ShowError("No URL found", "The clipboard does not contain a valid URL or file.");
                     return;
@@ -339,9 +342,13 @@ namespace mpvnet
         static void ShowTextWithEditor(string name, string text)
         {
             string file = Path.GetTempPath() + $"\\{name}.txt";
-            //UTF8 without BOM
             File.WriteAllText(file, BR + text.Trim() + BR);
             ProcessHelp.ShellExecute(file);
+        }
+
+        static void ScaleWindow(float factor)
+        {
+            core.RaiseScaleWindow(factor);
         }
     }
 }

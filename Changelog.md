@@ -1,4 +1,11 @@
 
+5.4.8.8 Beta (2021-03-??)
+=========================
+
+- The mpv window-scale property works now exactly like in mpv.
+- Implementation for the mpv title property.
+
+
 5.4.8.7 Beta (2021-03-09)
 =========================
 

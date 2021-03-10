@@ -10,6 +10,8 @@ $7z          = 'C:\Program Files\7-Zip\7z.exe'
 $cloudDirectories = 'C:\Users\frank\OneDrive\Public\mpv.net\',
                     'C:\Users\frank\Dropbox\Public\mpv.net\'
 
+cd $PSScriptRoot
+
 function UploadBeta($sourceFile)
 {
     foreach ($cloudDirectory in $cloudDirectories)

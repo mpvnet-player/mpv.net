@@ -7,7 +7,7 @@ using System.Management.Automation.Runspaces;
 using System.Threading;
 
 using static mpvnet.Core;
-using static NewLine;
+using static mpvnet.NewLine;
 
 namespace mpvnet
 {

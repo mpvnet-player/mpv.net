@@ -31,11 +31,11 @@ namespace mpvnet
                 if (args.Length >= 2 && args[0] == "--reg-file-assoc")
                 {
                     if (args[1] == "audio")
-                        FileAssociation.Register(App.AudioTypes);
+                        FileAssociation.Register(Core.AudioTypes);
                     else if (args[1] == "video")
-                        FileAssociation.Register(App.VideoTypes);
+                        FileAssociation.Register(Core.VideoTypes);
                     else if (args[1] == "image")
-                        FileAssociation.Register(App.ImageTypes);
+                        FileAssociation.Register(Core.ImageTypes);
                     else
                         FileAssociation.Register(args.Skip(1).ToArray());
 

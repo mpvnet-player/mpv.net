@@ -95,7 +95,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Misc\App.cs" />
-    <Compile Include="Misc\NewLine.cs" />
     <Compile Include="Misc\Extension.cs" />
     <Content Include="..\License.txt">
       <Link>License.txt</Link>
@@ -129,7 +128,6 @@
     </Page>
     <Compile Include="Misc\Help.cs" />
     <Compile Include="Misc\UpdateCheck.cs" />
-    <Compile Include="Misc\RegistryHelp.cs" />
     <Compile Include="Misc\Theme.cs" />
     <Compile Include="Misc\PowerShell.cs" />
     <Compile Include="Native\StockIcon.cs" />

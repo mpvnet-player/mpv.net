@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,6 +17,12 @@ using static mpvnet.Core;
 
 namespace mpvnet
 {
+    public static class NewLine
+    {
+        public static string BR = Environment.NewLine;
+        public static string BR2 = Environment.NewLine + Environment.NewLine;
+    }
+
     public class Sys
     {
         public static bool IsDarkTheme {
@@ -67,13 +74,13 @@ namespace mpvnet
                 RegistryHelp.SetValue($@"HKCR\" + "." + ext, null, ExeFilenameNoExt + "." + ext);
                 RegistryHelp.SetValue($@"HKCR\" + "." + ext + @"\OpenWithProgIDs", ExeFilenameNoExt + "." + ext, "");
 
-                if (App.VideoTypes.Contains(ext))
+                if (Core.VideoTypes.Contains(ext))
                     RegistryHelp.SetValue(@"HKCR\" + "." + ext, "PerceivedType", "video");
 
-                if (App.AudioTypes.Contains(ext))
+                if (Core.AudioTypes.Contains(ext))
                     RegistryHelp.SetValue(@"HKCR\" + "." + ext, "PerceivedType", "audio");
 
-                if (App.ImageTypes.Contains(ext))
+                if (Core.ImageTypes.Contains(ext))
                     RegistryHelp.SetValue(@"HKCR\" + "." + ext, "PerceivedType", "image");
 
                 RegistryHelp.SetValue($@"HKCR\" + ExeFilenameNoExt + "." + ext + @"\shell\open\command", null, $"\"{ExePath}\" \"%1\"");

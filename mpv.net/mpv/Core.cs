@@ -11,7 +11,7 @@ using System.Threading;
 using System.Windows.Forms;
 
 using static libmpv;
-using static NewLine;
+using static mpvnet.NewLine;
 
 using System.Globalization;
 
@@ -20,6 +20,12 @@ namespace mpvnet
     public class Core
     {
         public static Core core { get; } = new Core();
+        public static Core GetCore() => core;
+
+        public static string[] VideoTypes { get; set; } = "264 265 asf avc avi avs dav flv h264 h265 hevc m2t m2ts m2v m4v mkv mov mp4 mpeg mpg mpv mts ts vob vpy webm wmv y4m".Split(' ');
+        public static string[] AudioTypes { get; set; } = "aac ac3 dts dtshd dtshr dtsma eac3 flac m4a mka mp2 mp3 mpa mpc ogg opus thd thd+ac3 w64 wav".Split(' ');
+        public static string[] ImageTypes { get; set; } = { "jpg", "bmp", "png", "gif" };
+        public static string[] SubtitleTypes { get; } = { "srt", "ass", "idx", "sup", "ttxt", "ssa", "smi" };
 
         public event Action<mpv_log_level, string> LogMessageAsync; // log-message        MPV_EVENT_LOG_MESSAGE
         public event Action<mpv_end_file_reason> EndFileAsync;      // end-file           MPV_EVENT_END_FILE
@@ -69,6 +75,7 @@ namespace mpvnet
         
         public event Action VideoSizeChanged;
         public event Action VideoSizeChangedAsync;
+        public event Action<float> ScaleWindow;
 
         public Dictionary<string, List<Action>>               PropChangeActions { get; set; } = new Dictionary<string, List<Action>>();
         public Dictionary<string, List<Action<int>>>       IntPropChangeActions { get; set; } = new Dictionary<string, List<Action<int>>>();
@@ -88,12 +95,13 @@ namespace mpvnet
         public AutoResetEvent ShutdownAutoResetEvent  { get; } = new AutoResetEvent(false);
         public AutoResetEvent VideoSizeAutoResetEvent { get; } = new AutoResetEvent(false);
 
-        public string InputConfPath { get => ConfigFolder + "input.conf"; }
-        public string ConfPath      { get => ConfigFolder + "mpv.conf"; }
-        public string Sid { get; set; } = "";
         public string Aid { get; set; } = "";
-        public string Vid { get; set; } = "";
+        public string ConfPath { get => ConfigFolder + "mpv.conf"; }
         public string GPUAPI { get; set; } = "auto";
+        public string InputConfPath { get => ConfigFolder + "input.conf"; }
+        public string Sid { get; set; } = "";
+        public string Title { get; set; } = "";
+        public string Vid { get; set; } = "";
 
         public bool WasInitialSizeSet;
         public bool Border { get; set; } = true;
@@ -172,6 +180,7 @@ namespace mpvnet
                 case "taskbar-progress": TaskbarProgress = value == "yes"; break;
                 case "screen": Screen = Convert.ToInt32(value); break;
                 case "gpu-api": GPUAPI = value; break;
+                case "title": Title = value; break;
             }
 
             if (AutofitLarger > 1)
@@ -1077,7 +1086,7 @@ namespace mpvnet
 
                 if (file.Ext() == "iso")
                     LoadISO(file);
-                else if(App.SubtitleTypes.Contains(file.Ext()))
+                else if(Core.SubtitleTypes.Contains(file.Ext()))
                     commandv("sub-add", file);
                 else if (file.Ext().Length != 3 && File.Exists(Path.Combine(file, "BDMV\\index.bdmv")))
                 {
@@ -1157,9 +1166,9 @@ namespace mpvnet
             List<string> files = Directory.GetFiles(dir).ToList();
 
             files = files.Where(file =>
-                App.VideoTypes.Contains(file.Ext()) ||
-                App.AudioTypes.Contains(file.Ext()) ||
-                App.ImageTypes.Contains(file.Ext())).ToList();
+                Core.VideoTypes.Contains(file.Ext()) ||
+                Core.AudioTypes.Contains(file.Ext()) ||
+                Core.ImageTypes.Contains(file.Ext())).ToList();
 
             files.Sort(new StringLogicalComparer());
             int index = files.IndexOf(path);
@@ -1263,6 +1272,11 @@ namespace mpvnet
                     return ci.EnglishName;
 
             return id;
+        }
+
+        public void RaiseScaleWindow(float value)
+        {
+            ScaleWindow(value);
         }
 
         void ReadMetaData()

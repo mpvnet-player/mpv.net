@@ -49,6 +49,10 @@ namespace mpvnet
                 Hwnd = Handle;
                 ConsoleHelp.Padding = 60;
                 core.Init();
+                core.Title = core.get_property_string("title");
+
+                if (core.Title != null && core.Title.EndsWith("} - mpv"))
+                    core.Title = "";
 
                 if (App.GlobalMediaKeys)
                 {
@@ -60,6 +64,7 @@ namespace mpvnet
 
                 core.Shutdown += Shutdown;
                 core.VideoSizeChanged += VideoSizeChanged;
+                core.ScaleWindow += ScaleWindow;
                 core.FileLoaded += FileLoaded;
                 core.Idle += Idle;
                 core.Seek += () => UpdateProgressBar();
@@ -75,6 +80,8 @@ namespace mpvnet
                 core.observe_property_string("aid", PropChangeAid);
                 core.observe_property_string("vid", PropChangeVid);
 
+                core.observe_property_string("title", PropChangeTitle);
+
                 core.observe_property_int("edition", PropChangeEdition);
                 core.observe_property_double("window-scale", PropChangeWindowScale);
                 
@@ -84,7 +91,8 @@ namespace mpvnet
                 AppDomain.CurrentDomain.UnhandledException += (sender, e) => App.ShowException(e.ExceptionObject);
                 Application.ThreadException += (sender, e) => App.ShowException(e.Exception);
                 Msg.SupportURL = "https://github.com/stax76/mpv.net#support";
-                Text = "mpv.net " + Application.ProductVersion;
+
+                Text = string.IsNullOrEmpty(core.Title) ? "mpv.net " + Application.ProductVersion : core.Title;
                 TaskbarButtonCreatedMessage = RegisterWindowMessage("TaskbarButtonCreated");
                 
                 ContextMenu = new ContextMenuStripEx(components);
@@ -138,13 +146,27 @@ namespace mpvnet
             }
         }
 
+        void ScaleWindow(float value)
+        {
+            BeginInvoke(new Action(() => SetFormPosAndSize(value)));
+        }
+
+        void WindowScale(double scale)
+        {
+            if (!WasShown())
+                return;
+
+            Size size = new Size((int)(core.VideoSize.Width * scale), (int)(core.VideoSize.Height * scale));
+            SetSize(size, core.VideoSize, Screen.FromControl(this), false, false);
+        }
+
         public MenuItem FindMenuItem(string text) => FindMenuItem(text, ContextMenu.Items);
 
         void Shutdown() => BeginInvoke(new Action(() => Close()));
 
         void Idle()
         {
-            BeginInvoke(new Action(() => Text = "mpv.net " + Application.ProductVersion));
+            BeginInvoke(new Action(() => Text = string.IsNullOrEmpty(core.Title) ? "mpv.net " + Application.ProductVersion : core.Title));
         }
 
         bool WasShown() => ShownTickCount != 0 && Environment.TickCount > ShownTickCount + 500;
@@ -353,19 +375,31 @@ namespace mpvnet
             }
 
             height = Convert.ToInt32(height * scale);
-            int width = height * videoSize.Width / videoSize.Height;
+            SetSize(new Size(height * videoSize.Width / videoSize.Height, height), videoSize, screen);
+        }
+
+        void SetSize(Size size,
+                     Size videoSize,
+                     Screen screen,
+                     bool checkAutofitSmaller = true,
+                     bool checkAutofitLarger = true)
+        {
+            int height = size.Height;
+            int width = size.Height * videoSize.Width / videoSize.Height;
             int maxHeight = screen.WorkingArea.Height - (Height - ClientSize.Height);
             int maxWidth = screen.WorkingArea.Width - (Width - ClientSize.Width);
 
-            if (height < maxHeight * core.AutofitSmaller)
+            if (checkAutofitSmaller && (height < maxHeight * core.AutofitSmaller))
             {
                 height = Convert.ToInt32(maxHeight * core.AutofitSmaller);
                 width = Convert.ToInt32(height * videoSize.Width / videoSize.Height);
             }
 
-            if (height > maxHeight * core.AutofitLarger)
+            float autofitLarger = checkAutofitLarger ? core.AutofitLarger : 1;
+
+            if (height > maxHeight * autofitLarger)
             {
-                height = Convert.ToInt32(maxHeight * core.AutofitLarger);
+                height = Convert.ToInt32(maxHeight * autofitLarger);
                 width = Convert.ToInt32(height * videoSize.Width / videoSize.Height);
             }
 
@@ -399,8 +433,7 @@ namespace mpvnet
             if (top + rect.Height > maxBottom)
                 top = maxBottom - rect.Height;
 
-            SetWindowPos(Handle, IntPtr.Zero /* HWND_TOP */,
-                left, top, rect.Width, rect.Height, 4 /* SWP_NOZORDER */);
+            SetWindowPos(Handle, IntPtr.Zero, left, top, rect.Width, rect.Height, 4);
         }
 
         public void CycleFullscreen(bool enabled)
@@ -484,10 +517,15 @@ namespace mpvnet
             string path = core.get_property_string("path");
 
             BeginInvoke(new Action(() => {
-                if (path.Contains("://"))
-                    Text = core.get_property_string("media-title") + " - mpv.net " + Application.ProductVersion;
+                if (string.IsNullOrEmpty(core.Title))
+                {
+                    if (path.Contains("://"))
+                        Text = core.get_property_string("media-title") + " - mpv.net " + Application.ProductVersion;
+                    else
+                        Text = path.FileName() + " - mpv.net " + Application.ProductVersion;
+                }
                 else
-                    Text = path.FileName() + " - mpv.net " + Application.ProductVersion;
+                    Text = core.Title;
 
                 int interval = (int)(core.Duration.TotalMilliseconds / 100);
 
@@ -704,17 +742,15 @@ namespace mpvnet
         void PropChangeSid(string value) => core.Sid = value;
 
         void PropChangeVid(string value) => core.Vid = value;
+        
+        void PropChangeTitle(string value) => BeginInvoke(new Action(() => {
+            if (value != null && !value.EndsWith("} - mpv"))
+                Text = value;
+        }));
 
         void PropChangeEdition(int value) => core.Edition = value;
         
-        void PropChangeWindowScale(double value)
-        {
-            if (value != 1)
-            {
-                BeginInvoke(new Action(() => SetFormPosAndSize(value)));
-                core.command("no-osd set window-scale 1");
-            }
-        }
+        void PropChangeWindowScale(double value) => BeginInvoke(new Action(() => WindowScale(value)));
 
         void PropChangeWindowMaximized()
         {
