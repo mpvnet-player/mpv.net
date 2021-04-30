@@ -12,6 +12,7 @@ using VB = Microsoft.VisualBasic;
 
 using static mpvnet.NewLine;
 using static mpvnet.Core;
+using System.Threading.Tasks;
 
 namespace mpvnet
 {
@@ -48,10 +49,13 @@ namespace mpvnet
                 case "show-keys": ShowTextWithEditor("input-key-list", core.get_property_string("input-key-list").Replace(",", BR)); break;
                 case "show-media-search": ShowDialog(typeof(EverythingWindow)); break;
                 case "show-profiles": ShowTextWithEditor("profile-list", mpvHelp.GetProfiles()); break;
+                case "show-playlist": ShowPlaylist(); break;
                 case "show-properties": ShowProperties(); break;
                 case "show-protocols": ShowTextWithEditor("protocol-list", mpvHelp.GetProtocols()); break;
                 case "show-setup-dialog": ShowDialog(typeof(SetupWindow)); break;
+                case "show-text": ShowText(args[0], Convert.ToInt32(args[1]), Convert.ToInt32(args[2])); break;
                 case "update-check": UpdateCheck.CheckOnline(true); break;
+
                 default: Msg.ShowError($"No command '{id}' found."); break;
             }
         }
@@ -161,7 +165,7 @@ namespace mpvnet
                 {
                     fileSize = new FileInfo(path).Length;
 
-                    if (Core.AudioTypes.Contains(path.Ext()))
+                    if (AudioTypes.Contains(path.Ext()))
                     {
                         using (MediaInfo mediaInfo = new MediaInfo(path))
                         {
@@ -185,7 +189,7 @@ namespace mpvnet
                             return;
                         }
                     }
-                    else if (Core.ImageTypes.Contains(path.Ext()))
+                    else if (ImageTypes.Contains(path.Ext()))
                     {
                         using (MediaInfo mediaInfo = new MediaInfo(path))
                         {
@@ -308,7 +312,7 @@ namespace mpvnet
             core.commandv("show-text", aid + ": " + tracks[aid - 1].Text.Substring(3), "5000");
         }
 
-        static void ShowCommands()
+        public static void ShowCommands()
         {
             string code = @"
                 foreach ($item in ($json | ConvertFrom-Json | foreach { $_ } | sort name))
@@ -333,22 +337,54 @@ namespace mpvnet
             ShowTextWithEditor("command-list", PowerShell.InvokeAndReturnString(code, "json", json));
         }
 
-        static void ShowProperties()
+        public static void ShowProperties()
         {
             var props = core.get_property_string("property-list").Split(',').OrderBy(prop => prop);
             ShowTextWithEditor("property-list", string.Join(BR, props));
         }
 
-        static void ShowTextWithEditor(string name, string text)
+        public static void ShowTextWithEditor(string name, string text)
         {
             string file = Path.GetTempPath() + $"\\{name}.txt";
             File.WriteAllText(file, BR + text.Trim() + BR);
             ProcessHelp.ShellExecute(file);
         }
 
-        static void ScaleWindow(float factor)
+        public static void ScaleWindow(float factor)
         {
             core.RaiseScaleWindow(factor);
+        }
+
+        public static void ShowText(string text, int duration = 0, int fontSize = 0)
+        {
+            if (string.IsNullOrEmpty(text))
+                return;
+
+            if (duration == 0)
+                duration = core.get_property_int("osd-duration");
+
+            if (fontSize == 0)
+                fontSize = core.get_property_int("osd-font-size");
+
+            core.command("show-text \"${osd-ass-cc/0}{\\\\fs" + fontSize +
+                "}${osd-ass-cc/1}" + text + "\" " + duration);
+        }
+
+        public static void ShowPlaylist(string[] args = null)
+        {
+            int duration = 5000;
+
+            if (args?.Length == 1)
+                duration = Convert.ToInt32(args[0]);
+
+            var size = core.get_property_number("osd-font-size");
+            core.set_property_number("osd-font-size", 40);
+            core.command("show-text ${playlist} " + duration);
+
+            App.RunTask(() => {
+                Thread.Sleep(6000);
+                core.set_property_number("osd-font-size", size);
+            });
         }
     }
 }

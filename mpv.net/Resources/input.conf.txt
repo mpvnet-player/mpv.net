@@ -56,11 +56,11 @@
  .           frame-step             #menu: Navigate > Jump Next Frame
  ,           frame-back-step        #menu: Navigate > Jump Previous Frame
  _           ignore                 #menu: Navigate > -
- Right       seek  7                #menu: Navigate > Jump 7 sec forward
- Left        seek -7                #menu: Navigate > Jump 7 sec backward
+ Right       seek  5                #menu: Navigate > Jump 5 sec forward
+ Left        seek -5                #menu: Navigate > Jump 5 sec backward
  _           ignore                 #menu: Navigate > -
- Up          seek  40               #menu: Navigate > Jump 40 sec forward
- Down        seek -40               #menu: Navigate > Jump 40 sec backward
+ Up          seek  30               #menu: Navigate > Jump 30 sec forward
+ Down        seek -30               #menu: Navigate > Jump 30 sec backward
  _           ignore                 #menu: Navigate > -
  Ctrl+Right  seek  300              #menu: Navigate > Jump 5 min forward
  Ctrl+Left   seek -300              #menu: Navigate > Jump 5 min backward
@@ -158,7 +158,7 @@
  _       script-message mpv.net show-decoders        #menu: View > Show Decoders
  _       script-message mpv.net show-demuxers        #menu: View > Show Demuxers
  _       script-message mpv.net show-keys            #menu: View > Show Keys
- F8      script-binding show-playlist                #menu: View > Show Playlist
+ F8      script-message mpv.net show-playlist        #menu: View > Show Playlist
  Ctrl+p  script-message mpv.net show-profiles        #menu: View > Show Profiles
  p       show-progress                               #menu: View > Show Progress
  Shift+p script-message mpv.net show-properties      #menu: View > Show Properties

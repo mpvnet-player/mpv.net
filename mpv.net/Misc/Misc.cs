@@ -74,13 +74,13 @@ namespace mpvnet
                 RegistryHelp.SetValue($@"HKCR\" + "." + ext, null, ExeFilenameNoExt + "." + ext);
                 RegistryHelp.SetValue($@"HKCR\" + "." + ext + @"\OpenWithProgIDs", ExeFilenameNoExt + "." + ext, "");
 
-                if (Core.VideoTypes.Contains(ext))
+                if (VideoTypes.Contains(ext))
                     RegistryHelp.SetValue(@"HKCR\" + "." + ext, "PerceivedType", "video");
 
-                if (Core.AudioTypes.Contains(ext))
+                if (AudioTypes.Contains(ext))
                     RegistryHelp.SetValue(@"HKCR\" + "." + ext, "PerceivedType", "audio");
 
-                if (Core.ImageTypes.Contains(ext))
+                if (ImageTypes.Contains(ext))
                     RegistryHelp.SetValue(@"HKCR\" + "." + ext, "PerceivedType", "image");
 
                 RegistryHelp.SetValue($@"HKCR\" + ExeFilenameNoExt + "." + ext + @"\shell\open\command", null, $"\"{ExePath}\" \"%1\"");

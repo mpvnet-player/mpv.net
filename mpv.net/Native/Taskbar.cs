@@ -23,7 +23,7 @@ public class Taskbar
         // ITaskbarList2
         [PreserveSig] void MarkFullscreenWindow(IntPtr hwnd, [MarshalAs(UnmanagedType.Bool)] bool fFullscreen);
         // ITaskbarList3
-        [PreserveSig] void SetProgressValue(IntPtr hwnd, UInt64 ullCompleted, UInt64 ullTotal);
+        [PreserveSig] void SetProgressValue(IntPtr hwnd, ulong ullCompleted, ulong ullTotal);
         [PreserveSig] void SetProgressState(IntPtr hwnd, TaskbarStates state);
     }
 
@@ -41,7 +41,7 @@ public class Taskbar
 
     public void SetValue(double progressValue, double progressMax)
     {
-        Instance.SetProgressValue(Handle, (UInt64)progressValue, (UInt64)progressMax);
+        Instance.SetProgressValue(Handle, (ulong)progressValue, (ulong)progressMax);
     }
 }
 

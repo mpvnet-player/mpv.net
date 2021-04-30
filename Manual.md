@@ -59,18 +59,7 @@ mpv.net requires the .NET Framework 4.8 and Windows 7 or 10 and a modern graphic
 
 There is a setup exe and a portable zip file download.
 
-x64 editions have the advantage of being typically better optimized and tested.
-
 For internet streaming youtube-dl must be downloaded and installed manually, meaning it must be located in the PATH environment variable or in the startup directory.
-
-### Scoop
-
-If you use Scoop
-
-```
-scoop bucket add extras
-scoop install mpv.net
-```
 
 
 #### File Associations

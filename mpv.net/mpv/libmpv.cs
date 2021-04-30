@@ -18,6 +18,12 @@ public class libmpv
     public static extern mpv_error mpv_command_string(IntPtr mpvHandle, [MarshalAs(UnmanagedType.LPUTF8Str)] string command);
 
     [DllImport("mpv-1.dll", CallingConvention = CallingConvention.Cdecl)]
+    public static extern mpv_error mpv_command_ret(IntPtr mpvHandle, IntPtr strings, IntPtr node);
+
+    [DllImport("mpv-1.dll", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void mpv_free_node_contents(IntPtr node);
+
+    [DllImport("mpv-1.dll", CallingConvention = CallingConvention.Cdecl)]
     public static extern IntPtr mpv_error_string(mpv_error error);
 
     [DllImport("mpv-1.dll", CallingConvention = CallingConvention.Cdecl)]
@@ -42,16 +48,16 @@ public class libmpv
     public static extern mpv_error mpv_set_property(IntPtr mpvHandle, byte[] name, mpv_format format, ref byte[] data);
 
     [DllImport("mpv-1.dll", CallingConvention = CallingConvention.Cdecl)]
-    public static extern mpv_error mpv_set_property(IntPtr mpvHandle, byte[] name, mpv_format format, ref Int64 data);
+    public static extern mpv_error mpv_set_property(IntPtr mpvHandle, byte[] name, mpv_format format, ref long data);
 
     [DllImport("mpv-1.dll", CallingConvention = CallingConvention.Cdecl)]
     public static extern mpv_error mpv_set_property(IntPtr mpvHandle, byte[] name, mpv_format format, ref double data);
 
     [DllImport("mpv-1.dll", CallingConvention = CallingConvention.Cdecl)]
-    public static extern mpv_error mpv_observe_property(IntPtr mpvHandle, UInt64 reply_userdata, [MarshalAs(UnmanagedType.LPUTF8Str)] string name, mpv_format format);
+    public static extern mpv_error mpv_observe_property(IntPtr mpvHandle, ulong reply_userdata, [MarshalAs(UnmanagedType.LPUTF8Str)] string name, mpv_format format);
 
     [DllImport("mpv-1.dll", CallingConvention = CallingConvention.Cdecl)]
-    public static extern int mpv_unobserve_property(IntPtr mpvHandle, UInt64 registered_reply_userdata);
+    public static extern int mpv_unobserve_property(IntPtr mpvHandle, ulong registered_reply_userdata);
 
     [DllImport("mpv-1.dll", CallingConvention = CallingConvention.Cdecl)]
     public static extern void mpv_free(IntPtr data);
@@ -163,7 +169,7 @@ public class libmpv
     {
         public mpv_event_id event_id;
         public int error;
-        public UInt64 reply_userdata;
+        public ulong reply_userdata;
         public IntPtr data;
     }
 
@@ -189,22 +195,16 @@ public class libmpv
         public int error;
     }
 
-    public static IntPtr AllocateUtf8ArrayWithSentinel(string[] arr, out IntPtr[] byteArrayPointers)
+    [StructLayout(LayoutKind.Explicit, Size = 16)]
+    public struct mpv_node
     {
-        int numberOfStrings = arr.Length + 1; // add extra element for extra null pointer last (sentinel)
-        byteArrayPointers = new IntPtr[numberOfStrings];
-        IntPtr rootPointer = Marshal.AllocCoTaskMem(IntPtr.Size * numberOfStrings);
-
-        for (int index = 0; index < arr.Length; index++)
-        {
-            var bytes = GetUtf8Bytes(arr[index]);
-            IntPtr unmanagedPointer = Marshal.AllocHGlobal(bytes.Length);
-            Marshal.Copy(bytes, 0, unmanagedPointer, bytes.Length);
-            byteArrayPointers[index] = unmanagedPointer;
-        }
-
-        Marshal.Copy(byteArrayPointers, 0, rootPointer, numberOfStrings);
-        return rootPointer;
+        [FieldOffset(0)] public IntPtr str;
+        [FieldOffset(0)] public int flag;
+        [FieldOffset(0)] public long int64;
+        [FieldOffset(0)] public double dbl;
+        [FieldOffset(0)] public IntPtr list;
+        [FieldOffset(0)] public IntPtr ba;
+        [FieldOffset(8)] public mpv_format format;
     }
 
     public static string[] ConvertFromUtf8Strings(IntPtr utf8StringArray, int stringCount)

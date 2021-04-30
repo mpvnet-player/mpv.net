@@ -1,7 +1,7 @@
 
 MIT License
 
-Copyright (C) 2017-2020 Frank Skare (stax76)
+Copyright (C) 2017-2021 mpv.net/mpv/mplayer
 
 Permission is hereby granted, free of charge, to any person
 obtaining a copy of this software and ssociated documentation

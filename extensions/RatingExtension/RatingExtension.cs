@@ -95,10 +95,21 @@ namespace RatingExtension // the assembly name must end with 'Extension'
             else
             {
                 TimeSpan ts = DateTime.Now - DeleteTime;
-
-                if (FileToDelete == core.get_property_string("path") && ts.TotalSeconds < 5 && File.Exists(FileToDelete))
+                string path = core.get_property_string("path");
+                
+                if (FileToDelete == path && ts.TotalSeconds < 5 && File.Exists(FileToDelete))
                 {
                     core.command("playlist-remove current");
+                    int pos = core.get_property_int("playlist-pos");
+
+                    if (pos == -1)
+                    {
+                        int count = core.get_property_int("playlist-count");
+
+                        if (count > 0)
+                            core.set_property_int("playlist-pos", count - 1);
+                    }
+
                     Thread.Sleep(2000);
                     FileSystem.DeleteFile(FileToDelete, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
                 }

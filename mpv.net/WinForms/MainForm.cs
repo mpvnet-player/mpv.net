@@ -953,8 +953,8 @@ namespace mpvnet
 
         protected override void OnKeyDown(KeyEventArgs e)
         {
-            // prevent beep using alt key
-            if (Control.ModifierKeys == Keys.Alt)
+            // prevent annoying beep using alt key
+            if (ModifierKeys == Keys.Alt)
                 e.SuppressKeyPress = true;
 
             base.OnKeyDown(e);

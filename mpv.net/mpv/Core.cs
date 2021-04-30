@@ -103,12 +103,12 @@ namespace mpvnet
         public string Title { get; set; } = "";
         public string Vid { get; set; } = "";
 
-        public bool WasInitialSizeSet;
         public bool Border { get; set; } = true;
         public bool Fullscreen { get; set; }
         public bool IsLogoVisible { set; get; }
         public bool IsQuitNeeded { set; get; } = true;
         public bool TaskbarProgress { get; set; } = true;
+        public bool WasInitialSizeSet;
         public bool WindowMaximized { get; set; }
         public bool WindowMinimized { get; set; }
 
@@ -129,7 +129,7 @@ namespace mpvnet
 
             mpv_request_log_messages(Handle, "terminal-default");
 
-            App.RunAction(() => EventLoop());
+            App.RunTask(() => EventLoop());
 
             if (App.IsStartedFromTerminal)
             {
@@ -152,8 +152,6 @@ namespace mpvnet
 
             Initialized?.Invoke();
             InvokeAsync(InitializedAsync);
-
-            LoadMpvScripts();
         }
 
         public void ProcessProperty(string name, string value)
@@ -287,37 +285,11 @@ namespace mpvnet
             }
         }
 
-        public void LoadMpvScripts()
-        {
-            if (Directory.Exists(Folder.Startup + "Scripts"))
-                foreach (string path in Directory.GetFiles(Folder.Startup + "Scripts"))
-                    if ((path.EndsWith(".lua") || path.EndsWith(".js")) && KnownScripts.Contains(Path.GetFileName(path)))
-                        commandv("load-script", $"{path}");
-        }
-
-        public string[] KnownScripts { get; } = { "show-playlist.js"};
-
         public void LoadScripts()
         {
-            if (Directory.Exists(Folder.Startup + "Scripts"))
-            {
-                foreach (string file in Directory.GetFiles(Folder.Startup + "Scripts"))
-                {
-                    if (KnownScripts.Contains(Path.GetFileName(file)))
-                    {
-                        if (file.EndsWith(".ps1"))
-                            App.RunAction(() => InvokePowerShellScript(file));
-                    }
-                    else
-                        ConsoleHelp.WriteError("Failed to load script:\n" + file +
-                            "\nOnly scripts that ship with mpv.net are allowed in <startup>\\scripts." +
-                            "\nNever copy or install a new mpv.net version on top of a old mpv.net version.");
-                }
-            }
-
             if (Directory.Exists(ConfigFolder + "scripts-ps"))
                 foreach (string file in Directory.GetFiles(ConfigFolder + "scripts-ps", "*.ps1"))
-                    App.RunAction(() => InvokePowerShellScript(file));
+                    App.RunTask(() => InvokePowerShellScript(file));
         }
 
         public void InvokePowerShellScript(string file)
@@ -425,7 +397,7 @@ namespace mpvnet
                                 string[] args = ConvertFromUtf8Strings(data.args, data.num_args);
 
                                 if (args.Length > 1 && args[0] == "mpv.net")
-                                    App.RunAction(() => Commands.Execute(args[1], args.Skip(2).ToArray()));
+                                    App.RunTask(() => Commands.Execute(args[1], args.Skip(2).ToArray()));
 
                                 InvokeAsync<string[]>(ClientMessageAsync, args);
                                 ClientMessage?.Invoke(args);
@@ -473,9 +445,9 @@ namespace mpvnet
 
                                 VideoSizeAutoResetEvent.Set();
 
-                                App.RunAction(new Action(() => ReadMetaData()));
+                                App.RunTask(new Action(() => ReadMetaData()));
 
-                                App.RunAction(new Action(() => {
+                                App.RunTask(new Action(() => {
                                     string path = core.get_property_string("path");
 
                                     if (path.Contains("://"))
@@ -641,7 +613,7 @@ namespace mpvnet
                 foreach (Action a in action.GetInvocationList())
                 {
                     var a2 = a;
-                    App.RunAction(a2);
+                    App.RunTask(a2);
                 }
             }
         }
@@ -653,7 +625,7 @@ namespace mpvnet
                 foreach (Action<T> a in action.GetInvocationList())
                 {
                     var a2 = a;
-                    App.RunAction(() => a2.Invoke(t));
+                    App.RunTask(() => a2.Invoke(t));
                 }
             }
         }
@@ -665,7 +637,7 @@ namespace mpvnet
                 foreach (Action<T1, T2> a in action.GetInvocationList())
                 {
                     var a2 = a;
-                    App.RunAction(() => a2.Invoke(t1, t2));
+                    App.RunTask(() => a2.Invoke(t1, t2));
                 }
             }
         }
@@ -675,20 +647,6 @@ namespace mpvnet
             command("overlay-remove 0");
             IsLogoVisible = false;
         }
-           
-        public void commandv(params string[] args)
-        {
-            IntPtr mainPtr = AllocateUtf8ArrayWithSentinel(args, out IntPtr[] byteArrayPointers);
-            mpv_error err = mpv_command(Handle, mainPtr);
-
-            foreach (IntPtr ptr in byteArrayPointers)
-                Marshal.FreeHGlobal(ptr);
-
-            Marshal.FreeHGlobal(mainPtr);
-
-            if (err < 0)
-                HandleError(err, true, "error executing command:", string.Join("\n", args));
-        }
 
         public void command(string command, bool throwException = false)
         {
@@ -696,6 +654,70 @@ namespace mpvnet
 
             if (err < 0)
                 HandleError(err, throwException, "error executing command:", command);
+        }
+
+        public void commandv(params string[] args)
+        {
+            int count = args.Length + 1;
+            IntPtr[] pointers = new IntPtr[count];
+            IntPtr rootPtr = Marshal.AllocHGlobal(IntPtr.Size * count);
+
+            for (int index = 0; index < args.Length; index++)
+            {
+                var bytes = GetUtf8Bytes(args[index]);
+                IntPtr ptr = Marshal.AllocHGlobal(bytes.Length);
+                Marshal.Copy(bytes, 0, ptr, bytes.Length);
+                pointers[index] = ptr;
+            }
+
+            Marshal.Copy(pointers, 0, rootPtr, count);
+            mpv_error err = mpv_command(Handle, rootPtr);
+
+            foreach (IntPtr ptr in pointers)
+                Marshal.FreeHGlobal(ptr);
+
+            Marshal.FreeHGlobal(rootPtr);
+
+            if (err < 0)
+                HandleError(err, true, "error executing command:", string.Join("\n", args));
+        }
+
+        public string expand(string value)
+        {
+            string[] args = { "expand-text", value };
+            int count = args.Length + 1;
+            IntPtr[] pointers = new IntPtr[count];
+            IntPtr rootPtr = Marshal.AllocHGlobal(IntPtr.Size * count);
+
+            for (int index = 0; index < args.Length; index++)
+            {
+                var bytes = GetUtf8Bytes(args[index]);
+                IntPtr ptr = Marshal.AllocHGlobal(bytes.Length);
+                Marshal.Copy(bytes, 0, ptr, bytes.Length);
+                pointers[index] = ptr;
+            }
+
+            Marshal.Copy(pointers, 0, rootPtr, count);
+            IntPtr resultNodePtr = Marshal.AllocHGlobal(16);
+            mpv_error err = mpv_command_ret(Handle, rootPtr, resultNodePtr);
+
+            foreach (IntPtr ptr in pointers)
+                Marshal.FreeHGlobal(ptr);
+
+            Marshal.FreeHGlobal(rootPtr);
+
+            if (err < 0)
+            {
+                HandleError(err, true, "error executing command:", string.Join("\n", args));
+                Marshal.FreeHGlobal(resultNodePtr);
+                return "property expansion error";
+            }
+
+            mpv_node resultNode = Marshal.PtrToStructure<mpv_node>(resultNodePtr);
+            string ret = ConvertFromUtf8(resultNode.str);
+            mpv_free_node_contents(resultNodePtr);
+            Marshal.FreeHGlobal(resultNodePtr);
+            return ret;
         }
 
         public bool get_property_bool(string name, bool throwException = false)
@@ -711,7 +733,7 @@ namespace mpvnet
 
         public void set_property_bool(string name, bool value, bool throwException = false)
         {
-            Int64 val = (value) ? 1 : 0;
+            long val = (value) ? 1 : 0;
             mpv_error err = mpv_set_property(Handle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_FLAG, ref val);
 
             if (err < 0)
@@ -731,7 +753,7 @@ namespace mpvnet
 
         public void set_property_int(string name, int value, bool throwException = false)
         {
-            Int64 val = value;
+            long val = value;
             mpv_error err = mpv_set_property(Handle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_INT64, ref val);
 
             if (err < 0)
@@ -917,18 +939,6 @@ namespace mpvnet
             }
         }
 
-        public void show_text(string text, int duration = 0, int fontSize = 0)
-        {
-            if (duration == 0)
-                duration = get_property_int("osd-duration");
-
-            if (fontSize == 0)
-                fontSize = get_property_int("osd-font-size");
-
-            core.command("show-text \"${osd-ass-cc/0}{\\\\fs" + fontSize +
-                "}${osd-ass-cc/1}" + text + "\" " + duration);
-        }
-
         public void HandleError(mpv_error err, bool throwException, params string[] messages)
         {
             if (throwException)
@@ -1106,7 +1116,7 @@ namespace mpvnet
                 set_property_int("playlist-pos", 0);
 
             if (loadFolder && !append)
-                App.RunAction(() => LoadFolder());
+                App.RunTask(() => LoadFolder());
         }
 
         public void LoadISO(string path)

@@ -19,7 +19,7 @@ namespace mpvnet
         public bool Print { get; set; }
         public List<string> Scripts { get; } = new List<string>();
         public List<KeyValuePair<string, object>> Variables = new List<KeyValuePair<string, object>>();
-        public string[] Parameters { get; }
+        public string[] Arguments { get; }
         public event Action<string, object[]> Event;
         public event Action<string, object> PropertyChanged;
         public List<KeyValuePair<string, ScriptBlock>> EventHandlers = new List<KeyValuePair<string, ScriptBlock>>();
@@ -41,8 +41,8 @@ namespace mpvnet
                 foreach (string script in Scripts)
                     Pipeline.Commands.AddScript(script);
 
-                if (Parameters != null)
-                    foreach (string param in Parameters)
+                if (Arguments != null)
+                    foreach (string param in Arguments)
                         foreach (Command command in Pipeline.Commands)
                             command.Parameters.Add(null, param);
 
@@ -137,19 +137,19 @@ namespace mpvnet
             switch (type)
             {
                 case "bool": case "boolean":
-                    core.observe_property_bool(name, (value) => App.RunAction(() => PropertyChanged.Invoke(name, value)));
+                    core.observe_property_bool(name, (value) => App.RunTask(() => PropertyChanged.Invoke(name, value)));
                     break;
                 case "string":
-                    core.observe_property_string(name, (value) => App.RunAction(() => PropertyChanged.Invoke(name, value)));
+                    core.observe_property_string(name, (value) => App.RunTask(() => PropertyChanged.Invoke(name, value)));
                     break;
                 case "int": case "integer":
-                    core.observe_property_int(name, (value) => App.RunAction(() => PropertyChanged.Invoke(name, value)));
+                    core.observe_property_int(name, (value) => App.RunTask(() => PropertyChanged.Invoke(name, value)));
                     break;
                 case "float": case "double":
-                    core.observe_property_double(name, (value) => App.RunAction(() => PropertyChanged.Invoke(name, value)));
+                    core.observe_property_double(name, (value) => App.RunTask(() => PropertyChanged.Invoke(name, value)));
                     break;
                 case "nil": case "none": case "native":
-                    core.observe_property(name, () => App.RunAction(() => PropertyChanged.Invoke(name, null)));
+                    core.observe_property(name, () => App.RunTask(() => PropertyChanged.Invoke(name, null)));
                     break;
                 default:
                     App.ShowError("Invalid Type", "Valid types are: bool or boolean, string, int or integer, float or double, nil or none or native");

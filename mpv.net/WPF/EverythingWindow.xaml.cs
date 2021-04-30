@@ -119,7 +119,7 @@ namespace mpvnet
         void FilterTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             string searchtext = FilterTextBox.Text;
-            App.RunAction(() => Search(searchtext));
+            App.RunTask(() => Search(searchtext));
         }
 
         object LockObject = new object();

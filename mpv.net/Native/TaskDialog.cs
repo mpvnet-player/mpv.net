@@ -462,18 +462,20 @@ public class TaskDialog<T> : TaskDialogNative, IDisposable
     {
         if (Buttons != null && Buttons.Count > 0)
         {
-            ButtonArray = TaskDialog<T>.AllocateAndMarshalButtons(Buttons);
+            ButtonArray = AllocateAndMarshalButtons(Buttons);
             Config.pButtons = ButtonArray;
             Config.cButtons = (uint)Buttons.Count;
         }
 
-        if (RadioButtons == null || RadioButtons.Count <= 0) return;
-        RadioButtonArray = TaskDialog<T>.AllocateAndMarshalButtons(RadioButtons);
+        if (RadioButtons == null || RadioButtons.Count <= 0)
+            return;
+
+        RadioButtonArray = AllocateAndMarshalButtons(RadioButtons);
         Config.pRadioButtons = RadioButtonArray;
         Config.cRadioButtons = (uint)RadioButtons.Count;
     }
 
-    public static IntPtr AllocateAndMarshalButtons(List<TaskDialogNative.TASKDIALOG_BUTTON> structs)
+    public static IntPtr AllocateAndMarshalButtons(List<TASKDIALOG_BUTTON> structs)
     {
         var initialPtr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(TASKDIALOG_BUTTON)) * structs.Count);
         var currentPtr = initialPtr;

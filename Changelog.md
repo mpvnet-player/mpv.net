@@ -5,6 +5,10 @@
 - Improved window scaling.
 - Title property implementation.
 - Command palette shows commands without assigned menu item.
+- The code from the included JavaScript file was ported into the core player
+  because JavaScript is currently broken in the builds of shinshiro.
+- MediaInfo 21.3
+- libmpv 2021-02-28
 
 
 5.4.8.7 Beta (2021-03-09)

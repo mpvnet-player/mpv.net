@@ -1,9 +1,7 @@
 
 $tmpDir      = 'D:\Work'
-$exePath     = $PSScriptRoot + '\mpv.net\bin\x64\mpvnet.exe'
+$exePath     = $PSScriptRoot + '\mpv.net\bin\mpvnet.exe'
 $versionInfo = [Diagnostics.FileVersionInfo]::GetVersionInfo($exePath)
-$vsDir       = 'C:\Program Files (x86)\Microsoft Visual Studio\2019'
-$msBuild     = $vsDir + '\Community\MSBuild\Current\Bin\MSBuild.exe'
 $inno        = 'C:\Program Files (x86)\Inno Setup 6\ISCC.exe'
 $7z          = 'C:\Program Files\7-Zip\7z.exe'
 
@@ -34,25 +32,11 @@ function UploadBeta($sourceFile)
 
 if ($versionInfo.FilePrivatePart -eq 0)
 {
-    & $msBuild mpv.net.sln -t:Rebuild -p:Configuration=Debug -p:Platform=x64
+    & $inno setup.iss
     if ($LastExitCode) { throw $LastExitCode }
 
-    & $msBuild mpv.net.sln -t:Rebuild -p:Configuration=Debug -p:Platform=x86
-    if ($LastExitCode) { throw $LastExitCode }
-
-    & $inno /Darch=x64 setup.iss
-    if ($LastExitCode) { throw $LastExitCode }
-
-    & $inno /Darch=x86 setup.iss
-    if ($LastExitCode) { throw $LastExitCode }
-
-    $targetDir = $tmpDir + "\mpv.net-portable-x64-$($versionInfo.FileVersion)"
-    Copy-Item .\mpv.net\bin\x64 $targetDir -Recurse -Exclude System.Management.Automation.xml
-    & $7z a -tzip -mx9 "$targetDir.zip" -r "$targetDir\*"
-    if ($LastExitCode) { throw $LastExitCode }
-
-    $targetDir = $tmpDir + "\mpv.net-portable-x86-$($versionInfo.FileVersion)"
-    Copy-Item .\mpv.net\bin\x86 $targetDir -Recurse -Exclude System.Management.Automation.xml
+    $targetDir = $tmpDir + "\mpv.net-$($versionInfo.FileVersion)-portable"
+    Copy-Item .\mpv.net\bin $targetDir -Recurse -Exclude System.Management.Automation.xml
     & $7z a -tzip -mx9 "$targetDir.zip" -r "$targetDir\*"
     if ($LastExitCode) { throw $LastExitCode }
 
@@ -62,20 +46,8 @@ if ($versionInfo.FilePrivatePart -eq 0)
 }
 else
 {
-    & $msBuild mpv.net.sln -t:Rebuild -p:Configuration=Debug -p:Platform=x64
-    if ($LastExitCode) { throw $LastExitCode }
-
-    & $msBuild mpv.net.sln -t:Rebuild -p:Configuration=Debug -p:Platform=x86
-    if ($LastExitCode) { throw $LastExitCode }
-
-    $targetDir = "$tmpDir\mpv.net-portable-x64-$($versionInfo.FileVersion)-beta"
-    Copy-Item .\mpv.net\bin\x64 $targetDir -Recurse -Exclude System.Management.Automation.xml
-    & $7z a -t7z -mx9 "$targetDir.7z" -r "$targetDir\*"
-    if ($LastExitCode) { throw $LastExitCode }
-    UploadBeta "$targetDir.7z"
-
-    $targetDir = $tmpDir + "\mpv.net-portable-x86-$($versionInfo.FileVersion)-beta"
-    Copy-Item .\mpv.net\bin\x86 $targetDir -Recurse -Exclude System.Management.Automation.xml
+    $targetDir = "$tmpDir\mpv.net-$($versionInfo.FileVersion)-portable-beta"
+    Copy-Item .\mpv.net\bin $targetDir -Recurse -Exclude System.Management.Automation.xml
     & $7z a -t7z -mx9 "$targetDir.7z" -r "$targetDir\*"
     if ($LastExitCode) { throw $LastExitCode }
     UploadBeta "$targetDir.7z"
