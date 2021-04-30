@@ -86,6 +86,7 @@ namespace mpvnet
 
                 AppDomain.CurrentDomain.UnhandledException += (sender, e) => App.ShowException(e.ExceptionObject);
                 Application.ThreadException += (sender, e) => App.ShowException(e.Exception);
+             
                 Msg.SupportURL = "https://github.com/stax76/mpv.net#support";
 
                 TaskbarButtonCreatedMessage = RegisterWindowMessage("TaskbarButtonCreated");
@@ -844,7 +845,7 @@ namespace mpvnet
 
             BuildMenu();
             ContextMenuStrip = ContextMenu;
-            WPF.WPF.Init();
+            WPF.Init();
             System.Windows.Application.Current.ShutdownMode = System.Windows.ShutdownMode.OnExplicitShutdown;
             Cursor.Position = new Point(Cursor.Position.X + 1, Cursor.Position.Y);
             MinimumSize = new Size(FontHeight * 9, FontHeight * 9);

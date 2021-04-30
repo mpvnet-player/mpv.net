@@ -2,7 +2,7 @@
 using System;
 using System.Windows;
 
-namespace WPF
+namespace mpvnet
 {
     public class WPF
     {
@@ -15,6 +15,8 @@ namespace WPF
                 Application.Current.Resources.MergedDictionaries.Add(
                     Application.LoadComponent(new Uri("mpvnet;component/WPF/Resources.xaml",
                         UriKind.Relative)) as ResourceDictionary);
+
+                Application.Current.DispatcherUnhandledException += (sender, e) => App.ShowException(e.Exception);
             }
         }
     }
