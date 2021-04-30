@@ -8,7 +8,7 @@
 - The code from the included JavaScript file was ported into the core player
   because JavaScript is currently broken in the builds of shinshiro.
 - MediaInfo 21.3
-- libmpv 2021-02-28
+- libmpv shinchiro 2021-04-04
 
 
 5.4.8.7 Beta (2021-03-09)

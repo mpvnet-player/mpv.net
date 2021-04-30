@@ -492,17 +492,13 @@ The documentation of mpvs window features can be found here:
 
 mpv.net has currently implemented the following window features:
 
-[screen](https://mpv.io/manual/master/#options-screen)
-
-[fullscreen](https://mpv.io/manual/master/#options-fullscreen)
-
-[ontop](https://mpv.io/manual/master/#options-ontop)
-
-[border](https://mpv.io/manual/master/#options-border)
-
-[window-minimized](https://mpv.io/manual/master/#options-window-minimized)
-
-[window-maximized](https://mpv.io/manual/master/#options-window-maximized)
+- [border](https://mpv.io/manual/master/#options-border)
+- [fullscreen](https://mpv.io/manual/master/#options-fullscreen)
+- [ontop](https://mpv.io/manual/master/#options-ontop)
+- [screen](https://mpv.io/manual/master/#options-screen)
+- [title](https://mpv.io/manual/master/#options-title)
+- [window-maximized](https://mpv.io/manual/master/#options-window-maximized)
+- [window-minimized](https://mpv.io/manual/master/#options-window-minimized)
 
 
 **Partly implemented are:**

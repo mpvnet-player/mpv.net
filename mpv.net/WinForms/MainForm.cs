@@ -49,10 +49,6 @@ namespace mpvnet
                 Hwnd = Handle;
                 ConsoleHelp.Padding = 60;
                 core.Init();
-                core.Title = core.get_property_string("title");
-
-                if (core.Title != null && core.Title.EndsWith("} - mpv"))
-                    core.Title = "";
 
                 if (App.GlobalMediaKeys)
                 {
@@ -92,7 +88,6 @@ namespace mpvnet
                 Application.ThreadException += (sender, e) => App.ShowException(e.Exception);
                 Msg.SupportURL = "https://github.com/stax76/mpv.net#support";
 
-                Text = string.IsNullOrEmpty(core.Title) ? "mpv.net " + Application.ProductVersion : core.Title;
                 TaskbarButtonCreatedMessage = RegisterWindowMessage("TaskbarButtonCreated");
                 
                 ContextMenu = new ContextMenuStripEx(components);
@@ -167,10 +162,7 @@ namespace mpvnet
 
         void Shutdown() => BeginInvoke(new Action(() => Close()));
 
-        void Idle()
-        {
-            BeginInvoke(new Action(() => Text = string.IsNullOrEmpty(core.Title) ? "mpv.net " + Application.ProductVersion : core.Title));
-        }
+        void Idle() => SetTitle();
 
         bool WasShown() => ShownTickCount != 0 && Environment.TickCount > ShownTickCount + 500;
 
@@ -524,15 +516,7 @@ namespace mpvnet
             string path = core.get_property_string("path");
 
             BeginInvoke(new Action(() => {
-                if (string.IsNullOrEmpty(core.Title))
-                {
-                    if (path.Contains("://"))
-                        Text = core.get_property_string("media-title") + " - mpv.net " + Application.ProductVersion;
-                    else
-                        Text = path.FileName() + " - mpv.net " + Application.ProductVersion;
-                }
-                else
-                    Text = core.Title;
+                Text = core.expand(Title);
 
                 int interval = (int)(core.Duration.TotalMilliseconds / 100);
 
@@ -555,6 +539,8 @@ namespace mpvnet
                 RecentFiles.RemoveAt(App.RecentCount);
         }
 
+        void SetTitle() => BeginInvoke(new Action(() => Text = core.expand(Title)));
+
         void SaveWindowProperties()
         {
             if (WindowState == FormWindowState.Normal)
@@ -570,6 +556,21 @@ namespace mpvnet
                 CreateParams cp = base.CreateParams;
                 cp.Style |= 0x00020000 /* WS_MINIMIZEBOX */;
                 return cp;
+            }
+        }
+
+        string _Title;
+
+        public string Title {
+            get => _Title;
+            set {
+                if (string.IsNullOrEmpty(value))
+                    return;
+
+                if (value.EndsWith("} - mpv"))
+                    value = value.Replace("} - mpv", "} - mpv.net");
+
+                _Title = value;
             }
         }
 
@@ -749,11 +750,8 @@ namespace mpvnet
         void PropChangeSid(string value) => core.Sid = value;
 
         void PropChangeVid(string value) => core.Vid = value;
-        
-        void PropChangeTitle(string value) => BeginInvoke(new Action(() => {
-            if (value != null && !value.EndsWith("} - mpv"))
-                Text = value;
-        }));
+
+        void PropChangeTitle(string value) { Title = value; SetTitle(); }
 
         void PropChangeEdition(int value) => core.Edition = value;
         

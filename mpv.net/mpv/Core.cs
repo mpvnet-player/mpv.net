@@ -100,7 +100,6 @@ namespace mpvnet
         public string GPUAPI { get; set; } = "auto";
         public string InputConfPath { get => ConfigFolder + "input.conf"; }
         public string Sid { get; set; } = "";
-        public string Title { get; set; } = "";
         public string Vid { get; set; } = "";
 
         public bool Border { get; set; } = true;
@@ -178,7 +177,6 @@ namespace mpvnet
                 case "taskbar-progress": TaskbarProgress = value == "yes"; break;
                 case "screen": Screen = Convert.ToInt32(value); break;
                 case "gpu-api": GPUAPI = value; break;
-                case "title": Title = value; break;
             }
 
             if (AutofitLarger > 1)
@@ -684,6 +682,12 @@ namespace mpvnet
 
         public string expand(string value)
         {
+            if (value == null)
+                return "";
+
+            if (!value.Contains("${"))
+                return value;
+
             string[] args = { "expand-text", value };
             int count = args.Length + 1;
             IntPtr[] pointers = new IntPtr[count];
