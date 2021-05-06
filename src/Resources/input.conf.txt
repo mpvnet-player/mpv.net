@@ -181,7 +181,7 @@
  _ script-message mpv.net shell-execute https://github.com/stax76/mpv.net #menu: Help > Website mpv.net
  _ ignore                                                                 #menu: Help > -
  _ script-message mpv.net shell-execute https://mpv.io/manual/stable/     #menu: Help > Manual mpv
- _ script-message mpv.net shell-execute https://github.com/stax76/mpv.net/blob/master/Manual.md #menu: Help > Manual mpv.net
+ _ script-message mpv.net shell-execute https://github.com/stax76/mpv.net/blob/master/docs/Manual.md #menu: Help > Manual mpv.net
  _ ignore                                                                 #menu: Help > -
  _ script-message mpv.net update-check                                    #menu: Help > Check for Updates
  _ script-message mpv.net show-about                                      #menu: Help > About mpv.net

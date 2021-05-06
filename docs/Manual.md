@@ -339,17 +339,17 @@ Alternatively the Chrome/Firefox extension [Open With](../../../issues/119) can 
 Scripting
 ---------
 
-There is no debugger support available for the scripting hosts, mpv.net can be started from a terminal, 
-script errors and debug messages are printed then on the terminal.
-
-
 #### Lua
 
 File Type: `lua`
 
 Location: `<config folder>\scripts`
 
-Lua and JavaScript scripts are loaded before the first media file loads.
+The Lua script host is built into libmpv.
+
+There is no debugging support, only error and debug messages printed on the terminal.
+
+Lua scripts are loaded before the first media file loads.
 
 [mpv Lua documentation](https://mpv.io/manual/master/#lua-scripting)
 
@@ -362,7 +362,11 @@ File Type: `js`
 
 Location: `<config folder>\scripts`
 
-Lua and JavaScript scripts are loaded before the first media file loads.
+The JavaScript script host is built into libmpv.
+
+There is no debugging support, only error and debug messages printed on the terminal.
+
+JavaScript scripts are loaded before the first media file loads.
 
 [mpv JavaScript documentation](https://mpv.io/manual/master/#javascript)
 
@@ -375,11 +379,13 @@ File Type: `ps1`
 
 Location: `<config folder>\scripts-ps`
 
-The PowerShell scripting host is like extensions not initialized before media files are loaded.
+The PowerShell scripting host is like extensions not
+initialized before media files are loaded.
 
-mpv.net does not define scripting interfaces but instead exposed its complete internals, there are no compatibility guaranties.
+mpv.net does not define scripting interfaces but instead exposed
+its complete internals, there are no compatibility guaranties.
 
-[Example Scripts](scripts)
+[Example Scripts](../../../tree/master/src/Scripts)
 
 
 #### C#
@@ -388,35 +394,50 @@ File Type: `cs`
 
 Location: `<config folder>\scripts-cs`
 
-mpv.net does not define scripting interfaces but instead exposed its complete internals, there are no compatibility guaranties.
+mpv.net does not define scripting interfaces but instead exposed
+its complete internals, there are no compatibility guaranties.
 
-Script code can be written within a C# [extension](#extensions), that way full code completion and debugger support is available. Once the code was developed and debugged, the code can be moved from the extension to a lightweight standalone script.
+Script code can be written within a C# [extension](../../../tree/master/Extensions),
+that way full code completion and debugger support is available.
+Once the code was developed and debugged, it can be moved
+from the extension to a lightweight standalone script.
 
-The C# scripting host is like [extensions](#extensions) not initialized before media files are loaded.
+The C# scripting host is like [extensions](../../../tree/master/Extensions)
+not initialized before media files are loaded.
 
-[Example Scripts](scripts)
+[Example Scripts](../../../tree/master/src/Scripts)
 
 
 Extensions
 ----------
 
-Extensions are located in a subfolder _extensions_ in the config folder and the filename must have the same name as the directory:
+Extensions are located in a subfolder _extensions_ in the config folder
+and the filename must have the same name as the directory:
 
 ```Text
 <config folder>\extensions\ExampleExtension\ExampleExtension.dll
 ```
 
-mpv.net does not define extension interfaces but instead exposed its complete internals, there are no compatibility guaranties.
+mpv.net does not define extension interfaces but instead exposed
+its complete internals, there are no compatibility guaranties.
 
 
 ### Walkthrough creating an extension
 
 - Download and install [Visual Studio Community](https://visualstudio.microsoft.com).
-- Create a new project of type **Class Library .NET Framework** and ensure the project name ends with **Extension**.
+- Create a new project of type **Class Library .NET Framework**
+  and ensure the project name ends with **Extension**.
 - Add a reference to **System.ComponentModel.Composition**.
-- Add a reference to mpvnet.exe, select the mpvnet reference in the Solution Explorer, open the Properties window and set **Copy Local** to false to prevent mpvnet.exe being copied to the output directory when the project is built.
-- Now open the project properties and set the output path in the Build tab, extensions are like scripts located in your config folder, example: `<config folder>\extensions\ExampleExtension\ExampleExtension.dll`
-- Also in the project properties choose the option **Start external program** in the Debug tab and define the path to mpvnet.exe. In the Debug tab you may also define command line arguments like a video file to be played when you start debugging.
+- Add a reference to mpvnet.exe, select the mpvnet reference
+  in the Solution Explorer, open the Properties window and set
+  **Copy Local** to false to prevent mpvnet.exe being copied
+  to the output directory when the project is built.
+- Now open the project properties and set the output path in the Build tab,
+  extensions are like scripts located in your config folder, example:
+  `<config folder>\extensions\ExampleExtension\ExampleExtension.dll`
+- Also in the project properties choose the option **Start external program**
+  in the Debug tab and define the path to mpvnet.exe. In the Debug tab you may
+  also define command line arguments like a video file to be played when you start debugging.
 
 
 ### Sample Code
@@ -427,7 +448,7 @@ I use this extension as well to develop and debug C# scripts.
 Once the code was developed and debugged, I move the code from
 the extension to a standalone script.
 
-[Source Code](extensions)
+[Source Code](../../../tree/master/Extensions)
 
 
 #### RatingExtension
@@ -436,7 +457,7 @@ This extension writes a rating to the filename of rated videos when mpv.net shut
 
 The input.conf defaults contain key bindings for this extension to set ratings.
 
-[Source Code](extensions)
+[Source Code](../../../tree/master/Extensions)
 
 
 Color Theme
