@@ -29,9 +29,13 @@ About
 
 mpv.net is a modern desktop media player for Windows based on the popular mpv player.
 
-mpv.net is designed to be mpv compatible, almost all mpv features are available because they are all contained in libmpv, this means the official [mpv manual](https://mpv.io/manual/master/) applies to mpv.net.
+mpv.net is designed to be mpv compatible, almost all mpv features are available
+because they are all contained in libmpv, this means the official
+[mpv manual](https://mpv.io/manual/master/) applies to mpv.net.
 
-mpv focuses on the usage of the command line and the terminal, mpv.net retains the ability to be used from the command line and the terminal and adds a modern Windows GUI on top of it.
+mpv focuses on the usage of the command line and the terminal,
+mpv.net retains the ability to be used from the command line and
+the terminal and adds a modern Windows GUI on top of it.
 
 
 Download
@@ -59,20 +63,27 @@ mpv.net requires the .NET Framework 4.8 and Windows 7 or 10 and a modern graphic
 
 There is a setup exe and a portable zip file download.
 
-For internet streaming youtube-dl must be downloaded and installed manually, meaning it must be located in the PATH environment variable or in the startup directory.
+For internet streaming youtube-dl must be downloaded and installed manually,
+meaning it must be located in the PATH environment variable or in the startup directory.
 
 
 #### File Associations
 
 File Associations can be created using the setup or with the context menu under 'Tools > Setup'.
 
-After the file associations were registered, go to the Windows settings under 'Settings > Apps > Default apps' or shell execute `ms-settings:defaultapps` and choose mpv.net as default app for Video and optionally for Audio and Images.
+After the file associations were registered, go to the Windows settings under
+'Settings > Apps > Default apps' or shell execute `ms-settings:defaultapps` and choose
+mpv.net as default app for Video and optionally for Audio and Images.
 
-It's possible to change the default application using the 'Open with' feature of the context menu in File Explorer.
+It's possible to change the default application using the 'Open with' feature
+of the context menu in File Explorer.
 
-[Open with++](#open-with) can be used to extend the File Explorer context menu to get menu items for [Play with mpv.net](https://github.com/stax76/OpenWithPlusPlus#play-with-mpvnet) and [Add to mpv.net playlist](https://github.com/stax76/OpenWithPlusPlus#add-to-mpvnet-playlist).
+[Open with++](#open-with) can be used to extend the File Explorer context menu
+to get menu items for [Play with mpv.net](https://github.com/stax76/OpenWithPlusPlus#play-with-mpvnet) and
+[Add to mpv.net playlist](https://github.com/stax76/OpenWithPlusPlus#add-to-mpvnet-playlist).
 
-When multiple files are selected in File Explorer and enter is pressed then the files are opened in mpv.net in random order, this works with maximum 15 files.
+When multiple files are selected in File Explorer and enter is pressed then
+the files are opened in mpv.net in random order, this works with maximum 15 files.
 
 
 Support
@@ -80,7 +91,8 @@ Support
 
 Before making a support request, please try a newer [beta version](#beta) first.
 
-Bugs and feature requests can be made on the github [issue tracker](../../../issues), feel free to use for anything mpv.net related, usage questions are welcome.
+Bugs and feature requests can be made on the github [issue tracker](../../../issues),
+feel free to use for anything mpv.net related, usage questions are welcome.
 
 Or use the [support thread](https://forum.videohelp.com/threads/392514-mpv-net-a-extendable-media-player-for-windows) in the VideoHelp forum.
 
@@ -99,15 +111,13 @@ all config will be loaded from this folder only.
 
 mpv specific settings are stored in the file mpv.conf, if no mpv.conf file exists
 mpv.net generates it with the following defaults:
-
-https://github.com/stax76/mpv.net/blob/master/mpv.net/src/Resources/mpv.conf.txt
+[mpv.conf defaults](../../../tree/master/src/Resources/mpv.conf.txt)
 
 mpv.net specific settings are stored in the file mpvnet.conf.
 
 The input (key/mouse) bindings and the context menu definitions are stored in the
 input.conf file, if it's missing mpv.net generates it with the following defaults:
-
-https://github.com/stax76/mpv.net/blob/master/mpv.net/src/Resources/input.conf.txt
+[input.conf defaults](../../../tree/master/src/Resources/input.conf.txt)
 
 mpv.net supports almost all mpv settings and features.
 
@@ -150,9 +160,11 @@ Non property switches are generally not supported in mpv.net!
 Terminal
 --------
 
-When mpv.net is started from a terminal it will output status, error and debug messages to the terminal and accept input keys from the terminal.
+When mpv.net is started from a terminal it will output status,
+error and debug messages to the terminal and accept input keys from the terminal.
 
-In the context menu under _Tools > Setup_ a button can be found to add mpv.net to the path environment variable.
+In the context menu under _Tools > Setup_ a button can be found to add
+mpv.net to the path environment variable.
 
 A common task for the terminal is debugging scripts.
 
@@ -432,7 +444,7 @@ Color Theme
 
 mpv.net supports custom color themes, the definition of the built-in themes can be found at:
 
-https://github.com/stax76/mpv.net/blob/master/mpv.net/src/Resources/theme.txt
+https://github.com/stax76/mpv.net/tree/master/src/Resources/theme.txt
 
 
 Custom themes can be saved at:
@@ -556,7 +568,7 @@ located in the config directory.
 
 If the input.conf file does not exists mpv.net generates it with the following defaults:
 
-<https://github.com/stax76/mpv.net/blob/master/mpv.net/src/Resources/input.conf.txt>
+<https://github.com/stax76/mpv.net/tree/master/src/Resources/input.conf.txt>
 
 input.conf defines mpvs key and mouse bindings and mpv.net uses
 comments to define the context menu.
