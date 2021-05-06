@@ -76,11 +76,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Misc\App.cs" />
+    <Compile Include="Misc\CSharpScriptHost.cs" />
     <Compile Include="Misc\Extension.cs" />
-    <Content Include="..\License.txt">
-      <Link>License.txt</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <None Include="Resources\mpvnet-santa.png" />
     <Content Include="Resources\theme.txt" />
     <Page Include="WPF\SearchTextBoxUserControl.xaml">
@@ -180,12 +177,6 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="..\Changelog.md">
-      <Link>Changelog.md</Link>
-    </None>
-    <None Include="..\Manual.md">
-      <Link>Manual.md</Link>
-    </None>
     <None Include="..\README.md">
       <Link>README.md</Link>
     </None>

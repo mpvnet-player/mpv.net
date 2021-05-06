@@ -1,5 +1,5 @@
 
-![](https://raw.githubusercontent.com/stax76/mpv.net/master/img/mpvnet.png)
+![](https://raw.githubusercontent.com/stax76/mpv.net/master/docs/img/mpvnet.png)
 
 ![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/stax76/mpv.net) ![GitHub closed issues](https://img.shields.io/github/issues-closed/stax76/mpv.net) ![GitHub All Releases](https://img.shields.io/github/downloads/stax76/mpv.net/total) ![GitHub tag (latest by date)](https://img.shields.io/github/tag-date/stax76/mpv.net) ![GitHub stars](https://img.shields.io/github/stars/stax76/mpv.net)
 
@@ -90,19 +90,19 @@ Features
 - Update check and update routine
 
 
-## [Support](Manual.md#support)
+## [Support](docs/Manual.md#support)
 
-[Support section of the manual.](Manual.md#support)
-
-
-## [Download](Manual.md#download)
-
-[Download section of the manual.](Manual.md#download)
+[Support section of the manual.](docs/Manual.md#support)
 
 
-## [Manual](Manual.md)
+## [Download](docs/Manual.md#download)
 
-[The mpv.net documentation.](Manual.md)
+[Download section of the manual.](docs/Manual.md#download)
+
+
+## [Manual](docs/Manual.md)
+
+[The mpv.net documentation.](docs/Manual.md)
 
 
 Screenshots
@@ -110,39 +110,39 @@ Screenshots
 
 #### Main Window
 
-![Main Window](https://raw.githubusercontent.com/stax76/mpv.net/master/img/Main.png)
+![Main Window](docs/img/Main.png)
 
 
 #### Context Menu
 
 Context menu using dark mode.
 
-![Context Menu](https://raw.githubusercontent.com/stax76/mpv.net/master/img/Menu.jpg)
+![Context Menu](https://raw.githubusercontent.com/stax76/mpv.net/master/docs/img/Menu.jpg)
 
 
 #### Config Editor
 
 Searchable config editor as alternative to edit the conf file manually.
 
-![](https://raw.githubusercontent.com/stax76/mpv.net/master/img/ConfEditor.png)
+![](https://raw.githubusercontent.com/stax76/mpv.net/master/docs/img/ConfEditor.png)
 
 
 #### Terminal
 
 OSD console and status printed on the terminal.
 
-![](https://raw.githubusercontent.com/stax76/mpv.net/master/img/Terminal.png)
+![](https://raw.githubusercontent.com/stax76/mpv.net/master/docs/img/Terminal.png)
 
 
 #### Input Editor
 
 Searchable key and mouse binding editor.
 
-![Input Editor](https://raw.githubusercontent.com/stax76/mpv.net/master/img/InputEditor.png)
+![Input Editor](https://raw.githubusercontent.com/stax76/mpv.net/master/docs/img/InputEditor.png)
 
 
 #### Command Palette
 
 Command Palette to find commands and shortcut keys easily.
 
-![Command Palette](https://raw.githubusercontent.com/stax76/mpv.net/master/img/CommandPalette.png)
+![Command Palette](https://raw.githubusercontent.com/stax76/mpv.net/master/docs/img/CommandPalette.png)

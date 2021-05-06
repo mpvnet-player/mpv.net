@@ -3,11 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28729.10
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mpv.net", "mpv.net\mpv.net.csproj", "{1751F378-8EDF-4B62-BE6D-304C7C287089}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mpv.net", "mpv.net.csproj", "{1751F378-8EDF-4B62-BE6D-304C7C287089}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RatingExtension", "extensions\RatingExtension\RatingExtension.csproj", "{55C88710-539D-4402-84C8-31694841C731}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScriptingExtension", "extensions\ScriptingExtension\ScriptingExtension.csproj", "{94255EF2-C823-4D82-9017-0E993CC0F5A1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +21,6 @@ Global
 		{55C88710-539D-4402-84C8-31694841C731}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{55C88710-539D-4402-84C8-31694841C731}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{55C88710-539D-4402-84C8-31694841C731}.Release|Any CPU.Build.0 = Release|Any CPU
-		{94255EF2-C823-4D82-9017-0E993CC0F5A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{94255EF2-C823-4D82-9017-0E993CC0F5A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{94255EF2-C823-4D82-9017-0E993CC0F5A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{94255EF2-C823-4D82-9017-0E993CC0F5A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

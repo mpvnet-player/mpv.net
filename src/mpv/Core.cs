@@ -1220,11 +1220,11 @@ namespace mpvnet
             if (!File.Exists(ConfigFolder + "history.txt"))
                 return;
 
-            int totalMinutes = Convert.ToInt32((DateTime.Now - LastHistoryStartDateTime).TotalMinutes);
+            double totalMinutes = (DateTime.Now - LastHistoryStartDateTime).TotalMinutes;
 
             if (LastHistoryPath != null && totalMinutes > 1 && !HistoryDiscard())
                 File.AppendAllText(ConfigFolder + "history.txt", DateTime.Now.ToString().Substring(0, 16) +
-                    " " + totalMinutes.ToString().PadLeft(3) + " " + LastHistoryPath + "\r\n");
+                    " " + Convert.ToInt32(totalMinutes).ToString().PadLeft(3) + " " + LastHistoryPath + "\r\n");
 
             LastHistoryPath = path;
             LastHistoryStartDateTime = DateTime.Now;

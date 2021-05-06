@@ -8,8 +8,6 @@ using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
-using System.Diagnostics;
-using System.Threading.Tasks;
 
 using static mpvnet.Core;
 using static WinAPI;
@@ -851,7 +849,8 @@ namespace mpvnet
             MinimumSize = new Size(FontHeight * 9, FontHeight * 9);
             UpdateCheck.DailyCheck();
             core.LoadScripts();
-            Task.Run(() => App.Extension = new Extension());
+            App.RunTask(() => App.Extension = new Extension());
+            CSharpScriptHost.ExecuteScriptsInFolder(core.ConfigFolder + "scripts-cs");
             ShownTickCount = Environment.TickCount;
             App.ShowSetup();
         }
