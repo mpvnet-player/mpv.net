@@ -80,7 +80,7 @@ Support
 
 Before making a support request, please try a newer [beta version](#beta) first.
 
-Bugs and feature requests can be made on the github [issue tracker](../../issues), feel free to use for anything mpv.net related, usage questions are welcome.
+Bugs and feature requests can be made on the github [issue tracker](../../../issues), feel free to use for anything mpv.net related, usage questions are welcome.
 
 Or use the [support thread](https://forum.videohelp.com/threads/392514-mpv-net-a-extendable-media-player-for-windows) in the VideoHelp forum.
 
@@ -316,7 +316,7 @@ This will start the app on system start and have it running in the background. W
 
 ### Open With
 
-Alternatively the Chrome/Firefox extension [Open With](../../issues/119) can be used.
+Alternatively the Chrome/Firefox extension [Open With](../../../issues/119) can be used.
 
 
 ### Open with++
