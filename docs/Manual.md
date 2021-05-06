@@ -442,15 +442,6 @@ its complete internals, there are no compatibility guaranties.
 
 ### Sample Code
 
-#### ScriptingExtension
-
-I use this extension as well to develop and debug C# scripts.
-Once the code was developed and debugged, I move the code from
-the extension to a standalone script.
-
-[Source Code](../../../tree/master/Extensions)
-
-
 #### RatingExtension
 
 This extension writes a rating to the filename of rated videos when mpv.net shuts down.
