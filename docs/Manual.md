@@ -42,7 +42,7 @@ Download
 
 ### Stable
 
-[Release page](../../releases)
+[Release page](../../../releases)
 
 
 ### Beta
@@ -80,7 +80,7 @@ Support
 
 Before making a support request, please try a newer [beta version](#beta) first.
 
-Bugs and feature requests can be made on the github [issue tracker](https://github.com/stax76/mpv.net/issues), feel free to use for anything mpv.net related, usage questions are welcome.
+Bugs and feature requests can be made on the github [issue tracker](../../issues), feel free to use for anything mpv.net related, usage questions are welcome.
 
 Or use the [support thread](https://forum.videohelp.com/threads/392514-mpv-net-a-extendable-media-player-for-windows) in the VideoHelp forum.
 
@@ -100,14 +100,14 @@ all config will be loaded from this folder only.
 mpv specific settings are stored in the file mpv.conf, if no mpv.conf file exists
 mpv.net generates it with the following defaults:
 
-<https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/mpv.conf.txt>
+https://github.com/stax76/mpv.net/blob/master/mpv.net/src/Resources/mpv.conf.txt
 
 mpv.net specific settings are stored in the file mpvnet.conf.
 
 The input (key/mouse) bindings and the context menu definitions are stored in the
 input.conf file, if it's missing mpv.net generates it with the following defaults:
 
-<https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt>
+https://github.com/stax76/mpv.net/blob/master/mpv.net/src/Resources/input.conf.txt
 
 mpv.net supports almost all mpv settings and features.
 
@@ -136,7 +136,7 @@ To disable the border property:
 
 Supported are all mpv properties, they are documented here:
 
-<https://mpv.io/manual/master/#properties>
+https://mpv.io/manual/master/#properties
 
 
 mpv.net has a feature to list all properties:
@@ -316,7 +316,7 @@ This will start the app on system start and have it running in the background. W
 
 ### Open With
 
-Alternatively he Chrome/Firefox extension [Open With](https://github.com/stax76/mpv.net/issues/119) can be used.
+Alternatively the Chrome/Firefox extension [Open With](../../issues/119) can be used.
 
 
 ### Open with++
@@ -376,8 +376,6 @@ File Type: `cs`
 
 Location: `<config folder>\scripts-cs`
 
-C# scripting in mpv.net is implemented with a C# [extension](#extensions) and [CS-Script](https://www.cs-script.net/).
-
 mpv.net does not define scripting interfaces but instead exposed its complete internals, there are no compatibility guaranties.
 
 Script code can be written within a C# [extension](#extensions), that way full code completion and debugger support is available. Once the code was developed and debugged, the code can be moved from the extension to a lightweight standalone script.
@@ -413,9 +411,9 @@ mpv.net does not define extension interfaces but instead exposed its complete in
 
 #### ScriptingExtension
 
-The ScriptingExtension implements the C# scripting host using [CS-Script](https://www.cs-script.net/).
-
-I use this extension as well to develop and debug C# scripts. Once the code was developed and debugged, I move the code from the extension to a standalone script.
+I use this extension as well to develop and debug C# scripts.
+Once the code was developed and debugged, I move the code from
+the extension to a standalone script.
 
 [Source Code](extensions)
 
@@ -434,7 +432,7 @@ Color Theme
 
 mpv.net supports custom color themes, the definition of the built-in themes can be found at:
 
-<https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/theme.txt>
+https://github.com/stax76/mpv.net/blob/master/mpv.net/src/Resources/theme.txt
 
 
 Custom themes can be saved at:
@@ -443,7 +441,8 @@ Custom themes can be saved at:
 
 The theme.conf file may contain an unlimited amount of themes.
 
-In the config editor under UI there are the settings dark-theme and light-theme to define the themes used in dark and in light mode.
+In the config editor under UI there are the settings dark-theme and
+light-theme to define the themes used in dark and in light mode.
 
 
 Advanced Features
@@ -464,11 +463,16 @@ Python and VapourSynth must be in the path environment variable.
 Hidden Features
 ---------------
 
-Selecting multiple files in File Explorer and pressing enter will open the files in mpv.net. Explorer restricts this to maximum 15 files and the order will be random.
+Selecting multiple files in File Explorer and pressing enter will
+open the files in mpv.net. Explorer restricts this to maximum 15 files
+and the order will be random.
 
-Whenever the control key is pressed when files or URLs are opened, the playlist is not cleared but the files or URLs are appended to the playlist. This works in all mpv.net features that open files or URLs.
+Whenever the control key is pressed when files or URLs are opened,
+the playlist is not cleared but the files or URLs are appended to the playlist.
+This works in all mpv.net features that open files or URLs.
 
-Pressing the shift key while opening a single file will suppress loading all files of the folder into the playlist.
+Pressing the shift key while opening a single file will suppress loading
+all files of the folder into the playlist.
 
 In fullscreen mode clicking the top right corner closes the player.
 
@@ -481,13 +485,14 @@ mpv.net is designed to work exactly like mpv, there are a few limitations:
 
 ### Window Limitations
 
-mpv.net implements an own main window which means only mpv window features are supported that have an own implementation in mpv.net.
+mpv.net implements an own main window which means only mpv window
+features are supported that have an own implementation in mpv.net.
 
 A window free mode is currently not supported.
 
 The documentation of mpvs window features can be found here:
 
-<https://mpv.io/manual/master/#window>
+https://mpv.io/manual/master/#window
 
 
 mpv.net has currently implemented the following window features:
@@ -540,31 +545,35 @@ Third party components are:
 - [libmpv provides the core functionality](https://mpv.io/)
 - [MediaInfo](https://mediaarea.net/en/MediaInfo)
 - [Tommy, a single file TOML parser](https://github.com/dezhidki/Tommy)
-- [CS-Script, scripting with C#](http://www.csscript.net/)
 - [Everything, a fast file search service](https://www.voidtools.com)
 
 
 Context Menu
 ------------
 
-The context menu of mpv.net is defined in the file input.conf which is located in the config directory.
+The context menu of mpv.net is defined in the file input.conf which is
+located in the config directory.
 
 If the input.conf file does not exists mpv.net generates it with the following defaults:
 
-<https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt>
+<https://github.com/stax76/mpv.net/blob/master/mpv.net/src/Resources/input.conf.txt>
 
-input.conf defines mpvs key and mouse bindings and mpv.net uses comments to define the context menu.
+input.conf defines mpvs key and mouse bindings and mpv.net uses
+comments to define the context menu.
 
 
 ### Open > Open Files
 
 The Open Files menu entry is one way to open files in mpv.net, it supports multi selection.
 
-Another way to open files is the command line which is used by File Explorer for existing associations.
+Another way to open files is the command line which is used by
+File Explorer for existing associations.
 
 A third way is to drag and drop files on the main window.
 
-Whenever the control key is pressed when files or URLs are opened, the playlist is not cleared but the files or URLs are appended to the playlist. This works in all mpv.net features that open files or URLs.
+Whenever the control key is pressed when files or URLs are opened,
+the playlist is not cleared but the files or URLs are appended to the
+playlist. This works in all mpv.net features that open files or URLs.
 
 Pressing the shift key while opening a single file will suppress loading all files in the folder.
 
@@ -573,9 +582,12 @@ Blu-ray and DVD ISO image files are supported.
 
 ### Open > Open URL or file path from clipboard
 
-Opens files and URLs from the clipboard. How to open URLs directly from the browser from sites like YouTube is described in the [External Tools section](#external-tools).
+Opens files and URLs from the clipboard. How to open URLs directly
+from the browser from sites like YouTube is described in the
+[External Tools section](#external-tools).
 
-For internet streaming youtube-dl must be downloaded and installed manually, meaning it must be located in the PATH environment variable or in the startup directory.
+For internet streaming youtube-dl must be downloaded and installed manually,
+meaning it must be located in the PATH environment variable or in the startup directory.
 
 ### Open > Open DVD/Blu-ray Drive/Folder
 
@@ -584,17 +596,22 @@ Opens a DVD/Blu-ray Drive/Folder.
 
 ### Open > Show media search
 
-mpv.net supports system wide media searches using the Everything indexing service installed by the popular file search tool [Everything](www.voidtools.com).
+mpv.net supports system wide media searches using the Everything indexing
+service installed by the popular file search tool [Everything](www.voidtools.com).
 
 
 ### Open > Load external audio files
 
-Allows to load an external audio file. It's also possible to auto detect external audio files based on the file name, the option for this can be found in the settings under 'Settings > Show Config Editor > Audio > audio-file-auto'.
+Allows to load an external audio file. It's also possible to auto detect
+external audio files based on the file name, the option for this can be
+found in the settings under 'Settings > Show Config Editor > Audio > audio-file-auto'.
 
 
 ### Open > Load external subtitle files
 
-Allows to load an external subtitle file. It's also possible to auto detect external subtitle files based on the file name, the option for this can be found in the settings under 'Settings > Show Config Editor > Subtitles > sub-auto'.
+Allows to load an external subtitle file. It's also possible to auto detect
+external subtitle files based on the file name, the option for this can be
+found in the settings under 'Settings > Show Config Editor > Subtitles > sub-auto'.
 
 
 ### Play/Pause

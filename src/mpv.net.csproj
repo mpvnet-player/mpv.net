@@ -78,8 +78,20 @@
     <Compile Include="Misc\App.cs" />
     <Compile Include="Misc\CSharpScriptHost.cs" />
     <Compile Include="Misc\Extension.cs" />
+    <Content Include="Scripts\JavaScript\seek-show-position.js" />
+    <Content Include="Scripts\JavaScript\show-playlist.js" />
+    <None Include="..\docs\Changelog.md">
+      <Link>Changelog.md</Link>
+    </None>
+    <None Include="..\docs\Manual.md">
+      <Link>Manual.md</Link>
+    </None>
     <None Include="Resources\mpvnet-santa.png" />
     <Content Include="Resources\theme.txt" />
+    <None Include="Scripts\Lua\pause-when-minimize.lua" />
+    <None Include="Scripts\PowerShell\open-file-dialog.ps1" />
+    <None Include="Scripts\PowerShell\pause-when-minimize.ps1" />
+    <None Include="Scripts\PowerShell\show-in-file-explorer.ps1" />
     <Page Include="WPF\SearchTextBoxUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -109,6 +121,10 @@
     <Compile Include="Misc\Theme.cs" />
     <Compile Include="Misc\PowerShell.cs" />
     <Compile Include="Native\StockIcon.cs" />
+    <Compile Include="Scripts\C-Sharp\dynamic-context-menu-items.cs" />
+    <Compile Include="Scripts\C-Sharp\key-binding.cs" />
+    <Compile Include="Scripts\C-Sharp\observe-property-and-draw-text.cs" />
+    <Compile Include="Scripts\C-Sharp\pause-when-minimize.cs" />
     <Compile Include="WPF\SearchTextBoxUserControl.xaml.cs">
       <DependentUpon>SearchTextBoxUserControl.xaml</DependentUpon>
     </Compile>
