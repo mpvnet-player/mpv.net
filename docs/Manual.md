@@ -111,17 +111,19 @@ all config will be loaded from this folder only.
 
 mpv specific settings are stored in the file mpv.conf, if no mpv.conf file exists
 mpv.net generates it with the following defaults:
+
 [mpv.conf defaults](../../../tree/master/src/Resources/mpv.conf.txt)
 
 mpv.net specific settings are stored in the file mpvnet.conf.
 
 The input (key/mouse) bindings and the context menu definitions are stored in the
 input.conf file, if it's missing mpv.net generates it with the following defaults:
+
 [input.conf defaults](../../../tree/master/src/Resources/input.conf.txt)
 
 mpv.net supports almost all mpv settings and features.
 
-The config folder can be opened from the context menu (`Settings > Open Config Folder`).
+The config folder can be opened from the context menu: `Settings > Open Config Folder`
 
 
 Command Line Interface
@@ -176,12 +178,12 @@ mpv.net specific options can be found in the conf editor searching for 'mpv.net'
 
 The options are saved in the mpvnet.conf file.
 
-#### --queue <files>
+#### --queue \<files\>
 
 Adds files to the playlist, requires [--process-instance=single](#--process-instancevalue).
 [Open with++](#open-with) can be used to add files to the playlist using File Explorer.
 
-#### --command=<input command>
+#### --command=\<input command\>
 
 Sends a input commands. Useful to control mpv.net from the command line, for instance
 to create global hotkeys with AutoHotkey, for that [process-instance=single](#--process-instancevalue)
@@ -578,12 +580,14 @@ Technical Overview
 
 mpv.net is written in C# 7 and runs on the .NET Framework 4.8.
 
-The Extension implementation is based on the [Managed Extensibility Framework](https://docs.microsoft.com/en-us/dotnet/framework/mef/).
+The Extension implementation is based on the
+[Managed Extensibility Framework](https://docs.microsoft.com/en-us/dotnet/framework/mef/).
 
-The main window is WinForms based because WinForms allows better libmpv integration compared to WPF, all other windows are WPF based.
+The main window is WinForms based because WinForms allows better libmpv integration
+compared to WPF, all other windows are WPF based.
 
-The config editor adds it's controls dynamically and uses [TOML](https://en.wikipedia.org/wiki/TOML) to define it's
-content.
+The config editor adds it's controls dynamically and uses
+[TOML](https://en.wikipedia.org/wiki/TOML) to define it's content.
 
 
 Third party components are:
