@@ -410,12 +410,12 @@ Location: `<config folder>\scripts-cs`
 mpv.net does not define scripting interfaces but instead exposed
 its complete internals, there are no compatibility guaranties.
 
-Script code can be written within a C# [extension](../../../tree/master/Extensions),
+Script code can be written within a C# [extension](../../../tree/master/src/Extensions),
 that way full code completion and debugger support is available.
 Once the code was developed and debugged, it can be moved
 from the extension to a lightweight standalone script.
 
-The C# scripting host is like [extensions](../../../tree/master/Extensions)
+The C# scripting host is like [extensions](../../../tree/master/src/Extensions)
 not initialized before media files are loaded.
 
 [Example Scripts](../../../tree/master/src/Scripts)
@@ -461,7 +461,7 @@ This extension writes a rating to the filename of rated videos when mpv.net shut
 
 The input.conf defaults contain key bindings for this extension to set ratings.
 
-[Source Code](../../../tree/master/Extensions)
+[Source Code](../../../tree/master/src/Extensions)
 
 
 Color Theme
@@ -469,7 +469,7 @@ Color Theme
 
 mpv.net supports custom color themes, the definition of the built-in themes can be found at:
 
-https://github.com/stax76/mpv.net/tree/master/src/Resources/theme.txt
+[theme.txt](../../../tree/master/src/Resources/theme.txt)
 
 
 Custom themes can be saved at:
