@@ -96,7 +96,7 @@
  _           ignore                 #menu: Video > -
  Ctrl+s      async screenshot       #menu: Video > Take Screenshot
  d           cycle deinterlace      #menu: Video > Toggle Deinterlace
- a           cycle-values video-aspect "16:9" "4:3" "2.35:1" "-1" #menu: Video > Cycle Aspect Ratio
+ a           cycle-values video-aspect 16:9 4:3 2.35:1 -1 #menu: Video > Cycle Aspect Ratio
 
  KP7         script-message mpv.net cycle-audio #menu: Audio > Cycle/Next
  _           ignore                 #menu: Audio > -
@@ -163,9 +163,9 @@
  F1      script-message mpv.net show-command-palette #menu: Tools > Show All Commands
  h       script-message mpv.net show-history         #menu: Tools > Show History
  l       ab-loop                                     #menu: Tools > Set/clear A-B loop points
- L       cycle-values loop-file "inf" "no"           #menu: Tools > Toggle infinite file looping
+ L       cycle-values loop-file inf no               #menu: Tools > Toggle infinite file looping
  _       playlist-shuffle                            #menu: Tools > Shuffle Playlist
- Ctrl+h  cycle-values hwdec "auto" "no"              #menu: Tools > Toggle Hardware Decoding
+ Ctrl+h  cycle-values hwdec auto no                  #menu: Tools > Toggle Hardware Decoding
  _ script-message mpv.net show-setup-dialog          #menu: Tools > Setup...
 
  _ script-message mpv.net shell-execute https://mpv.io                    #menu: Help > Website mpv

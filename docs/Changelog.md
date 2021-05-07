@@ -1,5 +1,5 @@
 
-5.4.8.8 Beta (2021-03-??)
+5.4.8.8 Beta (not yet released)
 =========================
 
 - Improved window scaling.
@@ -7,6 +7,9 @@
 - Command palette shows commands without assigned menu item.
 - The code from the included JavaScript file was ported into the core player
   because JavaScript is currently broken in the builds of shinshiro.
+- New option `--command=<input command>`, can be used in combination
+  with `process-instance=single` to control mpv.net via command line,
+  for instance to create global hotkeys with AutoHotkey.
 - MediaInfo 21.3
 - libmpv shinchiro 2021-04-04
 

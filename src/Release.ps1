@@ -1,6 +1,6 @@
 
 $tmpDir      = 'D:\Work'
-$exePath     = $PSScriptRoot + '\mpv.net\bin\mpvnet.exe'
+$exePath     = $PSScriptRoot + '\bin\mpvnet.exe'
 $versionInfo = [Diagnostics.FileVersionInfo]::GetVersionInfo($exePath)
 $inno        = 'C:\Program Files (x86)\Inno Setup 6\ISCC.exe'
 $7z          = 'C:\Program Files\7-Zip\7z.exe'
@@ -8,7 +8,7 @@ $7z          = 'C:\Program Files\7-Zip\7z.exe'
 $cloudDirectories = 'C:\Users\frank\OneDrive\Public\mpv.net\',
                     'C:\Users\frank\Dropbox\Public\mpv.net\'
 
-cd $PSScriptRoot
+# cd $PSScriptRoot
 
 function UploadBeta($sourceFile)
 {
@@ -32,11 +32,11 @@ function UploadBeta($sourceFile)
 
 if ($versionInfo.FilePrivatePart -eq 0)
 {
-    & $inno setup.iss
+    & $inno $PSScriptRoot\setup.iss
     if ($LastExitCode) { throw $LastExitCode }
 
     $targetDir = $tmpDir + "\mpv.net-$($versionInfo.FileVersion)-portable"
-    Copy-Item .\mpv.net\bin $targetDir -Recurse -Exclude System.Management.Automation.xml
+    Copy-Item $PSScriptRoot\bin $targetDir -Recurse -Exclude System.Management.Automation.xml
     & $7z a -tzip -mx9 "$targetDir.zip" -r "$targetDir\*"
     if ($LastExitCode) { throw $LastExitCode }
 
@@ -47,7 +47,7 @@ if ($versionInfo.FilePrivatePart -eq 0)
 else
 {
     $targetDir = "$tmpDir\mpv.net-$($versionInfo.FileVersion)-portable-beta"
-    Copy-Item .\mpv.net\bin $targetDir -Recurse -Exclude System.Management.Automation.xml
+    Copy-Item $PSScriptRoot\bin $targetDir -Recurse -Exclude System.Management.Automation.xml
     & $7z a -t7z -mx9 "$targetDir.7z" -r "$targetDir\*"
     if ($LastExitCode) { throw $LastExitCode }
     UploadBeta "$targetDir.7z"

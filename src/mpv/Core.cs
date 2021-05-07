@@ -998,6 +998,11 @@ namespace mpvnet
                                 Console.WriteLine(core.get_property_string("input-key-list").Replace(",", BR));
                                 continue;
                             }
+                            else if (arg.StartsWith("--command="))
+                            {
+                                core.command(arg.Substring(10));
+                                continue;
+                            }
                         }
 
                         if (!arg.StartsWith("--"))

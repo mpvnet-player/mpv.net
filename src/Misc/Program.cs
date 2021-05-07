@@ -47,17 +47,22 @@ namespace mpvnet
 
                 if ((App.ProcessInstance == "single" || App.ProcessInstance == "queue") && !isFirst)
                 {
-                    List<string> files = new List<string>();
-                    files.Add(App.ProcessInstance);
+                    List<string> args2 = new List<string>();
+                    args2.Add(App.ProcessInstance);
 
                     foreach (string arg in args)
                     {
                         if (!arg.StartsWith("--") && (arg == "-" || arg.Contains("://") ||
                             arg.Contains(":\\") || arg.StartsWith("\\\\")))
 
-                            files.Add(arg);
+                            args2.Add(arg);
                         else if (arg == "--queue")
-                            files[0] = "queue";
+                            args2[0] = "queue";
+                        else if (arg.StartsWith("--command="))
+                        {
+                            args2[0] = "command";
+                            args2.Add(arg.Substring(10));
+                        }
                     }
 
                     Process[] procs = Process.GetProcessesByName("mpvnet");
@@ -70,7 +75,7 @@ namespace mpvnet
                             {
                                 WinAPI.AllowSetForegroundWindow(proc.Id);
                                 var data = new WinAPI.COPYDATASTRUCT();
-                                data.lpData = string.Join("\n", files.ToArray());
+                                data.lpData = string.Join("\n", args2.ToArray());
                                 data.cbData = data.lpData.Length * 2 + 1;
                                 WinAPI.SendMessage(proc.MainWindowHandle, 0x004A /*WM_COPYDATA*/, IntPtr.Zero, ref data);
                                 mutex.Dispose();

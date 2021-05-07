@@ -687,18 +687,21 @@ namespace mpvnet
                 case 0x004A: // WM_COPYDATA
                     {
                         var copyData = (COPYDATASTRUCT)m.GetLParam(typeof(COPYDATASTRUCT));
-                        string[] files = copyData.lpData.Split('\n');
-                        string mode = files[0];
-                        files = files.Skip(1).ToArray();
+                        string[] args = copyData.lpData.Split('\n');
+                        string mode = args[0];
+                        args = args.Skip(1).ToArray();
 
                         switch (mode)
                         {
                             case "single":
-                                core.LoadFiles(files, true, Control.ModifierKeys.HasFlag(Keys.Control));
+                                core.LoadFiles(args, true, ModifierKeys.HasFlag(Keys.Control));
                                 break;
                             case "queue":
-                                foreach (string file in files)
+                                foreach (string file in args)
                                     core.commandv("loadfile", file, "append");
+                                break;
+                            case "command":
+                                core.command(args[0]);
                                 break;
                         }
 

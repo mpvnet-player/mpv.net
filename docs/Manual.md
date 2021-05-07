@@ -172,20 +172,31 @@ A common task for the terminal is debugging scripts.
 mpv.net specific options
 ------------------------
 
-All mpv.net specific options can be found in the conf editor searching for 'mpv.net'.
+mpv.net specific options can be found in the conf editor searching for 'mpv.net'.
 
 The options are saved in the mpvnet.conf file.
 
-## Audio
+#### --queue <files>
 
-### --remember-volume=\<yes|no\>
+Adds files to the playlist, requires [--process-instance=single](#--process-instancevalue).
+[Open with++](#open-with) can be used to add files to the playlist using File Explorer.
+
+#### --command=<input command>
+
+Sends a input commands. Useful to control mpv.net from the command line, for instance
+to create global hotkeys with AutoHotkey, for that [process-instance=single](#--process-instancevalue)
+must be used. Spaces have to be escaped with quotes and quotes have to be escaped with double quotes.
+
+### Audio
+
+#### --remember-volume=\<yes|no\>
 
 Save volume and mute on exit and restore it on start. Default: yes
 
 
-## Screen
+### Screen
 
-### --start-size=\<value\>
+#### --start-size=\<value\>
 
 Setting to remember the window height.
 
@@ -199,48 +210,48 @@ Window size is remembered but only in the current session. Default
 Window size is always remembered.
 
 
-### --start-threshold=\<milliseconds\>
+#### --start-threshold=\<milliseconds\>
 
 Threshold in milliseconds to wait for libmpv returning the video
 resolution before the window is shown, otherwise default dimensions
 are used as defined by autofit and start-size. Default: 1500
 
 
-### --minimum-aspect-ratio=\<float\>
+#### --minimum-aspect-ratio=\<float\>
 
 Minimum aspect ratio, if the AR is smaller than the defined value then
 the window AR is set to 16/9. This avoids a square window for Music
 with cover art. Default: 1.2
 
 
-### --remember-position=\<yes|no\>
+#### --remember-position=\<yes|no\>
 
 Save the window position on exit. Default: no
 
 
-## Playback
+### Playback
 
-### --auto-load-folder=\<yes|no\>
+#### --auto-load-folder=\<yes|no\>
 
 For single files automatically load the entire directory into the playlist.
 Can be suppressed via shift key. Default: yes
 
 
-## Input
+### Input
 
-### --global-media-keys=\<yes|no\>
+#### --global-media-keys=\<yes|no\>
 
 Enable global media keys next track, previous track, play/pause, stop. Default: no
 
 
-## General
+### General
 
-### --update-check=\<yes|no\>
+#### --update-check=\<yes|no\>
 
 Daily check for new version. (requires PowerShell 5 and curl.) Default: no
 
 
-### --process-instance=\<value\>
+#### --process-instance=\<value\>
 
 Defines if more then one mpv.net process is allowed.
 
@@ -258,34 +269,34 @@ Force a single process everytime the shell starts mpv.net. Default
 Force a single process and add files to playlist.
 
 
-### --recent-count=\<int\>
+#### --recent-count=\<int\>
 
 Amount of recent files to be remembered. Default: 15
 
 
-### --video-file-extensions=\<string\>
+#### --video-file-extensions=\<string\>
 
 Video file extensions used to create file associations and used by the auto-load-folder feature.
 
 
-### --audio-file-extensions=\<string\>
+#### --audio-file-extensions=\<string\>
 
 Audio file extensions used to create file associations and used by the auto-load-folder feature.
 
 
-### --image-file-extensions=\<string\>
+#### --image-file-extensions=\<string\>
 
 Image file extensions used to create file associations and used by the auto-load-folder feature.
 
 
-### --debug-mode=\<yes|no\>
+#### --debug-mode=\<yes|no\>
 
 Enable this only when a developer asks for it. Default: no
 
 
-## UI
+### UI
 
-### --dark-mode=\<value\>
+#### --dark-mode=\<value\>
 
 Enables a dark theme.
 
@@ -298,14 +309,14 @@ Available on Windows 10 or higher.
 **never**
 
 
-### ---dark-theme=\<string\>
+#### ---dark-theme=\<string\>
 
 Color theme used in dark mode. Default: dark
 
 [Color Themes](#color-theme)
 
 
-### --light-theme=\<string\>
+#### --light-theme=\<string\>
 
 Color theme used in light mode. Default: light
 
@@ -436,8 +447,8 @@ its complete internals, there are no compatibility guaranties.
   extensions are like scripts located in your config folder, example:
   `<config folder>\extensions\ExampleExtension\ExampleExtension.dll`
 - Also in the project properties choose the option **Start external program**
-  in the Debug tab and define the path to mpvnet.exe. In the Debug tab you may
-  also define command line arguments like a video file to be played when you start debugging.
+  in the Debug tab and define the path to mpvnet.exe. In the Debug tab you may also
+  define command line arguments like a video file to be played when you start debugging.
 
 
 ### Sample Code
@@ -541,14 +552,25 @@ mpv.net has currently implemented the following window features:
 
 ### Command Line Limitations
 
-mpv.net supports only property switches, it does not support non property switches.
+mpv.net supports only property switches, non property switches cannot be accessed
+from libmpv and therefore need a implementation in mpv.net, implemented so far are:
+
+--ad=help  
+--audio-device=help  
+--input-keylist  
+--profile=help  
+--vd=help  
+--version  
 
 
 ### mpv.net specific options
 
-Options that are specific to mpv.net can be found by entering _mpv.net_ in the search field of the config editor.
+Options that are specific to mpv.net can be found by entering _mpv.net_
+in the search field of the config editor, in the manual they are documented
+[here](#mpvnet-specific-options).
 
-mpv.net specific options are saved in the file mpvnet.conf and are just as mpv properties available on the command line.
+mpv.net specific options are saved in the file mpvnet.conf and are just
+as mpv properties available on the command line.
 
 
 Technical Overview
@@ -942,7 +964,7 @@ Cycles the deinterlace property using the following command:
 
 Cycles the aspect ratio using the following command:
 
-`cycle-values video-aspect "16:9" "4:3" "2.35:1" "-1"`
+`cycle-values video-aspect 16:9 4:3 2.35:1 -1`
 
 [cycle-values command](https://mpv.io/manual/master/#command-interface-cycle-values)
 
