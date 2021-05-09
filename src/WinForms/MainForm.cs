@@ -48,14 +48,6 @@ namespace mpvnet
                 ConsoleHelp.Padding = 60;
                 core.Init();
 
-                if (App.GlobalMediaKeys)
-                {
-                    RegisterGlobalKey(VK_MEDIA_NEXT_TRACK);
-                    RegisterGlobalKey(VK_MEDIA_PREV_TRACK);
-                    RegisterGlobalKey(VK_MEDIA_PLAY_PAUSE);
-                    RegisterGlobalKey(VK_MEDIA_STOP);
-                }
-
                 core.Shutdown += Shutdown;
                 core.VideoSizeChanged += VideoSizeChanged;
                 core.ScaleWindow += ScaleWindow;
@@ -601,7 +593,7 @@ namespace mpvnet
                     break;
                 case 0x319: // WM_APPCOMMAND
                     {
-                        string value = mpvHelp.WM_APPCOMMAND_to_mpv_key((int)(m.LParam.ToInt64() >> 16 & ~0xf000));
+                        string value = Input.WM_APPCOMMAND_to_mpv_key((int)(m.LParam.ToInt64() >> 16 & ~0xf000));
 
                         if (value != null)
                         {
@@ -613,21 +605,7 @@ namespace mpvnet
                     }
                     break;
                 case 0x0312: // WM_HOTKEY
-                    switch (m.WParam.ToInt64())
-                    {
-                        case VK_MEDIA_NEXT_TRACK:
-                            core.command("keypress NEXT"); 
-                            break;
-                        case VK_MEDIA_PREV_TRACK:
-                            core.command("keypress PREV");
-                            break;
-                        case VK_MEDIA_PLAY_PAUSE:
-                            core.command("keypress PLAYPAUSE");
-                            break;
-                        case VK_MEDIA_STOP:
-                            core.command("keypress STOP");
-                            break;
-                    }
+                    GlobalHotkey.Execute(m.WParam.ToInt32());
                     break;
                 case 0x0200: // WM_MOUSEMOVE
                     if (Environment.TickCount - LastCycleFullscreen > 500)
@@ -743,8 +721,6 @@ namespace mpvnet
                 Taskbar.SetValue(core.get_property_number("time-pos"), core.Duration.TotalSeconds);
         }
 
-        void RegisterGlobalKey(int key) => RegisterHotKey(Handle, key, 0, (uint)key);
-
         void PropChangeOnTop(bool value) => BeginInvoke(new Action(() => TopMost = value));
 
         void PropChangeAid(string value) => core.Aid = value;
@@ -852,6 +828,7 @@ namespace mpvnet
             MinimumSize = new Size(FontHeight * 9, FontHeight * 9);
             UpdateCheck.DailyCheck();
             core.LoadScripts();
+            GlobalHotkey.RegisterGlobalHotkeys(Handle);
             App.RunTask(() => App.Extension = new Extension());
             CSharpScriptHost.ExecuteScriptsInFolder(core.ConfigFolder + "scripts-cs");
             ShownTickCount = Environment.TickCount;

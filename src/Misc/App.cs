@@ -170,7 +170,6 @@ namespace mpvnet
         {
             switch (name)
             {
-                case "global-media-keys": GlobalMediaKeys = value == "yes"; return true;
                 case "remember-position": RememberPosition = value == "yes"; return true;
                 case "debug-mode": DebugMode = value == "yes"; return true;
                 case "remember-volume": RememberVolume = value == "yes"; return true;

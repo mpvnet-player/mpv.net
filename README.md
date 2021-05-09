@@ -61,6 +61,7 @@ Features
 - Customizable context menu defined in the same file as the key bindings
 - Config dialog
 - Shorcut key editor
+- Global hotkeys
 - Many features like the config editor and shortcut key editor are fully searchable
 - Configuration files that are easy to read and edit
 - Command palette to quickly find commands and keys

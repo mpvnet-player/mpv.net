@@ -525,15 +525,6 @@ options = [{ name = "yes" },
            { name = "no" }]
 
 [[settings]]
-name = "global-media-keys"
-file = "mpvnet"
-default = "no"
-filter = "Input"
-help = "Enable global media keys next track, previous track, play/pause, stop. (mpv.net specific setting)"
-options = [{ name = "yes" },
-           { name = "no" }]
-
-[[settings]]
 name = "input-ar-delay"
 file = "mpv"
 filter = "Input"

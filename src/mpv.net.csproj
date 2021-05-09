@@ -111,6 +111,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Compile Include="Misc\Help.cs" />
+    <Compile Include="Misc\GlobalHotkey.cs" />
     <Compile Include="Misc\UpdateCheck.cs" />
     <Compile Include="Misc\Theme.cs" />
     <Compile Include="Misc\PowerShell.cs" />

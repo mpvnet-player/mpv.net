@@ -10,6 +10,7 @@ Table of contents
 * [Installation](#installation)
 * [Support](#support)
 * [Settings](#settings)
+* [Input and context menu](#input-and-context-menu)
 * [Command Line Interface](#command-line-interface)
 * [Terminal](#terminal)
 * [mpv.net specific options](#mpvnet-specific-options)
@@ -66,6 +67,13 @@ There is a setup exe and a portable zip file download.
 For internet streaming youtube-dl must be downloaded and installed manually,
 meaning it must be located in the PATH environment variable or in the startup directory.
 
+mpvnet.exe is platform agnostic, users that need x86 have to replace 4 native tools:
+
+- Everything.dll
+- mpv-1.dll
+- MediaInfo.dll
+- mpvnet.com
+
 
 #### File Associations
 
@@ -116,12 +124,16 @@ mpv.net generates it with the following defaults:
 
 mpv.net specific settings are stored in the file mpvnet.conf.
 
+
+Input and context menu
+----------------------
+
 The input (key/mouse) bindings and the context menu definitions are stored in the
 input.conf file, if it's missing mpv.net generates it with the following defaults:
 
 [input.conf defaults](../../../tree/master/src/Resources/input.conf.txt)
 
-mpv.net supports almost all mpv settings and features.
+Global hotkeys are supported via global-input.conf file.
 
 The config folder can be opened from the context menu: `Settings > Open Config Folder`
 
@@ -185,7 +197,7 @@ Adds files to the playlist, requires [--process-instance=single](#--process-inst
 
 #### --command=\<input command\>
 
-Sends a input commands. Useful to control mpv.net from the command line, for instance
+Sends a input command. Useful to control mpv.net from the command line, for instance
 to create global hotkeys with AutoHotkey, for that [process-instance=single](#--process-instancevalue)
 must be used. Spaces have to be escaped with quotes and quotes have to be escaped with double quotes.
 
@@ -237,13 +249,6 @@ Save the window position on exit. Default: no
 
 For single files automatically load the entire directory into the playlist.
 Can be suppressed via shift key. Default: yes
-
-
-### Input
-
-#### --global-media-keys=\<yes|no\>
-
-Enable global media keys next track, previous track, play/pause, stop. Default: no
 
 
 ### General

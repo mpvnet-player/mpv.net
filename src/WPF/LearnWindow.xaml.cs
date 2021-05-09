@@ -1,6 +1,5 @@
 ﻿
 using System;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows;
@@ -54,7 +53,7 @@ namespace mpvnet
 
             string ret = ToUnicode(vk, scanCode, keys);
 
-            if (ret.Length == 1 && (int)ret[0] < 32)
+            if (ret.Length == 1 && ret[0] < 32)
                 return "";
 
             if (ret == "" && (keys[VK_MENU] & 0x80) != 0)
@@ -187,7 +186,7 @@ namespace mpvnet
                 OnKeyDown((uint)m.WParam.ToInt64());
             else if (m.Msg == WM_APPCOMMAND)
             {
-                string value = mpvHelp.WM_APPCOMMAND_to_mpv_key((int)(m.LParam.ToInt64() >> 16 & ~0xf000));
+                string value = Input.WM_APPCOMMAND_to_mpv_key((int)(m.LParam.ToInt64() >> 16 & ~0xf000));
 
                 if (value != null)
                     SetKey(value);
