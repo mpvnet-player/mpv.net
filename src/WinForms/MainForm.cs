@@ -105,8 +105,8 @@ namespace mpvnet
                 if (!core.Border)
                     FormBorderStyle = FormBorderStyle.None;
 
-                int posX = RegistryHelp.GetInt(App.RegPath, "PosX");
-                int posY = RegistryHelp.GetInt(App.RegPath, "PosY");
+                int posX = RegistryHelp.GetInt("PosX");
+                int posY = RegistryHelp.GetInt("PosY");
 
                 if (posX != 0 && posY != 0 && App.RememberPosition)
                 {
@@ -320,10 +320,11 @@ namespace mpvnet
             return null;
         }
 
-        void SetFormPosAndSize(double scale = 1,
-                               bool force = false,
-                               bool checkAutofitSmaller = true,
-                               bool checkAutofitLarger = true)
+        void SetFormPosAndSize(
+            double scale = 1,
+            bool force = false,
+            bool checkAutofitSmaller = true,
+            bool checkAutofitLarger = true)
         {
             if (!force)
             {
@@ -346,36 +347,66 @@ namespace mpvnet
                 core.VideoSize = new Size((int)(autoFitHeight * (16 / 9f)), autoFitHeight);
 
             Size videoSize = core.VideoSize;
+            
             int height = videoSize.Height;
+            int width  = videoSize.Width;
+
+            if (App.StartSize == "previous")
+                App.StartSize = "previous-height";
 
             if (core.WasInitialSizeSet || scale != 1)
-                height = ClientSize.Height;
+            {
+                if (App.StartSize == "always")
+                {
+                    width = ClientSize.Width;
+                    height = ClientSize.Height;
+                }
+                else if (App.StartSize == "always-height" || App.StartSize == "previous-height")
+                {
+                    height = ClientSize.Height;
+                    width = height * videoSize.Width / videoSize.Height;
+                }
+            }
             else
             {
-                int savedHeight = RegistryHelp.GetInt(App.RegPath, "Height");
+                int savedHeight = RegistryHelp.GetInt("Height");
+                int savedWidth  = RegistryHelp.GetInt("Width");
 
-                if (App.StartSize == "always" && savedHeight != 0)
+                if (App.StartSize == "always-height" && savedHeight != 0)
+                {
                     height = savedHeight;
-                else
-                    if (App.StartSize != "video")
-                        height = autoFitHeight;
+                    width = height * videoSize.Width / videoSize.Height;
+                }
+                else if (App.StartSize == "always" && savedHeight != 0)
+                {
+                    height = savedHeight;
+                    width = savedWidth;
+                }
+                else if (App.StartSize == "previous-height")
+                {
+                    height = autoFitHeight;
+                    width = height * videoSize.Width / videoSize.Height;
+                }
 
                 core.WasInitialSizeSet = true;
             }
 
             height = Convert.ToInt32(height * scale);
-            SetSize(new Size(height * videoSize.Width / videoSize.Height, height),
-                videoSize, screen, checkAutofitSmaller, checkAutofitLarger);
+            width  = Convert.ToInt32(width  * scale);
+
+            SetSize(new Size(width, height), videoSize, screen, checkAutofitSmaller, checkAutofitLarger);
         }
 
-        void SetSize(Size size,
-                     Size videoSize,
-                     Screen screen,
-                     bool checkAutofitSmaller = true,
-                     bool checkAutofitLarger = true)
+        void SetSize(
+            Size size,
+            Size videoSize,
+            Screen screen,
+            bool checkAutofitSmaller = true,
+            bool checkAutofitLarger = true)
         {
             int height = size.Height;
-            int width = size.Height * videoSize.Width / videoSize.Height;
+            int width = size.Width;
+
             int maxHeight = screen.WorkingArea.Height - (Height - ClientSize.Height);
             int maxWidth = screen.WorkingArea.Width - (Width - ClientSize.Width);
 
@@ -538,6 +569,7 @@ namespace mpvnet
             {
                 RegistryHelp.SetValue(App.RegPath, "PosX", Left + Width / 2);
                 RegistryHelp.SetValue(App.RegPath, "PosY", Top + Height / 2);
+                RegistryHelp.SetValue(App.RegPath, "Width", ClientSize.Width);
                 RegistryHelp.SetValue(App.RegPath, "Height", ClientSize.Height);
             }
         }

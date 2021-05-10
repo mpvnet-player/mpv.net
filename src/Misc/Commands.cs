@@ -234,7 +234,7 @@ namespace mpvnet
         public static void ExecuteMpvCommand() // deprecated 2019
         {
             InvokeOnMainThread(new Action(() => {
-                string command = VB.Interaction.InputBox("Enter a mpv command to be executed.", "Execute Command", RegistryHelp.GetString(App.RegPath, "RecentExecutedCommand"));
+                string command = VB.Interaction.InputBox("Enter a mpv command to be executed.", "Execute Command", RegistryHelp.GetString("RecentExecutedCommand"));
              
                 if (string.IsNullOrEmpty(command))
                     return;

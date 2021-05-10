@@ -1,4 +1,10 @@
 
+5.4.8.9 Beta (???)
+=========================
+
+- Reworked [start-size](Manual.md#--start-sizevalue) option. 
+
+
 5.4.8.8 Beta (2021-05-09)
 =========================
 

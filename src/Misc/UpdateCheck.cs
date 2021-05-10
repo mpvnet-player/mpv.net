@@ -15,7 +15,7 @@ namespace mpvnet
     {
         public static void DailyCheck()
         {
-            if (App.UpdateCheck && RegistryHelp.GetInt(RegistryHelp.ApplicationKey, "UpdateCheckLast")
+            if (App.UpdateCheck && RegistryHelp.GetInt("UpdateCheckLast")
                 != DateTime.Now.DayOfYear)
 
                 CheckOnline();
@@ -44,7 +44,7 @@ namespace mpvnet
                         return;
                     }
 
-                    if ((RegistryHelp.GetString(RegistryHelp.ApplicationKey, "UpdateCheckVersion")
+                    if ((RegistryHelp.GetString("UpdateCheckVersion")
                         != onlineVersion.ToString() || showUpToDateMessage) && Msg.ShowQuestion(
                             $"New version {onlineVersion} is available, update now?") == MsgResult.OK)
                     {

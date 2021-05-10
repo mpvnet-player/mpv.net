@@ -18,7 +18,7 @@ namespace mpvnet
         public static string DarkMode { get; set; } = "always";
         public static string DarkTheme { get; set; } = "dark";
         public static string LightTheme { get; set; } = "light";
-        public static string StartSize { get; set; } = "previous";
+        public static string StartSize { get; set; } = "previous-height";
 
         public static bool RememberPosition { get; set; }
         public static bool DebugMode { get; set; }
@@ -135,8 +135,8 @@ namespace mpvnet
         {
             if (RememberVolume)
             {
-                core.set_property_int("volume", RegistryHelp.GetInt(RegPath, "Volume", 70));
-                core.set_property_string("mute", RegistryHelp.GetString(RegPath, "Mute", "no"));
+                core.set_property_int("volume", RegistryHelp.GetInt("Volume", 70));
+                core.set_property_string("mute", RegistryHelp.GetString("Mute", "no"));
             }
         }
 
@@ -196,7 +196,7 @@ namespace mpvnet
 
         public static void ShowSetup()
         {
-            int value = RegistryHelp.GetInt(RegistryHelp.ApplicationKey, Folder.Startup);
+            int value = RegistryHelp.GetInt(Folder.Startup);
 
             if (value != 1)
             {

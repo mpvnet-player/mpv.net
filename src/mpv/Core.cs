@@ -193,7 +193,7 @@ namespace mpvnet
                     _ConfigFolder = portableFolder;
 
                     if (!Directory.Exists(_ConfigFolder))
-                        _ConfigFolder = RegistryHelp.GetString(App.RegPath, "ConfigFolder");
+                        _ConfigFolder = RegistryHelp.GetString("ConfigFolder");
 
                     if (!Directory.Exists(_ConfigFolder))
                     {

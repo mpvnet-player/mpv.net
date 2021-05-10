@@ -31,7 +31,7 @@ namespace mpvnet
             LoadConf(App.ConfPath);
             LoadSettings();
             InitialContent = GetCompareString();
-            SearchControl.Text = RegistryHelp.GetString(App.RegPath, "ConfigEditorSearch");
+            SearchControl.Text = RegistryHelp.GetString("ConfigEditorSearch");
             FilterListBox.SelectedItem = SearchControl.Text.TrimEnd(':');
         }
 

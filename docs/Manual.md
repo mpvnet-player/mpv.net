@@ -217,11 +217,14 @@ Setting to remember the window height.
 **video**  
 Window size is set to video resolution.  
 
-**previous**  
-Window size is remembered but only in the current session. Default
+**previous-height**  
+Height is remembered in the current session. Default
+
+**always-height**  
+Height is always remembered.
 
 **always**  
-Window size is always remembered.
+Size is always remembered.
 
 
 #### --start-threshold=\<milliseconds\>

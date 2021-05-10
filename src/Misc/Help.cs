@@ -173,15 +173,15 @@ namespace mpvnet
                 regKey.SetValue(name, value);
         }
 
-        public static string GetString(string path, string name, string defaultValue = "")
+        public static string GetString(string name, string defaultValue = "")
         {
-            object value = GetValue(path, name, defaultValue);
+            object value = GetValue(ApplicationKey, name, defaultValue);
             return !(value is string) ? defaultValue : value.ToString();
         }
 
-        public static int GetInt(string path, string name, int defaultValue = 0)
+        public static int GetInt(string name, int defaultValue = 0)
         {
-            object value = GetValue(path, name, defaultValue);
+            object value = GetValue(ApplicationKey, name, defaultValue);
             return !(value is int) ? defaultValue : (int)value;
         }
 
@@ -193,22 +193,18 @@ namespace mpvnet
 
         public static void RemoveKey(string path)
         {
-            try
-            {
+            try {
                 GetRootKey(path).DeleteSubKeyTree(path.Substring(5), false);
-            }
-            catch { }
+            } catch { }
         }
 
         public static void RemoveValue(string path, string name)
         {
-            try
-            {
+            try {
                 using (RegistryKey regKey = GetRootKey(path).OpenSubKey(path.Substring(5), true))
                     if (regKey != null)
                         regKey.DeleteValue(name, false);
-            }
-            catch { }
+            } catch { }
         }
 
         static RegistryKey GetRootKey(string path)
