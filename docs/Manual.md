@@ -212,15 +212,15 @@ Save volume and mute on exit and restore it on start. Default: yes
 
 #### --start-size=\<value\>
 
-Setting to remember the window height.
+Setting to remember the window size.
 
 **video**  
 Window size is set to video resolution.  
 
-**previous-height**  
+**height-session**  
 Height is remembered in the current session. Default
 
-**always-height**  
+**height-always**  
 Height is always remembered.
 
 **always**  

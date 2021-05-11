@@ -1,8 +1,13 @@
 
-5.4.8.9 Beta (???)
+5.4.8.9 Beta (2021-??-??)
 =========================
 
-- Reworked [start-size](Manual.md#--start-sizevalue) option. 
+- New `start-size` option to always keep and remember the width and height.
+- There is an issue with the `window-scale` mpv property, it does not
+  work correctly in mpv either. I've removed support for it and
+  added an own implementation `script-message mpv.net window-scale`.
+- The previous Beta replaced the CS-Script library with an own
+  C# scripting implementation.
 
 
 5.4.8.8 Beta (2021-05-09)

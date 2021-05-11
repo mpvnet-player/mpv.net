@@ -54,7 +54,7 @@ namespace mpvnet
             parameters.OutputAssembly = outputFile;
             CompilerResults results = provider.CompileAssemblyFromFile(parameters, file);
 
-            var errors = results.Errors.Cast<CompilerError>().Select((i) => "Line Number " +
+            var errors = results.Errors.Cast<CompilerError>().Select(i => "Line Number " +
                 i.Line + "\r\n" + "Error Number: " + i.ErrorNumber + "\r\n" + i.ErrorText);
 
             if (errors.Count() > 0)

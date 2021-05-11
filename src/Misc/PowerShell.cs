@@ -137,16 +137,16 @@ namespace mpvnet
             switch (type)
             {
                 case "bool": case "boolean":
-                    core.observe_property_bool(name, (value) => App.RunTask(() => PropertyChanged.Invoke(name, value)));
+                    core.observe_property_bool(name, value => App.RunTask(() => PropertyChanged.Invoke(name, value)));
                     break;
                 case "string":
-                    core.observe_property_string(name, (value) => App.RunTask(() => PropertyChanged.Invoke(name, value)));
+                    core.observe_property_string(name, value => App.RunTask(() => PropertyChanged.Invoke(name, value)));
                     break;
                 case "int": case "integer":
-                    core.observe_property_int(name, (value) => App.RunTask(() => PropertyChanged.Invoke(name, value)));
+                    core.observe_property_int(name, value => App.RunTask(() => PropertyChanged.Invoke(name, value)));
                     break;
                 case "float": case "double":
-                    core.observe_property_double(name, (value) => App.RunTask(() => PropertyChanged.Invoke(name, value)));
+                    core.observe_property_double(name, value => App.RunTask(() => PropertyChanged.Invoke(name, value)));
                     break;
                 case "nil": case "none": case "native":
                     core.observe_property(name, () => App.RunTask(() => PropertyChanged.Invoke(name, null)));
@@ -168,11 +168,11 @@ namespace mpvnet
                     break;
 
                 case "end-file":
-                    core.EndFileAsync += (reason) => Event.Invoke("end-file", new object[] { reason });
+                    core.EndFileAsync += reason => Event.Invoke("end-file", new object[] { reason });
                     break;
 
                 case "client-message":
-                    core.ClientMessageAsync += (args) => Event.Invoke("client-message", args);
+                    core.ClientMessageAsync += args => Event.Invoke("client-message", args);
                     break;
 
                 case "shutdown":

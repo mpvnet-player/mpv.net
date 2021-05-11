@@ -18,7 +18,7 @@ namespace mpvnet
         public static string DarkMode { get; set; } = "always";
         public static string DarkTheme { get; set; } = "dark";
         public static string LightTheme { get; set; } = "light";
-        public static string StartSize { get; set; } = "previous-height";
+        public static string StartSize { get; set; } = "height-session";
 
         public static bool RememberPosition { get; set; }
         public static bool DebugMode { get; set; }
@@ -96,7 +96,7 @@ namespace mpvnet
 
         public static string Version {
             get {
-                return "Copyright (C) 2017-2021 mpv.net/mpv/mplayer\n" +
+                return "Copyright (C) 2000-2021 mpv.net/mpv/mplayer\n" +
                     $"mpv.net {Application.ProductVersion} ({File.GetLastWriteTime(Application.ExecutablePath).ToShortDateString()})\n" +
                     $"{core.get_property_string("mpv-version")} ({File.GetLastWriteTime(Folder.Startup + "mpv-1.dll").ToShortDateString()})\nffmpeg {core.get_property_string("ffmpeg-version")}\nMIT License";
             }

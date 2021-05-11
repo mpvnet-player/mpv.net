@@ -328,7 +328,7 @@ help = "<int> Initial window height in percent. Default: 60"
 name = "autofit-smaller"
 file = "mpv"
 filter = "Screen"
-help = "<int> Minimum window height in percent. Default: 30"
+help = "<int> Minimum window height in percent. Default: 10"
 
 [[settings]]
 name = "autofit-larger"
@@ -339,13 +339,13 @@ help = "<int> Maximum window height in percent. Default: 80"
 [[settings]]
 name = "start-size"
 file = "mpvnet"
-default = "previous-height"
+default = "height-session"
 filter = "Screen"
 help = "Setting to remember the window size. (mpv.net specific setting)"
-options = [{ name = "video",           help = "Window size is set to video resolution" },
-           { name = "previous-height", help = "Height is remembered in the current session" },
-           { name = "always-height",   help = "Height is always remembered" },
-           { name = "always",          help = "Size is always remembered" }]
+options = [{ name = "video",          help = "Window size is set to video resolution" },
+           { name = "height-session", help = "Height is remembered in the current session" },
+           { name = "height-always",  help = "Height is always remembered" },
+           { name = "always",         help = "Size is always remembered" }]
 
 [[settings]]
 name = "start-threshold"

@@ -51,6 +51,7 @@ namespace mpvnet
                 core.Shutdown += Shutdown;
                 core.VideoSizeChanged += VideoSizeChanged;
                 core.ScaleWindow += ScaleWindow;
+                core.WindowScale += WindowScale;
                 core.FileLoaded += FileLoaded;
                 core.Idle += Idle;
                 core.Seek += () => UpdateProgressBar();
@@ -69,7 +70,6 @@ namespace mpvnet
                 core.observe_property_string("title", PropChangeTitle);
 
                 core.observe_property_int("edition", PropChangeEdition);
-                core.observe_property_double("window-scale", PropChangeWindowScale);
                 
                 if (core.GPUAPI != "vulkan")
                     core.ProcessCommandLine(false);
@@ -116,13 +116,13 @@ namespace mpvnet
 
                 if (core.WindowMaximized)
                 {
-                    SetFormPosAndSize(1, true);
+                    SetFormPosAndSize(true);
                     WindowState = FormWindowState.Maximized;
                 }
 
                 if (core.WindowMinimized)
                 {
-                    SetFormPosAndSize(1, true);
+                    SetFormPosAndSize(true);
                     WindowState = FormWindowState.Minimized;
                 }
             }
@@ -132,21 +132,23 @@ namespace mpvnet
             }
         }
 
-        void ScaleWindow(float value) {
+        void ScaleWindow(float scale) {
             BeginInvoke(new Action(() => {
-                if (value < 1 && (Width == MinimumSize.Width || Height == MinimumSize.Height))
-                    return;
-                SetFormPosAndSize(value, false, false, false);
+                int w = (int)(ClientSize.Width * scale);
+                int h = (int)Math.Ceiling(w * core.VideoSize.Height / (double)core.VideoSize.Width);
+                SetSize(w, h, Screen.FromControl(this), false);
             }));
         }
 
-        void WindowScale(double scale)
+        void WindowScale(float scale)
         {
-            if (!WasShown())
-                return;
-
-            Size size = new Size((int)(core.VideoSize.Width * scale), (int)(core.VideoSize.Height * scale));
-            SetSize(size, core.VideoSize, Screen.FromControl(this), false, false);
+            BeginInvoke(new Action(() => {
+                SetSize(
+                    (int)(core.VideoSize.Width * scale),
+                    (int)Math.Ceiling(core.VideoSize.Height * scale),
+                    Screen.FromControl(this), false);
+                core.command($"show-text \"window-scale {scale.ToString(CultureInfo.InvariantCulture)}\"");
+            }));
         }
 
         public MenuItem FindMenuItem(string text) => FindMenuItem(text, ContextMenu.Items);
@@ -313,18 +315,16 @@ namespace mpvnet
                     if (mi.DropDownItems.Count > 0)
                     {
                         MenuItem val = FindMenuItem(text, mi.DropDownItems);
-                        if (val != null) return val;
+                        
+                        if (val != null)
+                            return val;
                     }
                 }
             }
             return null;
         }
 
-        void SetFormPosAndSize(
-            double scale = 1,
-            bool force = false,
-            bool checkAutofitSmaller = true,
-            bool checkAutofitLarger = true)
+        void SetFormPosAndSize(bool force = false, bool checkAutofit = true)
         {
             if (!force)
             {
@@ -352,16 +352,16 @@ namespace mpvnet
             int width  = videoSize.Width;
 
             if (App.StartSize == "previous")
-                App.StartSize = "previous-height";
+                App.StartSize = "height-session";
 
-            if (core.WasInitialSizeSet || scale != 1)
+            if (core.WasInitialSizeSet)
             {
                 if (App.StartSize == "always")
                 {
                     width = ClientSize.Width;
                     height = ClientSize.Height;
                 }
-                else if (App.StartSize == "always-height" || App.StartSize == "previous-height")
+                else if (App.StartSize == "height-always" || App.StartSize == "height-session")
                 {
                     height = ClientSize.Height;
                     width = height * videoSize.Width / videoSize.Height;
@@ -372,7 +372,7 @@ namespace mpvnet
                 int savedHeight = RegistryHelp.GetInt("Height");
                 int savedWidth  = RegistryHelp.GetInt("Width");
 
-                if (App.StartSize == "always-height" && savedHeight != 0)
+                if (App.StartSize == "height-always" && savedHeight != 0)
                 {
                     height = savedHeight;
                     width = height * videoSize.Width / videoSize.Height;
@@ -382,7 +382,7 @@ namespace mpvnet
                     height = savedHeight;
                     width = savedWidth;
                 }
-                else if (App.StartSize == "previous-height")
+                else if (App.StartSize == "height-session")
                 {
                     height = autoFitHeight;
                     width = height * videoSize.Width / videoSize.Height;
@@ -391,43 +391,48 @@ namespace mpvnet
                 core.WasInitialSizeSet = true;
             }
 
-            height = Convert.ToInt32(height * scale);
-            width  = Convert.ToInt32(width  * scale);
-
-            SetSize(new Size(width, height), videoSize, screen, checkAutofitSmaller, checkAutofitLarger);
+            SetSize(width, height, screen, checkAutofit);
         }
 
-        void SetSize(
-            Size size,
-            Size videoSize,
-            Screen screen,
-            bool checkAutofitSmaller = true,
-            bool checkAutofitLarger = true)
+        void SetSize(int width, int height, Screen screen, bool checkAutofit = true)
         {
-            int height = size.Height;
-            int width = size.Width;
+            int maxHeight = screen.WorkingArea.Height - (Height - ClientSize.Height) - FontHeight / 2;
+            int maxWidth = screen.WorkingArea.Width - (Width - ClientSize.Width) - FontHeight / 2;
 
-            int maxHeight = screen.WorkingArea.Height - (Height - ClientSize.Height);
-            int maxWidth = screen.WorkingArea.Width - (Width - ClientSize.Width);
+            int startWidth = width;
+            int startHeight = height;
 
-            if (checkAutofitSmaller && (height < maxHeight * core.AutofitSmaller))
+            if (checkAutofit)
             {
-                height = Convert.ToInt32(maxHeight * core.AutofitSmaller);
-                width = Convert.ToInt32(height * videoSize.Width / videoSize.Height);
-            }
+                if (height < maxHeight * core.AutofitSmaller)
+                {
+                    height = Convert.ToInt32(maxHeight * core.AutofitSmaller);
+                    width = Convert.ToInt32(height * startWidth / (double)startHeight);
+                }
 
-            float autofitLarger = checkAutofitLarger ? core.AutofitLarger : 1;
-
-            if (height > maxHeight * autofitLarger)
-            {
-                height = Convert.ToInt32(maxHeight * autofitLarger);
-                width = Convert.ToInt32(height * videoSize.Width / videoSize.Height);
+                if (height > maxHeight * core.AutofitLarger)
+                {
+                    height = Convert.ToInt32(maxHeight * core.AutofitLarger);
+                    width = Convert.ToInt32(height * startWidth / (double)startHeight);
+                }
             }
 
             if (width > maxWidth)
             {
                 width = maxWidth;
-                height = (int)Math.Ceiling(width * videoSize.Height / (double)videoSize.Width);
+                height = (int)Math.Ceiling(width * startHeight / (double)width);
+            }
+
+            if (height > maxHeight)
+            {
+                height = maxHeight;
+                width = Convert.ToInt32(height * startWidth / (double)startHeight);
+            }
+
+            if (height < maxHeight * 0.1)
+            {
+                height = Convert.ToInt32(maxHeight * 0.1);
+                width = Convert.ToInt32(height * startWidth / (double)startHeight);
             }
 
             Point middlePos = new Point(Left + Width / 2, Top + Height / 2);
@@ -764,8 +769,6 @@ namespace mpvnet
         void PropChangeTitle(string value) { Title = value; SetTitle(); }
 
         void PropChangeEdition(int value) => core.Edition = value;
-        
-        void PropChangeWindowScale(double value) => BeginInvoke(new Action(() => WindowScale(value)));
 
         void PropChangeWindowMaximized()
         {
@@ -857,7 +860,6 @@ namespace mpvnet
             WPF.Init();
             System.Windows.Application.Current.ShutdownMode = System.Windows.ShutdownMode.OnExplicitShutdown;
             Cursor.Position = new Point(Cursor.Position.X + 1, Cursor.Position.Y);
-            MinimumSize = new Size(FontHeight * 9, FontHeight * 9);
             UpdateCheck.DailyCheck();
             core.LoadScripts();
             GlobalHotkey.RegisterGlobalHotkeys(Handle);
@@ -871,7 +873,7 @@ namespace mpvnet
         {
             base.OnActivated(e);
             Message m = new Message() { Msg = 0x0202 }; // WM_LBUTTONUP
-            SendMessage(MainForm.Instance.Handle, m.Msg, m.WParam, m.LParam);
+            SendMessage(Handle, m.Msg, m.WParam, m.LParam);
         }
 
         protected override void OnResize(EventArgs e)

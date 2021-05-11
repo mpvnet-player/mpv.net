@@ -135,9 +135,10 @@
  Alt++   script-message mpv.net scale-window 1.2     #menu: View > Zoom > Enlarge
  Alt+-   script-message mpv.net scale-window 0.8     #menu: View > Zoom > Shrink
  _       ignore                                      #menu: View > Zoom > -
- Alt+0   set window-scale 0.5                        #menu: View > Zoom > 50 %
- Alt+1   set window-scale 1.0                        #menu: View > Zoom > 100 %
- Alt+2   set window-scale 2.0                        #menu: View > Zoom > 200 %
+ Alt+0   script-message mpv.net window-scale 0.5     #menu: View > Zoom > 50 %
+ Alt+1   script-message mpv.net window-scale 1.0     #menu: View > Zoom > 100 %
+ Alt+2   script-message mpv.net window-scale 2.0     #menu: View > Zoom > 200 %
+ Alt+3   script-message mpv.net window-scale 3.0     #menu: View > Zoom > 300 %
  b       cycle border                                #menu: View > Toggle Border
  i       script-message mpv.net show-info            #menu: View > File/Stream Info
  t       script-binding stats/display-stats          #menu: View > Show Statistics

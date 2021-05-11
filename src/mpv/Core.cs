@@ -76,6 +76,7 @@ namespace mpvnet
         public event Action VideoSizeChanged;
         public event Action VideoSizeChangedAsync;
         public event Action<float> ScaleWindow;
+        public event Action<float> WindowScale;
 
         public Dictionary<string, List<Action>>               PropChangeActions { get; set; } = new Dictionary<string, List<Action>>();
         public Dictionary<string, List<Action<int>>>       IntPropChangeActions { get; set; } = new Dictionary<string, List<Action<int>>>();
@@ -1296,6 +1297,11 @@ namespace mpvnet
         public void RaiseScaleWindow(float value)
         {
             ScaleWindow(value);
+        }
+
+        public void RaiseWindowScale(float value)
+        {
+            WindowScale(value);
         }
 
         void ReadMetaData()

@@ -12,7 +12,6 @@ using VB = Microsoft.VisualBasic;
 
 using static mpvnet.NewLine;
 using static mpvnet.Core;
-using System.Threading.Tasks;
 
 namespace mpvnet
 {
@@ -35,6 +34,7 @@ namespace mpvnet
                 case "playlist-first": PlaylistFirst(); break;
                 case "playlist-last": PlaylistLast(); break;
                 case "scale-window": ScaleWindow(float.Parse(args[0], CultureInfo.InvariantCulture)); break;
+                case "window-scale": WindowScale(float.Parse(args[0], CultureInfo.InvariantCulture)); break;
                 case "shell-execute": ProcessHelp.ShellExecute(args[0]); break;
                 case "show-about": ShowDialog(typeof(AboutWindow)); break;
                 case "show-audio-devices": ShowTextWithEditor("audio-device-list", core.get_property_osd_string("audio-device-list")); break;
@@ -350,10 +350,9 @@ namespace mpvnet
             ProcessHelp.ShellExecute(file);
         }
 
-        public static void ScaleWindow(float factor)
-        {
-            core.RaiseScaleWindow(factor);
-        }
+        public static void ScaleWindow(float factor) => core.RaiseScaleWindow(factor);
+
+        public static void WindowScale(float value) => core.RaiseWindowScale(value);
 
         public static void ShowText(string text, int duration = 0, int fontSize = 0)
         {
