@@ -217,6 +217,12 @@ Setting to remember the window size.
 **video**  
 Window size is set to video resolution.  
 
+**width-session**  
+Width is remembered in the current session.
+
+**width-always**  
+Width is always remembered.
+
 **height-session**  
 Height is remembered in the current session. Default
 

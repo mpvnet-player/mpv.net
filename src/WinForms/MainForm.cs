@@ -366,6 +366,11 @@ namespace mpvnet
                     height = ClientSize.Height;
                     width = height * videoSize.Width / videoSize.Height;
                 }
+                else if (App.StartSize == "width-always" || App.StartSize == "width-session")
+                {
+                    width = ClientSize.Width;
+                    height = (int)Math.Ceiling(width * videoSize.Height / (double)videoSize.Width);
+                }
             }
             else
             {
@@ -377,15 +382,25 @@ namespace mpvnet
                     height = savedHeight;
                     width = height * videoSize.Width / videoSize.Height;
                 }
-                else if (App.StartSize == "always" && savedHeight != 0)
-                {
-                    height = savedHeight;
-                    width = savedWidth;
-                }
                 else if (App.StartSize == "height-session")
                 {
                     height = autoFitHeight;
                     width = height * videoSize.Width / videoSize.Height;
+                }
+                if (App.StartSize == "width-always" && savedHeight != 0)
+                {
+                    width = savedWidth;
+                    height = (int)Math.Ceiling(width * videoSize.Height / (double)videoSize.Width);
+                }
+                else if (App.StartSize == "width-session")
+                {
+                    width = autoFitHeight / 9 * 16;
+                    height = (int)Math.Ceiling(width * videoSize.Height / (double)videoSize.Width);
+                }
+                else if (App.StartSize == "always" && savedHeight != 0)
+                {
+                    height = savedHeight;
+                    width = savedWidth;
                 }
 
                 core.WasInitialSizeSet = true;
@@ -420,7 +435,7 @@ namespace mpvnet
             if (width > maxWidth)
             {
                 width = maxWidth;
-                height = (int)Math.Ceiling(width * startHeight / (double)width);
+                height = (int)Math.Ceiling(width * startHeight / (double)startWidth);
             }
 
             if (height > maxHeight)
@@ -440,6 +455,14 @@ namespace mpvnet
             NativeHelp.AddWindowBorders(Handle, ref rect);
             int left = middlePos.X - rect.Width / 2;
             int top = middlePos.Y - rect.Height / 2;
+            Rectangle workingArea = screen.WorkingArea;
+            Rectangle currentRect = new Rectangle(Left, Top, Width, Height);
+
+            if (HorizontalLocation(screen) == -1) left = Left;
+            if (HorizontalLocation(screen) ==  1) left = currentRect.Right - rect.Width;
+
+            if (VerticalLocation(screen) == -1) top = Top;
+            if (VerticalLocation(screen) ==  1) top = currentRect.Bottom - rect.Height;
 
             Screen[] screens = Screen.AllScreens;
             int minLeft = screens.Select(val => val.WorkingArea.X).Min();
@@ -460,6 +483,34 @@ namespace mpvnet
                 top = maxBottom - rect.Height;
 
             SetWindowPos(Handle, IntPtr.Zero, left, top, rect.Width, rect.Height, 4);
+        }
+
+        public int HorizontalLocation(Screen screen)
+        {
+            Rectangle workingArea = screen.WorkingArea;
+            Rectangle rect = new Rectangle(Left - workingArea.X, Top - workingArea.Y, Width, Height);
+
+            if (rect.X * 3 < workingArea.Width - rect.Right)
+                return -1;
+
+            if (rect.X > (workingArea.Width - rect.Right) * 3)
+                return 1;
+
+            return 0;
+        }
+
+        public int VerticalLocation(Screen screen)
+        {
+            Rectangle workingArea = screen.WorkingArea;
+            Rectangle rect = new Rectangle(Left - workingArea.X, Top - workingArea.Y, Width, Height);
+
+            if (rect.Y * 3 < workingArea.Height - rect.Bottom)
+                return -1;
+
+            if (rect.Y > (workingArea.Height - rect.Bottom) * 3)
+                return 1;
+
+            return 0;
         }
 
         public void CycleFullscreen(bool enabled)

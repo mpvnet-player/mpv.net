@@ -343,6 +343,8 @@ default = "height-session"
 filter = "Screen"
 help = "Setting to remember the window size. (mpv.net specific setting)"
 options = [{ name = "video",          help = "Window size is set to video resolution" },
+           { name = "width-session",  help = "Width is remembered in the current session" },
+           { name = "width-always",   help = "Width is always remembered" },
            { name = "height-session", help = "Height is remembered in the current session" },
            { name = "height-always",  help = "Height is always remembered" },
            { name = "always",         help = "Size is always remembered" }]
