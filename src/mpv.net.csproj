@@ -149,7 +149,6 @@
     <Compile Include="mpv\core.cs" />
     <Compile Include="Misc\Commands.cs" />
     <Compile Include="Native\Native.cs" />
-    <Compile Include="Native\NativeHelp.cs" />
     <Compile Include="Misc\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Native\TaskDialog.cs" />

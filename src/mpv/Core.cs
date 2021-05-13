@@ -248,13 +248,11 @@ namespace mpvnet
                     if (!File.Exists(_ConfigFolder + "mpv.conf"))
                     {
                         string conf = Properties.Resources.mpv_conf;
-                        Graphics gx = Graphics.FromHwnd(IntPtr.Zero);
-                        float scale = WinAPI.GetDeviceCaps(gx.GetHdc(), 88 /*LOGPIXELSX*/) / 96.0f;
+                        float scale = Native.GetDPI(IntPtr.Zero) / 96.0f;
 
                         if (scale != 1)
                             conf = conf.Replace("console-scale=1", "console-scale=" + scale);
 
-                        gx.Dispose();
                         File.WriteAllText(_ConfigFolder + "mpv.conf", conf);
                     }
                 }
@@ -356,7 +354,7 @@ namespace mpvnet
                 mpv_event evt = (mpv_event)Marshal.PtrToStructure(ptr, typeof(mpv_event));
 
                 if (WindowHandle == IntPtr.Zero)
-                    WindowHandle = WinAPI.FindWindowEx(MainForm.Hwnd, IntPtr.Zero, "mpv", null);
+                    WindowHandle = Native.FindWindowEx(MainForm.Hwnd, IntPtr.Zero, "mpv", null);
 
                 //Debug.WriteLine(evt.event_id.ToString());
 
@@ -1210,9 +1208,9 @@ namespace mpvnet
                 string dll = Environment.GetEnvironmentVariable("AviSynthDLL");
 
                 if (File.Exists(dll))
-                    WinAPI.LoadLibrary(dll);
+                    Native.LoadLibrary(dll);
                 else
-                    WinAPI.LoadLibrary("AviSynth.dll");
+                    Native.LoadLibrary("AviSynth.dll");
 
                 WasAviSynthLoaded = true;
             }

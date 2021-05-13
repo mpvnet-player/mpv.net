@@ -167,6 +167,11 @@ namespace mpvnet
     {
         public static string ApplicationKey { get; } = @"HKCU\Software\" + Application.ProductName;
 
+        public static void SetInt(string name, object value)
+        {
+            SetValue(ApplicationKey, name, value);
+        }
+
         public static void SetValue(string path, string name, object value)
         {
             using (RegistryKey regKey = GetRootKey(path).CreateSubKey(path.Substring(5), RegistryKeyPermissionCheck.ReadWriteSubTree))

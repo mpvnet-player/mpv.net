@@ -10,7 +10,7 @@ using System.ComponentModel;
 using System.Globalization;
 
 using static mpvnet.Core;
-using static WinAPI;
+using static Native;
 
 namespace mpvnet
 {
@@ -19,12 +19,13 @@ namespace mpvnet
         public static MainForm Instance { get; set; }
         public static IntPtr Hwnd { get; set; }
         public new ContextMenuStripEx ContextMenu { get; set; }
-        Point  LastCursorPosition;
-        int    LastCursorChanged;
-        int    LastCycleFullscreen;
-        int    LastAppCommand;
-        int    TaskbarButtonCreatedMessage;
-        int    ShownTickCount;
+        Point LastCursorPosition;
+     
+        int LastCursorChanged;
+        int LastCycleFullscreen;
+        int LastAppCommand;
+        int TaskbarButtonCreatedMessage;
+        int ShownTickCount;
 
         Taskbar  Taskbar;
         List<string> RecentFiles;
@@ -107,11 +108,19 @@ namespace mpvnet
 
                 int posX = RegistryHelp.GetInt("PosX");
                 int posY = RegistryHelp.GetInt("PosY");
-
-                if (posX != 0 && posY != 0 && App.RememberPosition)
+                
+                if ((posX != 0 || posY != 0) && App.RememberPosition)
                 {
                     Left = posX - Width / 2;
                     Top = posY - Height / 2;
+
+                    int horizontal = RegistryHelp.GetInt("HorizontalLocation");
+                    int vertical = RegistryHelp.GetInt("VerticalLocation");
+
+                    if (horizontal == -1) Left = posX;
+                    if (horizontal ==  1) Left = posX - Width;
+                    if (vertical   == -1) Top = posY;
+                    if (vertical   ==  1) Top = posY - Height;
                 }
 
                 if (core.WindowMaximized)
@@ -452,17 +461,18 @@ namespace mpvnet
 
             Point middlePos = new Point(Left + Width / 2, Top + Height / 2);
             var rect = new RECT(new Rectangle(screen.Bounds.X, screen.Bounds.Y, width, height));
-            NativeHelp.AddWindowBorders(Handle, ref rect);
+            AddWindowBorders(Handle, ref rect, GetDPI(Handle));
+
             int left = middlePos.X - rect.Width / 2;
             int top = middlePos.Y - rect.Height / 2;
             Rectangle workingArea = screen.WorkingArea;
             Rectangle currentRect = new Rectangle(Left, Top, Width, Height);
 
-            if (HorizontalLocation(screen) == -1) left = Left;
-            if (HorizontalLocation(screen) ==  1) left = currentRect.Right - rect.Width;
+            if (GetHorizontalLocation(screen) == -1) left = Left;
+            if (GetHorizontalLocation(screen) ==  1) left = currentRect.Right - rect.Width;
 
-            if (VerticalLocation(screen) == -1) top = Top;
-            if (VerticalLocation(screen) ==  1) top = currentRect.Bottom - rect.Height;
+            if (GetVerticalLocation(screen) == -1) top = Top;
+            if (GetVerticalLocation(screen) ==  1) top = currentRect.Bottom - rect.Height;
 
             Screen[] screens = Screen.AllScreens;
             int minLeft = screens.Select(val => val.WorkingArea.X).Min();
@@ -485,10 +495,13 @@ namespace mpvnet
             SetWindowPos(Handle, IntPtr.Zero, left, top, rect.Width, rect.Height, 4);
         }
 
-        public int HorizontalLocation(Screen screen)
+        public int GetHorizontalLocation(Screen screen)
         {
             Rectangle workingArea = screen.WorkingArea;
             Rectangle rect = new Rectangle(Left - workingArea.X, Top - workingArea.Y, Width, Height);
+
+            if (workingArea.Width / (float)Width < 1.2)
+                return 0;
 
             if (rect.X * 3 < workingArea.Width - rect.Right)
                 return -1;
@@ -499,10 +512,13 @@ namespace mpvnet
             return 0;
         }
 
-        public int VerticalLocation(Screen screen)
+        public int GetVerticalLocation(Screen screen)
         {
             Rectangle workingArea = screen.WorkingArea;
             Rectangle rect = new Rectangle(Left - workingArea.X, Top - workingArea.Y, Width, Height);
+
+            if (workingArea.Height / (float)Height < 1.2)
+                return 0;
 
             if (rect.Y * 3 < workingArea.Height - rect.Bottom)
                 return -1;
@@ -623,11 +639,33 @@ namespace mpvnet
         {
             if (WindowState == FormWindowState.Normal)
             {
-                RegistryHelp.SetValue(App.RegPath, "PosX", Left + Width / 2);
-                RegistryHelp.SetValue(App.RegPath, "PosY", Top + Height / 2);
+                SavePosition();
+
                 RegistryHelp.SetValue(App.RegPath, "Width", ClientSize.Width);
                 RegistryHelp.SetValue(App.RegPath, "Height", ClientSize.Height);
             }
+        }
+
+        void SavePosition()
+        {
+            int posX = Left + Width / 2;
+            int posY = Top + Height / 2;
+
+            Screen screen = Screen.FromControl(this);
+
+            int x = GetHorizontalLocation(screen);
+            int y = GetVerticalLocation(screen);
+
+            if (x == -1) posX = Left;
+            if (x ==  1) posX = Left + Width;
+            if (y == -1) posY = Top;
+            if (y ==  1) posY = Top + Height;
+
+            RegistryHelp.SetInt("PosX", posX);
+            RegistryHelp.SetInt("PosY", posY);
+            
+            RegistryHelp.SetInt("HorizontalLocation", x);
+            RegistryHelp.SetInt("VerticalLocation", y);
         }
 
         protected override CreateParams CreateParams {
@@ -726,27 +764,28 @@ namespace mpvnet
                     break;
                 case 0x0214: // WM_SIZING
                     {
-                        var rc = Marshal.PtrToStructure<RECT>(m.LParam);
-                        var r = rc;
-                        NativeHelp.SubtractWindowBorders(Handle, ref r);
+                        RECT rc = Marshal.PtrToStructure<RECT>(m.LParam);
+                        RECT r = rc;
+                        SubtractWindowBorders(Handle, ref r, GetDPI(Handle));
+
                         int c_w = r.Right - r.Left, c_h = r.Bottom - r.Top;
-                        Size s = core.VideoSize;
+                        Size videoSize = core.VideoSize;
 
-                        if (s == Size.Empty)
-                            s = new Size(16, 9);
+                        if (videoSize == Size.Empty)
+                            videoSize = new Size(16, 9);
 
-                        float aspect = s.Width / (float)s.Height;
+                        float aspect = videoSize.Width / (float)videoSize.Height;
                         int d_w = (int)(c_h * aspect - c_w);
                         int d_h = (int)(c_w / aspect - c_h);
 
                         int[] d_corners = { d_w, d_h, -d_w, -d_h };
                         int[] corners = { rc.Left, rc.Top, rc.Right, rc.Bottom };
-                        int corner = NativeHelp.GetResizeBorder(m.WParam.ToInt32());
+                        int corner = GetResizeBorder(m.WParam.ToInt32());
 
                         if (corner >= 0)
                             corners[corner] -= d_corners[corner];
 
-                        Marshal.StructureToPtr<RECT>(new RECT(corners[0], corners[1], corners[2], corners[3]), m.LParam, false);
+                        Marshal.StructureToPtr(new RECT(corners[0], corners[1], corners[2], corners[3]), m.LParam, false);
                         m.Result = new IntPtr(1);
                     }
                     return;

@@ -4,11 +4,14 @@
 
 - There is an issue with the `window-scale` mpv property, it does not
   work correctly in mpv either, so I've removed support for it and
-  added an own implementation `script-message mpv.net window-scale`.
+  added my own implementation `script-message mpv.net window-scale`.
 - The previous Beta replaced the CS-Script library with my own
   C# scripting implementation.
 - If a player window border is near to a screen border and the window size
   changes, the player windows sticks to that near screen border location.
+  Furthermore the `remember-position` option remembers a near screen border
+  position instead of remembering the window center position.
+- High DPI multi monitor fix.
 - `start-size` option has new options, see in config editor and manual.
 
 

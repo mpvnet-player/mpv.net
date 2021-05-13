@@ -3,8 +3,10 @@ using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
 
-public class WinAPI
+public class Native
 {
+    static Version Windows_10_1607 = new Version(10, 0, 14393); // Windows 10 1607
+
     [DllImport("kernel32.dll")]
     public static extern bool AttachConsole(int dwProcessId);
 
@@ -37,7 +39,14 @@ public class WinAPI
     public static extern void ReleaseCapture();
 
     [DllImport("user32.dll")]
+    public static extern int GetDpiForWindow(IntPtr hwnd);
+
+    [DllImport("user32.dll")]
     public static extern bool AdjustWindowRect(ref RECT lpRect, uint dwStyle, bool bMenu);
+
+    [DllImport("user32.dll")]
+    public static extern bool AdjustWindowRectExForDpi(
+        ref RECT lpRect, uint dwStyle, bool bMenu, uint dwExStyle, uint dpi);
 
     [DllImport("user32.dll")]
     public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int x, int y, int cx, int cy, uint uFlags);
@@ -96,5 +105,51 @@ public class WinAPI
         public int cbData;
         [MarshalAs(UnmanagedType.LPTStr)]
         public string lpData;
+    }
+
+    public static int GetResizeBorder(int v)
+    {
+        switch (v)
+        {
+            case 1 /* WMSZ_LEFT        */ : return 3;
+            case 3 /* WMSZ_TOP         */ : return 2;
+            case 2 /* WMSZ_RIGHT       */ : return 3;
+            case 6 /* WMSZ_BOTTOM      */ : return 2;
+            case 4 /* WMSZ_TOPLEFT     */ : return 1;
+            case 5 /* WMSZ_TOPRIGHT    */ : return 1;
+            case 7 /* WMSZ_BOTTOMLEFT  */ : return 3;
+            case 8 /* WMSZ_BOTTOMRIGHT */ : return 3;
+            default: return -1;
+        }
+    }
+
+    public static void SubtractWindowBorders(IntPtr hwnd, ref RECT rc, int dpi)
+    {
+        RECT r = new RECT(0, 0, 0, 0);
+        AddWindowBorders(hwnd, ref r, dpi);
+        rc.Left -= r.Left;
+        rc.Top -= r.Top;
+        rc.Right -= r.Right;
+        rc.Bottom -= r.Bottom;
+    }
+
+    public static void AddWindowBorders(IntPtr hwnd, ref RECT rc, int dpi)
+    {
+        uint windowStyle   = (uint)GetWindowLong(hwnd, -16); // GWL_STYLE
+        uint windowStyleEx = (uint)GetWindowLong(hwnd, -20); // GWL_EXSTYLE
+
+        if (Environment.OSVersion.Version >= Windows_10_1607)
+            AdjustWindowRectExForDpi(ref rc, windowStyle, false, windowStyleEx, (uint)dpi);
+        else
+            AdjustWindowRect(ref rc, windowStyle, false);
+    }
+
+    public static int GetDPI(IntPtr hwnd)
+    {
+        if (Environment.OSVersion.Version >= Windows_10_1607)
+            return GetDpiForWindow(hwnd);
+        else
+            using (Graphics gx = Graphics.FromHwnd(hwnd))
+                return GetDeviceCaps(gx.GetHdc(), 88 /*LOGPIXELSX*/);
     }
 }
