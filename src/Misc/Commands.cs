@@ -298,18 +298,26 @@ namespace mpvnet
 
         public static void CycleAudio()
         {
-            MediaTrack[] tracks = core.MediaTracks.Where(track => track.Type == "a").ToArray();
+            MediaTrack[] audioTracks = core.MediaTracks.Where(track => track.Type == "a").ToArray();
+            int len = audioTracks.Length;
 
-            if (tracks.Length < 2)
+            if (len < 1)
+            {
+                core.commandv("show-text", "No audio tracks");
                 return;
+            }
 
             int aid = core.get_property_int("aid");
 
-            if (++aid > tracks.Length)
-                aid = 1;
+            if (len > 1)
+            {
+                if (++aid > len)
+                    aid = 1;
 
-            core.commandv("set", "aid", aid.ToString());
-            core.commandv("show-text", aid + ": " + tracks[aid - 1].Text.Substring(3), "5000");
+                core.commandv("set", "aid", aid.ToString());
+            }
+
+            core.commandv("show-text", aid + "/" + len + ": " + audioTracks[aid - 1].Text.Substring(3), "5000");
         }
 
         public static void ShowCommands()

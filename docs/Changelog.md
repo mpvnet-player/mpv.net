@@ -13,6 +13,7 @@
   position instead of remembering the window center position.
 - High DPI multi monitor fix.
 - `start-size` option has new options, see in config editor and manual.
+- Improved `cycle-audio` OSD info.
 
 
 5.4.8.8 Beta (2021-05-09)
