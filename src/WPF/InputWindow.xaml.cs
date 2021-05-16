@@ -9,6 +9,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 
 using static mpvnet.Core;
+using static TaskDialog.Msg;
 
 namespace mpvnet
 {
@@ -37,7 +38,7 @@ namespace mpvnet
             if (SearchControl.SearchTextBox.Text == "?")
             {
                 SearchControl.SearchTextBox.Text = "";
-                Msg.Show("Filtering", "Reduce the filter scope with:\n\ni input\n\nm menu\n\nc command\n\nIf only one character is entered input search is performed.");
+                MsgInfo("Filtering", "Reduce the filter scope with:\n\ni input\n\nm menu\n\nc command\n\nIf only one character is entered input search is performed.");
             }
         }
 
@@ -85,7 +86,7 @@ namespace mpvnet
 
             foreach (CommandItem i in CommandItem.Items)
                 if (items.ContainsKey(i.Input) && i.Input != "")
-                    Msg.Show($"Duplicate found:\n\n{i.Input}: {i.Path}\n\n{items[i.Input].Input}: {items[i.Input].Path}\n\nPlease note that you can chain multiple commands in the same line by using a semicolon as separator.", "Duplicate Found");
+                    MsgInfo($"Duplicate found:\n\n{i.Input}: {i.Path}\n\n{items[i.Input].Input}: {items[i.Input].Path}\n\nPlease note that you can chain multiple commands in the same line by using a semicolon as separator.", "Duplicate Found");
                 else
                     items[i.Input] = i;
         }
@@ -124,9 +125,11 @@ namespace mpvnet
 
         void Window_Closed(object sender, EventArgs e)
         {
-            if (InitialInputConfContent == GetInputConfContent()) return;
+            if (InitialInputConfContent == GetInputConfContent())
+                return;
+
             File.WriteAllText(core.InputConfPath, GetInputConfContent());
-            Msg.Show("Changes will be available on next mpv.net startup.");
+            MsgInfo("Changes will be available on next mpv.net startup.");
         }
 
         void DataGrid_PreviewCanExecute(object sender, CanExecuteRoutedEventArgs e)

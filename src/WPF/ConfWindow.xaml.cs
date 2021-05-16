@@ -11,6 +11,7 @@ using System.Windows.Input;
 
 using DynamicGUI;
 
+using static TaskDialog.Msg;
 using static mpvnet.Core;
 
 namespace mpvnet
@@ -75,7 +76,7 @@ namespace mpvnet
             
             File.WriteAllText(core.ConfPath, GetContent("mpv"));
             File.WriteAllText(App.ConfPath, GetContent("mpvnet"));
-            Msg.Show("Changes will be available on next mpv.net startup.");            
+            MsgInfo("Changes will be available on next mpv.net startup.");            
         }
 
         string GetCompareString()
@@ -297,7 +298,7 @@ namespace mpvnet
 
         void PreviewTextBlock_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            Msg.Show("mpv.conf Preview", GetContent("mpv"));
+            MsgInfo("mpv.conf Preview", GetContent("mpv"));
         }
 
         void ShowManualTextBlock_MouseUp(object sender, MouseButtonEventArgs e)

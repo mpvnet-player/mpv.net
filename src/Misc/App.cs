@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using System.Threading.Tasks;
 
 using static mpvnet.Core;
+using static TaskDialog.Msg;
 
 namespace mpvnet
 {
@@ -116,7 +117,7 @@ namespace mpvnet
                 if (IsStartedFromTerminal)
                     ConsoleHelp.WriteError(obj.ToString());
                 else
-                    Msg.ShowError(obj.ToString());
+                    MsgError(obj.ToString());
             }
         }
 
@@ -206,7 +207,7 @@ namespace mpvnet
 
                     Commands.Execute("show-setup-dialog");
                 else
-                    Msg.Show("The setup dialog can be found in the context menu at:\n\nTools > Setup");
+                    MsgInfo("The setup dialog can be found in the context menu at:\n\nTools > Setup");
 
                 RegistryHelp.SetValue(RegistryHelp.ApplicationKey, Folder.Startup, 1);
             }

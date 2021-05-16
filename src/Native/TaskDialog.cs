@@ -82,16 +82,20 @@ public class Msg
         }
     }
 
-    public static void ShowWarning(string mainInstruction,
-                                   string content = null,
-                                   bool onlyOnce = false)
+    public static void ShowWarning(
+        string mainInstruction,
+        string content = null,
+        bool onlyOnce = false)
     {
         if (onlyOnce && Msg.ShownMessages != null &&
             Msg.ShownMessages.Contains(mainInstruction + content))
             return;
 
         Msg.Show(mainInstruction, content, MsgIcon.Warning, MsgButtons.Ok, MsgResult.None);
-        if (!onlyOnce) return;
+
+        if (!onlyOnce)
+            return;
+
         Msg.ShownMessages += mainInstruction + content;
     }
 

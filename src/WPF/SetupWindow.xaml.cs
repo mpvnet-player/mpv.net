@@ -8,6 +8,7 @@ using System.Windows;
 using WinForms = System.Windows.Forms;
 
 using static StockIcon;
+using static TaskDialog.Msg;
 
 namespace mpvnet
 {
@@ -44,7 +45,7 @@ namespace mpvnet
                     proc.WaitForExit();
 
                     if (proc.ExitCode == 0)
-                        Msg.Show("File associations successfully created.");
+                        MsgInfo("File associations successfully created.");
                 }
 
             } catch {}

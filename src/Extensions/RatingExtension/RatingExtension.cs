@@ -17,7 +17,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.IO;
 using System.Threading;
-
+using System.Windows.Forms;
 using Microsoft.VisualBasic.FileIO;
 
 using mpvnet;
@@ -91,7 +91,8 @@ namespace RatingExtension // the assembly name must end with 'Extension'
                 }
             }
             else if (args[1] == "about")
-                Msg.Show("Rating Extension", "This extension writes a rating to the filename of rated videos when mpv.net shuts down.\n\nThe input.conf defaults contain key bindings for this extension to set ratings.");
+                MessageBox.Show("This extension writes a rating to the filename of rated videos when mpv.net shuts down.\n\nThe input.conf defaults contain key bindings for this extension to set ratings.",
+                    "Rating Extension");
         }
 
         void Delete(int rating)

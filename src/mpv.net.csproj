@@ -231,7 +231,12 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="WinForms\TaskDialog\TaskDialog.vbproj">
+      <Project>{cfbe6e6c-b711-42bb-b5ed-487d4767fe2b}</Project>
+      <Name>TaskDialog</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

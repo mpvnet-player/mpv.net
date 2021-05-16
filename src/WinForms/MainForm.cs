@@ -11,6 +11,7 @@ using System.Globalization;
 
 using static mpvnet.Core;
 using static Native;
+using static TaskDialog.Msg;
 
 namespace mpvnet
 {
@@ -957,6 +958,7 @@ namespace mpvnet
             CSharpScriptHost.ExecuteScriptsInFolder(core.ConfigFolder + "scripts-cs");
             ShownTickCount = Environment.TickCount;
             App.ShowSetup();
+            MsgError("aaaaaaaaaaaaaaa", "bbbbbbbbbbbbbbbbbb");
         }
 
         protected override void OnActivated(EventArgs e)

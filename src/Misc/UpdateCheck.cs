@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 using static mpvnet.Core;
+using static TaskDialog.Msg;
 
 namespace mpvnet
 {
@@ -39,7 +40,7 @@ namespace mpvnet
                     if (onlineVersion <= currentVersion)
                     {
                         if (showUpToDateMessage)
-                            Msg.Show($"{Application.ProductName} is up to date.");
+                            MsgInfo($"{Application.ProductName} is up to date.");
 
                         return;
                     }
