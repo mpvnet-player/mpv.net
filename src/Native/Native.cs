@@ -149,7 +149,7 @@ namespace mpvnet
 
         public static int GetDPI(IntPtr hwnd)
         {
-            if (Environment.OSVersion.Version >= Windows_10_1607)
+            if (Environment.OSVersion.Version >= Windows_10_1607 && hwnd != IntPtr.Zero)
                 return GetDpiForWindow(hwnd);
             else
                 using (Graphics gx = Graphics.FromHwnd(hwnd))
