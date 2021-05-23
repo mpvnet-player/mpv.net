@@ -6,16 +6,16 @@ using mpvnet;
 
 class Script
 {
-    Core core;
-    
+    CorePlayer Core;
+
     public Script()
     {
-        core = Core.core;
-        core.observe_property_bool("fullscreen", FullscreenChange);
+        Core = Global.Core;
+        Core.observe_property_bool("fullscreen", FullscreenChange);
     }
 
     void FullscreenChange(bool value)
     {
-        core.commandv("show-text", "fullscreen: " + value);
+        Core.commandv("show-text", "fullscreen: " + value);
     }
 }

@@ -5,15 +5,20 @@
 - There is an issue with the `window-scale` mpv property, it does not
   work correctly in mpv either, so I've removed support for it and
   added my own implementation `script-message mpv.net window-scale`.
-- The previous Beta replaced the CS-Script library with my own
-  C# scripting implementation.
+- The CS-Script library was replaced with my own C# scripting implementation.
 - If a player window border is near to a screen border and the window size
   changes, the player windows sticks to that near screen border location.
   Furthermore the `remember-position` option remembers a near screen border
   position instead of remembering the window center position.
 - High DPI multi monitor fix.
-- `start-size` option has new options, see in config editor and manual.
-- Improved `cycle-audio` OSD info.
+- `start-size` option has new options, see config editor and manual.
+- Improved `script-message mpv.net cycle-audio` OSD info.
+- The logic for finding the config directory has changed, see manual.
+- The native TaskDialog/MessageBox was replaced with the themed VB.NET
+  implementation of StaxRip.
+- The dotnet script and extension host was redesigned, existing scripts
+  and extensions must be fixed. All example scripts were updated and
+  a new script delete-current-file.cs was added.
 
 
 5.4.8.8 Beta (2021-05-09)

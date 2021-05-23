@@ -7,8 +7,7 @@ using System.Windows.Forms;
 
 using Microsoft.Win32;
 
-using static mpvnet.Core;
-using static mpvnet.NewLine;
+using static mpvnet.Global;
 
 namespace mpvnet
 {
@@ -34,55 +33,6 @@ namespace mpvnet
                 proc.StartInfo.UseShellExecute = true;
                 proc.Start();
             }
-        }
-    }
-
-    public static class ConsoleHelp
-    {
-        public static int Padding { get; set; }
-
-        public static void WriteError(object obj, string module = "mpv.net")
-        {
-            Write(obj, module, ConsoleColor.DarkRed, false);    
-        }
-
-        public static void Write(object obj, string module = "mpv.net")
-        {
-            Write(obj, module, ConsoleColor.Black, true);
-        }
-
-        public static void Write(object obj, string module, ConsoleColor color)
-        {
-            Write(obj, module, color, false);
-        }
-
-        public static void Write(object obj, string module, ConsoleColor color, bool useDefaultColor)
-        {
-            if (obj == null)
-                return;
-
-            string value = obj.ToString();               
-
-            if (!string.IsNullOrEmpty(module))
-                module = "[" + module + "] ";
-
-            if (useDefaultColor)
-                Console.ResetColor();
-            else
-                Console.ForegroundColor = color;
-
-            value = module + value;
-
-            if (Padding > 0 && value.Length < Padding)
-                value = value.PadRight(Padding);
-
-            if (color == ConsoleColor.Red || color == ConsoleColor.DarkRed)
-                Console.Error.WriteLine(value);
-            else
-                Console.WriteLine(value);
-
-            Console.ResetColor();
-            Trace.WriteLine(obj);
         }
     }
 
@@ -134,7 +84,7 @@ namespace mpvnet
                     ''
                 }";
 
-            string json = core.get_property_string("profile-list");
+            string json = Core.get_property_string("profile-list");
             return PowerShell.InvokeAndReturnString(code, "json", json).Trim();
         }
 
@@ -146,19 +96,19 @@ namespace mpvnet
                     $item.codec + ' - ' + $item.description
                 }";
 
-            string json = core.get_property_string("decoder-list");
+            string json = Core.get_property_string("decoder-list");
             return PowerShell.InvokeAndReturnString(code, "json", json).Trim();
         }
 
         public static string GetProtocols()
         {
-            string list = core.get_property_string("protocol-list");
+            string list = Core.get_property_string("protocol-list");
             return string.Join(BR, list.Split(',').OrderBy(a => a));
         }
 
         public static string GetDemuxers()
         {
-            string list = core.get_property_string("demuxer-lavf-list");
+            string list = Core.get_property_string("demuxer-lavf-list");
             return string.Join(BR, list.Split(',').OrderBy(a => a));
         }
     }
@@ -170,6 +120,17 @@ namespace mpvnet
         public static void SetInt(string name, object value)
         {
             SetValue(ApplicationKey, name, value);
+        }
+
+        public static void SetString(string name, string value)
+        {
+            SetValue(ApplicationKey, name, value);
+        }
+
+        public static void SetValue(string name, object value)
+        {
+            using (RegistryKey regKey = GetRootKey(ApplicationKey).CreateSubKey(ApplicationKey.Substring(5), RegistryKeyPermissionCheck.ReadWriteSubTree))
+                regKey.SetValue(name, value);
         }
 
         public static void SetValue(string path, string name, object value)
@@ -189,6 +150,8 @@ namespace mpvnet
             object value = GetValue(ApplicationKey, name, defaultValue);
             return !(value is int) ? defaultValue : (int)value;
         }
+
+        public static object GetValue(string name) => GetValue(ApplicationKey, name, null);
 
         public static object GetValue(string path, string name, object defaultValue = null)
         {

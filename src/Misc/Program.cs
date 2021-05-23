@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Diagnostics;
 
-using static mpvnet.Core;
+using static mpvnet.Global;
 
 namespace mpvnet
 {
@@ -23,7 +23,7 @@ namespace mpvnet
                 if (App.IsStartedFromTerminal)
                     Native.AttachConsole(-1 /*ATTACH_PARENT_PROCESS*/);
 
-                if (core.ConfigFolder == "")
+                if (Core.ConfigFolder == "")
                     return;
 
                 string[] args = Environment.GetCommandLineArgs().Skip(1).ToArray();
@@ -31,11 +31,11 @@ namespace mpvnet
                 if (args.Length >= 2 && args[0] == "--reg-file-assoc")
                 {
                     if (args[1] == "audio")
-                        FileAssociation.Register(Core.AudioTypes);
+                        FileAssociation.Register(CorePlayer.AudioTypes);
                     else if (args[1] == "video")
-                        FileAssociation.Register(Core.VideoTypes);
+                        FileAssociation.Register(CorePlayer.VideoTypes);
                     else if (args[1] == "image")
-                        FileAssociation.Register(Core.ImageTypes);
+                        FileAssociation.Register(CorePlayer.ImageTypes);
                     else
                         FileAssociation.Register(args.Skip(1).ToArray());
 

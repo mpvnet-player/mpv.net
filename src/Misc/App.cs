@@ -6,15 +6,13 @@ using System.IO;
 using System.Windows.Forms;
 using System.Threading.Tasks;
 
-using static mpvnet.Core;
-using static TaskDialog.Msg;
+using static mpvnet.Global;
 
 namespace mpvnet
 {
     public static class App
     {
-        public static string RegPath { get; } = @"HKCU\Software\" + Application.ProductName;
-        public static string ConfPath { get => core.ConfigFolder + "mpvnet.conf"; }
+        public static string ConfPath { get => Core.ConfigFolder + "mpvnet.conf"; }
         public static string ProcessInstance { get; set; } = "single";
         public static string DarkMode { get; set; } = "always";
         public static string DarkTheme { get; set; } = "dark";
@@ -43,8 +41,8 @@ namespace mpvnet
 
         public static void Init()
         {
-            string dummy = core.ConfigFolder;
-            var dummy2 = core.Conf;
+            string dummy = Core.ConfigFolder;
+            var dummy2 = Core.Conf;
 
             foreach (var i in Conf)
                 ProcessProperty(i.Key, i.Value, true);
@@ -53,7 +51,7 @@ namespace mpvnet
             {
                 try
                 {
-                    string filePath = core.ConfigFolder + "mpvnet-debug.log";
+                    string filePath = Core.ConfigFolder + "mpvnet-debug.log";
 
                     if (File.Exists(filePath))
                         File.Delete(filePath);
@@ -72,16 +70,16 @@ namespace mpvnet
 
             string themeContent = null;
 
-            if (File.Exists(core.ConfigFolder + "theme.conf"))
-                themeContent = File.ReadAllText(core.ConfigFolder + "theme.conf");
+            if (File.Exists(Core.ConfigFolder + "theme.conf"))
+                themeContent = File.ReadAllText(Core.ConfigFolder + "theme.conf");
 
             Theme.Init(
                 themeContent,
                 Properties.Resources.theme,
                 IsDarkMode ? DarkTheme : LightTheme);
 
-            core.Shutdown += Shutdown;
-            core.Initialized += Initialized;
+            Core.Shutdown += Shutdown;
+            Core.Initialized += Initialized;
         }
 
         public static void RunTask(Action action)
@@ -99,34 +97,32 @@ namespace mpvnet
             get {
                 return "Copyright (C) 2000-2021 mpv.net/mpv/mplayer\n" +
                     $"mpv.net {Application.ProductVersion} ({File.GetLastWriteTime(Application.ExecutablePath).ToShortDateString()})\n" +
-                    $"{core.get_property_string("mpv-version")} ({File.GetLastWriteTime(Folder.Startup + "mpv-1.dll").ToShortDateString()})\nffmpeg {core.get_property_string("ffmpeg-version")}\nMIT License";
+                    $"{Core.get_property_string("mpv-version")} ({File.GetLastWriteTime(Folder.Startup + "mpv-1.dll").ToShortDateString()})\nffmpeg {Core.get_property_string("ffmpeg-version")}\nMIT License";
             }
         }
 
         public static void ShowException(object obj)
         {
-            if (obj is Exception e)
-            {
-                if (IsStartedFromTerminal)
-                    ConsoleHelp.WriteError(e.ToString());
-                else
-                    Msg.ShowException(e);
-            }
+            if (IsStartedFromTerminal)
+                Terminal.WriteError(obj.ToString());
             else
             {
-                if (IsStartedFromTerminal)
-                    ConsoleHelp.WriteError(obj.ToString());
+                if (obj is Exception e)
+                    Msg.ShowException(e);
                 else
-                    MsgError(obj.ToString());
+                    Msg.ShowError(obj.ToString());
             }
         }
 
-        public static void ShowError(string title, string msg)
+        public static void ShowError(string title, string msg = null)
         {
             if (IsStartedFromTerminal)
             {
-                ConsoleHelp.WriteError(title);
-                ConsoleHelp.WriteError(msg);
+                if (title != null)
+                    Terminal.WriteError(title);
+
+                if (msg != null)
+                    Terminal.WriteError(msg);
             }
             else
                 Msg.ShowError(title, msg);
@@ -136,8 +132,8 @@ namespace mpvnet
         {
             if (RememberVolume)
             {
-                core.set_property_int("volume", RegistryHelp.GetInt("Volume", 70));
-                core.set_property_string("mute", RegistryHelp.GetString("Mute", "no"));
+                Core.set_property_int("volume", RegistryHelp.GetInt("volume", 70));
+                Core.set_property_string("mute", RegistryHelp.GetString("mute", "no"));
             }
         }
 
@@ -145,8 +141,8 @@ namespace mpvnet
         {
             if (RememberVolume)
             {
-                RegistryHelp.SetValue(RegPath, "Volume", core.get_property_int("volume"));
-                RegistryHelp.SetValue(RegPath, "Mute", core.get_property_string("mute"));
+                RegistryHelp.SetInt("volume", Core.get_property_int("volume"));
+                RegistryHelp.SetString("mute", Core.get_property_string("mute"));
             }
         }
 
@@ -185,31 +181,31 @@ namespace mpvnet
                 case "minimum-aspect-ratio": MinimumAspectRatio = value.ToFloat(); return true;
                 case "dark-theme": DarkTheme = value.Trim('\'', '"'); return true;
                 case "light-theme": LightTheme = value.Trim('\'', '"'); return true;
-                case "video-file-extensions": VideoTypes = value.Split(" ,;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries); return true;
-                case "audio-file-extensions": AudioTypes = value.Split(" ,;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries); return true;
-                case "image-file-extensions": ImageTypes = value.Split(" ,;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries); return true;
+                case "video-file-extensions": CorePlayer.VideoTypes = value.Split(" ,;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries); return true;
+                case "audio-file-extensions": CorePlayer.AudioTypes = value.Split(" ,;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries); return true;
+                case "image-file-extensions": CorePlayer.ImageTypes = value.Split(" ,;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries); return true;
                 default:
                     if (writeError)
-                        ConsoleHelp.WriteError($"unknown mpvnet.conf property: {name}");
+                        Terminal.WriteError($"unknown mpvnet.conf property: {name}");
                     return false;
             }
         }
 
         public static void ShowSetup()
         {
-            int value = RegistryHelp.GetInt(Folder.Startup);
+            int value = RegistryHelp.GetInt("location: " + Folder.Startup);
 
             if (value != 1)
             {
                 if (Msg.ShowQuestion("Would you like to setup mpv.net?",
                     "The setup allows to create a start menu shortcut, file associations and " +
-                    "adding mpv.net to the Path environment variable.") == MsgResult.OK)
+                    "adding mpv.net to the Path environment variable.") == DialogResult.OK)
 
                     Commands.Execute("show-setup-dialog");
                 else
-                    MsgInfo("The setup dialog can be found in the context menu at:\n\nTools > Setup");
+                    Msg.ShowInfo("The setup dialog can be found at:\n\nContext Menu > Tools > Setup");
 
-                RegistryHelp.SetValue(RegistryHelp.ApplicationKey, Folder.Startup, 1);
+                RegistryHelp.SetInt("location: " + Folder.Startup, 1);
             }
         }
     }

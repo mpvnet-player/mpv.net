@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -11,17 +12,12 @@ using System.Threading;
 using System.Windows.Forms;
 
 using static libmpv;
-using static mpvnet.NewLine;
-
-using System.Globalization;
+using static mpvnet.Global;
 
 namespace mpvnet
 {
-    public class Core
+    public class CorePlayer
     {
-        public static Core core { get; } = new Core();
-        public static Core GetCore() => core;
-
         public static string[] VideoTypes { get; set; } = "264 265 asf avc avi avs dav flv h264 h265 hevc m2t m2ts m2v m4v mkv mov mp4 mpeg mpg mpv mts ts vob vpy webm wmv y4m".Split(' ');
         public static string[] AudioTypes { get; set; } = "aac ac3 dts dtshd dtshr dtsma eac3 flac m4a mka mp2 mp3 mpa mpc ogg opus thd thd+ac3 w64 wav".Split(' ');
         public static string[] ImageTypes { get; set; } = { "jpg", "bmp", "png", "gif" };
@@ -190,57 +186,31 @@ namespace mpvnet
             get {
                 if (_ConfigFolder == null)
                 {
-                    string portableFolder = Folder.Startup + @"portable_config\";
-                    _ConfigFolder = portableFolder;
-
-                    if (!Directory.Exists(_ConfigFolder))
-                        _ConfigFolder = RegistryHelp.GetString("ConfigFolder");
+                    _ConfigFolder = Folder.Startup + "portable_config";
 
                     if (!Directory.Exists(_ConfigFolder))
                     {
-                        string appdataFolder = Environment.GetFolderPath(
-                            Environment.SpecialFolder.ApplicationData) + @"\mpv.net\";
+                        _ConfigFolder = Folder.AppData + "mpv.net";
 
-                        using (TaskDialog<string> td = new TaskDialog<string>())
+                        if (!Directory.Exists(_ConfigFolder))
                         {
-                            td.MainInstruction = "Choose a settings folder.";
-                            td.AddCommand(@"AppData\Roaming\mpv.net", appdataFolder, appdataFolder);
-                            td.AddCommand(@"<startup>\portable_config", portableFolder, portableFolder);
-                            td.AddCommand("Choose custom folder", "custom");
-                            _ConfigFolder = td.Show();
-                        }
+                            _ConfigFolder = Folder.CustomSettings;
 
-                        if (_ConfigFolder == null)
-                        {
-                            _ConfigFolder = "";
-                            return "";
-                        }
-
-                        if (_ConfigFolder == "custom")
-                        {
-                            using (var dialog = new FolderBrowserDialog())
-                            {
-                                dialog.Description = "Choose a folder.";
-
-                                if (dialog.ShowDialog() == DialogResult.OK)
-                                    _ConfigFolder = dialog.SelectedPath + @"\";
-                                else
-                                    _ConfigFolder = appdataFolder;
-                            }
+                            if (!Directory.Exists(_ConfigFolder))
+                                _ConfigFolder = Folder.AppData + "mpv.net";
                         }
                     }
 
-                    if (Folder.Startup == _ConfigFolder)
+                    if (Folder.Startup.IsIdenticalFolder(_ConfigFolder))
                     {
                         Msg.ShowError("Startup folder and config folder cannot be identical, using portable_config instead.");
-                        _ConfigFolder = portableFolder;
+                        _ConfigFolder = Folder.Startup + "portable_config";
                     }
 
                     if (!Directory.Exists(_ConfigFolder))
                         Directory.CreateDirectory(_ConfigFolder);
 
-                    if (!_ConfigFolder.Contains("portable_config"))
-                        RegistryHelp.SetValue(App.RegPath, "ConfigFolder", _ConfigFolder);
+                    _ConfigFolder = _ConfigFolder.AddSep();
 
                     if (!File.Exists(_ConfigFolder + "input.conf"))
                         File.WriteAllText(_ConfigFolder + "input.conf", Properties.Resources.input_conf);
@@ -292,7 +262,7 @@ namespace mpvnet
         public void InvokePowerShellScript(string file)
         {
             PowerShell ps = new PowerShell();
-            ps.Variables.Add(new KeyValuePair<string, object>("core", core));
+            ps.Variables.Add(new KeyValuePair<string, object>("core", Core));
             ps.Variables.Add(new KeyValuePair<string, object>("window", MainForm.Instance));
             ps.Scripts.Add("Using namespace mpvnet; [Reflection.Assembly]::LoadWithPartialName('mpvnet')" + BR);
 
@@ -427,7 +397,7 @@ namespace mpvnet
                                 Duration = TimeSpan.FromSeconds(get_property_number("duration"));
 
                                 if (App.StartSize == "video")
-                                    core.WasInitialSizeSet = false;
+                                    Core.WasInitialSizeSet = false;
 
                                 Size size = new Size(get_property_int("width"), get_property_int("height"));
 
@@ -445,10 +415,10 @@ namespace mpvnet
                                 App.RunTask(new Action(() => ReadMetaData()));
 
                                 App.RunTask(new Action(() => {
-                                    string path = core.get_property_string("path");
+                                    string path = Core.get_property_string("path");
 
                                     if (path.Contains("://"))
-                                        path = core.get_property_string("media-title");
+                                        path = Core.get_property_string("media-title");
 
                                     WriteHistory(path);
                                 }));
@@ -594,7 +564,7 @@ namespace mpvnet
 
         public void SetBluRayTitle(int id)
         {
-            core.LoadFiles(new[] { @"bd://" + id }, false, false);
+            Core.LoadFiles(new[] { @"bd://" + id }, false, false);
         }
 
         void InvokeEvent(Action action, Action asyncAction)
@@ -947,9 +917,9 @@ namespace mpvnet
             if (throwException)
             {
                 foreach (string msg in messages)
-                    ConsoleHelp.WriteError(msg);
+                    Terminal.WriteError(msg);
 
-                ConsoleHelp.WriteError(GetError(err));
+                Terminal.WriteError(GetError(err));
                 throw new Exception(string.Join(BR2, messages) + BR2 + GetError(err));
             }
         }
@@ -984,7 +954,7 @@ namespace mpvnet
                             }
                             else if (arg == "--audio-device=help")
                             {
-                                Console.WriteLine(core.get_property_osd_string("audio-device-list"));
+                                Console.WriteLine(Core.get_property_osd_string("audio-device-list"));
                                 continue;
                             }
                             else if (arg == "--version")
@@ -994,12 +964,12 @@ namespace mpvnet
                             }
                             else if (arg == "--input-keylist")
                             {
-                                Console.WriteLine(core.get_property_string("input-key-list").Replace(",", BR));
+                                Console.WriteLine(Core.get_property_string("input-key-list").Replace(",", BR));
                                 continue;
                             }
                             else if (arg.StartsWith("--command="))
                             {
-                                core.command(arg.Substring(10));
+                                Core.command(arg.Substring(10));
                                 continue;
                             }
                         }
@@ -1029,14 +999,14 @@ namespace mpvnet
 
                         if (preInit && preInitProperties.Contains(left))
                         {
-                            core.ProcessProperty(left, right);
+                            Core.ProcessProperty(left, right);
 
                             if (!App.ProcessProperty(left, right))
                                 set_property_string(left, right, true);
                         }
                         else if (!preInit && !preInitProperties.Contains(left))
                         {
-                            core.ProcessProperty(left, right);
+                            Core.ProcessProperty(left, right);
 
                             if (!App.ProcessProperty(left, right))
                             {
@@ -1069,7 +1039,7 @@ namespace mpvnet
 
                 if (shuffle)
                 {
-                    core.command("playlist-shuffle");
+                    Core.command("playlist-shuffle");
                     set_property_int("playlist-pos", 0);
                 }
 
@@ -1104,11 +1074,11 @@ namespace mpvnet
 
                 if (file.Ext() == "iso")
                     LoadISO(file);
-                else if(Core.SubtitleTypes.Contains(file.Ext()))
+                else if(CorePlayer.SubtitleTypes.Contains(file.Ext()))
                     commandv("sub-add", file);
                 else if (file.Ext().Length != 3 && File.Exists(Path.Combine(file, "BDMV\\index.bdmv")))
                 {
-                    core.command("stop");
+                    Core.command("stop");
                     Thread.Sleep(500);
                     set_property_string("bluray-device", file);
                     commandv("loadfile", @"bd://");
@@ -1133,35 +1103,31 @@ namespace mpvnet
 
             if (gb < 10)
             {
-                using (TaskDialog<string> td = new TaskDialog<string>())
-                {
-                    td.MainInstruction = "Is this a Blu-ray or a DVD image?";
-                    td.AddCommand("Blu-ray");
-                    td.AddCommand("DVD");
+                DialogResult result = Msg.ShowQuestion("Click Yes for Blu-ray and No for DVD.",
+                    null, MessageBoxButtons.YesNoCancel);
 
-                    switch (td.Show())
-                    {
-                        case "Blu-ray":
-                            core.command("stop");
-                            Thread.Sleep(500);
-                            core.set_property_string("bluray-device", path);
-                            core.LoadFiles(new[] { @"bd://" }, false, false);
-                            break;
-                        case "DVD":
-                            core.command("stop");
-                            Thread.Sleep(500);
-                            core.set_property_string("dvd-device", path);
-                            core.LoadFiles(new[] { @"dvd://" }, false, false);
-                            break;
-                    }
+                switch (result)
+                {
+                    case DialogResult.Yes:
+                        Core.command("stop");
+                        Thread.Sleep(500);
+                        Core.set_property_string("bluray-device", path);
+                        Core.LoadFiles(new[] { @"bd://" }, false, false);
+                        break;
+                    case DialogResult.No:
+                        Core.command("stop");
+                        Thread.Sleep(500);
+                        Core.set_property_string("dvd-device", path);
+                        Core.LoadFiles(new[] { @"dvd://" }, false, false);
+                        break;
                 }
             }
             else
             {
-                core.command("stop");
+                Core.command("stop");
                 Thread.Sleep(500);
-                core.set_property_string("bluray-device", path);
-                core.LoadFiles(new[] { @"bd://" }, false, false);
+                Core.set_property_string("bluray-device", path);
+                Core.LoadFiles(new[] { @"bd://" }, false, false);
             }
         }
 
@@ -1184,9 +1150,9 @@ namespace mpvnet
             List<string> files = Directory.GetFiles(dir).ToList();
 
             files = files.Where(file =>
-                Core.VideoTypes.Contains(file.Ext()) ||
-                Core.AudioTypes.Contains(file.Ext()) ||
-                Core.ImageTypes.Contains(file.Ext())).ToList();
+                CorePlayer.VideoTypes.Contains(file.Ext()) ||
+                CorePlayer.AudioTypes.Contains(file.Ext()) ||
+                CorePlayer.ImageTypes.Contains(file.Ext())).ToList();
 
             files.Sort(new StringLogicalComparer());
             int index = files.IndexOf(path);
@@ -1239,7 +1205,7 @@ namespace mpvnet
         bool HistoryDiscard()
         {
             if (HistoryDiscardOption == null)
-                HistoryDiscardOption = core.get_opt("history-discard");
+                HistoryDiscardOption = Core.get_opt("history-discard");
 
             if (string.IsNullOrEmpty(HistoryDiscardOption))
                 return false;
@@ -1316,30 +1282,30 @@ namespace mpvnet
 
                 if (path.ToLowerEx().Contains("://"))
                 {
-                    int count = core.get_property_int("track-list/count");
+                    int count = Core.get_property_int("track-list/count");
 
                     for (int i = 0; i < count; i++)
                     {
-                        string type = core.get_property_string($"track-list/{i}/type");
+                        string type = Core.get_property_string($"track-list/{i}/type");
 
                         if (type == "audio")
                         {
                             MediaTrack track = new MediaTrack();
-                            Add(track, GetLanguage(core.get_property_string($"track-list/{i}/lang")));
-                            Add(track, core.get_property_string($"track-list/{i}/codec").ToUpperEx());
-                            Add(track, core.get_property_int($"track-list/{i}/audio-channels") + " channels");
+                            Add(track, GetLanguage(Core.get_property_string($"track-list/{i}/lang")));
+                            Add(track, Core.get_property_string($"track-list/{i}/codec").ToUpperEx());
+                            Add(track, Core.get_property_int($"track-list/{i}/audio-channels") + " channels");
                             track.Text = "A: " + track.Text.Trim(' ', ',');
                             track.Type = "a";
-                            track.ID = core.get_property_int($"track-list/{i}/id");
+                            track.ID = Core.get_property_int($"track-list/{i}/id");
                             MediaTracks.Add(track);
                         }
                         else if (type == "sub")
                         {
                             MediaTrack track = new MediaTrack();
-                            Add(track, GetLanguage(core.get_property_string($"track-list/{i}/lang")));
+                            Add(track, GetLanguage(Core.get_property_string($"track-list/{i}/lang")));
                             track.Text = "S: " + track.Text.Trim(' ', ',');
                             track.Type = "s";
-                            track.ID = core.get_property_int($"track-list/{i}/id");
+                            track.ID = Core.get_property_int($"track-list/{i}/id");
                             MediaTracks.Add(track);
                         }
                     }

@@ -108,21 +108,28 @@ Or use the [support thread](https://forum.videohelp.com/threads/392514-mpv-net-a
 Settings
 --------
 
-When mpv.net finds no config folder on startup it will ask for a location.
+mpv.net searches the config folder at:
 
-If a folder named portable_config next to the mpvnet.exe exists,
-all config will be loaded from this folder only.
+1. startup\portable_config
+2. %APPDATA%\mpv.net
 
-```Text
-<startup>\portable_config\
-```
+In order to use a custom directory create following file:
+
+startup\settings-directory.txt
+
+Put your custom directory in that file.
+
+The custom directory path can be relative to the startup directory path.
+
+This custom directory is only used if the portable_config and %APPDATA% directory does not exist.
 
 mpv specific settings are stored in the file mpv.conf, if no mpv.conf file exists
 mpv.net generates it with the following defaults:
 
 [mpv.conf defaults](../../../tree/master/src/Resources/mpv.conf.txt)
 
-mpv.net specific settings are stored in the file mpvnet.conf.
+mpv.net specific settings are stored in the file mpvnet.conf,
+these options are documented [here](#mpvnet-specific-options).
 
 
 Input and context menu

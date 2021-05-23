@@ -7,8 +7,7 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
-using static mpvnet.Core;
-using static TaskDialog.Msg;
+using static mpvnet.Global;
 
 namespace mpvnet
 {
@@ -16,7 +15,7 @@ namespace mpvnet
     {
         public static void DailyCheck()
         {
-            if (App.UpdateCheck && RegistryHelp.GetInt("UpdateCheckLast")
+            if (App.UpdateCheck && RegistryHelp.GetInt("last-update-check")
                 != DateTime.Now.DayOfYear)
 
                 CheckOnline();
@@ -28,26 +27,33 @@ namespace mpvnet
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    RegistryHelp.SetValue(RegistryHelp.ApplicationKey, "UpdateCheckLast", DateTime.Now.DayOfYear);
+                    RegistryHelp.SetValue("last-update-check", DateTime.Now.DayOfYear);
                     client.DefaultRequestHeaders.Add("User-Agent", "mpv.net");
                     var response = await client.GetAsync("https://api.github.com/repos/stax76/mpv.net/releases/latest");
                     response.EnsureSuccessStatusCode();
                     string content = await response.Content.ReadAsStringAsync();
                     Match match = Regex.Match(content, @"""mpv\.net-([\d\.]+)-portable\.zip""");
+
+                    if (!match.Success)
+                    {
+                        App.ShowError("Update check is currently not available.");
+                        return;
+                    }
+                    
                     Version onlineVersion = Version.Parse(match.Groups[1].Value);
                     Version currentVersion = Assembly.GetEntryAssembly().GetName().Version;
 
                     if (onlineVersion <= currentVersion)
                     {
                         if (showUpToDateMessage)
-                            MsgInfo($"{Application.ProductName} is up to date.");
+                            Msg.ShowInfo($"{Application.ProductName} is up to date.");
 
                         return;
                     }
 
-                    if ((RegistryHelp.GetString("UpdateCheckVersion")
+                    if ((RegistryHelp.GetString("update-check-version")
                         != onlineVersion.ToString() || showUpToDateMessage) && Msg.ShowQuestion(
-                            $"New version {onlineVersion} is available, update now?") == MsgResult.OK)
+                            $"New version {onlineVersion} is available, update now?") == DialogResult.OK)
                     {
                         string url = $"https://github.com/stax76/mpv.net/releases/download/{onlineVersion}/mpv.net-{onlineVersion}-portable.zip";
 
@@ -64,16 +70,16 @@ namespace mpvnet
                             proc.Start();
                         }
 
-                        core.command("quit");
+                        Core.command("quit");
                     }
 
-                    RegistryHelp.SetValue(RegistryHelp.ApplicationKey, "UpdateCheckVersion", onlineVersion.ToString());
+                    RegistryHelp.SetValue("update-check-version", onlineVersion.ToString());
                 }
             }
             catch (Exception ex)
             {
                 if (showUpToDateMessage)
-                    Msg.ShowException(ex);
+                    App.ShowException(ex);
             }
         }
     }

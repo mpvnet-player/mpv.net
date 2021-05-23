@@ -110,8 +110,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Compile Include="Misc\Global.cs" />
     <Compile Include="Misc\Help.cs" />
     <Compile Include="Misc\GlobalHotkey.cs" />
+    <Compile Include="Misc\Msg.cs" />
+    <Compile Include="Misc\Terminal.cs" />
     <Compile Include="Misc\UpdateCheck.cs" />
     <Compile Include="Misc\Theme.cs" />
     <Compile Include="Misc\PowerShell.cs" />
@@ -146,12 +149,11 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Misc\Misc.cs" />
-    <Compile Include="mpv\core.cs" />
+    <Compile Include="mpv\CorePlayer.cs" />
     <Compile Include="Misc\Commands.cs" />
     <Compile Include="Native\Native.cs" />
     <Compile Include="Misc\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Native\TaskDialog.cs" />
     <Compile Include="WPF\SetupWindow.xaml.cs">
       <DependentUpon>SetupWindow.xaml</DependentUpon>
     </Compile>
@@ -230,12 +232,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="WinForms\TaskDialog\TaskDialog.vbproj">
-      <Project>{cfbe6e6c-b711-42bb-b5ed-487d4767fe2b}</Project>
-      <Name>TaskDialog</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

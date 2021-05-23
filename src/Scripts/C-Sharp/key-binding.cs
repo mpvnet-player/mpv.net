@@ -11,7 +11,7 @@ class Script
     {
         string content = "ctrl+w script-message my-message-1 my-argument-1";
         string sectionName = Assembly.GetExecutingAssembly().GetName().Name;
-        Core core = Core.core;
+        CorePlayer core = Global.Core;
         core.commandv("define-section", sectionName, content, "force");
         core.commandv("enable-section", sectionName);
         core.ClientMessage += ClientMessage;
@@ -22,7 +22,7 @@ class Script
         switch (args[0])
         {
             case "my-message-1":
-                Msg.Show(args[1]);
+                Msg.ShowInfo(args[1]);
                 break;
         }
     }

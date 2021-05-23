@@ -10,8 +10,7 @@ using System.Windows;
 
 using VB = Microsoft.VisualBasic;
 
-using static mpvnet.NewLine;
-using static mpvnet.Core;
+using static mpvnet.Global;
 
 namespace mpvnet
 {
@@ -23,21 +22,19 @@ namespace mpvnet
             {
                 case "add-files-to-playlist": OpenFiles("append"); break; // deprecated 2019
                 case "cycle-audio": CycleAudio(); break;
-                case "execute-mpv-command": ExecuteMpvCommand(); break;
+                case "execute-mpv-command": Msg.ShowError("Command was removed, reset input.conf."); break;
                 case "load-audio": LoadAudio(); break;
                 case "load-sub": LoadSubtitle(); break;
-                case "manage-file-associations": // deprecated 2019
-                case "open-conf-folder": ProcessHelp.ShellExecute(core.ConfigFolder); break;
+                case "open-conf-folder": ProcessHelp.ShellExecute(Core.ConfigFolder); break;
                 case "open-files": OpenFiles(args); break;
                 case "open-optical-media": Open_DVD_Or_BD_Folder(); break;
                 case "open-url": OpenURL(); break;
                 case "playlist-first": PlaylistFirst(); break;
                 case "playlist-last": PlaylistLast(); break;
                 case "scale-window": ScaleWindow(float.Parse(args[0], CultureInfo.InvariantCulture)); break;
-                case "window-scale": WindowScale(float.Parse(args[0], CultureInfo.InvariantCulture)); break;
                 case "shell-execute": ProcessHelp.ShellExecute(args[0]); break;
                 case "show-about": ShowDialog(typeof(AboutWindow)); break;
-                case "show-audio-devices": ShowTextWithEditor("audio-device-list", core.get_property_osd_string("audio-device-list")); break;
+                case "show-audio-devices": ShowTextWithEditor("audio-device-list", Core.get_property_osd_string("audio-device-list")); break;
                 case "show-command-palette": ShowDialog(typeof(CommandPaletteWindow)); break;
                 case "show-commands": ShowCommands(); break;
                 case "show-conf-editor": ShowDialog(typeof(ConfWindow)); break;
@@ -46,15 +43,16 @@ namespace mpvnet
                 case "show-history": ShowHistory(); break;
                 case "show-info": ShowInfo(); break;
                 case "show-input-editor": ShowDialog(typeof(InputWindow)); break;
-                case "show-keys": ShowTextWithEditor("input-key-list", core.get_property_string("input-key-list").Replace(",", BR)); break;
+                case "show-keys": ShowTextWithEditor("input-key-list", Core.get_property_string("input-key-list").Replace(",", BR)); break;
                 case "show-media-search": ShowDialog(typeof(EverythingWindow)); break;
-                case "show-profiles": ShowTextWithEditor("profile-list", mpvHelp.GetProfiles()); break;
                 case "show-playlist": ShowPlaylist(); break;
+                case "show-profiles": ShowTextWithEditor("profile-list", mpvHelp.GetProfiles()); break;
                 case "show-properties": ShowProperties(); break;
                 case "show-protocols": ShowTextWithEditor("protocol-list", mpvHelp.GetProtocols()); break;
                 case "show-setup-dialog": ShowDialog(typeof(SetupWindow)); break;
                 case "show-text": ShowText(args[0], Convert.ToInt32(args[1]), Convert.ToInt32(args[2])); break;
                 case "update-check": UpdateCheck.CheckOnline(true); break;
+                case "window-scale": WindowScale(float.Parse(args[0], CultureInfo.InvariantCulture)); break;
 
                 default: Msg.ShowError($"No command '{id}' found."); break;
             }
@@ -85,7 +83,7 @@ namespace mpvnet
             InvokeOnMainThread(new Action(() => {
                 using (var d = new OpenFileDialog() { Multiselect = true })
                     if (d.ShowDialog() == DialogResult.OK)
-                        core.LoadFiles(d.FileNames, loadFolder, append);
+                        Core.LoadFiles(d.FileNames, loadFolder, append);
             }));
         }
 
@@ -99,18 +97,18 @@ namespace mpvnet
 
                     if (dialog.ShowDialog() == DialogResult.OK)
                     {
-                        core.command("stop");
+                        Core.command("stop");
                         Thread.Sleep(500);
 
                         if (Directory.Exists(dialog.SelectedPath + "\\BDMV"))
                         {
-                            core.set_property_string("bluray-device", dialog.SelectedPath);
-                            core.LoadFiles(new[] { @"bd://" }, false, false);
+                            Core.set_property_string("bluray-device", dialog.SelectedPath);
+                            Core.LoadFiles(new[] { @"bd://" }, false, false);
                         }
                         else
                         {
-                            core.set_property_string("dvd-device", dialog.SelectedPath);
-                            core.LoadFiles(new[] { @"dvd://" }, false, false);
+                            Core.set_property_string("dvd-device", dialog.SelectedPath);
+                            Core.LoadFiles(new[] { @"dvd://" }, false, false);
                         }
                     }
                 }
@@ -119,31 +117,31 @@ namespace mpvnet
 
         public static void PlaylistFirst()
         {
-            int pos = core.get_property_int("playlist-pos");
+            int pos = Core.get_property_int("playlist-pos");
 
             if (pos != 0)
-                core.set_property_int("playlist-pos", 0);
+                Core.set_property_int("playlist-pos", 0);
         }
 
         public static void PlaylistLast()
         {
-            int pos = core.get_property_int("playlist-pos");
-            int count = core.get_property_int("playlist-count");
+            int pos = Core.get_property_int("playlist-pos");
+            int count = Core.get_property_int("playlist-count");
 
             if (pos < count - 1)
-                core.set_property_int("playlist-pos", count - 1);
+                Core.set_property_int("playlist-pos", count - 1);
         }
 
         public static void ShowHistory()
         {
-            if (File.Exists(core.ConfigFolder + "history.txt"))
-                ProcessHelp.ShellExecute(core.ConfigFolder + "history.txt");
+            if (File.Exists(Core.ConfigFolder + "history.txt"))
+                ProcessHelp.ShellExecute(Core.ConfigFolder + "history.txt");
             else
             {
                 if (Msg.ShowQuestion("Create history.txt file in config folder?",
-                    "mpv.net will write the date, time and filename of opened files to it.") == MsgResult.OK)
+                    "mpv.net will write the date, time and filename of opened files to it.") == DialogResult.OK)
 
-                    File.WriteAllText(core.ConfigFolder + "history.txt", "");
+                    File.WriteAllText(Core.ConfigFolder + "history.txt", "");
             }
         }
 
@@ -153,19 +151,19 @@ namespace mpvnet
             {
                 string performer, title, album, genre, date, duration, text = "";
                 long fileSize = 0;
-                string path = core.get_property_string("path");
+                string path = Core.get_property_string("path");
 
                 if (path.Contains("://"))
-                    path = core.get_property_string("media-title");
+                    path = Core.get_property_string("media-title");
 
-                int width = core.get_property_int("video-params/w");
-                int height = core.get_property_int("video-params/h");
+                int width = Core.get_property_int("video-params/w");
+                int height = Core.get_property_int("video-params/h");
 
                 if (File.Exists(path))
                 {
                     fileSize = new FileInfo(path).Length;
 
-                    if (AudioTypes.Contains(path.Ext()))
+                    if (CorePlayer.AudioTypes.Contains(path.Ext()))
                     {
                         using (MediaInfo mediaInfo = new MediaInfo(path))
                         {
@@ -185,11 +183,11 @@ namespace mpvnet
                             text += "Size: " + mediaInfo.GetInfo(MediaInfoStreamKind.General, "FileSize/String") + "\n";
                             text += "Type: " + path.Ext().ToUpper();
 
-                            core.commandv("show-text", text, "5000");
+                            Core.commandv("show-text", text, "5000");
                             return;
                         }
                     }
-                    else if (ImageTypes.Contains(path.Ext()))
+                    else if (CorePlayer.ImageTypes.Contains(path.Ext()))
                     {
                         using (MediaInfo mediaInfo = new MediaInfo(path))
                         {
@@ -199,16 +197,16 @@ namespace mpvnet
                                 "Size: " + mediaInfo.GetInfo(MediaInfoStreamKind.General, "FileSize/String") + "\n" +
                                 "Type: " + path.Ext().ToUpper();
 
-                            core.commandv("show-text", text, "5000");
+                            Core.commandv("show-text", text, "5000");
                             return;
                         }
                     }
                 }
 
-                TimeSpan position = TimeSpan.FromSeconds(core.get_property_number("time-pos"));
-                TimeSpan duration2 = TimeSpan.FromSeconds(core.get_property_number("duration"));
-                string videoFormat = core.get_property_string("video-format").ToUpper();
-                string audioCodec = core.get_property_string("audio-codec-name").ToUpper();
+                TimeSpan position = TimeSpan.FromSeconds(Core.get_property_number("time-pos"));
+                TimeSpan duration2 = TimeSpan.FromSeconds(Core.get_property_number("duration"));
+                string videoFormat = Core.get_property_string("video-format").ToUpper();
+                string audioCodec = Core.get_property_string("audio-codec-name").ToUpper();
 
                 text = path.FileName() + "\n" +
                     FormatTime(position.TotalMinutes) + ":" +
@@ -222,26 +220,13 @@ namespace mpvnet
 
                 text += $"{videoFormat}\n{audioCodec}";
 
-                core.commandv("show-text", text, "5000");
+                Core.commandv("show-text", text, "5000");
                 string FormatTime(double value) => ((int)value).ToString("00");
             }
             catch (Exception e)
             {
                 App.ShowException(e);
             }
-        }
-
-        public static void ExecuteMpvCommand() // deprecated 2019
-        {
-            InvokeOnMainThread(new Action(() => {
-                string command = VB.Interaction.InputBox("Enter a mpv command to be executed.", "Execute Command", RegistryHelp.GetString("RecentExecutedCommand"));
-             
-                if (string.IsNullOrEmpty(command))
-                    return;
-
-                RegistryHelp.SetValue(App.RegPath, "RecentExecutedCommand", command);
-                core.command(command, false);
-            }));
         }
         
         public static void OpenURL()
@@ -256,7 +241,7 @@ namespace mpvnet
                     return;
                 }
 
-                core.LoadFiles(new [] { clipboard }, false, Control.ModifierKeys.HasFlag(Keys.Control));
+                Core.LoadFiles(new [] { clipboard }, false, Control.ModifierKeys.HasFlag(Keys.Control));
             }));
         }
 
@@ -265,7 +250,7 @@ namespace mpvnet
             InvokeOnMainThread(new Action(() => {
                 using (var d = new OpenFileDialog())
                 {
-                    string path = core.get_property_string("path");
+                    string path = Core.get_property_string("path");
 
                     if (File.Exists(path))
                         d.InitialDirectory = Path.GetDirectoryName(path);
@@ -274,7 +259,7 @@ namespace mpvnet
 
                     if (d.ShowDialog() == DialogResult.OK)
                         foreach (string filename in d.FileNames)
-                            core.commandv("sub-add", filename);
+                            Core.commandv("sub-add", filename);
                 }
             }));
         }
@@ -284,40 +269,40 @@ namespace mpvnet
             InvokeOnMainThread(new Action(() => {
                 using (var d = new OpenFileDialog())
                 {
-                    string path = core.get_property_string("path");
+                    string path = Core.get_property_string("path");
                     if (File.Exists(path))
                         d.InitialDirectory = Path.GetDirectoryName(path);
                     d.Multiselect = true;
 
                     if (d.ShowDialog() == DialogResult.OK)
                         foreach (string i in d.FileNames)
-                            core.commandv("audio-add", i);
+                            Core.commandv("audio-add", i);
                 }
             }));
         }
 
         public static void CycleAudio()
         {
-            MediaTrack[] audioTracks = core.MediaTracks.Where(track => track.Type == "a").ToArray();
+            MediaTrack[] audioTracks = Core.MediaTracks.Where(track => track.Type == "a").ToArray();
             int len = audioTracks.Length;
 
             if (len < 1)
             {
-                core.commandv("show-text", "No audio tracks");
+                Core.commandv("show-text", "No audio tracks");
                 return;
             }
 
-            int aid = core.get_property_int("aid");
+            int aid = Core.get_property_int("aid");
 
             if (len > 1)
             {
                 if (++aid > len)
                     aid = 1;
 
-                core.commandv("set", "aid", aid.ToString());
+                Core.commandv("set", "aid", aid.ToString());
             }
 
-            core.commandv("show-text", aid + "/" + len + ": " + audioTracks[aid - 1].Text.Substring(3), "5000");
+            Core.commandv("show-text", aid + "/" + len + ": " + audioTracks[aid - 1].Text.Substring(3), "5000");
         }
 
         public static void ShowCommands()
@@ -341,13 +326,13 @@ namespace mpvnet
                     }
                 }";
 
-            string json = core.get_property_string("command-list");
+            string json = Core.get_property_string("command-list");
             ShowTextWithEditor("command-list", PowerShell.InvokeAndReturnString(code, "json", json));
         }
 
         public static void ShowProperties()
         {
-            var props = core.get_property_string("property-list").Split(',').OrderBy(prop => prop);
+            var props = Core.get_property_string("property-list").Split(',').OrderBy(prop => prop);
             ShowTextWithEditor("property-list", string.Join(BR, props));
         }
 
@@ -358,9 +343,9 @@ namespace mpvnet
             ProcessHelp.ShellExecute(file);
         }
 
-        public static void ScaleWindow(float factor) => core.RaiseScaleWindow(factor);
+        public static void ScaleWindow(float factor) => Core.RaiseScaleWindow(factor);
 
-        public static void WindowScale(float value) => core.RaiseWindowScale(value);
+        public static void WindowScale(float value) => Core.RaiseWindowScale(value);
 
         public static void ShowText(string text, int duration = 0, int fontSize = 0)
         {
@@ -368,12 +353,12 @@ namespace mpvnet
                 return;
 
             if (duration == 0)
-                duration = core.get_property_int("osd-duration");
+                duration = Core.get_property_int("osd-duration");
 
             if (fontSize == 0)
-                fontSize = core.get_property_int("osd-font-size");
+                fontSize = Core.get_property_int("osd-font-size");
 
-            core.command("show-text \"${osd-ass-cc/0}{\\\\fs" + fontSize +
+            Core.command("show-text \"${osd-ass-cc/0}{\\\\fs" + fontSize +
                 "}${osd-ass-cc/1}" + text + "\" " + duration);
         }
 
@@ -384,13 +369,13 @@ namespace mpvnet
             if (args?.Length == 1)
                 duration = Convert.ToInt32(args[0]);
 
-            var size = core.get_property_number("osd-font-size");
-            core.set_property_number("osd-font-size", 40);
-            core.command("show-text ${playlist} " + duration);
+            var size = Core.get_property_number("osd-font-size");
+            Core.set_property_number("osd-font-size", 40);
+            Core.command("show-text ${playlist} " + duration);
 
             App.RunTask(() => {
                 Thread.Sleep(6000);
-                core.set_property_number("osd-font-size", size);
+                Core.set_property_number("osd-font-size", size);
             });
         }
     }

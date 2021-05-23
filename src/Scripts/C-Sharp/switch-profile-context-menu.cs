@@ -8,12 +8,12 @@ using System.Linq;
 class Script
 {
     MainForm MainForm;
-    Core core;
+    CorePlayer Core;
 
     public Script()
     {
-        core = Core.core;
-        MainForm = mpvnet.MainForm.Instance;
+        Core = Global.Core;
+        MainForm = MainForm.Instance;
         MainForm.ContextMenu.Opening += ContextMenu_Opening;
     }
 
@@ -26,13 +26,13 @@ class Script
             return;
 
         menuItem.DropDownItems.Clear();
-        var editionTracks = core.MediaTracks.Where(track => track.Type == "e");
+        var editionTracks = Core.MediaTracks.Where(track => track.Type == "e");
 
         foreach (MediaTrack track in editionTracks)
         {
             MenuItem mi = new MenuItem(track.Text);
-            mi.Action = () => { core.commandv("set", "edition", track.ID.ToString()); };
-            mi.Checked = core.Edition == track.ID;
+            mi.Action = () => { Core.commandv("set", "edition", track.ID.ToString()); };
+            mi.Checked = Core.Edition == track.ID;
             menuItem.DropDownItems.Add(mi);
         }
     }

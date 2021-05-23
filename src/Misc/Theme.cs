@@ -45,7 +45,7 @@ namespace mpvnet
                         if (!theme.Dictionary.ContainsKey(key))
                         {
                             isKeyMissing = true;
-                            ConsoleHelp.WriteError($"Theme '{activeTheme}' misses '{key}'");
+                            Terminal.WriteError($"Theme '{activeTheme}' misses '{key}'");
                             break;
                         }
                     }

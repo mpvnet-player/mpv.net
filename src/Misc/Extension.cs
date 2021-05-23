@@ -6,7 +6,7 @@ using System.ComponentModel.Composition.Hosting;
 using System.IO;
 using System.Linq;
 
-using static mpvnet.Core;
+using static mpvnet.Global;
 
 namespace mpvnet
 {
@@ -33,14 +33,14 @@ namespace mpvnet
                         if (knownExtensions.Contains(Path.GetFileName(extDir)))
                             catalog.Catalogs.Add(new DirectoryCatalog(extDir, Path.GetFileName(extDir) + ".dll"));
                         else
-                            ConsoleHelp.WriteError("Failed to load extension:\n\n" +  extDir +
+                            Terminal.WriteError("Failed to load extension:\n\n" +  extDir +
                                 "\n\nOnly extensions that ship with mpv.net are allowed in <startup>\\extensions" +
                                 "\n\nUser extensions have to use <config folder>\\extensions" +
                                 "\n\nNever copy or install a new mpv.net version over a old mpv.net version.");
                     }
                 }
 
-                dir = core.ConfigFolder + "extensions";
+                dir = Core.ConfigFolder + "extensions";
 
                 if (Directory.Exists(dir))
                     foreach (string extDir in Directory.GetDirectories(dir))

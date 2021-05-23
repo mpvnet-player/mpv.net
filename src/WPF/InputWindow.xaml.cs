@@ -8,8 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 
-using static mpvnet.Core;
-using static TaskDialog.Msg;
+using static mpvnet.Global;
 
 namespace mpvnet
 {
@@ -38,7 +37,9 @@ namespace mpvnet
             if (SearchControl.SearchTextBox.Text == "?")
             {
                 SearchControl.SearchTextBox.Text = "";
-                MsgInfo("Filtering", "Reduce the filter scope with:\n\ni input\n\nm menu\n\nc command\n\nIf only one character is entered input search is performed.");
+                Msg.ShowInfo("Filtering",
+                    "Reduce the filter scope with:\n\ni input\n\nm menu\n\nc command\n\n" +
+                    "If only one character is entered input search is performed.");
             }
         }
 
@@ -86,7 +87,7 @@ namespace mpvnet
 
             foreach (CommandItem i in CommandItem.Items)
                 if (items.ContainsKey(i.Input) && i.Input != "")
-                    MsgInfo($"Duplicate found:\n\n{i.Input}: {i.Path}\n\n{items[i.Input].Input}: {items[i.Input].Path}\n\nPlease note that you can chain multiple commands in the same line by using a semicolon as separator.", "Duplicate Found");
+                    Msg.ShowInfo($"Duplicate found:\n\n{i.Input}: {i.Path}\n\n{items[i.Input].Input}: {items[i.Input].Path}\n\nPlease note that you can chain multiple commands in the same line by using a semicolon as separator.", "Duplicate Found");
                 else
                     items[i.Input] = i;
         }
@@ -128,8 +129,8 @@ namespace mpvnet
             if (InitialInputConfContent == GetInputConfContent())
                 return;
 
-            File.WriteAllText(core.InputConfPath, GetInputConfContent());
-            MsgInfo("Changes will be available on next mpv.net startup.");
+            File.WriteAllText(Core.InputConfPath, GetInputConfContent());
+            Msg.ShowInfo("Changes will be available on next startup.");
         }
 
         void DataGrid_PreviewCanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -137,7 +138,7 @@ namespace mpvnet
             DataGrid grid = (DataGrid)sender;
 
             if (e.Command == DataGrid.DeleteCommand)
-                if (Msg.ShowQuestion($"Confirm to delete: {(grid.SelectedItem as CommandItem).Input} ({(grid.SelectedItem as CommandItem).Path})") != MsgResult.OK)
+                if (Msg.ShowQuestion($"Confirm to delete: {(grid.SelectedItem as CommandItem).Input} ({(grid.SelectedItem as CommandItem).Path})") != System.Windows.Forms.DialogResult.OK)
                     e.Handled = true;
         }
 

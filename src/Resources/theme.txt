@@ -12,6 +12,11 @@ menu-highlight  = #505050
 menu-border     = #FFFFFF
 menu-checked    = #5A5A5A
 
+button-foreground = #DDDDDD
+button-background = #505050
+button-hover      = #555555
+button-border     = #707070
+
 
 [light]
 
@@ -25,3 +30,8 @@ menu-background = #DFDFDF
 menu-highlight  = #BFBFBF
 menu-border     = #6A6A6A
 menu-checked    = #AAAAAA
+
+button-foreground = #000000
+button-background = #BBBBBB
+button-hover      = #CCCCCC
+button-border     = #6A6A6A

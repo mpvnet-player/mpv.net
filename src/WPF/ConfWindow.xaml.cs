@@ -11,8 +11,7 @@ using System.Windows.Input;
 
 using DynamicGUI;
 
-using static TaskDialog.Msg;
-using static mpvnet.Core;
+using static mpvnet.Global;
 
 namespace mpvnet
 {
@@ -28,11 +27,11 @@ namespace mpvnet
             InitializeComponent();
             DataContext = this;
             SearchControl.SearchTextBox.TextChanged += SearchTextBox_TextChanged;
-            LoadConf(core.ConfPath);
+            LoadConf(Core.ConfPath);
             LoadConf(App.ConfPath);
             LoadSettings();
             InitialContent = GetCompareString();
-            SearchControl.Text = RegistryHelp.GetString("ConfigEditorSearch");
+            SearchControl.Text = RegistryHelp.GetString("config-editor-search");
             FilterListBox.SelectedItem = SearchControl.Text.TrimEnd(':');
         }
 
@@ -69,14 +68,14 @@ namespace mpvnet
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
-            RegistryHelp.SetValue(App.RegPath, "ConfigEditorSearch", SearchControl.Text);
+            RegistryHelp.SetValue("config-editor-search", SearchControl.Text);
             
             if (InitialContent == GetCompareString())
                 return;
             
-            File.WriteAllText(core.ConfPath, GetContent("mpv"));
+            File.WriteAllText(Core.ConfPath, GetContent("mpv"));
             File.WriteAllText(App.ConfPath, GetContent("mpvnet"));
-            MsgInfo("Changes will be available on next mpv.net startup.");            
+            Msg.ShowInfo("Changes will be available on next startup.");            
         }
 
         string GetCompareString()
@@ -291,25 +290,17 @@ namespace mpvnet
                 SearchControl.Text = e.AddedItems[0] + ":";
         }
 
-        void OpenSettingsTextBlock_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            ProcessHelp.ShellExecute(Path.GetDirectoryName(core.ConfPath));
-        }
+        void OpenSettingsTextBlock_MouseUp(object sender, MouseButtonEventArgs e) =>
+            ProcessHelp.ShellExecute(Path.GetDirectoryName(Core.ConfPath));
 
-        void PreviewTextBlock_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            MsgInfo("mpv.conf Preview", GetContent("mpv"));
-        }
+        void PreviewTextBlock_MouseUp(object sender, MouseButtonEventArgs e) =>
+            Msg.ShowInfo("mpv.conf Preview", GetContent("mpv"));
 
-        void ShowManualTextBlock_MouseUp(object sender, MouseButtonEventArgs e)
-        {
+        void ShowManualTextBlock_MouseUp(object sender, MouseButtonEventArgs e) =>
             ProcessHelp.ShellExecute("https://mpv.io/manual/master/");
-        }
 
-        void SupportTextBlock_MouseUp(object sender, MouseButtonEventArgs e)
-        {
+        void SupportTextBlock_MouseUp(object sender, MouseButtonEventArgs e) =>
             ProcessHelp.ShellExecute("https://github.com/stax76/mpv.net#Support");
-        }
 
         protected override void OnKeyDown(KeyEventArgs e)
         {

@@ -6,7 +6,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Interop;
 
-using static mpvnet.Core;
+using static mpvnet.Global;
 
 namespace mpvnet
 {
@@ -107,7 +107,7 @@ namespace mpvnet
             {
                 CommandItem item = ListView.SelectedItem as CommandItem;
                 Close();
-                core.command(item.Command);
+                Core.command(item.Command);
             }
         }
 

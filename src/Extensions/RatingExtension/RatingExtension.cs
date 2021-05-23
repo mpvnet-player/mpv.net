@@ -18,16 +18,19 @@ using System.ComponentModel.Composition;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
+
 using Microsoft.VisualBasic.FileIO;
 
 using mpvnet;
-using static mpvnet.Core;
+using static mpvnet.Global;
 
-namespace RatingExtension // the assembly name must end with 'Extension'
+namespace RatingExtension // the assembly name must end with 'Extension'!
 {
     [Export(typeof(IExtension))]
     public class RatingExtension : IExtension
     {
+        //Script script = new Script();
+
         // dictionory to store the filename and the rating
         Dictionary<string, int> Dic = new Dictionary<string, int>();
 
@@ -36,8 +39,8 @@ namespace RatingExtension // the assembly name must end with 'Extension'
 
         public RatingExtension() // plugin initialization
         {
-            core.ClientMessage += ClientMessage; //handles keys defined in input.conf
-            core.Shutdown += Shutdown; // handles MPV_EVENT_SHUTDOWN
+            Core.ClientMessage += ClientMessage; //handles keys defined in input.conf
+            Core.Shutdown += Shutdown; // handles MPV_EVENT_SHUTDOWN
         }
 
         // handles MPV_EVENT_SHUTDOWN
@@ -48,7 +51,7 @@ namespace RatingExtension // the assembly name must end with 'Extension'
                 string filepath = i.Key;
                 int rating = i.Value;
 
-                if (String.IsNullOrEmpty(filepath) || !File.Exists(filepath))
+                if (string.IsNullOrEmpty(filepath) || !File.Exists(filepath))
                     return;
 
                 string basename = Path.GetFileNameWithoutExtension(filepath);
@@ -77,7 +80,7 @@ namespace RatingExtension // the assembly name must end with 'Extension'
 
             if (int.TryParse(args[1], out int rating))
             {
-                string path = core.get_property_string("path");
+                string path = Core.get_property_string("path");
 
                 if (!File.Exists(path))
                     return;
@@ -87,7 +90,7 @@ namespace RatingExtension // the assembly name must end with 'Extension'
                 else
                 {
                     Dic[path] = rating;
-                    core.commandv("show-text", $"Rating: {rating}");
+                    Core.commandv("show-text", $"Rating: {rating}");
                 }
             }
             else if (args[1] == "about")
@@ -99,26 +102,26 @@ namespace RatingExtension // the assembly name must end with 'Extension'
         {
             if (rating == 0)
             {
-                FileToDelete = core.get_property_string("path");
+                FileToDelete = Core.get_property_string("path");
                 DeleteTime = DateTime.Now;
-                core.commandv("show-text", "Press 1 to delete file", "5000");
+                Core.commandv("show-text", "Press 1 to delete file", "5000");
             }
             else
             {
                 TimeSpan ts = DateTime.Now - DeleteTime;
-                string path = core.get_property_string("path");
+                string path = Core.get_property_string("path");
                 
                 if (FileToDelete == path && ts.TotalSeconds < 5 && File.Exists(FileToDelete))
                 {
-                    core.command("playlist-remove current");
-                    int pos = core.get_property_int("playlist-pos");
+                    Core.command("playlist-remove current");
+                    int pos = Core.get_property_int("playlist-pos");
 
                     if (pos == -1)
                     {
-                        int count = core.get_property_int("playlist-count");
+                        int count = Core.get_property_int("playlist-count");
 
                         if (count > 0)
-                            core.set_property_int("playlist-pos", count - 1);
+                            Core.set_property_int("playlist-pos", count - 1);
                     }
 
                     Thread.Sleep(2000);

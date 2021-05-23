@@ -8,28 +8,28 @@ using mpvnet;
 
 class Script
 {
-    MainForm Form;
-    Core core;
+    MainForm MainForm;
+    CorePlayer Core;
 
     bool WasPlaying;
     bool WasPaused;
 
     public Script()
     {
-        core = Core.core;
-        Form = MainForm.Instance;
-        Form.Resize += Form_Resize;
+        Core = Global.Core;
+        MainForm = MainForm.Instance;
+        MainForm.Resize += Form_Resize;
     }
 
-    private void Form_Resize(object sender, EventArgs e)
+    void Form_Resize(object sender, EventArgs e)
     {
-        if (Form.WindowState == FormWindowState.Minimized)
+        if (MainForm.WindowState == FormWindowState.Minimized)
         {
-            WasPlaying = !core.get_property_bool("pause");
+            WasPlaying = !Core.get_property_bool("pause");
 
             if (WasPlaying)
             {
-                core.set_property_bool("pause", true, true);
+                Core.set_property_bool("pause", true, true);
                 WasPaused = true;
             }
         }
@@ -37,7 +37,7 @@ class Script
         {
             if (WasPaused)
             {
-                core.set_property_bool("pause", false, true);
+                Core.set_property_bool("pause", false, true);
                 WasPaused = false;
             }
         }

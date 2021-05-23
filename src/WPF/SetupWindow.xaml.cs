@@ -8,7 +8,6 @@ using System.Windows;
 using WinForms = System.Windows.Forms;
 
 using static StockIcon;
-using static TaskDialog.Msg;
 
 namespace mpvnet
 {
@@ -45,15 +44,16 @@ namespace mpvnet
                     proc.WaitForExit();
 
                     if (proc.ExitCode == 0)
-                        MsgInfo("File associations successfully created.");
+                        Msg.ShowInfo("File associations successfully created.");
+                    else
+                        Msg.ShowError("Error creating file associations.");
                 }
-
             } catch {}
         }
 
-        void AddVideo_Click(object sender, RoutedEventArgs e) => RegFileAssoc(Core.VideoTypes);
-        void AddAudio_Click(object sender, RoutedEventArgs e) => RegFileAssoc(Core.AudioTypes);
-        void AddImage_Click(object sender, RoutedEventArgs e) => RegFileAssoc(Core.ImageTypes);
+        void AddVideo_Click(object sender, RoutedEventArgs e) => RegFileAssoc(CorePlayer.VideoTypes);
+        void AddAudio_Click(object sender, RoutedEventArgs e) => RegFileAssoc(CorePlayer.AudioTypes);
+        void AddImage_Click(object sender, RoutedEventArgs e) => RegFileAssoc(CorePlayer.ImageTypes);
 
         void RemoveFileAssociations_Click(object sender, RoutedEventArgs e)
         {

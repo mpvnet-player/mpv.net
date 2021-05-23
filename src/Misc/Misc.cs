@@ -13,16 +13,10 @@ using System.Windows.Forms;
 
 using Microsoft.Win32;
 
-using static mpvnet.Core;
+using static mpvnet.Global;
 
 namespace mpvnet
 {
-    public static class NewLine
-    {
-        public static string BR = Environment.NewLine;
-        public static string BR2 = Environment.NewLine + Environment.NewLine;
-    }
-
     public class Sys
     {
         public static bool IsDarkTheme {
@@ -102,13 +96,13 @@ namespace mpvnet
                 RegistryHelp.SetValue($@"HKCR\" + "." + ext, null, ExeFilenameNoExt + "." + ext);
                 RegistryHelp.SetValue($@"HKCR\" + "." + ext + @"\OpenWithProgIDs", ExeFilenameNoExt + "." + ext, "");
 
-                if (VideoTypes.Contains(ext))
+                if (CorePlayer.VideoTypes.Contains(ext))
                     RegistryHelp.SetValue(@"HKCR\" + "." + ext, "PerceivedType", "video");
 
-                if (AudioTypes.Contains(ext))
+                if (CorePlayer.AudioTypes.Contains(ext))
                     RegistryHelp.SetValue(@"HKCR\" + "." + ext, "PerceivedType", "audio");
 
-                if (ImageTypes.Contains(ext))
+                if (CorePlayer.ImageTypes.Contains(ext))
                     RegistryHelp.SetValue(@"HKCR\" + "." + ext, "PerceivedType", "image");
 
                 RegistryHelp.SetValue($@"HKCR\" + ExeFilenameNoExt + "." + ext + @"\shell\open\command", null, $"\"{ExePath}\" \"%1\"");
@@ -203,7 +197,7 @@ namespace mpvnet
         public static ObservableCollection<CommandItem> Items {
             get {
                 if (_Items is null)
-                    _Items = GetItems(File.ReadAllText(core.InputConfPath));
+                    _Items = GetItems(File.ReadAllText(Core.InputConfPath));
 
                 return _Items;
             }
@@ -212,6 +206,26 @@ namespace mpvnet
 
     public class Folder
     {
-        public static string Startup { get; } = Application.StartupPath + @"\";
+        public static string Startup { get; } = Application.StartupPath.AddSep();
+        public static string AppData { get; } = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData).AddSep();
+
+        public static string CustomSettings {
+            get {
+                string linkFile = Startup + "settings-directory.txt";
+
+                if (File.Exists(linkFile))
+                {
+                    string linkTarget = File.ReadAllText(linkFile).Trim();
+
+                    if (linkTarget.StartsWithEx("."))
+                        linkTarget = Startup + linkTarget;
+
+                    if (Directory.Exists(linkTarget))
+                        return linkTarget.AddSep();
+                }
+
+                return "";
+            }
+        }
     }
 }

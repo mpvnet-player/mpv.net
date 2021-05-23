@@ -6,8 +6,7 @@ using System.Management.Automation;
 using System.Management.Automation.Runspaces;
 using System.Threading;
 
-using static mpvnet.Core;
-using static mpvnet.NewLine;
+using static mpvnet.Global;
 
 namespace mpvnet
 {
@@ -90,7 +89,7 @@ namespace mpvnet
             var output = sender as PipelineReader<PSObject>;
 
             while (output.Count > 0)
-                ConsoleHelp.Write(output.Read(), Module);
+                Terminal.Write(output.Read(), Module);
         }
 
         public void Error_DataReady(object sender, EventArgs e)
@@ -98,7 +97,7 @@ namespace mpvnet
             var output = sender as PipelineReader<Object>;
 
             while (output.Count > 0)
-                ConsoleHelp.WriteError(output.Read(), Module);
+                Terminal.WriteError(output.Read(), Module);
         }
 
         public void RedirectStreams(PSEventJob job)
@@ -110,25 +109,25 @@ namespace mpvnet
             }
         }
 
-        public void commandv(params string[] args) => core.commandv(args);
+        public void commandv(params string[] args) => Core.commandv(args);
 
-        public void command(string command) => core.command(command);
+        public void command(string command) => Core.command(command);
 
-        public bool get_property_bool(string name) => core.get_property_bool(name);
+        public bool get_property_bool(string name) => Core.get_property_bool(name);
 
-        public void set_property_bool(string name, bool value) => core.set_property_bool(name, value);
+        public void set_property_bool(string name, bool value) => Core.set_property_bool(name, value);
 
-        public int get_property_int(string name) => core.get_property_int(name);
+        public int get_property_int(string name) => Core.get_property_int(name);
 
-        public void set_property_int(string name, int value) => core.set_property_int(name, value);
+        public void set_property_int(string name, int value) => Core.set_property_int(name, value);
 
-        public double get_property_number(string name) => core.get_property_number(name);
+        public double get_property_number(string name) => Core.get_property_number(name);
 
-        public void set_property_number(string name, double value) => core.set_property_number(name, value);
+        public void set_property_number(string name, double value) => Core.set_property_number(name, value);
 
-        public string get_property_string(string name) => core.get_property_string(name);
+        public string get_property_string(string name) => Core.get_property_string(name);
 
-        public void set_property_string(string name, string value) => core.set_property_string(name, value);
+        public void set_property_string(string name, string value) => Core.set_property_string(name, value);
 
         public void observe_property(string name, string type, ScriptBlock sb)
         {
@@ -137,19 +136,19 @@ namespace mpvnet
             switch (type)
             {
                 case "bool": case "boolean":
-                    core.observe_property_bool(name, value => App.RunTask(() => PropertyChanged.Invoke(name, value)));
+                    Core.observe_property_bool(name, value => App.RunTask(() => PropertyChanged.Invoke(name, value)));
                     break;
                 case "string":
-                    core.observe_property_string(name, value => App.RunTask(() => PropertyChanged.Invoke(name, value)));
+                    Core.observe_property_string(name, value => App.RunTask(() => PropertyChanged.Invoke(name, value)));
                     break;
                 case "int": case "integer":
-                    core.observe_property_int(name, value => App.RunTask(() => PropertyChanged.Invoke(name, value)));
+                    Core.observe_property_int(name, value => App.RunTask(() => PropertyChanged.Invoke(name, value)));
                     break;
                 case "float": case "double":
-                    core.observe_property_double(name, value => App.RunTask(() => PropertyChanged.Invoke(name, value)));
+                    Core.observe_property_double(name, value => App.RunTask(() => PropertyChanged.Invoke(name, value)));
                     break;
                 case "nil": case "none": case "native":
-                    core.observe_property(name, () => App.RunTask(() => PropertyChanged.Invoke(name, null)));
+                    Core.observe_property(name, () => App.RunTask(() => PropertyChanged.Invoke(name, null)));
                     break;
                 default:
                     App.ShowError("Invalid Type", "Valid types are: bool or boolean, string, int or integer, float or double, nil or none or native");
@@ -164,59 +163,59 @@ namespace mpvnet
             switch (name)
             {
                 case "log-message":
-                    core.LogMessageAsync += (level, msg) => Event.Invoke("log-message", new object[] { level, msg });
+                    Core.LogMessageAsync += (level, msg) => Event.Invoke("log-message", new object[] { level, msg });
                     break;
 
                 case "end-file":
-                    core.EndFileAsync += reason => Event.Invoke("end-file", new object[] { reason });
+                    Core.EndFileAsync += reason => Event.Invoke("end-file", new object[] { reason });
                     break;
 
                 case "client-message":
-                    core.ClientMessageAsync += args => Event.Invoke("client-message", args);
+                    Core.ClientMessageAsync += args => Event.Invoke("client-message", args);
                     break;
 
                 case "shutdown":
-                    core.Shutdown += () => Event.Invoke("shutdown", null);
+                    Core.Shutdown += () => Event.Invoke("shutdown", null);
                     break;
 
                 case "get-property-reply":
-                    core.GetPropertyReplyAsync += () => Event.Invoke("get-property-reply", null);
+                    Core.GetPropertyReplyAsync += () => Event.Invoke("get-property-reply", null);
                     break;
 
                 case "set-property-reply":
-                    core.SetPropertyReplyAsync += () => Event.Invoke("set-property-reply", null);
+                    Core.SetPropertyReplyAsync += () => Event.Invoke("set-property-reply", null);
                     break;
 
                 case "command-reply":
-                    core.CommandReplyAsync += () => Event.Invoke("command-reply", null);
+                    Core.CommandReplyAsync += () => Event.Invoke("command-reply", null);
                     break;
 
                 case "start-file":
-                    core.StartFileAsync += () => Event.Invoke("start-file", null);
+                    Core.StartFileAsync += () => Event.Invoke("start-file", null);
                     break;
 
                 case "file-loaded":
-                    core.FileLoadedAsync += () => Event.Invoke("file-loaded", null);
+                    Core.FileLoadedAsync += () => Event.Invoke("file-loaded", null);
                     break;
 
                 case "idle":
-                    core.IdleAsync += () => Event.Invoke("idle", null);
+                    Core.IdleAsync += () => Event.Invoke("idle", null);
                     break;
 
                 case "video-reconfig":
-                    core.VideoReconfigAsync += () => Event.Invoke("video-reconfig", null);
+                    Core.VideoReconfigAsync += () => Event.Invoke("video-reconfig", null);
                     break;
 
                 case "audio-reconfig":
-                    core.AudioReconfigAsync += () => Event.Invoke("audio-reconfig", null);
+                    Core.AudioReconfigAsync += () => Event.Invoke("audio-reconfig", null);
                     break;
 
                 case "seek":
-                    core.SeekAsync += () => Event.Invoke("seek", null);
+                    Core.SeekAsync += () => Event.Invoke("seek", null);
                     break;
 
                 case "playback-restart":
-                    core.PlaybackRestartAsync += () => Event.Invoke("playback-restart", null);
+                    Core.PlaybackRestartAsync += () => Event.Invoke("playback-restart", null);
                     break;
             }
         }
@@ -224,13 +223,13 @@ namespace mpvnet
         void Output_DataAdded(object sender, DataAddedEventArgs e)
         {
             var output = sender as PSDataCollection<PSObject>;
-            ConsoleHelp.Write(output[e.Index], Module);
+            Terminal.Write(output[e.Index], Module);
         }
 
         void Error_DataAdded(object sender, DataAddedEventArgs e)
         {
             var error = sender as PSDataCollection<ErrorRecord>;
-            ConsoleHelp.WriteError(error[e.Index], Module);
+            Terminal.WriteError(error[e.Index], Module);
         }
     }
 

@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Runtime.InteropServices;
 
-using static mpvnet.Core;
+using static mpvnet.Global;
 
 namespace mpvnet
 {
@@ -18,7 +18,7 @@ namespace mpvnet
         public static void RegisterGlobalHotkeys(IntPtr hwnd)
         {
             HWND = hwnd;
-            string path = core.ConfigFolder + "global-input.conf";
+            string path = Core.ConfigFolder + "global-input.conf";
 
             if (!File.Exists(path))
                 return;
@@ -82,14 +82,14 @@ namespace mpvnet
                 bool success = RegisterHotKey(HWND, ID++, mod, vk);
 
                 if (!success)
-                    ConsoleHelp.WriteError(line + ": " + new Win32Exception().Message + "\n", "global-input.conf");
+                    Terminal.WriteError(line + ": " + new Win32Exception().Message + "\n", "global-input.conf");
             }
         }
 
         public static void Execute(int id)
         {
             if (Commands.ContainsKey(id))
-                core.command(Commands[id]);
+                Core.command(Commands[id]);
         }
 
         static int mpv_to_VK(string value)

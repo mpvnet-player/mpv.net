@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.IO;
 
-public static class Extensions
+public static class TestStringExtension
 {
     public static bool ContainsEx(this string instance, string value)
     {
@@ -19,11 +19,14 @@ public static class Extensions
 
         return false;
     }
+}
 
+public static class ConvertToStringExtension
+{
     public static string ToUpperEx(this string instance)
     {
         if (instance != null)
-            return instance.ToUpper();
+            return instance.ToUpperInvariant();
 
         return "";
     }
@@ -31,9 +34,46 @@ public static class Extensions
     public static string ToLowerEx(this string instance)
     {
         if (instance != null)
-            return instance.ToLower();
+            return instance.ToLowerInvariant();
 
         return "";
+    }
+
+    public static string TrimEx(this string instance)
+    {
+        if (instance == null)
+            return "";
+
+        return instance.Trim();
+    }
+}
+
+public static class ConvertStringExtension
+{
+    public static int ToInt(this string instance)
+    {
+        int.TryParse(instance, out int result);
+        return result;
+    }
+
+    public static float ToFloat(this string instance)
+    {
+        float.TryParse(instance.Replace(",", "."), NumberStyles.Float,
+            CultureInfo.InvariantCulture, out float result);
+
+        return result;
+    }
+}
+
+public static class PathStringExtension
+{
+    // return extension with lower case and without dot.
+    public static string Ext(this string instance)
+    {
+        if (instance == null)
+            return "";
+
+        return Path.GetExtension(instance).TrimStart('.').ToLower();
     }
 
     public static string FileName(this string instance)
@@ -54,25 +94,23 @@ public static class Extensions
         return instance;
     }
 
-    public static string Ext(this string instance)
+    // Ensure trailing directory separator char
+    public static string AddSep(this string instance)
     {
-        if (instance == null)
+        if (string.IsNullOrEmpty(instance))
             return "";
 
-        return Path.GetExtension(instance).TrimStart('.').ToLower();
+        if (!instance.EndsWith(Path.DirectorySeparatorChar.ToString()))
+            instance = instance + Path.DirectorySeparatorChar;
+
+        return instance;
     }
 
-    public static int ToInt(this string instance)
+    public static bool IsIdenticalFolder(this string instance, string testFolder)
     {
-        int.TryParse(instance, out int result);
-        return result;
-    }
+        if (string.IsNullOrEmpty(instance) || string.IsNullOrEmpty(testFolder))
+            return false;
 
-    public static float ToFloat(this string instance)
-    {
-        float.TryParse(instance.Replace(",", "."), NumberStyles.Float,
-            CultureInfo.InvariantCulture, out float result);
-
-        return result;
+        return instance.ToLowerInvariant().AddSep() == testFolder.ToLowerInvariant().AddSep();
     }
 }

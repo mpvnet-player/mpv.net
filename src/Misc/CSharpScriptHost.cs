@@ -33,7 +33,14 @@ namespace mpvnet
                 Compile(outputFile, file);
 
             if (File.Exists(outputFile))
-                References.Add(Assembly.LoadFile(outputFile).CreateInstance("Script"));
+            {
+                object instance = Assembly.LoadFile(outputFile).CreateInstance("Script");
+
+                if (instance != null)
+                    References.Add(instance);
+                else
+                    Terminal.WriteError("Failed to initialize script.", outputFile.FileName());
+            }
         }
 
         public static void Compile(string outputFile, string file)
@@ -42,6 +49,7 @@ namespace mpvnet
             CompilerParameters parameters = new CompilerParameters();
 
             string[] dependencies = {
+                Folder.Startup + "mpvnet.exe",
                 "Microsoft.VisualBasic.dll",
                 "System.Core.dll", "System.Data.dll", "System.dll", "System.Drawing.dll", "System.Web.dll",
                 "System.Windows.Forms.dll", "System.Xaml.dll", "System.Xml.dll", "System.Xml.Linq.dll",
@@ -55,10 +63,10 @@ namespace mpvnet
             CompilerResults results = provider.CompileAssemblyFromFile(parameters, file);
 
             var errors = results.Errors.Cast<CompilerError>().Select(i => "Line Number " +
-                i.Line + "\r\n" + "Error Number: " + i.ErrorNumber + "\r\n" + i.ErrorText);
+                i.Line + "\n" + "Error Number: " + i.ErrorNumber + "\n" + i.ErrorText);
 
             if (errors.Count() > 0)
-                ConsoleHelp.WriteError(string.Join("\r\n\r\n", errors), Path.GetFileName(file));
+                Terminal.WriteError(string.Join("\n\n", errors), Path.GetFileName(file));
         }
 
         static string GetMD5(string code)

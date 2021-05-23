@@ -4,13 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 
-using static mpvnet.Core;
+using static mpvnet.Global;
 
 namespace mpvnet
 {
@@ -109,7 +108,7 @@ namespace mpvnet
         void Execute()
         {
             if (ListView.SelectedItem != null)
-                core.LoadFiles(new[] { ListView.SelectedItem as string }, true, Keyboard.Modifiers == ModifierKeys.Control);
+                Core.LoadFiles(new[] { ListView.SelectedItem as string }, true, Keyboard.Modifiers == ModifierKeys.Control);
 
             Keyboard.Focus(FilterTextBox);
         }
@@ -142,7 +141,7 @@ namespace mpvnet
                         Everything_GetResultFullPathName(i, sb, (uint)sb.Capacity);
                         string ext = sb.ToString().Ext();
 
-                        if (Core.AudioTypes.Contains(ext) || Core.VideoTypes.Contains(ext) || Core.ImageTypes.Contains(ext))
+                        if (CorePlayer.AudioTypes.Contains(ext) || CorePlayer.VideoTypes.Contains(ext) || CorePlayer.ImageTypes.Contains(ext))
                             items.Add(sb.ToString());
 
                         if (items.Count > 100)
