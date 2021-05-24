@@ -101,7 +101,7 @@ namespace mpvnet
 
         public bool Border { get; set; } = true;
         public bool Fullscreen { get; set; }
-        public bool IsLogoVisible { set; get; }
+        public bool IsLogoVisible { set; get; } = true;
         public bool IsQuitNeeded { set; get; } = true;
         public bool TaskbarProgress { get; set; } = true;
         public bool WasInitialSizeSet;
@@ -1074,7 +1074,7 @@ namespace mpvnet
 
                 if (file.Ext() == "iso")
                     LoadISO(file);
-                else if(CorePlayer.SubtitleTypes.Contains(file.Ext()))
+                else if(SubtitleTypes.Contains(file.Ext()))
                     commandv("sub-add", file);
                 else if (file.Ext().Length != 3 && File.Exists(Path.Combine(file, "BDMV\\index.bdmv")))
                 {
@@ -1150,9 +1150,9 @@ namespace mpvnet
             List<string> files = Directory.GetFiles(dir).ToList();
 
             files = files.Where(file =>
-                CorePlayer.VideoTypes.Contains(file.Ext()) ||
-                CorePlayer.AudioTypes.Contains(file.Ext()) ||
-                CorePlayer.ImageTypes.Contains(file.Ext())).ToList();
+                VideoTypes.Contains(file.Ext()) ||
+                AudioTypes.Contains(file.Ext()) ||
+                ImageTypes.Contains(file.Ext())).ToList();
 
             files.Sort(new StringLogicalComparer());
             int index = files.IndexOf(path);

@@ -383,7 +383,7 @@ namespace mpvnet
                     height = autoFitHeight;
                     width = height * videoSize.Width / videoSize.Height;
                 }
-                if (App.StartSize == "width-always" && windowSize.Height != 0)
+                else if(App.StartSize == "width-always" && windowSize.Height != 0)
                 {
                     width = windowSize.Width;
                     height = (int)Math.Ceiling(width * videoSize.Height / (double)videoSize.Width);
