@@ -329,7 +329,7 @@ namespace mpvnet
                 size = new Size(size.Height, size.Width);
 
             if (size.Width == 0 || size.Height == 0)
-                size = new Size(1, 1);
+                size = new Size(16, 9);
 
             if (VideoSize != size)
             {
