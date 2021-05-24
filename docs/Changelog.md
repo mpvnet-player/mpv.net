@@ -1,26 +1,27 @@
 
-5.4.8.9 Beta (2021-??-??)
+5.4.9.0 Beta (2021-05-??)
 =========================
 
-- There is an issue with the `window-scale` mpv property, it does not
-  work correctly in mpv either, so I've removed support for it and
-  added my own implementation `script-message mpv.net window-scale`.
+- `window-scale 1` does not work correctly in mpv,
+  so I've removed support for it and added my own implementation
+  that actually works: `script-message mpv.net window-scale`.
 - The CS-Script library was replaced with my own C# scripting implementation.
 - If a player window border is near to a screen border and the window size
   changes, the player windows sticks to that near screen border location.
   Furthermore the `remember-window-position` option remembers a near screen
   border position instead of remembering the window center position.
-- High DPI multi monitor fix.
+- Multi monitor fix using different DPI values.
 - `start-size` option has new options, see config editor and manual.
 - Improved `script-message mpv.net cycle-audio` OSD info.
 - The logic for finding the config directory has changed, see manual.
-- The dotnet script and extension host was redesigned, existing scripts
-  and extensions must be fixed. All example scripts were updated and
-  a new script delete-current-file.cs was added.
+- The dotnet script and extension host was a little redesigned, this breaks
+  backward compatibility unfortunately, but I can help fixing existing
+  open source code however. Example scripts and extensions were updated.
 - Fix console not working due to incorrect mpv.conf value generated
   (script-opts=console-scale=0).
 - Registry usage is not portable and also not popular, so settings
   are stored in the file settings.xml now instead of the Registry.
+- Video rotation support added.
 
 
 5.4.8.8 Beta (2021-05-09)

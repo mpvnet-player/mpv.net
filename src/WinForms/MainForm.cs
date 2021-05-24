@@ -51,6 +51,7 @@ namespace mpvnet
 
                 Core.observe_property("window-maximized", PropChangeWindowMaximized);
                 Core.observe_property("window-minimized", PropChangeWindowMinimized);
+              
                 Core.observe_property_bool("pause", PropChangePause);
                 Core.observe_property_bool("fullscreen", PropChangeFullscreen);
                 Core.observe_property_bool("ontop", PropChangeOnTop);
@@ -811,7 +812,7 @@ namespace mpvnet
         {
             if (CursorHelp.IsPosDifferent(LastCursorPosition))
             {
-                LastCursorPosition = Control.MousePosition;
+                LastCursorPosition = MousePosition;
                 LastCursorChanged = Environment.TickCount;
             }
             else if (Environment.TickCount - LastCursorChanged > 1500 &&
@@ -838,7 +839,7 @@ namespace mpvnet
         void PropChangeVid(string value) => Core.Vid = value;
 
         void PropChangeTitle(string value) { Title = value; SetTitle(); }
-
+        
         void PropChangeEdition(int value) => Core.Edition = value;
 
         void PropChangeWindowMaximized()

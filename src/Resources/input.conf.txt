@@ -144,6 +144,7 @@
  t       script-binding stats/display-stats          #menu: View > Show Statistics
  T       script-binding stats/display-stats-toggle   #menu: View > Toggle Statistics
  Del     script-binding osc/visibility               #menu: View > Toggle OSC Visibility
+ Ctrl+r  cycle-values video-rotate 90 180 270 0      #menu: View > Rotate Video
  _       script-message mpv.net show-audio-devices   #menu: View > Show Audio Devices
  Shift+c script-message mpv.net show-commands        #menu: View > Show Commands
  `       script-binding console/enable               #menu: View > Show Console

@@ -110,7 +110,7 @@ namespace mpvnet
 
         public int Screen { get; set; } = -1;
         public int Edition { get; set; }
-        public int PropertyChangedID;
+        public int VideoRotate { get; set; }
 
         public float Autofit { get; set; } = 0.6f;
         public float AutofitSmaller { get; set; } = 0.3f;
@@ -145,6 +145,11 @@ namespace mpvnet
 
             if (err < 0)
                 throw new Exception("mpv_initialize error\n\n" + GetError(err));
+
+            err = mpv_observe_property(Handle, 0, "video-rotate", mpv_format.MPV_FORMAT_INT64);
+
+            if (err < 0)
+                throw new Exception("mpv_observe_property video-rotate error\n\n" + GetError(err));
 
             Initialized?.Invoke();
             InvokeAsync(InitializedAsync);
@@ -316,6 +321,23 @@ namespace mpvnet
             ps.Invoke();
         }
 
+        void UpdateVideoSize(string w, string h)
+        {
+            Size size = new Size(get_property_int(w), get_property_int(h));
+
+            if (VideoRotate == 90 || VideoRotate == 270)
+                size = new Size(size.Height, size.Width);
+
+            if (size.Width == 0 || size.Height == 0)
+                size = new Size(1, 1);
+
+            if (VideoSize != size)
+            {
+                VideoSize = size;
+                InvokeEvent(VideoSizeChanged, VideoSizeChangedAsync);
+            }
+        }
+
         public void EventLoop()
         {
             while (true)
@@ -326,7 +348,7 @@ namespace mpvnet
                 if (WindowHandle == IntPtr.Zero)
                     WindowHandle = Native.FindWindowEx(MainForm.Hwnd, IntPtr.Zero, "mpv", null);
 
-                //Debug.WriteLine(evt.event_id.ToString());
+                //System.Diagnostics.Debug.WriteLine(evt.event_id.ToString());
 
                 try
                 {
@@ -366,28 +388,19 @@ namespace mpvnet
                                 if (args.Length > 1 && args[0] == "mpv.net")
                                     App.RunTask(() => Commands.Execute(args[1], args.Skip(2).ToArray()));
 
-                                InvokeAsync<string[]>(ClientMessageAsync, args);
+                                InvokeAsync(ClientMessageAsync, args);
                                 ClientMessage?.Invoke(args);
                             }
                             break;
                         case mpv_event_id.MPV_EVENT_VIDEO_RECONFIG:
-                            {
-                                Size size = new Size(get_property_int("dwidth"), get_property_int("dheight"));
-
-                                if (size.Width != 0 && size.Height != 0 && VideoSize != size)
-                                {
-                                    VideoSize = size;
-                                    InvokeEvent(VideoSizeChanged, VideoSizeChangedAsync);
-                                }
-
-                                InvokeEvent(VideoReconfig, VideoReconfigAsync);
-                            }
+                            UpdateVideoSize("dwidth", "dheight");
+                            InvokeEvent(VideoReconfig, VideoReconfigAsync);
                             break;
                         case mpv_event_id.MPV_EVENT_END_FILE:
                             {
                                 var data = (mpv_event_end_file)Marshal.PtrToStructure(evt.data, typeof(mpv_event_end_file));
                                 var reason = (mpv_end_file_reason)data.reason;
-                                InvokeAsync<mpv_end_file_reason>(EndFileAsync, reason);
+                                InvokeAsync(EndFileAsync, reason);
                                 EndFile?.Invoke(reason);
                             }
                             break;
@@ -399,16 +412,7 @@ namespace mpvnet
                                 if (App.StartSize == "video")
                                     Core.WasInitialSizeSet = false;
 
-                                Size size = new Size(get_property_int("width"), get_property_int("height"));
-
-                                if (size.Width == 0 || size.Height == 0)
-                                    size = new Size(1, 1);
-
-                                if (VideoSize != size)
-                                {
-                                    VideoSize = size;
-                                    InvokeEvent(VideoSizeChanged, VideoSizeChangedAsync);
-                                }
+                                UpdateVideoSize("width", "height");
 
                                 VideoSizeAutoResetEvent.Set();
 
@@ -429,7 +433,6 @@ namespace mpvnet
                         case mpv_event_id.MPV_EVENT_PROPERTY_CHANGE:
                             {
                                 var data = (mpv_event_property)Marshal.PtrToStructure(evt.data, typeof(mpv_event_property));
-                                //Debug.WriteLine(data.name);
 
                                 if (data.format == mpv_format.MPV_FORMAT_FLAG)
                                 {
@@ -457,6 +460,12 @@ namespace mpvnet
                                 }
                                 else if (data.format == mpv_format.MPV_FORMAT_INT64)
                                 {
+                                    if (data.name == "video-rotate")
+                                    {
+                                        VideoRotate = Marshal.PtrToStructure<int>(data.data);
+                                        UpdateVideoSize("dwidth", "dheight");
+                                    }
+
                                     lock (IntPropChangeActions)
                                         foreach (var pair in IntPropChangeActions)
                                             if (pair.Key == data.name)
