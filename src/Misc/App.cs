@@ -19,7 +19,7 @@ namespace mpvnet
         public static string LightTheme { get; set; } = "light";
         public static string StartSize { get; set; } = "height-session";
 
-        public static bool RememberPosition { get; set; }
+        public static bool RememberWindowPosition { get; set; }
         public static bool DebugMode { get; set; }
         public static bool IsStartedFromTerminal { get; } = Environment.GetEnvironmentVariable("_started_from_console") == "yes";
         public static bool RememberVolume { get; set; } = true;
@@ -37,6 +37,17 @@ namespace mpvnet
 
         public static bool IsDarkMode {
             get => (DarkMode == "system" && Sys.IsDarkTheme) || DarkMode == "always";
+        }
+
+        static AppSettings _Settings;
+
+        public static AppSettings Settings {
+            get {
+                if (_Settings == null)
+                    _Settings = SettingsManager.Load();
+
+                return _Settings;
+            }
         }
 
         public static void Init()
@@ -132,18 +143,17 @@ namespace mpvnet
         {
             if (RememberVolume)
             {
-                Core.set_property_int("volume", RegistryHelp.GetInt("volume", 70));
-                Core.set_property_string("mute", RegistryHelp.GetString("mute", "no"));
+                Core.set_property_int("volume", Settings.Volume);
+                Core.set_property_string("mute", Settings.Mute);
             }
         }
 
         static void Shutdown()
         {
-            if (RememberVolume)
-            {
-                RegistryHelp.SetInt("volume", Core.get_property_int("volume"));
-                RegistryHelp.SetString("mute", Core.get_property_string("mute"));
-            }
+            Settings.Volume = Core.get_property_int("volume");
+            Settings.Mute = Core.get_property_string("mute");
+
+            SettingsManager.Save(Settings);
         }
 
         static Dictionary<string, string> _Conf;
@@ -167,7 +177,7 @@ namespace mpvnet
         {
             switch (name)
             {
-                case "remember-position": RememberPosition = value == "yes"; return true;
+                case "remember-window-position": RememberWindowPosition = value == "yes"; return true;
                 case "debug-mode": DebugMode = value == "yes"; return true;
                 case "remember-volume": RememberVolume = value == "yes"; return true;
                 case "queue": Queue = value == "yes"; return true;
@@ -188,24 +198,6 @@ namespace mpvnet
                     if (writeError)
                         Terminal.WriteError($"unknown mpvnet.conf property: {name}");
                     return false;
-            }
-        }
-
-        public static void ShowSetup()
-        {
-            int value = RegistryHelp.GetInt("location: " + Folder.Startup);
-
-            if (value != 1)
-            {
-                if (Msg.ShowQuestion("Would you like to setup mpv.net?",
-                    "The setup allows to create a start menu shortcut, file associations and " +
-                    "adding mpv.net to the Path environment variable.") == DialogResult.OK)
-
-                    Commands.Execute("show-setup-dialog");
-                else
-                    Msg.ShowInfo("The setup dialog can be found at:\n\nContext Menu > Tools > Setup");
-
-                RegistryHelp.SetInt("location: " + Folder.Startup, 1);
             }
         }
     }

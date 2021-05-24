@@ -189,6 +189,7 @@ public class ToolStripRendererEx : ToolStripSystemRenderer
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
             rect = new Rectangle(rect.X + 2, rect.Y, rect.Width - 4, rect.Height - 1);
             rect.Inflate(-1, -1);
+
             using (SolidBrush b = new SolidBrush(SelectionColor))
                 e.Graphics.FillRectangle(b, rect);
         }
@@ -205,12 +206,12 @@ public class ToolStripRendererEx : ToolStripSystemRenderer
         float y3 = e.Item.Height * 0.75f;
         e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
 
-        using (Brush b = new SolidBrush(ForegroundColor))
+        using (Brush brush = new SolidBrush(ForegroundColor))
         {
-            using (Pen p = new Pen(b, Control.DefaultFont.Height / 20f))
+            using (Pen pen = new Pen(brush, Control.DefaultFont.Height / 20f))
             {
-                e.Graphics.DrawLine(p, x1, y1, x2, y2);
-                e.Graphics.DrawLine(p, x2, y2, x3, y3);
+                e.Graphics.DrawLine(pen, x1, y1, x2, y2);
+                e.Graphics.DrawLine(pen, x2, y2, x3, y3);
             }
         }
     }
@@ -221,7 +222,6 @@ public class ToolStripRendererEx : ToolStripSystemRenderer
             return;
 
         MenuItem item = e.Item as MenuItem;
-
         e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
         if (!item.Checked)
@@ -250,6 +250,7 @@ public class ToolStripRendererEx : ToolStripSystemRenderer
         int top = e.Item.Height / 2;
         top -= 1;
         int offset = Convert.ToInt32(e.Item.Font.Height * 0.7);
+
         using (Pen p = new Pen(BorderColor))
             e.Graphics.DrawLine(p,
                 new Point(offset, top),
@@ -298,6 +299,7 @@ public struct HSLColor
             value = 0;
         else if (value > 1)
             value = 1;
+
         return value;
     }
 
@@ -388,7 +390,7 @@ public struct HSLColor
 
     public void SetRGB(int red, int green, int blue)
     {
-        HSLColor hc = HSLColor.Convert(Color.FromArgb(red, green, blue));
+        HSLColor hc = Convert(Color.FromArgb(red, green, blue));
         _Hue = hc._Hue;
         _Saturation = hc._Saturation;
         _Luminosity = hc._Luminosity;

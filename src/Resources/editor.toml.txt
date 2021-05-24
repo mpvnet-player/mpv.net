@@ -362,7 +362,7 @@ filter = "Screen"
 help = "<float> Minimum aspect ratio, if the AR is smaller than the defined value then the window AR is set to 16/9. This avoids a square window for Music with cover art. Default: 1.2 (mpv.net specific setting)"
 
 [[settings]]
-name = "remember-position"
+name = "remember-window-position"
 file = "mpvnet"
 default = "no"
 filter = "Screen"

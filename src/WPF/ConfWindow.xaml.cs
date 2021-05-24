@@ -31,7 +31,7 @@ namespace mpvnet
             LoadConf(App.ConfPath);
             LoadSettings();
             InitialContent = GetCompareString();
-            SearchControl.Text = RegistryHelp.GetString("config-editor-search");
+            SearchControl.Text = App.Settings.ConfigEditorSearch;
             FilterListBox.SelectedItem = SearchControl.Text.TrimEnd(':');
         }
 
@@ -68,7 +68,7 @@ namespace mpvnet
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
-            RegistryHelp.SetValue("config-editor-search", SearchControl.Text);
+            App.Settings.ConfigEditorSearch = SearchControl.Text;
             
             if (InitialContent == GetCompareString())
                 return;

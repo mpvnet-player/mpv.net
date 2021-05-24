@@ -114,6 +114,7 @@
     <Compile Include="Misc\Help.cs" />
     <Compile Include="Misc\GlobalHotkey.cs" />
     <Compile Include="Misc\Msg.cs" />
+    <Compile Include="Misc\Settings.cs" />
     <Compile Include="Misc\Terminal.cs" />
     <Compile Include="Misc\UpdateCheck.cs" />
     <Compile Include="Misc\Theme.cs" />
@@ -141,7 +142,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="mpv\libmpv.cs" />
+    <Compile Include="Native\libmpv.cs" />
     <Compile Include="WinForms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -149,7 +150,7 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Misc\Misc.cs" />
-    <Compile Include="mpv\CorePlayer.cs" />
+    <Compile Include="Misc\CorePlayer.cs" />
     <Compile Include="Misc\Commands.cs" />
     <Compile Include="Native\Native.cs" />
     <Compile Include="Misc\Program.cs" />

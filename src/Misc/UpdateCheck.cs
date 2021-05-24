@@ -15,9 +15,7 @@ namespace mpvnet
     {
         public static void DailyCheck()
         {
-            if (App.UpdateCheck && RegistryHelp.GetInt("last-update-check")
-                != DateTime.Now.DayOfYear)
-
+            if (App.UpdateCheck && App.Settings.LastUpdateCheck != DateTime.Now.DayOfYear)
                 CheckOnline();
         }
 
@@ -27,7 +25,7 @@ namespace mpvnet
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    RegistryHelp.SetValue("last-update-check", DateTime.Now.DayOfYear);
+                    App.Settings.LastUpdateCheck = DateTime.Now.DayOfYear;
                     client.DefaultRequestHeaders.Add("User-Agent", "mpv.net");
                     var response = await client.GetAsync("https://api.github.com/repos/stax76/mpv.net/releases/latest");
                     response.EnsureSuccessStatusCode();
@@ -51,8 +49,8 @@ namespace mpvnet
                         return;
                     }
 
-                    if ((RegistryHelp.GetString("update-check-version")
-                        != onlineVersion.ToString() || showUpToDateMessage) && Msg.ShowQuestion(
+                    if ((App.Settings.UpdateCheckVersion != onlineVersion.ToString() ||
+                        showUpToDateMessage) && Msg.ShowQuestion(
                             $"New version {onlineVersion} is available, update now?") == DialogResult.OK)
                     {
                         string url = $"https://github.com/stax76/mpv.net/releases/download/{onlineVersion}/mpv.net-{onlineVersion}-portable.zip";
@@ -73,7 +71,7 @@ namespace mpvnet
                         Core.command("quit");
                     }
 
-                    RegistryHelp.SetValue("update-check-version", onlineVersion.ToString());
+                    App.Settings.UpdateCheckVersion = onlineVersion.ToString();
                 }
             }
             catch (Exception ex)

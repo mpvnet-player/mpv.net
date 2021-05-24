@@ -28,7 +28,6 @@ namespace mpvnet
         int ShownTickCount;
 
         Taskbar  Taskbar;
-        List<string> RecentFiles;
         bool WasMaximized;
 
         public MainForm()
@@ -38,9 +37,6 @@ namespace mpvnet
 
             try
             {
-                object recent = RegistryHelp.GetValue("recent");
-                RecentFiles = recent is string[] r ? new List<string>(r) : new List<string>();
-
                 Instance = this;
                 Hwnd = Handle;
                 Core.Init();
@@ -100,21 +96,19 @@ namespace mpvnet
                 if (!Core.Border)
                     FormBorderStyle = FormBorderStyle.None;
 
-                int posX = RegistryHelp.GetInt("position-x");
-                int posY = RegistryHelp.GetInt("position-y");
+                Point pos = App.Settings.WindowPosition;
                 
-                if ((posX != 0 || posY != 0) && App.RememberPosition)
+                if ((pos.X != 0 || pos.Y != 0) && App.RememberWindowPosition)
                 {
-                    Left = posX - Width / 2;
-                    Top = posY - Height / 2;
+                    Left = pos.X - Width / 2;
+                    Top = pos.Y - Height / 2;
 
-                    int horizontal = RegistryHelp.GetInt("location-horizontal");
-                    int vertical = RegistryHelp.GetInt("location-vertical");
+                    Point location = App.Settings.WindowLocation;
 
-                    if (horizontal == -1) Left = posX;
-                    if (horizontal ==  1) Left = posX - Width;
-                    if (vertical   == -1) Top = posY;
-                    if (vertical   ==  1) Top = posY - Height;
+                    if (location.X == -1) Left = pos.X;
+                    if (location.X ==  1) Left = pos.X - Width;
+                    if (location.Y == -1) Top = pos.Y;
+                    if (location.Y ==  1) Top = pos.Y - Height;
                 }
 
                 if (Core.WindowMaximized)
@@ -273,12 +267,12 @@ namespace mpvnet
             {
                 recent.DropDownItems.Clear();
 
-                foreach (string path in RecentFiles)
+                foreach (string path in App.Settings.RecentFiles)
                     MenuItem.Add(recent.DropDownItems, path, () => Core.LoadFiles(new[] { path }, true, Control.ModifierKeys.HasFlag(Keys.Control)));
                
                 recent.DropDownItems.Add(new ToolStripSeparator());
                 MenuItem mi = new MenuItem("Clear List");
-                mi.Action = () => RecentFiles.Clear();
+                mi.Action = () => App.Settings.RecentFiles.Clear();
                 recent.DropDownItems.Add(mi);
             }
 
@@ -377,12 +371,11 @@ namespace mpvnet
             }
             else
             {
-                int savedHeight = RegistryHelp.GetInt("window-height");
-                int savedWidth  = RegistryHelp.GetInt("window-width");
+                Size windowSize = App.Settings.WindowSize;
 
-                if (App.StartSize == "height-always" && savedHeight != 0)
+                if (App.StartSize == "height-always" && windowSize.Height != 0)
                 {
-                    height = savedHeight;
+                    height = windowSize.Height;
                     width = height * videoSize.Width / videoSize.Height;
                 }
                 else if (App.StartSize == "height-session")
@@ -390,9 +383,9 @@ namespace mpvnet
                     height = autoFitHeight;
                     width = height * videoSize.Width / videoSize.Height;
                 }
-                if (App.StartSize == "width-always" && savedHeight != 0)
+                if (App.StartSize == "width-always" && windowSize.Height != 0)
                 {
-                    width = savedWidth;
+                    width = windowSize.Width;
                     height = (int)Math.Ceiling(width * videoSize.Height / (double)videoSize.Width);
                 }
                 else if (App.StartSize == "width-session")
@@ -400,10 +393,10 @@ namespace mpvnet
                     width = autoFitHeight / 9 * 16;
                     height = (int)Math.Ceiling(width * videoSize.Height / (double)videoSize.Width);
                 }
-                else if (App.StartSize == "always" && savedHeight != 0)
+                else if (App.StartSize == "always" && windowSize.Height != 0)
                 {
-                    height = savedHeight;
-                    width = savedWidth;
+                    height = windowSize.Height;
+                    width = windowSize.Width;
                 }
 
                 Core.WasInitialSizeSet = true;
@@ -495,7 +488,7 @@ namespace mpvnet
             Rectangle workingArea = screen.WorkingArea;
             Rectangle rect = new Rectangle(Left - workingArea.X, Top - workingArea.Y, Width, Height);
 
-            if (workingArea.Width / (float)Width < 1.2)
+            if (workingArea.Width / (float)Width < 1.1)
                 return 0;
 
             if (rect.X * 3 < workingArea.Width - rect.Right)
@@ -512,7 +505,7 @@ namespace mpvnet
             Rectangle workingArea = screen.WorkingArea;
             Rectangle rect = new Rectangle(Left - workingArea.X, Top - workingArea.Y, Width, Height);
 
-            if (workingArea.Height / (float)Height < 1.2)
+            if (workingArea.Height / (float)Height < 1.1)
                 return 0;
 
             if (rect.Y * 3 < workingArea.Height - rect.Bottom)
@@ -619,13 +612,13 @@ namespace mpvnet
                 UpdateProgressBar();
             }));
 
-            if (RecentFiles.Contains(path))
-                RecentFiles.Remove(path);
+            if (App.Settings.RecentFiles.Contains(path))
+                App.Settings.RecentFiles.Remove(path);
 
-            RecentFiles.Insert(0, path);
+            App.Settings.RecentFiles.Insert(0, path);
 
-            while (RecentFiles.Count > App.RecentCount)
-                RecentFiles.RemoveAt(App.RecentCount);
+            while (App.Settings.RecentFiles.Count > App.RecentCount)
+                App.Settings.RecentFiles.RemoveAt(App.RecentCount);
         }
 
         void SetTitle() => BeginInvoke(new Action(() => Text = Core.expand(Title)));
@@ -635,32 +628,25 @@ namespace mpvnet
             if (WindowState == FormWindowState.Normal)
             {
                 SavePosition();
-
-                RegistryHelp.SetInt("window-width", ClientSize.Width);
-                RegistryHelp.SetInt("window-height", ClientSize.Height);
+                App.Settings.WindowSize = ClientSize;
             }
         }
 
         void SavePosition()
         {
-            int posX = Left + Width / 2;
-            int posY = Top + Height / 2;
-
+            Point pos = new Point(Left + Width / 2, Top + Height / 2);
             Screen screen = Screen.FromControl(this);
 
             int x = GetHorizontalLocation(screen);
             int y = GetVerticalLocation(screen);
 
-            if (x == -1) posX = Left;
-            if (x ==  1) posX = Left + Width;
-            if (y == -1) posY = Top;
-            if (y ==  1) posY = Top + Height;
+            if (x == -1) pos.X = Left;
+            if (x ==  1) pos.X = Left + Width;
+            if (y == -1) pos.Y = Top;
+            if (y ==  1) pos.Y = Top + Height;
 
-            RegistryHelp.SetInt("position-x", posX);
-            RegistryHelp.SetInt("position-y", posY);
-            
-            RegistryHelp.SetInt("location-horizontal", x);
-            RegistryHelp.SetInt("location-vertical", y);
+            App.Settings.WindowPosition = pos;
+            App.Settings.WindowLocation = new Point(x, y);
         }
 
         protected override CreateParams CreateParams {
@@ -952,7 +938,6 @@ namespace mpvnet
             App.RunTask(() => App.Extension = new Extension());
             CSharpScriptHost.ExecuteScriptsInFolder(Core.ConfigFolder + "scripts-cs");
             ShownTickCount = Environment.TickCount;
-            App.ShowSetup();
 
             //if (Debugger.IsAttached)
             //{
@@ -1005,7 +990,6 @@ namespace mpvnet
         {
             base.OnFormClosing(e);
             SaveWindowProperties();
-            RegistryHelp.SetValue("recent", RecentFiles.ToArray());
 
             if (Core.IsQuitNeeded)
                 Core.commandv("quit");

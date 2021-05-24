@@ -77,7 +77,7 @@ mpvnet.exe is platform agnostic, users that need x86 have to replace 4 native to
 
 #### File Associations
 
-File Associations can be created using the setup or with the context menu under 'Tools > Setup'.
+File Associations can be created using the context menu under 'Tools > Setup'.
 
 After the file associations were registered, go to the Windows settings under
 'Settings > Apps > Default apps' or shell execute `ms-settings:defaultapps` and choose
@@ -254,7 +254,7 @@ the window AR is set to 16/9. This avoids a square window for Music
 with cover art. Default: 1.2
 
 
-#### --remember-position=\<yes|no\>
+#### --remember-window-position=\<yes|no\>
 
 Save the window position on exit. Default: no
 
