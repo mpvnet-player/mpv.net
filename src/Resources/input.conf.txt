@@ -15,7 +15,7 @@
  # The input key list can be found in the context menu under: View > Show Keys
 
  # mpv.net input.conf defaults:
- # https://github.com/stax76/mpv.net/blob/master/mpv.net/Resources/input.conf.txt
+ # https://github.com/stax76/mpv.net/blob/master/src/Resources/input.conf.txt
 
  # mpv input.conf defaults:
  # https://github.com/mpv-player/mpv/blob/master/etc/input.conf

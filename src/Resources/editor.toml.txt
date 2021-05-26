@@ -608,12 +608,12 @@ options = [{ name = "always" },
 name = "dark-theme"
 file = "mpvnet"
 filter = "UI"
-url = "https://github.com/stax76/mpv.net/blob/master/Manual.md#color-theme"
+url = "https://github.com/stax76/mpv.net/blob/master/docs/Manual.md#color-theme"
 help = "Color theme used in dark mode. Default: dark"
 
 [[settings]]
 name = "light-theme"
 file = "mpvnet"
 filter = "UI"
-url = "https://github.com/stax76/mpv.net/blob/master/Manual.md#color-theme"
+url = "https://github.com/stax76/mpv.net/blob/master/docs/Manual.md#color-theme"
 help = "Color theme used in light mode. Default: light"
