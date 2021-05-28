@@ -18,7 +18,7 @@
     >
     
     <Window.Resources>
-        <Style x:Key="DataGrid_Font_Centering" TargetType="{x:Type DataGridCell}">
+        <Style x:Key="DataGridFontCentering" TargetType="{x:Type DataGridCell}">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type DataGridCell}">
@@ -28,6 +28,19 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+        </Style>
+
+        <LinearGradientBrush x:Key="HeaderBrush" StartPoint="0.5,0" EndPoint="0.5,1">
+            <GradientStop Color="Gray" Offset="0"/>
+            <GradientStop Color="Gray" Offset="1"/>
+            <GradientStop Color="#323232" Offset="0.5"/>
+        </LinearGradientBrush>
+
+        <Style x:Key="HeaderStyle" TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="{StaticResource HeaderBrush}" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="MinHeight" Value="22" />
+            <Setter Property="Cursor" Value="Hand" />
         </Style>
     </Window.Resources>
 
@@ -46,15 +59,27 @@
             />
 
         <DataGrid
-            x:Name="DataGrid"
+            Name="DataGrid"
             Grid.Row="1"
             CommandManager.PreviewCanExecute="DataGrid_PreviewCanExecute"
             AutoGenerateColumns="False"
-            CellStyle="{StaticResource DataGrid_Font_Centering}"
+            ColumnHeaderStyle="{StaticResource HeaderStyle}"
+            Foreground="{Binding Theme.Foreground}"
+            Background="{Binding Theme.Background}"
+            RowBackground="{Binding Theme.Background}"
+            HorizontalGridLinesBrush="{Binding Theme.Foreground}"
+            VerticalGridLinesBrush="{Binding Theme.Foreground}"
+            CellStyle="{StaticResource DataGridFontCentering}"
             >
+
+            <DataGrid.Resources>
+                <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
+                    <Setter Property="Background" Value="{Binding DataContext.Theme.Background, ElementName=DataGrid}" />
+                </Style>
+            </DataGrid.Resources>
             
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Menu"  Binding="{Binding Path}"/>
+                <DataGridTextColumn Header="Menu" Binding="{Binding Path}"/>
                 
                 <DataGridTemplateColumn Header="Input">
                     <DataGridTemplateColumn.CellTemplate>
@@ -65,9 +90,8 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                
+
                 <DataGridTextColumn Header="Command" Binding="{Binding Command}" MaxWidth="330" />
-                
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

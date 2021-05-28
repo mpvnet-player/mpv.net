@@ -42,6 +42,7 @@ namespace mpvnet
             if (SearchControl.SearchTextBox.Text == "?")
             {
                 SearchControl.SearchTextBox.Text = "";
+
                 Msg.ShowInfo("Filtering",
                     "Reduce the filter scope with:" + BR2 +
                     "i input" + BR2 +
@@ -53,9 +54,13 @@ namespace mpvnet
 
         bool Filter(CommandItem item)
         {
-            if (item.Command == "") return false;
+            if (item.Command == "")
+                return false;
+
             string searchText = SearchControl.SearchTextBox.Text.ToLower();
-            if (searchText == "" || searchText == "?") return true;
+
+            if (searchText == "" || searchText == "?")
+                return true;
 
             if (searchText.Length == 1)
                 return item.Input.ToLower().Replace("ctrl+", "").Replace("shift+", "").Replace("alt+", "") == searchText.ToLower();
@@ -74,8 +79,8 @@ namespace mpvnet
             else if (searchText.StartsWith("c ") || searchText.StartsWith("c:"))
                 return item.Command.ToLower().Contains(searchText.Substring(2).Trim());
             else if (item.Command.ToLower().Contains(searchText) ||
-                item.Path.ToLower().Contains(searchText) ||
-                item.Input.ToLower().Contains(searchText))
+                     item.Path.ToLower().Contains(searchText) ||
+                     item.Input.ToLower().Contains(searchText))
             {
                 return true;
             }
@@ -85,7 +90,10 @@ namespace mpvnet
         void ButtonClick(object sender, RoutedEventArgs e)
         {
             CommandItem item = ((Button)e.Source).DataContext as CommandItem;
-            if (item is null) return;
+
+            if (item is null)
+                return;
+
             LearnWindow w = new LearnWindow();
             w.Owner = this;
             w.InputItem = item;
@@ -109,10 +117,12 @@ namespace mpvnet
             foreach (string line in Properties.Resources.input_conf.Split(new[] { "\r\n" }, StringSplitOptions.None))
             {
                 string test = line.Trim();
-                if (test == "" || test.StartsWith("#")) text += test + "\r\n";
+
+                if (test == "" || test.StartsWith("#"))
+                    text += test + BR;
             }
 
-            text = "\r\n" + text.Trim() + "\r\n\r\n";
+            text = BR + text.Trim() + BR2;
 
             foreach (CommandItem item in CommandItem.Items)
             {
@@ -127,8 +137,9 @@ namespace mpvnet
                 if (item.Path.Trim() != "")
                     line = line.PadRight(40) + " #menu: " + item.Path;
 
-                text += line + "\r\n";
+                text += line + BR;
             }
+
             return text;
         }
 

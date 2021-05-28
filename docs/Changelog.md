@@ -3,8 +3,8 @@
 =========================
 
 - `window-scale 1` does not work correctly in mpv,
-  so I've removed support for it and added my own implementation
-  that actually works: `script-message mpv.net window-scale`.
+  so I've removed support for it and added my own implementation:
+  `script-message mpv.net window-scale`.
 - The CS-Script library was replaced with my own C# scripting implementation.
 - If a player window border is near to a screen border and the window size
   changes, the player windows sticks to that near screen border location.
@@ -22,6 +22,7 @@
 - Settings are stored in the file settings.xml now instead of the Registry.
 - Video rotation support added.
 - After using the config editor it's no longer necessary to restart mpv.net.
+- Improved input editor theming. 
 
 
 5.4.8.8 Beta (2021-05-09)
