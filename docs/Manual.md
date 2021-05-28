@@ -20,7 +20,7 @@ Table of contents
 * [Color Theme](#color-theme)
 * [Advanced Features](#advanced-features)
 * [Hidden Features](#hidden-features)
-* [Differences](#differences)
+* [Differences compared to mpv](#differences-compared-to-mpv)
 * [Technical Overview](#technical-overview)
 * [Context Menu Commands](#context-menu)
 
@@ -535,8 +535,8 @@ all files of the folder into the playlist.
 In fullscreen mode clicking the top right corner closes the player.
 
 
-Differences
------------
+Differences compared to mpv
+---------------------------
 
 mpv.net is designed to work exactly like mpv, there are a few limitations:
 
@@ -546,7 +546,8 @@ mpv.net is designed to work exactly like mpv, there are a few limitations:
 mpv.net implements an own main window which means only mpv window
 features are supported that have an own implementation in mpv.net.
 
-A window free mode is currently not supported.
+A window free mode is currently not supported, the main window is always
+visible, even when mpv.net is started from the terminal and music is played.
 
 The documentation of mpvs window features can be found here:
 
@@ -575,8 +576,11 @@ mpv.net has currently implemented the following window features:
 
 ### Command Line Limitations
 
-mpv.net supports only property switches, non property switches cannot be accessed
-from libmpv and therefore need a implementation in mpv.net, implemented so far are:
+mpv.net supports property based mpv command line options which means it supports
+almost all mpv command line options.
+
+What is not supported are non property bases options. Non property based options
+need an own implementation in mpv.net, so far implemented are:
 
 --ad=help  
 --audio-device=help  

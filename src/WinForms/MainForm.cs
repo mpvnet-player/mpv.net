@@ -20,7 +20,7 @@ namespace mpvnet
         public static IntPtr Hwnd { get; set; }
         public new ContextMenuStripEx ContextMenu { get; set; }
         Point LastCursorPosition;
-     
+
         int LastCursorChanged;
         int LastCycleFullscreen;
         int LastAppCommand;
