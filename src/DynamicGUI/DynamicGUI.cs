@@ -1,14 +1,13 @@
 ﻿
-using mpvnet;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Navigation;
 
 using Tommy;
+using mpvnet;
 
 namespace DynamicGUI
 {
@@ -62,10 +61,10 @@ namespace DynamicGUI
                 baseSetting.File = setting["file"];
                 baseSetting.Filter = setting["filter"];
 
-                if (setting.HasKey("help")) baseSetting.Help = setting["help"];
-                if (setting.HasKey("url")) baseSetting.URL = setting["url"];
+                if (setting.HasKey("help"))  baseSetting.Help  = setting["help"];
+                if (setting.HasKey("url"))   baseSetting.URL   = setting["url"];
                 if (setting.HasKey("width")) baseSetting.Width = setting["width"];
-                if (setting.HasKey("type")) baseSetting.Type = setting["type"];
+                if (setting.HasKey("type"))  baseSetting.Type  = setting["type"];
 
                 settingsList.Add(baseSetting);
             }
@@ -75,26 +74,29 @@ namespace DynamicGUI
 
     public class ConfItem
     {
-        public string Name { get; set; } = "";
-        public string Value { get; set; } = "";
         public string Comment { get; set; } = "";
-        public string LineComment { get; set; } = "";
-        public string Section { get; set; } = "";
         public string File { get; set; } = "";
+        public string LineComment { get; set; } = "";
+        public string Name { get; set; } = "";
+        public string Section { get; set; } = "";
+        public string Value { get; set; } = "";
+
         public bool IsSectionItem { get; set; }
         public SettingBase SettingBase { get; set; }
     }
 
     public abstract class SettingBase
     {
-        public string Name { get; set; }
-        public string File { get; set; }
-        public string Value { get; set; }
-        public string Help { get; set; }
         public string Default { get; set; }
-        public string URL { get; set; }
+        public string File { get; set; }
         public string Filter { get; set; }
+        public string Help { get; set; }
+        public string Name { get; set; }
+        public string StartValue { get; set; }
         public string Type { get; set; }
+        public string URL { get; set; }
+        public string Value { get; set; }
+
         public int Width { get; set; }
         public ConfItem ConfItem { get; set; }
     }

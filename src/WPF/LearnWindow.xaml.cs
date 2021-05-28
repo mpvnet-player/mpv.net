@@ -24,7 +24,15 @@ namespace mpvnet
         int VK_LCONTROL = 0xA2;
         int VK_RCONTROL = 0xA3;
 
-        public LearnWindow() => InitializeComponent();
+        public LearnWindow()
+        {
+            InitializeComponent();
+            DataContext = this;
+        }
+
+        public Theme Theme {
+            get => Theme.Current;
+        }
 
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         static extern short GetKeyState(int keyCode);

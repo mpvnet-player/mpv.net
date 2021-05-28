@@ -197,7 +197,9 @@ public class ToolStripRendererEx : ToolStripSystemRenderer
 
     protected override void OnRenderArrow(ToolStripArrowRenderEventArgs e)
     {
-        if (e.Direction == ArrowDirection.Down) throw new NotImplementedException();
+        if (e.Direction == ArrowDirection.Down)
+            throw new NotImplementedException();
+
         float x1 = e.Item.Width - e.Item.Height * 0.6f;
         float y1 = e.Item.Height * 0.25f;
         float x2 = x1 + e.Item.Height * 0.25f;

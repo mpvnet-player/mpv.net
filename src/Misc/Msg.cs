@@ -2,6 +2,8 @@
 using System;
 using System.Windows.Forms;
 
+using static mpvnet.Global;
+
 public class Msg
 {
     public static void ShowInfo(object title, object content = null)
@@ -33,7 +35,7 @@ public class Msg
     public static DialogResult Show(object title, object content, MessageBoxIcon icon,
         MessageBoxButtons buttons = MessageBoxButtons.OK)
     {
-        string msg = (title?.ToString().TrimEx() + "\n\n" + content?.ToString().TrimEx()).Trim();
+        string msg = (title?.ToString().TrimEx() + BR2 + content?.ToString().TrimEx()).Trim();
         return MessageBox.Show(msg, Application.ProductName, buttons, icon);
     }
 }

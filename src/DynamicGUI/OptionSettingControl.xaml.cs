@@ -2,6 +2,8 @@
 using System.Windows;
 using System.Windows.Controls;
 
+using mpvnet;
+
 namespace DynamicGUI
 {
     public partial class OptionSettingControl : UserControl, ISettingControl
@@ -12,6 +14,7 @@ namespace DynamicGUI
         {
             OptionSetting = optionSetting;
             InitializeComponent();
+            DataContext = this;
             TitleTextBox.Text = optionSetting.Name;
 
             if (string.IsNullOrEmpty(optionSetting.Help))
@@ -24,6 +27,10 @@ namespace DynamicGUI
                 LinkTextBlock.Visibility = Visibility.Collapsed;
 
             Link.SetURL(optionSetting.URL);
+        }
+
+        public Theme Theme {
+            get => Theme.Current;
         }
 
         string _SearchableText;

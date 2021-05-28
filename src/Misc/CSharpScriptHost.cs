@@ -10,6 +10,8 @@ using System.Text;
 
 using Microsoft.CSharp;
 
+using static mpvnet.Global;
+
 namespace mpvnet
 {
     class CSharpScriptHost
@@ -66,7 +68,7 @@ namespace mpvnet
                 i.Line + "\n" + "Error Number: " + i.ErrorNumber + "\n" + i.ErrorText);
 
             if (errors.Count() > 0)
-                Terminal.WriteError(string.Join("\n\n", errors), Path.GetFileName(file));
+                Terminal.WriteError(string.Join(BR2, errors), Path.GetFileName(file));
         }
 
         static string GetMD5(string code)

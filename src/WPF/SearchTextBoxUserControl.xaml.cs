@@ -3,6 +3,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
+using mpvnet;
+
 namespace Controls
 {
     public partial class SearchTextBoxUserControl : UserControl
@@ -10,9 +12,17 @@ namespace Controls
         public SearchTextBoxUserControl()
         {
             InitializeComponent();
+            DataContext = this;
         }
 
-        public string Text { get => SearchTextBox.Text; set => SearchTextBox.Text = value; }
+        public Theme Theme {
+            get => Theme.Current;
+        }
+
+        public string Text {
+            get => SearchTextBox.Text;
+            set => SearchTextBox.Text = value;
+        }
 
         string _HintText;
 

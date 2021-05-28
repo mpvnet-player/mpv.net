@@ -94,7 +94,9 @@ namespace RatingExtension // the assembly name must end with 'Extension'!
                 }
             }
             else if (args[1] == "about")
-                MessageBox.Show("This extension writes a rating to the filename of rated videos when mpv.net shuts down.\n\nThe input.conf defaults contain key bindings for this extension to set ratings.",
+                MessageBox.Show($"This extension writes a rating to the filename of rated videos " +
+                    "when mpv.net shuts down." + BR2 +
+                    "The input.conf defaults contain key bindings for this extension to set ratings.",
                     "Rating Extension");
         }
 

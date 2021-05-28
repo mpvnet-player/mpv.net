@@ -35,10 +35,16 @@ namespace mpvnet
             FilterListBox.SelectedItem = SearchControl.Text.TrimEnd(':');
         }
 
+        public Theme Theme {
+            get => Theme.Current;
+        }
+
         void LoadSettings()
         {
             foreach (SettingBase setting in SettingsDefinitions)
             {
+                setting.StartValue = setting.Value;
+
                 if (!FilterStrings.Contains(setting.Filter))
                     FilterStrings.Add(setting.Filter);
 
@@ -47,9 +53,9 @@ namespace mpvnet
                     if (setting.Name == confItem.Name && confItem.Section == "" && !confItem.IsSectionItem)
                     {
                         setting.Value = confItem.Value.Trim('\'', '"');
+                        setting.StartValue = setting.Value;
                         setting.ConfItem = confItem;
                         confItem.SettingBase = setting;
-                        continue;
                     }
                 }
 
@@ -75,7 +81,30 @@ namespace mpvnet
             
             File.WriteAllText(Core.ConfPath, GetContent("mpv"));
             File.WriteAllText(App.ConfPath, GetContent("mpvnet"));
-            Msg.ShowInfo("Changes will be available on next startup.");            
+
+            foreach (SettingBase item in SettingsDefinitions)
+            {
+                if (item.Value != item.StartValue)
+                {
+                    if (item.File == "mpv")
+                    {
+                        Core.ProcessProperty(item.Name, item.Value);
+                        
+                        try
+                        {
+                            Core.set_property_string(item.Name, item.Value, true);
+                        }
+                        catch (Exception ex)
+                        {
+                            App.ShowError(ex.Message);
+                        }
+                    }
+                    else if (item.File == "mpvnet")
+                        App.ProcessProperty(item.Name, item.Value, true);
+                }
+            }
+
+            App.InitTheme();
         }
 
         string GetCompareString()
@@ -90,6 +119,7 @@ namespace mpvnet
 
             string comment = "";
             string section = "";
+
             bool isSectionItem = false;
 
             foreach (string currentLine in File.ReadAllLines(file))
@@ -175,7 +205,7 @@ namespace mpvnet
                 }
                 else if ((item.SettingBase.Value ?? "") != item.SettingBase.Default)
                 {
-                    string value = "";
+                    string value;
 
                     if (item.SettingBase.Type == "string" ||
                         item.SettingBase.Type == "folder" ||
@@ -205,7 +235,7 @@ namespace mpvnet
 
                 if ((setting.Value ?? "") != setting.Default)
                 {
-                    string value = "";
+                    string value;
 
                     if (setting.Type == "string" ||
                         setting.Type == "folder" ||
@@ -300,7 +330,7 @@ namespace mpvnet
             ProcessHelp.ShellExecute("https://mpv.io/manual/master/");
 
         void SupportTextBlock_MouseUp(object sender, MouseButtonEventArgs e) =>
-            ProcessHelp.ShellExecute("https://github.com/stax76/mpv.net#Support");
+            ProcessHelp.ShellExecute("https://github.com/stax76/mpv.net/blob/master/docs/Manual.md#support");
 
         protected override void OnKeyDown(KeyEventArgs e)
         {

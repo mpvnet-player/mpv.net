@@ -13,7 +13,15 @@ namespace mpvnet
 {
     public partial class SetupWindow : Window
     {
-        public SetupWindow() => InitializeComponent();
+        public SetupWindow()
+        {
+            InitializeComponent();
+            DataContext = this;
+        }
+
+        public Theme Theme {
+            get => Theme.Current;
+        }
 
         static BitmapSource _ShieldIcon;
 

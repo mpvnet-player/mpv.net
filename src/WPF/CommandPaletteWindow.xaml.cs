@@ -17,11 +17,16 @@ namespace mpvnet
         public CommandPaletteWindow()
         {
             InitializeComponent();
+            DataContext = this;
             CollectionViewSource collectionViewSource = new CollectionViewSource() { Source = CommandItem.Items };
             CollectionView = collectionViewSource.View;
             var yourCostumFilter = new Predicate<object>(item => Filter((CommandItem)item));
             CollectionView.Filter = yourCostumFilter;
             ListView.ItemsSource = CollectionView;
+        }
+
+        public Theme Theme {
+            get => Theme.Current;
         }
 
         bool Filter(CommandItem item)

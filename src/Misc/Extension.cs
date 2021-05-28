@@ -33,10 +33,10 @@ namespace mpvnet
                         if (knownExtensions.Contains(Path.GetFileName(extDir)))
                             catalog.Catalogs.Add(new DirectoryCatalog(extDir, Path.GetFileName(extDir) + ".dll"));
                         else
-                            Terminal.WriteError("Failed to load extension:\n\n" +  extDir +
-                                "\n\nOnly extensions that ship with mpv.net are allowed in <startup>\\extensions" +
-                                "\n\nUser extensions have to use <config folder>\\extensions" +
-                                "\n\nNever copy or install a new mpv.net version over a old mpv.net version.");
+                            Terminal.WriteError("Failed to load extension:" + BR2 + extDir +
+                                BR2 + "Only extensions that ship with mpv.net are allowed in <startup>\\extensions" +
+                                BR2 + "User extensions have to use <config folder>\\extensions" +
+                                BR2 + "Never copy or install a new mpv.net version over a old mpv.net version.");
                     }
                 }
 

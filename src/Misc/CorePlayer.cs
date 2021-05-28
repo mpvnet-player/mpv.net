@@ -144,12 +144,12 @@ namespace mpvnet
             mpv_error err = mpv_initialize(Handle);
 
             if (err < 0)
-                throw new Exception("mpv_initialize error\n\n" + GetError(err));
+                throw new Exception("mpv_initialize error" + BR2 + GetError(err) + BR);
 
             err = mpv_observe_property(Handle, 0, "video-rotate", mpv_format.MPV_FORMAT_INT64);
 
             if (err < 0)
-                throw new Exception("mpv_observe_property video-rotate error\n\n" + GetError(err));
+                throw new Exception("mpv_observe_property video-rotate error" + BR2 + GetError(err) + BR);
 
             Initialized?.Invoke();
             InvokeAsync(InitializedAsync);
@@ -929,7 +929,7 @@ namespace mpvnet
                     Terminal.WriteError(msg);
 
                 Terminal.WriteError(GetError(err));
-                throw new Exception(string.Join(BR2, messages) + BR2 + GetError(err));
+                throw new Exception(string.Join(BR2, messages) + BR2 + GetError(err) + BR);
             }
         }
 

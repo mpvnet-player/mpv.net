@@ -44,8 +44,8 @@
  _           ignore                 #menu: -
  Enter       cycle fullscreen       #menu: Toggle Fullscreen
  
- F11         playlist-prev          #menu: Navigate > Previous File
- F12         playlist-next          #menu: Navigate > Next File
+ F11         playlist-prev; set pause no #menu: Navigate > Previous File
+ F12         playlist-next; set pause no #menu: Navigate > Next File
  _           ignore                 #menu: Navigate > -
  Home        script-message mpv.net playlist-first #menu: Navigate > First File
  End         script-message mpv.net playlist-last  #menu: Navigate > Last File

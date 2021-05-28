@@ -19,9 +19,9 @@
   open source code however. Example scripts and extensions were updated.
 - Fix console not working due to incorrect mpv.conf value generated
   (script-opts=console-scale=0).
-- Registry usage is not portable and also not popular, so settings
-  are stored in the file settings.xml now instead of the Registry.
+- Settings are stored in the file settings.xml now instead of the Registry.
 - Video rotation support added.
+- After using the config editor it's no longer necessary to restart mpv.net.
 
 
 5.4.8.8 Beta (2021-05-09)

@@ -26,7 +26,6 @@ namespace mpvnet
         public static bool AutoLoadFolder { get; set; } = true;
         public static bool Queue { get; set; }
         public static bool UpdateCheck { get; set; }
-        public static bool GlobalMediaKeys { get; set; }
 
         public static int StartThreshold { get; set; } = 1500;
         public static int RecentCount { get; set; } = 15;
@@ -52,8 +51,8 @@ namespace mpvnet
 
         public static void Init()
         {
-            string dummy = Core.ConfigFolder;
-            var dummy2 = Core.Conf;
+            var useless1 = Core.ConfigFolder;
+            var useless2 = Core.Conf;
 
             foreach (var i in Conf)
                 ProcessProperty(i.Key, i.Value, true);
@@ -79,6 +78,14 @@ namespace mpvnet
                 }
             }
 
+            InitTheme();
+
+            Core.Shutdown += Shutdown;
+            Core.Initialized += Initialized;
+        }
+
+        public static void InitTheme()
+        {
             string themeContent = null;
 
             if (File.Exists(Core.ConfigFolder + "theme.conf"))
@@ -89,8 +96,11 @@ namespace mpvnet
                 Properties.Resources.theme,
                 IsDarkMode ? DarkTheme : LightTheme);
 
-            Core.Shutdown += Shutdown;
-            Core.Initialized += Initialized;
+            ToolStripRendererEx.ForegroundColor = Theme.Current.GetWinFormsColor("menu-foreground");
+            ToolStripRendererEx.BackgroundColor = Theme.Current.GetWinFormsColor("menu-background");
+            ToolStripRendererEx.SelectionColor  = Theme.Current.GetWinFormsColor("menu-highlight");
+            ToolStripRendererEx.BorderColor     = Theme.Current.GetWinFormsColor("menu-border");
+            ToolStripRendererEx.CheckedColor    = Theme.Current.GetWinFormsColor("menu-checked");
         }
 
         public static void RunTask(Action action)

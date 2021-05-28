@@ -18,6 +18,11 @@ namespace mpvnet
         public EverythingWindow()
         {
             InitializeComponent();
+            DataContext = this;
+        }
+
+        public Theme Theme { 
+            get => Theme.Current;
         }
 
         const int EVERYTHING_REQUEST_FILE_NAME = 0x00000001;

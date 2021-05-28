@@ -1,9 +1,11 @@
 ﻿
+using mpvnet;
 using System;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+
 using WinForms = System.Windows.Forms;
 
 namespace DynamicGUI
@@ -16,6 +18,7 @@ namespace DynamicGUI
         {
             StringSetting = stringSetting;
             InitializeComponent();
+            DataContext = this;
             TitleTextBox.Text = stringSetting.Name;
             HelpTextBox.Text = stringSetting.Help;
             ValueTextBox.Text = StringSetting.Value;
@@ -30,6 +33,10 @@ namespace DynamicGUI
 
             if (string.IsNullOrEmpty(stringSetting.URL))
                 LinkTextBlock.Visibility = Visibility.Collapsed;
+        }
+
+        public Theme Theme {
+            get => Theme.Current;
         }
 
         string _SearchableText;

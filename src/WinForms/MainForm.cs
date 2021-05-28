@@ -33,7 +33,6 @@ namespace mpvnet
         public MainForm()
         {
             InitializeComponent();
-            SetColors();
 
             try
             {
@@ -943,15 +942,6 @@ namespace mpvnet
             //if (Debugger.IsAttached)
             //{
             //}
-        }
-
-        static void SetColors()
-        {
-            ToolStripRendererEx.ForegroundColor = Theme.Current.GetWinFormsColor("menu-foreground");
-            ToolStripRendererEx.BackgroundColor = Theme.Current.GetWinFormsColor("menu-background");
-            ToolStripRendererEx.SelectionColor = Theme.Current.GetWinFormsColor("menu-highlight");
-            ToolStripRendererEx.BorderColor = Theme.Current.GetWinFormsColor("menu-border");
-            ToolStripRendererEx.CheckedColor = Theme.Current.GetWinFormsColor("menu-checked");
         }
 
         protected override void OnResize(EventArgs e)

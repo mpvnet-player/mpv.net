@@ -20,6 +20,7 @@ namespace mpvnet
         public InputWindow()
         {
             InitializeComponent();
+            DataContext = this;
             InitialInputConfContent = GetInputConfContent();
             SearchControl.SearchTextBox.TextChanged += SearchTextBox_TextChanged;
             DataGrid.SelectionMode = DataGridSelectionMode.Single;
@@ -30,6 +31,10 @@ namespace mpvnet
             DataGrid.ItemsSource = CollectionView;
         }
 
+        public Theme Theme {
+            get => Theme.Current;
+        }
+
         void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             CollectionView.Refresh();
@@ -38,7 +43,10 @@ namespace mpvnet
             {
                 SearchControl.SearchTextBox.Text = "";
                 Msg.ShowInfo("Filtering",
-                    "Reduce the filter scope with:\n\ni input\n\nm menu\n\nc command\n\n" +
+                    "Reduce the filter scope with:" + BR2 +
+                    "i input" + BR2 +
+                    "m menu" + BR2 +
+                    "c command" + BR2 +
                     "If only one character is entered input search is performed.");
             }
         }
@@ -87,7 +95,7 @@ namespace mpvnet
 
             foreach (CommandItem i in CommandItem.Items)
                 if (items.ContainsKey(i.Input) && i.Input != "")
-                    Msg.ShowInfo($"Duplicate found:\n\n{i.Input}: {i.Path}\n\n{items[i.Input].Input}: {items[i.Input].Path}\n\nPlease note that you can chain multiple commands in the same line by using a semicolon as separator.", "Duplicate Found");
+                    Msg.ShowInfo($"Duplicate found:{BR2 + i.Input}: {i.Path + BR2}{items[i.Input].Input}: {items[i.Input].Path + BR2}Please note that you can chain multiple commands in the same line by using a semicolon as separator.", "Duplicate Found");
                 else
                     items[i.Input] = i;
         }
