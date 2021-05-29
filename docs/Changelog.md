@@ -1,6 +1,6 @@
 
-5.4.9.0 Beta (2021-05-??)
-=========================
+5.4.9.0 (2021-05-29)
+====================
 
 - `window-scale 1` does not work correctly in mpv,
   so I've removed support for it and added my own implementation:

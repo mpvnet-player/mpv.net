@@ -37,27 +37,19 @@ if ($versionInfo.FilePrivatePart -eq 0)
     Copy-Item $PSScriptRoot\bin $targetDir -Recurse -Exclude 'System.Management.Automation.xml', 'settings-directory.txt'
     & $7z a -tzip -mx9 "$targetDir.zip" -r "$targetDir\*"
     if ($LastExitCode) { throw $LastExitCode }
-
-    Set-Clipboard ($versionInfo.FileVersion + "`n`nChangelog:`n`n" +
-        'https://github.com/stax76/mpv.net/blob/master/Changelog.md' + "`n`nDownload:`n`n" +
-        'https://github.com/stax76/mpv.net/blob/master/Manual.md#stable')
 }
 else
 {
     $targetDir = "$tmpDir\mpv.net-$($versionInfo.FileVersion)-portable-beta"
     Copy-Item $PSScriptRoot\bin $targetDir -Recurse -Exclude 'System.Management.Automation.xml', 'settings-directory.txt'
-    & $7z a -t7z -mx9 "$targetDir.7z" -r "$targetDir\*"
+    & $7z a -tzip -mx9 "$targetDir.zip" -r "$targetDir\*"
     if ($LastExitCode) { throw $LastExitCode }
-    UploadBeta "$targetDir.7z"
+    UploadBeta "$targetDir.zip"
 
     foreach ($cloudDirectory in $cloudDirectories)
     {
         Invoke-Item $cloudDirectory
     }
-
-    Set-Clipboard ($versionInfo.FileVersion + " Beta`n`nChangelog:`n`n" +
-        'https://github.com/stax76/mpv.net/blob/master/Changelog.md' + "`n`nDownload:`n`n" +
-        'https://github.com/stax76/mpv.net/blob/master/Manual.md#beta')
 }
 
 Write-Host 'successfully finished' -ForegroundColor Green

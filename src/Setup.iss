@@ -23,7 +23,7 @@ Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
 
 [Files]
 Source: "{#MyAppSourceDir}\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppSourceDir}\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs;
+Source: "{#MyAppSourceDir}\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs; Excludes: "System.Management.Automation.xml,settings-directory.txt"
 
 [UninstallRun]
 Filename: "powershell.exe"; Flags: runhidden; Parameters: "-NoProfile -ExecutionPolicy Bypass -File ""{app}\Setup\remove file associations.ps1"""
