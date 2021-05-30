@@ -53,15 +53,14 @@ namespace mpvnet
                 case "update-check": UpdateCheck.CheckOnline(true); break;
                 case "window-scale": WindowScale(float.Parse(args[0], CultureInfo.InvariantCulture)); break;
 
-                default: App.ShowError($"No command '{id}' found."); break;
+                default: Terminal.WriteError($"No command '{id}' found."); break;
             }
         }
 
-        public static void InvokeOnMainThread(Action action) => MainForm.Instance.BeginInvoke(action);
 
         public static void ShowDialog(Type winType)
         {
-            InvokeOnMainThread(new Action(() => {
+            App.InvokeOnMainThread(new Action(() => {
                 Window win = Activator.CreateInstance(winType) as Window;
                 new WindowInteropHelper(win).Owner = MainForm.Instance.Handle;
                 win.ShowDialog();
@@ -79,7 +78,7 @@ namespace mpvnet
                 if (arg == "no-folder") loadFolder = false;
             }
 
-            InvokeOnMainThread(new Action(() => {
+            App.InvokeOnMainThread(new Action(() => {
                 using (var d = new OpenFileDialog() { Multiselect = true })
                     if (d.ShowDialog() == DialogResult.OK)
                         Core.LoadFiles(d.FileNames, loadFolder, append);
@@ -88,7 +87,7 @@ namespace mpvnet
 
         public static void Open_DVD_Or_BD_Folder()
         {
-            InvokeOnMainThread(new Action(() => {
+            App.InvokeOnMainThread(new Action(() => {
                 using (var dialog = new FolderBrowserDialog())
                 {
                     dialog.Description = "Select a DVD or Blu-ray folder.";
@@ -230,7 +229,7 @@ namespace mpvnet
         
         public static void OpenURL()
         {
-            InvokeOnMainThread(new Action(() => {
+            App.InvokeOnMainThread(new Action(() => {
                 string clipboard = System.Windows.Forms.Clipboard.GetText();
 
                 if (string.IsNullOrEmpty(clipboard) || (!clipboard.Contains("://") && !File.Exists(clipboard)) ||
@@ -246,7 +245,7 @@ namespace mpvnet
 
         public static void LoadSubtitle()
         {
-            InvokeOnMainThread(new Action(() => {
+            App.InvokeOnMainThread(new Action(() => {
                 using (var d = new OpenFileDialog())
                 {
                     string path = Core.get_property_string("path");
@@ -265,7 +264,7 @@ namespace mpvnet
 
         public static void LoadAudio()
         {
-            InvokeOnMainThread(new Action(() => {
+            App.InvokeOnMainThread(new Action(() => {
                 using (var d = new OpenFileDialog())
                 {
                     string path = Core.get_property_string("path");

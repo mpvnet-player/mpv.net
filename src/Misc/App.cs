@@ -137,6 +137,8 @@ namespace mpvnet
             }
         }
 
+        public static void InvokeOnMainThread(Action action) => MainForm.Instance.BeginInvoke(action);
+
         public static void ShowError(string title, string msg = null)
         {
             if (IsStartedFromTerminal)
@@ -148,7 +150,7 @@ namespace mpvnet
                     Terminal.WriteError(msg);
             }
             else
-                Msg.ShowError(title, msg);
+                InvokeOnMainThread(() => Msg.ShowError(title, msg));
         }
 
         static void Initialized()
