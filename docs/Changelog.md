@@ -1,4 +1,10 @@
 
+5.4.9.1 (2021-0?-??)
+====================
+
+- New media info command: Ctrl+m script-message mpv.net show-media-info #menu: View > Show Media Info
+
+
 5.4.9.0 (2021-05-29)
 ====================
 

@@ -2,6 +2,7 @@
 using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -11,6 +12,19 @@ using static mpvnet.Global;
 
 namespace mpvnet
 {
+    public static class FileHelp
+    {
+        public static void Delete(string path)
+        {
+            try {
+                if (File.Exists(path))
+                    File.Delete(path);
+            } catch (Exception ex) {
+                Terminal.WriteError("Failed to delete file:" + BR + path + BR + ex.Message);
+            }
+        }
+    }
+
     public static class ProcessHelp
     {
         public static void Execute(string file, string arguments = null)

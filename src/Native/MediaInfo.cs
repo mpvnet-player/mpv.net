@@ -41,6 +41,13 @@ public class MediaInfo : IDisposable
             stream, parameter, MediaInfoKind.Text, MediaInfoKind.Name));
     }
 
+    public string GetSummary(bool complete, bool rawView)
+    {
+        MediaInfo_Option(Handle, "Language", rawView ? "raw" : "");
+        MediaInfo_Option(Handle, "Complete", complete ? "1" : "0");
+        return Marshal.PtrToStringUni(MediaInfo_Inform(Handle, 0)) ?? "";
+    }
+
     bool Disposed;
 
     public void Dispose()

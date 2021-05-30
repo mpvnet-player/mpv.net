@@ -12,6 +12,8 @@ namespace mpvnet
 {
     public static class App
     {
+        public static List<string> TempFiles { get; } = new List<string>();
+
         public static string ConfPath { get => Core.ConfigFolder + "mpvnet.conf"; }
         public static string ProcessInstance { get; set; } = "single";
         public static string DarkMode { get; set; } = "always";
@@ -164,6 +166,9 @@ namespace mpvnet
             Settings.Mute = Core.get_property_string("mute");
 
             SettingsManager.Save(Settings);
+
+            foreach (string file in TempFiles)
+                FileHelp.Delete(file);
         }
 
         static Dictionary<string, string> _Conf;

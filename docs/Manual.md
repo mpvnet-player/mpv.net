@@ -60,9 +60,13 @@ Download
 Installation
 ------------
 
-mpv.net requires the .NET Framework 4.8 and Windows 7 or 10 and a modern graphics card.
+mpv.net requires the .NET Framework 4.8 and Windows 7 or higher and a modern graphics card.
 
 There is a setup exe and a portable zip file download.
+
+An old version should be uninstalled before installing a new version,
+it's generally not a good idea to install a new version on top of an old version,
+the setup don't enforce it because it's not easy to implement.
 
 For internet streaming youtube-dl must be downloaded and installed manually,
 meaning it must be located in the PATH environment variable or in the startup directory.

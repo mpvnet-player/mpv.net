@@ -8,15 +8,13 @@ using System.Windows.Forms;
 using System.Windows.Interop;
 using System.Windows;
 
-using VB = Microsoft.VisualBasic;
-
 using static mpvnet.Global;
 
 namespace mpvnet
 {
     public class Commands
     {
-        public static void Execute(string id, string[] args = null)
+        public static void Execute(string id, string[] args)
         {
             switch (id)
             {
@@ -44,8 +42,9 @@ namespace mpvnet
                 case "show-info": ShowInfo(); break;
                 case "show-input-editor": ShowDialog(typeof(InputWindow)); break;
                 case "show-keys": ShowTextWithEditor("input-key-list", Core.get_property_string("input-key-list").Replace(",", BR)); break;
+                case "show-media-info": ShowMediaInfo(args); break;
                 case "show-media-search": ShowDialog(typeof(EverythingWindow)); break;
-                case "show-playlist": ShowPlaylist(); break;
+                case "show-playlist": ShowPlaylist(args); break;
                 case "show-profiles": ShowTextWithEditor("profile-list", mpvHelp.GetProfiles()); break;
                 case "show-properties": ShowProperties(); break;
                 case "show-protocols": ShowTextWithEditor("protocol-list", mpvHelp.GetProtocols()); break;
@@ -54,7 +53,7 @@ namespace mpvnet
                 case "update-check": UpdateCheck.CheckOnline(true); break;
                 case "window-scale": WindowScale(float.Parse(args[0], CultureInfo.InvariantCulture)); break;
 
-                default: Msg.ShowError($"No command '{id}' found."); break;
+                default: App.ShowError($"No command '{id}' found."); break;
             }
         }
 
@@ -338,7 +337,8 @@ namespace mpvnet
 
         public static void ShowTextWithEditor(string name, string text)
         {
-            string file = Path.GetTempPath() + $"\\{name}.txt";
+            string file = Path.Combine(Path.GetTempPath(), name + ".txt");
+            App.TempFiles.Add(file);
             File.WriteAllText(file, BR + text.Trim() + BR);
             ProcessHelp.ShellExecute(file);
         }
@@ -362,12 +362,12 @@ namespace mpvnet
                 "}${osd-ass-cc/1}" + text + "\" " + duration);
         }
 
-        public static void ShowPlaylist(string[] args = null)
+        public static void ShowPlaylist(string[] args)
         {
             int duration = 5000;
 
-            if (args?.Length == 1)
-                duration = Convert.ToInt32(args[0]);
+            if (args.Length == 1 && int.TryParse(args[0], out int result))
+                duration = result;
 
             var size = Core.get_property_number("osd-font-size");
             Core.set_property_number("osd-font-size", 40);
@@ -377,6 +377,22 @@ namespace mpvnet
                 Thread.Sleep(6000);
                 Core.set_property_number("osd-font-size", size);
             });
+        }
+
+        public static void ShowMediaInfo(string[] args)
+        {
+            string path = Core.GetPropertyString("path");
+
+            if (File.Exists(path))
+            {
+                using (MediaInfo mediaInfo = new MediaInfo(path))
+                {
+                    bool full = args.Contains("full");
+                    bool raw = args.Contains("raw");
+                    string text = mediaInfo.GetSummary(full, raw);
+                    ShowTextWithEditor(Path.GetFileName(path), text);
+                }
+            }
         }
     }
 }

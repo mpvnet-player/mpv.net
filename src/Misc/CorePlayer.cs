@@ -762,6 +762,11 @@ namespace mpvnet
                 HandleError(err, throwException, $"error setting property: {name} = {value}");
         }
 
+        public string GetPropertyString(string name, bool throwException = false)
+        {
+            return get_property_string(name, throwException);
+        }
+
         public string get_property_string(string name, bool throwException = false)
         {
             mpv_error err = mpv_get_property(Handle, GetUtf8Bytes(name),

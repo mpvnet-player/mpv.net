@@ -77,8 +77,5 @@ class Script
             Dic[path] = rating;
             Core.commandv("show-text", "Rating: " + rating);
         }
-        else if (args[1] == "about")
-            MessageBox.Show("This extension writes a rating to the filename of rated videos when mpv.net shuts down.",
-                "Rating Extension");
     }
 }
