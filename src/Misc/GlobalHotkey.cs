@@ -46,10 +46,10 @@ namespace mpvnet
             {
                 string umod = parts[i].ToUpper();
 
-                if (umod == "ALT") mod |= KeyModifiers.Alt;
-                if (umod == "CTRL") mod |= KeyModifiers.Ctrl;
+                if (umod == "ALT")   mod |= KeyModifiers.Alt;
+                if (umod == "CTRL")  mod |= KeyModifiers.Ctrl;
                 if (umod == "SHIFT") mod |= KeyModifiers.Shift;
-                if (umod == "WIN") mod |= KeyModifiers.Win;
+                if (umod == "WIN")   mod |= KeyModifiers.Win;
             }
 
             key = parts[parts.Length - 1];

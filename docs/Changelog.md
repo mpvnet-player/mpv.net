@@ -3,6 +3,7 @@
 ====================
 
 - New media info command: Ctrl+m script-message mpv.net show-media-info #menu: View > Show Media Info
+- Context menu font render quality fix.
 
 
 5.4.9.0 (2021-05-29)

@@ -158,8 +158,6 @@ public class ToolStripRendererEx : ToolStripSystemRenderer
 
     protected override void OnRenderItemText(ToolStripItemTextRenderEventArgs e)
     {
-        e.Graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
-
         if (e.Item is ToolStripMenuItem && !(e.Item.Owner is MenuStrip))
         {
             Rectangle rect = e.TextRectangle;
@@ -186,7 +184,6 @@ public class ToolStripRendererEx : ToolStripSystemRenderer
 
         if (e.Item.Selected && e.Item.Enabled)
         {
-            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
             rect = new Rectangle(rect.X + 2, rect.Y, rect.Width - 4, rect.Height - 1);
             rect.Inflate(-1, -1);
 
@@ -206,7 +203,8 @@ public class ToolStripRendererEx : ToolStripSystemRenderer
         float y2 = e.Item.Height / 2f;
         float x3 = x1;
         float y3 = e.Item.Height * 0.75f;
-        e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
+
+        e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
         using (Brush brush = new SolidBrush(ForegroundColor))
         {
