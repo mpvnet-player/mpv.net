@@ -92,12 +92,13 @@ namespace mpvnet
         public AutoResetEvent ShutdownAutoResetEvent  { get; } = new AutoResetEvent(false);
         public AutoResetEvent VideoSizeAutoResetEvent { get; } = new AutoResetEvent(false);
 
-        public string Aid { get; set; } = "";
         public string ConfPath { get => ConfigFolder + "mpv.conf"; }
         public string GPUAPI { get; set; } = "auto";
         public string InputConfPath { get => ConfigFolder + "input.conf"; }
-        public string Sid { get; set; } = "";
-        public string Vid { get; set; } = "";
+        
+        public string VID { get; set; } = "";
+        public string AID { get; set; } = "";
+        public string SID { get; set; } = "";
 
         public bool Border { get; set; } = true;
         public bool Fullscreen { get; set; }
@@ -1293,12 +1294,11 @@ namespace mpvnet
             lock (MediaTracks)
             {
                 MediaTracks.Clear();
+                int trackListCount = Core.get_property_int("track-list/count");
 
                 if (path.ToLowerEx().Contains("://"))
                 {
-                    int count = Core.get_property_int("track-list/count");
-
-                    for (int i = 0; i < count; i++)
+                    for (int i = 0; i < trackListCount; i++)
                     {
                         string type = Core.get_property_string($"track-list/{i}/type");
 
@@ -1328,9 +1328,9 @@ namespace mpvnet
                 {
                     using (MediaInfo mi = new MediaInfo(path))
                     {
-                        int count = mi.GetCount(MediaInfoStreamKind.Video);
+                        int videoCount = mi.GetCount(MediaInfoStreamKind.Video);
 
-                        for (int i = 0; i < count; i++)
+                        for (int i = 0; i < videoCount; i++)
                         {
                             MediaTrack track = new MediaTrack();
                             Add(track, mi.GetVideo(i, "Format"));
@@ -1347,9 +1347,9 @@ namespace mpvnet
                             MediaTracks.Add(track);
                         }
 
-                        count = mi.GetCount(MediaInfoStreamKind.Audio);
+                        int audioCount = mi.GetCount(MediaInfoStreamKind.Audio);
 
-                        for (int i = 0; i < count; i++)
+                        for (int i = 0; i < audioCount; i++)
                         {
                             MediaTrack track = new MediaTrack();
                             Add(track, mi.GetAudio(i, "Language/String"));
@@ -1367,9 +1367,27 @@ namespace mpvnet
                             MediaTracks.Add(track);
                         }
 
-                        count = mi.GetCount(MediaInfoStreamKind.Text);
+                        for (int i = 0; i < trackListCount; i++)
+                        {
+                            string type     = Core.get_property_string($"track-list/{i}/type");
+                            string external = Core.get_property_string($"track-list/{i}/external");
 
-                        for (int i = 0; i < count; i++)
+                            if (type == "audio" && external == "yes")
+                            {
+                                MediaTrack track = new MediaTrack();
+                                Add(track, GetLanguage(Core.get_property_string($"track-list/{i}/lang")));
+                                Add(track, Core.get_property_string($"track-list/{i}/codec").ToUpperEx());
+                                Add(track, Core.get_property_int($"track-list/{i}/audio-channels") + " channels");
+                                track.Text = "A: " + (track.Text.Trim(' ', ',') + ", External").Trim(' ', ',');
+                                track.Type = "a";
+                                track.ID = Core.get_property_int($"track-list/{i}/id");
+                                MediaTracks.Add(track);
+                            }
+                        }
+
+                        int subCount = mi.GetCount(MediaInfoStreamKind.Text);
+
+                        for (int i = 0; i < subCount; i++)
                         {
                             MediaTrack track = new MediaTrack();
                             Add(track, mi.GetText(i, "Language/String"));
@@ -1384,9 +1402,25 @@ namespace mpvnet
                             MediaTracks.Add(track);
                         }
 
-                        count = get_property_int("edition-list/count");
+                        for (int i = 0; i < trackListCount; i++)
+                        {
+                            string type     = Core.get_property_string($"track-list/{i}/type");
+                            string external = Core.get_property_string($"track-list/{i}/external");
 
-                        for (int i = 0; i < count; i++)
+                            if (type == "sub" && external == "yes")
+                            {
+                                MediaTrack track = new MediaTrack();
+                                Add(track, GetLanguage(Core.get_property_string($"track-list/{i}/lang")));
+                                track.Text = "S: " + (track.Text.Trim(' ', ',') + ", External").Trim(' ', ',');
+                                track.Type = "s";
+                                track.ID = Core.get_property_int($"track-list/{i}/id");
+                                MediaTracks.Add(track);
+                            }
+                        }
+
+                        int editionCount = get_property_int("edition-list/count");
+
+                        for (int i = 0; i < editionCount; i++)
                         {
                             MediaTrack track = new MediaTrack();
                             track.Text = "E: " + get_property_string($"edition-list/{i}/title");

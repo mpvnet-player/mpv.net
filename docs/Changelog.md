@@ -4,6 +4,7 @@
 
 - New media info command: Ctrl+m script-message mpv.net show-media-info #menu: View > Show Media Info
 - Context menu font render quality fix.
+- Context menu and cycle-audio command support external audio and subtitle tracks.
 
 
 5.4.9.0 (2021-05-29)

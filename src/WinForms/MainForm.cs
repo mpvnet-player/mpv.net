@@ -196,7 +196,7 @@ namespace mpvnet
                     {
                         MenuItem mi = new MenuItem(track.Text);
                         mi.Action = () => Core.commandv("set", "vid", track.ID.ToString());
-                        mi.Checked = Core.Vid == track.ID.ToString();
+                        mi.Checked = Core.VID == track.ID.ToString();
                         trackMenuItem.DropDownItems.Add(mi);
                     }
 
@@ -207,7 +207,7 @@ namespace mpvnet
                     {
                         MenuItem mi = new MenuItem(track.Text);
                         mi.Action = () => Core.commandv("set", "aid", track.ID.ToString());
-                        mi.Checked = Core.Aid == track.ID.ToString();
+                        mi.Checked = Core.AID == track.ID.ToString();
                         trackMenuItem.DropDownItems.Add(mi);
                     }
 
@@ -218,7 +218,7 @@ namespace mpvnet
                     {
                         MenuItem mi = new MenuItem(track.Text);
                         mi.Action = () => Core.commandv("set", "sid", track.ID.ToString());
-                        mi.Checked = Core.Sid == track.ID.ToString();
+                        mi.Checked = Core.SID == track.ID.ToString();
                         trackMenuItem.DropDownItems.Add(mi);
                     }
 
@@ -226,7 +226,7 @@ namespace mpvnet
                     {
                         MenuItem mi = new MenuItem("S: No subtitles");
                         mi.Action = () => Core.commandv("set", "sid", "no");
-                        mi.Checked = Core.Sid == "no";
+                        mi.Checked = Core.SID == "no";
                         trackMenuItem.DropDownItems.Add(mi);
                     }
 
@@ -831,11 +831,11 @@ namespace mpvnet
 
         void PropChangeOnTop(bool value) => BeginInvoke(new Action(() => TopMost = value));
 
-        void PropChangeAid(string value) => Core.Aid = value;
+        void PropChangeAid(string value) => Core.AID = value;
 
-        void PropChangeSid(string value) => Core.Sid = value;
+        void PropChangeSid(string value) => Core.SID = value;
 
-        void PropChangeVid(string value) => Core.Vid = value;
+        void PropChangeVid(string value) => Core.VID = value;
 
         void PropChangeTitle(string value) { Title = value; SetTitle(); }
         

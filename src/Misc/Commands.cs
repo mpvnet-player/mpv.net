@@ -57,7 +57,6 @@ namespace mpvnet
             }
         }
 
-
         public static void ShowDialog(Type winType)
         {
             App.InvokeOnMainThread(new Action(() => {
