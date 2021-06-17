@@ -388,6 +388,8 @@ https://www.unifiedremote.com/tutorials/how-to-create-a-custom-keyboard-shortcut
 
 https://www.unifiedremote.com/tutorials/how-to-install-a-custom-remote
 
+[My config](./Universal%20Remote)
+
 
 Scripting
 ---------
