@@ -82,8 +82,8 @@ namespace mpvnet
 
             InitTheme();
 
-            Core.Shutdown += Shutdown;
-            Core.Initialized += Initialized;
+            Core.Shutdown += Core_Shutdown;
+            Core.Initialized += Core_Initialized;
         }
 
         public static void InitTheme()
@@ -153,7 +153,7 @@ namespace mpvnet
                 InvokeOnMainThread(() => Msg.ShowError(title, msg));
         }
 
-        static void Initialized()
+        static void Core_Initialized()
         {
             if (RememberVolume)
             {
@@ -162,7 +162,7 @@ namespace mpvnet
             }
         }
 
-        static void Shutdown()
+        static void Core_Shutdown()
         {
             Settings.Volume = Core.get_property_int("volume");
             Settings.Mute = Core.get_property_string("mute");

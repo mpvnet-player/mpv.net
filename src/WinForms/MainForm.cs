@@ -40,12 +40,12 @@ namespace mpvnet
                 Hwnd = Handle;
                 Core.Init();
 
-                Core.Shutdown += Shutdown;
-                Core.VideoSizeChanged += VideoSizeChanged;
-                Core.ScaleWindow += ScaleWindow;
-                Core.WindowScale += WindowScale;
-                Core.FileLoaded += FileLoaded;
-                Core.Idle += Idle;
+                Core.Shutdown += Core_Shutdown;
+                Core.VideoSizeChanged += Core_VideoSizeChanged;
+                Core.ScaleWindow += Core_ScaleWindow;
+                Core.WindowScale += Core_WindowScale;
+                Core.FileLoaded += Core_FileLoaded;
+                Core.Idle += Core_Idle;
                 Core.Seek += () => UpdateProgressBar();
 
                 Core.observe_property("window-maximized", PropChangeWindowMaximized);
@@ -129,7 +129,7 @@ namespace mpvnet
             }
         }
 
-        void ScaleWindow(float scale) {
+        void Core_ScaleWindow(float scale) {
             BeginInvoke(new Action(() => {
                 int w = (int)(ClientSize.Width * scale);
                 int h = (int)Math.Ceiling(w * Core.VideoSize.Height / (double)Core.VideoSize.Width);
@@ -137,7 +137,7 @@ namespace mpvnet
             }));
         }
 
-        void WindowScale(float scale)
+        void Core_WindowScale(float scale)
         {
             BeginInvoke(new Action(() => {
                 SetSize(
@@ -150,15 +150,15 @@ namespace mpvnet
 
         public MenuItem FindMenuItem(string text) => FindMenuItem(text, ContextMenu.Items);
 
-        void Shutdown() => BeginInvoke(new Action(() => Close()));
+        void Core_Shutdown() => BeginInvoke(new Action(() => Close()));
 
-        void Idle() => SetTitle();
+        void Core_Idle() => SetTitle();
 
         bool WasShown() => ShownTickCount != 0 && Environment.TickCount > ShownTickCount + 500;
 
         void CM_Popup(object sender, EventArgs e) => CursorHelp.Show();
 
-        void VideoSizeChanged() => BeginInvoke(new Action(() => SetFormPosAndSize()));
+        void Core_VideoSizeChanged() => BeginInvoke(new Action(() => SetFormPosAndSize()));
 
         void PropChangeFullscreen(bool value) => BeginInvoke(new Action(() => CycleFullscreen(value)));
 
@@ -403,7 +403,6 @@ namespace mpvnet
             }
 
             SetSize(width, height, screen, checkAutofit);
-            SaveWindowProperties();
         }
 
         void SetSize(int width, int height, Screen screen, bool checkAutofit = true)
@@ -593,7 +592,7 @@ namespace mpvnet
             }
         }
 
-        void FileLoaded()
+        void Core_FileLoaded()
         {
             string path = Core.get_property_string("path");
 
@@ -938,15 +937,12 @@ namespace mpvnet
             App.RunTask(() => App.Extension = new Extension());
             CSharpScriptHost.ExecuteScriptsInFolder(Core.ConfigFolder + "scripts-cs");
             ShownTickCount = Environment.TickCount;
-
-            //if (Debugger.IsAttached)
-            //{
-            //}
         }
 
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
+            SaveWindowProperties();
 
             if (Core.IsLogoVisible)
                 Core.ShowLogo();
@@ -1002,6 +998,12 @@ namespace mpvnet
 
             if (Width - e.Location.X < 10 && e.Location.Y < 10)
                 Core.commandv("quit");
+        }
+
+        protected override void OnMove(EventArgs e)
+        {
+            base.OnMove(e);
+            SaveWindowProperties();
         }
 
         protected override void OnDragEnter(DragEventArgs e)

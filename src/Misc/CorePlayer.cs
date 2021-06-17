@@ -68,7 +68,6 @@ namespace mpvnet
 
         public event Action Initialized;
         public event Action InitializedAsync;
-        
         public event Action VideoSizeChanged;
         public event Action VideoSizeChangedAsync;
         public event Action<float> ScaleWindow;
@@ -348,8 +347,6 @@ namespace mpvnet
 
                 if (WindowHandle == IntPtr.Zero)
                     WindowHandle = Native.FindWindowEx(MainForm.Hwnd, IntPtr.Zero, "mpv", null);
-
-                //System.Diagnostics.Debug.WriteLine(evt.event_id.ToString());
 
                 try
                 {
