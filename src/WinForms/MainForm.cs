@@ -403,6 +403,7 @@ namespace mpvnet
             }
 
             SetSize(width, height, screen, checkAutofit);
+            SaveWindowProperties();
         }
 
         void SetSize(int width, int height, Screen screen, bool checkAutofit = true)
@@ -553,7 +554,6 @@ namespace mpvnet
                         FormBorderStyle = FormBorderStyle.None;                      
 
                     SetFormPosAndSize();
-                    SaveWindowProperties();
                 }
             }
         }
@@ -980,7 +980,6 @@ namespace mpvnet
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             base.OnFormClosing(e);
-            SaveWindowProperties();
 
             if (Core.IsQuitNeeded)
                 Core.commandv("quit");

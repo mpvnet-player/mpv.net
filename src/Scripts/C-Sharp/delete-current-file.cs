@@ -35,14 +35,14 @@ class Script
         {
             FileToDelete = Core.get_property_string("path");
             DeleteTime = DateTime.Now;
-            Core.commandv("show-text", "Press 1 to delete file", "5000");
+            Core.commandv("show-text", "Press 1 to delete file", "10000");
         }
         else if (args[1] == "confirm")
         {
             TimeSpan ts = DateTime.Now - DeleteTime;
             string path = Core.get_property_string("path");
 
-            if (FileToDelete == path && ts.TotalSeconds < 5 && File.Exists(FileToDelete))
+            if (FileToDelete == path && ts.TotalSeconds < 10 && File.Exists(FileToDelete))
             {
                 Core.command("playlist-remove current");
                 int pos = Core.get_property_int("playlist-pos");
@@ -53,6 +53,11 @@ class Script
 
                     if (count > 0)
                         Core.set_property_int("playlist-pos", count - 1);
+                    else
+                    {
+                        Core.ShowLogo();
+                        Core.commandv("show-text", "");
+                    }
                 }
 
                 Thread.Sleep(2000);

@@ -2,9 +2,11 @@
 5.4.9.1 (2021-0?-??)
 ====================
 
-- New media info command: Ctrl+m script-message mpv.net show-media-info #menu: View > Show Media Info
+- New media info command: `Ctrl+m script-message mpv.net show-media-info #menu: View > Show Media Info`
 - Context menu font render quality fix.
-- Context menu and cycle-audio command support external audio and subtitle tracks.
+- Context menu and `cycle-audio` command support external audio and subtitle tracks.
+- Fix window size not being saved.
+- libmpv shinchiro 2021-06-06
 
 
 5.4.9.0 (2021-05-29)
