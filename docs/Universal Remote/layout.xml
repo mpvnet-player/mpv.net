@@ -4,7 +4,7 @@
         <button text="PLAY" ontap="play" />
         <button text="PREV" ontap="prev" />
         <button text="NEXT" ontap="next" />
-        <button text="Enter"   ontap="enter" />
+        <button text="Enter" ontap="enter" />
     </row>
     <row>
         <button text="LEFT"  ontap="left" />
