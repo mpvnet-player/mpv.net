@@ -374,6 +374,21 @@ Alternatively the Chrome/Firefox extension [Open With](../../../issues/119) can 
 [Open with++](https://github.com/stax76/OpenWithPlusPlus) can be used to extend the File Explorer context menu to get menu items for [Play with mpv.net](https://github.com/stax76/OpenWithPlusPlus#play-with-mpvnet) and [Add to mpv.net playlist](https://github.com/stax76/OpenWithPlusPlus#add-to-mpvnet-playlist).
 
 
+### Universal Remote
+
+Universal Remote is a non-free Android remote control app.
+
+https://www.unifiedremote.com
+
+https://play.google.com/store/apps/details?id=com.Relmtech.Remote
+
+https://play.google.com/store/apps/details?id=com.Relmtech.RemotePaid
+
+https://www.unifiedremote.com/tutorials/how-to-create-a-custom-keyboard-shortcuts-remote
+
+https://www.unifiedremote.com/tutorials/how-to-install-a-custom-remote
+
+
 Scripting
 ---------
 

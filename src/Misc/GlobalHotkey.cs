@@ -61,7 +61,7 @@ namespace mpvnet
                 int hi = result >> 8;
                 int lo = result & 0xFF;
 
-                if (lo == -1)
+                if (lo == -1 || hi == -1)
                     return;
 
                 vk = lo;
