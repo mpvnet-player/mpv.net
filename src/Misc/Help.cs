@@ -4,6 +4,8 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Windows.Forms;
 
 using Microsoft.Win32;
@@ -12,6 +14,19 @@ using static mpvnet.Global;
 
 namespace mpvnet
 {
+    public static class StringHelp
+    {
+        public static string GetMD5Hash(string txt)
+        {
+            using (MD5 md5 = MD5.Create())
+            {
+                byte[] inputBuffer = Encoding.UTF8.GetBytes(txt);
+                byte[] hashBuffer = md5.ComputeHash(inputBuffer);
+                return BitConverter.ToString(md5.ComputeHash(inputBuffer)).Replace("-", "");
+            }
+        }
+    }
+
     public static class FileHelp
     {
         public static void Delete(string path)

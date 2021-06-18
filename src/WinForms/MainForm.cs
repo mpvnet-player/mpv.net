@@ -815,7 +815,7 @@ namespace mpvnet
             }
             else if (Environment.TickCount - LastCursorChanged > 1500 &&
                 !IsMouseInOSC() && ClientRectangle.Contains(PointToClient(MousePosition)) &&
-                Form.ActiveForm == this && !ContextMenu.Visible)
+                ActiveForm == this && !ContextMenu.Visible)
 
                 CursorHelp.Hide();
         }

@@ -1,12 +1,9 @@
 ﻿
-using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Security.Cryptography;
-using System.Text;
 
 using Microsoft.CSharp;
 
@@ -28,7 +25,7 @@ namespace mpvnet
         static void Execute(string file)
         {
             string code = File.ReadAllText(file);
-            string filename = Path.GetFileNameWithoutExtension(file) + " " + GetMD5(code) + ".dll";
+            string filename = Path.GetFileNameWithoutExtension(file) + " " + StringHelp.GetMD5Hash(code) + ".dll";
             string outputFile = Path.Combine(Path.GetTempPath(), filename);
 
             if (!File.Exists(outputFile))
@@ -69,16 +66,6 @@ namespace mpvnet
 
             if (errors.Count() > 0)
                 Terminal.WriteError(string.Join(BR2, errors), Path.GetFileName(file));
-        }
-
-        static string GetMD5(string code)
-        {
-            using (MD5 md5 = MD5.Create())
-            {
-                byte[] inputBuffer = Encoding.UTF8.GetBytes(code);
-                byte[] hashBuffer = md5.ComputeHash(inputBuffer);
-                return BitConverter.ToString(md5.ComputeHash(inputBuffer)).Replace("-", "");
-            }
         }
     }
 }

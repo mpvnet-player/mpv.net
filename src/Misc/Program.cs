@@ -38,7 +38,7 @@ namespace mpvnet
                 }
 
                 App.Init();
-                Mutex mutex = new Mutex(true, "mpvnetProcessInstance", out bool isFirst);
+                Mutex mutex = new Mutex(true, StringHelp.GetMD5Hash(App.ConfPath), out bool isFirst);
 
                 if ((App.ProcessInstance == "single" || App.ProcessInstance == "queue") && !isFirst)
                 {
