@@ -57,13 +57,13 @@ namespace mpvnet
         [DllImport("user32.dll", EntryPoint = "GetWindowLong")]
         static extern IntPtr GetWindowLong32(IntPtr hWnd, int nIndex);
 
-        [DllImport("user32.dll", EntryPoint = "GetWindowLongPtr")]
-        static extern IntPtr GetWindowLong64(IntPtr hWnd, int nIndex);
+        [DllImport("user32.dll")]
+        static extern IntPtr GetWindowLongPtr(IntPtr hWnd, int nIndex);
 
         public static IntPtr GetWindowLong(IntPtr hWnd, int nIndex)
         {
             if (IntPtr.Size == 8)
-                return GetWindowLong64(hWnd, nIndex);
+                return GetWindowLongPtr(hWnd, nIndex);
             else
                 return GetWindowLong32(hWnd, nIndex);
         }
@@ -71,13 +71,13 @@ namespace mpvnet
         [DllImport("user32.dll", EntryPoint = "SetWindowLong")]
         public static extern IntPtr SetWindowLong32(IntPtr hWnd, int nIndex, uint dwNewLong);
 
-        [DllImport("user32.dll", EntryPoint = "SetWindowLongPtr")]
-        public static extern IntPtr SetWindowLong64(IntPtr hWnd, int nIndex, uint dwNewLong);
+        [DllImport("user32.dll")]
+        public static extern IntPtr SetWindowLongPtr(IntPtr hWnd, int nIndex, uint dwNewLong);
 
         public static IntPtr SetWindowLong(IntPtr hWnd, int nIndex, uint dwNewLong)
         {
             if (IntPtr.Size == 8)
-                return SetWindowLong64(hWnd, nIndex, dwNewLong);
+                return SetWindowLongPtr(hWnd, nIndex, dwNewLong);
             else
                 return SetWindowLong32(hWnd, nIndex, dwNewLong);
         }
