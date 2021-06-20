@@ -68,6 +68,20 @@ namespace mpvnet
                 return GetWindowLong32(hWnd, nIndex);
         }
 
+        [DllImport("user32.dll", EntryPoint = "SetWindowLong")]
+        public static extern IntPtr SetWindowLong32(IntPtr hWnd, int nIndex, uint dwNewLong);
+
+        [DllImport("user32.dll", EntryPoint = "SetWindowLongPtr")]
+        public static extern IntPtr SetWindowLong64(IntPtr hWnd, int nIndex, uint dwNewLong);
+
+        public static IntPtr SetWindowLong(IntPtr hWnd, int nIndex, uint dwNewLong)
+        {
+            if (IntPtr.Size == 8)
+                return SetWindowLong64(hWnd, nIndex, dwNewLong);
+            else
+                return SetWindowLong32(hWnd, nIndex, dwNewLong);
+        }
+
         [DllImport("gdi32.dll")]
         public static extern int GetDeviceCaps(IntPtr hdc, int nIndex);
 

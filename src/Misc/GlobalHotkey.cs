@@ -61,9 +61,6 @@ namespace mpvnet
                 int hi = result >> 8;
                 int lo = result & 0xFF;
 
-                if (lo == -1 || hi == -1)
-                    return;
-
                 vk = lo;
 
                 if ((hi & 1) == 1) mod |= KeyModifiers.Shift;
