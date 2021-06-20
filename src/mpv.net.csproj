@@ -86,6 +86,10 @@
     </None>
     <None Include="Resources\mpvnet-santa.png" />
     <Content Include="Resources\theme.txt" />
+    <Page Include="WPF\CommandPaletteControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="WPF\SearchTextBoxUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -120,6 +124,9 @@
     <Compile Include="Misc\Theme.cs" />
     <Compile Include="Misc\PowerShell.cs" />
     <Compile Include="Native\StockIcon.cs" />
+    <Compile Include="WPF\CommandPaletteControl.xaml.cs">
+      <DependentUpon>CommandPaletteControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WPF\SearchTextBoxUserControl.xaml.cs">
       <DependentUpon>SearchTextBoxUserControl.xaml</DependentUpon>
     </Compile>

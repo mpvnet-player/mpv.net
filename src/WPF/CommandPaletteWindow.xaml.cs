@@ -25,9 +25,7 @@ namespace mpvnet
             ListView.ItemsSource = CollectionView;
         }
 
-        public Theme Theme {
-            get => Theme.Current;
-        }
+        public Theme Theme => Theme.Current;
 
         bool Filter(CommandItem item)
         {

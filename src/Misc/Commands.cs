@@ -33,7 +33,7 @@ namespace mpvnet
                 case "shell-execute": ProcessHelp.ShellExecute(args[0]); break;
                 case "show-about": ShowDialog(typeof(AboutWindow)); break;
                 case "show-audio-devices": ShowTextWithEditor("audio-device-list", Core.get_property_osd_string("audio-device-list")); break;
-                case "show-command-palette": ShowDialog(typeof(CommandPaletteWindow)); break;
+                case "show-command-palette": ShowCommandPalette(); break;
                 case "show-commands": ShowCommands(); break;
                 case "show-conf-editor": ShowDialog(typeof(ConfWindow)); break;
                 case "show-decoders": ShowTextWithEditor("decoder-list", mpvHelp.GetDecoders()); break;
