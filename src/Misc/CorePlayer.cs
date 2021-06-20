@@ -349,14 +349,18 @@ namespace mpvnet
                 {
                     WindowHandle = Native.FindWindowEx(MainForm.Hwnd, IntPtr.Zero, "mpv", null);
 
-                    int GWL_STYLE = -16;
-                    uint WS_CHILD = 0x40000000;
-                    uint WS_VISIBLE = 0x10000000;
-                    uint WS_DISABLED = 0x08000000;
-                    uint WS_CLIPSIBLINGS = 0x04000000;
+                    if (WindowHandle != IntPtr.Zero)
+                    {
+                        int GWL_STYLE = -16;
 
-                    Native.SetWindowLong(WindowHandle, GWL_STYLE,
-                        WS_CHILD | WS_VISIBLE | WS_DISABLED | WS_CLIPSIBLINGS);
+                        uint WS_CHILD        = 0x40000000;
+                        uint WS_CLIPSIBLINGS = 0x04000000;
+                        uint WS_DISABLED     = 0x08000000;
+                        uint WS_VISIBLE      = 0x10000000;
+
+                        Native.SetWindowLong(WindowHandle, GWL_STYLE,
+                            WS_CHILD | WS_VISIBLE | WS_DISABLED | WS_CLIPSIBLINGS);
+                    }
                 }
 
                 try

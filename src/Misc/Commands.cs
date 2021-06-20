@@ -392,5 +392,10 @@ namespace mpvnet
                 }
             }
         }
+
+        public static void ShowCommandPalette()
+        {
+
+        }
     }
 }
