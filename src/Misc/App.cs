@@ -12,8 +12,6 @@ namespace mpvnet
 {
     public static class App
     {
-        public static event Action ShowCommandPalette;
-
         public static List<string> TempFiles { get; } = new List<string>();
 
         public static string ConfPath { get => Core.ConfigFolder + "mpvnet.conf"; }

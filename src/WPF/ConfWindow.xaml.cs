@@ -35,9 +35,7 @@ namespace mpvnet
             FilterListBox.SelectedItem = SearchControl.Text.TrimEnd(':');
         }
 
-        public Theme Theme {
-            get => Theme.Current;
-        }
+        public Theme Theme => Theme.Current;
 
         void LoadSettings()
         {
@@ -75,10 +73,10 @@ namespace mpvnet
         {
             base.OnClosed(e);
             App.Settings.ConfigEditorSearch = SearchControl.Text;
-            
+
             if (InitialContent == GetCompareString())
                 return;
-            
+
             File.WriteAllText(Core.ConfPath, GetContent("mpv"));
             File.WriteAllText(App.ConfPath, GetContent("mpvnet"));
 
@@ -89,7 +87,7 @@ namespace mpvnet
                     if (item.File == "mpv")
                     {
                         Core.ProcessProperty(item.Name, item.Value);
-                        
+
                         try
                         {
                             Core.set_property_string(item.Name, item.Value, true);

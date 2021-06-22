@@ -44,7 +44,6 @@ namespace mpvnet
                 case "show-input-editor": ShowDialog(typeof(InputWindow)); break;
                 case "show-keys": ShowTextWithEditor("input-key-list", Core.get_property_string("input-key-list").Replace(",", BR)); break;
                 case "show-media-info": ShowMediaInfo(args); break;
-                case "show-media-search": ShowDialog(typeof(EverythingWindow)); break;
                 case "show-playlist": ShowPlaylist(); break;
                 case "show-profiles": ShowTextWithEditor("profile-list", mpvHelp.GetProfiles()); break;
                 case "show-properties": ShowProperties(); break;

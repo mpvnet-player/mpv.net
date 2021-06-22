@@ -242,7 +242,14 @@ namespace mpvnet
 
         public static IEnumerable<CommandPaletteItem> GetItems()
         {
-            return CommandItem.Items.Select(i => new CommandPaletteItem() { Text = i.Display, SecondaryText = i.Input });
+            var aaa = CommandItem.Items.ToArray();
+            return CommandItem.Items
+                .Where(i => i.Command != "")
+                .Select(i => new CommandPaletteItem() {
+                    Text = i.Display,
+                    SecondaryText = i.Input,
+                    Action = () => Core.command(i.Command)
+                });
         }
     }
 }

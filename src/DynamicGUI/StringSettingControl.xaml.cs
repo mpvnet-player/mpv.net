@@ -35,9 +35,7 @@ namespace DynamicGUI
                 LinkTextBlock.Visibility = Visibility.Collapsed;
         }
 
-        public Theme Theme {
-            get => Theme.Current;
-        }
+        public Theme Theme => Theme.Current;
 
         string _SearchableText;
 

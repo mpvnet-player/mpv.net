@@ -30,9 +30,7 @@ namespace mpvnet
             DataContext = this;
         }
 
-        public Theme Theme {
-            get => Theme.Current;
-        }
+        public Theme Theme => Theme.Current;
 
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         static extern short GetKeyState(int keyCode);

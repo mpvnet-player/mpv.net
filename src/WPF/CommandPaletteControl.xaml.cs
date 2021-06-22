@@ -14,6 +14,7 @@ namespace mpvnet
     {
         public ICollectionView CollectionView { get; set; }
         public ICommand EscapeCommand { get; }
+        public ICommand ExecuteCommand { get; }
         public CollectionViewSource CollectionViewSource { get; }
         public ObservableCollection<CommandPaletteItem> Items { get; } = new ObservableCollection<CommandPaletteItem>();
 
@@ -27,7 +28,8 @@ namespace mpvnet
             MainListView.ItemsSource = CollectionView;
 
             EscapeCommand = new RelayCommand(OnEscapeCommand);
-            SearchControl.SearchTextBox.PreviewKeyDown += SearchControl_PreviewKeyDown;
+            ExecuteCommand = new RelayCommand(OnExecuteCommand);
+            SearchControl.SearchTextBox.PreviewKeyDown += SearchTextBox_PreviewKeyDown;
             SearchControl.SearchTextBox.TextChanged += SearchTextBox_TextChanged;
             SearchControl.SearchTextBox.BorderBrush = Theme.Background;
             SearchControl.HideClearButton = true;
@@ -39,7 +41,7 @@ namespace mpvnet
             SelectFirst();
         }
 
-        void SearchControl_PreviewKeyDown(object sender, KeyEventArgs e)
+        void SearchTextBox_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             switch (e.Key)
             {
@@ -66,16 +68,18 @@ namespace mpvnet
                         MainListView.ScrollIntoView(MainListView.SelectedItem);
                     }
                     break;
-                case Key.Enter:
-                    Execute();
-                    break;
             }
         }
 
-        void OnEscapeCommand(object param)
-        {
-            MainForm.Instance.HideCommandPalette();
-        }
+        void MainListView_SizeChanged(object sender, SizeChangedEventArgs e) => AdjustHeight();
+
+        void MainListView_MouseUp(object sender, MouseButtonEventArgs e) => Execute();
+
+        void OnEscapeCommand(object param) => MainForm.Instance.HideCommandPalette();
+
+        void OnExecuteCommand(object param) => Execute();
+
+        void OnLoaded(object sender, RoutedEventArgs e) => Keyboard.Focus(SearchControl.SearchTextBox);
 
         public Theme Theme => Theme.Current;
 
@@ -94,7 +98,10 @@ namespace mpvnet
         public void SelectFirst()
         {
             if (MainListView.Items.Count > 0)
+            {
                 MainListView.SelectedIndex = 0;
+                MainListView.ScrollIntoView(MainListView.SelectedItem);
+            }
         }
 
         void Execute()
@@ -104,12 +111,8 @@ namespace mpvnet
                 CommandPaletteItem item = MainListView.SelectedItem as CommandPaletteItem;
                 MainForm.Instance.HideCommandPalette();
                 item.Action.Invoke();
+                MainForm.Instance.Voodoo();
             }
-        }
-
-        void OnLoaded(object sender, RoutedEventArgs e)
-        {
-            Keyboard.Focus(SearchControl.SearchTextBox);
         }
 
         public void SetItems(IEnumerable<CommandPaletteItem> items)
@@ -120,21 +123,11 @@ namespace mpvnet
                 Items.Add(i);
         }
 
-        void MainListView_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            AdjustHeight();
-        }
-
         public void AdjustHeight()
         {
             double actualHeight = SearchControl.ActualHeight + MainListView.ActualHeight;
             int dpi = Native.GetDPI(MainForm.Instance.Handle);
             MainForm.Instance.CommandPaletteHost.Height = (int)(actualHeight / 96.0 * dpi);
-        }
-
-        void MainListView_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            Execute();
         }
     }
 }

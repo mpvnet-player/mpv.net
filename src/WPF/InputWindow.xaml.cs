@@ -26,14 +26,11 @@ namespace mpvnet
             DataGrid.SelectionMode = DataGridSelectionMode.Single;
             CollectionViewSource collectionViewSource = new CollectionViewSource() { Source = CommandItem.Items };
             CollectionView = collectionViewSource.View;
-            var yourCostumFilter = new Predicate<object>(item => Filter((CommandItem)item));
-            CollectionView.Filter = yourCostumFilter;
+            CollectionView.Filter = new Predicate<object>(item => Filter((CommandItem)item));
             DataGrid.ItemsSource = CollectionView;
         }
 
-        public Theme Theme {
-            get => Theme.Current;
-        }
+        public Theme Theme => Theme.Current;
 
         void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {

@@ -19,9 +19,7 @@ namespace mpvnet
             DataContext = this;
         }
 
-        public Theme Theme {
-            get => Theme.Current;
-        }
+        public Theme Theme => Theme.Current;
 
         static BitmapSource _ShieldIcon;
 
@@ -45,7 +43,7 @@ namespace mpvnet
                 using (Process proc = new Process())
                 {
                     proc.StartInfo.FileName = WinForms.Application.ExecutablePath;
-                    proc.StartInfo.Arguments = "--reg-file-assoc " + String.Join(" ", extensions);
+                    proc.StartInfo.Arguments = "--reg-file-assoc " + string.Join(" ", extensions);
                     proc.StartInfo.Verb = "runas";
                     proc.StartInfo.UseShellExecute = true;
                     proc.Start();

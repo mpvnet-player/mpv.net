@@ -13,7 +13,8 @@
     >
 
     <UserControl.InputBindings>
-        <KeyBinding Gesture="Esc"  Command="{Binding EscapeCommand}"/>
+        <KeyBinding Gesture="Esc"    Command="{Binding EscapeCommand}"/>
+        <KeyBinding Gesture="Enter"  Command="{Binding ExecuteCommand}"/>
     </UserControl.InputBindings>
     
     <Grid>

@@ -104,10 +104,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="WPF\EverythingWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="WPF\Resources.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -162,9 +158,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WPF\SetupWindow.xaml.cs">
       <DependentUpon>SetupWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="WPF\EverythingWindow.xaml.cs">
-      <DependentUpon>EverythingWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="WPF\ConfWindow.xaml.cs">
       <DependentUpon>ConfWindow.xaml</DependentUpon>

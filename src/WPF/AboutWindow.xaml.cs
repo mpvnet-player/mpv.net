@@ -16,8 +16,6 @@ namespace mpvnet
         protected override void OnPreviewKeyDown(KeyEventArgs e) => Close();
         protected override void OnMouseDown(MouseButtonEventArgs e) => Close();
 
-        public Theme Theme {
-            get => Theme.Current;
-        }
+        public Theme Theme => Theme.Current;
     }
 }

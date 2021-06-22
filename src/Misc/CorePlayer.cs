@@ -388,7 +388,7 @@ namespace mpvnet
                                 if (LogMessage != null || LogMessageAsync != null)
                                 {
                                     string msg = $"[{ConvertFromUtf8(data.prefix)}] {ConvertFromUtf8(data.text)}";
-                                    InvokeAsync<mpv_log_level, string>(LogMessageAsync, data.log_level, msg);
+                                    InvokeAsync(LogMessageAsync, data.log_level, msg);
                                     LogMessage?.Invoke(data.log_level, msg);
                                 }
                             }
