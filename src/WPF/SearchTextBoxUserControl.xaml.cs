@@ -3,21 +3,19 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-using mpvnet;
-
-namespace Controls
+namespace mpvnet
 {
     public partial class SearchTextBoxUserControl : UserControl
     {
+        public bool HideClearButton { get; set; }
+
         public SearchTextBoxUserControl()
         {
             InitializeComponent();
             DataContext = this;
         }
 
-        public Theme Theme {
-            get => Theme.Current;
-        }
+        public Theme Theme => Theme.Current;
 
         public string Text {
             get => SearchTextBox.Text;
@@ -49,7 +47,7 @@ namespace Controls
         {
             HintTextBlock.Text = SearchTextBox.Text == "" ? HintText : "";
 
-            if (SearchTextBox.Text == "")
+            if (SearchTextBox.Text == "" || HideClearButton)
                 SearchClearButton.Visibility = Visibility.Hidden;
             else
                 SearchClearButton.Visibility = Visibility.Visible;

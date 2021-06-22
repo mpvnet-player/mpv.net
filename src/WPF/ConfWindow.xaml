@@ -1,9 +1,11 @@
 ﻿<Window
-    xmlns:Controls="clr-namespace:Controls"  x:Name="ConfWindow1"  x:Class="mpvnet.ConfWindow"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    x:Name="ConfWindow1"
+    x:Class="mpvnet.ConfWindow"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:mpvnet"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     mc:Ignorable="d"
     
     Title="Config Editor"
@@ -26,8 +28,8 @@
             <ColumnDefinition Width="100" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        
-        <Controls:SearchTextBoxUserControl
+
+        <local:SearchTextBoxUserControl
             x:Name="SearchControl"
             HintText="Find a setting"
             Width="250"

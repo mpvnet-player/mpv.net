@@ -9,6 +9,7 @@ using System.Windows.Interop;
 using System.Windows;
 
 using static mpvnet.Global;
+using System.Collections.Generic;
 
 namespace mpvnet
 {
@@ -44,7 +45,7 @@ namespace mpvnet
                 case "show-keys": ShowTextWithEditor("input-key-list", Core.get_property_string("input-key-list").Replace(",", BR)); break;
                 case "show-media-info": ShowMediaInfo(args); break;
                 case "show-media-search": ShowDialog(typeof(EverythingWindow)); break;
-                case "show-playlist": ShowPlaylist(args); break;
+                case "show-playlist": ShowPlaylist(); break;
                 case "show-profiles": ShowTextWithEditor("profile-list", mpvHelp.GetProfiles()); break;
                 case "show-properties": ShowProperties(); break;
                 case "show-protocols": ShowTextWithEditor("protocol-list", mpvHelp.GetProtocols()); break;
@@ -360,23 +361,6 @@ namespace mpvnet
                 "}${osd-ass-cc/1}" + text + "\" " + duration);
         }
 
-        public static void ShowPlaylist(string[] args)
-        {
-            int duration = 5000;
-
-            if (args.Length == 1 && int.TryParse(args[0], out int result))
-                duration = result;
-
-            var size = Core.get_property_number("osd-font-size");
-            Core.set_property_number("osd-font-size", 40);
-            Core.command("show-text ${playlist} " + duration);
-
-            App.RunTask(() => {
-                Thread.Sleep(6000);
-                Core.set_property_number("osd-font-size", size);
-            });
-        }
-
         public static void ShowMediaInfo(string[] args)
         {
             string path = Core.GetPropertyString("path");
@@ -393,9 +377,38 @@ namespace mpvnet
             }
         }
 
-        public static void ShowCommandPalette()
-        {
+        public static void ShowCommandPalette() => App.InvokeOnMainThread(ShowCommandPaletteInternal);
 
+        static void ShowCommandPaletteInternal()
+        {
+            CommandPalette.Instance.SetItems(CommandPalette.GetItems());
+            MainForm.Instance.ShowCommandPalette();
+        }
+
+        public static void ShowPlaylist() => App.InvokeOnMainThread(ShowPlaylistInternal);
+
+        static void ShowPlaylistInternal()
+        {
+            int count = Core.get_property_int("playlist-count");
+
+            if (count <= 0)
+                return;
+
+            List<CommandPaletteItem> items = new List<CommandPaletteItem>();
+
+            for (int i = 0; i < count; i++)
+            {
+                int index = i;
+                string file = Core.get_property_string($"playlist/{i}/filename");
+                CommandPaletteItem item = new CommandPaletteItem() {
+                    Text = PathHelp.GetFileName(file),
+                    Action = () => Core.set_property_int("playlist-pos", index)
+                };
+                items.Add(item);
+            }
+
+            CommandPalette.Instance.SetItems(items);
+            MainForm.Instance.ShowCommandPalette();
         }
     }
 }

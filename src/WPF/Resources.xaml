@@ -36,6 +36,7 @@
             </Setter.Value>
         </Setter>
     </Style>
+
     <Style TargetType="RadioButton">
         <Setter Property="Padding" Value="6 0 0 0" />
         <Setter Property="Template">
@@ -46,7 +47,7 @@
                             <ColumnDefinition x:Name="LeftCol" Width="18" />
                             <ColumnDefinition x:Name="RightCol" Width="*" />
                         </Grid.ColumnDefinitions>
-                        
+
                         <Grid x:Name="PART_CHECKBOX">
                             <Ellipse
                                 x:Name="normal"
@@ -72,7 +73,7 @@
                                 StrokeThickness="{TemplateBinding BorderThickness}"
                                 />
                         </Grid>
-                        
+
                         <ContentPresenter
                             x:Name="contentPresenter"
                             Grid.Column="1"
@@ -85,7 +86,7 @@
                             ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
                             RecognizesAccessKey="True"
                             />
-                        
+
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal" />

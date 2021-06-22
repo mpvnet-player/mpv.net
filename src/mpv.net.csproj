@@ -73,9 +73,11 @@
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Misc\App.cs" />
+    <Compile Include="WPF\RelayCommand.cs" />
     <Compile Include="Misc\CSharpScriptHost.cs" />
     <Compile Include="Misc\Extension.cs" />
     <None Include="..\docs\Changelog.md">
@@ -103,10 +105,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="WPF\EverythingWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="WPF\CommandPaletteWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -167,9 +165,6 @@
     </Compile>
     <Compile Include="WPF\EverythingWindow.xaml.cs">
       <DependentUpon>EverythingWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="WPF\CommandPaletteWindow.xaml.cs">
-      <DependentUpon>CommandPaletteWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="WPF\ConfWindow.xaml.cs">
       <DependentUpon>ConfWindow.xaml</DependentUpon>

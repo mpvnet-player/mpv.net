@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using System.Windows.Forms.Integration;
 
 using static mpvnet.Native;
 using static mpvnet.Global;
@@ -16,6 +17,7 @@ namespace mpvnet
 {
     public partial class MainForm : Form
     {
+        public ElementHost CommandPaletteHost { get; set; }
         public static MainForm Instance { get; set; }
         public static IntPtr Hwnd { get; set; }
         public new ContextMenuStripEx ContextMenu { get; set; }
@@ -168,7 +170,7 @@ namespace mpvnet
 
         bool IsMouseInOSC()
         {
-            Point pos = PointToClient(Control.MousePosition);
+            Point pos = PointToClient(MousePosition);
             float top = 0;
 
             if (FormBorderStyle == FormBorderStyle.None)
@@ -176,6 +178,8 @@ namespace mpvnet
 
             return pos.Y > ClientSize.Height * 0.85 || pos.Y < top;
         }
+
+        bool IsCommandPaletteVissible() => CommandPaletteHost != null && CommandPaletteHost.Visible;
 
         void ContextMenu_Opening(object sender, CancelEventArgs e)
         {
@@ -815,7 +819,7 @@ namespace mpvnet
             }
             else if (Environment.TickCount - LastCursorChanged > 1500 &&
                 !IsMouseInOSC() && ClientRectangle.Contains(PointToClient(MousePosition)) &&
-                ActiveForm == this && !ContextMenu.Visible)
+                ActiveForm == this && !ContextMenu.Visible && !IsCommandPaletteVissible())
 
                 CursorHelp.Hide();
         }
@@ -1038,6 +1042,51 @@ namespace mpvnet
                 e.SuppressKeyPress = true;
 
             base.OnKeyDown(e);
+        }
+
+        public void ShowCommandPalette()
+        {
+            if (CommandPaletteHost == null)
+            {
+                CommandPaletteHost = new ElementHost();
+                AdjustCommandPaletteLeftAndWidth();
+                CommandPaletteHost.Child = CommandPalette.Instance;
+                CommandPalette.Instance.AdjustHeight();
+                CommandPalette.Instance.SelectFirst();
+                Controls.Add(CommandPaletteHost);
+            }
+        }
+
+        public void HideCommandPalette()
+        {
+            if (CommandPaletteHost != null)
+            {
+                ActiveControl = null;
+                CommandPalette.Instance.SearchControl.SearchTextBox.Text = "";
+                Controls.Remove(CommandPaletteHost);
+                CommandPaletteHost.Child = null;
+                CommandPaletteHost.Dispose();
+                CommandPaletteHost = null;
+            }
+        }
+
+        void AdjustCommandPaletteLeftAndWidth()
+        {
+            if (CommandPaletteHost == null)
+                return;
+
+            CommandPaletteHost.Width = FontHeight * 25;
+
+            if (CommandPaletteHost.Width > ClientSize.Width)
+                CommandPaletteHost.Width = ClientSize.Width;
+
+            CommandPaletteHost.Left = (ClientSize.Width - CommandPaletteHost.Size.Width) / 2;
+        }
+
+        protected override void OnLayout(LayoutEventArgs args)
+        {
+            base.OnLayout(args);
+            AdjustCommandPaletteLeftAndWidth();
         }
     }
 }

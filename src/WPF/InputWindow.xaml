@@ -1,9 +1,10 @@
 ﻿<Window
-    xmlns:Controls="clr-namespace:Controls"  x:Class="mpvnet.InputWindow"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    x:Class="mpvnet.InputWindow"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:mpvnet"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     mc:Ignorable="d"
     
     Title="Input Editor"
@@ -49,8 +50,8 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        
-        <Controls:SearchTextBoxUserControl
+
+        <local:SearchTextBoxUserControl
             HintText="Type ? to get help."
             x:Name="SearchControl"
             Width="300"
