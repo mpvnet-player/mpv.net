@@ -43,6 +43,7 @@
  s           stop                   #menu: Stop
  _           ignore                 #menu: -
  Enter       cycle fullscreen       #menu: Toggle Fullscreen
+ f           cycle fullscreen       #menu: Toggle Fullscreen
  
  F11         playlist-prev; set pause no #menu: Navigate > Previous File
  F12         playlist-next; set pause no #menu: Navigate > Next File
@@ -112,13 +113,15 @@
  r           add sub-pos -1         #menu: Subtitle > Move Up
  R           add sub-pos +1         #menu: Subtitle > Move Down
  _           ignore                 #menu: Subtitle > -
- _           add sub-scale -0.1     #menu: Subtitle > Decrease Subtitle Font Size
- _           add sub-scale  0.1     #menu: Subtitle > Increase Subtitle Font Size
+ Shift+f     add sub-scale -0.1     #menu: Subtitle > Decrease Subtitle Font Size
+ Shift+g     add sub-scale  0.1     #menu: Subtitle > Increase Subtitle Font Size
 
  _           ignore                 #menu: Track
 
- +           add volume  10         #menu: Volume > Up
- -           add volume -10         #menu: Volume > Down
+ +           add volume  2         #menu: Volume > Up
+ -           add volume -2         #menu: Volume > Down
+ 0           add volume  2         #menu: Volume > Up
+ 9           add volume -2         #menu: Volume > Down
  _           ignore                 #menu: Volume > -
  m           cycle mute             #menu: Volume > Mute
 
@@ -192,10 +195,10 @@
  Stop         stop
  Forward      seek  60
  Rewind       seek -60
- Wheel_Up     add volume  10
- Wheel_Down   add volume -10
- Wheel_Left   add volume -10
- Wheel_Right  add volume  10
+ Wheel_Up     add volume  2
+ Wheel_Down   add volume -2
+ Wheel_Left   add volume -2
+ Wheel_Right  add volume  2
  Prev         playlist-prev
  Next         playlist-next
  MBTN_Forward playlist-next
