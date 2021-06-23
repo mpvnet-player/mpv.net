@@ -34,7 +34,7 @@ namespace mpvnet
 
                     if (!match.Success)
                     {
-                        App.ShowError("Update check is currently not available.");
+                        App.InvokeOnMainThread(() => App.ShowError("Update check is currently not available."));
                         return;
                     }
                     
@@ -44,7 +44,7 @@ namespace mpvnet
                     if (onlineVersion <= currentVersion)
                     {
                         if (showUpToDateMessage)
-                            Msg.ShowInfo($"{Application.ProductName} is up to date.");
+                            App.InvokeOnMainThread(() => Msg.ShowInfo($"{Application.ProductName} is up to date."));
 
                         return;
                     }
@@ -60,7 +60,7 @@ namespace mpvnet
                             proc.StartInfo.UseShellExecute = true;
                             proc.StartInfo.WorkingDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
                             proc.StartInfo.FileName = "powershell.exe";
-                            proc.StartInfo.Arguments = $"-NoExit -ExecutionPolicy Bypass -File \"{Folder.Startup + "Setup\\update.ps1"}\" \"{url}\" \"{Folder.Startup.TrimEnd(Path.DirectorySeparatorChar)}\"";
+                            proc.StartInfo.Arguments = $"-NoExit -NoProfile -ExecutionPolicy Bypass -File \"{Folder.Startup + "Setup\\update.ps1"}\" \"{url}\" \"{Folder.Startup.TrimEnd(Path.DirectorySeparatorChar)}\"";
 
                             if (Folder.Startup.Contains("Program Files"))
                                 proc.StartInfo.Verb = "runas";

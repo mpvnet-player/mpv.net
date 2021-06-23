@@ -11,7 +11,7 @@
     Loaded="OnLoaded"
     Background="{Binding Theme.Background}"
     >
-
+    
     <UserControl.InputBindings>
         <KeyBinding Gesture="Esc"    Command="{Binding EscapeCommand}"/>
         <KeyBinding Gesture="Enter"  Command="{Binding ExecuteCommand}"/>
@@ -37,7 +37,8 @@
             Background="{Binding Theme.Background}"
             BorderThickness="0"
             MaxHeight="202"
-            SizeChanged="MainListView_SizeChanged" MouseUp="MainListView_MouseUp"
+            SizeChanged="MainListView_SizeChanged"
+            MouseUp="MainListView_MouseUp"
             >
 
             <ListView.ItemContainerStyle>

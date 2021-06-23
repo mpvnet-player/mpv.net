@@ -103,6 +103,7 @@ namespace mpvnet
         public bool Fullscreen { get; set; }
         public bool IsLogoVisible { set; get; } = true;
         public bool IsQuitNeeded { set; get; } = true;
+        public bool KeepaspectWindow { get; set; }
         public bool TaskbarProgress { get; set; } = true;
         public bool WasInitialSizeSet;
         public bool WindowMaximized { get; set; }
@@ -174,6 +175,7 @@ namespace mpvnet
                 case "fs":
                 case "fullscreen": Fullscreen = value == "yes"; break;
                 case "border":     Border = value == "yes"; break;
+                case "keepaspect-window": KeepaspectWindow = value == "yes"; break;
                 case "window-maximized": WindowMaximized = value == "yes"; break;
                 case "window-minimized": WindowMinimized = value == "yes"; break;
                 case "taskbar-progress": TaskbarProgress = value == "yes"; break;
@@ -1336,7 +1338,7 @@ namespace mpvnet
                         }
                     }
                 }
-                else if (File.Exists(path))
+                else if (File.Exists(path) && !path.Contains(@"\\.\pipe\"))
                 {
                     using (MediaInfo mi = new MediaInfo(path))
                     {

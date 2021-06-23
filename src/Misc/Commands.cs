@@ -364,7 +364,7 @@ namespace mpvnet
         {
             string path = Core.GetPropertyString("path");
 
-            if (File.Exists(path))
+            if (File.Exists(path) && !path.Contains(@"\\.\pipe\"))
             {
                 using (MediaInfo mediaInfo = new MediaInfo(path))
                 {

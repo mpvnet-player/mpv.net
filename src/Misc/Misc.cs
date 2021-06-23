@@ -242,7 +242,6 @@ namespace mpvnet
 
         public static IEnumerable<CommandPaletteItem> GetItems()
         {
-            var aaa = CommandItem.Items.ToArray();
             return CommandItem.Items
                 .Where(i => i.Command != "")
                 .Select(i => new CommandPaletteItem() {

@@ -53,10 +53,11 @@ namespace mpvnet
                 Core.observe_property("window-maximized", PropChangeWindowMaximized);
                 Core.observe_property("window-minimized", PropChangeWindowMinimized);
 
-                Core.observe_property_bool("pause", PropChangePause);
-                Core.observe_property_bool("fullscreen", PropChangeFullscreen);
-                Core.observe_property_bool("ontop", PropChangeOnTop);
                 Core.observe_property_bool("border", PropChangeBorder);
+                Core.observe_property_bool("fullscreen", PropChangeFullscreen);
+                Core.observe_property_bool("keepaspect-window", value => Core.KeepaspectWindow = value);
+                Core.observe_property_bool("ontop", PropChangeOnTop);
+                Core.observe_property_bool("pause", PropChangePause);
 
                 Core.observe_property_string("sid", PropChangeSid);
                 Core.observe_property_string("aid", PropChangeAid);
@@ -751,6 +752,7 @@ namespace mpvnet
                     }
                     break;
                 case 0x0214: // WM_SIZING
+                    if (Core.KeepaspectWindow)
                     {
                         RECT rc = Marshal.PtrToStructure<RECT>(m.LParam);
                         RECT r = rc;

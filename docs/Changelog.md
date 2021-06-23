@@ -2,10 +2,12 @@
 5.4.9.1 (2021-0?-??)
 ====================
 
+- Fix exception using named pipes.
+- The mpv window property keepaspect-window was implemented.
 - Everything search removed to keep the core player lightweight,
   it might come back as user script or extension.
-- Fancy new command palette implementation, it's now integrated into the main window.
-- Playlist is now shown with the new command palette and not using the OSD.
+- The command palette is integrated into the main window.
+- Playlist is shown with the command palette and not using the OSD.
 - New media info command: `Ctrl+m script-message mpv.net show-media-info #menu: View > Show Media Info`
 - Context menu font render quality fix.
 - Context menu and `cycle-audio` command supports external audio and subtitle tracks.

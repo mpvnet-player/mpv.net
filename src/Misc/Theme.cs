@@ -14,10 +14,12 @@ namespace mpvnet
 
         public static Theme Current { get; set; }
 
+        public Brush Background { get; set; }
         public Brush Foreground { get; set; }
         public Brush Foreground2 { get; set; }
-        public Brush Background { get; set; }
         public Brush Heading { get; set; }
+        public Brush MenuBackground { get; set; }
+        public Brush MenuHighlight { get; set; }
 
         public System.Drawing.Color GetWinFormsColor(string key)
         {
@@ -67,10 +69,12 @@ namespace mpvnet
             if (Current == null)
                 Current = DefaultThemes[0];
 
+            Current.Background = Current.GetBrush("background");
             Current.Foreground = Current.GetBrush("foreground");
             Current.Foreground2 = Current.GetBrush("foreground2");
-            Current.Background = Current.GetBrush("background");
             Current.Heading = Current.GetBrush("heading");
+            Current.MenuBackground = Current.GetBrush("menu-background");
+            Current.MenuHighlight = Current.GetBrush("menu-highlight");
         }
 
         static List<Theme> Load(string content)
