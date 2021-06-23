@@ -1,5 +1,5 @@
 
-5.4.9.1 (2021-0?-??)
+5.4.9.1 (2021-06-23)
 ====================
 
 - Fix exception using named pipes.
@@ -12,7 +12,7 @@
 - Context menu font render quality fix.
 - Context menu and `cycle-audio` command supports external audio and subtitle tracks.
 - Fix window size not being saved.
-- libmpv shinchiro 2021-06-06
+- libmpv shinchiro 2021-06-20
 
 
 5.4.9.0 (2021-05-29)
