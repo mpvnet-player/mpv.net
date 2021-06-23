@@ -103,10 +103,11 @@ options = [{ name = "bilinear",         help = "Bilinear hardware texture filter
 [[settings]]
 name = "dscale"
 file = "mpv"
-default = "bilinear"
+default = "auto"
 filter = "Video"
-help = "Like scale, but apply these filters on downscaling instead. If this option is unset, the filter implied by scale will be applied."
-options = [{ name = "bilinear",         help = "Bilinear hardware texture filtering (fastest, very low quality)." },
+help = "Like scale, but apply these filters on downscaling instead."
+options = [{ name = "auto",             help = "Same with the upscaler." },
+           { name = "bilinear",         help = "Bilinear hardware texture filtering (fastest, very low quality)." },
            { name = "spline36",         help = "Mid quality and speed. This is the default when using gpu-hq." },
            { name = "lanczos",          help = "Lanczos scaling. Provides mid quality and speed. Generally worse than spline36, but it results in a slightly sharper image which is good for some content types. The number of taps can be controlled with  scale-radius, but is best left unchanged. (This filter is an alias for sinc-windowed sinc)" },
            { name = "ewa_lanczos",      help = "Elliptic weighted average Lanczos scaling. Also known as Jinc. Relatively slow, but very good quality. The radius can be controlled with scale-radius. Increasing the radius makes the filter sharper but adds more ringing. (This filter is an alias for jinc-windowed jinc)" },
