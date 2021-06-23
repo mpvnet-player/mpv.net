@@ -1,6 +1,6 @@
 
-5.4.9.1 (2021-06-23)
-====================
+5.4.9.1 Beta (2021-06-23)
+=========================
 
 - Fix exception using named pipes.
 - The mpv window property keepaspect-window was implemented.
