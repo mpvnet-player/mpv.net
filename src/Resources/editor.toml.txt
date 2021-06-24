@@ -82,8 +82,7 @@ options = [{ name = "bilinear",         help = "Bilinear hardware texture filter
            { name = "ewa_lanczos",      help = "Elliptic weighted average Lanczos scaling. Also known as Jinc. Relatively slow, but very good quality. The radius can be controlled with scale-radius. Increasing the radius makes the filter sharper but adds more ringing. (This filter is an alias for jinc-windowed jinc)" },
            { name = "ewa_lanczossharp", help = "A slightly sharpened version of ewa_lanczos, preconfigured to use an ideal radius and parameter. If your hardware can run it, this is probably what you should use by default." },
            { name = "mitchell",         help = "Mitchell-Netravali. The B and C parameters can be set with  scale-param1 and scale-param2. This filter is very good at downscaling (see dscale)." },
-           { name = "oversample",       help = "A version of nearest neighbour that (naively) oversamples pixels, so that pixels overlapping edges get linearly interpolated instead of rounded. This essentially removes the small imperfections and judder artifacts caused by nearest-neighbour interpolation, in exchange for adding some blur. This filter is good at temporal interpolation, and also known as \"smoothmotion\" (see tscale)." },
-           { name = "linear",           help = "A tscale filter." }]
+           { name = "oversample",       help = "A version of nearest neighbour that (naively) oversamples pixels, so that pixels overlapping edges get linearly interpolated instead of rounded. This essentially removes the small imperfections and judder artifacts caused by nearest-neighbour interpolation, in exchange for adding some blur. This filter is good at temporal interpolation, and also known as \"smoothmotion\" (see tscale)." }]
 
 [[settings]]
 name = "cscale"
@@ -97,8 +96,7 @@ options = [{ name = "bilinear",         help = "Bilinear hardware texture filter
            { name = "ewa_lanczos",      help = "Elliptic weighted average Lanczos scaling. Also known as Jinc. Relatively slow, but very good quality. The radius can be controlled with scale-radius. Increasing the radius makes the filter sharper but adds more ringing. (This filter is an alias for jinc-windowed jinc)" },
            { name = "ewa_lanczossharp", help = "A slightly sharpened version of ewa_lanczos, preconfigured to use an ideal radius and parameter. If your hardware can run it, this is probably what you should use by default." },
            { name = "mitchell",         help = "Mitchell-Netravali. The B and C parameters can be set with scale-param1 and scale-param2. This filter is very good at downscaling (see dscale)." },
-           { name = "oversample",       help = "A version of nearest neighbour that (naively) oversamples pixels, so that pixels overlapping edges get linearly interpolated instead of rounded. This essentially removes the small imperfections and judder artifacts caused by nearest-neighbour interpolation, in exchange for adding some blur. This filter is good at temporal interpolation, and also known as \"smoothmotion\" (see tscale)." },
-           { name = "linear",           help = "A tscale filter." }]
+           { name = "oversample",       help = "A version of nearest neighbour that (naively) oversamples pixels, so that pixels overlapping edges get linearly interpolated instead of rounded. This essentially removes the small imperfections and judder artifacts caused by nearest-neighbour interpolation, in exchange for adding some blur. This filter is good at temporal interpolation, and also known as \"smoothmotion\" (see tscale)." }]
 
 [[settings]]
 name = "dscale"
@@ -113,8 +111,7 @@ options = [{ name = "auto",             help = "Same with the upscaler." },
            { name = "ewa_lanczos",      help = "Elliptic weighted average Lanczos scaling. Also known as Jinc. Relatively slow, but very good quality. The radius can be controlled with scale-radius. Increasing the radius makes the filter sharper but adds more ringing. (This filter is an alias for jinc-windowed jinc)" },
            { name = "ewa_lanczossharp", help = "A slightly sharpened version of ewa_lanczos, preconfigured to use an ideal radius and parameter. If your hardware can run it, this is probably what you should use by default." },
            { name = "mitchell",         help = "Mitchell-Netravali. The B and C parameters can be set with scale-param1 and scale-param2. This filter is very good at downscaling (see dscale)." },
-           { name = "oversample",       help = "A version of nearest neighbour that (naively) oversamples pixels, so that pixels overlapping edges get linearly interpolated instead of rounded. This essentially removes the small imperfections and judder artifacts caused by nearest-neighbour interpolation, in exchange for adding some blur. This filter is good at temporal interpolation, and also known as \"smoothmotion\" (see tscale)." },
-           { name = "linear",           help = "A tscale filter." }]
+           { name = "oversample",       help = "A version of nearest neighbour that (naively) oversamples pixels, so that pixels overlapping edges get linearly interpolated instead of rounded. This essentially removes the small imperfections and judder artifacts caused by nearest-neighbour interpolation, in exchange for adding some blur. This filter is good at temporal interpolation, and also known as \"smoothmotion\" (see tscale)." }]
 
 [[settings]]
 name = "dither-depth"
@@ -124,7 +121,8 @@ filter = "Video"
 help = "Set dither target depth to N. Note that the depth of the connected video display device cannot be detected. Often, LCD panels will do dithering on their own, which conflicts with this option and leads to ugly output."
 options = [{ name = "no",   help = "Disable any dithering done by mpv." },
            { name = "auto", help = "Automatic selection. If output bit depth cannot be detected, 8 bits per component are assumed." },
-           { name = "8",    help = "Dither to 8 bit output." }]
+           { name = "8",    help = "Dither to 8 bit output." },
+           { name = "10",   help = "Dither to 10 bit output." }]
 
 [[settings]]
 name = "correct-downscaling"
