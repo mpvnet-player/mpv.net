@@ -43,7 +43,7 @@
  s           stop                   #menu: Stop
  _           ignore                 #menu: -
  Enter       cycle fullscreen       #menu: Toggle Fullscreen
- f           cycle fullscreen       #menu: Toggle Fullscreen
+ f           cycle fullscreen
  
  F11         playlist-prev; set pause no #menu: Navigate > Previous File
  F12         playlist-next; set pause no #menu: Navigate > Next File
@@ -113,15 +113,15 @@
  r           add sub-pos -1         #menu: Subtitle > Move Up
  R           add sub-pos +1         #menu: Subtitle > Move Down
  _           ignore                 #menu: Subtitle > -
- Shift+f     add sub-scale -0.1     #menu: Subtitle > Decrease Subtitle Font Size
- Shift+g     add sub-scale  0.1     #menu: Subtitle > Increase Subtitle Font Size
+ F           add sub-scale -0.1     #menu: Subtitle > Decrease Subtitle Font Size
+ G           add sub-scale  0.1     #menu: Subtitle > Increase Subtitle Font Size
 
  _           ignore                 #menu: Track
 
- +           add volume  2         #menu: Volume > Up
- -           add volume -2         #menu: Volume > Down
- 0           add volume  2         #menu: Volume > Up
- 9           add volume -2         #menu: Volume > Down
+ +           add volume  2          #menu: Volume > Up
+ -           add volume -2          #menu: Volume > Down
+ 0           add volume  2          #menu: Volume > Up
+ 9           add volume -2          #menu: Volume > Down
  _           ignore                 #menu: Volume > -
  m           cycle mute             #menu: Volume > Mute
 
