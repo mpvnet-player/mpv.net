@@ -1,79 +1,74 @@
 
-mpv.net manual
+mpv.net手册
 ==============
 
-Other Languages: [简体中文](Manual_chs.md)
+同步源提交_20210623_1c23c10 
 
-Table of contents
+目录
 -----------------
 
-* [About](#about)
-* [Download](#download)
-* [Installation](#installation)
-* [Support](#support)
-* [Settings](#settings)
-* [Input and context menu](#input-and-context-menu)
-* [Command Line Interface](#command-line-interface)
-* [Terminal](#terminal)
-* [mpv.net specific options](#mpvnet-specific-options)
-* [External Tools](#external-tools)
-* [Scripting](#scripting)
-* [Extensions](#extensions)
-* [Color Theme](#color-theme)
-* [Advanced Features](#advanced-features)
-* [Hidden Features](#hidden-features)
-* [Differences compared to mpv](#differences-compared-to-mpv)
-* [Technical Overview](#technical-overview)
-* [Context Menu Commands](#context-menu)
+* [关于](#关于)
+* [下载](#下载)
+* [安装](#安装)
+* [支持](#支持)
+* [设置](#设置)
+* [快捷键输入绑定](#快捷键输入绑定)
+* [命令行界面](#命令行界面)
+* [终端](#终端)
+* [mpv.net的专属选项](#mpv.net的专属选项)
+* [外部工具](#外部工具)
+* [脚本](#脚本)
+* [扩展](#扩展)
+* [配色主题](#配色主题)
+* [高级功能](#高级功能)
+* [隐藏功能](#隐藏功能)
+* [与mpv的差异](#与mpv的差异)
+* [技术概览](#技术概览)
+* [上下文菜单](#上下文菜单)
 
 
-About
+关于
 -----
 
-mpv.net is a modern desktop media player for Windows based on the popular mpv player.
+mpv.net是基于受欢迎的mpv的Windows现代媒体播放器。
 
-mpv.net is designed to be mpv compatible, almost all mpv features are available
-because they are all contained in libmpv, this means the official
-[mpv manual](https://mpv.io/manual/master/) applies to mpv.net.
+mpv.net出于兼容mpv而设计，几乎所有mpv的功能都可用，因为它们都包含在libmpv中，
+这意味着[mpv官方手册](https://mpv.io/manual/master/) 也适用于mpv.net。
 
-mpv focuses on the usage of the command line and the terminal,
-mpv.net retains the ability to be used from the command line and
-the terminal and adds a modern Windows GUI on top of it.
+mpv专注命令行与终端的使用，而mpv.net保留了这些并加入了现代化的图形界面。
 
 
-Download
+下载
 --------
 
-[Changelog](Changelog.md)
+[更新日志](Changelog.md)
 
 
-### Stable
+### 稳定版
 
-[Release page](../../../releases)
+[发布页面](../../../releases)
 
 
-### Beta
+### 测试版
 
 [OneDrive](https://1drv.ms/u/s!ArwKS_ZUR01g1ldoLA90tX9DzKTj?e=xITXbC)
 
 [DropBox](https://www.dropbox.com/sh/t54p9igdwvllbpl/AADKyWpaFnIhdyosxyP5d3_xa?dl=0)
 
 
-Installation
+安装
 ------------
 
-mpv.net requires the .NET Framework 4.8 and Windows 7 or higher and a modern graphics card.
+mpv.net需要.NET Framework 4.8运行库和高于win7版本的系统以及一张不太旧的显卡。
 
-There is a setup exe and a portable zip file download.
+安装版和便携版可供下载。
 
-An old version should be uninstalled before installing a new version,
-it's generally not a good idea to install a new version on top of an old version,
-the setup don't enforce it because it's not easy to implement.
+安装新版本之前应完全卸载旧版本，使用旧版本覆盖安装新版本通常不是推荐的做法，
+安装工具不强制执行这项操作，因为它难以实现。
 
-For internet streaming youtube-dl must be downloaded and installed manually,
-meaning it must be located in the PATH environment variable or in the startup directory.
+对于网络串流，必须手动下载安装youtube-dl，它必须位于环境变量 PATH 或启动目录中。
 
-mpvnet.exe is platform agnostic, users that need x86 have to replace 4 native tools:
+mpv.net不限制系统平台，win32的用户必须替换目录中的4个工具:
 
 - Everything.dll
 - mpv-1.dll
@@ -81,304 +76,303 @@ mpvnet.exe is platform agnostic, users that need x86 have to replace 4 native to
 - mpvnet.com
 
 
-#### File Associations
+#### 文件关联
 
-File Associations can be created using the context menu under 'Tools > Setup'.
+可以使用上下文菜单创建文件关联。 'Tools > Setup'
 
-After the file associations were registered, go to the Windows settings under
-'Settings > Apps > Default apps' or shell execute `ms-settings:defaultapps` and choose
-mpv.net as default app for Video and optionally for Audio and Images.
+注册完文件关联后，进入 "Windows设置 > 应用 > 默认应用"，或者从powershell
+执行 `ms-settings:defaultapps` ，然后选择mpv. net作为视频/音频/图像的默认程序。
 
-It's possible to change the default application using the 'Open with' feature
-of the context menu in File Explorer.
+可以使用资源管理器的上下文菜单的'Open with'功能更改默认应用程序。
 
-[Open with++](#open-with) can be used to extend the File Explorer context menu
-to get menu items for [Play with mpv.net](https://github.com/stax76/OpenWithPlusPlus#play-with-mpvnet) and
+[Open with++](#open-with) 可用来扩展资源管理器的上下文菜单
+[Play with mpv.net](https://github.com/stax76/OpenWithPlusPlus#play-with-mpvnet) 和 
 [Add to mpv.net playlist](https://github.com/stax76/OpenWithPlusPlus#add-to-mpvnet-playlist).
+可用来获取 'Play with mpv.net' 和 'Add to mpv.net playlist' 的菜单子项
 
-When multiple files are selected in File Explorer and enter is pressed then
-the files are opened in mpv.net in random order, this works with maximum 15 files.
+当在资源管理器中选择多个文件并按 enter 键时，文件会在mpv.net随机排序打开，最多限制15个文件。
 
 
-Support
+支持
 -------
 
-Before making a support request, please try a newer [beta version](#beta) first.
+在提出支持请求之前，先尝试最新的[测试版](#测试版)。
 
-Bugs and feature requests can be made on the github [issue tracker](../../../issues),
-feel free to use for anything mpv.net related, usage questions are welcome.
+程序错误和功能请求可以在github的[问题追踪](../../../issues)上提出，
+任何与mpv. net相关的东西都可以使用，欢迎提交使用上出现的问题。
 
-Or use the [support thread](https://forum.videohelp.com/threads/392514-mpv-net-a-extendable-media-player-for-windows) in the VideoHelp forum.
+或者浏览VideoHelp论坛的讨论帖。 
+[support thread](https://forum.videohelp.com/threads/392514-mpv-net-a-extendable-media-player-for-windows)
 
 
-Settings
+设置
 --------
 
-mpv.net searches the config folder at:
+mpv.net在以下路径寻找设置文件夹：
 
-1. startup\portable_config
+1. <程序启动目录>\portable_config
 2. %APPDATA%\mpv.net
 
-In order to use a custom directory create following file:
+弱使用自定义目录，则创建以下文件：
 
-startup\settings-directory.txt
+<程序启动目录>\settings-directory.txt
 
-Put your custom directory in that file.
+并在此文件中输入你的自定义路径。
 
-The custom directory path can be relative to the startup directory path.
+自定义目录路径可以使用相对路径： `startup\...`
 
-This custom directory is only used if the portable_config and %APPDATA% directory does not exist.
+只有在 portable_config 和 %APPDATA% 目录不存在的情况下，才可使用此自定义路径。
 
-mpv specific settings are stored in the file mpv.conf, if no mpv.conf file exists
-mpv.net generates it with the following defaults:
+如果设置目录中不存在 mpv.conf ，将使用以下文件生成默认的初始设置：
 
 [mpv.conf defaults](../../../tree/master/src/Resources/mpv.conf.txt)
 
-mpv.net specific settings are stored in the file mpvnet.conf,
-these options are documented [here](#mpvnet-specific-options).
+mpv.net的专属选项保存在 mpvnet.conf 文件中，参数解释请参阅[此处](#mpv.net的专属选项).
 
 
-Input and context menu
+快捷键输入绑定
 ----------------------
 
-The input (key/mouse) bindings and the context menu definitions are stored in the
-input.conf file, if it's missing mpv.net generates it with the following defaults:
+键鼠的快捷键和上下文菜单的操作保存在 input.conf 文件中，
+如果设置目录中不存在，将使用以下文件生成默认的初始设置：
 
 [input.conf defaults](../../../tree/master/src/Resources/input.conf.txt)
 
-Global hotkeys are supported via global-input.conf file.
+通过 global-input.conf 文件支持全局热键。
 
-The config folder can be opened from the context menu: `Settings > Open Config Folder`
+配置文件夹可以从上下文菜单中打开： `Settings > Open Config Folder`
 
 
-Command Line Interface
+命令行界面
 ----------------------
 
 **mpvnet** [options] [file|URL|PLAYLIST|-]  
 **mpvnet** [options] files
 
 
-mpv properties can be set with the same syntax as mpv, that is:
+mpv的参数与mpv.net共通，例如：
 
 
-To enable the border property:
+启用窗口装饰：
 
 `--border` or `--border=yes`
 
 
-To disable the border property:
+禁用窗口装饰：
 
 `--no-boder` or `--border=no`
 
 
-Supported are all mpv properties, they are documented here:
+所有支持的mpv属性，参阅此处：
 
 https://mpv.io/manual/master/#properties
 
 
-mpv.net has a feature to list all properties:
+mpv.net可以使用以下功能列出所有属性：
 
-_Context Menu > View > Show Properties_
-
-
-Non property switches are generally not supported in mpv.net!
+'Context Menu > View > Show Properties'
 
 
-Terminal
+mpv.net通常不支持非属性的运行时状态切换！
+
+
+终端
 --------
 
-When mpv.net is started from a terminal it will output status,
-error and debug messages to the terminal and accept input keys from the terminal.
+当mpv. net从终端启动时，它将输出状态、错误和调试消息，并接受终端的输入。
 
-In the context menu under _Tools > Setup_ a button can be found to add
-mpv.net to the path environment variable.
+在菜单中的 'Tools > Setup' 可以将mpv.net添加到环境变量PATH。
 
 A common task for the terminal is debugging scripts.
 
 
-mpv.net specific options
+mpv.net的专属选项
 ------------------------
 
-mpv.net specific options can be found in the conf editor searching for 'mpv.net'.
+这些专属选项可以在 conf editor 中使用关键词 "mpv.net" 检索。
 
-The options are saved in the mpvnet.conf file.
+这些专属选项被修改后被保存在 mpvnet.conf 文件中。
 
 #### --queue \<files\>
 
-Adds files to the playlist, requires [--process-instance=single](#--process-instancevalue).
-[Open with++](#open-with) can be used to add files to the playlist using File Explorer.
+添加文件到播放列表，需要设置 [--process-instance=single](#--process-instancevalue) 。
+也可以在资源管理器中使用 [Open with++](#open-with) 添加文件。
 
 #### --command=\<input command\>
 
-Sends a input command. Useful to control mpv.net from the command line, for instance
-to create global hotkeys with AutoHotkey, for that [process-instance=single](#--process-instancevalue)
-must be used. Spaces have to be escaped with quotes and quotes have to be escaped with double quotes.
+发送一个输入命令。用于从命令行控制mpv.net，例如使用 AutoHotkey 创建全局热键，
+必须设置 [process-instance=single](#--process-instancevalue) 。
+空格必须用引号转义，引号必须用双引号转义。
 
 ### Audio
 
 #### --remember-volume=\<yes|no\>
 
-Save volume and mute on exit and restore it on start. Default: yes
+在程序退出时保存音量并静音，在启动时恢复之前的音量。默认：yes
 
 
 ### Screen
 
 #### --start-size=\<value\>
 
-Setting to remember the window size.
+设置为记住窗口大小。
 
 **video**  
-Window size is set to video resolution.  
+窗口大小设置为视频分辨率。
 
 **width-session**  
-Width is remembered in the current session.
+记住当前的宽度。
 
 **width-always**  
-Width is always remembered.
+始终记住宽度。
 
 **height-session**  
-Height is remembered in the current session. Default
+记住当前的高度。（默认值）
 
 **height-always**  
-Height is always remembered.
+始终记住高度。
 
 **always**  
-Size is always remembered.
+始终记住大小。
 
 
 #### --start-threshold=\<milliseconds\>
 
-Threshold in milliseconds to wait for libmpv returning the video
-resolution before the window is shown, otherwise default dimensions
-are used as defined by autofit and start-size. Default: 1500
+在显示窗口之前等待libmpv返回视频分辨率的阈值（毫秒），
+否则将使用由 --autofit 和 --start-size 定义的初始大小。默认：1500
 
 
 #### --minimum-aspect-ratio=\<float\>
 
-Minimum aspect ratio, if the AR is smaller than the defined value then
-the window AR is set to 16/9. This avoids a square window for Music
-with cover art. Default: 1.2
+最小宽高比，如果窗口宽高比小于定义的值，那么将窗口宽高比设置为16/9。
+这避免了音乐封面的方形窗口。默认：1.2
 
 
 #### --remember-window-position=\<yes|no\>
 
-Save the window position on exit. Default: no
+在退出时保存窗口的位置。默认：no
 
 
 ### Playback
 
 #### --auto-load-folder=\<yes|no\>
 
-For single files automatically load the entire directory into the playlist.
-Can be suppressed via shift key. Default: yes
+打开单个文件时，自动将整个目录加载到播放列表中。可以通过 shift 键临时禁用。默认：yes
 
 
 ### General
 
 #### --update-check=\<yes|no\>
 
-Daily check for new version. (requires PowerShell 5 and curl.) Default: no
+每日检查新版本（需要 PowerShell 5 和 curl）。默认：no
 
 
 #### --process-instance=\<value\>
 
-Defines if more then one mpv.net process is allowed.
+定义是否允许多个 mpv.net 进程。
 
-Tip: Whenever the control key is pressed when files or URLs are opened,
-the playlist is not cleared but the files or URLs are appended to the playlist.
-This not only works on process startup but in all mpv.net features that open files and URLs.
+提示：当打开文件或 url 时，只要按下CTRL键，就不会清除当前的播放列表，
+而只将文件或 url 追加到列表中。这不仅适用于进程启动，也适用于所有打开文件和 url 的功能。
 
 **multi**  
-Create a new process everytime the shell starts mpv.net.
+每次从 shell 启动 mpv.net 时创建一个新进程。
 
 **single**  
-Force a single process everytime the shell starts mpv.net. Default
+每次从 shell 启动 mpv.net 只允许唯一一个进程。（默认值）
 
 **queue**  
-Force a single process and add files to playlist.
+和 single 类似但会把文件追加到已打开的mpv.net的播放列表中。
 
 
 #### --recent-count=\<int\>
 
-Amount of recent files to be remembered. Default: 15
+最近文件的记录数量。默认：15
 
 
 #### --video-file-extensions=\<string\>
 
-Video file extensions used to create file associations and used by the auto-load-folder feature.
+用于创建文件关联的视频文件扩展名，由自动加载文件夹的功能使用。
 
 
 #### --audio-file-extensions=\<string\>
 
-Audio file extensions used to create file associations and used by the auto-load-folder feature.
+用于创建文件关联的音频文件扩展名，由自动加载文件夹的功能使用。
 
 
 #### --image-file-extensions=\<string\>
 
-Image file extensions used to create file associations and used by the auto-load-folder feature.
+用于创建文件关联的图片文件扩展名，由自动加载文件夹的功能使用。
 
 
 #### --debug-mode=\<yes|no\>
 
-Enable this only when a developer asks for it. Default: no
+只有在开发人员要求时才启用此选项。默认：no
 
 
 ### UI
 
 #### --dark-mode=\<value\>
 
-Enables a dark theme.
+启用深色模式.
 
 **always**  
-Default
+始终（默认值）
 
 **system**  
-Available on Windows 10 or higher.
+跟随系统。（需要win10及以上的系统）
 
 **never**
+从不
 
 
 #### ---dark-theme=\<string\>
 
-Color theme used in dark mode. Default: dark
+深色模式中使用的配色主题。默认：dark
 
-[Color Themes](#color-theme)
+[配色主题](#配色主题)
 
 
 #### --light-theme=\<string\>
 
-Color theme used in light mode. Default: light
+浅色模式中使用的配色主题。默认：light
 
-[Color Themes](#color-theme)
+[配色主题](#配色主题)
 
 
-External Tools
+外部工具
 --------------
 
 ### Play with mpv
 
-In order to play videos from sites such as YouTube the Chrome Extension [Play with mpv](https://chrome.google.com/webstore/detail/play-with-mpv/hahklcmnfgffdlchjigehabfbiigleji) can be used.
+[Play with mpv](https://chrome.google.com/webstore/detail/play-with-mpv/hahklcmnfgffdlchjigehabfbiigleji)
+是一个支持调用mpv播放YouTube等网站视频的谷歌浏览器的扩展。
 
-Due to Chrome Extensions not being able to start a app, another app that communicates with the extension is required, this app can be downloaded [here](http://www.mediafire.com/file/lezj8lwqt5zf75v/play-with-mpvnet-server.7z/file). The extension works only when the app is running, to have the app always running a link can be created in the auto start folder located at:
+由于Chrome扩展无法启动一个应用程序，需要另一个与扩展程序通信的应用程序，该程序可以从
+[此处](http://www.mediafire.com/file/lezj8lwqt5zf75v/play-with-mpvnet-server.7z/file)下载。
+只有当该程序运行时扩展才能正常工作，为了让应用程序始终运行，应将其放在系统自启动目录中：
 
 `C:\Users\%username%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup`
 
-This will start the app on system start and have it running in the background. When the file association registration of mpv.net was executed then the app should find the location of mpv.net, alternativly the mpv.net folder can be added to the Path environment variable.
+这将使该程序随系统共同启动，并在后台运行。当mpv.net的文件关联注册被执行后，
+该程序应该会找到mpv.net的位置，或者将mpv.net文件夹添加到环境变量PATH。
 
 
 ### Open With
 
-Alternatively the Chrome/Firefox extension [Open With](../../../issues/119) can be used.
+或者可以使用Chrome/Firefox扩展 [Open With](../../../issues/119) 。
 
 
 ### Open with++
 
-[Open with++](https://github.com/stax76/OpenWithPlusPlus) can be used to extend the File Explorer context menu to get menu items for [Play with mpv.net](https://github.com/stax76/OpenWithPlusPlus#play-with-mpvnet) and [Add to mpv.net playlist](https://github.com/stax76/OpenWithPlusPlus#add-to-mpvnet-playlist).
+[Open with++](#open-with) 可用来扩展资源管理器的上下文菜单
+[Play with mpv.net](https://github.com/stax76/OpenWithPlusPlus#play-with-mpvnet) 和 
+[Add to mpv.net playlist](https://github.com/stax76/OpenWithPlusPlus#add-to-mpvnet-playlist).
+可用来获取 'Play with mpv.net' 和 'Add to mpv.net playlist' 的菜单子项
 
 
 ### Universal Remote
 
-Universal Remote is a non-free Android remote control app.
+Universal Remote 是一个收费的安卓远程控制app。
 
 https://www.unifiedremote.com
 
@@ -390,100 +384,92 @@ https://www.unifiedremote.com/tutorials/how-to-create-a-custom-keyboard-shortcut
 
 https://www.unifiedremote.com/tutorials/how-to-install-a-custom-remote
 
-[My config](./Universal%20Remote)
+[我的配置](./Universal%20Remote)
 
 
-Scripting
+脚本
 ---------
 
 #### Lua
 
-File Type: `lua`
+文件类型： `lua`
 
-Location: `<config folder>\scripts`
+文件位置： `<config folder>\scripts`
 
-The Lua script host is built into libmpv.
+Lua脚本的host由libmpv内建。
 
-There is no debugging support, only error and debug messages printed on the terminal.
+没有调试支持，只有错误和调试消息输出在终端上。
 
-Lua scripts are loaded before the first media file loads.
+Lua脚本在第一个媒体文件打开之前加载。
 
-[mpv Lua documentation](https://mpv.io/manual/master/#lua-scripting)
+[mpv Lua 文档](https://mpv.io/manual/master/#lua-scripting)
 
-[mpv user scripts](https://github.com/mpv-player/mpv/wiki/User-Scripts)
+[mpv用户脚本](https://github.com/mpv-player/mpv/wiki/User-Scripts)
 
 
 #### JavaScript
 
-File Type: `js`
+文件类型： `js`
 
-Location: `<config folder>\scripts`
+文件位置： `<config folder>\scripts`
 
-The JavaScript script host is built into libmpv.
+JavaScriptLua脚本的host由libmpv内建。
 
-There is no debugging support, only error and debug messages printed on the terminal.
+没有调试支持，只有错误和调试消息输出在终端上。
 
-JavaScript scripts are loaded before the first media file loads.
+JavaScript脚本在第一个媒体文件打开之前加载。
 
-[mpv JavaScript documentation](https://mpv.io/manual/master/#javascript)
+[mpv JavaScript 文档](https://mpv.io/manual/master/#javascript)
 
-[mpv user scripts](https://github.com/mpv-player/mpv/wiki/User-Scripts)
+[mpv用户脚本](https://github.com/mpv-player/mpv/wiki/User-Scripts)
 
 
 #### PowerShell
 
-File Type: `ps1`
+文件类型： `ps1`
 
-Location: `<config folder>\scripts-ps`
+文件位置： `<config folder>\scripts-ps`
 
-The PowerShell scripting host is like extensions not
-initialized before media files are loaded.
+PS脚本的host类似于扩展，在打开媒体文件前尚未初始化。
 
-mpv.net does not define scripting interfaces but instead exposed
-its complete internals, there are no compatibility guaranties.
+mpv.net没有定义脚本接口，而是公开了它的完整内部，没有兼容性保证。
 
-[Example Scripts](../../../tree/master/src/Scripts)
+[示例脚本](../../../tree/master/src/Scripts)
 
 
 #### C#
 
-File Type: `cs`
+文件类型： `cs`
 
-Location: `<config folder>\scripts-cs`
+文件位置： `<config folder>\scripts-cs`
 
-mpv.net does not define scripting interfaces but instead exposed
-its complete internals, there are no compatibility guaranties.
+mpv.net没有定义脚本接口，而是公开了它的完整内部，没有兼容性保证。
 
-Script code can be written within a C# [extension](../../../tree/master/src/Extensions),
-that way full code completion and debugger support is available.
-Once the code was developed and debugged, it can be moved
-from the extension to a lightweight standalone script.
+脚本代码可以在C#[扩展](../../../tree/master/src/Extensions)中编写，这样就可以获得
+完整的代码和调试器支持。一旦代码被调试和开发完成，就可以将其从扩展转移到轻量级的独立脚本。
 
-The C# scripting host is like [extensions](../../../tree/master/src/Extensions)
-not initialized before media files are loaded.
+C#脚本的host类似于[扩展](../../../tree/master/src/Extensions)，在打开媒体文件前尚未初始化。
 
-[Example Scripts](../../../tree/master/src/Scripts)
+[示例脚本](../../../tree/master/src/Scripts)
 
 
-Extensions
+扩展
 ----------
 
-Extensions are located in a subfolder _extensions_ in the config folder
-and the filename must have the same name as the directory:
+扩展位于设置目录的子文件夹 'extensions' 中，文件名必须与上级文件夹具有相同的名称：
 
 ```Text
 <config folder>\extensions\ExampleExtension\ExampleExtension.dll
 ```
 
-mpv.net does not define extension interfaces but instead exposed
-its complete internals, there are no compatibility guaranties.
+mpv.net没有定义脚本接口，而是公开了它的完整内部，没有兼容性保证。
 
 
-### Walkthrough creating an extension
+### 创建扩展演示
 
-- Download and install [Visual Studio Community](https://visualstudio.microsoft.com).
-- Create a new project of type **Class Library .NET Framework**
-  and ensure the project name ends with **Extension**.
+- 下载安装 [Visual Studio Community](https://visualstudio.microsoft.com) 。
+- 创建新的项目类型 **Class Library .NET Framework**
+  并确保项目名称以 **Extension** 作结尾。
 - Add a reference to **System.ComponentModel.Composition**.
 - Add a reference to mpvnet.exe, select the mpvnet reference
   in the Solution Explorer, open the Properties window and set
@@ -497,87 +483,81 @@ its complete internals, there are no compatibility guaranties.
   define command line arguments like a video file to be played when you start debugging.
 
 
-### Sample Code
+### 代码样本
 
 #### RatingExtension
 
-This extension writes a rating to the filename of rated videos when mpv.net shuts down.
+当mpv.net关闭时，这个扩展程序会对分级视频的文件名进行记录。
 
-The input.conf defaults contain key bindings for this extension to set ratings.
+'input.conf defaults' 包含了用于设置评级扩展的键位绑定。
 
-[Source Code](../../../tree/master/src/Extensions)
+[源码](../../../tree/master/src/Extensions)
 
 
-Color Theme
+配色主题
 -----------
 
-mpv.net supports custom color themes, the definition of the built-in themes can be found at:
+mpv.net支持自定义配色主题，内置主题的定义可以在以下文件中查看：
 
 [theme.txt](../../../tree/master/src/Resources/theme.txt)
 
 
-Custom themes can be saved at:
+自定义的配色方案保存在以下文件中：
 
 `<conf folder>\theme.conf`
 
-The theme.conf file may contain an unlimited amount of themes.
+theme.conf 文件可包含无限量的主题。
 
-In the config editor under UI there are the settings dark-theme and
-light-theme to define the themes used in dark and in light mode.
+在 config editor 的 UI 词条中存在 dark-theme 和 light-theme 的设置来定义主题应用在深色/浅色模式。
 
 
-Advanced Features
+高级功能
 -----------------
 
-### Playback of VapourSynth scripts
+### 播放 VapourSynth 脚本
 
-vpy files are supported with following mpv.conf configuration:
+播放vpy文件的功能受 mpv.conf 中的以下参数支持：
 
 ```
 [extension.vpy]
 demuxer-lavf-format = vapoursynth
 ```
 
-Python and VapourSynth must be in the path environment variable.
+Python和VapourSynth必须在环境变量PATH中。
 
 
-Hidden Features
+隐藏功能
 ---------------
 
-Selecting multiple files in File Explorer and pressing enter will
-open the files in mpv.net. Explorer restricts this to maximum 15 files
-and the order will be random.
+使用mpv.net在资源管理器中选择多个文件并按下回车键打开。
+资源管理器将此限制为最多15个并且顺序将是随机的。
 
-Whenever the control key is pressed when files or URLs are opened,
-the playlist is not cleared but the files or URLs are appended to the playlist.
-This works in all mpv.net features that open files or URLs.
+当打开文件或url时，只要按下CTRL键，就不会清除播放列表，而是将文件或url附加到播放列表中。
+这适用于mpv.net的所有打开文件或url的功能。
 
-Pressing the shift key while opening a single file will suppress loading
-all files of the folder into the playlist.
+在打开单个文件时按下SHIFT键将禁止该文件夹的其它文件添加到播放列表中。
 
-In fullscreen mode clicking the top right corner closes the player.
+在全屏模式下点击顶部右上角关闭播放器。
 
 
-Differences compared to mpv
+与mpv的差异
 ---------------------------
 
-mpv.net is designed to work exactly like mpv, there are a few limitations:
+mpv.net被设计的和mpv大体一致，但是有一些限制：
 
 
-### Window Limitations
+### 窗口限制
 
-mpv.net implements an own main window which means only mpv window
-features are supported that have an own implementation in mpv.net.
+mpv.net实现了一个自己的主窗口，这意味着只有在mpv.net中有自己实现的mpv窗口功能才受支持。
 
-A window free mode is currently not supported, the main window is always
-visible, even when mpv.net is started from the terminal and music is played.
+当前不支持无窗口模式，即使从终端启动mpv.net并播放音乐，主窗口也始终可见。
 
-The documentation of mpvs window features can be found here:
+mpv窗口特性的文档可以在此处找到：
 
 https://mpv.io/manual/master/#window
 
 
-mpv.net has currently implemented the following window properties:
+mpv.net目前已实现了以下窗口属性：
 
 - [border](https://mpv.io/manual/master/#options-border)
 - [fullscreen](https://mpv.io/manual/master/#options-fullscreen)
@@ -589,7 +569,7 @@ mpv.net has currently implemented the following window properties:
 - [window-minimized](https://mpv.io/manual/master/#options-window-minimized)
 
 
-**Partly implemented are:**
+**部分支持的属性：**
 
 [autofit](https://mpv.io/manual/master/#options-autofit)
 
@@ -598,13 +578,11 @@ mpv.net has currently implemented the following window properties:
 [autofit-larger](https://mpv.io/manual/master/#options-autofit-larger)
 
 
-### Command Line Limitations
+### 命令行限制
 
-mpv.net supports property based mpv command line options which means it supports
-almost all mpv command line options.
+mpv.net支持基于属性的mpv命令行选项，这意味着它支持mpv几乎所有的命令行选项。
 
-What is not supported are non property bases options. Non property based options
-need an own implementation in mpv.net, so far implemented are:
+不支持的是非基于属性的选项。它们在mpv.net中有自己的实现，到目前为止实现的有：
 
 --ad=help  
 --audio-device=help  
@@ -614,51 +592,44 @@ need an own implementation in mpv.net, so far implemented are:
 --version  
 
 
-### mpv.net specific options
+### mpv.net的专属选项
 
-Options that are specific to mpv.net can be found by entering _mpv.net_
-in the search field of the config editor, in the manual they are documented
-[here](#mpvnet-specific-options).
+在config editor中输入 'mpv.net' 检索这些选项，在[此处](#mpv.net的专属选项)的手册中有对应说明。
 
-mpv.net specific options are saved in the file mpvnet.conf and are just
-as mpv properties available on the command line.
+mpv.net的专属选项保存在 'mpvnet.conf' 文件中，与mpv一样可由命令行界面获取。
 
 
-Technical Overview
+技术概览
 ------------------
 
-mpv.net is written in C# 7 and runs on the .NET Framework 4.8.
+mpv.net使用 C#7 编写并且需要 .NET Framework 4.8 来运行。
 
-The Extension implementation is based on the
+扩展的实现基于 
 [Managed Extensibility Framework](https://docs.microsoft.com/en-us/dotnet/framework/mef/).
 
-The main window is WinForms based because WinForms allows better libmpv integration
-compared to WPF, all other windows are WPF based.
+主窗口基于WinForms，与WPF相比对libmpv集成的更友好，所有其他窗口都是基于WPF的。
 
-The config editor adds it's controls dynamically and uses
-[TOML](https://en.wikipedia.org/wiki/TOML) to define it's content.
+配置编辑器动态的添加控件，并使用 [TOML](https://en.wikipedia.org/wiki/TOML) 定义内容。
 
 
-Third party components are:
+使用的第三方组件：
 
-- [libmpv provides the core functionality](https://mpv.io/)
+- [libmpv提供了核心功能](https://mpv.io/)
 - [MediaInfo](https://mediaarea.net/en/MediaInfo)
-- [Tommy, a single file TOML parser](https://github.com/dezhidki/Tommy)
-- [Everything, a fast file search service](https://www.voidtools.com)
+- [Tommy单文件TOML的解析器](https://github.com/dezhidki/Tommy)
+- [Everything快速文件搜索服务](https://www.voidtools.com)
 
 
-Context Menu
+上下文菜单
 ------------
 
-The context menu of mpv.net is defined in the file input.conf which is
-located in the config directory.
+mpv.net的上下文菜单由设置目录中的文件 input.conf 定义。
 
-If the input.conf file does not exists mpv.net generates it with the following defaults:
+如果 input.conf 文件不存在，mpv.net由以下文件生成默认：
 
 <https://github.com/stax76/mpv.net/tree/master/src/Resources/input.conf.txt>
 
-input.conf defines mpvs key and mouse bindings and mpv.net uses
-comments to define the context menu.
+input.conf 定义mpv的快捷键，同时mpv.net使用注释定义上下文菜单。
 
 
 ### Open > Open Files
