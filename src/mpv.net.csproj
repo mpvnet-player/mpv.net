@@ -77,6 +77,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Misc\App.cs" />
+    <Compile Include="Misc\Common.cs" />
     <Compile Include="WPF\RelayCommand.cs" />
     <Compile Include="Misc\CSharpScriptHost.cs" />
     <Compile Include="Misc\Extension.cs" />
@@ -87,6 +88,7 @@
       <Link>Manual.md</Link>
     </None>
     <None Include="Resources\mpvnet-santa.png" />
+    <None Include="Resources\editor_conf.txt" />
     <Content Include="Resources\theme.txt" />
     <Page Include="WPF\CommandPaletteControl.xaml">
       <SubType>Designer</SubType>
@@ -124,14 +126,13 @@
     <Compile Include="WPF\SearchTextBoxUserControl.xaml.cs">
       <DependentUpon>SearchTextBoxUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DynamicGUI\DynamicGUI.cs" />
-    <Compile Include="DynamicGUI\OptionSettingControl.xaml.cs">
+    <Compile Include="Misc\Conf.cs" />
+    <Compile Include="WPF\OptionSettingControl.xaml.cs">
       <DependentUpon>OptionSettingControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DynamicGUI\StringSettingControl.xaml.cs">
+    <Compile Include="WPF\StringSettingControl.xaml.cs">
       <DependentUpon>StringSettingControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DynamicGUI\Tommy.cs" />
     <Compile Include="Misc\ExtensionMethods.cs" />
     <Compile Include="Native\MediaInfo.cs" />
     <Compile Include="Native\Taskbar.cs" />
@@ -197,7 +198,6 @@
     </Compile>
     <Content Include="mpvnet.ico" />
     <Content Include="Resources\mpv.conf.txt" />
-    <Content Include="Resources\editor.toml.txt" />
     <None Include="Resources\mpvnet.ico" />
     <None Include="Resources\mpvnet.png" />
   </ItemGroup>
@@ -208,11 +208,11 @@
     <Content Include="Resources\input.conf.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="DynamicGUI\OptionSettingControl.xaml">
+    <Page Include="WPF\OptionSettingControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="DynamicGUI\StringSettingControl.xaml">
+    <Page Include="WPF\StringSettingControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

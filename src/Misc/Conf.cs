@@ -1,49 +1,42 @@
 ﻿
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Navigation;
 
-using Tommy;
-using mpvnet;
-
-namespace DynamicGUI
+namespace mpvnet
 {
-    public class Settings
+    public class Conf
     {
-        public static List<SettingBase> LoadSettings(string content)
+        public static List<SettingBase> LoadConf(string content)
         {
-            TomlTable table;
+            List<SettingBase> settingsList = new List<SettingBase>();
 
-            using (StringReader reader = new StringReader(content))
-                table = TOML.Parse(reader);
-
-            List<SettingBase> settingsList = new List<SettingBase>(); 
-
-            foreach (TomlTable setting in table["settings"])
+            foreach (ConfSection section in ConfParser.Parse(content))
             {
                 SettingBase baseSetting = null;
 
-                if (setting.HasKey("options"))
+                if (section.HasName("option"))
                 {
                     OptionSetting optionSetting = new OptionSetting();
                     baseSetting = optionSetting;
-                    optionSetting.Default = setting["default"];
+                    optionSetting.Default = section.GetValue("default");
                     optionSetting.Value = optionSetting.Default;
 
-                    foreach (TomlTable option in setting["options"])
+                    foreach (var i in section.GetValues("option"))
                     {
                         var opt = new OptionSettingOption();
-                        opt.Name = option["name"];
 
-                        if (option.HasKey("help"))
-                            opt.Help = option["help"];
+                        if (i.Value.Contains(" "))
+                        {
+                            opt.Name = i.Value.Substring(0, i.Value.IndexOf(" "));
+                            opt.Help = i.Value.Substring(i.Value.IndexOf(" ")).Trim();
+                        }
+                        else
+                            opt.Name = i.Value;
 
-                        if (option.HasKey("text"))
-                            opt.Text = option["text"];
-                        else if (opt.Name == optionSetting.Default)
+                        if (opt.Name == optionSetting.Default)
                             opt.Text = opt.Name + " (Default)";
 
                         opt.OptionSetting = optionSetting;
@@ -54,20 +47,21 @@ namespace DynamicGUI
                 {
                     StringSetting stringSetting = new StringSetting();
                     baseSetting = stringSetting;
-                    stringSetting.Default = setting.HasKey("default") ? setting["default"].ToString() : "";
+                    stringSetting.Default = section.HasName("default") ? section.GetValue("default") : "";
                 }
 
-                baseSetting.Name = setting["name"];
-                baseSetting.File = setting["file"];
-                baseSetting.Filter = setting["filter"];
+                baseSetting.Name   = section.GetValue("name");
+                baseSetting.File   = section.GetValue("file");
+                baseSetting.Filter = section.GetValue("filter");
 
-                if (setting.HasKey("help"))  baseSetting.Help  = setting["help"];
-                if (setting.HasKey("url"))   baseSetting.URL   = setting["url"];
-                if (setting.HasKey("width")) baseSetting.Width = setting["width"];
-                if (setting.HasKey("type"))  baseSetting.Type  = setting["type"];
+                if (section.HasName("help"))  baseSetting.Help = section.GetValue("help");
+                if (section.HasName("url"))   baseSetting.URL = section.GetValue("url");
+                if (section.HasName("width")) baseSetting.Width = Convert.ToInt32(section.GetValue("width"));
+                if (section.HasName("type"))  baseSetting.Type = section.GetValue("type");
 
                 settingsList.Add(baseSetting);
             }
+
             return settingsList;
         }
     }
@@ -155,7 +149,9 @@ namespace DynamicGUI
 
         public void SetURL(string url)
         {
-            if (string.IsNullOrEmpty(url)) return;
+            if (string.IsNullOrEmpty(url))
+                return;
+
             NavigateUri = new Uri(url);
             RequestNavigate += HyperLinkEx_RequestNavigate;
             Inlines.Clear();

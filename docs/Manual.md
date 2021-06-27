@@ -374,9 +374,9 @@ Alternatively the Chrome/Firefox extension [Open With](../../../issues/119) can 
 [Open with++](https://github.com/stax76/OpenWithPlusPlus) can be used to extend the File Explorer context menu to get menu items for [Play with mpv.net](https://github.com/stax76/OpenWithPlusPlus#play-with-mpvnet) and [Add to mpv.net playlist](https://github.com/stax76/OpenWithPlusPlus#add-to-mpvnet-playlist).
 
 
-### Universal Remote
+### Universal Remote Android app
 
-Universal Remote is a non-free Android remote control app.
+Universal Remote is Android remote control app which costs 5 €.
 
 https://www.unifiedremote.com
 
@@ -389,6 +389,14 @@ https://www.unifiedremote.com/tutorials/how-to-create-a-custom-keyboard-shortcut
 https://www.unifiedremote.com/tutorials/how-to-install-a-custom-remote
 
 [My config](./Universal%20Remote)
+
+Very useful is the Universal Remote File Browser feature.
+
+
+### One For All Contour URC1210 and FLIRC USB
+
+My primary remote control solution however is a One For All Contour URC1210
+using Philips code 0556 together with FLIRC USB (gen2).
 
 
 Scripting
@@ -633,15 +641,10 @@ The Extension implementation is based on the
 The main window is WinForms based because WinForms allows better libmpv integration
 compared to WPF, all other windows are WPF based.
 
-The config editor adds it's controls dynamically and uses
-[TOML](https://en.wikipedia.org/wiki/TOML) to define it's content.
-
-
 Third party components are:
 
 - [libmpv provides the core functionality](https://mpv.io/)
 - [MediaInfo](https://mediaarea.net/en/MediaInfo)
-- [Tommy, a single file TOML parser](https://github.com/dezhidki/Tommy)
 - [Everything, a fast file search service](https://www.voidtools.com)
 
 

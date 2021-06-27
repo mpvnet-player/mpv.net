@@ -62,19 +62,21 @@ namespace mpvnet.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to 
-        ///[[settings]]
-        ///name = &quot;hwdec&quot;
-        ///file = &quot;mpv&quot;
-        ///default = &quot;no&quot;
-        ///filter = &quot;Video&quot;
-        ///url = &quot;https://mpv.io/manual/master/#options-hwdec&quot;
-        ///help = &quot;Specify the hardware video decoding API that should be used if possible. Whether hardware decoding is actually done depends on the video codec. If hardware decoding is not possible, mpv will fall back on software decoding.\n\nFor more information visit:&quot;
-        ///options = [{ name = &quot;no&quot;,           help = &quot;always use software decoding&quot; },
-        ///           { name = &quot;auto&quot;,         h [rest of string was truncated]&quot;;.
+        ///[setting]
+        ///name = hwdec
+        ///file = mpv
+        ///default = no
+        ///filter = Video
+        ///url = https://mpv.io/manual/master/#options-hwdec
+        ///help = Specify the hardware video decoding API that should be used if possible. Whether hardware decoding is actually done depends on the video codec. If hardware decoding is not possible, mpv will fall back on software decoding.\n\nFor more information visit:
+        ///
+        ///option = no            always use software decoding
+        ///option = auto          enable best hw decoder (see below)
+        ///option = yes     [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string editor_toml {
+        internal static string editor_conf {
             get {
-                return ResourceManager.GetString("editor_toml", resourceCulture);
+                return ResourceManager.GetString("editor_conf", resourceCulture);
             }
         }
         
@@ -110,7 +112,7 @@ namespace mpvnet.Properties {
         ///keep-open-pause = no
         ///osd-duration = 2000
         ///osd-playing-msg = &apos;${filename}&apos;
-        ///script-opts = osc-scalewindowed=1.5,osc-hidetimeout=2000,osc-greenandgrumpy=yes,console-scale=1
+        ///script-opts = osc-scalewindowed=1.5,osc-hidetimeout=2000,console-scale=1
         ///screenshot-directory = &apos;~~desktop/&apos;
         ///
         ///[protocol.https]
