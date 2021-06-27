@@ -68,7 +68,7 @@ mpv.net需要.NET Framework 4.8运行库和高于win7版本的系统以及一张
 
 对于网络串流，必须手动下载安装youtube-dl，它必须位于环境变量 PATH 或启动目录中。
 
-mpv.net不限制系统平台，win32的用户必须替换目录中的4个工具:
+mpv.net不限制系统平台，win32的用户必须替换目录中的4个工具：
 
 - Everything.dll
 - mpv-1.dll
@@ -468,19 +468,16 @@ mpv.net没有定义脚本接口，而是公开了它的完整内部，没有兼�
 ### 创建扩展演示
 
 - 下载安装 [Visual Studio Community](https://visualstudio.microsoft.com) 。
-- 创建新的项目类型 **Class Library .NET Framework**
-  并确保项目名称以 **Extension** 作结尾。
-- Add a reference to **System.ComponentModel.Composition**.
-- Add a reference to mpvnet.exe, select the mpvnet reference
-  in the Solution Explorer, open the Properties window and set
-  **Copy Local** to false to prevent mpvnet.exe being copied
-  to the output directory when the project is built.
-- Now open the project properties and set the output path in the Build tab,
-  extensions are like scripts located in your config folder, example:
+- 创建新的项目类型 **Class Library .NET Framework** 并确保项目名称以 **Extension** 作结尾。
+- 增加一个 reference 到 **System.ComponentModel.Composition**.
+- 增加一个 reference 到 mpvnet.exe ，在 Solution Explorer 中选择 mpvnet 的 reference ，
+  打开 Properties 窗口并设置 **Copy Local** 为 false 来阻止在项目编译时 mpvnet.exe 被复制到输出目录。
+- 现在打开 project properties 并在 Build 标签页设置 output path ，
+  扩展类似于位于配置文件夹中的脚本，例如：
   `<config folder>\extensions\ExampleExtension\ExampleExtension.dll`
-- Also in the project properties choose the option **Start external program**
-  in the Debug tab and define the path to mpvnet.exe. In the Debug tab you may also
-  define command line arguments like a video file to be played when you start debugging.
+- 同样在 project properties 的 Debug 标签页中选择选项 **Start external program** 
+  并且定义到 mpvnet.exe 的路径。
+  在 Debug 标签页中你还可以定义 command line arguments ，例如开始调试时要播放的视频文件。
 
 
 ### 代码样本
@@ -634,59 +631,51 @@ input.conf 定义mpv的快捷键，同时mpv.net使用注释定义上下文菜�
 
 ### Open > Open Files
 
-The Open Files menu entry is one way to open files in mpv.net, it supports multi selection.
+菜单中的打开文件是在mpv.net中打开文件的一种方式，它支持多选。
 
-Another way to open files is the command line which is used by
-File Explorer for existing associations.
+打开文件的另一种方法是现有关联的文件资源管理器使用命令行。
 
-A third way is to drag and drop files on the main window.
+第三种方法是拖放文件到主窗口上。
 
-Whenever the control key is pressed when files or URLs are opened,
-the playlist is not cleared but the files or URLs are appended to the
-playlist. This works in all mpv.net features that open files or URLs.
+每当打开文件或URL时按下控制键时，播放列表不会被清除，但文件或URL会追加到播放列表中。
+这适用于所有打开文件或URL的mpv.net的功能。
 
-Pressing the shift key while opening a single file will suppress loading all files in the folder.
+在打开单个文件时按shift键将临时禁止加载文件夹中的其它文件。
 
-Blu-ray and DVD ISO image files are supported.
+支持Blu-ray和DVD的ISO镜像文件。
 
 
 ### Open > Open URL or file path from clipboard
 
-Opens files and URLs from the clipboard. How to open URLs directly
-from the browser from sites like YouTube is described in the
-[External Tools section](#external-tools).
+从剪贴板打开文件和URL。如何从YouTube等网站的浏览器中直接打开url在[外部工具](#外部工具)部分进行了描述。
 
-For internet streaming youtube-dl must be downloaded and installed manually,
-meaning it must be located in the PATH environment variable or in the startup directory.
+对于网络流媒体，必须手动下载并安装youtube-dl，这意味着它必须位于环境变量PATH或启动目录中。
 
 ### Open > Open DVD/Blu-ray Drive/Folder
 
-Opens a DVD/Blu-ray Drive/Folder.
+打开DVD/Blu-ray的驱动器/文件夹。
 
 
 ### Open > Show media search
 
-mpv.net supports system wide media searches using the Everything indexing
-service installed by the popular file search tool [Everything](www.voidtools.com).
+mpv.net使用流行的文件搜索工具[Everything](www.voidtools.com)的索引服务支持系统范围的媒体搜索。 
 
 
 ### Open > Load external audio files
 
-Allows to load an external audio file. It's also possible to auto detect
-external audio files based on the file name, the option for this can be
-found in the settings under 'Settings > Show Config Editor > Audio > audio-file-auto'.
+允许加载外部音轨文件。也可以根据文件名自动检测，该选项可在下面的设置中找到 
+'Settings > Show Config Editor > Audio > audio-file-auto' 。
 
 
 ### Open > Load external subtitle files
 
-Allows to load an external subtitle file. It's also possible to auto detect
-external subtitle files based on the file name, the option for this can be
-found in the settings under 'Settings > Show Config Editor > Subtitles > sub-auto'.
+允许加载外部字幕文件。也可以根据文件名自动检测，该选项可在下面的设置中找到 
+'Settings > Show Config Editor > Subtitles > sub-auto' 。
 
 
 ### Play/Pause
 
-Play/Pause using the command:
+使用以下命令播放/暂停：
 
 `cycle pause`
 
@@ -697,7 +686,7 @@ Play/Pause using the command:
 
 ### Stop
 
-Stops the player and unloads the playlist using the command:
+使用以下命令中止播放并关闭播放列表：
 
 `stop`
 
@@ -706,7 +695,7 @@ Stops the player and unloads the playlist using the command:
 
 ### Toggle Fullscreen
 
-Toggles fullscreen using the command:
+使用以下命令切换全屏的状态：
 
 `cycle fullscreen`
 
@@ -717,7 +706,7 @@ Toggles fullscreen using the command:
 
 ### Navigate > Previous File
 
-Navigates to the previous file in the playlist using the command:
+使用以下命令跳转播放列表中的上一个文件：
 
 `playlist-prev`
 
@@ -726,7 +715,7 @@ Navigates to the previous file in the playlist using the command:
 
 ### Navigate > Next File
 
-Navigates to the next file in the playlist using the command:
+使用以下命令跳转播放列表中的下一个文件：
 
 `playlist-next`
 
@@ -735,7 +724,7 @@ Navigates to the next file in the playlist using the command:
 
 ### Navigate > Next Chapter
 
-Navigates to the next chapter using the command:
+使用以下命令跳转下一章节：
 
 `add chapter 1`
 
@@ -746,7 +735,7 @@ Navigates to the next chapter using the command:
 
 ### Navigate > Previous Chapter
 
-Navigates to the previous chapter using the command:
+使用以下命令跳转上一章节：
 
 `add chapter -1`
 
@@ -757,7 +746,7 @@ Navigates to the previous chapter using the command:
 
 ### Navigate > Jump Next Frame
 
-Jumps to the next frame using the command:
+使用以下命令跳转下一帧：
 
 `frame-step`
 
@@ -766,7 +755,7 @@ Jumps to the next frame using the command:
 
 ### Navigate > Jump Previous Frame
 
-Jumps to the previous frame using the command:
+使用以下命令跳转上一帧：
 
 `frame-back-step`
 
@@ -775,14 +764,12 @@ Jumps to the previous frame using the command:
 
 ### Navigate > Jump
 
-Seeking using the command:
+使用以下命令跳转（无OSD信息）：
 
 `no-osd seek sec`
 
-sec is the relative amount of seconds to jump, the no-osd prefix
-is used because mpv.net includes a script that shows the position
-when a seek operation is performed, the script uses a more simple
-time format.
+sec是跳转的相对秒数，使用no osd前缀是因为mpv.net包含一个脚本，
+该脚本显示执行寻道操作时的位置，该脚本使用更简单的时间格式。
 
 [no-osd command prefix](https://mpv.io/manual/master/#command-interface-no-osd)
 
@@ -791,7 +778,7 @@ time format.
 
 ### Pan & Scan > Increase Size
 
-Adds video zoom using the command:
+使用以下命令放大0.1视频尺寸：
 
 `add video-zoom  0.1`
 
@@ -802,7 +789,7 @@ Adds video zoom using the command:
 
 ### Pan & Scan > Decrease Size
 
-Adds negative video zoom using the command:
+使用以下命令缩小0.1视频尺寸：
 
 `add video-zoom  -0.1`
 
@@ -867,7 +854,7 @@ Adds negative video zoom using the command:
 
 ### Pan & Scan > Reset
 
-Resets Pan & Scan, multiple commands in the same line are separated with semicolon.
+重置平移、缩放的状态，同一行中的多个命令用“分号”分隔。
 
 `set video-zoom 0; set video-pan-x 0; set video-pan-y 0`
 
@@ -878,7 +865,7 @@ Resets Pan & Scan, multiple commands in the same line are separated with semicol
 
 ### Video > Decrease Contrast
 
-Decreases contrast with the following command:
+使用以下命令减少1对比度：
 
 `add contrast -1`
 
@@ -889,7 +876,7 @@ Decreases contrast with the following command:
 
 ### Video > Increase Contrast
 
-Increases contrast with the following command:
+使用以下命令增加1对比度：
 
 `add contrast 1`
 
@@ -900,7 +887,7 @@ Increases contrast with the following command:
 
 ### Video > Decrease Brightness
 
-Decreases brightness using the following command:
+使用以下命令减少1亮度：
 
 `add brightness -1`
 
@@ -911,7 +898,7 @@ Decreases brightness using the following command:
 
 ### Video > Increase Brightness
 
-Increases brightness using the following command:
+使用以下命令增加1亮度：
 
 `add brightness 1`
 
@@ -922,7 +909,7 @@ Increases brightness using the following command:
 
 ### Video > Decrease Gamma
 
-Decreases gamma using the following command:
+使用以下命令减少1伽马：
 
 `add gamma -1`
 
@@ -933,7 +920,7 @@ Decreases gamma using the following command:
 
 ### Video > Increase Gamma
 
-Increases gamma using the following command:
+使用以下命令增加1伽马：
 
 `add gamma 1`
 
@@ -944,7 +931,7 @@ Increases gamma using the following command:
 
 ### Video > Decrease Saturation
 
-Decreases saturation using the following command:
+使用以下命令减少1饱和度：
 
 `add saturation -1`
 
@@ -955,7 +942,7 @@ Decreases saturation using the following command:
 
 ### Video > Increase Saturation
 
-Increases saturation using the following command:
+使用以下命令增加1饱和度：
 
 `add saturation 1`
 
@@ -975,7 +962,7 @@ Increases saturation using the following command:
 
 ### Video > Toggle Deinterlace
 
-Cycles the deinterlace property using the following command:
+使用以下命令改变去隔行扫描的状态：
 
 `cycle deinterlace`
 
@@ -986,7 +973,7 @@ Cycles the deinterlace property using the following command:
 
 ### Video > Cycle Aspect Ratio
 
-Cycles the aspect ratio using the following command:
+使用以下命令改变长宽比：
 
 `cycle-values video-aspect 16:9 4:3 2.35:1 -1`
 
@@ -997,13 +984,12 @@ Cycles the aspect ratio using the following command:
 
 ### Audio > Cycle/Next
 
-This uses a mpv.net command that shows better info then the mpv preset
-and also has the advantage of not showing no audio.
+使用mpv.net的命令改变到下一个可用的音轨并且不跳过音轨关闭（比mpv原生指令更好）
 
 
 ### Audio > Delay +0.1
 
-Adds a audio delay using the following command:
+使用以下命令增加0.1音频延迟：
 
 `add audio-delay 0.1`
 
@@ -1014,7 +1000,7 @@ Adds a audio delay using the following command:
 
 ### Audio > Delay -0.1
 
-Adds a negative audio delay using the following command:
+使用以下命令减少0.1音频延迟：
 
 `add audio-delay -0.1`
 
@@ -1025,7 +1011,7 @@ Adds a negative audio delay using the following command:
 
 ### Subtitle > Cycle/Next
 
-Shows the next subtitle track using the following command:
+使用以下命令改变到下一个可用的字幕轨：
 
 `cycle sub`
 
@@ -1036,7 +1022,7 @@ Shows the next subtitle track using the following command:
 
 ### Subtitle > Toggle Visibility
 
-Cycles the subtitle visibility using the following command:
+使用以下命令改变字幕可见性的状态：
 
 `cycle sub-visibility`
 
@@ -1047,7 +1033,7 @@ Cycles the subtitle visibility using the following command:
 
 ### Subtitle > Delay -0.1
 
-Adds a negative subtitle delay using the following command:
+使用以下命令减少0.1字幕延迟：
 
 `add sub-delay -0.1`
 
@@ -1058,7 +1044,7 @@ Adds a negative subtitle delay using the following command:
 
 ### Subtitle > Delay 0.1
 
-Adds a positive subtitle delay using the following command:
+使用以下命令增加0.1字幕延迟：
 
 `add sub-delay 0.1`
 
@@ -1069,7 +1055,7 @@ Adds a positive subtitle delay using the following command:
 
 ### Subtitle > Move Up
 
-Moves the subtitle up using the following command:
+使用以下命令上移1字幕位置：
 
 `add sub-pos -1`
 
@@ -1080,7 +1066,7 @@ Moves the subtitle up using the following command:
 
 ### Subtitle > Move Down
 
-Moves the subtitle down using the following command:
+使用以下命令下移1字幕位置：
 
 `add sub-pos 1`
 
@@ -1091,7 +1077,7 @@ Moves the subtitle down using the following command:
 
 ### Subtitle > Decrease Subtitle Font Size
 
-Decreases the subtitle font size using the following command:
+使用以下命令减少0.1字幕尺寸：
 
 `add sub-scale -0.1`
 
@@ -1102,7 +1088,7 @@ Decreases the subtitle font size using the following command:
 
 ### Subtitle > Increase Subtitle Font Size
 
-Increases the subtitle font size using the following command:
+使用以下命令增加0.1字幕尺寸：
 
 `add sub-scale 0.1`
 
@@ -1113,7 +1099,7 @@ Increases the subtitle font size using the following command:
 
 ### Volume > Up
 
-Increases the volume using the following command:
+使用以下命令增加10音量：
 
 `add volume 10`
 
@@ -1124,7 +1110,7 @@ Increases the volume using the following command:
 
 ### Volume > Down
 
-Decreases the volume using the following command:
+使用以下命令减少10音量：
 
 `add volume -10`
 
@@ -1135,7 +1121,7 @@ Decreases the volume using the following command:
 
 ### Volume > Mute
 
-Cycles the mute property using the following command:
+使用以下命令改变静音状态：
 
 `cycle mute`
 
@@ -1146,7 +1132,7 @@ Cycles the mute property using the following command:
 
 ### Speed > -10%
 
-Decreases the speed by 10% using the following command:
+使用以下命令递退1.1倍的播放速度：
 
 `multiply speed 1/1.1`
 
@@ -1157,7 +1143,7 @@ Decreases the speed by 10% using the following command:
 
 ### Speed > 10%
 
-Increases the speed by 10% using the following command:
+使用以下命令递进1.1倍的播放速度：
 
 `multiply speed 1.1`
 
@@ -1168,7 +1154,7 @@ Increases the speed by 10% using the following command:
 
 ### Speed > Half
 
-Halfs the speed using the following command:
+使用以下命令半速播放：
 
 `multiply speed 0.5`
 
@@ -1179,7 +1165,7 @@ Halfs the speed using the following command:
 
 ### Speed > Double
 
-Doubles the speed using the following command:
+使用以下命令倍速播放：
 
 `multiply speed 2`
 
@@ -1190,7 +1176,7 @@ Doubles the speed using the following command:
 
 ### Speed > Reset
 
-Resets the speed using the following command:
+使用以下命令重置播放速度：
 
 `set speed 1`
 
@@ -1201,12 +1187,12 @@ Resets the speed using the following command:
 
 ### Extensions > Rating > 0stars
 
-A plugin the writes the rating to the filename.
+一个将评级写入文件名的插件。
 
 
 ### View > On Top > Enable
 
-Forces the player to stay on top of other windows using the following command:
+使用以下命令启用播放器置顶：
 
 `set ontop yes`
 
@@ -1217,7 +1203,7 @@ Forces the player to stay on top of other windows using the following command:
 
 ### View > On Top > Disable
 
-Disables the player to stay on top of other windows using the following command:
+使用以下命令禁用播放器置顶：
 
 `set ontop no`
 
@@ -1228,12 +1214,12 @@ Disables the player to stay on top of other windows using the following command:
 
 ### View > File Info
 
-Shows info using a mpv.net command about the current file, shows length, position, formats, size and filename.
+使用mpv.net的命令显示当前文件的信息（持续时间、位置、格式、大小和文件名）。
 
 
 ### View > Show Statistics
 
-Show statistics using the following command:
+使用以下命令临时显示数据统计：
 
 `script-binding stats/display-stats`
 
@@ -1242,7 +1228,7 @@ Show statistics using the following command:
 
 ### View > Toggle Statistics
 
-Toggles statistics using the following command:
+使用以下命令切换数据统计的状态：
 
 `script-binding stats/display-stats-toggle`
 
@@ -1251,7 +1237,7 @@ Toggles statistics using the following command:
 
 ### View > Toggle OSC Visibility
 
-Toggles OSC Visibility using the following command:
+使用以下命令切换OSC可见性的状态：
 
 `script-binding osc/visibility`
 
@@ -1260,7 +1246,7 @@ Toggles OSC Visibility using the following command:
 
 ### View > Show Playlist
 
-Shows the playlist for 5 seconds using the following command:
+使用以下命令显示5秒的（原生OSD）播放列表：
 
 `show-text ${playlist} 5000`
 
@@ -1269,7 +1255,7 @@ Shows the playlist for 5 seconds using the following command:
 
 ### View > Show Audio/Video/Subtitle List
 
-Shows the Audio/Video/Subtitle list for 5 seconds using the following command:
+使用以下命令显示5秒的轨道信息列表：
 
 `show-text ${track-list} 5000`
 
@@ -1278,46 +1264,44 @@ Shows the Audio/Video/Subtitle list for 5 seconds using the following command:
 
 ### Settings > Show Config Editor
 
-Shows mpv.net's config editor.
+显示mpv.net的设置编辑器
 
 
 ### Settings > Show Input Editor
 
-Shows mpv.net's key binding editor.
+显示mpv.net的快捷键编辑器
 
 
 ### Settings > Open Config Folder
 
-Opens the config folder which contains:
+打开包含以下文件的设置文件夹：
 
-mpv.conf file containing mpv settings
+mpv.conf 文件内涵mpv的设置
 
-mpvnet.conf file containing mpv.net settings
+mpvnet.conf 文件内涵mpvnet的设置
 
-input.conf containing mpv key and mouse bindings
+input.conf 文件内涵mpv的键鼠绑定
 
-User scripts and user extensions
+用户脚本和扩展
 
 
 ### Tools > Command Palette
 
-Shows the command palette window which allows to quickly find and execute commands and key shortcuts.
+显示命令面板，该窗口允许快速查找、执行命令和快捷键。
 
 
 ### Tools > Show History
 
-Shows a text file that contains the file history. If the file don't exist
-it asks if the file should be created in the settings folder. Once the file
-exist then the history is logged. It logges the playback history containing
-the time and filename.
+显示包含历史记录的文本文件。如果文件不存在，则会询问是否在设置文件夹中创建该文件。
+一旦文件存在，则写入历史记录（包括时间和文件名）
 
-To ignore certain paths:
+屏蔽部分路径的参数：
 
 script-opt = history-discard=path1;path2
 
 ### Tools > Set/clear A-B loop points
 
-Enables to set loop start and end points using the following command:
+使用以下命令创建单个片段循环：
 
 `ab-loop`
 
@@ -1326,9 +1310,9 @@ Enables to set loop start and end points using the following command:
 
 ### Tools > Toggle infinite file looping
 
-Loops the current file infinitely using the following command:
+使用以下命令改变当前文件的循环播放的状态：
 
-cycle-values loop-file "inf" "no"
+`cycle-values loop-file "inf" "no"`
 
 [cycle-values command](https://mpv.io/manual/master/#command-interface-cycle-values)
 
@@ -1337,7 +1321,7 @@ cycle-values loop-file "inf" "no"
 
 ### Tools > Toggle Hardware Decoding
 
-Cycles the hwdec property to enable/disable hardware decoding using the following command:
+使用以下命令改变硬件解码的状态：
 
 `cycle-values hwdec "auto" "no"`
 
@@ -1348,39 +1332,39 @@ Cycles the hwdec property to enable/disable hardware decoding using the followin
 
 ### Tools > Setup
 
-Allows to manage file associations.
+允许管理文件关联。
 
 
 ### Help > Show mpv manual
 
-Shows the [mpv manual](https://mpv.io/manual/stable/).
+显示 [mpv官方手册](https://mpv.io/manual/stable/).
 
 
 ### Help > Show mpv.net web site
 
-Shows the [mpv.net web site](https://mpv-net.github.io/mpv.net-web-site/).
+显示 [mpv.net 网站](https://mpv-net.github.io/mpv.net-web-site/).
 
 
 ### Help > Show mpv.net manual
 
-Shows the [mpv.net manual](https://github.com/stax76/mpv.net/blob/master/Manual.md).
+显示 [mpv.net手册](https://github.com/stax76/mpv.net/blob/master/Manual.md).
 
 
 ### Help > Check for Updates
 
-Checks for updates and allows to execute the update routine.
+检查更新并允许执行更新流程。
 
-The update routine requires PowerShell 5 and curl, an up to date Windows 10 system has both included.
+更新流程需要 PowerShell 5 和 curl （最新版本的win10已内置）
 
 
 ### Help > About mpv.net
 
-Shows the mpv.net about dialog which shows a copyright notice, the versions of mpv.net and libmpv and a license notice (MIT).
+显示mpv.net的关于信息。
 
 
 ### Exit
 
-Exits mpv.net using the following command:
+使用以下命令退出mpv.net：
 
 `quit`
 
@@ -1389,7 +1373,7 @@ Exits mpv.net using the following command:
 
 ### Exit Watch Later
 
-Exits mpv.net and remembers the position in the file using the following command:
+使用以下命令退出mpv.net并且记住文件状态：
 
 `quit-watch-later`
 
