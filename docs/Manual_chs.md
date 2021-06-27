@@ -2,7 +2,7 @@
 mpv.net手册
 ==============
 
-同步源提交_20210623_1c23c10 
+同步源提交_20210627_c40a0d8 
 
 目录
 -----------------
@@ -370,7 +370,7 @@ mpv.net的专属选项
 可用来获取 'Play with mpv.net' 和 'Add to mpv.net playlist' 的菜单子项
 
 
-### Universal Remote
+### Universal Remote 安卓应用
 
 Universal Remote 是一个收费的安卓远程控制app。
 
@@ -385,6 +385,14 @@ https://www.unifiedremote.com/tutorials/how-to-create-a-custom-keyboard-shortcut
 https://www.unifiedremote.com/tutorials/how-to-install-a-custom-remote
 
 [我的配置](./Universal%20Remote)
+
+Universal Remote 的 File Browser 功能十分有用。
+
+
+### One For All Contour URC1210 and FLIRC USB
+
+然而我的主要远程控制解决方案适用于所有人， 
+Philips code 0556 和 FLIRC USB (gen2) 一同被使用。
 
 
 脚本
@@ -606,14 +614,10 @@ mpv.net使用 C#7 编写并且需要 .NET Framework 4.8 来运行。
 
 主窗口基于WinForms，与WPF相比对libmpv集成的更友好，所有其他窗口都是基于WPF的。
 
-配置编辑器动态的添加控件，并使用 [TOML](https://en.wikipedia.org/wiki/TOML) 定义内容。
-
-
 使用的第三方组件：
 
 - [libmpv提供了核心功能](https://mpv.io/)
 - [MediaInfo](https://mediaarea.net/en/MediaInfo)
-- [Tommy单文件TOML的解析器](https://github.com/dezhidki/Tommy)
 - [Everything快速文件搜索服务](https://www.voidtools.com)
 
 
