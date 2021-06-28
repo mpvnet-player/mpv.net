@@ -2,6 +2,8 @@
 mpv.net manual
 ==============
 
+Other Languages: [简体中文](Manual_chs.md)
+
 Table of contents
 -----------------
 
@@ -1358,7 +1360,7 @@ Enables to set loop start and end points using the following command:
 
 Loops the current file infinitely using the following command:
 
-cycle-values loop-file "inf" "no"
+`cycle-values loop-file "inf" "no"`
 
 [cycle-values command](https://mpv.io/manual/master/#command-interface-cycle-values)
 
