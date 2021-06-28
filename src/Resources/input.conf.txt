@@ -39,7 +39,7 @@
 
  _           ignore                 #menu: -
  Space       cycle pause            #menu: Play/Pause
- s           stop                   #menu: Stop
+ Ctrl+s      stop                   #menu: Stop
  _           ignore                 #menu: -
  Enter       cycle fullscreen       #menu: Toggle Fullscreen
  f           cycle fullscreen
@@ -94,7 +94,7 @@
  Ctrl+7      add saturation -1      #menu: Video > Decrease Saturation
  Ctrl+8      add saturation  1      #menu: Video > Increase Saturation
  _           ignore                 #menu: Video > -
- Ctrl+s      async screenshot       #menu: Video > Take Screenshot
+ s           async screenshot       #menu: Video > Take Screenshot
  d           cycle deinterlace      #menu: Video > Toggle Deinterlace
  a           cycle-values video-aspect 16:9 4:3 2.35:1 -1 #menu: Video > Cycle Aspect Ratio
 
