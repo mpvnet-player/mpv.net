@@ -382,6 +382,7 @@ namespace mpvnet
         {
             CommandPalette.Instance.SetItems(CommandPalette.GetItems());
             MainForm.Instance.ShowCommandPalette();
+            CommandPalette.Instance.SelectFirst();
         }
 
         public static void ShowPlaylist() => App.InvokeOnMainThread(ShowPlaylistInternal);
@@ -389,6 +390,8 @@ namespace mpvnet
         static void ShowPlaylistInternal()
         {
             int count = Core.get_property_int("playlist-count");
+            string currentPath = Core.get_property_string("path");
+            CommandPaletteItem currentItem = null;
 
             if (count <= 0)
                 return;
@@ -399,14 +402,27 @@ namespace mpvnet
             {
                 int index = i;
                 string file = Core.get_property_string($"playlist/{i}/filename");
+           
                 CommandPaletteItem item = new CommandPaletteItem() {
                     Text = PathHelp.GetFileName(file),
                     Action = () => Core.set_property_int("playlist-pos", index)
                 };
+
                 items.Add(item);
+
+                if (currentPath.ToLowerEx() == file.ToLowerEx())
+                    currentItem = item;
             }
 
             CommandPalette.Instance.SetItems(items);
+
+            if (currentItem != null)
+            {
+                CommandPalette.Instance.MainListView.SelectedItem = currentItem;
+                CommandPalette.Instance.MainListView.ScrollIntoView(
+                    CommandPalette.Instance.MainListView.SelectedItem);
+            }
+
             MainForm.Instance.ShowCommandPalette();
         }
     }

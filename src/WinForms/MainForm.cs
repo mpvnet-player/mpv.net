@@ -1063,7 +1063,6 @@ namespace mpvnet
                 AdjustCommandPaletteLeftAndWidth();
                 CommandPaletteHost.Child = CommandPalette.Instance;
                 CommandPalette.Instance.AdjustHeight();
-                CommandPalette.Instance.SelectFirst();
                 Controls.Add(CommandPaletteHost);
             }
         }
