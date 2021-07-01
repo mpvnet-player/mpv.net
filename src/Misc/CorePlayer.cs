@@ -228,7 +228,8 @@ namespace mpvnet
                         float scale = Native.GetDPI(IntPtr.Zero) / 96.0f;
 
                         if (scale != 1)
-                            conf = conf.Replace("console-scale=1", "console-scale=" + scale);
+                            conf = conf.Replace("console-scale=1", "console-scale=" +
+                                scale.ToString(CultureInfo.InvariantCulture));
 
                         File.WriteAllText(_ConfigFolder + "mpv.conf", conf);
                     }
@@ -740,7 +741,7 @@ namespace mpvnet
 
         public void set_property_bool(string name, bool value, bool throwException = false)
         {
-            long val = (value) ? 1 : 0;
+            long val = value ? 1 : 0;
             mpv_error err = mpv_set_property(Handle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_FLAG, ref val);
 
             if (err < 0)

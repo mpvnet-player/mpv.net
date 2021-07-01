@@ -25,7 +25,6 @@ namespace mpvnet
 
         int LastCursorChanged;
         int LastCycleFullscreen;
-        int LastAppCommand;
         int TaskbarButtonCreatedMessage;
         int ShownTickCount;
 
@@ -698,13 +697,8 @@ namespace mpvnet
                 case 0x20e: // WM_MOUSEHWHEEL
                 case 0x20b: // WM_XBUTTONDOWN
                 case 0x20c: // WM_XBUTTONUP
-                    {
-                        bool skip = m.Msg == 0x100 && LastAppCommand != 0 &&
-                            (Environment.TickCount - LastAppCommand) < 1000;
-
-                        if (Core.WindowHandle != IntPtr.Zero && !skip)
-                            m.Result = SendMessage(Core.WindowHandle, m.Msg, m.WParam, m.LParam);
-                    }
+                    if (Core.WindowHandle != IntPtr.Zero)
+                        m.Result = SendMessage(Core.WindowHandle, m.Msg, m.WParam, m.LParam);
                     break;
                 case 0x319: // WM_APPCOMMAND
                     {
@@ -712,9 +706,8 @@ namespace mpvnet
 
                         if (value != null)
                         {
-                            Core.command("keypress " + value);
+                            Core.Command("keypress " + value);
                             m.Result = new IntPtr(1);
-                            LastAppCommand = Environment.TickCount;
                             return;
                         }
                     }
