@@ -1,6 +1,5 @@
 
--- This script removes the currently playing file from the playlist
--- and moves it into the recycle bin. Works only on Windows.
+-- This script deletes the file that is currently playing.
 
 -- input.conf:
 

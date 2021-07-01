@@ -3,8 +3,11 @@
 
 // In input.conf add:
 
-// KP0 script-message delete-current-file ask      #menu: Script > Delete current file > Ask
+// KP0 script-message delete-current-file delete   #menu: Script > Delete current file > Delete
+//   0 script-message delete-current-file delete   #menu: Script > Delete current file > Delete
+
 // KP1 script-message delete-current-file confirm  #menu: Script > Delete current file > Confirm
+//   1 script-message delete-current-file confirm  #menu: Script > Delete current file > Confirm
 
 using System;
 using System.IO;
@@ -31,37 +34,34 @@ class Script
         if (args == null || args.Length != 2 || args[0] != "delete-current-file")
             return;
 
-        if (args[1] == "ask")
+        if (args[1] == "delete")
         {
-            FileToDelete = Core.get_property_string("path");
+            FileToDelete = Core.GetPropertyString("path");
             DeleteTime = DateTime.Now;
-            Core.commandv("show-text", "Press 1 to delete file", "10000");
+            Core.CommandV("show-text", "Press 1 to delete file", "10000");
         }
         else if (args[1] == "confirm")
         {
             TimeSpan ts = DateTime.Now - DeleteTime;
-            string path = Core.get_property_string("path");
+            string path = Core.GetPropertyString("path");
 
             if (FileToDelete == path && ts.TotalSeconds < 10 && File.Exists(FileToDelete))
             {
-                Core.command("playlist-remove current");
-                int pos = Core.get_property_int("playlist-pos");
+                Core.CommandV("show-text", "");
 
-                if (pos == -1)
-                {
-                    int count = Core.get_property_int("playlist-count");
+                int count = Core.GetPropertyInt("playlist-count");
+                int pos = Core.GetPropertyInt("playlist-pos");
+                int newPos = pos == count - 1 ? pos - 1 : pos + 1;
 
-                    if (count > 0)
-                        Core.set_property_int("playlist-pos", count - 1);
-                    else
-                    {
-                        Core.ShowLogo();
-                        Core.commandv("show-text", "");
-                    }
-                }
+                if (newPos > -1)
+                    Core.SetPropertyNumber("playlist-pos", newPos);
 
-                Thread.Sleep(2000);
-                FileSystem.DeleteFile(FileToDelete, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
+                Core.Command("playlist-remove " + pos);
+
+                App.RunTask(() => {
+                    Thread.Sleep(2000);
+                    FileSystem.DeleteFile(FileToDelete, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);                
+                });
             }
         }
     }

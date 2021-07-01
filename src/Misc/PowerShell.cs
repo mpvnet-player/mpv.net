@@ -58,7 +58,7 @@ namespace mpvnet
                     Pipeline.Output.DataReady += Output_DataReady;
                     Pipeline.Error.DataReady += Error_DataReady;
                 }
-            
+
                 return Pipeline.Invoke();
             }
             catch (RuntimeException e)

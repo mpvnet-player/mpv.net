@@ -639,12 +639,22 @@ namespace mpvnet
             IsLogoVisible = false;
         }
 
+        public void Command(string command, bool throwException = false)
+        {
+            this.command(command, throwException);
+        }
+
         public void command(string command, bool throwException = false)
         {
             mpv_error err = mpv_command_string(Handle, command);
 
             if (err < 0)
                 HandleError(err, throwException, "error executing command:", command);
+        }
+
+        public void CommandV(params string[] args)
+        {
+            commandv(args);
         }
 
         public void commandv(params string[] args)
@@ -737,6 +747,11 @@ namespace mpvnet
                 HandleError(err, throwException, $"error setting property: {name} = {value}");
         }
 
+        public int GetPropertyInt(string name, bool throwException = false)
+        {
+            return get_property_int(name, throwException);
+        }
+
         public int get_property_int(string name, bool throwException = false)
         {
             mpv_error err = mpv_get_property(Handle, GetUtf8Bytes(name),
@@ -766,6 +781,11 @@ namespace mpvnet
                 HandleError(err, throwException, $"error getting property: {name}");
 
             return value;
+        }
+
+        public void SetPropertyNumber(string name, double value, bool throwException = false)
+        {
+            set_property_number(name, value, throwException);
         }
 
         public void set_property_number(string name, double value, bool throwException = false)
