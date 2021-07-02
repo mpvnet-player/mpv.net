@@ -5,24 +5,9 @@
 
 -- KP0 script-binding delete_current_file/delete
 --   0 script-binding delete_current_file/delete
+
 -- KP1 script-binding delete_current_file/confirm
 --   1 script-binding delete_current_file/confirm
-
-local utils = require 'mp.utils'
-
-function delete_file()
-    local code = [[& {
-        Add-Type -AssemblyName Microsoft.VisualBasic
-        [Microsoft.VisualBasic.FileIO.FileSystem]::DeleteFile('FileToDelete', 'OnlyErrorDialogs', 'SendToRecycleBin')
-    }]]
-
-    code = string.gsub(code, "FileToDelete", FileToDelete)
-
-    utils.subprocess({
-        args = { 'powershell', '-NoProfile', '-ExecutionPolicy', 'Bypass', '-Command', code },
-        playback_only = false,
-    })
-end
 
 function delete()
     FileToDelete = mp.get_property("path")
@@ -50,7 +35,21 @@ function confirm()
         end
 
         mp.command("playlist-remove " .. pos)
-        mp.add_timeout(2, delete_file)
+
+        local ps_code = [[& {
+            Start-Sleep -Seconds 2
+            Add-Type -AssemblyName Microsoft.VisualBasic
+            [Microsoft.VisualBasic.FileIO.FileSystem]::DeleteFile('FileToDelete', 'OnlyErrorDialogs', 'SendToRecycleBin')
+        }]]
+
+        ps_code = string.gsub(ps_code, "FileToDelete", FileToDelete)
+
+        mp.command_native({
+            name = "subprocess",
+            playback_only = false,
+            detach = true,
+            args = { 'powershell', '-NoProfile', '-ExecutionPolicy', 'Bypass', '-Command', ps_code },
+        })
     end
 end
 
