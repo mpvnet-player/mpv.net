@@ -23,6 +23,7 @@ function confirm()
 
         local count = mp.get_property_number("playlist-count")
         local pos = mp.get_property_number("playlist-pos")
+        local newPos = 0
 
         if pos == count - 1 then
             newPos = pos - 1
@@ -31,6 +32,7 @@ function confirm()
         end
 
         if newPos > -1 then
+            mp.command("set pause no")
             mp.set_property_number("playlist-pos", newPos)
         end
 
@@ -42,7 +44,8 @@ function confirm()
             [Microsoft.VisualBasic.FileIO.FileSystem]::DeleteFile('FileToDelete', 'OnlyErrorDialogs', 'SendToRecycleBin')
         }]]
 
-        ps_code = string.gsub(ps_code, "FileToDelete", FileToDelete)
+        local escapedFileToDelete = string.gsub(FileToDelete, "'", "''")
+        ps_code = string.gsub(ps_code, "FileToDelete", escapedFileToDelete)
 
         mp.command_native({
             name = "subprocess",
