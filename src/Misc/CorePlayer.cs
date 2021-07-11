@@ -1134,10 +1134,15 @@ namespace mpvnet
                     commandv("loadfile", @"bd://");
                 }
                 else
+                {
                     if (i == 0 && !append)
+                    {
+                        command("set pause no");
                         commandv("loadfile", file);
+                    }
                     else
                         commandv("loadfile", file, "append");
+                }
             }
 
             if (string.IsNullOrEmpty(get_property_string("path")))
