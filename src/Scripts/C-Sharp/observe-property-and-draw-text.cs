@@ -11,11 +11,11 @@ class Script
     public Script()
     {
         Core = Global.Core;
-        Core.observe_property_bool("fullscreen", FullscreenChange);
+        Core.ObservePropertyBool("fullscreen", FullscreenChange);
     }
 
     void FullscreenChange(bool value)
     {
-        Core.commandv("show-text", "fullscreen: " + value);
+        Core.CommandV("show-text", "fullscreen: " + value);
     }
 }

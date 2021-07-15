@@ -17,4 +17,4 @@ $code = {
     }
 }
 
-$mp.register_event("client-message", $code)
+$mp.RegisterEvent("client-message", $code)

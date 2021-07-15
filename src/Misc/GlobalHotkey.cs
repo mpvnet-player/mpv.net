@@ -86,7 +86,7 @@ namespace mpvnet
         public static void Execute(int id)
         {
             if (Commands.ContainsKey(id))
-                Core.command(Commands[id]);
+                Core.Command(Commands[id]);
         }
 
         static int mpv_to_VK(string value)

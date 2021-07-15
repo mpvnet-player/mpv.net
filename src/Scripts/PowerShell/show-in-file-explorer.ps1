@@ -6,9 +6,8 @@
 $code = {
     if ($args[0] -eq 'show-in-file-explorer')
     {
-        # probably works only with shell execute for which powershell has no built-in support
-        [Diagnostics.Process]::Start('explorer.exe', '/n, /select, "' + $mp.get_property_string('path') + '"')
+        Start-Process explorer.exe '/n,','/select,',"$($mp.GetPropertyString('path'))"
     }
 }
 
-$mp.register_event("client-message", $code)
+$mp.RegisterEvent("client-message", $code)

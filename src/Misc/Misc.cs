@@ -247,7 +247,7 @@ namespace mpvnet
                 .Select(i => new CommandPaletteItem() {
                     Text = i.Display,
                     SecondaryText = i.Input,
-                    Action = () => Core.command(i.Command)
+                    Action = () => Core.Command(i.Command)
                 });
         }
     }

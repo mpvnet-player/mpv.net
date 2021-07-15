@@ -104,6 +104,7 @@ namespace mpvnet
         public bool IsLogoVisible { set; get; } = true;
         public bool IsQuitNeeded { set; get; } = true;
         public bool KeepaspectWindow { get; set; }
+        public bool Paused { get; set; }
         public bool TaskbarProgress { get; set; } = true;
         public bool WasInitialSizeSet;
         public bool WindowMaximized { get; set; }
@@ -130,16 +131,16 @@ namespace mpvnet
 
             if (App.IsStartedFromTerminal)
             {
-                set_property_string("terminal", "yes");
-                set_property_string("input-terminal", "yes");
-                set_property_string("msg-level", "osd/libass=fatal");
+                SetPropertyString("terminal", "yes");
+                SetPropertyString("input-terminal", "yes");
+                SetPropertyString("msg-level", "osd/libass=fatal");
             }
 
-            set_property_string("wid", MainForm.Hwnd.ToString());
-            set_property_string("osc", "yes");
-            set_property_string("force-window", "yes");
-            set_property_string("config-dir", ConfigFolder);
-            set_property_string("config", "yes");
+            SetPropertyString("wid", MainForm.Hwnd.ToString());
+            SetPropertyString("osc", "yes");
+            SetPropertyString("force-window", "yes");
+            SetPropertyString("config-dir", ConfigFolder);
+            SetPropertyString("config", "yes");
 
             ProcessCommandLine(true);
             mpv_error err = mpv_initialize(Handle);
@@ -147,10 +148,10 @@ namespace mpvnet
             if (err < 0)
                 throw new Exception("mpv_initialize error" + BR2 + GetError(err) + BR);
 
-            err = mpv_observe_property(Handle, 0, "video-rotate", mpv_format.MPV_FORMAT_INT64);
-
-            if (err < 0)
-                throw new Exception("mpv_observe_property video-rotate error" + BR2 + GetError(err) + BR);
+            ObservePropertyInt("video-rotate", value => {
+                VideoRotate = value;
+                UpdateVideoSize("dwidth", "dheight");
+            });
 
             Initialized?.Invoke();
             InvokeAsync(InitializedAsync);
@@ -275,42 +276,42 @@ namespace mpvnet
             ps.Scripts.Add("Using namespace mpvnet; [Reflection.Assembly]::LoadWithPartialName('mpvnet')" + BR);
 
             string eventCode = @"
-                    $eventJob = Register-ObjectEvent -InputObject $mp -EventName Event -Action {
-                        foreach ($pair in $mp.EventHandlers)
+                $eventJob = Register-ObjectEvent -InputObject $mp -EventName Event -Action {
+                    foreach ($pair in $mp.EventHandlers)
+                    {
+                        if ($pair.Key -eq $args[0])
                         {
-                            if ($pair.Key -eq $args[0])
+                            if ($args.Length -gt 1)
                             {
-                                if ($args.Length -gt 1)
-                                {
-                                    $args2 = $args[1]
-                                }
-
-                                Invoke-Command -ScriptBlock $pair.Value -ArgumentList $args2
+                                $args2 = $args[1]
                             }
+
+                            Invoke-Command -ScriptBlock $pair.Value -ArgumentList $args2
                         }
                     }
+                }
 
-                    $mp.RedirectStreams($eventJob)
-                ";
+                $mp.RedirectStreams($eventJob)
+            ";
 
             string propertyChangedCode = @"
-                    $propertyChangedJob = Register-ObjectEvent -InputObject $mp -EventName PropertyChanged -Action {
-                        foreach ($pair in $mp.PropChangedHandlers)
+                $propertyChangedJob = Register-ObjectEvent -InputObject $mp -EventName PropertyChanged -Action {
+                    foreach ($pair in $mp.PropChangedHandlers)
+                    {
+                        if ($pair.Key -eq $args[0])
                         {
-                            if ($pair.Key -eq $args[0])
+                            if ($args.Length -gt 1)
                             {
-                                if ($args.Length -gt 1)
-                                {
-                                    $args2 = $args[1]
-                                }
-
-                                Invoke-Command -ScriptBlock $pair.Value -ArgumentList $args2
+                                $args2 = $args[1]
                             }
+
+                            Invoke-Command -ScriptBlock $pair.Value -ArgumentList $args2
                         }
                     }
+                }
 
-                    $mp.RedirectStreams($propertyChangedJob)
-                ";
+                $mp.RedirectStreams($propertyChangedJob)
+            ";
 
             ps.Scripts.Add(eventCode);
             ps.Scripts.Add(propertyChangedCode);
@@ -326,7 +327,7 @@ namespace mpvnet
 
         void UpdateVideoSize(string w, string h)
         {
-            Size size = new Size(get_property_int(w), get_property_int(h));
+            Size size = new Size(GetPropertyInt(w), GetPropertyInt(h));
 
             if (VideoRotate == 90 || VideoRotate == 270)
                 size = new Size(size.Height, size.Width);
@@ -423,10 +424,10 @@ namespace mpvnet
                         case mpv_event_id.MPV_EVENT_FILE_LOADED:
                             {
                                 HideLogo();
-                                Duration = TimeSpan.FromSeconds(get_property_number("duration"));
+                                Duration = TimeSpan.FromSeconds(GetPropertyDouble("duration"));
 
                                 if (App.StartSize == "video")
-                                    Core.WasInitialSizeSet = false;
+                                    WasInitialSizeSet = false;
 
                                 UpdateVideoSize("width", "height");
 
@@ -435,10 +436,10 @@ namespace mpvnet
                                 App.RunTask(new Action(() => ReadMetaData()));
 
                                 App.RunTask(new Action(() => {
-                                    string path = Core.get_property_string("path");
+                                    string path = GetPropertyString("path");
 
                                     if (path.Contains("://"))
-                                        path = Core.get_property_string("media-title");
+                                        path = GetPropertyString("media-title");
 
                                     WriteHistory(path);
                                 }));
@@ -476,12 +477,6 @@ namespace mpvnet
                                 }
                                 else if (data.format == mpv_format.MPV_FORMAT_INT64)
                                 {
-                                    if (data.name == "video-rotate")
-                                    {
-                                        VideoRotate = Marshal.PtrToStructure<int>(data.data);
-                                        UpdateVideoSize("dwidth", "dheight");
-                                    }
-
                                     lock (IntPropChangeActions)
                                         foreach (var pair in IntPropChangeActions)
                                             if (pair.Key == data.name)
@@ -537,9 +532,11 @@ namespace mpvnet
                             InvokeEvent(Idle, IdleAsync);
                             break;
                         case mpv_event_id.MPV_EVENT_PAUSE:
+                            Paused = true;
                             InvokeEvent(Pause, PauseAsync);
                             break;
                         case mpv_event_id.MPV_EVENT_UNPAUSE:
+                            Paused = false;
                             InvokeEvent(Unpause, UnpauseAsync);
                             break;
                         case mpv_event_id.MPV_EVENT_SCRIPT_INPUT_DISPATCH:
@@ -589,7 +586,7 @@ namespace mpvnet
 
         public void SetBluRayTitle(int id)
         {
-            Core.LoadFiles(new[] { @"bd://" + id }, false, false);
+            LoadFiles(new[] { @"bd://" + id }, false, false);
         }
 
         void InvokeEvent(Action action, Action asyncAction)
@@ -636,16 +633,11 @@ namespace mpvnet
 
         void HideLogo()
         {
-            command("overlay-remove 0");
+            Command("overlay-remove 0");
             IsLogoVisible = false;
         }
 
         public void Command(string command, bool throwException = false)
-        {
-            this.command(command, throwException);
-        }
-
-        public void command(string command, bool throwException = false)
         {
             mpv_error err = mpv_command_string(Handle, command);
 
@@ -654,11 +646,6 @@ namespace mpvnet
         }
 
         public void CommandV(params string[] args)
-        {
-            commandv(args);
-        }
-
-        public void commandv(params string[] args)
         {
             int count = args.Length + 1;
             IntPtr[] pointers = new IntPtr[count];
@@ -684,7 +671,7 @@ namespace mpvnet
                 HandleError(err, true, "error executing command:", string.Join("\n", args));
         }
 
-        public string expand(string value)
+        public string Expand(string value)
         {
             if (value == null)
                 return "";
@@ -728,7 +715,7 @@ namespace mpvnet
             return ret;
         }
 
-        public bool get_property_bool(string name, bool throwException = false)
+        public bool GetPropertyBool(string name, bool throwException = false)
         {
             mpv_error err = mpv_get_property(Handle, GetUtf8Bytes(name),
                 mpv_format.MPV_FORMAT_FLAG, out IntPtr lpBuffer);
@@ -739,7 +726,7 @@ namespace mpvnet
             return lpBuffer.ToInt32() != 0;
         }
 
-        public void set_property_bool(string name, bool value, bool throwException = false)
+        public void SetPropertyBool(string name, bool value, bool throwException = false)
         {
             long val = value ? 1 : 0;
             mpv_error err = mpv_set_property(Handle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_FLAG, ref val);
@@ -750,11 +737,6 @@ namespace mpvnet
 
         public int GetPropertyInt(string name, bool throwException = false)
         {
-            return get_property_int(name, throwException);
-        }
-
-        public int get_property_int(string name, bool throwException = false)
-        {
             mpv_error err = mpv_get_property(Handle, GetUtf8Bytes(name),
                 mpv_format.MPV_FORMAT_INT64, out IntPtr lpBuffer);
 
@@ -764,7 +746,7 @@ namespace mpvnet
             return lpBuffer.ToInt32();
         }
 
-        public void set_property_int(string name, int value, bool throwException = false)
+        public void SetPropertyInt(string name, int value, bool throwException = false)
         {
             long val = value;
             mpv_error err = mpv_set_property(Handle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_INT64, ref val);
@@ -773,7 +755,27 @@ namespace mpvnet
                 HandleError(err, throwException, $"error setting property: {name} = {value}");
         }
 
-        public double get_property_number(string name, bool throwException = false)
+        public long GetPropertyLong(string name, bool throwException = false)
+        {
+            mpv_error err = mpv_get_property(Handle, GetUtf8Bytes(name),
+                mpv_format.MPV_FORMAT_INT64, out IntPtr lpBuffer);
+
+            if (err < 0)
+                HandleError(err, throwException, $"error getting property: {name}");
+
+            return lpBuffer.ToInt64();
+        }
+
+        public void SetPropertyLong(string name, long value, bool throwException = false)
+        {
+            long val = value;
+            mpv_error err = mpv_set_property(Handle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_INT64, ref val);
+
+            if (err < 0)
+                HandleError(err, throwException, $"error setting property: {name} = {value}");
+        }
+
+        public double GetPropertyDouble(string name, bool throwException = false)
         {
             mpv_error err = mpv_get_property(Handle, GetUtf8Bytes(name),
                 mpv_format.MPV_FORMAT_DOUBLE, out double value);
@@ -784,12 +786,7 @@ namespace mpvnet
             return value;
         }
 
-        public void SetPropertyNumber(string name, double value, bool throwException = false)
-        {
-            set_property_number(name, value, throwException);
-        }
-
-        public void set_property_number(string name, double value, bool throwException = false)
+        public void SetPropertyDouble(string name, double value, bool throwException = false)
         {
             double val = value;
             mpv_error err = mpv_set_property(Handle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_DOUBLE, ref val);
@@ -799,11 +796,6 @@ namespace mpvnet
         }
 
         public string GetPropertyString(string name, bool throwException = false)
-        {
-            return get_property_string(name, throwException);
-        }
-
-        public string get_property_string(string name, bool throwException = false)
         {
             mpv_error err = mpv_get_property(Handle, GetUtf8Bytes(name),
                 mpv_format.MPV_FORMAT_STRING, out IntPtr lpBuffer);
@@ -819,7 +811,7 @@ namespace mpvnet
             return "";
         }
 
-        public void set_property_string(string name, string value, bool throwException = false)
+        public void SetPropertyString(string name, string value, bool throwException = false)
         {
             byte[] bytes = GetUtf8Bytes(value);
             mpv_error err = mpv_set_property(Handle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_STRING, ref bytes);
@@ -828,7 +820,7 @@ namespace mpvnet
                 HandleError(err, throwException, $"error setting property: {name} = " + value);
         }
 
-        public string get_property_osd_string(string name, bool throwException = false)
+        public string GetPropertyOsdString(string name, bool throwException = false)
         {
             mpv_error err = mpv_get_property(Handle, GetUtf8Bytes(name),
                 mpv_format.MPV_FORMAT_OSD_STRING, out IntPtr lpBuffer);
@@ -844,9 +836,9 @@ namespace mpvnet
             return "";
         }
 
-        public string get_opt(string name, string defaultValue = "")
+        public string GetScriptOption(string name, string defaultValue = "")
         {
-            string value = get_property_string("script-opts");
+            string value = GetPropertyString("script-opts");
 
             if (string.IsNullOrEmpty(value))
                 return defaultValue;
@@ -867,7 +859,7 @@ namespace mpvnet
             return defaultValue;
         }
 
-        public void observe_property_int(string name, Action<int> action)
+        public void ObservePropertyInt(string name, Action<int> action)
         {
             lock (IntPropChangeActions)
             {
@@ -886,7 +878,7 @@ namespace mpvnet
             }
         }
 
-        public void observe_property_double(string name, Action<double> action)
+        public void ObservePropertyDouble(string name, Action<double> action)
         {
             lock (DoublePropChangeActions)
             {
@@ -905,7 +897,7 @@ namespace mpvnet
             }
         }
 
-        public void observe_property_bool(string name, Action<bool> action)
+        public void ObservePropertyBool(string name, Action<bool> action)
         {
             lock (BoolPropChangeActions)
             {
@@ -924,7 +916,7 @@ namespace mpvnet
             }
         }
 
-        public void observe_property_string(string name, Action<string> action)
+        public void ObservePropertyString(string name, Action<string> action)
         {
             lock (StringPropChangeActions)
             {
@@ -943,7 +935,7 @@ namespace mpvnet
             }
         }
 
-        public void observe_property(string name, Action action)
+        public void ObserveProperty(string name, Action action)
         {
             lock (PropChangeActions)
             {
@@ -1004,7 +996,7 @@ namespace mpvnet
                             }
                             else if (arg == "--audio-device=help")
                             {
-                                Console.WriteLine(Core.get_property_osd_string("audio-device-list"));
+                                Console.WriteLine(GetPropertyOsdString("audio-device-list"));
                                 continue;
                             }
                             else if (arg == "--version")
@@ -1014,12 +1006,12 @@ namespace mpvnet
                             }
                             else if (arg == "--input-keylist")
                             {
-                                Console.WriteLine(Core.get_property_string("input-key-list").Replace(",", BR));
+                                Console.WriteLine(GetPropertyString("input-key-list").Replace(",", BR));
                                 continue;
                             }
                             else if (arg.StartsWith("--command="))
                             {
-                                Core.command(arg.Substring(10));
+                                Command(arg.Substring(10));
                                 continue;
                             }
                         }
@@ -1049,18 +1041,18 @@ namespace mpvnet
 
                         if (preInit && preInitProperties.Contains(left))
                         {
-                            Core.ProcessProperty(left, right);
+                            ProcessProperty(left, right);
 
                             if (!App.ProcessProperty(left, right))
-                                set_property_string(left, right, true);
+                                SetPropertyString(left, right, true);
                         }
                         else if (!preInit && !preInitProperties.Contains(left))
                         {
-                            Core.ProcessProperty(left, right);
+                            ProcessProperty(left, right);
 
                             if (!App.ProcessProperty(left, right))
                             {
-                                set_property_string(left, right, true);
+                                SetPropertyString(left, right, true);
 
                                 if (left == "shuffle" && right == "yes")
                                     shuffle = true;
@@ -1089,8 +1081,8 @@ namespace mpvnet
 
                 if (shuffle)
                 {
-                    Core.command("playlist-shuffle");
-                    set_property_int("playlist-pos", 0);
+                    Command("playlist-shuffle");
+                    SetPropertyInt("playlist-pos", 0);
                 }
 
                 if (files.Count == 0 || files[0].Contains("://"))
@@ -1125,28 +1117,30 @@ namespace mpvnet
                 if (file.Ext() == "iso")
                     LoadISO(file);
                 else if(SubtitleTypes.Contains(file.Ext()))
-                    commandv("sub-add", file);
+                    CommandV("sub-add", file);
                 else if (file.Ext().Length != 3 && File.Exists(Path.Combine(file, "BDMV\\index.bdmv")))
                 {
-                    Core.command("stop");
+                    Command("stop");
                     Thread.Sleep(500);
-                    set_property_string("bluray-device", file);
-                    commandv("loadfile", @"bd://");
+                    SetPropertyString("bluray-device", file);
+                    CommandV("loadfile", @"bd://");
                 }
                 else
                 {
                     if (i == 0 && !append)
                     {
-                        command("set pause no");
-                        commandv("loadfile", file);
+                        CommandV("loadfile", file);
+
+                        if (Paused)
+                            SetPropertyBool("pause", false);
                     }
                     else
-                        commandv("loadfile", file, "append");
+                        CommandV("loadfile", file, "append");
                 }
             }
 
-            if (string.IsNullOrEmpty(get_property_string("path")))
-                set_property_int("playlist-pos", 0);
+            if (string.IsNullOrEmpty(GetPropertyString("path")))
+                SetPropertyInt("playlist-pos", 0);
 
             if (loadFolder && !append)
                 App.RunTask(() => LoadFolder());
@@ -1164,25 +1158,25 @@ namespace mpvnet
                 switch (result)
                 {
                     case DialogResult.Yes:
-                        Core.command("stop");
+                        Command("stop");
                         Thread.Sleep(500);
-                        Core.set_property_string("bluray-device", path);
-                        Core.LoadFiles(new[] { @"bd://" }, false, false);
+                        SetPropertyString("bluray-device", path);
+                        LoadFiles(new[] { @"bd://" }, false, false);
                         break;
                     case DialogResult.No:
-                        Core.command("stop");
+                        Command("stop");
                         Thread.Sleep(500);
-                        Core.set_property_string("dvd-device", path);
-                        Core.LoadFiles(new[] { @"dvd://" }, false, false);
+                        SetPropertyString("dvd-device", path);
+                        LoadFiles(new[] { @"dvd://" }, false, false);
                         break;
                 }
             }
             else
             {
-                Core.command("stop");
+                Command("stop");
                 Thread.Sleep(500);
-                Core.set_property_string("bluray-device", path);
-                Core.LoadFiles(new[] { @"bd://" }, false, false);
+                SetPropertyString("bluray-device", path);
+                LoadFiles(new[] { @"bd://" }, false, false);
             }
         }
 
@@ -1192,9 +1186,9 @@ namespace mpvnet
                 return;
 
             Thread.Sleep(1000);
-            string path = get_property_string("path");
+            string path = GetPropertyString("path");
 
-            if (!File.Exists(path) || get_property_int("playlist-count") != 1)
+            if (!File.Exists(path) || GetPropertyInt("playlist-count") != 1)
                 return;
 
             string dir = Environment.CurrentDirectory;
@@ -1214,10 +1208,10 @@ namespace mpvnet
             files.Remove(path);
 
             foreach (string i in files)
-                commandv("loadfile", i, "append");
+                CommandV("loadfile", i, "append");
 
             if (index > 0)
-                commandv("playlist-move", "0", (index + 1).ToString());
+                CommandV("playlist-move", "0", (index + 1).ToString());
         }
 
         bool WasAviSynthLoaded;
@@ -1260,7 +1254,7 @@ namespace mpvnet
         bool HistoryDiscard()
         {
             if (HistoryDiscardOption == null)
-                HistoryDiscardOption = Core.get_opt("history-discard");
+                HistoryDiscardOption = GetScriptOption("history-discard");
 
             if (string.IsNullOrEmpty(HistoryDiscardOption))
                 return false;
@@ -1297,7 +1291,7 @@ namespace mpvnet
                     BitmapData bd = bmp.LockBits(rect, ImageLockMode.ReadOnly, PixelFormat.Format32bppPArgb);
                     int x = Convert.ToInt32((cr.Width - len) / (december ? 1.95 : 2));
                     int y = Convert.ToInt32(((cr.Height - len) / 2.0) * (december ? 0.85 : 0.9));
-                    commandv("overlay-add", "0", $"{x}", $"{y}", "&" + bd.Scan0.ToInt64().ToString(), "0", "bgra", bd.Width.ToString(), bd.Height.ToString(), bd.Stride.ToString());
+                    CommandV("overlay-add", "0", $"{x}", $"{y}", "&" + bd.Scan0.ToInt64().ToString(), "0", "bgra", bd.Width.ToString(), bd.Height.ToString(), bd.Stride.ToString());
                     bmp.UnlockBits(bd);
                     IsLogoVisible = true;
                 }
@@ -1325,7 +1319,7 @@ namespace mpvnet
 
         void ReadMetaData()
         {
-            string path = get_property_string("path");
+            string path = GetPropertyString("path");
 
             if (!path.ToLowerEx().StartsWithEx("bd://"))
                 lock (BluRayTitles)
@@ -1334,32 +1328,32 @@ namespace mpvnet
             lock (MediaTracks)
             {
                 MediaTracks.Clear();
-                int trackListCount = Core.get_property_int("track-list/count");
+                int trackListCount = GetPropertyInt("track-list/count");
 
                 if (path.ToLowerEx().Contains("://"))
                 {
                     for (int i = 0; i < trackListCount; i++)
                     {
-                        string type = Core.get_property_string($"track-list/{i}/type");
+                        string type = GetPropertyString($"track-list/{i}/type");
 
                         if (type == "audio")
                         {
                             MediaTrack track = new MediaTrack();
-                            Add(track, GetLanguage(Core.get_property_string($"track-list/{i}/lang")));
-                            Add(track, Core.get_property_string($"track-list/{i}/codec").ToUpperEx());
-                            Add(track, Core.get_property_int($"track-list/{i}/audio-channels") + " channels");
+                            Add(track, GetLanguage(GetPropertyString($"track-list/{i}/lang")));
+                            Add(track, GetPropertyString($"track-list/{i}/codec").ToUpperEx());
+                            Add(track, GetPropertyInt($"track-list/{i}/audio-channels") + " channels");
                             track.Text = "A: " + track.Text.Trim(' ', ',');
                             track.Type = "a";
-                            track.ID = Core.get_property_int($"track-list/{i}/id");
+                            track.ID = GetPropertyInt($"track-list/{i}/id");
                             MediaTracks.Add(track);
                         }
                         else if (type == "sub")
                         {
                             MediaTrack track = new MediaTrack();
-                            Add(track, GetLanguage(Core.get_property_string($"track-list/{i}/lang")));
+                            Add(track, GetLanguage(GetPropertyString($"track-list/{i}/lang")));
                             track.Text = "S: " + track.Text.Trim(' ', ',');
                             track.Type = "s";
-                            track.ID = Core.get_property_int($"track-list/{i}/id");
+                            track.ID = GetPropertyInt($"track-list/{i}/id");
                             MediaTracks.Add(track);
                         }
                     }
@@ -1409,18 +1403,18 @@ namespace mpvnet
 
                         for (int i = 0; i < trackListCount; i++)
                         {
-                            string type     = Core.get_property_string($"track-list/{i}/type");
-                            string external = Core.get_property_string($"track-list/{i}/external");
+                            string type     = GetPropertyString($"track-list/{i}/type");
+                            string external = GetPropertyString($"track-list/{i}/external");
 
                             if (type == "audio" && external == "yes")
                             {
                                 MediaTrack track = new MediaTrack();
-                                Add(track, GetLanguage(Core.get_property_string($"track-list/{i}/lang")));
-                                Add(track, Core.get_property_string($"track-list/{i}/codec").ToUpperEx());
-                                Add(track, Core.get_property_int($"track-list/{i}/audio-channels") + " channels");
+                                Add(track, GetLanguage(GetPropertyString($"track-list/{i}/lang")));
+                                Add(track, GetPropertyString($"track-list/{i}/codec").ToUpperEx());
+                                Add(track, GetPropertyInt($"track-list/{i}/audio-channels") + " channels");
                                 track.Text = "A: " + (track.Text.Trim(' ', ',') + ", External").Trim(' ', ',');
                                 track.Type = "a";
-                                track.ID = Core.get_property_int($"track-list/{i}/id");
+                                track.ID = GetPropertyInt($"track-list/{i}/id");
                                 MediaTracks.Add(track);
                             }
                         }
@@ -1444,26 +1438,26 @@ namespace mpvnet
 
                         for (int i = 0; i < trackListCount; i++)
                         {
-                            string type     = Core.get_property_string($"track-list/{i}/type");
-                            string external = Core.get_property_string($"track-list/{i}/external");
+                            string type     = GetPropertyString($"track-list/{i}/type");
+                            string external = GetPropertyString($"track-list/{i}/external");
 
                             if (type == "sub" && external == "yes")
                             {
                                 MediaTrack track = new MediaTrack();
-                                Add(track, GetLanguage(Core.get_property_string($"track-list/{i}/lang")));
+                                Add(track, GetLanguage(GetPropertyString($"track-list/{i}/lang")));
                                 track.Text = "S: " + (track.Text.Trim(' ', ',') + ", External").Trim(' ', ',');
                                 track.Type = "s";
-                                track.ID = Core.get_property_int($"track-list/{i}/id");
+                                track.ID = GetPropertyInt($"track-list/{i}/id");
                                 MediaTracks.Add(track);
                             }
                         }
 
-                        int editionCount = get_property_int("edition-list/count");
+                        int editionCount = GetPropertyInt("edition-list/count");
 
                         for (int i = 0; i < editionCount; i++)
                         {
                             MediaTrack track = new MediaTrack();
-                            track.Text = "E: " + get_property_string($"edition-list/{i}/title");
+                            track.Text = "E: " + GetPropertyString($"edition-list/{i}/title");
                             track.Type = "e";
                             track.ID = i;
                             MediaTracks.Add(track);
@@ -1475,12 +1469,12 @@ namespace mpvnet
             lock (Chapters)
             {
                 Chapters.Clear();
-                int count = get_property_int("chapter-list/count");
+                int count = GetPropertyInt("chapter-list/count");
 
                 for (int x = 0; x < count; x++)
                 {
-                    string text = get_property_string($"chapter-list/{x}/title");
-                    double time = get_property_number($"chapter-list/{x}/time");
+                    string text = GetPropertyString($"chapter-list/{x}/title");
+                    double time = GetPropertyDouble($"chapter-list/{x}/time");
                     Chapters.Add(new KeyValuePair<string, double>(text, time));
                 }
             }

@@ -1,13 +1,13 @@
 
 $code = {
     $isMinimized = $args[0]
-    $isPaused = $mp.get_property_bool('pause')
+    $isPaused = $mp.GetPropertyBool('pause')
 
     if ($isMinimized)
     {
         if (-not $isPaused)
         {
-            $mp.set_property_bool('pause', $true)
+            $mp.SetPropertyBool('pause', $true)
             $script:wasPaused = $true
         }
     }
@@ -15,11 +15,11 @@ $code = {
     {
         if ($script:wasPaused -and $isPaused)
         {
-            $mp.set_property_bool('pause', $false)
+            $mp.SetPropertyBool('pause', $false)
         }
 
         $script:wasPaused = $false
     }
 }
 
-$mp.observe_property('window-minimized', 'bool', $code)
+$mp.ObserveProperty('window-minimized', 'bool', $code)

@@ -25,11 +25,11 @@ class Script
     {
         if (MainForm.WindowState == FormWindowState.Minimized)
         {
-            WasPlaying = !Core.get_property_bool("pause");
+            WasPlaying = !Core.GetPropertyBool("pause");
 
             if (WasPlaying)
             {
-                Core.set_property_bool("pause", true, true);
+                Core.SetPropertyBool("pause", true, true);
                 WasPaused = true;
             }
         }
@@ -37,7 +37,7 @@ class Script
         {
             if (WasPaused)
             {
-                Core.set_property_bool("pause", false, true);
+                Core.SetPropertyBool("pause", false, true);
                 WasPaused = false;
             }
         }

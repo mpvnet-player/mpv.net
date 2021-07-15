@@ -90,7 +90,7 @@ namespace mpvnet
 
                         try
                         {
-                            Core.set_property_string(item.Name, item.Value, true);
+                            Core.SetPropertyString(item.Name, item.Value, true);
                         }
                         catch (Exception ex)
                         {

@@ -109,46 +109,46 @@ namespace mpvnet
             }
         }
 
-        public void commandv(params string[] args) => Core.commandv(args);
+        public void CommandV(params string[] args) => Core.CommandV(args);
 
-        public void command(string command) => Core.command(command);
+        public void Command(string command) => Core.Command(command);
 
-        public bool get_property_bool(string name) => Core.get_property_bool(name);
+        public bool GetPropertyBool(string name) => Core.GetPropertyBool(name);
 
-        public void set_property_bool(string name, bool value) => Core.set_property_bool(name, value);
+        public void SetPropertyBool(string name, bool value) => Core.SetPropertyBool(name, value);
 
-        public int get_property_int(string name) => Core.get_property_int(name);
+        public int GetPropertyInt(string name) => Core.GetPropertyInt(name);
 
-        public void set_property_int(string name, int value) => Core.set_property_int(name, value);
+        public void SetPropertyInt(string name, int value) => Core.SetPropertyInt(name, value);
 
-        public double get_property_number(string name) => Core.get_property_number(name);
+        public double GetPropertyDouble(string name) => Core.GetPropertyDouble(name);
 
-        public void set_property_number(string name, double value) => Core.set_property_number(name, value);
+        public void SetPropertyDouble(string name, double value) => Core.SetPropertyDouble(name, value);
 
-        public string get_property_string(string name) => Core.get_property_string(name);
+        public string GetPropertyString(string name) => Core.GetPropertyString(name);
 
-        public void set_property_string(string name, string value) => Core.set_property_string(name, value);
+        public void SetPropertyString(string name, string value) => Core.SetPropertyString(name, value);
 
-        public void observe_property(string name, string type, ScriptBlock sb)
+        public void ObserveProperty(string name, string type, ScriptBlock sb)
         {
             PropChangedHandlers.Add(new KeyValuePair<string, ScriptBlock>(name, sb));
 
             switch (type)
             {
                 case "bool": case "boolean":
-                    Core.observe_property_bool(name, value => App.RunTask(() => PropertyChanged.Invoke(name, value)));
+                    Core.ObservePropertyBool(name, value => App.RunTask(() => PropertyChanged.Invoke(name, value)));
                     break;
                 case "string":
-                    Core.observe_property_string(name, value => App.RunTask(() => PropertyChanged.Invoke(name, value)));
+                    Core.ObservePropertyString(name, value => App.RunTask(() => PropertyChanged.Invoke(name, value)));
                     break;
                 case "int": case "integer":
-                    Core.observe_property_int(name, value => App.RunTask(() => PropertyChanged.Invoke(name, value)));
+                    Core.ObservePropertyInt(name, value => App.RunTask(() => PropertyChanged.Invoke(name, value)));
                     break;
                 case "float": case "double":
-                    Core.observe_property_double(name, value => App.RunTask(() => PropertyChanged.Invoke(name, value)));
+                    Core.ObservePropertyDouble(name, value => App.RunTask(() => PropertyChanged.Invoke(name, value)));
                     break;
                 case "nil": case "none": case "native":
-                    Core.observe_property(name, () => App.RunTask(() => PropertyChanged.Invoke(name, null)));
+                    Core.ObserveProperty(name, () => App.RunTask(() => PropertyChanged.Invoke(name, null)));
                     break;
                 default:
                     App.ShowError("Invalid Type", "Valid types are: bool or boolean, string, int or integer, float or double, nil or none or native");
@@ -156,7 +156,7 @@ namespace mpvnet
             }
         }
 
-        public void register_event(string name, ScriptBlock sb)
+        public void RegisterEvent(string name, ScriptBlock sb)
         {
             EventHandlers.Add(new KeyValuePair<string, ScriptBlock>(name, sb));
 

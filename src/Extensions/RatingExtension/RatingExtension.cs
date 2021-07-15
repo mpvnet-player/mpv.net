@@ -80,7 +80,7 @@ namespace RatingExtension // the assembly name must end with 'Extension'!
 
             if (int.TryParse(args[1], out int rating))
             {
-                string path = Core.get_property_string("path");
+                string path = Core.GetPropertyString("path");
 
                 if (!File.Exists(path))
                     return;
@@ -90,7 +90,7 @@ namespace RatingExtension // the assembly name must end with 'Extension'!
                 else
                 {
                     Dic[path] = rating;
-                    Core.commandv("show-text", $"Rating: {rating}");
+                    Core.CommandV("show-text", $"Rating: {rating}");
                 }
             }
             else if (args[1] == "about")
@@ -104,26 +104,26 @@ namespace RatingExtension // the assembly name must end with 'Extension'!
         {
             if (rating == 0)
             {
-                FileToDelete = Core.get_property_string("path");
+                FileToDelete = Core.GetPropertyString("path");
                 DeleteTime = DateTime.Now;
-                Core.commandv("show-text", "Press 1 to delete file", "5000");
+                Core.CommandV("show-text", "Press 1 to delete file", "5000");
             }
             else
             {
                 TimeSpan ts = DateTime.Now - DeleteTime;
-                string path = Core.get_property_string("path");
+                string path = Core.GetPropertyString("path");
                 
                 if (FileToDelete == path && ts.TotalSeconds < 5 && File.Exists(FileToDelete))
                 {
-                    Core.command("playlist-remove current");
-                    int pos = Core.get_property_int("playlist-pos");
+                    Core.Command("playlist-remove current");
+                    int pos = Core.GetPropertyInt("playlist-pos");
 
                     if (pos == -1)
                     {
-                        int count = Core.get_property_int("playlist-count");
+                        int count = Core.GetPropertyInt("playlist-count");
 
                         if (count > 0)
-                            Core.set_property_int("playlist-pos", count - 1);
+                            Core.SetPropertyInt("playlist-pos", count - 1);
                     }
 
                     Thread.Sleep(2000);

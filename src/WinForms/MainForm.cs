@@ -49,22 +49,22 @@ namespace mpvnet
                 Core.Idle += Core_Idle;
                 Core.Seek += () => UpdateProgressBar();
 
-                Core.observe_property("window-maximized", PropChangeWindowMaximized);
-                Core.observe_property("window-minimized", PropChangeWindowMinimized);
+                Core.ObserveProperty("window-maximized", PropChangeWindowMaximized);
+                Core.ObserveProperty("window-minimized", PropChangeWindowMinimized);
 
-                Core.observe_property_bool("border", PropChangeBorder);
-                Core.observe_property_bool("fullscreen", PropChangeFullscreen);
-                Core.observe_property_bool("keepaspect-window", value => Core.KeepaspectWindow = value);
-                Core.observe_property_bool("ontop", PropChangeOnTop);
-                Core.observe_property_bool("pause", PropChangePause);
+                Core.ObservePropertyBool("border", PropChangeBorder);
+                Core.ObservePropertyBool("fullscreen", PropChangeFullscreen);
+                Core.ObservePropertyBool("keepaspect-window", value => Core.KeepaspectWindow = value);
+                Core.ObservePropertyBool("ontop", PropChangeOnTop);
+                Core.ObservePropertyBool("pause", PropChangePause);
 
-                Core.observe_property_string("sid", PropChangeSid);
-                Core.observe_property_string("aid", PropChangeAid);
-                Core.observe_property_string("vid", PropChangeVid);
+                Core.ObservePropertyString("sid", PropChangeSid);
+                Core.ObservePropertyString("aid", PropChangeAid);
+                Core.ObservePropertyString("vid", PropChangeVid);
 
-                Core.observe_property_string("title", PropChangeTitle);
+                Core.ObservePropertyString("title", PropChangeTitle);
 
-                Core.observe_property_int("edition", PropChangeEdition);
+                Core.ObservePropertyInt("edition", PropChangeEdition);
 
                 if (Core.GPUAPI != "vulkan")
                     Core.ProcessCommandLine(false);
@@ -146,7 +146,7 @@ namespace mpvnet
                     (int)(Core.VideoSize.Width * scale),
                     (int)Math.Ceiling(Core.VideoSize.Height * scale),
                     Screen.FromControl(this), false);
-                Core.command($"show-text \"window-scale {scale.ToString(CultureInfo.InvariantCulture)}\"");
+                Core.Command($"show-text \"window-scale {scale.ToString(CultureInfo.InvariantCulture)}\"");
             }));
         }
 
@@ -199,7 +199,7 @@ namespace mpvnet
                     foreach (MediaTrack track in vidTracks)
                     {
                         MenuItem mi = new MenuItem(track.Text);
-                        mi.Action = () => Core.commandv("set", "vid", track.ID.ToString());
+                        mi.Action = () => Core.CommandV("set", "vid", track.ID.ToString());
                         mi.Checked = Core.VID == track.ID.ToString();
                         trackMenuItem.DropDownItems.Add(mi);
                     }
@@ -210,7 +210,7 @@ namespace mpvnet
                     foreach (MediaTrack track in audTracks)
                     {
                         MenuItem mi = new MenuItem(track.Text);
-                        mi.Action = () => Core.commandv("set", "aid", track.ID.ToString());
+                        mi.Action = () => Core.CommandV("set", "aid", track.ID.ToString());
                         mi.Checked = Core.AID == track.ID.ToString();
                         trackMenuItem.DropDownItems.Add(mi);
                     }
@@ -221,7 +221,7 @@ namespace mpvnet
                     foreach (MediaTrack track in subTracks)
                     {
                         MenuItem mi = new MenuItem(track.Text);
-                        mi.Action = () => Core.commandv("set", "sid", track.ID.ToString());
+                        mi.Action = () => Core.CommandV("set", "sid", track.ID.ToString());
                         mi.Checked = Core.SID == track.ID.ToString();
                         trackMenuItem.DropDownItems.Add(mi);
                     }
@@ -229,7 +229,7 @@ namespace mpvnet
                     if (subTracks.Length > 0)
                     {
                         MenuItem mi = new MenuItem("S: No subtitles");
-                        mi.Action = () => Core.commandv("set", "sid", "no");
+                        mi.Action = () => Core.CommandV("set", "sid", "no");
                         mi.Checked = Core.SID == "no";
                         trackMenuItem.DropDownItems.Add(mi);
                     }
@@ -240,7 +240,7 @@ namespace mpvnet
                     foreach (MediaTrack track in ediTracks)
                     {
                         MenuItem mi = new MenuItem(track.Text);
-                        mi.Action = () => Core.commandv("set", "edition", track.ID.ToString());
+                        mi.Action = () => Core.CommandV("set", "edition", track.ID.ToString());
                         mi.Checked = Core.Edition == track.ID;
                         trackMenuItem.DropDownItems.Add(mi);
                     }
@@ -259,7 +259,7 @@ namespace mpvnet
                     {
                         MenuItem mi = new MenuItem(pair.Key);
                         mi.ShortcutKeyDisplayString = TimeSpan.FromSeconds(pair.Value).ToString().Substring(0, 8) + "     ";
-                        mi.Action = () => Core.commandv("seek", pair.Value.ToString(CultureInfo.InvariantCulture), "absolute");
+                        mi.Action = () => Core.CommandV("seek", pair.Value.ToString(CultureInfo.InvariantCulture), "absolute");
                         chaptersMenuItem.DropDownItems.Add(mi);
                     }
                 }
@@ -585,7 +585,7 @@ namespace mpvnet
 
                 MenuItem menuItem = ContextMenu.Add(item.Path.Replace("&", "&&"), () => {
                     try {
-                        Core.command(item.Command);
+                        Core.Command(item.Command);
                     } catch (Exception ex) {
                         Msg.ShowException(ex);
                     }
@@ -598,10 +598,10 @@ namespace mpvnet
 
         void Core_FileLoaded()
         {
-            string path = Core.get_property_string("path");
+            string path = Core.GetPropertyString("path");
 
             BeginInvoke(new Action(() => {
-                Text = Core.expand(Title);
+                Text = Core.Expand(Title);
 
                 int interval = (int)(Core.Duration.TotalMilliseconds / 100);
 
@@ -624,7 +624,7 @@ namespace mpvnet
                 App.Settings.RecentFiles.RemoveAt(App.RecentCount);
         }
 
-        void SetTitle() => BeginInvoke(new Action(() => Text = Core.expand(Title)));
+        void SetTitle() => BeginInvoke(new Action(() => Text = Core.Expand(Title)));
 
         public void Voodoo()
         {
@@ -719,7 +719,7 @@ namespace mpvnet
                     if (Environment.TickCount - LastCycleFullscreen > 500)
                     {
                         Point pos = PointToClient(Cursor.Position);
-                        Core.command($"mouse {pos.X} {pos.Y}");
+                        Core.Command($"mouse {pos.X} {pos.Y}");
                     }
 
                     if (CursorHelp.IsPosDifferent(LastCursorPosition))
@@ -727,12 +727,12 @@ namespace mpvnet
                     break;
                 case 0x2a3: // WM_MOUSELEAVE
                     //osc won't auto hide after mouse left window in borderless mode
-                    Core.command($"mouse {ClientSize.Width / 2} {ClientSize.Height / 3}");
+                    Core.Command($"mouse {ClientSize.Width / 2} {ClientSize.Height / 3}");
                     break;
                 case 0x203: // WM_LBUTTONDBLCLK
                     {
                         Point pos = PointToClient(Cursor.Position);
-                        Core.command($"mouse {pos.X} {pos.Y} 0 double");
+                        Core.Command($"mouse {pos.X} {pos.Y} 0 double");
                     }
                     break;
                 case 0x02E0: // WM_DPICHANGED
@@ -786,10 +786,10 @@ namespace mpvnet
                                 break;
                             case "queue":
                                 foreach (string file in args)
-                                    Core.commandv("loadfile", file, "append");
+                                    Core.CommandV("loadfile", file, "append");
                                 break;
                             case "command":
-                                Core.command(args[0]);
+                                Core.Command(args[0]);
                                 break;
                         }
 
@@ -828,7 +828,7 @@ namespace mpvnet
         void UpdateProgressBar()
         {
             if (Core.TaskbarProgress && Taskbar != null)
-                Taskbar.SetValue(Core.get_property_number("time-pos"), Core.Duration.TotalSeconds);
+                Taskbar.SetValue(Core.GetPropertyDouble("time-pos"), Core.Duration.TotalSeconds);
         }
 
         void PropChangeOnTop(bool value) => BeginInvoke(new Action(() => TopMost = value));
@@ -850,7 +850,7 @@ namespace mpvnet
 
             BeginInvoke(new Action(() =>
             {
-                Core.WindowMaximized = Core.get_property_bool("window-maximized");
+                Core.WindowMaximized = Core.GetPropertyBool("window-maximized");
 
                 if (Core.WindowMaximized && WindowState != FormWindowState.Maximized)
                     WindowState = FormWindowState.Maximized;
@@ -866,7 +866,7 @@ namespace mpvnet
 
             BeginInvoke(new Action(() =>
             {
-                Core.WindowMinimized = Core.get_property_bool("window-minimized");
+                Core.WindowMinimized = Core.GetPropertyBool("window-minimized");
 
                 if (Core.WindowMinimized && WindowState != FormWindowState.Minimized)
                     WindowState = FormWindowState.Minimized;
@@ -923,7 +923,7 @@ namespace mpvnet
             base.OnShown(e);
 
             if (WindowState == FormWindowState.Maximized)
-                Core.set_property_bool("window-maximized", true);
+                Core.SetPropertyBool("window-maximized", true);
 
             if (Core.GPUAPI == "vulkan")
                 Core.ProcessCommandLine(false);
@@ -961,16 +961,16 @@ namespace mpvnet
             {
                 if (WindowState == FormWindowState.Minimized)
                 {
-                    Core.set_property_bool("window-minimized", true);
+                    Core.SetPropertyBool("window-minimized", true);
                 }
                 else if (WindowState == FormWindowState.Normal)
                 {
-                    Core.set_property_bool("window-maximized", false);
-                    Core.set_property_bool("window-minimized", false);
+                    Core.SetPropertyBool("window-maximized", false);
+                    Core.SetPropertyBool("window-minimized", false);
                 }
                 else if (WindowState == FormWindowState.Maximized)
                 {
-                    Core.set_property_bool("window-maximized", true);
+                    Core.SetPropertyBool("window-maximized", true);
                 }
             }
         }
@@ -980,7 +980,7 @@ namespace mpvnet
             base.OnFormClosing(e);
 
             if (Core.IsQuitNeeded)
-                Core.commandv("quit");
+                Core.CommandV("quit");
 
             if (!Core.ShutdownAutoResetEvent.WaitOne(10000))
                 Msg.ShowError("Shutdown thread failed to complete within 10 seconds.");
@@ -999,7 +999,7 @@ namespace mpvnet
             }
 
             if (Width - e.Location.X < 10 && e.Location.Y < 10)
-                Core.commandv("quit");
+                Core.CommandV("quit");
         }
 
         protected override void OnMove(EventArgs e)

@@ -12,8 +12,8 @@ class Script
         string content = "ctrl+w script-message my-message-1 my-argument-1";
         string sectionName = Assembly.GetExecutingAssembly().GetName().Name;
         CorePlayer core = Global.Core;
-        core.commandv("define-section", sectionName, content, "force");
-        core.commandv("enable-section", sectionName);
+        core.CommandV("define-section", sectionName, content, "force");
+        core.CommandV("enable-section", sectionName);
         core.ClientMessage += ClientMessage;
     }
 

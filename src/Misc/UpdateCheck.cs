@@ -68,7 +68,7 @@ namespace mpvnet
                             proc.Start();
                         }
 
-                        Core.command("quit");
+                        Core.Command("quit");
                     }
 
                     App.Settings.UpdateCheckVersion = onlineVersion.ToString();

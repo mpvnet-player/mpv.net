@@ -31,7 +31,7 @@ class Script
         foreach (MediaTrack track in editionTracks)
         {
             MenuItem mi = new MenuItem(track.Text);
-            mi.Action = () => { Core.commandv("set", "edition", track.ID.ToString()); };
+            mi.Action = () => { Core.CommandV("set", "edition", track.ID.ToString()); };
             mi.Checked = Core.Edition == track.ID;
             menuItem.DropDownItems.Add(mi);
         }

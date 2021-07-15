@@ -120,7 +120,7 @@ namespace mpvnet
             get {
                 return "Copyright (C) 2000-2021 mpv.net/mpv/mplayer\n" +
                     $"mpv.net {Application.ProductVersion} ({File.GetLastWriteTime(Application.ExecutablePath).ToShortDateString()})\n" +
-                    $"{Core.get_property_string("mpv-version")} ({File.GetLastWriteTime(Folder.Startup + "mpv-1.dll").ToShortDateString()})\nffmpeg {Core.get_property_string("ffmpeg-version")}\nMIT License";
+                    $"{Core.GetPropertyString("mpv-version")} ({File.GetLastWriteTime(Folder.Startup + "mpv-1.dll").ToShortDateString()})\nffmpeg {Core.GetPropertyString("ffmpeg-version")}\nMIT License";
             }
         }
 
@@ -157,15 +157,15 @@ namespace mpvnet
         {
             if (RememberVolume)
             {
-                Core.set_property_int("volume", Settings.Volume);
-                Core.set_property_string("mute", Settings.Mute);
+                Core.SetPropertyInt("volume", Settings.Volume);
+                Core.SetPropertyString("mute", Settings.Mute);
             }
         }
 
         static void Core_Shutdown()
         {
-            Settings.Volume = Core.get_property_int("volume");
-            Settings.Mute = Core.get_property_string("mute");
+            Settings.Volume = Core.GetPropertyInt("volume");
+            Settings.Mute = Core.GetPropertyString("mute");
 
             SettingsManager.Save(Settings);
 

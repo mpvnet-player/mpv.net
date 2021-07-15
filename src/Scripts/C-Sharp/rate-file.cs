@@ -69,13 +69,13 @@ class Script
 
         if (int.TryParse(args[1], out rating))
         {
-            string path = Core.get_property_string("path");
+            string path = Core.GetPropertyString("path");
 
             if (!File.Exists(path))
                 return;
 
             Dic[path] = rating;
-            Core.commandv("show-text", "Rating: " + rating);
+            Core.CommandV("show-text", "Rating: " + rating);
         }
     }
 }

@@ -127,7 +127,7 @@ namespace mpvnet
                     ''
                 }";
 
-            string json = Core.get_property_string("profile-list");
+            string json = Core.GetPropertyString("profile-list");
             return PowerShell.InvokeAndReturnString(code, "json", json).Trim();
         }
 
@@ -139,19 +139,19 @@ namespace mpvnet
                     $item.codec + ' - ' + $item.description
                 }";
 
-            string json = Core.get_property_string("decoder-list");
+            string json = Core.GetPropertyString("decoder-list");
             return PowerShell.InvokeAndReturnString(code, "json", json).Trim();
         }
 
         public static string GetProtocols()
         {
-            string list = Core.get_property_string("protocol-list");
+            string list = Core.GetPropertyString("protocol-list");
             return string.Join(BR, list.Split(',').OrderBy(a => a));
         }
 
         public static string GetDemuxers()
         {
-            string list = Core.get_property_string("demuxer-lavf-list");
+            string list = Core.GetPropertyString("demuxer-lavf-list");
             return string.Join(BR, list.Split(',').OrderBy(a => a));
         }
     }
