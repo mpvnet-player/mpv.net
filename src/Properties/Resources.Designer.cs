@@ -114,9 +114,6 @@ namespace mpvnet.Properties {
         ///osd-playing-msg = &apos;${filename}&apos;
         ///script-opts = osc-scalewindowed=1.5,osc-hidetimeout=2000,console-scale=1
         ///screenshot-directory = &apos;~~desktop/&apos;
-        ///
-        ///[protocol.https]
-        ///osd-playing-msg = &apos;${media-title}&apos;
         ///.
         /// </summary>
         internal static string mpv_conf {
@@ -132,6 +129,16 @@ namespace mpvnet.Properties {
             get {
                 object obj = ResourceManager.GetObject("mpvnet", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon mpvnet_icon {
+            get {
+                object obj = ResourceManager.GetObject("mpvnet_icon", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
         
