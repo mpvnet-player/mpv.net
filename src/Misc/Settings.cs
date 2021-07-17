@@ -36,20 +36,35 @@ namespace mpvnet
             if (!File.Exists(SettingsFile))
                 return new AppSettings();
 
-            XmlSerializer serializer = new XmlSerializer(typeof(AppSettings));
+            try
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(AppSettings));
 
-            using (FileStream fs = new FileStream(SettingsFile, FileMode.Open))
-                return (AppSettings)serializer.Deserialize(fs);
+                using (FileStream fs = new FileStream(SettingsFile, FileMode.Open))
+                    return (AppSettings)serializer.Deserialize(fs);
+            }
+            catch (Exception ex)
+            {
+                Terminal.WriteError(ex.ToString());
+                return new AppSettings();
+            }
         }
 
         public static void Save(object obj)
         {
-            using (XmlTextWriter writer = new XmlTextWriter(SettingsFile, Encoding.UTF8))
+            try
             {
-                writer.Formatting = Formatting.Indented;
-                writer.Indentation = 4;
-                XmlSerializer serializer = new XmlSerializer(obj.GetType());
-                serializer.Serialize(writer, obj);
+                using (XmlTextWriter writer = new XmlTextWriter(SettingsFile, Encoding.UTF8))
+                {
+                    writer.Formatting = Formatting.Indented;
+                    writer.Indentation = 4;
+                    XmlSerializer serializer = new XmlSerializer(obj.GetType());
+                    serializer.Serialize(writer, obj);
+                }
+            }
+            catch (Exception ex)
+            {
+                Terminal.WriteError(ex.ToString());
             }
         }
     }
