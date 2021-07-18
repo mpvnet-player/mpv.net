@@ -622,11 +622,17 @@ need an own implementation in mpv.net, so far implemented are:
 --version  
 
 
+### Scripting limitations (Lua and JavaScript)
+
+Script input bindings (mp.add_key_binding) are not direcly supported,
+the bindings must be defined explicitly in input.conf.
+
+
 ### mpv.net specific options
 
 Options that are specific to mpv.net can be found by entering _mpv.net_
-in the search field of the config editor, in the manual they are documented
-[here](#mpvnet-specific-options).
+in the search field of the config editor, in the mpv.net manual they are
+documented [here](#mpvnet-specific-options).
 
 mpv.net specific options are saved in the file mpvnet.conf and are just
 as mpv properties available on the command line.
