@@ -94,7 +94,7 @@ namespace mpvnet
 
         public void Error_DataReady(object sender, EventArgs e)
         {
-            var output = sender as PipelineReader<Object>;
+            var output = sender as PipelineReader<object>;
 
             while (output.Count > 0)
                 Terminal.WriteError(output.Read(), Module);
@@ -138,18 +138,23 @@ namespace mpvnet
                 case "bool": case "boolean":
                     Core.ObservePropertyBool(name, value => App.RunTask(() => PropertyChanged.Invoke(name, value)));
                     break;
+
                 case "string":
                     Core.ObservePropertyString(name, value => App.RunTask(() => PropertyChanged.Invoke(name, value)));
                     break;
+
                 case "int": case "integer":
                     Core.ObservePropertyInt(name, value => App.RunTask(() => PropertyChanged.Invoke(name, value)));
                     break;
+
                 case "float": case "double":
                     Core.ObservePropertyDouble(name, value => App.RunTask(() => PropertyChanged.Invoke(name, value)));
                     break;
+
                 case "nil": case "none": case "native":
                     Core.ObserveProperty(name, () => App.RunTask(() => PropertyChanged.Invoke(name, null)));
                     break;
+
                 default:
                     App.ShowError("Invalid Type", "Valid types are: bool or boolean, string, int or integer, float or double, nil or none or native");
                     break;
