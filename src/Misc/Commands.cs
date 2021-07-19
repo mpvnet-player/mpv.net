@@ -327,12 +327,6 @@ namespace mpvnet
             ShowTextWithEditor("command-list", PowerShell.InvokeAndReturnString(code, "json", json));
         }
 
-        public static void ShowProperties()
-        {
-            var props = Core.GetPropertyString("property-list").Split(',').OrderBy(prop => prop);
-            ShowTextWithEditor("property-list", string.Join(BR, props));
-        }
-
         public static void ShowTextWithEditor(string name, string text)
         {
             string file = Path.Combine(Path.GetTempPath(), name + ".txt");
@@ -423,6 +417,38 @@ namespace mpvnet
                     CommandPalette.Instance.MainListView.SelectedItem);
             }
 
+            MainForm.Instance.ShowCommandPalette();
+        }
+
+        public static void ShowProperties() => App.InvokeOnMainThread(ShowPropertiesInternal);
+
+        public static void ShowPropertiesInternal()
+        {
+            var props = Core.GetPropertyString("property-list").Split(',').OrderBy(prop => prop);
+            List<CommandPaletteItem> items = new List<CommandPaletteItem>();
+
+            foreach (string i in props)
+            {
+                string prop = i;
+
+                CommandPaletteItem item = new CommandPaletteItem()
+                {
+                    Text = prop,
+                    Action = () =>
+                    {
+                        string propValue = Core.GetPropertyString(prop);
+
+                        if (propValue.ContainsEx("${"))
+                            propValue += BR2 + Core.Expand(propValue);
+
+                        App.ShowInfo(prop + ": " +propValue);
+                    }
+                };
+
+                items.Add(item);
+            }
+
+            CommandPalette.Instance.SetItems(items);
             MainForm.Instance.ShowCommandPalette();
         }
     }

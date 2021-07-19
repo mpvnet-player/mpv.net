@@ -210,9 +210,8 @@ Adds files to the playlist, requires [--process-instance=single](#--process-inst
 
 #### --command=\<input command\>
 
-Sends a input command. Useful to control mpv.net from the command line, for instance
-to create global hotkeys with AutoHotkey, for that [process-instance=single](#--process-instancevalue)
-must be used. Spaces have to be escaped with quotes and quotes have to be escaped with double quotes.
+Sends a input command to a running mpv.net instance via command line, for instance
+to create global hotkeys with AutoHotkey. Requires [process-instance=single](#--process-instancevalue).
 
 ### Audio
 

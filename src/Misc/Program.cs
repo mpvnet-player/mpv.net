@@ -18,7 +18,7 @@ namespace mpvnet
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
 
-                if (App.IsStartedFromTerminal)
+                if (App.IsTerminalAttached)
                     Native.AttachConsole(-1 /*ATTACH_PARENT_PROCESS*/);
 
                 string[] args = Environment.GetCommandLineArgs().Skip(1).ToArray();
@@ -75,7 +75,7 @@ namespace mpvnet
                                 Native.SendMessage(proc.MainWindowHandle, 0x004A /*WM_COPYDATA*/, IntPtr.Zero, ref data);
                                 mutex.Dispose();
 
-                                if (App.IsStartedFromTerminal)
+                                if (App.IsTerminalAttached)
                                     Native.FreeConsole();
 
                                 return;
@@ -91,7 +91,7 @@ namespace mpvnet
 
                 Application.Run(new MainForm());
 
-                if (App.IsStartedFromTerminal)
+                if (App.IsTerminalAttached)
                     Native.FreeConsole();
 
                 mutex.Dispose();

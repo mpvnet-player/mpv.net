@@ -23,7 +23,7 @@ namespace mpvnet
 
         public static bool RememberWindowPosition { get; set; }
         public static bool DebugMode { get; set; }
-        public static bool IsStartedFromTerminal { get; } = Environment.GetEnvironmentVariable("_started_from_console") == "yes";
+        public static bool IsTerminalAttached { get; } = Environment.GetEnvironmentVariable("_started_from_console") == "yes";
         public static bool RememberVolume { get; set; } = true;
         public static bool AutoLoadFolder { get; set; } = true;
         public static bool Queue { get; set; }
@@ -126,7 +126,7 @@ namespace mpvnet
 
         public static void ShowException(object obj)
         {
-            if (IsStartedFromTerminal)
+            if (IsTerminalAttached)
                 Terminal.WriteError(obj.ToString());
             else
             {
@@ -139,9 +139,23 @@ namespace mpvnet
 
         public static void InvokeOnMainThread(Action action) => MainForm.Instance.BeginInvoke(action);
 
+        public static void ShowInfo(string title, string msg = null)
+        {
+            if (IsTerminalAttached)
+            {
+                if (title != null)
+                    Terminal.Write(title);
+
+                if (msg != null)
+                    Terminal.Write(msg);
+            }
+            else
+                InvokeOnMainThread(() => Msg.ShowInfo(title, msg));
+        }
+
         public static void ShowError(string title, string msg = null)
         {
-            if (IsStartedFromTerminal)
+            if (IsTerminalAttached)
             {
                 if (title != null)
                     Terminal.WriteError(title);

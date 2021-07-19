@@ -129,7 +129,7 @@ namespace mpvnet
 
             App.RunTask(() => EventLoop());
 
-            if (App.IsStartedFromTerminal)
+            if (App.IsTerminalAttached)
             {
                 SetPropertyString("terminal", "yes");
                 SetPropertyString("input-terminal", "yes");
@@ -1061,7 +1061,7 @@ namespace mpvnet
                     }
                     catch (Exception e)
                     {
-                        if (!App.IsStartedFromTerminal)
+                        if (!App.IsTerminalAttached)
                             Msg.ShowException(e);
                     }
                 }
@@ -1290,7 +1290,7 @@ namespace mpvnet
                     gx.DrawImage(bmp2, rect);
                     BitmapData bd = bmp.LockBits(rect, ImageLockMode.ReadOnly, PixelFormat.Format32bppPArgb);
                     int x = Convert.ToInt32((cr.Width - len) / (december ? 1.95 : 2));
-                    int y = Convert.ToInt32(((cr.Height - len) / 2.0) * (december ? 0.85 : 0.9));
+                    int y = Convert.ToInt32((cr.Height - len) / 2.0 * (december ? 0.85 : 0.9));
                     CommandV("overlay-add", "0", $"{x}", $"{y}", "&" + bd.Scan0.ToInt64().ToString(), "0", "bgra", bd.Width.ToString(), bd.Height.ToString(), bd.Stride.ToString());
                     bmp.UnlockBits(bd);
                     IsLogoVisible = true;

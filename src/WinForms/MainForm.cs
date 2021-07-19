@@ -1065,11 +1065,11 @@ namespace mpvnet
             if (CommandPaletteHost != null)
             {
                 ActiveControl = null;
-                CommandPalette.Instance.SearchControl.SearchTextBox.Text = "";
                 Controls.Remove(CommandPaletteHost);
                 CommandPaletteHost.Child = null;
                 CommandPaletteHost.Dispose();
                 CommandPaletteHost = null;
+                CommandPalette.Instance.SearchControl.SearchTextBox.Text = "";
             }
         }
 
