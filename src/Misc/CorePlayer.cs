@@ -100,6 +100,7 @@ namespace mpvnet
         public string SID { get; set; } = "";
 
         public bool Border { get; set; } = true;
+        public bool FileEnded { get; set; }
         public bool Fullscreen { get; set; }
         public bool IsLogoVisible { set; get; } = true;
         public bool IsQuitNeeded { set; get; } = true;
@@ -419,6 +420,7 @@ namespace mpvnet
                                 var reason = (mpv_end_file_reason)data.reason;
                                 InvokeAsync(EndFileAsync, reason);
                                 EndFile?.Invoke(reason);
+                                FileEnded = true;
                             }
                             break;
                         case mpv_event_id.MPV_EVENT_FILE_LOADED:
@@ -528,8 +530,15 @@ namespace mpvnet
                             InvokeEvent(TrackSwitched, TrackSwitchedAsync);
                             break;
                         case mpv_event_id.MPV_EVENT_IDLE:
-                            ShowLogo();
                             InvokeEvent(Idle, IdleAsync);
+
+                            if (FileEnded)
+                            {
+                                ShowLogo();
+
+                                if (GetPropertyString("keep-open") == "no")
+                                    Core.CommandV("quit");
+                            }
                             break;
                         case mpv_event_id.MPV_EVENT_PAUSE:
                             Paused = true;

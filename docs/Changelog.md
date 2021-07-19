@@ -5,6 +5,7 @@
 - Showing the playlist selects the currently played file/stream in the playlist.
 - Properties are shown in the command palette instead of the text editor
   making it very easy to find a property and show/print its value.
+- Support for --keep-open=no.
 
 
 5.4.9.1 Beta (2021-06-23)
