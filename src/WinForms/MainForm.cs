@@ -302,6 +302,38 @@ namespace mpvnet
                                 () => Core.SetBluRayTitle(item.Index));
                 }
             }
+
+            MenuItem profiles = FindMenuItem("Profile");
+
+            if (profiles != null)
+            {
+                profiles.DropDownItems.Clear();
+
+                foreach (string profile in ProfileNames)
+                    if (!profile.StartsWith("extension."))
+                        MenuItem.Add(profiles.DropDownItems, profile,
+                            () => {
+                                Core.CommandV("show-text", profile);
+                                Core.CommandV("apply-profile", profile);
+                            });
+            }
+        }
+
+        private string[] _ProfileNames;
+
+        public string[] ProfileNames {
+            get {
+                if (_ProfileNames == null)
+                {
+                    string[] ignore = { "builtin-pseudo-gui", "encoding", "libmpv", "pseudo-gui", "default" };
+                    string profileList = Core.GetPropertyString("profile-list");
+                    var json = profileList.FromJson<List<Dictionary<string, object>>>();
+                    _ProfileNames = json.Select(i => i["name"].ToString())
+                                        .Where(i => !ignore.Contains(i)).ToArray();
+                }
+
+                return _ProfileNames;
+            }
         }
 
         MenuItem FindMenuItem(string text, ToolStripItemCollection items)

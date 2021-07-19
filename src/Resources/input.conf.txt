@@ -158,6 +158,8 @@ _       script-message mpv.net show-protocols       #menu: View > Show Protocols
 F9      show-text ${track-list} 5000                #menu: View > Show Tracks
 Ctrl+m  script-message mpv.net show-media-info      #menu: View > Show Media Info
 
+_       ignore                                      #menu: Profile
+
 c       script-message mpv.net show-conf-editor     #menu: Settings > Show Config Editor
 Ctrl+i  script-message mpv.net show-input-editor    #menu: Settings > Show Input Editor
 Ctrl+f  script-message mpv.net open-conf-folder     #menu: Settings > Open Config Folder
