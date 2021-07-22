@@ -2,6 +2,7 @@
 5.4.9.2 Beta (2021-??-??)
 
 - Manual translated to simplified Chinese. (hooke007)
+- watch-later-options support added to conf editor. (hooke007)
 - Showing the playlist selects the currently played file/stream in the playlist.
 - Properties are shown in the command palette instead of the text editor
   making it very easy to find a property and show/print its value.
