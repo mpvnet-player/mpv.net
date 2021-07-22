@@ -120,7 +120,7 @@ namespace mpvnet
             get {
                 return "Copyright (C) 2000-2021 mpv.net/mpv/mplayer\n" +
                     $"mpv.net {Application.ProductVersion} ({File.GetLastWriteTime(Application.ExecutablePath).ToShortDateString()})\n" +
-                    $"{Core.GetPropertyString("mpv-version")} ({File.GetLastWriteTime(Folder.Startup + "mpv-1.dll").ToShortDateString()})\nffmpeg {Core.GetPropertyString("ffmpeg-version")}\nMIT License";
+                    $"{Core.GetPropertyString("mpv-version")} ({File.GetLastWriteTime(Folder.Startup + "mpv-1.dll").ToShortDateString()})\nffmpeg {Core.GetPropertyString("ffmpeg-version")}\nGPL v2 License";
             }
         }
 
