@@ -523,6 +523,13 @@ option = yes
 option = no
 
 [setting]
+name = watch-later-options
+file = mpv
+filter = Playback
+help = The options that are saved in "watch later" files if they have been changed since when mpv started. These values will be restored the next time the files are played. This is a string list option. For more information visit:
+url = https://mpv.io/manual/master/#options-watch-later-options
+
+[setting]
 name = hr-seek
 file = mpv
 default = absolute
