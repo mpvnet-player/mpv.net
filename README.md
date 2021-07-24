@@ -154,4 +154,4 @@ Related apps
 
 Find a list of related apps:
 
-https://github.com/stax76/frankskare
+https://stax76.github.io/frankskare
