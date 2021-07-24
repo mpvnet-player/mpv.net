@@ -147,3 +147,11 @@ Searchable key and mouse binding editor.
 Command Palette to easily find commands and shortcut keys.
 
 ![Command Palette](docs/img/CommandPalette.jpg)
+
+
+More apps created by me
+-----------------------
+
+Visit my homepage to find a list of all apps I've created.
+
+https://github.com/stax76/frankskare
