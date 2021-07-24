@@ -149,9 +149,9 @@ Command Palette to easily find commands and shortcut keys.
 ![Command Palette](docs/img/CommandPalette.jpg)
 
 
-More apps created by me
------------------------
+Related apps
+------------
 
-Visit my homepage to find a list of all apps I've created.
+Find a list of related apps:
 
 https://github.com/stax76/frankskare
