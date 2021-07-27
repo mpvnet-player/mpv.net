@@ -59,6 +59,9 @@ namespace mpvnet
                 if (section.HasName("width")) baseSetting.Width = Convert.ToInt32(section.GetValue("width"));
                 if (section.HasName("type"))  baseSetting.Type = section.GetValue("type");
 
+                if (baseSetting.Help.ContainsEx("\\n"))
+                    baseSetting.Help = baseSetting.Help.Replace("\\n", "\n");
+
                 settingsList.Add(baseSetting);
             }
 
