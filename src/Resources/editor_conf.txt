@@ -369,6 +369,16 @@ option = height-always   Height is always remembered
 option = always          Size is always remembered
 
 [setting]
+name = keepaspect-window
+file = mpv
+default = yes
+filter = Screen
+help = keepaspect-window will lock the window size to the video aspect. Default: yes
+
+option = yes
+option = no
+
+[setting]
 name = start-threshold
 file = mpvnet
 filter = Screen

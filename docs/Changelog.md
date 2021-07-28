@@ -9,6 +9,7 @@
 - Support for --keep-open=no.
 - Profile selection in the context menu.
 - Use defaults in case settings.xml fails loading (not reproducible).
+- conf editor support for keepaspect-window.
 - libmpv shinchiro 2021-07-18
 
 
