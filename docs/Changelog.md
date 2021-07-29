@@ -10,6 +10,7 @@
 - Profile selection in the context menu.
 - Use defaults in case settings.xml fails loading (not reproducible).
 - conf editor support for keepaspect-window.
+- Drawing flicker in the command palette (playlist) was fixed.
 - libmpv shinchiro 2021-07-18
 
 
