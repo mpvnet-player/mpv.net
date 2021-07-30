@@ -22,14 +22,14 @@ namespace mpvnet
         public static IntPtr Hwnd { get; set; }
         public new ContextMenuStripEx ContextMenu { get; set; }
         Point LastCursorPosition;
+        Taskbar Taskbar;
 
         int LastCursorChanged;
         int LastCycleFullscreen;
         int TaskbarButtonCreatedMessage;
-        int ShownTickCount;
 
-        Taskbar Taskbar;
         bool WasMaximized;
+        bool WasShown;
 
         public MainForm()
         {
@@ -155,8 +155,6 @@ namespace mpvnet
         void Core_Shutdown() => BeginInvoke(new Action(() => Close()));
 
         void Core_Idle() => SetTitle();
-
-        bool WasShown() => ShownTickCount != 0 && Environment.TickCount > ShownTickCount + 500;
 
         void CM_Popup(object sender, EventArgs e) => CursorHelp.Show();
 
@@ -666,7 +664,7 @@ namespace mpvnet
 
         void SaveWindowProperties()
         {
-            if (WindowState == FormWindowState.Normal)
+            if (WindowState == FormWindowState.Normal && WasShown)
             {
                 SavePosition();
                 App.Settings.WindowSize = ClientSize;
@@ -769,7 +767,7 @@ namespace mpvnet
                     break;
                 case 0x02E0: // WM_DPICHANGED
                     {
-                        if (!WasShown())
+                        if (!WasShown)
                             break;
 
                         RECT rect = Marshal.PtrToStructure<RECT>(m.LParam);
@@ -877,7 +875,7 @@ namespace mpvnet
 
         void PropChangeWindowMaximized()
         {
-            if (!WasShown())
+            if (!WasShown)
                 return;
 
             BeginInvoke(new Action(() =>
@@ -893,7 +891,7 @@ namespace mpvnet
 
         void PropChangeWindowMinimized()
         {
-            if (!WasShown())
+            if (!WasShown)
                 return;
 
             BeginInvoke(new Action(() =>
@@ -970,7 +968,7 @@ namespace mpvnet
             GlobalHotkey.RegisterGlobalHotkeys(Handle);
             App.RunTask(() => App.Extension = new Extension());
             CSharpScriptHost.ExecuteScriptsInFolder(Core.ConfigFolder + "scripts-cs");
-            ShownTickCount = Environment.TickCount;
+            WasShown = true;
         }
 
         protected override void OnResize(EventArgs e)
@@ -989,21 +987,17 @@ namespace mpvnet
                     WasMaximized = false;
             }
 
-            if (WasShown())
+            if (WasShown)
             {
                 if (WindowState == FormWindowState.Minimized)
-                {
                     Core.SetPropertyBool("window-minimized", true);
-                }
                 else if (WindowState == FormWindowState.Normal)
                 {
                     Core.SetPropertyBool("window-maximized", false);
                     Core.SetPropertyBool("window-minimized", false);
                 }
                 else if (WindowState == FormWindowState.Maximized)
-                {
                     Core.SetPropertyBool("window-maximized", true);
-                }
             }
         }
 
