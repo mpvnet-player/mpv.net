@@ -45,6 +45,12 @@
                 <Style TargetType="ListBoxItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
                     <Setter Property="Height" Value="25"></Setter>
+
+                    <Style.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="3"/>
+                        </Style>
+                    </Style.Resources>
                 </Style>
             </ListView.ItemContainerStyle>
 

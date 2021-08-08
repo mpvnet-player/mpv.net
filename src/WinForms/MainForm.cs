@@ -1083,6 +1083,8 @@ namespace mpvnet
                 CommandPaletteHost.Child = CommandPalette.Instance;
                 CommandPalette.Instance.AdjustHeight();
                 Controls.Add(CommandPaletteHost);
+                CommandPalette.Instance.Resources.Add("PrimaryTextBrush"
+                    , new System.Windows.Media.SolidColorBrush(Theme.Current.GetColor("foreground")));
             }
         }
 
@@ -1094,6 +1096,7 @@ namespace mpvnet
                 CommandPalette.Instance.Items.Clear();
                 CommandPalette.Instance.SearchControl.SearchTextBox.Text = "";
                 CommandPalette.Instance.UpdateLayout();
+                CommandPalette.Instance.Resources.Remove("PrimaryTextBrush");
 
                 ActiveControl = null;
                 Controls.Remove(CommandPaletteHost);

@@ -45,7 +45,14 @@
                     Margin="5,0,0,0"
                     Width="20"
                     Click="Button_Click"
-                    >...</Button>
+                    >...
+
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="3"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
             </Grid>
 
             <TextBox

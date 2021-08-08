@@ -80,6 +80,14 @@
     <Compile Include="Misc\App.cs" />
     <Compile Include="Misc\Common.cs" />
     <Compile Include="Misc\JSONParser.cs" />
+    <Compile Include="WPF\HandyControl\Controls\Attach\IconElement.cs" />
+    <Compile Include="WPF\HandyControl\Controls\Attach\ScrollViewerAttach.cs" />
+    <Compile Include="WPF\HandyControl\Controls\ScrollViewer.cs" />
+    <Compile Include="WPF\HandyControl\Controls\SimplePanel.cs" />
+    <Compile Include="WPF\HandyControl\Data\ValueBoxes.cs" />
+    <Compile Include="WPF\HandyControl\Tools\AnimationHelper.cs" />
+    <Compile Include="WPF\HandyControl\Tools\Extension\StringExtension.cs" />
+    <Compile Include="WPF\HandyControl\Tools\RegexPatterns.cs" />
     <Compile Include="WPF\RelayCommand.cs" />
     <Compile Include="Misc\CSharpScriptHost.cs" />
     <Compile Include="Misc\Extension.cs" />
@@ -95,6 +103,10 @@
     <Page Include="WPF\CommandPaletteControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WPF\HandyControl\Theme\Theme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="WPF\SearchTextBoxUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>

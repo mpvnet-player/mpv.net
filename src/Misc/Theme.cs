@@ -31,6 +31,11 @@ namespace mpvnet
             return new SolidColorBrush((Color)ColorConverter.ConvertFromString(Dictionary[key]));
         }
 
+        public Color GetColor(string key)
+        {
+            return (Color)ColorConverter.ConvertFromString(Dictionary[key]);
+        }
+
         public static void Init(string customContent, string defaultContent, string activeTheme)
         {
             Current = null;

@@ -47,6 +47,12 @@
             Click="SearchClearButton_Click"
             >r
 
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="3"/>
+                </Style>
+            </Button.Resources>
+            
             <Button.Style>
                 <Style TargetType="Button">
                     <Setter Property="Background" Value="{Binding Theme.Background}"/>

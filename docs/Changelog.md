@@ -11,7 +11,11 @@
 - Use defaults in case settings.xml fails loading (not reproducible).
 - conf editor support for keepaspect-window.
 - Drawing flicker in the command palette (playlist) was fixed.
-- libmpv shinchiro 2021-07-18
+- Saving window size and position was fixed.
+- Some scroll bars where replaced with Windows 10 styled scroll bars,
+  complex code used from HandyControl project.
+- Some UI elements use rounded corners.
+- libmpv shinchiro 2021-08-01
 
 
 5.4.9.1 Beta (2021-06-23)
