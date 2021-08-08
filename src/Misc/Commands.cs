@@ -3,7 +3,6 @@ using System;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Interop;
 using System.Windows;
@@ -48,6 +47,7 @@ namespace mpvnet
                 case "show-profiles": ShowTextWithEditor("profile-list", mpvHelp.GetProfiles()); break;
                 case "show-properties": ShowProperties(); break;
                 case "show-protocols": ShowTextWithEditor("protocol-list", mpvHelp.GetProtocols()); break;
+                case "show-recent": ShowRecent(); break;
                 case "show-setup-dialog": ShowDialog(typeof(SetupWindow)); break;
                 case "show-text": ShowText(args[0], Convert.ToInt32(args[1]), Convert.ToInt32(args[2])); break;
                 case "update-check": UpdateCheck.CheckOnline(true); break;
@@ -93,21 +93,7 @@ namespace mpvnet
                     dialog.ShowNewFolderButton = false;
 
                     if (dialog.ShowDialog() == DialogResult.OK)
-                    {
-                        Core.Command("stop");
-                        Thread.Sleep(500);
-
-                        if (Directory.Exists(dialog.SelectedPath + "\\BDMV"))
-                        {
-                            Core.SetPropertyString("bluray-device", dialog.SelectedPath);
-                            Core.LoadFiles(new[] { @"bd://" }, false, false);
-                        }
-                        else
-                        {
-                            Core.SetPropertyString("dvd-device", dialog.SelectedPath);
-                            Core.LoadFiles(new[] { @"dvd://" }, false, false);
-                        }
-                    }
+                        Core.LoadDiskFolder(dialog.SelectedPath);
                 }
             }));
         }
@@ -398,7 +384,7 @@ namespace mpvnet
                 string file = Core.GetPropertyString($"playlist/{i}/filename");
            
                 CommandPaletteItem item = new CommandPaletteItem() {
-                    Text = PathHelp.GetFileName(file),
+                    Text = file.FileName(),
                     Action = () => Core.SetPropertyInt("playlist-pos", index)
                 };
 
@@ -443,6 +429,29 @@ namespace mpvnet
 
                         App.ShowInfo(prop + ": " +propValue);
                     }
+                };
+
+                items.Add(item);
+            }
+
+            CommandPalette.Instance.SetItems(items);
+            MainForm.Instance.ShowCommandPalette();
+        }
+
+        public static void ShowRecent() => App.InvokeOnMainThread(ShowRecentInternal);
+
+        public static void ShowRecentInternal()
+        {
+            List<CommandPaletteItem> items = new List<CommandPaletteItem>();
+
+            foreach (string i in App.Settings.RecentFiles)
+            {
+                string file = i;
+
+                CommandPaletteItem item = new CommandPaletteItem()
+                {
+                    Text = file.ShortPath(60),
+                    Action = () => Core.LoadFiles(new[] { file }, true, Control.ModifierKeys.HasFlag(Keys.Control))
                 };
 
                 items.Add(item);

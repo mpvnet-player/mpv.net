@@ -1,6 +1,7 @@
 ﻿
 using System.Globalization;
 using System.IO;
+using System.Text.RegularExpressions;
 
 public static class TestStringExtension
 {
@@ -90,6 +91,17 @@ public static class PathStringExtension
 
         if (index > -1)
             return instance.Substring(index + 1);
+
+        return instance;
+    }
+
+    public static string ShortPath(this string instance, int maxLength)
+    {
+        if (string.IsNullOrEmpty(instance))
+            return "";
+
+        if (instance.Length > maxLength && instance.Substring(1, 2) == ":\\")
+            instance = instance.Substring(0, 3) + "...\\" + instance.FileName();
 
         return instance;
     }

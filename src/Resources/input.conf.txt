@@ -157,6 +157,7 @@ P       script-message mpv.net show-properties      #menu: View > Show Propertie
 _       script-message mpv.net show-protocols       #menu: View > Show Protocols
 F9      show-text ${track-list} 5000                #menu: View > Show Tracks
 Ctrl+m  script-message mpv.net show-media-info      #menu: View > Show Media Info
+Alt+r   script-message mpv.net show-recent          #menu: View > Show Recent
 
 _       ignore                                      #menu: Profile
 

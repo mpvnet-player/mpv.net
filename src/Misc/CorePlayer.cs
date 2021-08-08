@@ -1189,6 +1189,23 @@ namespace mpvnet
             }
         }
 
+        public void LoadDiskFolder(string path)
+        {
+            Core.Command("stop");
+            Thread.Sleep(500);
+
+            if (Directory.Exists(path + "\\BDMV"))
+            {
+                Core.SetPropertyString("bluray-device", path);
+                Core.LoadFiles(new[] { @"bd://" }, false, false);
+            }
+            else
+            {
+                Core.SetPropertyString("dvd-device", path);
+                Core.LoadFiles(new[] { @"dvd://" }, false, false);
+            }
+        }
+
         public void LoadFolder()
         {
             if (!App.AutoLoadFolder || Control.ModifierKeys.HasFlag(Keys.Shift))

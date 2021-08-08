@@ -270,7 +270,7 @@ namespace mpvnet
                 recent.DropDownItems.Clear();
 
                 foreach (string path in App.Settings.RecentFiles)
-                    MenuItem.Add(recent.DropDownItems, path, () => Core.LoadFiles(new[] { path }, true, Control.ModifierKeys.HasFlag(Keys.Control)));
+                    MenuItem.Add(recent.DropDownItems, path.ShortPath(100), () => Core.LoadFiles(new[] { path }, true, ModifierKeys.HasFlag(Keys.Control)));
 
                 recent.DropDownItems.Add(new ToolStripSeparator());
                 MenuItem mi = new MenuItem("Clear List");

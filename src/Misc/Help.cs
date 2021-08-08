@@ -14,20 +14,6 @@ using static mpvnet.Global;
 
 namespace mpvnet
 {
-    public static class PathHelp
-    {
-        public static string GetFileName(string path)
-        {
-            if (string.IsNullOrEmpty(path))
-                return "";
-
-            if (path.Contains(Path.DirectorySeparatorChar))
-                return path.Substring(path.LastIndexOf(Path.DirectorySeparatorChar) + 1);
-
-            return path;
-        }
-    }
-
     public static class StringHelp
     {
         public static string GetMD5Hash(string txt)
