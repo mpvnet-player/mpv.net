@@ -45,6 +45,7 @@ function confirm()
         }]]
 
         local escapedFileToDelete = string.gsub(FileToDelete, "'", "''")
+        escapedFileToDelete = string.gsub(escapedFileToDelete, "’", "’’")
         ps_code = string.gsub(ps_code, "FileToDelete", escapedFileToDelete)
 
         mp.command_native({
