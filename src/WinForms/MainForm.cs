@@ -387,7 +387,7 @@ namespace mpvnet
 
             if (Core.WasInitialSizeSet)
             {
-                if (App.StartSize == "always")
+                if (App.StartSize == "always" || !Core.KeepaspectWindow)
                 {
                     width = ClientSize.Width;
                     height = ClientSize.Height;

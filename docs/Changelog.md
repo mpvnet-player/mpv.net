@@ -18,6 +18,7 @@
 - The recent list can also be shown in the command palette:
   Alt+r script-message mpv.net show-recent #menu: View > Show Recent
 - The recent context menu removes the folder info in case of very long paths.
+- Leaving fullscreen using keepaspect-window=no restores the correct size.
 - libmpv shinchiro 2021-08-01
 
 
