@@ -8,9 +8,10 @@ url = https://mpv.io/manual/master/#options-hwdec
 help = Specify the hardware video decoding API that should be used if possible. Whether hardware decoding is actually done depends on the video codec. If hardware decoding is not possible, mpv will fall back on software decoding.\n\nFor more information visit:
 
 option = no            always use software decoding
-option = auto          enable best hw decoder (see below)
+option = auto          enable best hw decoder
 option = yes           exactly the same as auto
-option = auto-copy     enable best hw decoder with copy-back (see below)
+option = auto-copy     enable best hw decoder with copy-back
+option = auto-safe     enable any whitelisted hw decoder
 option = dxva2         requires vo=gpu with gpu-context=d3d11, gpu-context=angle or gpu-context=dxinterop (Windows only)
 option = dxva2-copy    copies video back to system RAM (Windows only)
 option = d3d11va       requires vo=gpu with gpu-context=d3d11 or gpu-context=angle (Windows 8+ only)
