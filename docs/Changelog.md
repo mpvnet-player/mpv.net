@@ -1,4 +1,10 @@
 
+5.4.9.2 Beta (2021-??-??)
+
+- Leaving fullscreen using keepaspect-window=no restores the correct size.
+- libmpv shinchiro 2021-08-15
+
+
 5.4.9.2 Beta (2021-08-08)
 
 - Manual translated to simplified Chinese. (hooke007)
@@ -18,7 +24,6 @@
 - The recent list can also be shown in the command palette:
   Alt+r script-message mpv.net show-recent #menu: View > Show Recent
 - The recent context menu removes the folder info in case of very long paths.
-- Leaving fullscreen using keepaspect-window=no restores the correct size.
 - libmpv shinchiro 2021-08-01
 
 
