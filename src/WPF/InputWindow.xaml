@@ -37,6 +37,8 @@
             <Setter Property="MinHeight" Value="22" />
             <Setter Property="Cursor" Value="Hand" />
         </Style>
+
+        <Style TargetType="Button" />
     </Window.Resources>
 
     <Grid>
