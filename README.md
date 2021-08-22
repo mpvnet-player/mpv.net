@@ -111,7 +111,7 @@ Screenshots
 
 #### Main Window
 
-![Main Window](docs/img/Main.jpg)
+![Main Window](docs/img/Main.webp)
 
 
 #### Context Menu
