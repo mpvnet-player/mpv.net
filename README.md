@@ -146,7 +146,7 @@ Searchable key and mouse binding editor.
 
 Command Palette to easily find commands and shortcut keys.
 
-![Command Palette](docs/img/CommandPalette.jpg)
+![Command Palette](docs/img/CommandPalette.webp)
 
 
 #### Playlist
