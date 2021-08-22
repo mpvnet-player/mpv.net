@@ -111,7 +111,7 @@ Screenshots
 
 #### Main Window
 
-![Main Window](docs/img/Main.png)
+![Main Window](docs/img/Main.jpg)
 
 
 #### Context Menu
@@ -147,6 +147,21 @@ Searchable key and mouse binding editor.
 Command Palette to easily find commands and shortcut keys.
 
 ![Command Palette](docs/img/CommandPalette.jpg)
+
+
+#### Playlist
+
+The command palette based playlist showing my favorite artist of the stax record label.
+
+![Playlist](docs/img/Playlist.png)
+
+
+#### Setup
+
+The setup dialog to register file associations, create a start menu item and
+add mpv.net to the PATH environment variable (per user)
+
+![Setup](docs/img/Setup.png)
 
 
 Related apps

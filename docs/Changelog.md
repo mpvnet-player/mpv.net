@@ -1,5 +1,7 @@
 
-5.4.9.3 Beta (2021-??-??)
+5.4.9.4 Beta (2021-??-??)
+
+5.4.9.3 Beta (2021-08-22)
 
 - Leaving fullscreen using keepaspect-window=no restores the correct size.
 - Major UI rework!
