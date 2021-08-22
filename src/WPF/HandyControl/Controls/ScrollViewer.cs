@@ -168,7 +168,6 @@ namespace HandyControl.Controls
 
         internal double CurrentVerticalOffset
         {
-            // ReSharper disable once UnusedMember.Local
             get => (double) GetValue(CurrentVerticalOffsetProperty);
             set => SetValue(CurrentVerticalOffsetProperty, value);
         }

@@ -1,5 +1,6 @@
 ﻿
 using System.Windows;
+
 using HandyControl.Data;
 
 namespace HandyControl.Controls

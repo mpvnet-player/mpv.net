@@ -21,6 +21,7 @@ namespace mpvnet
         List<ConfItem> ConfItems = new List<ConfItem>();
         public ObservableCollection<string> FilterStrings { get; } = new ObservableCollection<string>();
         string InitialContent;
+        string ThemeConf = GetThemeConf();
 
         public ConfWindow()
         {
@@ -34,6 +35,8 @@ namespace mpvnet
             SearchControl.Text = App.Settings.ConfigEditorSearch;
             FilterListBox.SelectedItem = SearchControl.Text.TrimEnd(':');
         }
+
+        static string GetThemeConf() => App.IsDarkMode + App.DarkTheme + App.LightTheme;
 
         public Theme Theme => Theme.Current;
 
@@ -103,6 +106,10 @@ namespace mpvnet
             }
 
             App.InitTheme();
+            App.UpdateWpfColors();
+
+            if (ThemeConf != GetThemeConf())
+                Msg.ShowInfo("Changed theme settings require mpv.net being restarted.");
         }
 
         string GetCompareString()

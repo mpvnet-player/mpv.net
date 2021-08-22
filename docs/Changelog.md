@@ -2,6 +2,7 @@
 5.4.9.3 Beta (2021-??-??)
 
 - Leaving fullscreen using keepaspect-window=no restores the correct size.
+- Major UI rework!
 - libmpv shinchiro 2021-08-15
 
 

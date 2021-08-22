@@ -21,20 +21,12 @@ namespace mpvnet
         public Brush MenuBackground { get; set; }
         public Brush MenuHighlight { get; set; }
 
-        public System.Drawing.Color GetWinFormsColor(string key)
-        {
-            return System.Drawing.ColorTranslator.FromHtml(Dictionary[key]);
-        }
-
         public Brush GetBrush(string key)
         {
             return new SolidColorBrush((Color)ColorConverter.ConvertFromString(Dictionary[key]));
         }
 
-        public Color GetColor(string key)
-        {
-            return (Color)ColorConverter.ConvertFromString(Dictionary[key]);
-        }
+        public Color GetColor(string key) => (Color)ColorConverter.ConvertFromString(Dictionary[key]);
 
         public static void Init(string customContent, string defaultContent, string activeTheme)
         {

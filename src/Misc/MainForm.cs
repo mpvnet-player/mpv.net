@@ -1,7 +1,6 @@
 ﻿
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
@@ -9,6 +8,8 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Windows.Forms.Integration;
+
+using WpfControls = System.Windows.Controls;
 
 using static mpvnet.Native;
 using static mpvnet.Global;
@@ -20,7 +21,7 @@ namespace mpvnet
         public ElementHost CommandPaletteHost { get; set; }
         public static MainForm Instance { get; set; }
         public static IntPtr Hwnd { get; set; }
-        public new ContextMenuStripEx ContextMenu { get; set; }
+        public new WpfControls.ContextMenu ContextMenu { get; set; }
         Point LastCursorPosition;
         Taskbar Taskbar;
 
@@ -73,10 +74,6 @@ namespace mpvnet
                 Application.ThreadException += (sender, e) => App.ShowException(e.Exception);
 
                 TaskbarButtonCreatedMessage = RegisterWindowMessage("TaskbarButtonCreated");
-
-                ContextMenu = new ContextMenuStripEx(components);
-                ContextMenu.Opened += ContextMenu_Opened;
-                ContextMenu.Opening += ContextMenu_Opening;
 
                 if (Core.Screen > -1)
                 {
@@ -150,8 +147,6 @@ namespace mpvnet
             }));
         }
 
-        public MenuItem FindMenuItem(string text) => FindMenuItem(text, ContextMenu.Items);
-
         void Core_Shutdown() => BeginInvoke(new Action(() => Close()));
 
         void Core_Idle() => SetTitle();
@@ -161,8 +156,6 @@ namespace mpvnet
         void Core_VideoSizeChanged() => BeginInvoke(new Action(() => SetFormPosAndSize()));
 
         void PropChangeFullscreen(bool value) => BeginInvoke(new Action(() => CycleFullscreen(value)));
-
-        void ContextMenu_Opened(object sender, EventArgs e) => CursorHelp.Show();
 
         bool IsFullscreen => WindowState == FormWindowState.Maximized && FormBorderStyle == FormBorderStyle.None;
 
@@ -179,15 +172,15 @@ namespace mpvnet
             return pos.Y > ClientSize.Height * 0.85 || pos.Y < top;
         }
 
-        void ContextMenu_Opening(object sender, CancelEventArgs e)
+        void UpdateMenu()
         {
             lock (Core.MediaTracks)
             {
-                MenuItem trackMenuItem = FindMenuItem("Track");
+                var trackMenuItem = FindMenuItem("Track");
 
                 if (trackMenuItem != null)
                 {
-                    trackMenuItem.DropDownItems.Clear();
+                    trackMenuItem.Items.Clear();
 
                     MediaTrack[] audTracks = Core.MediaTracks.Where(track => track.Type == "a").ToArray();
                     MediaTrack[] subTracks = Core.MediaTracks.Where(track => track.Type == "s").ToArray();
@@ -196,93 +189,99 @@ namespace mpvnet
 
                     foreach (MediaTrack track in vidTracks)
                     {
-                        MenuItem mi = new MenuItem(track.Text);
-                        mi.Action = () => Core.CommandV("set", "vid", track.ID.ToString());
-                        mi.Checked = Core.VID == track.ID.ToString();
-                        trackMenuItem.DropDownItems.Add(mi);
+                        var mi = new WpfControls.MenuItem() { Header = track.Text };
+                        mi.Click += (sender, args) => Core.CommandV("set", "vid", track.ID.ToString());
+                        mi.IsChecked = Core.VID == track.ID.ToString();
+                        trackMenuItem.Items.Add(mi);
                     }
 
                     if (vidTracks.Length > 0)
-                        trackMenuItem.DropDownItems.Add(new ToolStripSeparator());
+                        trackMenuItem.Items.Add(new WpfControls.Separator());
 
                     foreach (MediaTrack track in audTracks)
                     {
-                        MenuItem mi = new MenuItem(track.Text);
-                        mi.Action = () => Core.CommandV("set", "aid", track.ID.ToString());
-                        mi.Checked = Core.AID == track.ID.ToString();
-                        trackMenuItem.DropDownItems.Add(mi);
+                        var mi = new WpfControls.MenuItem() { Header = track.Text };
+                        mi.Click += (sender, args) => Core.CommandV("set", "aid", track.ID.ToString());
+                        mi.IsChecked = Core.AID == track.ID.ToString();
+                        trackMenuItem.Items.Add(mi);
                     }
 
                     if (subTracks.Length > 0)
-                        trackMenuItem.DropDownItems.Add(new ToolStripSeparator());
+                        trackMenuItem.Items.Add(new WpfControls.Separator());
 
                     foreach (MediaTrack track in subTracks)
                     {
-                        MenuItem mi = new MenuItem(track.Text);
-                        mi.Action = () => Core.CommandV("set", "sid", track.ID.ToString());
-                        mi.Checked = Core.SID == track.ID.ToString();
-                        trackMenuItem.DropDownItems.Add(mi);
+                        var mi = new WpfControls.MenuItem() { Header = track.Text };
+                        mi.Click += (sender, args) => Core.CommandV("set", "sid", track.ID.ToString());
+                        mi.IsChecked = Core.SID == track.ID.ToString();
+                        trackMenuItem.Items.Add(mi);
                     }
 
                     if (subTracks.Length > 0)
                     {
-                        MenuItem mi = new MenuItem("S: No subtitles");
-                        mi.Action = () => Core.CommandV("set", "sid", "no");
-                        mi.Checked = Core.SID == "no";
-                        trackMenuItem.DropDownItems.Add(mi);
+                        var mi = new WpfControls.MenuItem() { Header = "S: No subtitles" };
+                        mi.Click += (sender, args) => Core.CommandV("set", "sid", "no");
+                        mi.IsChecked = Core.SID == "no";
+                        trackMenuItem.Items.Add(mi);
                     }
 
                     if (ediTracks.Length > 0)
-                        trackMenuItem.DropDownItems.Add(new ToolStripSeparator());
+                        trackMenuItem.Items.Add(new WpfControls.Separator());
 
                     foreach (MediaTrack track in ediTracks)
                     {
-                        MenuItem mi = new MenuItem(track.Text);
-                        mi.Action = () => Core.CommandV("set", "edition", track.ID.ToString());
-                        mi.Checked = Core.Edition == track.ID;
-                        trackMenuItem.DropDownItems.Add(mi);
+                        var mi = new WpfControls.MenuItem() { Header = track.Text };
+                        mi.Click += (sender, args) => Core.CommandV("set", "edition", track.ID.ToString());
+                        mi.IsChecked = Core.Edition == track.ID;
+                        trackMenuItem.Items.Add(mi);
                     }
                 }
             }
 
             lock (Core.Chapters)
             {
-                MenuItem chaptersMenuItem = FindMenuItem("Chapters");
+                var chaptersMenuItem = FindMenuItem("Chapters");
 
                 if (chaptersMenuItem != null)
                 {
-                    chaptersMenuItem.DropDownItems.Clear();
+                    chaptersMenuItem.Items.Clear();
 
                     foreach (var pair in Core.Chapters)
                     {
-                        MenuItem mi = new MenuItem(pair.Key);
-                        mi.ShortcutKeyDisplayString = TimeSpan.FromSeconds(pair.Value).ToString().Substring(0, 8) + "     ";
-                        mi.Action = () => Core.CommandV("seek", pair.Value.ToString(CultureInfo.InvariantCulture), "absolute");
-                        chaptersMenuItem.DropDownItems.Add(mi);
+                        var chapterMenuItem = new WpfControls.MenuItem() { Header = pair.Key };
+                        chapterMenuItem.InputGestureText = TimeSpan.FromSeconds(pair.Value).ToString().Substring(0, 8);
+                        chapterMenuItem.Click += (sender, args) => Core.CommandV("seek", pair.Value.ToString(CultureInfo.InvariantCulture), "absolute");
+                        chaptersMenuItem.Items.Add(chapterMenuItem);
                     }
                 }
             }
 
-            MenuItem recent = FindMenuItem("Recent");
+            var recentMenuItem = FindMenuItem("Recent");
 
-            if (recent != null)
+            if (recentMenuItem != null)
             {
-                recent.DropDownItems.Clear();
+                recentMenuItem.Items.Clear();
 
                 foreach (string path in App.Settings.RecentFiles)
-                    MenuItem.Add(recent.DropDownItems, path.ShortPath(100), () => Core.LoadFiles(new[] { path }, true, ModifierKeys.HasFlag(Keys.Control)));
+                {
+                    var mi = MenuHelp.Add(recentMenuItem.Items, path.ShortPath(100));
 
-                recent.DropDownItems.Add(new ToolStripSeparator());
-                MenuItem mi = new MenuItem("Clear List");
-                mi.Action = () => App.Settings.RecentFiles.Clear();
-                recent.DropDownItems.Add(mi);
+                    if (mi != null)
+                        mi.Click += (sender, args) =>
+                            Core.LoadFiles(new[] { path }, true, ModifierKeys.HasFlag(Keys.Control));
+                }
+
+                recentMenuItem.Items.Add(new WpfControls.Separator());
+                var clearMenuItem = new WpfControls.MenuItem() { Header = "Clear List" };
+                clearMenuItem.Click += (sender, args) => App.Settings.RecentFiles.Clear();
+                recentMenuItem.Items.Add(clearMenuItem);
             }
 
-            MenuItem titles = FindMenuItem("Titles");
+            var titlesMenuItem = FindMenuItem("Titles");
 
-            if (titles != null)
+            if (titlesMenuItem != null)
             {
-                titles.DropDownItems.Clear();
+                titlesMenuItem.Items.Clear();
 
                 lock (Core.BluRayTitles)
                 {
@@ -295,25 +294,39 @@ namespace mpvnet
                         .Take(20).OrderBy(item => item.Index);
 
                     foreach (var item in titleItems)
+                    {
                         if (item.Len != TimeSpan.Zero)
-                            MenuItem.Add(titles.DropDownItems, $"{item.Len} ({item.Index})",
-                                () => Core.SetBluRayTitle(item.Index));
+                        {
+                            var mi = MenuHelp.Add(titlesMenuItem.Items, $"{item.Len} ({item.Index})");
+
+                            if (mi != null)
+                                mi.Click += (sender, args) => Core.SetBluRayTitle(item.Index);
+                        }
+                    }
                 }
             }
 
-            MenuItem profiles = FindMenuItem("Profile");
+            var profilesMenuItem = FindMenuItem("Profile");
 
-            if (profiles != null)
+            if (profilesMenuItem != null)
             {
-                profiles.DropDownItems.Clear();
+                profilesMenuItem.Items.Clear();
 
                 foreach (string profile in ProfileNames)
+                {
                     if (!profile.StartsWith("extension."))
-                        MenuItem.Add(profiles.DropDownItems, profile,
-                            () => {
+                    {
+                        var mi = MenuHelp.Add(profilesMenuItem.Items, profile);
+
+                        if (mi != null)
+                        {
+                            mi.Click += (sender, args) => {
                                 Core.CommandV("show-text", profile);
                                 Core.CommandV("apply-profile", profile);
-                            });
+                            };
+                        }
+                    }
+                }
             }
         }
 
@@ -334,18 +347,20 @@ namespace mpvnet
             }
         }
 
-        MenuItem FindMenuItem(string text, ToolStripItemCollection items)
+        public WpfControls.MenuItem FindMenuItem(string text) => FindMenuItem(text, ContextMenu.Items);
+
+        WpfControls.MenuItem FindMenuItem(string text, WpfControls.ItemCollection items)
         {
-            foreach (var item in items)
+            foreach (object item in items)
             {
-                if (item is MenuItem mi)
+                if (item is WpfControls.MenuItem mi)
                 {
-                    if (mi.Text.StartsWith(text) && mi.Text.Trim() == text)
+                    if (mi.Header.ToString().StartsWithEx(text) && mi.Header.ToString().TrimEx() == text)
                         return mi;
 
-                    if (mi.DropDownItems.Count > 0)
+                    if (mi.Items.Count > 0)
                     {
-                        MenuItem val = FindMenuItem(text, mi.DropDownItems);
+                        WpfControls.MenuItem val = FindMenuItem(text, mi.Items);
 
                         if (val != null)
                             return val;
@@ -593,6 +608,8 @@ namespace mpvnet
 
         public void BuildMenu()
         {
+            ContextMenu = new WpfControls.ContextMenu();
+
             string content = File.ReadAllText(Core.InputConfPath);
             var items = CommandItem.GetItems(content);
 
@@ -613,16 +630,21 @@ namespace mpvnet
                 if (string.IsNullOrEmpty(item.Path))
                     continue;
 
-                MenuItem menuItem = ContextMenu.Add(item.Path.Replace("&", "&&"), () => {
-                    try {
-                        Core.Command(item.Command);
-                    } catch (Exception ex) {
-                        Msg.ShowException(ex);
-                    }
-                });
+                var menuItem = MenuHelp.Add(ContextMenu.Items, item.Path);
 
                 if (menuItem != null)
-                    menuItem.ShortcutKeyDisplayString = item.Input.Replace("&", "&&") + "    ";
+                {
+                    menuItem.Click += (sender, args) => {
+                        try {
+                            Core.Command(item.Command);
+                        }
+                        catch (Exception ex) {
+                            Msg.ShowException(ex);
+                        }
+                    };
+
+                    menuItem.InputGestureText = item.Input;
+                }
             }
         }
 
@@ -726,9 +748,24 @@ namespace mpvnet
                 case 0x20a: // WM_MOUSEWHEEL
                 case 0x20e: // WM_MOUSEHWHEEL
                 case 0x20b: // WM_XBUTTONDOWN
-                case 0x20c: // WM_XBUTTONUP
+                case 0x20c: // WM_XBUTTONUP         
                     if (Core.WindowHandle != IntPtr.Zero)
                         m.Result = SendMessage(Core.WindowHandle, m.Msg, m.WParam, m.LParam);
+                    break;
+                case 0x0204: // WM_RBUTTONDOWN
+                    if (IsMouseInOSC() && Core.WindowHandle != IntPtr.Zero)
+                        m.Result = SendMessage(Core.WindowHandle, m.Msg, m.WParam, m.LParam);
+                    break;
+                case 0x0205: // WM_RBUTTONUP
+                    if (!IsMouseInOSC())
+                    {
+                        CursorHelp.Show();
+                        UpdateMenu();
+                        ContextMenu.IsOpen = true;
+                    }
+                    else
+                        if (Core.WindowHandle != IntPtr.Zero)
+                            m.Result = SendMessage(Core.WindowHandle, m.Msg, m.WParam, m.LParam);
                     break;
                 case 0x319: // WM_APPCOMMAND
                     {
@@ -848,7 +885,7 @@ namespace mpvnet
             }
             else if (Environment.TickCount - LastCursorChanged > 1500 &&
                 !IsMouseInOSC() && ClientRectangle.Contains(PointToClient(MousePosition)) &&
-                ActiveForm == this && !ContextMenu.Visible && !IsCommandPaletteVissible())
+                ActiveForm == this && !ContextMenu.IsVisible && !IsCommandPaletteVissible())
 
                 CursorHelp.Hide();
         }
@@ -958,9 +995,9 @@ namespace mpvnet
             if (Core.GPUAPI == "vulkan")
                 Core.ProcessCommandLine(false);
 
-            BuildMenu();
-            ContextMenuStrip = ContextMenu;
             WPF.Init();
+            App.UpdateWpfColors();
+            BuildMenu();
             System.Windows.Application.Current.ShutdownMode = System.Windows.ShutdownMode.OnExplicitShutdown;
             Cursor.Position = new Point(Cursor.Position.X + 1, Cursor.Position.Y);
             UpdateCheck.DailyCheck();
@@ -1074,17 +1111,39 @@ namespace mpvnet
             AdjustCommandPaletteLeftAndWidth();
         }
 
+        class ElementHostEx : ElementHost
+        {
+            protected override void OnHandleCreated(EventArgs e)
+            {
+                base.OnHandleCreated(e);
+                const int LWA_ColorKey = 1;
+                SetLayeredWindowAttributes(Handle, 0x111111, 255, LWA_ColorKey);
+            }
+
+            protected override CreateParams CreateParams {
+                get {
+                    const int WS_EX_LAYERED = 0x00080000;
+                    CreateParams cp = base.CreateParams;
+                    cp.ExStyle = cp.ExStyle | WS_EX_LAYERED;
+                    return cp;
+                }
+            }
+
+            [DllImport("user32.dll")]
+            public static extern bool SetLayeredWindowAttributes(IntPtr hWnd, int crKey, byte alpha, int dwFlags);
+        }
+
         public void ShowCommandPalette()
         {
             if (CommandPaletteHost == null)
             {
-                CommandPaletteHost = new ElementHost();
+                CommandPaletteHost = new ElementHostEx();
+                CommandPaletteHost.BackColor = Color.FromArgb(0x111111);
+
                 AdjustCommandPaletteLeftAndWidth();
                 CommandPaletteHost.Child = CommandPalette.Instance;
                 CommandPalette.Instance.AdjustHeight();
                 Controls.Add(CommandPaletteHost);
-                CommandPalette.Instance.Resources.Add("PrimaryTextBrush"
-                    , new System.Windows.Media.SolidColorBrush(Theme.Current.GetColor("foreground")));
             }
         }
 
@@ -1093,13 +1152,14 @@ namespace mpvnet
             if (CommandPaletteHost != null)
             {
                 CommandPaletteHost.Visible = false;
+
                 CommandPalette.Instance.Items.Clear();
                 CommandPalette.Instance.SearchControl.SearchTextBox.Text = "";
                 CommandPalette.Instance.UpdateLayout();
-                CommandPalette.Instance.Resources.Remove("PrimaryTextBrush");
 
                 ActiveControl = null;
                 Controls.Remove(CommandPaletteHost);
+
                 CommandPaletteHost.Child = null;
                 CommandPaletteHost.Dispose();
                 CommandPaletteHost = null;

@@ -385,7 +385,12 @@ namespace mpvnet
            
                 CommandPaletteItem item = new CommandPaletteItem() {
                     Text = file.FileName(),
-                    Action = () => Core.SetPropertyInt("playlist-pos", index)
+                    Action = () => {
+                        Core.SetPropertyInt("playlist-pos", index);
+
+                        if (Core.Paused)
+                            Core.SetPropertyBool("pause", false);
+                    }
                 };
 
                 items.Add(item);

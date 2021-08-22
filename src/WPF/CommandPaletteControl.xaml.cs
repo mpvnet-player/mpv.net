@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace mpvnet
 {
@@ -31,7 +32,6 @@ namespace mpvnet
             ExecuteCommand = new RelayCommand(OnExecuteCommand);
             SearchControl.SearchTextBox.PreviewKeyDown += SearchTextBox_PreviewKeyDown;
             SearchControl.SearchTextBox.TextChanged += SearchTextBox_TextChanged;
-            SearchControl.SearchTextBox.BorderBrush = Theme.Background;
             SearchControl.HideClearButton = true;
         }
 
@@ -125,7 +125,7 @@ namespace mpvnet
 
         public void AdjustHeight()
         {
-            double actualHeight = SearchControl.ActualHeight + MainListView.ActualHeight;
+            double actualHeight = SearchControl.ActualHeight + MainListView.ActualHeight + 5 + 16;
             int dpi = Native.GetDPI(MainForm.Instance.Handle);
             MainForm.Instance.CommandPaletteHost.Height = (int)(actualHeight / 96.0 * dpi);
         }

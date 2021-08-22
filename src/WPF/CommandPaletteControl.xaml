@@ -9,69 +9,124 @@
     
     FontSize="13"
     Loaded="OnLoaded"
-    Background="{Binding Theme.Background}"
+    Background="#111111"
     >
     
     <UserControl.InputBindings>
         <KeyBinding Gesture="Esc"    Command="{Binding EscapeCommand}"/>
         <KeyBinding Gesture="Enter"  Command="{Binding ExecuteCommand}"/>
     </UserControl.InputBindings>
-    
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
 
-        <local:SearchTextBoxUserControl
-            HintText="Search"
-            x:Name="SearchControl"
-            Grid.ColumnSpan="2"
-            Padding="1,1,1,0"
-            />
-
-        <ListView
-            Name="MainListView"
-            Grid.Row="1"
-            Foreground="{Binding Theme.Foreground}"
+    <Border BorderThickness="1,0,1,1"
+            CornerRadius="0,0,5,5"
+            Padding="0,0,0,5"
+            BorderBrush="{Binding Theme.MenuHighlight}"
             Background="{Binding Theme.Background}"
-            BorderThickness="0"
-            MaxHeight="202"
-            SizeChanged="MainListView_SizeChanged"
-            MouseUp="MainListView_MouseUp"
+            SnapsToDevicePixels="True"
             >
+        
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListBoxItem">
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
-                    <Setter Property="Height" Value="25"></Setter>
+            <Border BorderBrush="{Binding Theme.Heading}"
+                    BorderThickness="1"
+                    CornerRadius="3"
+                    Margin="7"
+                    >
+                
+                <local:SearchTextBoxUserControl
+                    HintText="Search"
+                    x:Name="SearchControl"
+                    Grid.ColumnSpan="2"
+                    Padding="1,1,1,0"
+                    />                
+            </Border>
 
-                    <Style.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="3"/>
-                        </Style>
-                    </Style.Resources>
-                </Style>
-            </ListView.ItemContainerStyle>
+            <ListView Name="MainListView"
+                      Grid.Row="1"
+                      Foreground="{Binding Theme.Foreground}"
+                      Background="{Binding Theme.Background}"
+                      BorderThickness="0"
+                      MaxHeight="202"
+                      SizeChanged="MainListView_SizeChanged"
+                      MouseUp="MainListView_MouseUp"
+                      >
 
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                        <Setter Property="Height" Value="25"></Setter>
+                        <Setter Property="BorderThickness" Value="0"></Setter>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                    <Border x:Name="BD"
+                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            BorderThickness="{TemplateBinding BorderThickness}"
+                                            Background="{TemplateBinding Background}"
+                                            Padding="{TemplateBinding Padding}"
+                                            SnapsToDevicePixels="true">
+                                        
+                                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <MultiTrigger>
+                                            <MultiTrigger.Conditions>
+                                                <Condition Property="IsMouseOver" Value="True" />
+                                            </MultiTrigger.Conditions>
+                                            <Setter Property="Background" TargetName="BD" Value="{DynamicResource HighlightBrush}" />
+                                        </MultiTrigger>
+                                        <MultiTrigger>
+                                            <MultiTrigger.Conditions>
+                                                <Condition Property="Selector.IsSelectionActive" Value="False" />
+                                                <Condition Property="IsSelected" Value="True" />
+                                            </MultiTrigger.Conditions>
+                                            <Setter Property="Background" TargetName="BD" Value="{DynamicResource BorderBrush}" />
+                                        </MultiTrigger>
+                                        <MultiTrigger>
+                                            <MultiTrigger.Conditions>
+                                                <Condition Property="Selector.IsSelectionActive" Value="True" />
+                                                <Condition Property="IsSelected" Value="True" />
+                                            </MultiTrigger.Conditions>
+                                            <Setter Property="Background" TargetName="BD" Value="OrangeRed" />
+                                        </MultiTrigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
 
-                        <TextBlock Text="{Binding Text}"></TextBlock>
+                        <Style.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="3"/>
+                            </Style>
+                        </Style.Resources>
+                    </Style>
+                </ListView.ItemContainerStyle>
 
-                        <TextBlock
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="{Binding Text}"></TextBlock>
+
+                            <TextBlock
                             Grid.Column="1"
                             Text="{Binding SecondaryText}"
                             HorizontalAlignment="Right"
                             />
-                    </Grid>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-    </Grid>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </Border>
 </UserControl>

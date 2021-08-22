@@ -5,12 +5,11 @@ heading     = #3C8CC8
 foreground  = #DDDDDD
 foreground2 = #AAAAAA
 background  = #323232
+highlight   = #404040
 
 menu-foreground = #DDDDDD
 menu-background = #323232
 menu-highlight  = #505050
-menu-border     = #FFFFFF
-menu-checked    = #5A5A5A
 
 
 [light]
@@ -19,9 +18,8 @@ heading     = #0068B2
 foreground  = #000000
 foreground2 = #4C4C4C
 background  = #F7F7F7
+highlight   = #DFDFDF
 
 menu-foreground = #000000
 menu-background = #DFDFDF
 menu-highlight  = #BFBFBF
-menu-border     = #6A6A6A
-menu-checked    = #AAAAAA

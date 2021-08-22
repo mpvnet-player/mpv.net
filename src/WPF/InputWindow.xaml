@@ -31,15 +31,9 @@
             </Setter>
         </Style>
 
-        <LinearGradientBrush x:Key="HeaderBrush" StartPoint="0.5,0" EndPoint="0.5,1">
-            <GradientStop Color="Gray" Offset="0"/>
-            <GradientStop Color="Gray" Offset="1"/>
-            <GradientStop Color="#323232" Offset="0.5"/>
-        </LinearGradientBrush>
-
         <Style x:Key="HeaderStyle" TargetType="DataGridColumnHeader">
-            <Setter Property="Background" Value="{StaticResource HeaderBrush}" />
-            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Background" Value="{DynamicResource RegionBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}" />
             <Setter Property="MinHeight" Value="22" />
             <Setter Property="Cursor" Value="Hand" />
         </Style>

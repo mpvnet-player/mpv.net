@@ -97,12 +97,26 @@ namespace mpvnet
                 themeContent,
                 Properties.Resources.theme,
                 IsDarkMode ? DarkTheme : LightTheme);
+        }
 
-            ToolStripRendererEx.ForegroundColor = Theme.Current.GetWinFormsColor("menu-foreground");
-            ToolStripRendererEx.BackgroundColor = Theme.Current.GetWinFormsColor("menu-background");
-            ToolStripRendererEx.SelectionColor  = Theme.Current.GetWinFormsColor("menu-highlight");
-            ToolStripRendererEx.BorderColor     = Theme.Current.GetWinFormsColor("menu-border");
-            ToolStripRendererEx.CheckedColor    = Theme.Current.GetWinFormsColor("menu-checked");
+        public static void UpdateWpfColors()
+        {
+            var dic = System.Windows.Application.Current.Resources;
+
+            dic.Remove("BorderColor");
+            dic.Add("BorderColor", Theme.Current.GetColor("menu-highlight"));
+
+            dic.Remove("RegionColor");
+            dic.Add("RegionColor", Theme.Current.GetColor("menu-background"));
+
+            dic.Remove("SecondaryRegionColor");
+            dic.Add("SecondaryRegionColor", Theme.Current.GetColor("menu-highlight"));
+
+            dic.Remove("PrimaryTextColor");
+            dic.Add("PrimaryTextColor", Theme.Current.GetColor("menu-foreground"));
+
+            dic.Remove("HighlightColor");
+            dic.Add("HighlightColor", Theme.Current.GetColor("highlight"));
         }
 
         public static void RunTask(Action action)
@@ -110,19 +124,16 @@ namespace mpvnet
             Task.Run(() => {
                 try {
                     action.Invoke();
-                } catch (Exception e) {
+                }
+                catch (Exception e) {
                     ShowException(e);
                 }
             });
         }
 
-        public static string Version {
-            get {
-                return "Copyright (C) 2000-2021 mpv.net/mpv/mplayer\n" +
-                    $"mpv.net {Application.ProductVersion} ({File.GetLastWriteTime(Application.ExecutablePath).ToShortDateString()})\n" +
-                    $"{Core.GetPropertyString("mpv-version")} ({File.GetLastWriteTime(Folder.Startup + "mpv-1.dll").ToShortDateString()})\nffmpeg {Core.GetPropertyString("ffmpeg-version")}\nGPL v2 License";
-            }
-        }
+        public static string Version => "Copyright (C) 2000-2021 mpv.net/mpv/mplayer\n" +
+            $"mpv.net {Application.ProductVersion} ({File.GetLastWriteTime(Application.ExecutablePath).ToShortDateString()})\n" +
+            $"{Core.GetPropertyString("mpv-version")} ({File.GetLastWriteTime(Folder.Startup + "mpv-1.dll").ToShortDateString()})\nffmpeg {Core.GetPropertyString("ffmpeg-version")}\nGPL v2 License";
 
         public static void ShowException(object obj)
         {

@@ -13,60 +13,121 @@
     Background="{Binding Theme.Background}"
     SizeToContent="WidthAndHeight"
     WindowStartupLocation="CenterOwner"
+    ResizeMode="NoResize"
     >
 
     <Window.Resources>
-        <Style TargetType="Button">
-            <Setter Property="Margin" Value="3"></Setter>
-            <Setter Property="Height" Value="25"></Setter>
-        </Style>
-
-        <Style TargetType="TextBlock">
-            <Setter Property="FontSize" Value="14"></Setter>
-            <Setter Property="Margin" Value="3,0,0,0"></Setter>
-            <Setter Property="TextAlignment" Value="Center"></Setter>
-        </Style>
-        
-        <ControlTemplate x:Key = "ShieldButtonTemplate" TargetType = "Button">
-            <Button Margin="0" HorizontalContentAlignment="Stretch">
+        <ControlTemplate x:Key="ShieldButtonTemplate" TargetType="Button">
+            <Border x:Name="border"
+                    CornerRadius="3"
+                    BorderBrush="{DynamicResource PrimaryTextBrush}"
+                    BorderThickness="1"
+                    Background="{DynamicResource BorderBrush}">
                 <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Image
-                        Grid.Column="0"
-                        Source="{x:Static mpvnet:SetupWindow.ShieldIcon}"
-                        Width="18"
-                        Height="18"
-                        Margin="3,0,0,0"
-                        />
-                    <ContentPresenter Grid.Column="1" HorizontalAlignment="Center" />
+                    <Image Source="{x:Static mpvnet:SetupWindow.ShieldIcon}"
+                           HorizontalAlignment="Left"
+                           Margin="9,0,0,0"
+                           Width="20"
+                           Height="20" />
+                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" />
                 </Grid>
-            </Button>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" TargetName="border" Value="{DynamicResource RegionBrush}"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="BorderBrush" TargetName="border" Value="#2C628B"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" TargetName="border" Value="0.25"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
         </ControlTemplate>
     </Window.Resources>
     
     <Grid>
         <StackPanel Orientation="Horizontal">
-            <StackPanel Width="180" Margin="5">
-                <TextBlock>Start Menu Shortcut</TextBlock>
-                <Button Name="AddStartMenuShortcut" Click="AddStartMenuShortcut_Click">Add</Button>
-                <Button Name="RemoveStartMenuShortcut" Click="RemoveStartMenuShortcut_Click">Remove</Button>
+            <StackPanel Width="140" Margin="25,5,5,5">
+                <Border Height="50">
+                    <TextBlock TextWrapping="Wrap"
+                               TextAlignment="Center"
+                               VerticalAlignment="Center"
+                               FontSize="14"
+                               >Start Menu Shortcut</TextBlock>
+                </Border>
+                <Button Name="AddStartMenuShortcut"
+                        Height="30"
+                        Margin="3"
+                        Click="AddStartMenuShortcut_Click"
+                        >Add</Button>
+                <Button Name="RemoveStartMenuShortcut"
+                        Height="30"
+                        Margin="3"
+                        Click="RemoveStartMenuShortcut_Click"
+                        >Remove</Button>
             </StackPanel>
-            <StackPanel Width="180" Margin="20,5,5,5">
-                <TextBlock>File Extensions</TextBlock>
-                <Button Name="AddVideo" Click="AddVideo_Click" Template="{StaticResource ShieldButtonTemplate}">Add Video</Button>
-                <Button Name="AddAudio" Click="AddAudio_Click" Template="{StaticResource ShieldButtonTemplate}">Add Audio</Button>
-                <Button Name="AddImage" Click="AddImage_Click" Template="{StaticResource ShieldButtonTemplate}">Add Image</Button>
-                <Button Name="RemoveFileAssociations" Margin="3,15,3,3" Click="RemoveFileAssociations_Click" Template="{StaticResource ShieldButtonTemplate}">Remove All</Button>
-                <Button Name="EditDefaultApp" Click="EditDefaultApp_Click">Edit Default App</Button>
+            <StackPanel Width="140" Margin="20,5,5,25">
+                <Border Height="50">
+                    <TextBlock TextWrapping="Wrap"
+                               TextAlignment="Center"
+                               VerticalAlignment="Center"
+                               FontSize="14"
+                               >File Extensions</TextBlock>
+                </Border>
+                <Button Name="AddVideo"
+                        Height="30"
+                        Margin="3"
+                        Click="AddVideo_Click"
+                        Template="{StaticResource ShieldButtonTemplate}"
+                        >Add Video</Button>
+                <Button Name="AddAudio"
+                        Height="30"
+                        Margin="3"
+                        Click="AddAudio_Click"
+                        Template="{StaticResource ShieldButtonTemplate}"
+                        >Add Audio</Button>
+                <Button Name="AddImage"
+                        Height="30"
+                        Margin="3"
+                        Click="AddImage_Click"
+                        Template="{StaticResource ShieldButtonTemplate}"
+                        >Add Image</Button>
+                <Button Name="RemoveFileAssociations"
+                        Margin="3,15,3,3"
+                        Height="30"
+                        Click="RemoveFileAssociations_Click"
+                        Template="{StaticResource ShieldButtonTemplate}"
+                        >Remove All</Button>
+                <Button Name="EditDefaultApp"
+                        Height="30"
+                        Margin="3"
+                        Click="EditDefaultApp_Click"
+                        >Edit Default App</Button>
             </StackPanel>
-            <StackPanel Width="180" Margin="20,5,5,5">
-                <TextBlock>Path Environment Variable</TextBlock>
-                <Button Name="AddToPathEnvVar" Click="AddToPathEnvVar_Click">Add</Button>
-                <Button Name="RemoveFromPathEnvVar" Click="RemoveFromPathEnvVar_Click">Remove</Button>
-                <Button Name="ShowEnvVarEditor" Click="ShowEnvVarEditor_Click">Show Editor</Button>
+            <StackPanel Width="140" Margin="20,5,25,5">
+                <Border Height="50">
+                    <TextBlock TextWrapping="Wrap"
+                               TextAlignment="Center"
+                               VerticalAlignment="Center"
+                               FontSize="14"
+                               >Path Environment Variable</TextBlock>
+                </Border>
+                <Button Name="AddToPathEnvVar"
+                        Height="30"
+                        Margin="3"
+                        Click="AddToPathEnvVar_Click"
+                        >Add</Button>
+                <Button Name="RemoveFromPathEnvVar"
+                        Height="30"
+                        Margin="3"
+                        Click="RemoveFromPathEnvVar_Click"
+                        >Remove</Button>
+                <Button Name="ShowEnvVarEditor"
+                        Height="30"
+                        Margin="3"
+                        Click="ShowEnvVarEditor_Click"
+                        >Show Editor</Button>
             </StackPanel>
         </StackPanel>
     </Grid>

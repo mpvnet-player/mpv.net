@@ -30,7 +30,8 @@
                     x:Name="ValueTextBox"
                     Text="{Binding Path=Text, ElementName=StringSettingControl1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     Width="150"
-                    Height="20"
+                    FontSize="13"
+                    Padding="2"
                     HorizontalAlignment="Left"
                     Foreground="{Binding Theme.Foreground}"
                     Background="{Binding Theme.Background}"
@@ -40,18 +41,12 @@
 
                 <Button
                     x:Name="Button"
-                    Height="20"
+                    Width="25"
+                    Height="25"
                     Grid.Column="1"
                     Margin="5,0,0,0"
-                    Width="20"
                     Click="Button_Click"
                     >...
-
-                    <Button.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="3"/>
-                        </Style>
-                    </Button.Resources>
                 </Button>
             </Grid>
 
