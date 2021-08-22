@@ -21,7 +21,9 @@ mpv.net supports mpvs property based command line switches.
 
 #### High quality video output
 
-Video output that is capable of many features loved by videophiles, such as video scaling with popular high quality algorithms, color management, frame timing, interpolation, HDR, and more.
+Video output that is capable of many features loved by videophiles,
+such as video scaling with popular high quality algorithms,
+color management, frame timing, interpolation, HDR, and more.
 
 
 #### On Screen Controller
@@ -41,7 +43,10 @@ mpv.net is under active development.
 
 #### Based on libmpv
 
-mpv.net is based on libmpv which offers a straightforward C API that was designed from the ground up to make mpv usable as a library and facilitate easy integration into other applications. mpv is like VLC not based on DirectShow or Media Foundation. 
+mpv.net is based on libmpv which offers a straightforward C API that
+was designed from the ground up to make mpv usable as a library and
+facilitate easy integration into other applications.
+mpv is like VLC not based on DirectShow or Media Foundation. 
 
 
 Table of contents
@@ -74,7 +79,6 @@ Features
 - Started from a terminal status and debug output is printed on the terminal
 - DXVA2 video decoding acceleration
 - Video output capable of features loved by videophiles, such as video scaling with popular high quality algorithms, color management, frame timing, interpolation, HDR, and more
-- File search feature powered by the popular search and index tool Everything
 - Browser extensions to start mpv.net from the browser
 - Fast seek performance
 - Fast startup performance
