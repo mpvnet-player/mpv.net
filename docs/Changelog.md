@@ -1,5 +1,10 @@
 
-5.4.9.4 Beta (2021-??-??)
+5.4.9.5 Beta (2021-??-??)
+
+5.4.9.4 Beta (2021-08-24)
+
+- Fix of command palette crash on Windows 7.
+
 
 5.4.9.3 Beta (2021-08-22)
 

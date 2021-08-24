@@ -1117,14 +1117,19 @@ namespace mpvnet
             {
                 base.OnHandleCreated(e);
                 const int LWA_ColorKey = 1;
-                SetLayeredWindowAttributes(Handle, 0x111111, 255, LWA_ColorKey);
+                
+                if (Environment.OSVersion.Version > new Version(10, 0))
+                    SetLayeredWindowAttributes(Handle, 0x111111, 255, LWA_ColorKey);
             }
 
             protected override CreateParams CreateParams {
                 get {
                     const int WS_EX_LAYERED = 0x00080000;
                     CreateParams cp = base.CreateParams;
-                    cp.ExStyle = cp.ExStyle | WS_EX_LAYERED;
+
+                    if (Environment.OSVersion.Version > new Version(10, 0))
+                        cp.ExStyle = cp.ExStyle | WS_EX_LAYERED;
+
                     return cp;
                 }
             }

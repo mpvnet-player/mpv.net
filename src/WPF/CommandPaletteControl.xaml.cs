@@ -33,6 +33,9 @@ namespace mpvnet
             SearchControl.SearchTextBox.PreviewKeyDown += SearchTextBox_PreviewKeyDown;
             SearchControl.SearchTextBox.TextChanged += SearchTextBox_TextChanged;
             SearchControl.HideClearButton = true;
+
+            if (Environment.OSVersion.Version < new Version(10, 0))
+                MainBorder.CornerRadius = new CornerRadius(0);
         }
 
         void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)

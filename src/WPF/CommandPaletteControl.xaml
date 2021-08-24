@@ -17,7 +17,8 @@
         <KeyBinding Gesture="Enter"  Command="{Binding ExecuteCommand}"/>
     </UserControl.InputBindings>
 
-    <Border BorderThickness="1,0,1,1"
+    <Border Name="MainBorder"
+            BorderThickness="1,0,1,1"
             CornerRadius="0,0,5,5"
             Padding="0,0,0,5"
             BorderBrush="{Binding Theme.MenuHighlight}"
