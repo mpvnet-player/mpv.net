@@ -13,11 +13,13 @@ using WpfControls = System.Windows.Controls;
 
 using static mpvnet.Native;
 using static mpvnet.Global;
+using System.Threading;
 
 namespace mpvnet
 {
     public partial class MainForm : Form
     {
+        public AutoResetEvent MenuAutoResetEvent { get; } = new AutoResetEvent(false);
         public ElementHost CommandPaletteHost { get; set; }
         public static MainForm Instance { get; set; }
         public static IntPtr Hwnd { get; set; }
@@ -608,8 +610,6 @@ namespace mpvnet
 
         public void BuildMenu()
         {
-            ContextMenu = new WpfControls.ContextMenu();
-
             string content = File.ReadAllText(Core.InputConfPath);
             var items = CommandItem.GetItems(content);
 
@@ -636,7 +636,10 @@ namespace mpvnet
                 {
                     menuItem.Click += (sender, args) => {
                         try {
-                            Core.Command(item.Command);
+                            App.RunTask(() => {
+                                MenuAutoResetEvent.WaitOne();
+                                Core.Command(item.Command);                
+                            });
                         }
                         catch (Exception ex) {
                             Msg.ShowException(ex);
@@ -997,6 +1000,8 @@ namespace mpvnet
 
             WPF.Init();
             App.UpdateWpfColors();
+            ContextMenu = new WpfControls.ContextMenu();
+            ContextMenu.Closed += ContextMenu_Closed;
             BuildMenu();
             System.Windows.Application.Current.ShutdownMode = System.Windows.ShutdownMode.OnExplicitShutdown;
             Cursor.Position = new Point(Cursor.Position.X + 1, Cursor.Position.Y);
@@ -1006,6 +1011,11 @@ namespace mpvnet
             App.RunTask(() => App.Extension = new Extension());
             CSharpScriptHost.ExecuteScriptsInFolder(Core.ConfigFolder + "scripts-cs");
             WasShown = true;
+        }
+
+        void ContextMenu_Closed(object sender, System.Windows.RoutedEventArgs e)
+        {
+            MenuAutoResetEvent.Set();
         }
 
         protected override void OnResize(EventArgs e)

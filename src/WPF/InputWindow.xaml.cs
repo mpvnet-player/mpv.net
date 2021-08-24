@@ -99,10 +99,7 @@ namespace mpvnet
             var items = new Dictionary<string, CommandItem>();
 
             foreach (CommandItem i in CommandItem.Items)
-                if (items.ContainsKey(i.Input) && i.Input != "")
-                    Msg.ShowInfo($"Duplicate found:{BR2 + i.Input}: {i.Path + BR2}{items[i.Input].Input}: {items[i.Input].Path + BR2}Please note that you can chain multiple commands in the same line by using a semicolon as separator.", "Duplicate Found");
-                else
-                    items[i.Input] = i;
+                items[i.Input] = i;
         }
 
         void Window_Loaded(object sender, RoutedEventArgs e) => Keyboard.Focus(SearchControl.SearchTextBox);
