@@ -34,7 +34,7 @@
             </Border>
             <ControlTemplate.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" TargetName="border" Value="{DynamicResource RegionBrush}"/>
+                    <Setter Property="Background" TargetName="border" Value="{DynamicResource HighlightBrush}"/>
                 </Trigger>
                 <Trigger Property="IsPressed" Value="True">
                     <Setter Property="BorderBrush" TargetName="border" Value="#2C628B"/>

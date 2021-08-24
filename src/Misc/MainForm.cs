@@ -6,6 +6,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Forms.Integration;
 
@@ -13,7 +14,6 @@ using WpfControls = System.Windows.Controls;
 
 using static mpvnet.Native;
 using static mpvnet.Global;
-using System.Threading;
 
 namespace mpvnet
 {
