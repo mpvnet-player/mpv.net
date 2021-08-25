@@ -122,7 +122,7 @@ namespace mpvnet
             else
             {
                 if (Msg.ShowQuestion("Create history.txt file in config folder?",
-                    "mpv.net will write the date, time and filename of opened files to it.") == DialogResult.OK)
+                    "mpv.net will write the date, time and filename of opened files to it.") == MessageBoxResult.OK)
 
                     File.WriteAllText(Core.ConfigFolder + "history.txt", "");
             }

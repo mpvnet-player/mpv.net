@@ -1,6 +1,9 @@
 
 5.4.9.5 Beta (2021-??-??)
 
+- Message boxes are themed.
+
+
 5.4.9.4 Beta (2021-08-24)
 
 - Fix of command palette crash on Windows 7.

@@ -1161,18 +1161,19 @@ namespace mpvnet
 
             if (gb < 10)
             {
-                DialogResult result = Msg.ShowQuestion("Click Yes for Blu-ray and No for DVD.",
-                    null, MessageBoxButtons.YesNoCancel);
+                System.Windows.MessageBoxResult result =
+                    Msg.ShowQuestion("Click Yes for Blu-ray and No for DVD.",
+                    null, System.Windows.MessageBoxButton.YesNoCancel);
 
                 switch (result)
                 {
-                    case DialogResult.Yes:
+                    case System.Windows.MessageBoxResult.Yes:
                         Command("stop");
                         Thread.Sleep(500);
                         SetPropertyString("bluray-device", path);
                         LoadFiles(new[] { @"bd://" }, false, false);
                         break;
-                    case DialogResult.No:
+                    case System.Windows.MessageBoxResult.No:
                         Command("stop");
                         Thread.Sleep(500);
                         SetPropertyString("dvd-device", path);

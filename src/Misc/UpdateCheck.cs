@@ -51,7 +51,8 @@ namespace mpvnet
 
                     if ((App.Settings.UpdateCheckVersion != onlineVersion.ToString() ||
                         showUpToDateMessage) && Msg.ShowQuestion(
-                            $"New version {onlineVersion} is available, update now?") == DialogResult.OK)
+                            $"New version {onlineVersion} is available, update now?") ==
+                            System.Windows.MessageBoxResult.OK)
                     {
                         string url = $"https://github.com/stax76/mpv.net/releases/download/{onlineVersion}/mpv.net-{onlineVersion}-portable.zip";
 

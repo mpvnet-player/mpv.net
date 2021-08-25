@@ -100,6 +100,15 @@
     <Compile Include="WPF\HandyControl\Tools\AnimationHelper.cs" />
     <Compile Include="WPF\HandyControl\Tools\Extension\StringExtension.cs" />
     <Compile Include="WPF\HandyControl\Tools\RegexPatterns.cs" />
+    <Compile Include="WPF\MsgBox\MessageBoxEx.xaml.cs">
+      <DependentUpon>MessageBoxEx.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WPF\MsgBox\MessageBoxExStatic.cs" />
+    <Compile Include="WPF\MsgBox\MsgBoxExCheckBoxData.cs" />
+    <Compile Include="WPF\MsgBox\MsgBoxExDelegate.cs" />
+    <Compile Include="WPF\MsgBox\MsgBoxExtendedFunctionality.cs" />
+    <Compile Include="WPF\MsgBox\MsgBoxUrl.cs" />
+    <Compile Include="WPF\MsgBox\MsgEnumerators.cs" />
     <Compile Include="WPF\RelayCommand.cs" />
     <Compile Include="Misc\CSharpScriptHost.cs" />
     <Compile Include="Misc\Extension.cs" />
@@ -116,6 +125,10 @@
     <Page Include="WPF\CommandPaletteControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WPF\MsgBox\MessageBoxEx.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="WPF\SearchTextBoxUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>

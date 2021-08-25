@@ -1,41 +1,50 @@
 ﻿
 using System;
-using System.Windows.Forms;
+using System.Windows;
+
+using WinForms = System.Windows.Forms;
 
 using static mpvnet.Global;
 
+using MsgBoxEx;
+
 public class Msg
 {
+    private static readonly string WindowTitle = WinForms.Application.ProductName;
+
     public static void ShowInfo(object title, object content = null)
     {
-        Show(title, content, MessageBoxIcon.Information);
+        Show(title, content, MessageBoxImage.Information);
     }
 
     public static void ShowError(object title, object content = null)
     {
-        Show(title, content, MessageBoxIcon.Error);
+        Show(title, content, MessageBoxImage.Error);
     }
 
     public static void ShowWarning(object title, object content = null)
     {
-        Show(title, content, MessageBoxIcon.Warning);
+        Show(title, content, MessageBoxImage.Warning);
     }
 
-    public static DialogResult ShowQuestion(object title, object content = null,
-        MessageBoxButtons buttons = MessageBoxButtons.OKCancel)
+    public static MessageBoxResult ShowQuestion(object title, object content = null,
+        MessageBoxButton buttons = MessageBoxButton.OKCancel)
     {
-        return Show(title, content, MessageBoxIcon.Question, buttons);
+        return Show(title, content, MessageBoxImage.Question, buttons);
     }
 
     public static void ShowException(Exception exception)
     {
-        Show(exception, null, MessageBoxIcon.Error);
+        Show(exception, null, MessageBoxImage.Error);
     }
 
-    public static DialogResult Show(object title, object content, MessageBoxIcon icon,
-        MessageBoxButtons buttons = MessageBoxButtons.OK)
+    public static MessageBoxResult Show(
+        object title,
+        object content,
+        MessageBoxImage img,
+        MessageBoxButton buttons = MessageBoxButton.OK)
     {
         string msg = (title?.ToString().TrimEx() + BR2 + content?.ToString().TrimEx()).Trim();
-        return MessageBox.Show(msg, Application.ProductName, buttons, icon);
+        return MessageBoxEx.OpenMessageBox(null, msg, WindowTitle, buttons, img);
     }
 }

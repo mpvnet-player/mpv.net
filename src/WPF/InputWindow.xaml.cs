@@ -151,7 +151,7 @@ namespace mpvnet
             DataGrid grid = (DataGrid)sender;
 
             if (e.Command == DataGrid.DeleteCommand)
-                if (Msg.ShowQuestion($"Confirm to delete: {(grid.SelectedItem as CommandItem).Input} ({(grid.SelectedItem as CommandItem).Path})") != System.Windows.Forms.DialogResult.OK)
+                if (Msg.ShowQuestion($"Confirm to delete: {(grid.SelectedItem as CommandItem).Input} ({(grid.SelectedItem as CommandItem).Path})") != MessageBoxResult.OK)
                     e.Handled = true;
         }
 
