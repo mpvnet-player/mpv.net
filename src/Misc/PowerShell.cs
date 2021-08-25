@@ -156,7 +156,7 @@ namespace mpvnet
                     break;
 
                 default:
-                    App.ShowError("Invalid Type", "Valid types are: bool or boolean, string, int or integer, float or double, nil or none or native");
+                    App.ShowError("Invalid Type, valid types are: bool or boolean, string, int or integer, float or double, nil or none or native");
                     break;
             }
         }

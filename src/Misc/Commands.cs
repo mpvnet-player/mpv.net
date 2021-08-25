@@ -121,7 +121,7 @@ namespace mpvnet
                 ProcessHelp.ShellExecute(Core.ConfigFolder + "history.txt");
             else
             {
-                if (Msg.ShowQuestion("Create history.txt file in config folder?",
+                if (Msg.ShowQuestion("Create history.txt file in config folder?" + BR2 +
                     "mpv.net will write the date, time and filename of opened files to it.") == MessageBoxResult.OK)
 
                     File.WriteAllText(Core.ConfigFolder + "history.txt", "");
@@ -220,7 +220,7 @@ namespace mpvnet
                 if (string.IsNullOrEmpty(clipboard) || (!clipboard.Contains("://") && !File.Exists(clipboard)) ||
                     clipboard.Contains("\n"))
                 {
-                    App.ShowError("No URL found", "The clipboard does not contain a valid URL or file.");
+                    App.ShowError("No URL found, the clipboard does not contain a valid URL or file.");
                     return;
                 }
 
@@ -432,7 +432,7 @@ namespace mpvnet
                         if (propValue.ContainsEx("${"))
                             propValue += BR2 + Core.Expand(propValue);
 
-                        App.ShowInfo(prop + ": " +propValue);
+                        App.ShowInfo(prop + ": " + propValue);
                     }
                 };
 

@@ -1,5 +1,7 @@
 
-5.4.9.5 Beta (2021-??-??)
+5.4.9.6 Beta (2021-??-??)
+
+5.4.9.5 Beta (2021-08-25)
 
 - Message boxes are themed.
 

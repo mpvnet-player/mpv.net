@@ -150,32 +150,26 @@ namespace mpvnet
 
         public static void InvokeOnMainThread(Action action) => MainForm.Instance.BeginInvoke(action);
 
-        public static void ShowInfo(string title, string msg = null)
+        public static void ShowInfo(string msg)
         {
             if (IsTerminalAttached)
             {
-                if (title != null)
-                    Terminal.Write(title);
-
                 if (msg != null)
                     Terminal.Write(msg);
             }
             else
-                InvokeOnMainThread(() => Msg.ShowInfo(title, msg));
+                InvokeOnMainThread(() => Msg.ShowInfo(msg));
         }
 
-        public static void ShowError(string title, string msg = null)
+        public static void ShowError(string msg)
         {
             if (IsTerminalAttached)
             {
-                if (title != null)
-                    Terminal.WriteError(title);
-
                 if (msg != null)
                     Terminal.WriteError(msg);
             }
             else
-                InvokeOnMainThread(() => Msg.ShowError(title, msg));
+                InvokeOnMainThread(() => Msg.ShowError(msg));
         }
 
         static void Core_Initialized()

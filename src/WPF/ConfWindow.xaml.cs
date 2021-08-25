@@ -329,7 +329,7 @@ namespace mpvnet
             ProcessHelp.ShellExecute(Path.GetDirectoryName(Core.ConfPath));
 
         void PreviewTextBlock_MouseUp(object sender, MouseButtonEventArgs e) =>
-            Msg.ShowInfo("mpv.conf Preview", GetContent("mpv"));
+            Msg.ShowInfo("mpv.conf Preview" + BR2 + GetContent("mpv"));
 
         void ShowManualTextBlock_MouseUp(object sender, MouseButtonEventArgs e) =>
             ProcessHelp.ShellExecute("https://mpv.io/manual/master/");

@@ -40,7 +40,7 @@ namespace mpvnet
             {
                 SearchControl.SearchTextBox.Text = "";
 
-                Msg.ShowInfo("Filtering",
+                Msg.ShowInfo("Filtering" + BR2 +
                     "Reduce the filter scope with:" + BR2 +
                     "i input" + BR2 +
                     "m menu" + BR2 +

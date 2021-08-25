@@ -12,39 +12,40 @@ public class Msg
 {
     private static readonly string WindowTitle = WinForms.Application.ProductName;
 
-    public static void ShowInfo(object title, object content = null)
+    public static void ShowInfo(object title)
     {
-        Show(title, content, MessageBoxImage.Information);
+        Show(title, MessageBoxImage.Information);
     }
 
-    public static void ShowError(object title, object content = null)
+    public static void ShowError(object title)
     {
-        Show(title, content, MessageBoxImage.Error);
+        Show(title, MessageBoxImage.Error);
     }
 
-    public static void ShowWarning(object title, object content = null)
+    public static void ShowWarning(object title)
     {
-        Show(title, content, MessageBoxImage.Warning);
+        Show(title, MessageBoxImage.Warning);
     }
 
-    public static MessageBoxResult ShowQuestion(object title, object content = null,
+    public static MessageBoxResult ShowQuestion(object title,
         MessageBoxButton buttons = MessageBoxButton.OKCancel)
     {
-        return Show(title, content, MessageBoxImage.Question, buttons);
+        return Show(title, MessageBoxImage.Question, buttons);
     }
 
     public static void ShowException(Exception exception)
     {
-        Show(exception, null, MessageBoxImage.Error);
+        Show(exception.Message, MessageBoxImage.Error, MessageBoxButton.OK, exception.ToString());
     }
 
     public static MessageBoxResult Show(
         object title,
-        object content,
         MessageBoxImage img,
-        MessageBoxButton buttons = MessageBoxButton.OK)
+        MessageBoxButton buttons = MessageBoxButton.OK,
+        string details = null)
     {
-        string msg = (title?.ToString().TrimEx() + BR2 + content?.ToString().TrimEx()).Trim();
+        string msg = title?.ToString().TrimEx();
+        MessageBoxEx.DetailsText = details;
         return MessageBoxEx.OpenMessageBox(null, msg, WindowTitle, buttons, img);
     }
 }

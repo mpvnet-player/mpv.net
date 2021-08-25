@@ -159,8 +159,9 @@
 			</StackPanel>
 		</Border>
 
-		<Expander Grid.Row="4" Header="Details" 
-				  IsExpanded="{Binding Path=Expanded}" 
+		<Expander Grid.Row="4" Header=" Details" 
+				  IsExpanded="{Binding Path=Expanded}"
+                  Margin="3,8,0,0"
 				  Visibility="{Binding Path=ShowDetailsBtn}"
 				  >
 			<Expander.Template>
@@ -187,11 +188,10 @@
 										  Style="{StaticResource GroupBoxExpanderToggleButtonStyle}"  
 										  IsChecked="{Binding Path=IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" />
 							<ContentPresenter ContentSource="Header" RecognizesAccessKey="true"  
-													  TextElement.Foreground="{Binding ElementName=textboxMessage, Path=Foreground}"  
-													  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
-													  Grid.Column="1" 
-													  VerticalAlignment="Center" HorizontalAlignment="Left" 
-													  Margin="3,0,0,0" />
+											  TextElement.Foreground="{Binding ElementName=textboxMessage, Path=Foreground}"  
+											  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+											  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" 
+											  />
 						</Grid>
 						<ContentPresenter x:Name="ExpandSite" Visibility="Collapsed" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" 
 									  Margin="{TemplateBinding Padding}" 

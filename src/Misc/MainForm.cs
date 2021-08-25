@@ -14,6 +14,7 @@ using WpfControls = System.Windows.Controls;
 
 using static mpvnet.Native;
 using static mpvnet.Global;
+using MsgBoxEx;
 
 namespace mpvnet
 {
@@ -1000,6 +1001,9 @@ namespace mpvnet
 
             WPF.Init();
             App.UpdateWpfColors();
+            MessageBoxEx.MessageForeground = Theme.Current.GetBrush("heading");
+            MessageBoxEx.MessageBackground = Theme.Current.GetBrush("background");
+            MessageBoxEx.ButtonBackground  = Theme.Current.GetBrush("highlight");
             ContextMenu = new WpfControls.ContextMenu();
             ContextMenu.Closed += ContextMenu_Closed;
             BuildMenu();

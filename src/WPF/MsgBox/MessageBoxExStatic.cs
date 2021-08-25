@@ -99,45 +99,9 @@ namespace MsgBoxEx
 
         #region static configuration methods
 
-        public static void SetMessageBackground(Color color)
-        {
-            try
-            {
-                MessageBackground = new SolidColorBrush(color);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, ex.ToString());
-            }
-        }
-
-        public static void SetMessageForeground(Color color)
-        {
-            try
-            {
-                MessageForeground = new SolidColorBrush(color);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, ex.ToString());
-            }
-        }
-
-        public static void SetButtonBackground(System.Windows.Media.Color color)
-        {
-            try
-            {
-                ButtonBackground = new SolidColorBrush(color);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, ex.ToString());
-            }
-        }
-
         public static Color ColorFromString(string colorString)
         {
-            Color wpfColor = System.Windows.Media.Colors.Black;
+            Color wpfColor = Colors.Black;
 
             try
             {

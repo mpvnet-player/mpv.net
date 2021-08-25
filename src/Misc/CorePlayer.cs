@@ -1163,7 +1163,7 @@ namespace mpvnet
             {
                 System.Windows.MessageBoxResult result =
                     Msg.ShowQuestion("Click Yes for Blu-ray and No for DVD.",
-                    null, System.Windows.MessageBoxButton.YesNoCancel);
+                    System.Windows.MessageBoxButton.YesNoCancel);
 
                 switch (result)
                 {
