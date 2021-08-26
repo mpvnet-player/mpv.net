@@ -1,17 +1,12 @@
 ﻿
 using System;
+using System.Threading;
 using System.Windows;
-
-using WinForms = System.Windows.Forms;
-
-using static mpvnet.Global;
 
 using MsgBoxEx;
 
 public class Msg
 {
-    private static readonly string WindowTitle = WinForms.Application.ProductName;
-
     public static void ShowInfo(object title)
     {
         Show(title, MessageBoxImage.Information);
@@ -44,8 +39,19 @@ public class Msg
         MessageBoxButton buttons = MessageBoxButton.OK,
         string details = null)
     {
-        string msg = title?.ToString().TrimEx();
-        MessageBoxEx.DetailsText = details;
-        return MessageBoxEx.OpenMessageBox(null, msg, WindowTitle, buttons, img);
+        MessageBoxResult fn()
+        {
+            string msg = title?.ToString().TrimEx();
+            MessageBoxEx.DetailsText = details;
+            string windowTitle = System.Windows.Forms.Application.ProductName;
+            return MessageBoxEx.OpenMessageBox(null, msg, windowTitle, buttons, img);
+        }
+
+        ApartmentState state = Thread.CurrentThread.GetApartmentState();
+       
+        if (state == ApartmentState.STA)
+            return fn();
+        else
+            return Application.Current.Dispatcher.Invoke(fn);
     }
 }
