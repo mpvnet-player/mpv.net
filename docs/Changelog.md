@@ -1,5 +1,10 @@
 
-5.4.9.7 Beta (2021-??-??)
+5.4.9.8 Beta (2021-??-??)
+
+5.4.9.7 Beta (2021-08-28)
+
+- Fix exception closing command palette on Windows 7.
+
 
 5.4.9.6 Beta (2021-08-26)
 

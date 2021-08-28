@@ -30,6 +30,7 @@ namespace mpvnet
 
             EscapeCommand = new RelayCommand(OnEscapeCommand);
             ExecuteCommand = new RelayCommand(OnExecuteCommand);
+
             SearchControl.SearchTextBox.PreviewKeyDown += SearchTextBox_PreviewKeyDown;
             SearchControl.SearchTextBox.TextChanged += SearchTextBox_TextChanged;
             SearchControl.HideClearButton = true;

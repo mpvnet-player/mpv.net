@@ -1148,6 +1148,15 @@ namespace mpvnet
                 }
             }
 
+            protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+            {
+                try {
+                    return base.ProcessCmdKey(ref msg, keyData);
+                } catch (Exception) {
+                    return true;
+                }
+            }
+
             [DllImport("user32.dll")]
             public static extern bool SetLayeredWindowAttributes(IntPtr hWnd, int crKey, byte alpha, int dwFlags);
         }
