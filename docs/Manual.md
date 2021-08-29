@@ -2,7 +2,7 @@
 mpv.net manual
 ==============
 
-Other Languages: [简体中文](Manual_chs.md)
+**ENGLISH** | **[简体中文](Manual_chs.md)**
 
 Table of contents
 -----------------
@@ -73,9 +73,8 @@ the setup don't enforce it because it's not easy to implement.
 For internet streaming youtube-dl must be downloaded and installed manually,
 meaning it must be located in the PATH environment variable or in the startup directory.
 
-mpvnet.exe is platform agnostic, users that need x86 have to replace 4 native tools:
+mpvnet.exe is platform agnostic, users that need x86 have to replace 3 native tools:
 
-- Everything.dll
 - mpv-1.dll
 - MediaInfo.dll
 - mpvnet.com
@@ -652,7 +651,6 @@ Third party components are:
 
 - [libmpv provides the core functionality](https://mpv.io/)
 - [MediaInfo](https://mediaarea.net/en/MediaInfo)
-- [Everything, a fast file search service](https://www.voidtools.com)
 
 
 Context Menu
@@ -696,15 +694,10 @@ from the browser from sites like YouTube is described in the
 For internet streaming youtube-dl must be downloaded and installed manually,
 meaning it must be located in the PATH environment variable or in the startup directory.
 
+
 ### Open > Open DVD/Blu-ray Drive/Folder
 
 Opens a DVD/Blu-ray Drive/Folder.
-
-
-### Open > Show media search
-
-mpv.net supports system wide media searches using the Everything indexing
-service installed by the popular file search tool [Everything](www.voidtools.com).
 
 
 ### Open > Load external audio files
