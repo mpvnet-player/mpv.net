@@ -498,7 +498,7 @@ option = no
 [setting]
 name = keep-open-pause
 file = mpv
-default = no
+default = yes
 filter = Playback
 help = If set to no, instead of pausing when keep-open is active, just stop at end of file and continue playing forward when you seek backwards until end where it stops again.
 
@@ -508,7 +508,7 @@ option = no
 [setting]
 name = keep-open
 file = mpv
-default = yes
+default = no
 filter = Playback
 help = Using no, mpv would terminate after the last file but mpv.net never terminates automatically.
 
