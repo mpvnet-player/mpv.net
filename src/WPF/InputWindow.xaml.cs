@@ -121,7 +121,7 @@ namespace mpvnet
             foreach (CommandItem item in CommandItem.Items)
             {
                 string input = item.Input == "" ? "_" : item.Input;
-                string line = " " + input.PadRight(10);
+                string line = input.PadRight(10);
 
                 if (item.Command.Trim() == "")
                     line += " ignore";

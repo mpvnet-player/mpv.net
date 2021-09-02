@@ -961,11 +961,13 @@ namespace mpvnet
             }));
         }
 
-        void PropChangePause(bool enabled)
+        void PropChangePause(bool paused)
         {
+            Core.Paused = paused;
+
             if (Taskbar != null && Core.TaskbarProgress)
             {
-                if (enabled)
+                if (paused)
                     Taskbar.SetState(TaskbarStates.Paused);
                 else
                     Taskbar.SetState(TaskbarStates.Normal);
