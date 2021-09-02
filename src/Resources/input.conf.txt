@@ -207,5 +207,6 @@ MBTN_Back    playlist-prev
 <            playlist-prev
 Ctrl+Wheel_Up   no-osd seek  7
 Ctrl+Wheel_Down no-osd seek -7
+MBTN_Left       ignore
 MBTN_Left_DBL   cycle fullscreen
 KP_Enter        cycle fullscreen
