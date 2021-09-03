@@ -1,6 +1,10 @@
 
 5.4.9.8 Beta (2021-??-??)
 
+- All PowerShell dependencies except the scipt host were removed
+  in order to achieve first class Windows 7 compatibility!
+  
+
 5.4.9.7 Beta (2021-08-28)
 
 - Fix exception closing command palette on Windows 7.

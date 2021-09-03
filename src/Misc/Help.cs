@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -99,34 +100,33 @@ namespace mpvnet
     {
         public static string GetProfiles()
         {
-            string code = @"
-                foreach ($item in ($json | ConvertFrom-Json | foreach { $_ } | sort name))
-                {
-                    $item.name
-                    ''
-
-                    foreach ($option in $item.options)
-                    {
-                        '   ' + $option.key + ' = ' + $option.value
-                    }
-
-                    ''
-                }";
-
             string json = Core.GetPropertyString("profile-list");
-            return PowerShell.InvokeAndReturnString(code, "json", json).Trim();
+            var o = json.FromJson<List<Dictionary<string, object>>>().OrderBy(i => i["name"]);
+            StringBuilder sb = new StringBuilder();
+
+            foreach (Dictionary<string, object> i in o)
+            {
+                sb.Append(i["name"].ToString() + BR2);
+
+                foreach (Dictionary<string, object> i2 in i["options"] as List<object>)
+                    sb.AppendLine("   " + i2["key"] + " = " + i2["value"]);
+
+                sb.Append(BR);
+            }
+
+            return sb.ToString();
         }
 
         public static string GetDecoders()
-        {
-            string code = @"
-                foreach ($item in ($json | ConvertFrom-Json | foreach { $_ } | sort codec))
-                {
-                    $item.codec + ' - ' + $item.description
-                }";
-
+        {           
             string json = Core.GetPropertyString("decoder-list");
-            return PowerShell.InvokeAndReturnString(code, "json", json).Trim();
+            var o = json.FromJson<List<Dictionary<string, object>>>().OrderBy(i => i["codec"]);
+            StringBuilder sb = new StringBuilder();
+
+            foreach (Dictionary<string, object> i in o)
+                sb.AppendLine(i["codec"] + " - " + i["description"]);
+
+            return sb.ToString();
         }
 
         public static string GetProtocols()

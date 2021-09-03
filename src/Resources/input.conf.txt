@@ -145,7 +145,7 @@ Ctrl+r  cycle-values video-rotate 90 180 270 0      #menu: View > Rotate Video
 T       script-binding stats/display-stats-toggle   #menu: View > Toggle Statistics
 t       script-binding stats/display-stats          #menu: View > Show Statistics
 _       script-message mpv.net show-audio-devices   #menu: View > Show Audio Devices
-Shift+c script-message mpv.net show-commands        #menu: View > Show Commands
+C       script-message mpv.net show-commands        #menu: View > Show Commands
 `       script-binding console/enable               #menu: View > Show Console
 _       script-message mpv.net show-decoders        #menu: View > Show Decoders
 _       script-message mpv.net show-demuxers        #menu: View > Show Demuxers

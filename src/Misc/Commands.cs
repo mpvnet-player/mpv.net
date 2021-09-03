@@ -9,6 +9,7 @@ using System.Windows;
 
 using static mpvnet.Global;
 using System.Collections.Generic;
+using System.Text;
 
 namespace mpvnet
 {
@@ -290,27 +291,27 @@ namespace mpvnet
 
         public static void ShowCommands()
         {
-            string code = @"
-                foreach ($item in ($json | ConvertFrom-Json | foreach { $_ } | sort name))
-                {
-                    ''
-                    $item.name
-
-                    foreach ($arg in $item.args)
-                    {
-                        $value = $arg.name + ' <' + $arg.type.ToLower() + '>'
-
-                        if ($arg.optional -eq $true)
-                        {
-                            $value = '[' + $value + ']'
-                        }
-
-                        '    ' + $value
-                    }
-                }";
-
             string json = Core.GetPropertyString("command-list");
-            ShowTextWithEditor("command-list", PowerShell.InvokeAndReturnString(code, "json", json));
+            var o = json.FromJson<List<Dictionary<string, object>>>().OrderBy(i => i["name"]);
+            StringBuilder sb = new StringBuilder();
+
+            foreach (Dictionary<string, object> i in o)
+            {
+                sb.AppendLine();
+                sb.AppendLine(i["name"].ToString());
+
+                foreach (Dictionary<string, object> i2 in i["args"] as List<object>)
+                {
+                    string value = i2["name"].ToString() + " <" + i2["type"].ToString().ToLower() + ">";
+
+                    if ((bool)i2["optional"] == true)
+                        value = "[" + value + "]";
+
+                    sb.AppendLine("    " + value);
+                }
+            }
+
+            ShowTextWithEditor("command-list", sb.ToString());
         }
 
         public static void ShowTextWithEditor(string name, string text)
