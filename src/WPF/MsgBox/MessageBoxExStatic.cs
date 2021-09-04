@@ -1,18 +1,22 @@
 ﻿
+// https://www.codeproject.com/Articles/5290638/Customizable-WPF-MessageBox
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing.Text;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Interop;
 using System.Windows.Media;
 
 namespace MsgBoxEx
 {
     public partial class MessageBoxEx : Window, INotifyPropertyChanged
     {
-        #region static fields
+        #region fields
 
         private static double screenWidth = SystemParameters.WorkArea.Width - 100;
 
@@ -21,9 +25,9 @@ namespace MsgBoxEx
         private static List<string> installedFonts = new List<string>();
         public static MessageBoxButtonDefault staticButtonDefault;
 
-        #endregion static fields
+        #endregion fields
 
-        #region static properties
+        #region properties
 
         public static Color DefaultUrlForegroundColor => Colors.Blue;
 
@@ -66,48 +70,54 @@ namespace MsgBoxEx
 
         public static string DelegateToolTip { get; set; }
 
-        #endregion static properties
+        #endregion properties
 
-        #region Show and ShowEx
+        #region methods
 
         public static MessageBoxResult OpenMessageBox(
-            Window owner, string msg, string title, MessageBoxButton buttons, MessageBoxImage image)
+            string msg, string title, MessageBoxButton buttons, MessageBoxImage image)
         {
-            //if (owner == null)
-            //{
-            //    owner = (Application.Current.MainWindow.Visibility == Visibility.Visible) ? Application.Current.MainWindow : null;
-            //}
-
-            MessageBoxEx form = new MessageBoxEx(msg, title, buttons, image) /*{ Owner = owner }*/;
-
-            form.ShowDialog();
-            return form.MessageResult;
+            MessageBoxEx window = new MessageBoxEx(msg, title, buttons, image);
+            SetOwner(window);
+            window.ShowDialog();
+            return window.MessageResult;
         }
 
-        public static MessageBoxResultEx OpenMessageBox(Window owner, string msg, string title, MessageBoxButtonEx buttons, MessageBoxImage image)
+        public static MessageBoxResultEx OpenMessageBox(string msg, string title, MessageBoxButtonEx buttons, MessageBoxImage image)
         {
-            //if (owner == null)
-            //{
-            //    owner = (Application.Current.MainWindow.Visibility == Visibility.Visible) ? Application.Current.MainWindow : null;
-            //}
-            MessageBoxEx form = new MessageBoxEx(msg, title, buttons, image) /*{ Owner = owner }*/;
-            form.ShowDialog();
-            return form.MessageResultEx;
+            MessageBoxEx window = new MessageBoxEx(msg, title, buttons, image);
+            SetOwner(window);
+            window.ShowDialog();
+            return window.MessageResultEx;
         }
 
-        #endregion Show and ShowEx
+        public static void SetOwner(Window window)
+        {
+            IntPtr ownerHandle = GetOwnerHandle();
 
-        #region static configuration methods
+            if (ownerHandle != IntPtr.Zero)
+                new WindowInteropHelper(window).Owner = ownerHandle;
+        }
+
+        public static IntPtr GetOwnerHandle()
+        {
+            IntPtr foregroundWindow = Native.GetForegroundWindow();
+            Native.GetWindowThreadProcessId(foregroundWindow, out var procID);
+
+            using (var proc = Process.GetCurrentProcess())
+                if (proc.Id == procID)
+                    return foregroundWindow;
+
+            return IntPtr.Zero;
+        }
 
         public static Color ColorFromString(string colorString)
         {
             Color wpfColor = Colors.Black;
 
-            try
-            {
+            try {
                 wpfColor = (Color)ColorConverter.ConvertFromString(colorString);
-            }
-            catch (Exception) { }
+            } catch (Exception) { }
 
             return wpfColor;
         }
@@ -192,6 +202,6 @@ namespace MsgBoxEx
             staticButtonDefault = buttonDefault;
         }
 
-        #endregion static configuration methods
+        #endregion methods
     }
 }

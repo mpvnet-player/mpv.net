@@ -44,7 +44,7 @@ public class Msg
             string msg = title?.ToString().TrimEx();
             MessageBoxEx.DetailsText = details;
             string windowTitle = System.Windows.Forms.Application.ProductName;
-            return MessageBoxEx.OpenMessageBox(null, msg, windowTitle, buttons, img);
+            return MessageBoxEx.OpenMessageBox(msg, windowTitle, buttons, img);
         }
 
         ApartmentState state = Thread.CurrentThread.GetApartmentState();

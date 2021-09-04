@@ -48,8 +48,6 @@ namespace MsgBoxEx
 
         #endregion INotifyPropertyChanged
 
-        private const string _DEFAULT_CAPTION = "Application Message";
-
         #region fields
 
         private double screenHeight;
@@ -357,7 +355,7 @@ namespace MsgBoxEx
 
             // configure the form based on specified criteria
             Message = msg;
-            MessageTitle = (string.IsNullOrEmpty(title.Trim())) ? _DEFAULT_CAPTION : title;
+            MessageTitle = (string.IsNullOrEmpty(title.Trim())) ? "Application Message" : title;
 
             // url (if specified)
             if (Url != null)
@@ -434,6 +432,7 @@ namespace MsgBoxEx
                             SystemSounds.Exclamation.Play();
                     }
                     break;
+
                 default:
                     MessageIcon = null;
                     break;

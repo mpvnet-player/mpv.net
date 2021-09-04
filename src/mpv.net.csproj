@@ -109,6 +109,7 @@
     <Compile Include="WPF\MsgBox\MsgBoxExtendedFunctionality.cs" />
     <Compile Include="WPF\MsgBox\MsgBoxUrl.cs" />
     <Compile Include="WPF\MsgBox\MsgEnumerators.cs" />
+    <Compile Include="WPF\MsgBox\Native.cs" />
     <Compile Include="WPF\RelayCommand.cs" />
     <Compile Include="Misc\CSharpScriptHost.cs" />
     <Compile Include="Misc\Extension.cs" />
