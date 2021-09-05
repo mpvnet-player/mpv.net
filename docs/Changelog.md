@@ -1,10 +1,14 @@
 
-5.4.9.8 Beta (2021-??-??)
+5.4.9.9 Beta (2021-??-??)
+
+5.4.9.8 Beta (2021-09-05)
 
 - All PowerShell dependencies except the scipt host were
   removed in order to improve Windows 7 compatibility.
 - Fix message box not working when ontop is enabled.
 - Use Vista folder browser.
+- Improved context menu performance.
+- libmpv shinchiro 2021-09-05
 
 
 5.4.9.7 Beta (2021-08-28)
