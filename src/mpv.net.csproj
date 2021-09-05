@@ -78,6 +78,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Misc\App.cs" />
+    <Compile Include="Misc\BetterFolderBrowser.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Misc\Common.cs" />
     <Compile Include="Misc\JSONParser.cs" />
     <Compile Include="WPF\HandyControl\Controls\Attach\BorderElement.cs" />

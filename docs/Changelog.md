@@ -1,9 +1,10 @@
 
 5.4.9.8 Beta (2021-??-??)
 
-- All PowerShell dependencies except the scipt host were removed
-  in order to achieve first class Windows 7 compatibility!
+- All PowerShell dependencies except the scipt host were
+  removed in order to improve Windows 7 compatibility.
 - Fix message box not working when ontop is enabled.
+- Use Vista folder browser.
 
 
 5.4.9.7 Beta (2021-08-28)
