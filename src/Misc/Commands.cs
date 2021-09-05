@@ -1,15 +1,15 @@
 ﻿
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Text;
+using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Interop;
-using System.Windows;
 
 using static mpvnet.Global;
-using System.Collections.Generic;
-using System.Text;
 
 namespace mpvnet
 {
@@ -88,7 +88,7 @@ namespace mpvnet
         public static void Open_DVD_Or_BD_Folder()
         {
             App.InvokeOnMainThread(new Action(() => {
-                using (var dialog = new BetterFolderBrowser())
+                using (var dialog = new FolderBrowser())
                     if (dialog.ShowDialog() == DialogResult.OK)
                         Core.LoadDiskFolder(dialog.SelectedPath);
             }));

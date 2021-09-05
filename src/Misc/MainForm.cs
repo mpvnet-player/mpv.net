@@ -9,12 +9,13 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Forms.Integration;
+using System.Windows.Threading;
 
+using MsgBoxEx;
 using WpfControls = System.Windows.Controls;
 
 using static mpvnet.Native;
 using static mpvnet.Global;
-using MsgBoxEx;
 
 namespace mpvnet
 {
@@ -639,6 +640,8 @@ namespace mpvnet
                         try {
                             App.RunTask(() => {
                                 MenuAutoResetEvent.WaitOne();
+                                System.Windows.Application.Current.Dispatcher.Invoke(
+                                    DispatcherPriority.Background, new Action(delegate { }));
                                 Core.Command(item.Command);                
                             });
                         }

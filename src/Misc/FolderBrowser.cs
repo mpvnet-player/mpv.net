@@ -1,94 +1,48 @@
 ﻿
-// https://github.com/Willy-Kimura/BetterFolderBrowser
-
 using System;
 using System.Windows.Forms;
-using System.ComponentModel;
 using System.Reflection;
+using System.IO;
+using System.Runtime.InteropServices;
+using System.Diagnostics;
 
 namespace mpvnet
 {
-    public partial class BetterFolderBrowser : CommonDialog
+    public partial class FolderBrowser : CommonDialog
     {
-        IContainer components = null;
         BetterFolderBrowserDialog _dialog = new BetterFolderBrowserDialog();
 
-        public BetterFolderBrowser()
-        {
-            InitializeComponent();
-            SetDefaults();
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-                components.Dispose();
-
-            base.Dispose(disposing);
-        }
-
-        void InitializeComponent() => components = new Container();
-
-        public string Title
-        {
-            get { return _dialog.Title; }
-            set { _dialog.Title = value; }
-        }
-
-        public string RootFolder
-        {
-            get { return _dialog.InitialDirectory; }
-            set { _dialog.InitialDirectory = value; }
-        }
-
-        public bool Multiselect
-        {
-            get { return _dialog.AllowMultiselect; }
-            set { _dialog.AllowMultiselect = value; }
-        }
-
-        public string SelectedPath => _dialog.FileName;
-
-        public string[] SelectedPaths => _dialog.FileNames;
-
-        public string SelectedFolder => _dialog.FileName;
-
-        public string[] SelectedFolders => _dialog.FileNames;
-
-        void SetDefaults()
-        {
-            _dialog.AllowMultiselect = false;
-            _dialog.Title = "Please select a folder...";
-            _dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+        public string SelectedPath {
+            get => _dialog.FileName;
+            set => _dialog.FileName = value;
         }
 
         public new DialogResult ShowDialog()
         {
-            DialogResult result;
-
-            if (_dialog.ShowDialog(IntPtr.Zero))
-                result = DialogResult.OK;
-            else
-                result = DialogResult.Cancel;
-
-            return result;
+            return _dialog.ShowDialog(GetOwnerHandle()) ? DialogResult.OK : DialogResult.Cancel;
         }
 
-        public new DialogResult ShowDialog(IWin32Window owner)
+        public static IntPtr GetOwnerHandle()
         {
-            DialogResult result;
+            IntPtr foregroundWindow = GetForegroundWindow();
+            GetWindowThreadProcessId(foregroundWindow, out var procID);
 
-            if (_dialog.ShowDialog(owner.Handle))
-                result = DialogResult.OK;
-            else
-                result = DialogResult.Cancel;
+            using (var proc = Process.GetCurrentProcess())
+                if (proc.Id == procID)
+                    return foregroundWindow;
 
-            return result;
+            return IntPtr.Zero;
         }
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetForegroundWindow();
+
+        [DllImport("user32.dll")]
+        public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
 
         protected override bool RunDialog(IntPtr hwndOwner) => _dialog.ShowDialog(hwndOwner);
 
-        public override void Reset() => SetDefaults();
+        public override void Reset() { }
 
         class BetterFolderBrowserDialog
         {
@@ -105,26 +59,13 @@ namespace mpvnet
                 ofd.Multiselect = false;
             }
 
-            public bool AllowMultiselect {
-                get { return ofd.Multiselect; }
-                set { ofd.Multiselect = value; }
-            }
-
-            public string[] FileNames => ofd.FileNames;
-
-            public string InitialDirectory {
-                get { return ofd.InitialDirectory; }
+            public string FileName {
+                get => ofd.FileName;
                 set {
-                    ofd.InitialDirectory = (value == null || value.Length == 0) ? Environment.CurrentDirectory : value;
+                    if (Directory.Exists(value))
+                        ofd.InitialDirectory = value;
                 }
             }
-
-            public string Title {
-                get { return ofd.Title; }
-                set { ofd.Title = (value == null) ? "Select a folder" : value; }
-            }
-
-            public string FileName => ofd.FileName;
 
             public bool ShowDialog() => ShowDialog(IntPtr.Zero);
 
@@ -201,7 +142,7 @@ namespace mpvnet
                 string[] names = typeName.Split('.');
 
                 if (names.Length > 0)
-                    type = m_asmb.GetType((m_ns + Convert.ToString(".")) + names[0]);
+                    type = m_asmb.GetType(m_ns + Convert.ToString(".") + names[0]);
 
                 for (int i = 1; i < names.Length; i++)
                     type = type.GetNestedType(names[i], BindingFlags.NonPublic);

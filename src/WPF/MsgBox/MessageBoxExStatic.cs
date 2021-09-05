@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing.Text;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interop;
@@ -101,8 +102,8 @@ namespace MsgBoxEx
 
         public static IntPtr GetOwnerHandle()
         {
-            IntPtr foregroundWindow = Native.GetForegroundWindow();
-            Native.GetWindowThreadProcessId(foregroundWindow, out var procID);
+            IntPtr foregroundWindow = GetForegroundWindow();
+            GetWindowThreadProcessId(foregroundWindow, out var procID);
 
             using (var proc = Process.GetCurrentProcess())
                 if (proc.Id == procID)
@@ -110,6 +111,12 @@ namespace MsgBoxEx
 
             return IntPtr.Zero;
         }
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetForegroundWindow();
+
+        [DllImport("user32.dll")]
+        public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
 
         public static Color ColorFromString(string colorString)
         {
