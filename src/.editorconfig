@@ -17,3 +17,6 @@ dotnet_diagnostic.IDE0011.severity = none
 
 # IDE0010: Add missing cases
 dotnet_diagnostic.IDE0010.severity = none
+
+# IDE0044: Add readonly modifier
+dotnet_diagnostic.IDE0044.severity = silent

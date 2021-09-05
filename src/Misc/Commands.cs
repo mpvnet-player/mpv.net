@@ -74,8 +74,11 @@ namespace mpvnet
 
             foreach (string arg in args)
             {
-                if (arg == "append") append = true;
-                if (arg == "no-folder") loadFolder = false;
+                if (arg == "append")
+                    append = true;
+
+                if (arg == "no-folder")
+                    loadFolder = false;
             }
 
             App.InvokeOnMainThread(new Action(() => {
@@ -88,9 +91,10 @@ namespace mpvnet
         public static void Open_DVD_Or_BD_Folder()
         {
             App.InvokeOnMainThread(new Action(() => {
-                using (var dialog = new FolderBrowser())
-                    if (dialog.ShowDialog() == DialogResult.OK)
-                        Core.LoadDiskFolder(dialog.SelectedPath);
+                var dialog = new FolderBrowser();
+
+                if (dialog.Show())
+                    Core.LoadDiskFolder(dialog.SelectedPath);
             }));
         }
 

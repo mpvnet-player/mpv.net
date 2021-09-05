@@ -1,25 +1,43 @@
 ﻿
 using System;
-using System.Windows.Forms;
-using System.Reflection;
-using System.IO;
-using System.Runtime.InteropServices;
 using System.Diagnostics;
+using System.IO;
+using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
 namespace mpvnet
 {
-    public partial class FolderBrowser : CommonDialog
+    public class FolderBrowser
     {
-        BetterFolderBrowserDialog _dialog = new BetterFolderBrowserDialog();
+        public string SelectedPath { get; set; }
 
-        public string SelectedPath {
-            get => _dialog.FileName;
-            set => _dialog.FileName = value;
+        string _initialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+
+        public string InitialDirectory {
+            get => _initialDirectory;
+            set {
+                if (Directory.Exists(value))
+                    _initialDirectory = value;
+            }
         }
 
-        public new DialogResult ShowDialog()
+        public bool Show() => Show(GetOwnerHandle());
+
+        public bool Show(IntPtr hWndOwner)
         {
-            return _dialog.ShowDialog(GetOwnerHandle()) ? DialogResult.OK : DialogResult.Cancel;
+            ShowDialogResult result = VistaDialog.Show(hWndOwner, InitialDirectory);
+
+            if (result.Result)
+                SelectedPath = result.FileName;
+
+            return result.Result;
+        }
+
+        struct ShowDialogResult
+        {
+            public bool Result { get; set; }
+            public string FileName { get; set; }
         }
 
         public static IntPtr GetOwnerHandle()
@@ -40,168 +58,67 @@ namespace mpvnet
         [DllImport("user32.dll")]
         public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
 
-        protected override bool RunDialog(IntPtr hwndOwner) => _dialog.ShowDialog(hwndOwner);
-
-        public override void Reset() { }
-
-        class BetterFolderBrowserDialog
+        static class VistaDialog
         {
-            OpenFileDialog ofd = null;
+            const string foldersFilter = "Folders|\n";
+            const BindingFlags flags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+            static Assembly windowsFormsAssembly = typeof(FileDialog).Assembly;
+            static Type iFileDialogType = windowsFormsAssembly.GetType("System.Windows.Forms.FileDialogNative+IFileDialog");
+            static MethodInfo createVistaDialogMethodInfo = typeof(OpenFileDialog).GetMethod("CreateVistaDialog", flags);
+            static MethodInfo onBeforeVistaDialogMethodInfo = typeof(OpenFileDialog).GetMethod("OnBeforeVistaDialog", flags);
+            static MethodInfo getOptionsMethodInfo = typeof(FileDialog).GetMethod("GetOptions", flags);
+            static MethodInfo setOptionsMethodInfo = iFileDialogType.GetMethod("SetOptions", flags);
+            static uint fosPickFoldersBitFlag = (uint)windowsFormsAssembly
+                .GetType("System.Windows.Forms.FileDialogNative+FOS")
+                .GetField("FOS_PICKFOLDERS")
+                .GetValue(null);
+            static ConstructorInfo vistaDialogEventsConstructorInfo = windowsFormsAssembly
+                .GetType("System.Windows.Forms.FileDialog+VistaDialogEvents")
+                .GetConstructor(flags, null, new[] { typeof(FileDialog) }, null);
+            static MethodInfo adviseMethodInfo = iFileDialogType.GetMethod("Advise");
+            static MethodInfo unAdviseMethodInfo = iFileDialogType.GetMethod("Unadvise");
+            static MethodInfo showMethodInfo = iFileDialogType.GetMethod("Show");
 
-            public BetterFolderBrowserDialog()
+            public static ShowDialogResult Show(IntPtr ownerHandle, string initialDirectory)
             {
-                ofd = new OpenFileDialog();
+                var openFileDialog = new OpenFileDialog
+                {
+                    AddExtension = false,
+                    CheckFileExists = false,
+                    DereferenceLinks = true,
+                    Filter = foldersFilter,
+                    InitialDirectory = initialDirectory,
+                    Multiselect = false,
+                };
 
-                ofd.Filter = "Folders|" + "\n";
-                ofd.AddExtension = false;
-                ofd.CheckFileExists = false;
-                ofd.DereferenceLinks = true;
-                ofd.Multiselect = false;
-            }
-
-            public string FileName {
-                get => ofd.FileName;
-                set {
-                    if (Directory.Exists(value))
-                        ofd.InitialDirectory = value;
-                }
-            }
-
-            public bool ShowDialog() => ShowDialog(IntPtr.Zero);
-
-            public bool ShowDialog(IntPtr hWndOwner)
-            {
-                bool flag = false;
-
-                var r = new Reflector("System.Windows.Forms");
-
-                uint num = 0;
-                Type typeIFileDialog = r.GetTypo("FileDialogNative.IFileDialog");
-                object dialog = r.Call(ofd, "CreateVistaDialog");
-                r.Call(ofd, "OnBeforeVistaDialog", dialog);
-
-                uint options = Convert.ToUInt32(r.CallAs(typeof(FileDialog), ofd, "GetOptions"));
-                options |= Convert.ToUInt32(r.GetEnum("FileDialogNative.FOS", "FOS_PICKFOLDERS"));
-                r.CallAs(typeIFileDialog, dialog, "SetOptions", options);
-
-                object pfde = r.New("FileDialog.VistaDialogEvents", ofd);
-                object[] parameters = new object[] { pfde, num };
-                r.CallAs2(typeIFileDialog, dialog, "Advise", parameters);
-
-                num = Convert.ToUInt32(parameters[1]);
+                var iFileDialog = createVistaDialogMethodInfo.Invoke(openFileDialog, new object[] { });
+                onBeforeVistaDialogMethodInfo.Invoke(openFileDialog, new[] { iFileDialog });
+                setOptionsMethodInfo.Invoke(iFileDialog, new object[] { (uint)getOptionsMethodInfo.Invoke(openFileDialog, new object[] { }) | fosPickFoldersBitFlag });
+                var adviseParametersWithOutputConnectionToken = new[] { vistaDialogEventsConstructorInfo.Invoke(new object[] { openFileDialog }), 0U };
+                adviseMethodInfo.Invoke(iFileDialog, adviseParametersWithOutputConnectionToken);
 
                 try
                 {
-                    int num2 = Convert.ToInt32(r.CallAs(typeIFileDialog, dialog, "Show", hWndOwner));
-                    flag = 0 == num2;
+                    int retVal = (int)showMethodInfo.Invoke(iFileDialog, new object[] { ownerHandle });
+
+                    return new ShowDialogResult
+                    {
+                        Result = retVal == 0,
+                        FileName = openFileDialog.FileName
+                    };
                 }
                 finally
                 {
-                    r.CallAs(typeIFileDialog, dialog, "Unadvise", num);
-                    GC.KeepAlive(pfde);
+                    unAdviseMethodInfo.Invoke(iFileDialog, new[] { adviseParametersWithOutputConnectionToken[1] });
                 }
-
-                return flag;
             }
         }
 
         class WindowWrapper : IWin32Window
         {
-            IntPtr _hwnd;
-
-            public IntPtr Handle => _hwnd;
-
-            public WindowWrapper(IntPtr handle) => _hwnd = handle;
-        }
-
-        class Reflector
-        {
-            string m_ns;
-            Assembly m_asmb;
-
-            public Reflector(string ns) : this(ns, ns) { }
-
-            public Reflector(string an__1, string ns)
-            {
-                m_ns = ns;
-                m_asmb = null;
-
-                foreach (AssemblyName aN__2 in Assembly.GetExecutingAssembly().GetReferencedAssemblies())
-                {
-                    if (aN__2.FullName.StartsWith(an__1))
-                    {
-                        m_asmb = Assembly.Load(aN__2);
-                        break;
-                    }
-                }
-            }
-
-            public Type GetTypo(string typeName)
-            {
-                Type type = null;
-                string[] names = typeName.Split('.');
-
-                if (names.Length > 0)
-                    type = m_asmb.GetType(m_ns + Convert.ToString(".") + names[0]);
-
-                for (int i = 1; i < names.Length; i++)
-                    type = type.GetNestedType(names[i], BindingFlags.NonPublic);
-
-                return type;
-            }
-
-            public object New(string name, params object[] parameters)
-            {
-                Type type = GetTypo(name);
-                ConstructorInfo[] ctorInfos = type.GetConstructors();
-
-                foreach (ConstructorInfo ci in ctorInfos)
-                {
-                    try {
-                        return ci.Invoke(parameters);
-                    } catch { }
-                }
-
-                return null;
-            }
-
-            public object Call(object obj, string func, params object[] parameters)
-            {
-                return Call2(obj, func, parameters);
-            }
-
-            public object Call2(object obj, string func, object[] parameters)
-            {
-                return CallAs2(obj.GetType(), obj, func, parameters);
-            }
-
-            public object CallAs(Type type, object obj, string func, params object[] parameters)
-            {
-                return CallAs2(type, obj, func, parameters);
-            }
-
-            public object CallAs2(Type type, object obj, string func, object[] parameters)
-            {
-                MethodInfo methInfo = type.GetMethod(
-                    func, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-                return methInfo.Invoke(obj, parameters);
-            }
-
-            public object Get(object obj, string prop) => GetAs(obj.GetType(), obj, prop);
-
-            public object GetAs(Type type, object obj, string prop)
-            {
-                PropertyInfo propInfo = type.GetProperty(
-                    prop, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-                return propInfo.GetValue(obj, null);
-            }
-
-            public object GetEnum(string typeName, string name)
-            {
-                Type type = GetTypo(typeName);
-                FieldInfo fieldInfo = type.GetField(name);
-                return fieldInfo.GetValue(null);
-            }
+            IntPtr _handle;
+            public WindowWrapper(IntPtr handle) { _handle = handle; }
+            public IntPtr Handle => _handle;
         }
     }
 }

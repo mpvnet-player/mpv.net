@@ -62,13 +62,11 @@ namespace DynamicGUI
             switch (StringSetting.Type)
             {
                 case "folder":
-                    using (FolderBrowser fb = new FolderBrowser())
-                    {
-                        fb.SelectedPath = ValueTextBox.Text;
+                    FolderBrowser fb = new FolderBrowser();
+                    fb.InitialDirectory = ValueTextBox.Text;
 
-                        if (fb.ShowDialog() == WinForms.DialogResult.OK)
-                            ValueTextBox.Text = fb.SelectedPath;
-                    }
+                    if (fb.Show())
+                        ValueTextBox.Text = fb.SelectedPath;
                     break;
                 case "color":
                     using (var dialog = new WinForms.ColorDialog())
