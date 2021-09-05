@@ -227,12 +227,6 @@ namespace mpvnet
                     if (!File.Exists(_ConfigFolder + "mpv.conf"))
                     {
                         string conf = Properties.Resources.mpv_conf;
-                        float scale = Native.GetDPI(IntPtr.Zero) / 96.0f;
-
-                        if (scale != 1)
-                            conf = conf.Replace("console-scale=1", "console-scale=" +
-                                scale.ToString(CultureInfo.InvariantCulture));
-
                         File.WriteAllText(_ConfigFolder + "mpv.conf", conf);
                     }
                 }
