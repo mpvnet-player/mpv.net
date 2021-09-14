@@ -21,11 +21,12 @@ namespace mpvnet
 {
     public partial class MainForm : Form
     {
-        public AutoResetEvent MenuAutoResetEvent { get; } = new AutoResetEvent(false);
         public ElementHost CommandPaletteHost { get; set; }
         public static MainForm Instance { get; set; }
         public static IntPtr Hwnd { get; set; }
-        public new WpfControls.ContextMenu ContextMenu { get; set; }
+   
+        new WpfControls.ContextMenu ContextMenu { get; set; }
+        AutoResetEvent MenuAutoResetEvent { get; } = new AutoResetEvent(false);
         Point LastCursorPosition;
         Taskbar Taskbar;
 
@@ -460,8 +461,10 @@ namespace mpvnet
 
         void SetSize(int width, int height, Screen screen, bool checkAutofit = true)
         {
-            int maxHeight = screen.WorkingArea.Height - (Height - ClientSize.Height) - FontHeight / 2;
-            int maxWidth = screen.WorkingArea.Width - (Width - ClientSize.Width) - FontHeight / 2;
+            Rectangle workingArea = GetWorkingArea(screen);
+
+            int maxHeight = workingArea.Height - (Height - ClientSize.Height);
+            int maxWidth = workingArea.Width - (Width - ClientSize.Width);
 
             int startWidth = width;
             int startHeight = height;
@@ -505,7 +508,7 @@ namespace mpvnet
 
             int left = middlePos.X - rect.Width / 2;
             int top = middlePos.Y - rect.Height / 2;
-            Rectangle workingArea = screen.WorkingArea;
+
             Rectangle currentRect = new Rectangle(Left, Top, Width, Height);
 
             if (GetHorizontalLocation(screen) == -1) left = Left;
@@ -515,10 +518,11 @@ namespace mpvnet
             if (GetVerticalLocation(screen) ==  1) top = currentRect.Bottom - rect.Height;
 
             Screen[] screens = Screen.AllScreens;
-            int minLeft = screens.Select(val => val.WorkingArea.X).Min();
-            int maxRight = screens.Select(val => val.WorkingArea.Right).Max();
-            int minTop = screens.Select(val => val.WorkingArea.Y).Min();
-            int maxBottom = screens.Select(val => val.WorkingArea.Bottom).Max();
+
+            int minLeft   = screens.Select(val => GetWorkingArea(val).X).Min();
+            int maxRight  = screens.Select(val => GetWorkingArea(val).Right).Max();
+            int minTop    = screens.Select(val => GetWorkingArea(val).Y).Min();
+            int maxBottom = screens.Select(val => GetWorkingArea(val).Bottom).Max();
 
             if (left < minLeft)
                 left = minLeft;
@@ -534,6 +538,47 @@ namespace mpvnet
 
             uint SWP_NOACTIVATE = 0x0010;
             SetWindowPos(Handle, IntPtr.Zero, left, top, rect.Width, rect.Height, SWP_NOACTIVATE);
+        }
+
+        public void CycleFullscreen(bool enabled)
+        {
+            LastCycleFullscreen = Environment.TickCount;
+            Core.Fullscreen = enabled;
+
+            if (enabled)
+            {
+                if (WindowState != FormWindowState.Maximized || FormBorderStyle != FormBorderStyle.None)
+                {
+                    FormBorderStyle = FormBorderStyle.None;
+                    WindowState = FormWindowState.Maximized;
+
+                    if (WasMaximized)
+                    {
+                        Rectangle bounds = Screen.FromControl(this).Bounds;
+                        uint SWP_SHOWWINDOW = 0x0040;
+                        IntPtr HWND_TOP= IntPtr.Zero;
+                        SetWindowPos(Handle, HWND_TOP, bounds.X, bounds.Y, bounds.Width, bounds.Height, SWP_SHOWWINDOW);
+                    }
+                }
+            }
+            else
+            {
+                if (WindowState == FormWindowState.Maximized && FormBorderStyle == FormBorderStyle.None)
+                {
+                    if (WasMaximized)
+                        WindowState = FormWindowState.Maximized;
+                    else
+                        WindowState = FormWindowState.Normal;
+
+                    if (Core.Border)
+                        FormBorderStyle = FormBorderStyle.Sizable;
+                    else
+                        FormBorderStyle = FormBorderStyle.None;
+
+                    if (Core.KeepaspectWindow)
+                        SetFormPosAndSize();
+                }
+            }
         }
 
         public int GetHorizontalLocation(Screen screen)
@@ -570,44 +615,24 @@ namespace mpvnet
             return 0;
         }
 
-        public void CycleFullscreen(bool enabled)
+        public static Rectangle GetWorkingArea(Screen screen)
         {
-            LastCycleFullscreen = Environment.TickCount;
-            Core.Fullscreen = enabled;
-
-            if (enabled)
+            if (screen.Primary)
             {
-                if (WindowState != FormWindowState.Maximized || FormBorderStyle != FormBorderStyle.None)
-                {
-                    FormBorderStyle = FormBorderStyle.None;
-                    WindowState = FormWindowState.Maximized;
+                Size maximizedSize = SystemInformation.PrimaryMonitorMaximizedWindowSize;
+                Size size = screen.WorkingArea.Size;
+                Rectangle rect = screen.WorkingArea;
 
-                    if (WasMaximized)
-                    {
-                        Rectangle b = Screen.FromControl(this).Bounds;
-                        uint SWP_SHOWWINDOW = 0x0040;
-                        IntPtr HWND_TOP= IntPtr.Zero;
-                        SetWindowPos(Handle, HWND_TOP, b.X, b.Y, b.Width, b.Height, SWP_SHOWWINDOW);
-                    }
-                }
+                if (maximizedSize.Width > size.Width)
+                    rect.Width = maximizedSize.Width;
+
+                if (maximizedSize.Height > size.Height)
+                    rect.Height = maximizedSize.Height;
+
+                return rect;
             }
             else
-            {
-                if (WindowState == FormWindowState.Maximized && FormBorderStyle == FormBorderStyle.None)
-                {
-                    if (WasMaximized)
-                        WindowState = FormWindowState.Maximized;
-                    else
-                        WindowState = FormWindowState.Normal;
-
-                    if (Core.Border)
-                        FormBorderStyle = FormBorderStyle.Sizable;
-                    else
-                        FormBorderStyle = FormBorderStyle.None;                      
-
-                    SetFormPosAndSize();
-                }
-            }
+                return screen.WorkingArea;
         }
 
         public void BuildMenu()
