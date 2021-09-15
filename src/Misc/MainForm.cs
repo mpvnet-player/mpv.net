@@ -135,8 +135,19 @@ namespace mpvnet
 
         void Core_ScaleWindow(float scale) {
             BeginInvoke(new Action(() => {
-                int w = (int)(ClientSize.Width * scale);
-                int h = (int)Math.Ceiling(w * Core.VideoSize.Height / (double)Core.VideoSize.Width);
+                int w, h;
+
+                if (Core.KeepaspectWindow || App.StartSize != "always")
+                {
+                    w = (int)(ClientSize.Width * scale);
+                    h = (int)Math.Ceiling(w * Core.VideoSize.Height / (double)Core.VideoSize.Width);
+                }
+                else
+                {
+                    w = (int)(ClientSize.Width * scale);
+                    h = (int)(ClientSize.Height * scale);
+                }
+
                 SetSize(w, h, Screen.FromControl(this), false);
             }));
         }
@@ -158,7 +169,11 @@ namespace mpvnet
 
         void CM_Popup(object sender, EventArgs e) => CursorHelp.Show();
 
-        void Core_VideoSizeChanged() => BeginInvoke(new Action(() => SetFormPosAndSize()));
+        void Core_VideoSizeChanged() => BeginInvoke(new Action(() =>
+        {
+            if (Core.KeepaspectWindow || App.StartSize != "always")
+                SetFormPosAndSize();
+        }));
 
         void PropChangeFullscreen(bool value) => BeginInvoke(new Action(() => CycleFullscreen(value)));
 
@@ -575,7 +590,7 @@ namespace mpvnet
                     else
                         FormBorderStyle = FormBorderStyle.None;
 
-                    if (Core.KeepaspectWindow)
+                    if (Core.KeepaspectWindow || App.StartSize != "always")
                         SetFormPosAndSize();
                 }
             }
