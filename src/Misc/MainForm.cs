@@ -137,15 +137,15 @@ namespace mpvnet
             BeginInvoke(new Action(() => {
                 int w, h;
 
-                if (Core.KeepaspectWindow || App.StartSize != "always")
+                if (KeepSize())
                 {
                     w = (int)(ClientSize.Width * scale);
-                    h = (int)Math.Ceiling(w * Core.VideoSize.Height / (double)Core.VideoSize.Width);
+                    h = (int)(ClientSize.Height * scale);
                 }
                 else
                 {
                     w = (int)(ClientSize.Width * scale);
-                    h = (int)(ClientSize.Height * scale);
+                    h = (int)Math.Ceiling(w * Core.VideoSize.Height / (double)Core.VideoSize.Width);
                 }
 
                 SetSize(w, h, Screen.FromControl(this), false);
@@ -171,7 +171,7 @@ namespace mpvnet
 
         void Core_VideoSizeChanged() => BeginInvoke(new Action(() =>
         {
-            if (Core.KeepaspectWindow || App.StartSize != "always")
+            if (!KeepSize())
                 SetFormPosAndSize();
         }));
 
@@ -180,6 +180,8 @@ namespace mpvnet
         bool IsFullscreen => WindowState == FormWindowState.Maximized && FormBorderStyle == FormBorderStyle.None;
 
         bool IsCommandPaletteVissible() => CommandPaletteHost != null && CommandPaletteHost.Visible;
+
+        bool KeepSize() => !Core.KeepaspectWindow || App.StartSize == "always";
 
         bool IsMouseInOSC()
         {
@@ -422,7 +424,7 @@ namespace mpvnet
 
             if (Core.WasInitialSizeSet)
             {
-                if (App.StartSize == "always" || !Core.KeepaspectWindow)
+                if (KeepSize())
                 {
                     width = ClientSize.Width;
                     height = ClientSize.Height;
@@ -590,7 +592,7 @@ namespace mpvnet
                     else
                         FormBorderStyle = FormBorderStyle.None;
 
-                    if (Core.KeepaspectWindow || App.StartSize != "always")
+                    if (!KeepSize())
                         SetFormPosAndSize();
                 }
             }

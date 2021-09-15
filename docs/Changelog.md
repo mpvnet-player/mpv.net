@@ -1,12 +1,7 @@
 
-5.5.0.2 Beta (2021-??-??)
+5.5.0.3 Beta (202?-??-??)
 
-5.5.0.1 Beta (2021-09-15)
-
-- Fix of keepaspect-window=no.
-
-
-5.4.9.9 Beta (2021-09-14)
+5.5.0.2 Beta (2021-09-15)
 
 - Fix of keepaspect-window=no.
 
