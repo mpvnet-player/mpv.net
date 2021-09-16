@@ -1134,7 +1134,7 @@ namespace mpvnet
                     {
                         CommandV("loadfile", file);
 
-                        if (Paused)
+                        if (App.AutoPlay && Paused)
                             SetPropertyBool("pause", false);
                     }
                     else

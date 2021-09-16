@@ -388,7 +388,7 @@ namespace mpvnet
                     Action = () => {
                         Core.SetPropertyInt("playlist-pos", index);
 
-                        if (Core.Paused)
+                        if (App.AutoPlay && Core.Paused)
                             Core.SetPropertyBool("pause", false);
                     }
                 };

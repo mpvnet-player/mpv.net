@@ -1,6 +1,10 @@
 
 5.5.0.3 Beta (202?-??-??)
 
+- New mpv.net option auto-play which sets pause=no on file load and
+  selecting from the playlist. Disabled by default.
+
+
 5.5.0.2 Beta (2021-09-15)
 
 - Fix of keepaspect-window=no.

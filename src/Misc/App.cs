@@ -21,12 +21,13 @@ namespace mpvnet
         public static string LightTheme { get; set; } = "light";
         public static string StartSize { get; set; } = "height-session";
 
-        public static bool RememberWindowPosition { get; set; }
+        public static bool AutoLoadFolder { get; set; } = true;
+        public static bool AutoPlay { get; set; }
         public static bool DebugMode { get; set; }
         public static bool IsTerminalAttached { get; } = Environment.GetEnvironmentVariable("_started_from_console") == "yes";
-        public static bool RememberVolume { get; set; } = true;
-        public static bool AutoLoadFolder { get; set; } = true;
         public static bool Queue { get; set; }
+        public static bool RememberVolume { get; set; } = true;
+        public static bool RememberWindowPosition { get; set; }
         public static bool UpdateCheck { get; set; }
 
         public static int StartThreshold { get; set; } = 1500;
@@ -213,23 +214,24 @@ namespace mpvnet
         {
             switch (name)
             {
-                case "remember-window-position": RememberWindowPosition = value == "yes"; return true;
-                case "debug-mode": DebugMode = value == "yes"; return true;
-                case "remember-volume": RememberVolume = value == "yes"; return true;
-                case "queue": Queue = value == "yes"; return true;
-                case "auto-load-folder": AutoLoadFolder = value == "yes"; return true;
-                case "update-check": UpdateCheck = value == "yes"; return true;
-                case "start-size": StartSize = value; return true;
-                case "process-instance": ProcessInstance = value; return true;
-                case "dark-mode": DarkMode = value; return true;
-                case "start-threshold": StartThreshold = value.ToInt(); return true;
-                case "recent-count": RecentCount = value.ToInt(); return true;
-                case "minimum-aspect-ratio": MinimumAspectRatio = value.ToFloat(); return true;
-                case "dark-theme": DarkTheme = value.Trim('\'', '"'); return true;
-                case "light-theme": LightTheme = value.Trim('\'', '"'); return true;
-                case "video-file-extensions": CorePlayer.VideoTypes = value.Split(" ,;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries); return true;
                 case "audio-file-extensions": CorePlayer.AudioTypes = value.Split(" ,;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries); return true;
+                case "auto-load-folder": AutoLoadFolder = value == "yes"; return true;
+                case "auto-play": AutoPlay = value == "yes"; return true;
+                case "dark-mode": DarkMode = value; return true;
+                case "dark-theme": DarkTheme = value.Trim('\'', '"'); return true;
+                case "debug-mode": DebugMode = value == "yes"; return true;
                 case "image-file-extensions": CorePlayer.ImageTypes = value.Split(" ,;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries); return true;
+                case "light-theme": LightTheme = value.Trim('\'', '"'); return true;
+                case "minimum-aspect-ratio": MinimumAspectRatio = value.ToFloat(); return true;
+                case "process-instance": ProcessInstance = value; return true;
+                case "queue": Queue = value == "yes"; return true;
+                case "recent-count": RecentCount = value.ToInt(); return true;
+                case "remember-volume": RememberVolume = value == "yes"; return true;
+                case "remember-window-position": RememberWindowPosition = value == "yes"; return true;
+                case "start-size": StartSize = value; return true;
+                case "start-threshold": StartThreshold = value.ToInt(); return true;
+                case "update-check": UpdateCheck = value == "yes"; return true;
+                case "video-file-extensions": CorePlayer.VideoTypes = value.Split(" ,;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries); return true;
                 default:
                     if (writeError)
                         Terminal.WriteError($"unknown mpvnet.conf property: {name}");

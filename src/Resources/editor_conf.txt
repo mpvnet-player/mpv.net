@@ -517,6 +517,16 @@ option = no      If the current file ends, go to the next file.
 option = always  Playback will never automatically advance to the next file.
 
 [setting]
+name = auto-play
+file = mpvnet
+default = no
+filter = Playback
+help = Sets pause=no on file load and selecting from the playlist. (mpv.net specific setting)
+
+option = yes
+option = no
+
+[setting]
 name = loop-file
 file = mpv
 filter = Playback
