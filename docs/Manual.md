@@ -133,7 +133,7 @@ mpv.net generates it with the following defaults:
 
 [mpv.conf defaults](../../../tree/master/src/Resources/mpv.conf.txt)
 
-mpv.net specific settings are stored in the file mpvnet.conf,
+mpv.net specific options are stored in the file mpvnet.conf,
 these options are documented [here](#mpvnet-specific-options).
 
 

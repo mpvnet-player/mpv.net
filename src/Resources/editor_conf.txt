@@ -195,7 +195,7 @@ name = remember-volume
 file = mpvnet
 default = yes
 filter = Audio
-help = Save volume and mute on exit and restore it on start. (mpv.net specific setting)
+help = Save volume and mute on exit and restore it on start. (mpv.net specific option)
 
 option = yes
 option = no
@@ -360,7 +360,7 @@ name = start-size
 file = mpvnet
 default = height-session
 filter = Screen
-help = Setting to remember the window size. (mpv.net specific setting)
+help = Setting to remember the window size. (mpv.net specific option)
 
 option = video           Window size is set to video resolution
 option = width-session   Width is remembered in the current session
@@ -383,20 +383,20 @@ option = no
 name = start-threshold
 file = mpvnet
 filter = Screen
-help = Threshold in milliseconds to wait for libmpv returning the video resolution before the window is shown, otherwise default dimensions are used as defined by autofit and start-size. Default: 1500 (mpv.net specific setting)
+help = Threshold in milliseconds to wait for libmpv returning the video resolution before the window is shown, otherwise default dimensions are used as defined by autofit and start-size. Default: 1500 (mpv.net specific option)
 
 [setting]
 name = minimum-aspect-ratio
 file = mpvnet
 filter = Screen
-help = <float> Minimum aspect ratio, if the AR is smaller than the defined value then the window AR is set to 16/9. This avoids a square window for Music with cover art. Default: 1.2 (mpv.net specific setting)
+help = <float> Minimum aspect ratio, if the AR is smaller than the defined value then the window AR is set to 16/9. This avoids a square window for Music with cover art. Default: 1.2 (mpv.net specific option)
 
 [setting]
 name = remember-window-position
 file = mpvnet
 default = no
 filter = Screen
-help = Save the window position on exit. (mpv.net specific setting)
+help = Save the window position on exit. (mpv.net specific option)
 
 option = yes
 option = no
@@ -521,7 +521,7 @@ name = auto-play
 file = mpvnet
 default = no
 filter = Playback
-help = Sets pause=no on file load and selecting from the playlist. (mpv.net specific setting)
+help = Sets pause=no on file load and selecting from the playlist. (mpv.net specific option)
 
 option = yes
 option = no
@@ -582,7 +582,7 @@ name = auto-load-folder
 file = mpvnet
 default = yes
 filter = Playback
-help = For single files automatically load the entire directory into the playlist. Can be suppressed via shift key. (mpv.net specific setting)
+help = For single files automatically load the entire directory into the playlist. Can be suppressed via shift key. (mpv.net specific option)
 
 option = yes
 option = no
@@ -604,7 +604,7 @@ name = update-check
 file = mpvnet
 default = no
 filter = General
-help = Daily check for new version. (requires PowerShell 5 and curl. mpv.net specific setting)
+help = Daily check for new version. (mpv.net specific option)
 
 option = yes
 option = no
@@ -614,7 +614,7 @@ name = process-instance
 file = mpvnet
 default = single
 filter = General
-help = Defines if more then one mpv.net process is allowed. (mpv.net specific setting)\n\nTip: Whenever the control key is pressed when files or URLs are opened, the playlist is not cleared but the files or URLs are appended to the playlist. This not only works on process startup but in all mpv.net features that open files and URLs.
+help = Defines if more then one mpv.net process is allowed. (mpv.net specific option)\n\nTip: Whenever the control key is pressed when files or URLs are opened, the playlist is not cleared but the files or URLs are appended to the playlist. This not only works on process startup but in all mpv.net features that open files and URLs.
 
 option = multi   Create a new process everytime the shell starts mpv.net
 option = single  Force a single process everytime the shell starts mpv.net
@@ -624,35 +624,35 @@ option = queue   Force a single process and add files to playlist
 name = recent-count
 file = mpvnet
 filter = General
-help = <int> Amount of recent files to be remembered. Default: 15 (mpv.net specific setting)
+help = <int> Amount of recent files to be remembered. Default: 15 (mpv.net specific option)
 
 [setting]
 name = video-file-extensions
 file = mpvnet
 filter = General
 width = 500
-help = Video file extensions used to create file associations and used by the auto-load-folder feature. (mpv.net specific setting)
+help = Video file extensions used to create file associations and used by the auto-load-folder feature. (mpv.net specific option)
 
 [setting]
 name = audio-file-extensions
 file = mpvnet
 filter = General
 width = 500
-help = Audio file extensions used to create file associations and used by the auto-load-folder feature. (mpv.net specific setting)
+help = Audio file extensions used to create file associations and used by the auto-load-folder feature. (mpv.net specific option)
 
 [setting]
 name = image-file-extensions
 file = mpvnet
 filter = General
 width = 500
-help = Image file extensions used to create file associations and used by the auto-load-folder feature. (mpv.net specific setting)
+help = Image file extensions used to create file associations and used by the auto-load-folder feature. (mpv.net specific option)
 
 [setting]
 name = debug-mode
 file = mpvnet
 default = no
 filter = General
-help = Enable this only when a developer asks for it. (mpv.net specific setting)
+help = Enable this only when a developer asks for it. (mpv.net specific option)
 
 option = yes
 option = no
@@ -662,7 +662,7 @@ name = dark-mode
 file = mpvnet
 default = always
 filter = UI
-help = Changes between a light and dark theme.\nmpv.net must be restarted after a change.\nmpv.net specific setting.
+help = Changes between a light and dark theme.\nmpv.net must be restarted after a change.\nmpv.net specific option.
 
 option = always
 option = system  Available on Windows 10 or higher
@@ -673,11 +673,11 @@ name = dark-theme
 file = mpvnet
 filter = UI
 url = https://github.com/stax76/mpv.net/blob/master/docs/Manual.md#color-theme
-help = Color theme used in dark mode.\nmpv.net must be restarted after a change.\nmpv.net specific setting. Default: dark
+help = Color theme used in dark mode.\nmpv.net must be restarted after a change.\nmpv.net specific option. Default: dark
 
 [setting]
 name = light-theme
 file = mpvnet
 filter = UI
 url = https://github.com/stax76/mpv.net/blob/master/docs/Manual.md#color-theme
-help = Color theme used in light mode.\nmpv.net must be restarted after a change.\nmpv.net specific setting. Default: light
+help = Color theme used in light mode.\nmpv.net must be restarted after a change.\nmpv.net specific option. Default: light
