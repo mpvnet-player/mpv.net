@@ -1,8 +1,12 @@
 
-5.5.0.3 Beta (202?-??-??)
+5.5.0.4 Beta (202?-??-??)
+
+5.5.0.3 Beta (2021-09-23)
 
 - New mpv.net option auto-play which sets pause=no on file load and
   selecting from the playlist. Disabled by default.
+- New option start-size=session to freeze the window size per session.
+- Changed keepaspect-window behavior.
 
 
 5.5.0.2 Beta (2021-09-15)

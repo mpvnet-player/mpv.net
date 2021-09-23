@@ -181,7 +181,7 @@ namespace mpvnet
 
         bool IsCommandPaletteVissible() => CommandPaletteHost != null && CommandPaletteHost.Visible;
 
-        bool KeepSize() => !Core.KeepaspectWindow || App.StartSize == "always";
+        bool KeepSize() => App.StartSize == "session" || App.StartSize == "always";
 
         bool IsMouseInOSC()
         {
@@ -464,7 +464,7 @@ namespace mpvnet
                     width = autoFitHeight / 9 * 16;
                     height = (int)Math.Ceiling(width * videoSize.Height / (double)videoSize.Width);
                 }
-                else if (App.StartSize == "always" && windowSize.Height != 0)
+                else if (KeepSize() && windowSize.Height != 0)
                 {
                     height = windowSize.Height;
                     width = windowSize.Width;
@@ -478,10 +478,8 @@ namespace mpvnet
 
         void SetSize(int width, int height, Screen screen, bool checkAutofit = true)
         {
-            Rectangle workingArea = GetWorkingArea(screen);
-
-            int maxHeight = workingArea.Height - (Height - ClientSize.Height);
-            int maxWidth = workingArea.Width - (Width - ClientSize.Width);
+            int maxHeight = screen.WorkingArea.Height - (Height - ClientSize.Height) - 2;
+            int maxWidth = screen.WorkingArea.Width - (Width - ClientSize.Width);
 
             int startWidth = width;
             int startHeight = height;
@@ -536,10 +534,10 @@ namespace mpvnet
 
             Screen[] screens = Screen.AllScreens;
 
-            int minLeft   = screens.Select(val => GetWorkingArea(val).X).Min();
-            int maxRight  = screens.Select(val => GetWorkingArea(val).Right).Max();
-            int minTop    = screens.Select(val => GetWorkingArea(val).Y).Min();
-            int maxBottom = screens.Select(val => GetWorkingArea(val).Bottom).Max();
+            int minLeft   = screens.Select(val => val.WorkingArea.X).Min();
+            int maxRight  = screens.Select(val => val.WorkingArea.Right).Max();
+            int minTop    = screens.Select(val => val.WorkingArea.Y).Min();
+            int maxBottom = screens.Select(val => val.WorkingArea.Bottom).Max();
 
             if (left < minLeft)
                 left = minLeft;
@@ -630,26 +628,6 @@ namespace mpvnet
                 return 1;
 
             return 0;
-        }
-
-        public static Rectangle GetWorkingArea(Screen screen)
-        {
-            if (screen.Primary)
-            {
-                Size maximizedSize = SystemInformation.PrimaryMonitorMaximizedWindowSize;
-                Size size = screen.WorkingArea.Size;
-                Rectangle rect = screen.WorkingArea;
-
-                if (maximizedSize.Width > size.Width)
-                    rect.Width = maximizedSize.Width;
-
-                if (maximizedSize.Height > size.Height)
-                    rect.Height = maximizedSize.Height;
-
-                return rect;
-            }
-            else
-                return screen.WorkingArea;
         }
 
         public void BuildMenu()

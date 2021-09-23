@@ -362,12 +362,13 @@ default = height-session
 filter = Screen
 help = Setting to remember the window size. (mpv.net specific option)
 
+option = width-session   Window width is remembered in the current session
+option = width-always    Window width is always remembered
+option = height-session  Window height is remembered in the current session
+option = height-always   Window height is always remembered
 option = video           Window size is set to video resolution
-option = width-session   Width is remembered in the current session
-option = width-always    Width is always remembered
-option = height-session  Height is remembered in the current session
-option = height-always   Height is always remembered
-option = always          Size is always remembered
+option = session         Window size is remembered in the current session
+option = always          Window size is always remembered
 
 [setting]
 name = keepaspect-window

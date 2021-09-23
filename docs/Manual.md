@@ -225,9 +225,6 @@ Save volume and mute on exit and restore it on start. Default: yes
 
 Setting to remember the window size.
 
-**video**  
-Window size is set to video resolution.  
-
 **width-session**  
 Width is remembered in the current session.
 
@@ -240,8 +237,14 @@ Height is remembered in the current session. Default
 **height-always**  
 Height is always remembered.
 
+**video**  
+Window size is set to video resolution.
+
+**session**
+Window size is remembered in the current session.
+
 **always**  
-Size is always remembered.
+Window size is always remembered.
 
 
 #### --start-threshold=\<milliseconds\>
