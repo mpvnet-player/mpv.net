@@ -68,7 +68,7 @@ public static class ConvertStringExtension
 
 public static class PathStringExtension
 {
-    // return extension with lower case and without dot.
+    // returns the extension with lower case and without preceding dot.
     public static string Ext(this string instance)
     {
         if (instance == null)

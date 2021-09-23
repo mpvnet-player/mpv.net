@@ -1000,10 +1000,7 @@ namespace mpvnet
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-
-            if (Core.GPUAPI != "vulkan")
-                Core.VideoSizeAutoResetEvent.WaitOne(App.StartThreshold);
-
+            Core.VideoSizeAutoResetEvent.WaitOne(App.StartThreshold);
             LastCycleFullscreen = Environment.TickCount;
             SetFormPosAndSize();
         }

@@ -94,7 +94,7 @@ namespace mpvnet
         public string ConfPath { get => ConfigFolder + "mpv.conf"; }
         public string GPUAPI { get; set; } = "auto";
         public string InputConfPath { get => ConfigFolder + "input.conf"; }
-        
+
         public string VID { get; set; } = "";
         public string AID { get; set; } = "";
         public string SID { get; set; } = "";
@@ -324,16 +324,17 @@ namespace mpvnet
         {
             Size size = new Size(GetPropertyInt(w), GetPropertyInt(h));
 
+            if (size.Width == 0 || size.Height == 0)
+                return;
+
             if (VideoRotate == 90 || VideoRotate == 270)
                 size = new Size(size.Height, size.Width);
-
-            if (size.Width == 0 || size.Height == 0)
-                size = new Size(16, 9);
 
             if (VideoSize != size)
             {
                 VideoSize = size;
                 InvokeEvent(VideoSizeChanged, VideoSizeChangedAsync);
+                VideoSizeAutoResetEvent.Set();
             }
         }
 
@@ -425,15 +426,17 @@ namespace mpvnet
                                 if (App.StartSize == "video")
                                     WasInitialSizeSet = false;
 
-                                UpdateVideoSize("width", "height");
+                                string path = GetPropertyString("path");
 
-                                VideoSizeAutoResetEvent.Set();
+                                if (!VideoTypes.Contains(path.Ext()) || AudioTypes.Contains(path.Ext()))
+                                {
+                                    UpdateVideoSize("width", "height");
+                                    VideoSizeAutoResetEvent.Set();
+                                }
 
                                 App.RunTask(new Action(() => ReadMetaData()));
 
                                 App.RunTask(new Action(() => {
-                                    string path = GetPropertyString("path");
-
                                     if (path.Contains("://"))
                                         path = GetPropertyString("media-title");
 

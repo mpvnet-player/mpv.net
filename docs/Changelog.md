@@ -1,6 +1,9 @@
 
 5.5.0.4 Beta (202?-??-??)
 
+- Window size flicker issue fix when changing files.
+
+
 5.5.0.3 Beta (2021-09-23)
 
 - New mpv.net option auto-play which sets pause=no on file load and
