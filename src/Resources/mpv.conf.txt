@@ -1,5 +1,6 @@
 ﻿
-input-default-bindings = no
+input-default-bindings = yes
+input-builtin-bindings = no
 input-ar-delay = 500
 input-ar-rate = 20
 keep-open = yes

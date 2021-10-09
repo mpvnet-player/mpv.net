@@ -2,6 +2,8 @@
 5.5.0.4 Beta (202?-??-??)
 
 - Window size flicker issue fix when changing files.
+- Support input-builtin-bindings to make mp.add_key_binding behave same as in mpv.
+- libmpv avih 2021-10-08
 
 
 5.5.0.3 Beta (2021-09-23)

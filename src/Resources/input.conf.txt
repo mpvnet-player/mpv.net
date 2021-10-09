@@ -3,8 +3,8 @@
 
 # A input and config editor can be found in the context menu under 'Settings'.
 
-# The mpv.conf defaults of mpv.net contain: 'input-default-bindings = no'
-# which disables the input defaults of mpv.
+# The mpv.conf defaults of mpv.net contain input-default-bindings=yes and
+# input-builtin-bindings=no which disables the input defaults of mpv.
 
 # The input test mode can be started via command line: --input-test
 
