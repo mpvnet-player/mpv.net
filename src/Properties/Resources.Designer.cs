@@ -19,7 +19,7 @@ namespace mpvnet.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -71,8 +71,8 @@ namespace mpvnet.Properties {
         ///help = Specify the hardware video decoding API that should be used if possible. Whether hardware decoding is actually done depends on the video codec. If hardware decoding is not possible, mpv will fall back on software decoding.\n\nFor more information visit:
         ///
         ///option = no            always use software decoding
-        ///option = auto          enable best hw decoder (see below)
-        ///option = yes     [rest of string was truncated]&quot;;.
+        ///option = auto          enable best hw decoder
+        ///option = yes           exact [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string editor_conf {
             get {
@@ -82,46 +82,23 @@ namespace mpvnet.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to 
-        /// # This file defines the key and mouse bindings and the context menu of mpv.net.
-        /// 
-        /// # A input and config editor can be found in the context menu under &apos;Settings&apos;.
-        /// 
-        /// # The mpv.conf defaults of mpv.net contain: &apos;input-default-bindings = no&apos;
-        /// # which disables the input defaults of mpv.
-        /// 
-        /// # Every line in this file begins with a space character to make search easier,
-        /// # if you want to know if &apos;o&apos; has already a binding you can search for &apos; o &apos;.
+        ///# This file defines the key and mouse bindings and also the context menu of mpv.net.
         ///
-        /// # input test mode:
-        /// # mpvnet --input-test
+        ///# A input and config editor can be found in the context menu under &apos;Settings&apos;.
         ///
-        /// # The  [rest of string was truncated]&quot;;.
+        ///# The mpv.conf defaults of mpv.net contain input-default-bindings=yes and
+        ///# input-builtin-bindings=no which disables the input defaults of mpv.
+        ///
+        ///# The input test mode can be started via command line: --input-test
+        ///
+        ///# The input key list can be printed with --input-keylist or
+        ///# shown from the context menu under: View &gt; Show Keys
+        ///
+        ///# m [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string input_conf {
             get {
                 return ResourceManager.GetString("input_conf", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 
-        ///input-default-bindings = no
-        ///input-ar-delay = 500
-        ///input-ar-rate = 20
-        ///keep-open = yes
-        ///keep-open-pause = no
-        ///osd-duration = 2000
-        ///osd-playing-msg = &apos;${filename}&apos;
-        ///script-opts = osc-scalewindowed=1.5,osc-hidetimeout=2000,console-scale=1
-        ///screenshot-directory = &apos;~~desktop/&apos;
-        ///
-        ///[protocol.https]
-        ///osd-playing-msg = &apos;${media-title}&apos;
-        ///.
-        /// </summary>
-        internal static string mpv_conf {
-            get {
-                return ResourceManager.GetString("mpv_conf", resourceCulture);
             }
         }
         
@@ -153,12 +130,11 @@ namespace mpvnet.Properties {
         ///foreground  = #DDDDDD
         ///foreground2 = #AAAAAA
         ///background  = #323232
+        ///highlight   = #404040
         ///
         ///menu-foreground = #DDDDDD
         ///menu-background = #323232
         ///menu-highlight  = #505050
-        ///menu-border     = #FFFFFF
-        ///menu-checked    = #5A5A5A
         ///
         ///
         ///[light]
@@ -167,12 +143,11 @@ namespace mpvnet.Properties {
         ///foreground  = #000000
         ///foreground2 = #4C4C4C
         ///background  = #F7F7F7
+        ///highlight   = #DFDFDF
         ///
         ///menu-foreground = #000000
         ///menu-background = #DFDFDF
         ///menu-highlight  = #BFBFBF
-        ///menu-border     = #6A6A6A
-        ///menu-checked    = #AAAAAA
         ///.
         /// </summary>
         internal static string theme {

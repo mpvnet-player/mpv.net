@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
@@ -137,17 +138,49 @@ namespace mpvnet
                 SetPropertyString("msg-level", "osd/libass=fatal");
             }
 
+            SetPropertyString("watch-later-options", "mute");
+            SetPropertyString("screenshot-directory", "~~desktop/");
+            SetPropertyString("script-opts", "osc-scalewindowed=1.5,osc-hidetimeout=2000,console-scale=1.5");
+            SetPropertyString("osd-playing-msg", "${filename}");
             SetPropertyString("wid", MainForm.Hwnd.ToString());
             SetPropertyString("osc", "yes");
             SetPropertyString("force-window", "yes");
             SetPropertyString("config-dir", ConfigFolder);
             SetPropertyString("config", "yes");
 
+            SetPropertyInt("input-ar-delay", 500);
+            SetPropertyInt("input-ar-rate", 20);
+            SetPropertyInt("osd-duration", 2000);
+
+            SetPropertyBool("keep-open", true);
+            SetPropertyBool("keep-open-pause", false);
+
             ProcessCommandLine(true);
             mpv_error err = mpv_initialize(Handle);
 
             if (err < 0)
                 throw new Exception("mpv_initialize error" + BR2 + GetError(err) + BR);
+
+            if (Debugger.IsAttached)
+            {
+                if (GetPropertyString("property-list").Contains("input-builtin-bindings"))
+                {
+                    SetPropertyBool("input-default-bindings", true);
+                    SetPropertyBool("input-builtin-bindings", false);
+                }
+                else
+                    SetPropertyBool("input-default-bindings", false);
+            }
+            else
+            {
+                SetPropertyBool("input-default-bindings", true);
+
+                try {
+                    SetPropertyBool("input-builtin-bindings", false, true);
+                } catch {
+                    SetPropertyBool("input-default-bindings", false);
+                }
+            }
 
             ObservePropertyInt("video-rotate", value => {
                 VideoRotate = value;
@@ -223,12 +256,6 @@ namespace mpvnet
 
                     if (!File.Exists(_ConfigFolder + "input.conf"))
                         File.WriteAllText(_ConfigFolder + "input.conf", Properties.Resources.input_conf);
-
-                    if (!File.Exists(_ConfigFolder + "mpv.conf"))
-                    {
-                        string conf = Properties.Resources.mpv_conf;
-                        File.WriteAllText(_ConfigFolder + "mpv.conf", conf);
-                    }
                 }
 
                 return _ConfigFolder;

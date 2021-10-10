@@ -3,7 +3,7 @@
 
 - Window size flicker issue fix when changing files.
 - Support input-builtin-bindings to make mp.add_key_binding behave same as in mpv.
-- libmpv avih 2021-10-08
+- libmpv shinchiro 2021-10-10
 
 
 5.5.0.3 Beta (2021-09-23)

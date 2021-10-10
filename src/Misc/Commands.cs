@@ -253,8 +253,10 @@ namespace mpvnet
                 using (var d = new OpenFileDialog())
                 {
                     string path = Core.GetPropertyString("path");
+
                     if (File.Exists(path))
                         d.InitialDirectory = Path.GetDirectoryName(path);
+
                     d.Multiselect = true;
 
                     if (d.ShowDialog() == DialogResult.OK)

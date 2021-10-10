@@ -231,7 +231,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Content Include="mpvnet.ico" />
-    <Content Include="Resources\mpv.conf.txt" />
     <None Include="Resources\mpvnet.ico" />
     <None Include="Resources\mpvnet.png" />
   </ItemGroup>
