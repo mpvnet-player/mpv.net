@@ -148,8 +148,6 @@ namespace mpvnet
             SetPropertyString("config-dir", ConfigFolder);
             SetPropertyString("config", "yes");
 
-            SetPropertyInt("input-ar-delay", 500);
-            SetPropertyInt("input-ar-rate", 20);
             SetPropertyInt("osd-duration", 2000);
 
             SetPropertyBool("keep-open", true);
