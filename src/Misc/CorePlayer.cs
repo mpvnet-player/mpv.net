@@ -153,32 +153,13 @@ namespace mpvnet
             SetPropertyBool("keep-open", true);
             SetPropertyBool("keep-open-pause", false);
 
+            SetInputBindingProperties();
+
             ProcessCommandLine(true);
             mpv_error err = mpv_initialize(Handle);
 
             if (err < 0)
                 throw new Exception("mpv_initialize error" + BR2 + GetError(err) + BR);
-
-            if (Debugger.IsAttached)
-            {
-                if (GetPropertyString("property-list").Contains("input-builtin-bindings"))
-                {
-                    SetPropertyBool("input-default-bindings", true);
-                    SetPropertyBool("input-builtin-bindings", false);
-                }
-                else
-                    SetPropertyBool("input-default-bindings", false);
-            }
-            else
-            {
-                SetPropertyBool("input-default-bindings", true);
-
-                try {
-                    SetPropertyBool("input-builtin-bindings", false, true);
-                } catch {
-                    SetPropertyBool("input-default-bindings", false);
-                }
-            }
 
             ObservePropertyInt("video-rotate", value => {
                 VideoRotate = value;
@@ -187,6 +168,49 @@ namespace mpvnet
 
             Initialized?.Invoke();
             InvokeAsync(InitializedAsync);
+        }
+
+        void SetInputBindingProperties()
+        {          
+            if (Debugger.IsAttached)
+            {
+                if (GetPropertyString("property-list").Contains("input-builtin-bindings"))
+                    throw new Exception();
+                else
+                    SetPropertyBool("input-default-bindings", false);
+            }
+            else
+            {
+                SetPropertyBool("input-default-bindings", true);
+
+                try
+                {
+                    SetPropertyBool("input-builtin-bindings", false, true);
+                }
+                catch
+                {
+                    SetPropertyBool("input-default-bindings", false);
+                }
+            }
+        }
+
+        void ApplyCompatibilityFixex()
+        {
+            if (!App.Settings.InputDefaultBindingsFixApplied)
+            {
+                if (File.Exists(ConfPath))
+                {
+                    string content = File.ReadAllText(ConfPath);
+
+                    if (content.Contains("input-default-bindings = no"))
+                        File.WriteAllText(ConfPath, content.Replace("input-default-bindings = no", ""));
+
+                    if (content.Contains("input-default-bindings=no"))
+                        File.WriteAllText(ConfPath, content.Replace("input-default-bindings=no", ""));
+                }
+
+                App.Settings.InputDefaultBindingsFixApplied = true;
+            }
         }
 
         public void ProcessProperty(string name, string value)
@@ -266,6 +290,8 @@ namespace mpvnet
             get {
                 if (_Conf == null)
                 {
+                    ApplyCompatibilityFixex();
+
                     _Conf = new Dictionary<string, string>();
 
                     if (File.Exists(ConfPath))
@@ -1092,8 +1118,7 @@ namespace mpvnet
                     }
                     catch (Exception e)
                     {
-                        if (!App.IsTerminalAttached)
-                            Msg.ShowException(e);
+                        App.ShowException(e);
                     }
                 }
             }
@@ -1356,15 +1381,9 @@ namespace mpvnet
             return id;
         }
 
-        public void RaiseScaleWindow(float value)
-        {
-            ScaleWindow(value);
-        }
+        public void RaiseScaleWindow(float value) => ScaleWindow(value);
 
-        public void RaiseWindowScale(float value)
-        {
-            WindowScale(value);
-        }
+        public void RaiseWindowScale(float value) => WindowScale(value);
 
         void ReadMetaData()
         {

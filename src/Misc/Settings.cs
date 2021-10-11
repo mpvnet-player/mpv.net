@@ -14,6 +14,7 @@ namespace mpvnet
     [Serializable()]
     public class AppSettings
     {
+        public bool InputDefaultBindingsFixApplied;
         public int LastUpdateCheck;
         public int Volume = 70;
         public List<string> RecentFiles = new List<string>();
@@ -27,9 +28,7 @@ namespace mpvnet
 
     class SettingsManager
     {
-        public static string SettingsFile {
-            get => Core.ConfigFolder + "settings.xml";
-        }
+        public static string SettingsFile => Core.ConfigFolder + "settings.xml";
 
         public static AppSettings Load()
         {

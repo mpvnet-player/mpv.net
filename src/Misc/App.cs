@@ -37,9 +37,7 @@ namespace mpvnet
 
         public static Extension Extension { get; set; }
 
-        public static bool IsDarkMode {
-            get => (DarkMode == "system" && Sys.IsDarkTheme) || DarkMode == "always";
-        }
+        public static bool IsDarkMode => (DarkMode == "system" && Sys.IsDarkTheme) || DarkMode == "always";
 
         static AppSettings _Settings;
 
@@ -143,13 +141,22 @@ namespace mpvnet
             else
             {
                 if (obj is Exception e)
-                    Msg.ShowException(e);
+                    InvokeOnMainThread(() => Msg.ShowException(e));
                 else
-                    Msg.ShowError(obj.ToString());
+                    InvokeOnMainThread(() => Msg.ShowError(obj.ToString()));
             }
         }
 
-        public static void InvokeOnMainThread(Action action) => MainForm.Instance.BeginInvoke(action);
+        public static void InvokeOnMainThread(Action action)
+        {
+            if (action == null)
+                return;
+
+            if (MainForm.Instance == null)
+                action.Invoke();
+            else
+                MainForm.Instance.BeginInvoke(action);
+        }
 
         public static void ShowInfo(string msg)
         {
