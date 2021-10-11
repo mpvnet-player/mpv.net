@@ -194,7 +194,7 @@ namespace mpvnet
             }
         }
 
-        void ApplyCompatibilityFixex()
+        void ApplyCompatibilityFixes()
         {
             if (!App.Settings.InputDefaultBindingsFixApplied)
             {
@@ -290,7 +290,7 @@ namespace mpvnet
             get {
                 if (_Conf == null)
                 {
-                    ApplyCompatibilityFixex();
+                    ApplyCompatibilityFixes();
 
                     _Conf = new Dictionary<string, string>();
 
