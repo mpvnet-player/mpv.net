@@ -240,7 +240,7 @@ Height is always remembered.
 **video**  
 Window size is set to video resolution.
 
-**session**
+**session**  
 Window size is remembered in the current session.
 
 **always**  

@@ -90,9 +90,8 @@ namespace mpvnet
 
         public static bool IsPosDifferent(Point screenPos)
         {
-            return
-                Math.Abs(screenPos.X - Control.MousePosition.X) > 10 ||
-                Math.Abs(screenPos.Y - Control.MousePosition.Y) > 10;
+            return Math.Abs(screenPos.X - Control.MousePosition.X) > 10 ||
+                   Math.Abs(screenPos.Y - Control.MousePosition.Y) > 10;
         }
     }
 
