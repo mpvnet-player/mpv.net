@@ -623,12 +623,6 @@ need an own implementation in mpv.net, so far implemented are:
 --version  
 
 
-### Scripting limitations (Lua and JavaScript)
-
-Script input bindings (mp.add_key_binding) are not direcly supported,
-the bindings must be defined explicitly in input.conf.
-
-
 ### mpv.net specific options
 
 Options that are specific to mpv.net can be found by entering _mpv.net_
