@@ -1,7 +1,6 @@
 ﻿
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
@@ -153,7 +152,13 @@ namespace mpvnet
             SetPropertyBool("keep-open", true);
             SetPropertyBool("keep-open-pause", false);
 
-            SetInputBindingProperties();
+            SetPropertyBool("input-default-bindings", true);
+
+            try {
+                SetPropertyBool("input-builtin-bindings", false, true);
+            } catch {
+                SetPropertyBool("input-default-bindings", false);
+            }
 
             ProcessCommandLine(true);
             mpv_error err = mpv_initialize(Handle);
@@ -168,30 +173,6 @@ namespace mpvnet
 
             Initialized?.Invoke();
             InvokeAsync(InitializedAsync);
-        }
-
-        void SetInputBindingProperties()
-        {          
-            if (Debugger.IsAttached)
-            {
-                if (GetPropertyString("property-list").Contains("input-builtin-bindings"))
-                    throw new Exception();
-                else
-                    SetPropertyBool("input-default-bindings", false);
-            }
-            else
-            {
-                SetPropertyBool("input-default-bindings", true);
-
-                try
-                {
-                    SetPropertyBool("input-builtin-bindings", false, true);
-                }
-                catch
-                {
-                    SetPropertyBool("input-default-bindings", false);
-                }
-            }
         }
 
         void ApplyCompatibilityFixes()
