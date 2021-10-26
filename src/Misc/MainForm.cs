@@ -1028,6 +1028,7 @@ namespace mpvnet
             MessageBoxEx.ButtonBackground  = Theme.Current.GetBrush("highlight");
             ContextMenu = new WpfControls.ContextMenu();
             ContextMenu.Closed += ContextMenu_Closed;
+            ContextMenu.UseLayoutRounding = true;
             BuildMenu();
             System.Windows.Application.Current.ShutdownMode = System.Windows.ShutdownMode.OnExplicitShutdown;
             Cursor.Position = new Point(Cursor.Position.X + 1, Cursor.Position.Y);
