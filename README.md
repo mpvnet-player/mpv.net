@@ -52,7 +52,7 @@ mpv is like VLC not based on DirectShow or Media Foundation.
 Table of contents
 -----------------
 
-- [Features](#features)
+- [Features](#features-that-mpv-and-mpvnet-have-in-common)
 - [Support](#support)
 - [Download](#download)
 - [Manual](#manual)
