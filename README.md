@@ -59,38 +59,43 @@ Table of contents
 - [Screenshots](#screenshots)
 
 
-Features
---------
+Features that mpv and mpv.net have in common
+--------------------------------------------
 
-- High degree of mpv compatibility, almost all mpv features are available
-- Customizable context menu defined in the same file as the key bindings
-- Config dialog
-- Shorcut key editor
-- Global hotkeys
-- Many features like the config editor and shortcut key editor are fully searchable
-- Configuration files that are easy to read and edit
-- Command palette to quickly find commands and keys
-- Modern graphical user interface with customizable color themes
-- Extension API for .NET languages (C#, VB.NET and F#)
-- Scripting API for C#, Lua, JavaScript and PowerShell
+- Lua and JavaScript Scripting
+- Simple config files that are easy to read and edit
 - JSON IPC to control the player with a external programs
 - On Screen Controler (OSC, play control buttons) with modern flat design
 - Command Line Interface
-- Started from a terminal status and debug output is printed on the terminal
+- Started from a terminal status, error and debug output is printed on the terminal
 - DXVA2 video decoding acceleration
 - Video output capable of features loved by videophiles, such as video scaling with popular high quality algorithms, color management, frame timing, interpolation, HDR, and more
-- Browser extensions to start mpv.net from the browser
+- Browser extensions to start mpv(.net) from the browser
 - Fast seek performance
 - Fast startup performance
 - Usable as video player, audio player and image viewer with a wide range of supported formats
 - Built-in decoders, no external codecs have to be installed
-- Setup as x64 installer, portable and Chocolatey
 - Build-in media streaming (requires youtube-dl being installed)
-- File associations can be created by the setup and from the player
 - External audio and subtitle files can be loaded manually or automatically
 - Screenshot feature
+- Watch later feature to save the video position
+
+
+Features exclusiv to mpv.net
+----------------------------
+
+- High degree of mpv compatibility, almost all mpv features are available
+- Modern graphical user interface with customizable color themes
+- Customizable context menu defined in the same file as the key bindings
+- Searchable config editor
+- Searchable input (shorcut keys) editor
+- C# and PowerShell Scripting
+- Global hotkeys
+- Command palette to quickly and easily find commands and keys
+- Extension API for .NET languages (C#, VB.NET and F#)
+- Setup as x64 installer, portable, Chocolatey and WinGet
+- Setup dialog for system integration (file associations etc.)
 - File history feature to log time and filename
-- Watch later feature to save the position
 - Files can be enqueued from File Explorer
 - Update check and update routine
 
