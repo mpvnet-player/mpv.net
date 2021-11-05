@@ -601,11 +601,9 @@ mpv.net has currently implemented the following window properties:
 
 **Partly implemented are:**
 
-[autofit](https://mpv.io/manual/master/#options-autofit)
-
-[autofit-smaller](https://mpv.io/manual/master/#options-autofit-smaller)
-
-[autofit-larger](https://mpv.io/manual/master/#options-autofit-larger)
+- [autofit-larger](https://mpv.io/manual/master/#options-autofit-larger)
+- [autofit-smaller](https://mpv.io/manual/master/#options-autofit-smaller)
+- [autofit](https://mpv.io/manual/master/#options-autofit)
 
 
 mpv.net specific window features are documented in the [screen section](#screen).
