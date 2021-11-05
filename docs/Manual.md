@@ -586,7 +586,7 @@ The documentation of mpvs window features can be found here:
 https://mpv.io/manual/master/#window
 
 
-mpv.net has currently implemented the following window properties:
+**mpv.net has currently implemented the following window properties:**
 
 - [border](https://mpv.io/manual/master/#options-border)
 - [fullscreen](https://mpv.io/manual/master/#options-fullscreen)
