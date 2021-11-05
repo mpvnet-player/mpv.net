@@ -72,6 +72,8 @@ namespace mpvnet
 
                 Core.ObservePropertyInt("edition", PropChangeEdition);
 
+                Core.ObservePropertyDouble("window-scale", WindowScale);
+
                 if (Core.GPUAPI != "vulkan")
                     Core.ProcessCommandLine(false);
 
@@ -160,6 +162,19 @@ namespace mpvnet
                     (int)Math.Ceiling(Core.VideoSize.Height * scale),
                     Screen.FromControl(this), false);
                 Core.Command($"show-text \"window-scale {scale.ToString(CultureInfo.InvariantCulture)}\"");
+            }));
+        }
+
+        void WindowScale(double scale)
+        {
+            if (!WasShown)
+                return;
+
+            BeginInvoke(new Action(() => {
+                SetSize(
+                    (int)(Core.VideoSize.Width * scale),
+                    (int)Math.Ceiling(Core.VideoSize.Height * scale),
+                    Screen.FromControl(this), false);
             }));
         }
 
