@@ -596,6 +596,7 @@ mpv.net has currently implemented the following window properties:
 - [title](https://mpv.io/manual/master/#options-title)
 - [window-maximized](https://mpv.io/manual/master/#options-window-maximized)
 - [window-minimized](https://mpv.io/manual/master/#options-window-minimized)
+- [window-scale](https://mpv.io/manual/master/#options-window-scale)
 
 
 **Partly implemented are:**
@@ -605,6 +606,9 @@ mpv.net has currently implemented the following window properties:
 [autofit-smaller](https://mpv.io/manual/master/#options-autofit-smaller)
 
 [autofit-larger](https://mpv.io/manual/master/#options-autofit-larger)
+
+
+mpv.net specific window features are documented in the [screen section](#screen).
 
 
 ### Command Line Limitations

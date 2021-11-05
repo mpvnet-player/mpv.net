@@ -1,9 +1,15 @@
 
-5.5.0.4 Beta (202?-??-??)
+not yet released
+
+- 
+
+
+5.5.0.4 Beta (2021-11-05)
 
 - Window size flicker issue fix when changing files.
 - Support input-builtin-bindings to make mp.add_key_binding behave same as in mpv.
-- libmpv shinchiro 2021-10-17
+- window-scale property support.
+- libmpv shinchiro 2021-10-31
 
 
 5.5.0.3 Beta (2021-09-23)
