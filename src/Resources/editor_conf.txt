@@ -1,5 +1,17 @@
 
 [setting]
+name = vo
+file = mpv
+default = gpu
+filter = Video
+help = Video output drivers to be used.\n\nFor more information visit:
+url = https://mpv.io/manual/master/#video-output-drivers-vo
+
+option = gpu       General purpose, customizable, GPU-accelerated video output driver. It supports extended scaling methods, dithering, color management, custom shaders, HDR, and more.
+option = gpu-next  Experimental video renderer based on libplacebo. This supports almost the same set of features as --vo=gpu.
+option = direct3d  Video output driver that uses the Direct3D 9 interface
+
+[setting]
 name = hwdec
 file = mpv
 default = no
@@ -20,8 +32,6 @@ option = cuda          requires vo=gpu (Any platform CUDA is available)
 option = cuda-copy     copies video back to system RAM (Any platform CUDA is available)
 option = nvdec         requires vo=gpu (Any platform CUDA is available)
 option = nvdec-copy    copies video back to system RAM (Any platform CUDA is available)
-option = crystalhd     copies video back to system RAM (Any platform supported by hardware)
-option = rkmpp         requires vo=gpu (some RockChip devices only)
 
 [setting]
 name = gpu-api
@@ -31,9 +41,9 @@ filter = Video
 help = Controls which type of graphics APIs will be accepted. Auto uses d3d11, it should only be changed in case of problems, Vulkan is not recommended.
 
 option = auto    Use any available API
-option = opengl  Allow only OpenGL (requires OpenGL 2.1+ or GLES 2.0+)
-option = vulkan  Allow only Vulkan (not recommended). 
 option = d3d11   Allow only gpu-context=d3d11
+option = opengl  Allow only OpenGL (requires OpenGL 2.1+ or GLES 2.0+)
+option = vulkan  Allow only Vulkan
 
 [setting]
 name = gpu-context
@@ -42,22 +52,11 @@ default = auto
 filter = Video
 
 option = auto       auto-select
-option = win        Win32/WGL
-option = winvk      VK_KHR_win32_surface
-option = angle      Direct3D11 through the OpenGL ES translation layer ANGLE. This supports almost everything the win backend does (if the ANGLE build is new enough).
-option = dxinterop  (experimental) Win32, using WGL for rendering and Direct3D 9Ex for presentation. Works on Nvidia and AMD. Newer Intel chips with the latest drivers may also work.
 option = d3d11      Win32, with native Direct3D 11 rendering.
-
-[setting]
-name = vo
-file = mpv
-default = gpu
-filter = Video
-help = Video output drivers to be used.\n\nFor more information visit:
-url = https://mpv.io/manual/master/#video-output-drivers-vo
-
-option = gpu       General purpose, customizable, GPU-accelerated video output driver. It supports extended scaling methods, dithering, color management, custom shaders, HDR, and more.
-option = direct3d  Video output driver that uses the Direct3D interface
+option = angle      Direct3D11 through the OpenGL ES translation layer ANGLE. This supports almost everything the win backend does (if the ANGLE build is new enough).
+option = win        Win32/WGL
+option = dxinterop  (experimental) Win32, using WGL for rendering and Direct3D 9Ex for presentation. Works on Nvidia and AMD. Newer Intel chips with the latest drivers may also work.
+option = winvk      VK_KHR_win32_surface
 
 [setting]
 name = video-sync
@@ -75,6 +74,16 @@ option = display-vdrop
 option = display-adrop
 option = display-desync
 option = desync
+
+[setting]
+name = builtin-scalers
+file = mpv
+default = yes
+filter = Video
+help = Allow using faster built-in replacements for common scalers such as nearest, bilinear or bicubic. These have the disadvantage of not being configurable, unlike normal scaler kernels. (only affects --vo=gpu-next)
+
+option = yes
+option = no
 
 [setting]
 name = scale
@@ -181,6 +190,16 @@ filter = Video
 help = Compute the HDR peak and frame average brightness per-frame instead of relying on tagged metadata. These values are averaged over local regions as well as over several frames to prevent the value from jittering around too much. This option basically gives you dynamic, per-scene tone mapping. Requires compute shaders, which is a fairly recent OpenGL feature, and will probably also perform horribly on some drivers, so enable at your own risk. The special value auto (default) will enable HDR peak computation automatically if compute shaders and SSBOs are supported.
 
 option = auto
+option = yes
+option = no
+
+[setting]
+name = allow-delayed-peak-detect
+file = mpv
+default = yes
+filter = Video
+help = When using --hdr-compute-peak, allow delaying the detected peak by a frame when beneficial for performance. In particular, this is required to avoid an unnecessary FBO indirection when no advanced rendering is required otherwise. Has no effect if there already is an indirect pass, such as when advanced scaling is enabled. (Only affects --vo=gpu-next, note that --vo=gpu always delays the peak.)
+
 option = yes
 option = no
 
