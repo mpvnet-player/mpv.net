@@ -1,7 +1,7 @@
 
 not yet released
 
-- 
+- Various conf editor improvements. (hooke007)
 
 
 5.5.0.4 Beta (2021-11-05)
