@@ -54,7 +54,6 @@ namespace mpvnet
                 case "show-protocols": ShowTextWithEditor("protocol-list", mpvHelp.GetProtocols()); break;
                 case "show-recent": ShowRecent(); break;
                 case "show-text": ShowText(args[0], Convert.ToInt32(args[1]), Convert.ToInt32(args[2])); break;
-                case "update-check": UpdateCheck.CheckOnline(true); break;
                 case "window-scale": WindowScale(float.Parse(args[0], CultureInfo.InvariantCulture)); break;
 
                 default: Terminal.WriteError($"No command '{id}' found."); break;

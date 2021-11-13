@@ -149,7 +149,6 @@
     <Compile Include="Misc\Msg.cs" />
     <Compile Include="Misc\Settings.cs" />
     <Compile Include="Misc\Terminal.cs" />
-    <Compile Include="Misc\UpdateCheck.cs" />
     <Compile Include="Misc\Theme.cs" />
     <Compile Include="Misc\PowerShell.cs" />
     <Compile Include="Native\StockIcon.cs" />

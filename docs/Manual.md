@@ -262,11 +262,6 @@ Can be suppressed via shift key. Default: yes
 
 ### General
 
-#### --update-check=\<yes|no\>
-
-Daily check for new version. (requires PowerShell 5 and curl.) Default: no
-
-
 #### --process-instance=\<value\>
 
 Defines if more then one mpv.net process is allowed.
@@ -1379,13 +1374,6 @@ Shows the [mpv.net web site](https://mpv-net.github.io/mpv.net-web-site/).
 ### Help > Show mpv.net manual
 
 Shows the [mpv.net manual](https://github.com/stax76/mpv.net/blob/master/Manual.md).
-
-
-### Help > Check for Updates
-
-Checks for updates and allows to execute the update routine.
-
-The update routine requires PowerShell 5 and curl, an up to date Windows 10 system has both included.
 
 
 ### Help > About mpv.net

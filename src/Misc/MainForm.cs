@@ -1052,7 +1052,6 @@ namespace mpvnet
             Core.LoadScripts();
             GlobalHotkey.RegisterGlobalHotkeys(Handle);
             App.RunTask(() => App.Extension = new Extension());
-            UpdateCheck.DailyCheck();
             App.RunTask(() => App.CopyMpvnetCom());
             CSharpScriptHost.ExecuteScriptsInFolder(Core.ConfigFolder + "scripts-cs");
             WasShown = true;

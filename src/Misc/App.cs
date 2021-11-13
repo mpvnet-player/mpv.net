@@ -28,7 +28,6 @@ namespace mpvnet
         public static bool Queue { get; set; }
         public static bool RememberVolume { get; set; } = true;
         public static bool RememberWindowPosition { get; set; }
-        public static bool UpdateCheck { get; set; }
 
         public static int StartThreshold { get; set; } = 1500;
         public static int RecentCount { get; set; } = 15;
@@ -237,7 +236,6 @@ namespace mpvnet
                 case "remember-window-position": RememberWindowPosition = value == "yes"; return true;
                 case "start-size": StartSize = value; return true;
                 case "start-threshold": StartThreshold = value.ToInt(); return true;
-                case "update-check": UpdateCheck = value == "yes"; return true;
                 case "video-file-extensions": CorePlayer.VideoTypes = value.Split(" ,;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries); return true;
                 default:
                     if (writeError)
