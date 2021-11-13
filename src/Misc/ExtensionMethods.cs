@@ -117,12 +117,4 @@ public static class PathStringExtension
 
         return instance;
     }
-
-    public static bool IsIdenticalFolder(this string instance, string testFolder)
-    {
-        if (string.IsNullOrEmpty(instance) || string.IsNullOrEmpty(testFolder))
-            return false;
-
-        return instance.ToLowerInvariant().AddSep() == testFolder.ToLowerInvariant().AddSep();
-    }
 }

@@ -93,6 +93,7 @@ namespace mpvnet
 
         public string ConfPath { get => ConfigFolder + "mpv.conf"; }
         public string GPUAPI { get; set; } = "auto";
+        public string VO { get; set; } = "gpu";
         public string InputConfPath { get => ConfigFolder + "input.conf"; }
 
         public string VID { get; set; } = "";
@@ -219,6 +220,7 @@ namespace mpvnet
                 case "taskbar-progress": TaskbarProgress = value == "yes"; break;
                 case "screen": Screen = Convert.ToInt32(value); break;
                 case "gpu-api": GPUAPI = value; break;
+                case "vo": VO = value; break;
             }
 
             if (AutofitLarger > 1)
@@ -234,23 +236,7 @@ namespace mpvnet
                     _ConfigFolder = Folder.Startup + "portable_config";
 
                     if (!Directory.Exists(_ConfigFolder))
-                    {
                         _ConfigFolder = Folder.AppData + "mpv.net";
-
-                        if (!Directory.Exists(_ConfigFolder))
-                        {
-                            _ConfigFolder = Folder.CustomSettings;
-
-                            if (!Directory.Exists(_ConfigFolder))
-                                _ConfigFolder = Folder.AppData + "mpv.net";
-                        }
-                    }
-
-                    if (Folder.Startup.IsIdenticalFolder(_ConfigFolder))
-                    {
-                        Msg.ShowError("Startup folder and config folder cannot be identical, using portable_config instead.");
-                        _ConfigFolder = Folder.Startup + "portable_config";
-                    }
 
                     if (!Directory.Exists(_ConfigFolder))
                         Directory.CreateDirectory(_ConfigFolder);

@@ -245,5 +245,14 @@ namespace mpvnet
                     return false;
             }
         }
+
+        public static void CopyMpvnetCom()
+        {
+            string dir = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData).AddSep() +
+                "Microsoft\\WindowsApps\\";
+
+            if (File.Exists(dir + "mpvnet.exe") && !File.Exists(dir + "mpvnet.com"))
+                File.Copy(Folder.Startup + "mpvnet.com", dir + "mpvnet.com");
+        }
     }
 }

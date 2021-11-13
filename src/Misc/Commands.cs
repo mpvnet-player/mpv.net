@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -8,6 +9,8 @@ using System.Text;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Interop;
+
+using WinForms = System.Windows.Forms;
 
 using static mpvnet.Global;
 
@@ -30,6 +33,7 @@ namespace mpvnet
                 case "open-url": OpenURL(); break;
                 case "playlist-first": PlaylistFirst(); break;
                 case "playlist-last": PlaylistLast(); break;
+                case "reg-file-assoc": RegisterFileAssociations(args[0]); break;
                 case "scale-window": ScaleWindow(float.Parse(args[0], CultureInfo.InvariantCulture)); break;
                 case "shell-execute": ProcessHelp.ShellExecute(args[0]); break;
                 case "show-about": ShowDialog(typeof(AboutWindow)); break;
@@ -49,7 +53,6 @@ namespace mpvnet
                 case "show-properties": ShowProperties(); break;
                 case "show-protocols": ShowTextWithEditor("protocol-list", mpvHelp.GetProtocols()); break;
                 case "show-recent": ShowRecent(); break;
-                case "show-setup-dialog": ShowDialog(typeof(SetupWindow)); break;
                 case "show-text": ShowText(args[0], Convert.ToInt32(args[1]), Convert.ToInt32(args[2])); break;
                 case "update-check": UpdateCheck.CheckOnline(true); break;
                 case "window-scale": WindowScale(float.Parse(args[0], CultureInfo.InvariantCulture)); break;
@@ -466,6 +469,39 @@ namespace mpvnet
 
             CommandPalette.Instance.SetItems(items);
             MainForm.Instance.ShowCommandPalette();
+        }
+
+        public static void RegisterFileAssociations(string perceivedType)
+        {
+            string[] extensions = { };
+
+            switch (perceivedType)
+            {
+                case "video": extensions = CorePlayer.VideoTypes; break;
+                case "audio": extensions = CorePlayer.AudioTypes; break;
+                case "image": extensions = CorePlayer.ImageTypes; break;
+            }
+
+            try
+            {
+                using (Process proc = new Process())
+                {
+                    proc.StartInfo.FileName = WinForms.Application.ExecutablePath;
+                    proc.StartInfo.Arguments = "--register-file-associations " +
+                        perceivedType + " " + string.Join(" ", extensions);
+                    proc.StartInfo.Verb = "runas";
+                    proc.StartInfo.UseShellExecute = true;
+                    proc.Start();
+                    proc.WaitForExit();
+
+                    if (proc.ExitCode == 0)
+                        Msg.ShowInfo("File associations were successfully " + 
+                            (perceivedType == "unreg" ? "removed" : "created") +
+                            ".\n\nFile Explorer icons will refresh after process restart.");
+                    else
+                        Msg.ShowError("Error creating file associations.");
+                }
+            } catch { }
         }
     }
 }

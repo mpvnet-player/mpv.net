@@ -9,7 +9,7 @@ url = https://mpv.io/manual/master/#video-output-drivers-vo
 
 option = gpu       General purpose, customizable, GPU-accelerated video output driver. It supports extended scaling methods, dithering, color management, custom shaders, HDR, and more.
 option = gpu-next  Experimental video renderer based on libplacebo. This supports almost the same set of features as --vo=gpu.
-option = direct3d  Video output driver that uses the Direct3D 9 interface
+option = direct3d  Video output driver that uses the Direct3D interface.
 
 [setting]
 name = hwdec
@@ -74,16 +74,6 @@ option = display-vdrop
 option = display-adrop
 option = display-desync
 option = desync
-
-[setting]
-name = builtin-scalers
-file = mpv
-default = yes
-filter = Video
-help = Allow using faster built-in replacements for common scalers such as nearest, bilinear or bicubic. These have the disadvantage of not being configurable, unlike normal scaler kernels. (only affects --vo=gpu-next)
-
-option = yes
-option = no
 
 [setting]
 name = scale

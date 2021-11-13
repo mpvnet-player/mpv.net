@@ -135,10 +135,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="WPF\SetupWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="WPF\AboutWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -191,9 +187,6 @@
     <Compile Include="Native\Native.cs" />
     <Compile Include="Misc\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WPF\SetupWindow.xaml.cs">
-      <DependentUpon>SetupWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="WPF\ConfWindow.xaml.cs">
       <DependentUpon>ConfWindow.xaml</DependentUpon>
     </Compile>

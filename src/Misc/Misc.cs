@@ -75,38 +75,47 @@ namespace mpvnet
         static string ExePath = Application.ExecutablePath;
         static string ExeFilename = Path.GetFileName(Application.ExecutablePath);
         static string ExeFilenameNoExt = Path.GetFileNameWithoutExtension(Application.ExecutablePath);
-        static string[] Types;
 
-        public static void Register(string[] types)
+        public static void Register(string perceivedType, string[] extensions)
         {
-            Types = types;
-
-            RegistryHelp.SetValue(@"HKCU\Software\Microsoft\Windows\CurrentVersion\App Paths\" + ExeFilename, null, ExePath);
-            RegistryHelp.SetValue(@"HKCR\Applications\" + ExeFilename, "FriendlyAppName", "mpv.net media player");
-            RegistryHelp.SetValue($@"HKCR\Applications\{ExeFilename}\shell\open\command", null, $"\"{ExePath}\" \"%1\"");
-            RegistryHelp.SetValue(@"HKLM\SOFTWARE\Clients\Media\mpv.net\Capabilities", "ApplicationDescription", "mpv.net media player");
-            RegistryHelp.SetValue(@"HKLM\SOFTWARE\Clients\Media\mpv.net\Capabilities", "ApplicationName", "mpv.net");
-            RegistryHelp.SetValue(@"HKCR\SystemFileAssociations\video\OpenWithList\" + ExeFilename, null, "");
-            RegistryHelp.SetValue(@"HKCR\SystemFileAssociations\audio\OpenWithList\" + ExeFilename, null, "");
-            RegistryHelp.SetValue(@"HKLM\SOFTWARE\RegisteredApplications", "mpv.net", @"SOFTWARE\Clients\Media\mpv.net\Capabilities");
-
-            foreach (string ext in Types)
+            if (perceivedType != "unreg")
             {
-                RegistryHelp.SetValue($@"HKCR\Applications\{ExeFilename}\SupportedTypes", "." + ext, "");
-                RegistryHelp.SetValue($@"HKCR\" + "." + ext, null, ExeFilenameNoExt + "." + ext);
-                RegistryHelp.SetValue($@"HKCR\" + "." + ext + @"\OpenWithProgIDs", ExeFilenameNoExt + "." + ext, "");
+                RegistryHelp.SetValue(@"HKCU\Software\Microsoft\Windows\CurrentVersion\App Paths\" + ExeFilename, null, ExePath);
+                RegistryHelp.SetValue(@"HKCR\Applications\" + ExeFilename, "FriendlyAppName", "mpv.net media player");
+                RegistryHelp.SetValue($@"HKCR\Applications\{ExeFilename}\shell\open\command", null, $"\"{ExePath}\" \"%1\"");
+                RegistryHelp.SetValue(@"HKLM\SOFTWARE\Clients\Media\mpv.net\Capabilities", "ApplicationDescription", "mpv.net media player");
+                RegistryHelp.SetValue(@"HKLM\SOFTWARE\Clients\Media\mpv.net\Capabilities", "ApplicationName", "mpv.net");
+                RegistryHelp.SetValue(@"HKCR\SystemFileAssociations\video\OpenWithList\" + ExeFilename, null, "");
+                RegistryHelp.SetValue(@"HKCR\SystemFileAssociations\audio\OpenWithList\" + ExeFilename, null, "");
+                RegistryHelp.SetValue(@"HKLM\SOFTWARE\RegisteredApplications", "mpv.net", @"SOFTWARE\Clients\Media\mpv.net\Capabilities");
 
-                if (CorePlayer.VideoTypes.Contains(ext))
-                    RegistryHelp.SetValue(@"HKCR\" + "." + ext, "PerceivedType", "video");
+                foreach (string ext in extensions)
+                {
+                    RegistryHelp.SetValue($@"HKCR\Applications\{ExeFilename}\SupportedTypes", "." + ext, "");
+                    RegistryHelp.SetValue(@"HKCR\" + "." + ext, null, ExeFilenameNoExt + "." + ext);
+                    RegistryHelp.SetValue(@"HKCR\" + "." + ext + @"\OpenWithProgIDs", ExeFilenameNoExt + "." + ext, "");
+                    RegistryHelp.SetValue(@"HKCR\" + "." + ext, "PerceivedType", perceivedType);
+                    RegistryHelp.SetValue(@"HKCR\" + ExeFilenameNoExt + "." + ext + @"\shell\open\command", null, $"\"{ExePath}\" \"%1\"");
+                    RegistryHelp.SetValue(@"HKLM\SOFTWARE\Clients\Media\mpv.net\Capabilities\FileAssociations", "." + ext, ExeFilenameNoExt + "." + ext);
+                }
+            }
+            else
+            {
+                RegistryHelp.RemoveKey(@"HKCU\Software\Microsoft\Windows\CurrentVersion\App Paths\" + ExeFilename);
+                RegistryHelp.RemoveKey(@"HKCR\Applications\" + ExeFilename);
+                RegistryHelp.RemoveKey(@"HKLM\SOFTWARE\Clients\Media\mpv.net");
+                RegistryHelp.RemoveKey(@"HKCR\SystemFileAssociations\video\OpenWithList\" + ExeFilename);
+                RegistryHelp.RemoveKey(@"HKCR\SystemFileAssociations\audio\OpenWithList\" + ExeFilename);
+                RegistryHelp.RemoveValue(@"HKLM\SOFTWARE\RegisteredApplications", "mpv.net");
 
-                if (CorePlayer.AudioTypes.Contains(ext))
-                    RegistryHelp.SetValue(@"HKCR\" + "." + ext, "PerceivedType", "audio");
+                foreach (string id in Registry.ClassesRoot.GetSubKeyNames())
+                {
+                    if (id.StartsWith(ExeFilenameNoExt + "."))
+                        Registry.ClassesRoot.DeleteSubKeyTree(id);
 
-                if (CorePlayer.ImageTypes.Contains(ext))
-                    RegistryHelp.SetValue(@"HKCR\" + "." + ext, "PerceivedType", "image");
-
-                RegistryHelp.SetValue($@"HKCR\" + ExeFilenameNoExt + "." + ext + @"\shell\open\command", null, $"\"{ExePath}\" \"%1\"");
-                RegistryHelp.SetValue(@"HKLM\SOFTWARE\Clients\Media\mpv.net\Capabilities\FileAssociations", "." + ext, ExeFilenameNoExt + "." + ext);
+                    RegistryHelp.RemoveValue($@"HKCR\Software\Classes\{id}\OpenWithProgIDs", ExeFilenameNoExt + id);
+                    RegistryHelp.RemoveValue($@"HKLM\Software\Classes\{id}\OpenWithProgIDs", ExeFilenameNoExt + id);
+                }
             }
         }
     }
@@ -208,25 +217,6 @@ namespace mpvnet
     {
         public static string Startup { get; } = Application.StartupPath.AddSep();
         public static string AppData { get; } = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData).AddSep();
-
-        public static string CustomSettings {
-            get {
-                string linkFile = Startup + "settings-directory.txt";
-
-                if (File.Exists(linkFile))
-                {
-                    string linkTarget = File.ReadAllText(linkFile).Trim();
-
-                    if (linkTarget.StartsWithEx("."))
-                        linkTarget = Startup + linkTarget;
-
-                    if (Directory.Exists(linkTarget))
-                        return linkTarget.AddSep();
-                }
-
-                return "";
-            }
-        }
     }
 
     public class CommandPaletteItem

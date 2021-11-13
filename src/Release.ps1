@@ -34,14 +34,14 @@ if ($versionInfo.FilePrivatePart -eq 0)
     if ($LastExitCode) { throw $LastExitCode }
 
     $targetDir = $tmpDir + "\mpv.net-$($versionInfo.FileVersion)-portable"
-    Copy-Item $PSScriptRoot\bin $targetDir -Recurse -Exclude 'System.Management.Automation.xml', 'settings-directory.txt'
+    Copy-Item $PSScriptRoot\bin $targetDir -Recurse -Exclude 'System.Management.Automation.xml'
     & $7z a -tzip -mx9 "$targetDir.zip" -r "$targetDir\*"
     if ($LastExitCode) { throw $LastExitCode }
 }
 else
 {
     $targetDir = "$tmpDir\mpv.net-$($versionInfo.FileVersion)-portable-beta"
-    Copy-Item $PSScriptRoot\bin $targetDir -Recurse -Exclude 'System.Management.Automation.xml', 'settings-directory.txt'
+    Copy-Item $PSScriptRoot\bin $targetDir -Recurse -Exclude 'System.Management.Automation.xml'
     & $7z a -tzip -mx9 "$targetDir.zip" -r "$targetDir\*"
     if ($LastExitCode) { throw $LastExitCode }
     UploadBeta "$targetDir.zip"

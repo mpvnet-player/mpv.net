@@ -74,7 +74,7 @@ namespace mpvnet
 
                 Core.ObservePropertyDouble("window-scale", WindowScale);
 
-                if (Core.GPUAPI != "vulkan")
+                if (!IsVulkanOrGpuNext)
                     Core.ProcessCommandLine(false);
 
                 AppDomain.CurrentDomain.UnhandledException += (sender, e) => App.ShowException(e.ExceptionObject);
@@ -195,6 +195,8 @@ namespace mpvnet
         bool IsFullscreen => WindowState == FormWindowState.Maximized && FormBorderStyle == FormBorderStyle.None;
 
         bool IsCommandPaletteVissible() => CommandPaletteHost != null && CommandPaletteHost.Visible;
+
+        bool IsVulkanOrGpuNext => Core.GPUAPI == "vulkan" || Core.VO == "gpu-next";
 
         bool KeepSize() => App.StartSize == "session" || App.StartSize == "always";
 
@@ -1033,7 +1035,7 @@ namespace mpvnet
             if (WindowState == FormWindowState.Maximized)
                 Core.SetPropertyBool("window-maximized", true);
 
-            if (Core.GPUAPI == "vulkan")
+            if (IsVulkanOrGpuNext)
                 Core.ProcessCommandLine(false);
 
             WPF.Init();
@@ -1047,10 +1049,11 @@ namespace mpvnet
             BuildMenu();
             System.Windows.Application.Current.ShutdownMode = System.Windows.ShutdownMode.OnExplicitShutdown;
             Cursor.Position = new Point(Cursor.Position.X + 1, Cursor.Position.Y);
-            UpdateCheck.DailyCheck();
             Core.LoadScripts();
             GlobalHotkey.RegisterGlobalHotkeys(Handle);
             App.RunTask(() => App.Extension = new Extension());
+            UpdateCheck.DailyCheck();
+            App.RunTask(() => App.CopyMpvnetCom());
             CSharpScriptHost.ExecuteScriptsInFolder(Core.ConfigFolder + "scripts-cs");
             WasShown = true;
         }

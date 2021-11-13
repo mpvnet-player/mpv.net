@@ -161,6 +161,10 @@ _       ignore                                      #menu: Profile
 c       script-message mpv.net show-conf-editor     #menu: Settings > Show Config Editor
 Ctrl+i  script-message mpv.net show-input-editor    #menu: Settings > Show Input Editor
 Ctrl+f  script-message mpv.net open-conf-folder     #menu: Settings > Open Config Folder
+_       script-message mpv.net reg-file-assoc video #menu: Settings > Setup > Register video file associations
+_       script-message mpv.net reg-file-assoc audio #menu: Settings > Setup > Register audio file associations
+_       script-message mpv.net reg-file-assoc image #menu: Settings > Setup > Register image file associations
+_       script-message mpv.net reg-file-assoc unreg #menu: Settings > Setup > Unregister file associations
 
 h       script-message mpv.net show-history         #menu: Tools > Show History
 l       ab-loop                                     #menu: Tools > Set/clear A-B loop points
