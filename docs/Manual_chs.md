@@ -2,7 +2,7 @@
 mpv.net手册
 ==============
 
-同步源提交_[20210722](https://github.com/stax76/mpv.net/commit/3f137474139d3721c3b8dd0b264bb76ceba36004#diff-bf7b5e59783955f479505de4969f792255eca0a69945ccfe3ec5dda409495bbe)
+同步源提交_[20211114](https://github.com/stax76/mpv.net/commit/243b45326ef8defa038edacd01fafee13f6a009a#diff-bf7b5e59783955f479505de4969f792255eca0a69945ccfe3ec5dda409495bbe)
 
 **[ENGLISH](Manual.md)** | **简体中文**
 
@@ -112,23 +112,11 @@ mpv.net不限制系统平台，win32的用户必须替换目录中的3个工具�
 mpv.net在以下路径寻找设置文件夹：
 
 1. <程序启动目录>\portable_config
-2. %APPDATA%\mpv.net
+2. %APPDATA%\mpv.net (`C:\Users\%USERNAME%\AppData\Roaming\mpv.net`)
 
-弱使用自定义目录，则创建以下文件：
-
-<程序启动目录>\settings-directory.txt
-
-并在此文件中输入你的自定义路径。
-
-自定义目录路径可以使用相对路径： `startup\...`
-
-只有在 portable_config 和 %APPDATA% 目录不存在的情况下，才可使用此自定义路径。
-
-如果设置目录中不存在 mpv.conf ，将使用以下文件生成默认的初始设置：
-
-[mpv.conf defaults](../../../tree/master/src/Resources/mpv.conf.txt)
-
-mpv.net的专属选项保存在 mpvnet.conf 文件中，参数解释请参阅 [此处](#mpvnet的专属选项)
+mpv的选项保存在mpv.conf文件中，
+mpv.net的专属选项保存在 mpvnet.conf 文件中，
+参数解释请参阅 [此处](#mpvnet的专属选项)
 
 
 快捷键输入绑定
@@ -217,9 +205,6 @@ mpv.net的专属选项
 
 设置为记住窗口大小。
 
-**video**  
-窗口大小设置为视频分辨率。
-
 **width-session**  
 记住当前的宽度。
 
@@ -231,6 +216,12 @@ mpv.net的专属选项
 
 **height-always**  
 始终记住高度。
+
+**video**  
+窗口大小设置为视频分辨率。
+
+**session**
+记住当前进程的大小。
 
 **always**  
 始终记住大小。
@@ -261,11 +252,6 @@ mpv.net的专属选项
 
 
 ### General
-
-#### --update-check=\<yes|no\>
-
-每日检查新版本（需要 PowerShell 5 和 curl）。默认：no
-
 
 #### --process-instance=\<value\>
 
@@ -562,7 +548,7 @@ mpv窗口特性的文档可以在此处找到：
 https://mpv.io/manual/master/#window
 
 
-mpv.net目前已实现了以下窗口属性：
+**mpv.net目前已实现了以下窗口属性：**
 
 - [border](https://mpv.io/manual/master/#options-border)
 - [fullscreen](https://mpv.io/manual/master/#options-fullscreen)
@@ -572,15 +558,17 @@ mpv.net目前已实现了以下窗口属性：
 - [title](https://mpv.io/manual/master/#options-title)
 - [window-maximized](https://mpv.io/manual/master/#options-window-maximized)
 - [window-minimized](https://mpv.io/manual/master/#options-window-minimized)
+- [window-scale](https://mpv.io/manual/master/#options-window-scale)
 
 
 **部分支持的属性：**
 
-[autofit](https://mpv.io/manual/master/#options-autofit)
+- [autofit](https://mpv.io/manual/master/#options-autofit)
+- [autofit-smaller](https://mpv.io/manual/master/#options-autofit-smaller)
+- [autofit-larger](https://mpv.io/manual/master/#options-autofit-larger)
 
-[autofit-smaller](https://mpv.io/manual/master/#options-autofit-smaller)
 
-[autofit-larger](https://mpv.io/manual/master/#options-autofit-larger)
+mpv.net的专属窗口功能在 [屏幕设置](#screen) 部分。
 
 
 ### 命令行限制
@@ -595,11 +583,6 @@ mpv.net支持基于属性的mpv命令行选项，这意味着它支持mpv几乎�
 --profile=help  
 --vd=help  
 --version  
-
-
-### 脚本限制(Lua&JavaScript)
-
-不直接支持脚本输入绑定 `mp.add_key_binding` ，必须在 input.conf 中重新定义绑定。
 
 
 ### mpv.net的专属选项
@@ -1352,13 +1335,6 @@ script-opt = history-discard=path1;path2
 ### Help > Show mpv.net manual
 
 显示 [mpv.net手册](https://github.com/stax76/mpv.net/blob/master/Manual.md).
-
-
-### Help > Check for Updates
-
-检查更新并允许执行更新流程。
-
-更新流程需要 PowerShell 5 和 curl （最新版本的win10已内置）
 
 
 ### Help > About mpv.net
