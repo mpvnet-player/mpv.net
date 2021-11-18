@@ -16,7 +16,7 @@ Modern GUI with customizable color themes.
 
 #### Command Line Interface
 
-mpv.net supports mpvs property based command line switches.
+mpv.net supports mpv's property based command line switches.
 
 
 #### High quality video output
@@ -163,14 +163,6 @@ Command Palette to easily find commands and shortcut keys.
 The command palette based playlist showing my favorite artist of the stax record label.
 
 ![Playlist](docs/img/Playlist.png)
-
-
-#### Setup
-
-The setup dialog to register file associations, create a start menu item and
-add mpv.net to the PATH environment variable (per user)
-
-![Setup](docs/img/Setup.png)
 
 
 Related apps

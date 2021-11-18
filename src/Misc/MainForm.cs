@@ -1138,10 +1138,10 @@ namespace mpvnet
             base.OnDragDrop(e);
 
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
-                Core.LoadFiles(e.Data.GetData(DataFormats.FileDrop) as String[], true, Control.ModifierKeys.HasFlag(Keys.Control));
+                Core.LoadFiles(e.Data.GetData(DataFormats.FileDrop) as String[], true, ModifierKeys.HasFlag(Keys.Control));
           
             if (e.Data.GetDataPresent(DataFormats.Text))
-                Core.LoadFiles(new[] { e.Data.GetData(DataFormats.Text).ToString() }, true, Control.ModifierKeys.HasFlag(Keys.Control));
+                Core.LoadFiles(new[] { e.Data.GetData(DataFormats.Text).ToString() }, true, ModifierKeys.HasFlag(Keys.Control));
         }
 
         protected override void OnLostFocus(EventArgs e)

@@ -140,7 +140,6 @@ namespace mpvnet
 
             SetPropertyString("watch-later-options", "mute");
             SetPropertyString("screenshot-directory", "~~desktop/");
-            SetPropertyString("script-opts", "osc-scalewindowed=1.5,osc-hidetimeout=2000,console-scale=1.5");
             SetPropertyString("osd-playing-msg", "${filename}");
             SetPropertyString("wid", MainForm.Hwnd.ToString());
             SetPropertyString("osc", "yes");

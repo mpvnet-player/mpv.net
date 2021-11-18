@@ -562,7 +562,7 @@ features are supported that have an own implementation in mpv.net.
 A window free mode is currently not supported, the main window is always
 visible, even when mpv.net is started from the terminal and music is played.
 
-The documentation of mpvs window features can be found here:
+The documentation of mpv's window features can be found here:
 
 https://mpv.io/manual/master/#window
 
@@ -643,7 +643,7 @@ If the input.conf file does not exists mpv.net generates it with the following d
 
 <https://github.com/stax76/mpv.net/tree/master/src/Resources/input.conf.txt>
 
-input.conf defines mpvs key and mouse bindings and mpv.net uses
+input.conf defines mpv's key and mouse bindings and mpv.net uses
 comments to define the context menu.
 
 

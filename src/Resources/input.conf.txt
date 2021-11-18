@@ -171,7 +171,6 @@ l       ab-loop                                     #menu: Tools > Set/clear A-B
 L       cycle-values loop-file inf no               #menu: Tools > Toggle infinite file looping
 _       playlist-shuffle                            #menu: Tools > Shuffle Playlist
 Ctrl+h  cycle-values hwdec auto no                  #menu: Tools > Toggle Hardware Decoding
-_ script-message mpv.net show-setup-dialog          #menu: Tools > Setup...
 
 _ script-message mpv.net shell-execute https://mpv.io                    #menu: Help > Website mpv
 _ script-message mpv.net shell-execute https://github.com/stax76/mpv.net #menu: Help > Website mpv.net

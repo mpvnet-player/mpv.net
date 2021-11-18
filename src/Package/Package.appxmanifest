@@ -8,130 +8,118 @@
   xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
   IgnorableNamespaces="uap rescap">
 
-  <Identity
-    Name="0351c0fc-9274-46ee-941b-728b74e8c5d5"
-    Publisher="CN=frank"
-    Version="1.0.0.0" />
+	<Identity
+	  Name="5664FrankSkare.mpv.net"
+	  Publisher="CN=6A1A1E69-736C-4C77-B310-7B6D38E32617"
+	  Version="5.6.0.0" />
 
-  <Properties>
-    <DisplayName>mpv.net</DisplayName>
-    <PublisherDisplayName>Frank Skare</PublisherDisplayName>
-    <Logo>Images\StoreLogo.png</Logo>
-  </Properties>
+	<Properties>
+		<DisplayName>mpv.net</DisplayName>
+		<PublisherDisplayName>Frank Skare</PublisherDisplayName>
+		<Logo>Images\StoreLogo.png</Logo>
+	</Properties>
 
-  <Dependencies>
-    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
-    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.14393.0" MaxVersionTested="10.0.14393.0" />
-  </Dependencies>
+	<Dependencies>
+		<TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
+		<TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.14393.0" MaxVersionTested="10.0.14393.0" />
+	</Dependencies>
 
-  <Resources>
-    <Resource Language="x-generate"/>
-  </Resources>
+	<Resources>
+		<Resource Language="x-generate"/>
+	</Resources>
 
-  <Applications>
-    <Application Id="App"
-      Executable="$targetnametoken$.exe"
-      EntryPoint="$targetentrypoint$">
-      <uap:VisualElements
-        DisplayName="mpv.net"
-        Description="mpv.net is a modern media player based on the popular mpv player."
-        BackgroundColor="transparent"
-        Square150x150Logo="Images\Square150x150Logo.png"
-        Square44x44Logo="Images\Square44x44Logo.png">
-        <uap:DefaultTile Wide310x150Logo="Images\Wide310x150Logo.png" />
-        <uap:SplashScreen Image="Images\SplashScreen.png" />
-      </uap:VisualElements>
+	<Applications>
+		<Application Id="App"
+		  Executable="$targetnametoken$.exe"
+		  EntryPoint="$targetentrypoint$">
+			<uap:VisualElements
+			  DisplayName="mpv.net"
+			  Description="mpv.net is a modern media player based on the popular mpv player."
+			  BackgroundColor="transparent"
+			  Square150x150Logo="Images\Square150x150Logo.png"
+			  Square44x44Logo="Images\Square44x44Logo.png">
+				<uap:DefaultTile Wide310x150Logo="Images\Wide310x150Logo.png" />
+				<uap:SplashScreen Image="Images\SplashScreen.png" />
+			</uap:VisualElements>
 
-      <Extensions>
-        <uap3:Extension Category="windows.appExecutionAlias">
-          <uap3:AppExecutionAlias>
-            <desktop:ExecutionAlias Alias="mpvnet.exe" />
-          </uap3:AppExecutionAlias>
-        </uap3:Extension>
+			<Extensions>
+				<uap3:Extension Category="windows.appExecutionAlias">
+					<uap3:AppExecutionAlias>
+						<desktop:ExecutionAlias Alias="mpvnet.exe" />
+					</uap3:AppExecutionAlias>
+				</uap3:Extension>
 
-        <uap:Extension Category="windows.fileTypeAssociation">
-          <uap:FileTypeAssociation Name="videotypes">
-            <uap:Logo>Images\mpvnetExtensions.png</uap:Logo>
-            <uap:SupportedFileTypes>
-              <uap:FileType>.264</uap:FileType>
-              <uap:FileType>.265</uap:FileType>
-              <uap:FileType>.asf</uap:FileType>
-              <uap:FileType>.avc</uap:FileType>
-              <uap:FileType>.avi</uap:FileType>
-              <uap:FileType>.avs</uap:FileType>
-              <uap:FileType>.dav</uap:FileType>
-              <uap:FileType>.flv</uap:FileType>
-              <uap:FileType>.h264</uap:FileType>
-              <uap:FileType>.h265</uap:FileType>
-              <uap:FileType>.hevc</uap:FileType>
-              <uap:FileType>.m2t</uap:FileType>
-              <uap:FileType>.m2ts</uap:FileType>
-              <uap:FileType>.m2v</uap:FileType>
-              <uap:FileType>.m4v</uap:FileType>
-              <uap:FileType>.mkv</uap:FileType>
-              <uap:FileType>.mov</uap:FileType>
-              <uap:FileType>.mp4</uap:FileType>
-              <uap:FileType>.mpeg</uap:FileType>
-              <uap:FileType>.mpg</uap:FileType>
-              <uap:FileType>.mpv</uap:FileType>
-              <uap:FileType>.mts</uap:FileType>
-              <uap:FileType>.ts</uap:FileType>
-              <uap:FileType>.vob</uap:FileType>
-              <uap:FileType>.vpy</uap:FileType>
-              <uap:FileType>.webm</uap:FileType>
-              <uap:FileType>.wmv</uap:FileType>
-              <uap:FileType>.y4m</uap:FileType>
-            </uap:SupportedFileTypes>
-          </uap:FileTypeAssociation>
-        </uap:Extension>
+				<uap:Extension Category="windows.fileTypeAssociation">
+					<uap:FileTypeAssociation Name="videotypes">
+						<uap:SupportedFileTypes>
+							<uap:FileType>.264</uap:FileType>
+							<uap:FileType>.265</uap:FileType>
+							<uap:FileType>.asf</uap:FileType>
+							<uap:FileType>.avc</uap:FileType>
+							<uap:FileType>.avi</uap:FileType>
+							<uap:FileType>.avs</uap:FileType>
+							<uap:FileType>.dav</uap:FileType>
+							<uap:FileType>.flv</uap:FileType>
+							<uap:FileType>.h264</uap:FileType>
+							<uap:FileType>.h265</uap:FileType>
+							<uap:FileType>.hevc</uap:FileType>
+							<uap:FileType>.m2t</uap:FileType>
+							<uap:FileType>.m2ts</uap:FileType>
+							<uap:FileType>.m2v</uap:FileType>
+							<uap:FileType>.m4v</uap:FileType>
+							<uap:FileType>.mkv</uap:FileType>
+							<uap:FileType>.mov</uap:FileType>
+							<uap:FileType>.mp4</uap:FileType>
+							<uap:FileType>.mpeg</uap:FileType>
+							<uap:FileType>.mpg</uap:FileType>
+							<uap:FileType>.mpv</uap:FileType>
+							<uap:FileType>.mts</uap:FileType>
+							<uap:FileType>.ts</uap:FileType>
+							<uap:FileType>.vob</uap:FileType>
+							<uap:FileType>.vpy</uap:FileType>
+							<uap:FileType>.webm</uap:FileType>
+							<uap:FileType>.wmv</uap:FileType>
+							<uap:FileType>.y4m</uap:FileType>
+						</uap:SupportedFileTypes>
+					</uap:FileTypeAssociation>
+				</uap:Extension>
 
-        <uap:Extension Category="windows.fileTypeAssociation">
-          <uap:FileTypeAssociation Name="audiotypes">
-            <uap:Logo>Images\mpvnetExtensions.png</uap:Logo>
-            <uap:SupportedFileTypes>
-              <uap:FileType>.aac</uap:FileType>
-              <uap:FileType>.ac3</uap:FileType>
-              <uap:FileType>.dts</uap:FileType>
-              <uap:FileType>.dtshd</uap:FileType>
-              <uap:FileType>.dtshr</uap:FileType>
-              <uap:FileType>.dtsma</uap:FileType>
-              <uap:FileType>.eac3</uap:FileType>
-              <uap:FileType>.flac</uap:FileType>
-              <uap:FileType>.m4a</uap:FileType>
-              <uap:FileType>.mka</uap:FileType>
-              <uap:FileType>.mp2</uap:FileType>
-              <uap:FileType>.mp3</uap:FileType>
-              <uap:FileType>.mpa</uap:FileType>
-              <uap:FileType>.mpc</uap:FileType>
-              <uap:FileType>.ogg</uap:FileType>
-              <uap:FileType>.opus</uap:FileType>
-              <uap:FileType>.thd</uap:FileType>
-              <uap:FileType>.w64</uap:FileType>
-              <uap:FileType>.wav</uap:FileType>
-            </uap:SupportedFileTypes>
-          </uap:FileTypeAssociation>
-        </uap:Extension>
+				<uap:Extension Category="windows.fileTypeAssociation">
+					<uap:FileTypeAssociation Name="audiotypes">
+						<uap:SupportedFileTypes>
+							<uap:FileType>.aac</uap:FileType>
+							<uap:FileType>.ac3</uap:FileType>
+							<uap:FileType>.dts</uap:FileType>
+							<uap:FileType>.dtshd</uap:FileType>
+							<uap:FileType>.dtshr</uap:FileType>
+							<uap:FileType>.dtsma</uap:FileType>
+							<uap:FileType>.eac3</uap:FileType>
+							<uap:FileType>.flac</uap:FileType>
+							<uap:FileType>.m4a</uap:FileType>
+							<uap:FileType>.mka</uap:FileType>
+							<uap:FileType>.mp2</uap:FileType>
+							<uap:FileType>.mp3</uap:FileType>
+							<uap:FileType>.mpa</uap:FileType>
+							<uap:FileType>.mpc</uap:FileType>
+							<uap:FileType>.ogg</uap:FileType>
+							<uap:FileType>.opus</uap:FileType>
+							<uap:FileType>.thd</uap:FileType>
+							<uap:FileType>.w64</uap:FileType>
+							<uap:FileType>.wav</uap:FileType>
+						</uap:SupportedFileTypes>
+					</uap:FileTypeAssociation>
+				</uap:Extension>
 
-        <uap:Extension Category="windows.fileTypeAssociation">
-          <uap:FileTypeAssociation Name="imagetypes">
-            <uap:Logo>Images\mpvnetExtensions.png</uap:Logo>
-            <uap:SupportedFileTypes>
-              <uap:FileType>.bmp</uap:FileType>
-              <uap:FileType>.gif</uap:FileType>
-              <uap:FileType>.jpg</uap:FileType>
-              <uap:FileType>.png</uap:FileType>
-              <uap:FileType>.webp</uap:FileType>
-            </uap:SupportedFileTypes>
-          </uap:FileTypeAssociation>
-        </uap:Extension>
-        
-      </Extensions>
-      
-    </Application>
-  </Applications>
+				<uap:Extension Category="windows.protocol">
+					<uap:Protocol Name="ytdl" />
+				</uap:Extension>
+			</Extensions>
 
-  <Capabilities>
-    <Capability Name="internetClient" />
-    <rescap:Capability Name="runFullTrust" />
-  </Capabilities>
+		</Application>
+	</Applications>
+
+	<Capabilities>
+		<Capability Name="internetClient" />
+		<rescap:Capability Name="runFullTrust" />
+	</Capabilities>
 </Package>
