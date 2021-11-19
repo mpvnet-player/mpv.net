@@ -8,6 +8,7 @@ not yet released
   file associations for the portable release can be created
   with commands found in the menu and command palette.
 - Fix script-opts files being ingnored.
+- libmpv shinchiro 2021-11-14
 
 
 5.5.0.4 Beta (2021-11-05)
