@@ -1,5 +1,4 @@
 ﻿
-using mpvnet;
 using System;
 using System.ComponentModel;
 using System.Drawing;
@@ -13,6 +12,8 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+
+using mpvnet;
 
 namespace MsgBoxEx
 {
@@ -377,7 +378,7 @@ namespace MsgBoxEx
 
             if (DelegateObj != null)
             {
-                Style style = (Style)(this.FindResource("ImageOpacityChanger"));
+                Style style = (Style)(FindResource("ImageOpacityChanger"));
 
                 if (style != null)
                 {

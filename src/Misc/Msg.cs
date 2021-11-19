@@ -3,29 +3,22 @@ using System;
 using System.Threading;
 using System.Windows;
 
+using WinForms = System.Windows.Forms;
+
 using MsgBoxEx;
 
 public class Msg
 {
-    public static void ShowInfo(object title)
-    {
-        Show(title, MessageBoxImage.Information);
-    }
+    public static void ShowInfo(object msg) => Show(msg, MessageBoxImage.Information);
 
-    public static void ShowError(object title)
-    {
-        Show(title, MessageBoxImage.Error);
-    }
+    public static void ShowError(object msg) => Show(msg, MessageBoxImage.Error);
 
-    public static void ShowWarning(object title)
-    {
-        Show(title, MessageBoxImage.Warning);
-    }
+    public static void ShowWarning(object msg) => Show(msg, MessageBoxImage.Warning);
 
-    public static MessageBoxResult ShowQuestion(object title,
+    public static MessageBoxResult ShowQuestion(object msg,
         MessageBoxButton buttons = MessageBoxButton.OKCancel)
     {
-        return Show(title, MessageBoxImage.Question, buttons);
+        return Show(msg, MessageBoxImage.Question, buttons);
     }
 
     public static void ShowException(Exception exception)
@@ -34,17 +27,16 @@ public class Msg
     }
 
     public static MessageBoxResult Show(
-        object title,
+        object msg,
         MessageBoxImage img,
         MessageBoxButton buttons = MessageBoxButton.OK,
         string details = null)
     {
         MessageBoxResult fn()
         {
-            string msg = title?.ToString().TrimEx();
             MessageBoxEx.DetailsText = details;
-            string windowTitle = System.Windows.Forms.Application.ProductName;
-            return MessageBoxEx.OpenMessageBox(msg, windowTitle, buttons, img);
+            return MessageBoxEx.OpenMessageBox((msg ?? "").ToString().Trim(),
+                WinForms.Application.ProductName, buttons, img);
         }
 
         ApartmentState state = Thread.CurrentThread.GetApartmentState();
