@@ -131,7 +131,13 @@ input.conf file, if it's missing mpv.net generates it with the following default
 
 [input.conf defaults](../../../tree/master/src/Resources/input.conf.txt)
 
-Global hotkeys are supported via global-input.conf file.
+Please be aware that once input.conf exists, mpv.net cannot update it, this means
+the menu becomes outdated when mpv.net is updated with new or changed default menu
+items. The only way to get an up-to-date menu is either resetting the menu by
+deleting input.conf or updating it by manually editing input.conf. This is
+currently the biggest design problem of mpv.net and it's difficult to overcome.
+
+Global keyboard shortcuts are supported via global-input.conf file.
 
 The config folder can be opened from the context menu: `Settings > Open Config Folder`
 
@@ -196,7 +202,7 @@ Adds files to the playlist, requires [--process-instance=single](#--process-inst
 #### --command=\<input command\>
 
 Sends a input command to a running mpv.net instance via command line, for instance
-to create global hotkeys with AutoHotkey. Requires [process-instance=single](#--process-instancevalue).
+to create global keyboard shortcuts with AutoHotkey. Requires [process-instance=single](#--process-instancevalue).
 
 ### Audio
 

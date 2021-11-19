@@ -48,9 +48,9 @@ namespace mpvnet
         {
             switch (value)
             {
-                case 5: return "SEARCH";       // BROWSER_SEARCH
-                case 6: return "FAVORITES";    // BROWSER_FAVORITES
-                case 7: return "HOMEPAGE";     // BROWSER_HOME
+                case 5:  return "SEARCH";       // BROWSER_SEARCH
+                case 6:  return "FAVORITES";    // BROWSER_FAVORITES
+                case 7:  return "HOMEPAGE";     // BROWSER_HOME
                 case 15: return "MAIL";         // LAUNCH_MAIL
                 case 33: return "PRINT";        // PRINT
                 case 11: return "NEXT";         // MEDIA_NEXTTRACK

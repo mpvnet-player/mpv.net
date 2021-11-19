@@ -90,7 +90,7 @@ Features exclusiv to mpv.net
 - Searchable config editor
 - Searchable input (shorcut keys) editor
 - C# and PowerShell Scripting
-- Global hotkeys
+- Global keyboard shortcuts
 - Command palette to quickly and easily find commands and keys
 - Extension API for .NET languages (C#, VB.NET and F#)
 - Setup as x64 installer, portable, Chocolatey and WinGet
