@@ -2,11 +2,8 @@
 not yet released
 
 - Various conf editor improvements. (hooke007)
-- Custom conf folder location feature removed
-  (a directory sym link can be used instead).
-- Inno Setup replaced with Microsoft Store setup,
-  file associations for the portable release can be created
-  with commands found in the menu and command palette.
+- Custom conf folder location feature removed.
+- Inno Setup replaced with Microsoft Store setup.
 - Fix script-opts files being ingnored.
 - libmpv shinchiro 2021-11-14
 

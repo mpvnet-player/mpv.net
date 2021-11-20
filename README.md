@@ -148,7 +148,7 @@ OSD console and status printed on the terminal.
 
 Searchable key and mouse binding editor.
 
-![Input Editor](docs/img/InputEditor.png)
+![Input Editor](docs/img/InputEditor.webp)
 
 
 #### Command Palette
