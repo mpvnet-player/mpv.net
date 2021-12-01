@@ -165,9 +165,7 @@ The command palette based playlist showing my favorite artist of the stax record
 ![Playlist](docs/img/Playlist.png)
 
 
-Related apps
-------------
-
-Find a list of related apps:
+List of my apps
+---------------
 
 https://stax76.github.io/frankskare

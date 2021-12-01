@@ -666,10 +666,12 @@ namespace mpvnet
 
             foreach (CommandItem item in items)
             {
-                if (string.IsNullOrEmpty(item.Path))
+                var tempItem = item;
+
+                if (string.IsNullOrEmpty(tempItem.Path))
                     continue;
 
-                var menuItem = MenuHelp.Add(ContextMenu.Items, item.Path);
+                var menuItem = MenuHelp.Add(ContextMenu.Items, tempItem.Path);
 
                 if (menuItem != null)
                 {
@@ -679,7 +681,8 @@ namespace mpvnet
                                 MenuAutoResetEvent.WaitOne();
                                 System.Windows.Application.Current.Dispatcher.Invoke(
                                     DispatcherPriority.Background, new Action(delegate { }));
-                                Core.Command(item.Command);                
+                                if (!string.IsNullOrEmpty(tempItem.Command))
+                                    Core.Command(tempItem.Command);                
                             });
                         }
                         catch (Exception ex) {
@@ -687,7 +690,7 @@ namespace mpvnet
                         }
                     };
 
-                    menuItem.InputGestureText = item.Input;
+                    menuItem.InputGestureText = tempItem.Input;
                 }
             }
         }
