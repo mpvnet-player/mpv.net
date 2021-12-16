@@ -70,7 +70,7 @@ in the startup directory).
 
 mpvnet.exe is platform agnostic, users that need x86 have to replace 3 native tools:
 
-- mpv-1.dll
+- mpv-2.dll
 - MediaInfo.dll
 - mpvnet.com
 
