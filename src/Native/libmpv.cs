@@ -5,64 +5,64 @@ using System.Text;
 
 public class libmpv
 {
-    [DllImport("mpv-1.dll", CallingConvention = CallingConvention.Cdecl)]
+    [DllImport("mpv-2.dll", CallingConvention = CallingConvention.Cdecl)]
     public static extern IntPtr mpv_create();
 
-    [DllImport("mpv-1.dll", CallingConvention = CallingConvention.Cdecl)]
+    [DllImport("mpv-2.dll", CallingConvention = CallingConvention.Cdecl)]
     public static extern mpv_error mpv_initialize(IntPtr mpvHandle);
 
-    [DllImport("mpv-1.dll", CallingConvention = CallingConvention.Cdecl)]
+    [DllImport("mpv-2.dll", CallingConvention = CallingConvention.Cdecl)]
     public static extern mpv_error mpv_command(IntPtr mpvHandle, IntPtr strings);
 
-    [DllImport("mpv-1.dll", CallingConvention = CallingConvention.Cdecl)]
+    [DllImport("mpv-2.dll", CallingConvention = CallingConvention.Cdecl)]
     public static extern mpv_error mpv_command_string(IntPtr mpvHandle, [MarshalAs(UnmanagedType.LPUTF8Str)] string command);
 
-    [DllImport("mpv-1.dll", CallingConvention = CallingConvention.Cdecl)]
+    [DllImport("mpv-2.dll", CallingConvention = CallingConvention.Cdecl)]
     public static extern mpv_error mpv_command_ret(IntPtr mpvHandle, IntPtr strings, IntPtr node);
 
-    [DllImport("mpv-1.dll", CallingConvention = CallingConvention.Cdecl)]
+    [DllImport("mpv-2.dll", CallingConvention = CallingConvention.Cdecl)]
     public static extern void mpv_free_node_contents(IntPtr node);
 
-    [DllImport("mpv-1.dll", CallingConvention = CallingConvention.Cdecl)]
+    [DllImport("mpv-2.dll", CallingConvention = CallingConvention.Cdecl)]
     public static extern IntPtr mpv_error_string(mpv_error error);
 
-    [DllImport("mpv-1.dll", CallingConvention = CallingConvention.Cdecl)]
+    [DllImport("mpv-2.dll", CallingConvention = CallingConvention.Cdecl)]
     public static extern int mpv_terminate_destroy(IntPtr mpvHandle);
 
-    [DllImport("mpv-1.dll", CallingConvention = CallingConvention.Cdecl)]
+    [DllImport("mpv-2.dll", CallingConvention = CallingConvention.Cdecl)]
     public static extern mpv_error mpv_request_log_messages(IntPtr mpvHandle, [MarshalAs(UnmanagedType.LPUTF8Str)] string min_level);
 
-    [DllImport("mpv-1.dll", CallingConvention = CallingConvention.Cdecl)]
+    [DllImport("mpv-2.dll", CallingConvention = CallingConvention.Cdecl)]
     public static extern int mpv_set_option(IntPtr mpvHandle, byte[] name, mpv_format format, ref long data);
 
-    [DllImport("mpv-1.dll", CallingConvention = CallingConvention.Cdecl)]
+    [DllImport("mpv-2.dll", CallingConvention = CallingConvention.Cdecl)]
     public static extern int mpv_set_option_string(IntPtr mpvHandle, byte[] name, byte[] value);
 
-    [DllImport("mpv-1.dll", CallingConvention = CallingConvention.Cdecl)]
+    [DllImport("mpv-2.dll", CallingConvention = CallingConvention.Cdecl)]
     public static extern mpv_error mpv_get_property(IntPtr mpvHandle, byte[] name, mpv_format format, out IntPtr data);
 
-    [DllImport("mpv-1.dll", CallingConvention = CallingConvention.Cdecl)]
+    [DllImport("mpv-2.dll", CallingConvention = CallingConvention.Cdecl)]
     public static extern mpv_error mpv_get_property(IntPtr mpvHandle, byte[] name, mpv_format format, out double data);
 
-    [DllImport("mpv-1.dll", CallingConvention = CallingConvention.Cdecl)]
+    [DllImport("mpv-2.dll", CallingConvention = CallingConvention.Cdecl)]
     public static extern mpv_error mpv_set_property(IntPtr mpvHandle, byte[] name, mpv_format format, ref byte[] data);
 
-    [DllImport("mpv-1.dll", CallingConvention = CallingConvention.Cdecl)]
+    [DllImport("mpv-2.dll", CallingConvention = CallingConvention.Cdecl)]
     public static extern mpv_error mpv_set_property(IntPtr mpvHandle, byte[] name, mpv_format format, ref long data);
 
-    [DllImport("mpv-1.dll", CallingConvention = CallingConvention.Cdecl)]
+    [DllImport("mpv-2.dll", CallingConvention = CallingConvention.Cdecl)]
     public static extern mpv_error mpv_set_property(IntPtr mpvHandle, byte[] name, mpv_format format, ref double data);
 
-    [DllImport("mpv-1.dll", CallingConvention = CallingConvention.Cdecl)]
+    [DllImport("mpv-2.dll", CallingConvention = CallingConvention.Cdecl)]
     public static extern mpv_error mpv_observe_property(IntPtr mpvHandle, ulong reply_userdata, [MarshalAs(UnmanagedType.LPUTF8Str)] string name, mpv_format format);
 
-    [DllImport("mpv-1.dll", CallingConvention = CallingConvention.Cdecl)]
+    [DllImport("mpv-2.dll", CallingConvention = CallingConvention.Cdecl)]
     public static extern int mpv_unobserve_property(IntPtr mpvHandle, ulong registered_reply_userdata);
 
-    [DllImport("mpv-1.dll", CallingConvention = CallingConvention.Cdecl)]
+    [DllImport("mpv-2.dll", CallingConvention = CallingConvention.Cdecl)]
     public static extern void mpv_free(IntPtr data);
 
-    [DllImport("mpv-1.dll", CallingConvention = CallingConvention.Cdecl)]
+    [DllImport("mpv-2.dll", CallingConvention = CallingConvention.Cdecl)]
     public static extern IntPtr mpv_wait_event(IntPtr mpvHandle, double timeout);
 
     public enum mpv_error
