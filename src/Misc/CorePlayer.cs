@@ -31,18 +31,10 @@ namespace mpvnet
         public event Action CommandReplyAsync;                      // command-reply      MPV_EVENT_COMMAND_REPLY
         public event Action StartFileAsync;                         // start-file         MPV_EVENT_START_FILE
         public event Action FileLoadedAsync;                        // file-loaded        MPV_EVENT_FILE_LOADED
-        public event Action TracksChangedAsync;                     //                    MPV_EVENT_TRACKS_CHANGED
-        public event Action TrackSwitchedAsync;                     //                    MPV_EVENT_TRACK_SWITCHED
-        public event Action IdleAsync;                              // idle               MPV_EVENT_IDLE
-        public event Action PauseAsync;                             //                    MPV_EVENT_PAUSE
-        public event Action UnpauseAsync;                           //                    MPV_EVENT_UNPAUSE
-        public event Action ScriptInputDispatchAsync;               //                    MPV_EVENT_SCRIPT_INPUT_DISPATCH
         public event Action VideoReconfigAsync;                     // video-reconfig     MPV_EVENT_VIDEO_RECONFIG
         public event Action AudioReconfigAsync;                     // audio-reconfig     MPV_EVENT_AUDIO_RECONFIG
-        public event Action MetadataUpdateAsync;                    //                    MPV_EVENT_METADATA_UPDATE
         public event Action SeekAsync;                              // seek               MPV_EVENT_SEEK
         public event Action PlaybackRestartAsync;                   // playback-restart   MPV_EVENT_PLAYBACK_RESTART
-        public event Action ChapterChangeAsync;                     //                    MPV_EVENT_CHAPTER_CHANGE
 
         public event Action<mpv_log_level, string>LogMessage; // log-message        MPV_EVENT_LOG_MESSAGE
         public event Action<mpv_end_file_reason> EndFile;     // end-file           MPV_EVENT_END_FILE
@@ -53,25 +45,19 @@ namespace mpvnet
         public event Action CommandReply;                     // command-reply      MPV_EVENT_COMMAND_REPLY
         public event Action StartFile;                        // start-file         MPV_EVENT_START_FILE
         public event Action FileLoaded;                       // file-loaded        MPV_EVENT_FILE_LOADED
-        public event Action TracksChanged;                    //                    MPV_EVENT_TRACKS_CHANGED
-        public event Action TrackSwitched;                    //                    MPV_EVENT_TRACK_SWITCHED
-        public event Action Idle;                             // idle               MPV_EVENT_IDLE
-        public event Action Pause;                            //                    MPV_EVENT_PAUSE
-        public event Action Unpause;                          //                    MPV_EVENT_UNPAUSE
-        public event Action ScriptInputDispatch;              //                    MPV_EVENT_SCRIPT_INPUT_DISPATCH
         public event Action VideoReconfig;                    // video-reconfig     MPV_EVENT_VIDEO_RECONFIG
         public event Action AudioReconfig;                    // audio-reconfig     MPV_EVENT_AUDIO_RECONFIG
-        public event Action MetadataUpdate;                   //                    MPV_EVENT_METADATA_UPDATE
         public event Action Seek;                             // seek               MPV_EVENT_SEEK
         public event Action PlaybackRestart;                  // playback-restart   MPV_EVENT_PLAYBACK_RESTART
-        public event Action ChapterChange;                    //                    MPV_EVENT_CHAPTER_CHANGE
 
         public event Action Initialized;
         public event Action InitializedAsync;
-        public event Action VideoSizeChanged;
-        public event Action VideoSizeChangedAsync;
         public event Action<float> ScaleWindow;
         public event Action<float> WindowScale;
+        public event Action<int> PlaylistPosChanged;
+        public event Action<int> PlaylistPosChangedAsync;
+        public event Action<Size> VideoSizeChanged;
+        public event Action<Size> VideoSizeChangedAsync;
 
         public Dictionary<string, List<Action>>               PropChangeActions { get; set; } = new Dictionary<string, List<Action>>();
         public Dictionary<string, List<Action<int>>>       IntPropChangeActions { get; set; } = new Dictionary<string, List<Action<int>>>();
@@ -169,6 +155,18 @@ namespace mpvnet
             ObservePropertyInt("video-rotate", value => {
                 VideoRotate = value;
                 UpdateVideoSize("dwidth", "dheight");
+            });
+
+            ObservePropertyInt("playlist-pos", value => {
+                InvokeEvent(PlaylistPosChanged, PlaylistPosChangedAsync, value);
+
+                if (FileEnded && value == -1)
+                {
+                    ShowLogo();
+
+                    if (GetPropertyString("keep-open") == "no")
+                        Core.CommandV("quit");
+                }
             });
 
             Initialized?.Invoke();
@@ -350,7 +348,7 @@ namespace mpvnet
             if (VideoSize != size)
             {
                 VideoSize = size;
-                InvokeEvent(VideoSizeChanged, VideoSizeChangedAsync);
+                InvokeEvent(VideoSizeChanged, VideoSizeChangedAsync, size);
                 VideoSizeAutoResetEvent.Set();
             }
         }
@@ -537,48 +535,14 @@ namespace mpvnet
                         case mpv_event_id.MPV_EVENT_START_FILE:
                             InvokeEvent(StartFile, StartFileAsync);
                             break;
-                        case mpv_event_id.MPV_EVENT_TRACKS_CHANGED:
-                            InvokeEvent(TracksChanged, TracksChangedAsync);
-                            break;
-                        case mpv_event_id.MPV_EVENT_TRACK_SWITCHED:
-                            InvokeEvent(TrackSwitched, TrackSwitchedAsync);
-                            break;
-                        case mpv_event_id.MPV_EVENT_IDLE:
-                            InvokeEvent(Idle, IdleAsync);
-
-                            if (FileEnded)
-                            {
-                                ShowLogo();
-
-                                if (GetPropertyString("keep-open") == "no")
-                                    Core.CommandV("quit");
-                            }
-                            break;
-                        case mpv_event_id.MPV_EVENT_PAUSE:
-                            Paused = true;
-                            InvokeEvent(Pause, PauseAsync);
-                            break;
-                        case mpv_event_id.MPV_EVENT_UNPAUSE:
-                            Paused = false;
-                            InvokeEvent(Unpause, UnpauseAsync);
-                            break;
-                        case mpv_event_id.MPV_EVENT_SCRIPT_INPUT_DISPATCH:
-                            InvokeEvent(ScriptInputDispatch, ScriptInputDispatchAsync);
-                            break;
                         case mpv_event_id.MPV_EVENT_AUDIO_RECONFIG:
                             InvokeEvent(AudioReconfig, AudioReconfigAsync);
-                            break;
-                        case mpv_event_id.MPV_EVENT_METADATA_UPDATE:
-                            InvokeEvent(MetadataUpdate, MetadataUpdateAsync);
                             break;
                         case mpv_event_id.MPV_EVENT_SEEK:
                             InvokeEvent(Seek, SeekAsync);
                             break;
                         case mpv_event_id.MPV_EVENT_PLAYBACK_RESTART:
                             InvokeEvent(PlaybackRestart, PlaybackRestartAsync);
-                            break;
-                        case mpv_event_id.MPV_EVENT_CHAPTER_CHANGE:
-                            InvokeEvent(ChapterChange, ChapterChangeAsync);
                             break;
                     }
                 }
@@ -616,6 +580,12 @@ namespace mpvnet
         {
             InvokeAsync(asyncAction);
             action?.Invoke();
+        }
+
+        void InvokeEvent<T>(Action<T> action, Action<T> asyncAction, T t)
+        {
+            InvokeAsync(asyncAction, t);
+            action?.Invoke(t);
         }
 
         void InvokeAsync(Action action)
@@ -1109,7 +1079,7 @@ namespace mpvnet
 
                 if (files.Count == 0 || files[0].Contains("://"))
                 {
-                    VideoSizeChanged?.Invoke();
+                    VideoSizeChanged?.Invoke(VideoSize);
                     VideoSizeAutoResetEvent.Set();
                 }
             }

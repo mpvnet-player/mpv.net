@@ -5,7 +5,7 @@ not yet released
 - Custom conf folder location feature removed.
 - Inno Setup replaced with Microsoft Store setup.
 - Fix script-opts files being ingnored.
-- libmpv shinchiro 2021-11-14
+- libmpv shinchiro 2021-12-19
 
 
 5.5.0.4 Beta (2021-11-05)

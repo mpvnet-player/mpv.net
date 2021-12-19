@@ -203,10 +203,6 @@ namespace mpvnet
                     Core.FileLoadedAsync += () => Event.Invoke("file-loaded", null);
                     break;
 
-                case "idle":
-                    Core.IdleAsync += () => Event.Invoke("idle", null);
-                    break;
-
                 case "video-reconfig":
                     Core.VideoReconfigAsync += () => Event.Invoke("video-reconfig", null);
                     break;

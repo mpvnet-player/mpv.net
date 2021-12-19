@@ -52,8 +52,8 @@ namespace mpvnet
                 Core.ScaleWindow += Core_ScaleWindow;
                 Core.WindowScale += Core_WindowScale;
                 Core.FileLoaded += Core_FileLoaded;
-                Core.Idle += Core_Idle;
                 Core.Seek += () => UpdateProgressBar();
+                Core.PlaylistPosChanged += (value) => SetTitle();
 
                 Core.ObserveProperty("window-maximized", PropChangeWindowMaximized);
                 Core.ObserveProperty("window-minimized", PropChangeWindowMinimized);
@@ -180,11 +180,9 @@ namespace mpvnet
 
         void Core_Shutdown() => BeginInvoke(new Action(() => Close()));
 
-        void Core_Idle() => SetTitle();
-
         void CM_Popup(object sender, EventArgs e) => CursorHelp.Show();
 
-        void Core_VideoSizeChanged() => BeginInvoke(new Action(() =>
+        void Core_VideoSizeChanged(Size value) => BeginInvoke(new Action(() =>
         {
             if (!KeepSize())
                 SetFormPosAndSize();
@@ -956,7 +954,7 @@ namespace mpvnet
         void PropChangeTitle(string value) { Title = value; SetTitle(); }
         
         void PropChangeEdition(int value) => Core.Edition = value;
-
+        
         void PropChangeWindowMaximized()
         {
             if (!WasShown)
