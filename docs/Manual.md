@@ -49,7 +49,11 @@ Download
 
 ### Stable
 
-[Release page](../../../releases)
+1. [Microsoft Store](https://www.microsoft.com/store/productId/9N64SQZTB3LM)
+
+2. [Portable](../../../releases)
+
+3. `winget install mpv.net`
 
 
 ### Beta
@@ -64,16 +68,7 @@ Installation
 
 mpv.net requires the .NET Framework 4.8 and Windows 7 or higher and a modern graphics card.
 
-For internet streaming youtube-dl or yt-dlp must be downloaded and installed manually
-(the location must be defined in the PATH environment variable or it must be located
-in the startup directory).
-
-mpvnet.exe is platform agnostic, users that need x86 have to replace 3 native tools:
-
-- mpv-2.dll
-- MediaInfo.dll
-- mpvnet.com
-
+For internet streaming youtube-dl or yt-dlp must be downloaded and installed manually.
 
 #### File Associations
 

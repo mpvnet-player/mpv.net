@@ -101,8 +101,8 @@ public class libmpv
         MPV_EVENT_START_FILE = 6,
         MPV_EVENT_END_FILE = 7,
         MPV_EVENT_FILE_LOADED = 8,
-        MPV_EVENT_IDLE = 11, //deprecated in mpv
-        MPV_EVENT_TICK = 14,
+        MPV_EVENT_IDLE = 11, //deprecated
+        MPV_EVENT_TICK = 14, //deprecated
         MPV_EVENT_SCRIPT_INPUT_DISPATCH = 15,
         MPV_EVENT_CLIENT_MESSAGE = 16,
         MPV_EVENT_VIDEO_RECONFIG = 17,
