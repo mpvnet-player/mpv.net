@@ -106,6 +106,7 @@ mpv.net searches the config folder at:
 
 1. startup\portable_config
 2. %APPDATA%\mpv.net (`C:\Users\%USERNAME%\AppData\Roaming\mpv.net`)
+3. For Microsoft Store version (`%LOCALAPPDATA%\Packages\5664FrankSkare.mpv.net_0ta2kwwjvkgap\LocalCache\Roaming\mpv.net`)
 
 mpv options are stored in the file mpv.conf,
 mpv.net options are stored in the file mpvnet.conf,
