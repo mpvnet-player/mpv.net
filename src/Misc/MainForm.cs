@@ -74,7 +74,7 @@ namespace mpvnet
 
                 Core.ObservePropertyDouble("window-scale", WindowScale);
 
-                if (!IsVulkanOrGpuNext)
+                if (Core.GPUAPI != "vulkan")
                     Core.ProcessCommandLine(false);
 
                 AppDomain.CurrentDomain.UnhandledException += (sender, e) => App.ShowException(e.ExceptionObject);
@@ -193,8 +193,6 @@ namespace mpvnet
         bool IsFullscreen => WindowState == FormWindowState.Maximized && FormBorderStyle == FormBorderStyle.None;
 
         bool IsCommandPaletteVissible() => CommandPaletteHost != null && CommandPaletteHost.Visible;
-
-        bool IsVulkanOrGpuNext => Core.GPUAPI == "vulkan" || Core.VO == "gpu-next";
 
         bool KeepSize() => App.StartSize == "session" || App.StartSize == "always";
 
@@ -1036,7 +1034,7 @@ namespace mpvnet
             if (WindowState == FormWindowState.Maximized)
                 Core.SetPropertyBool("window-maximized", true);
 
-            if (IsVulkanOrGpuNext)
+            if (Core.GPUAPI == "vulkan")
                 Core.ProcessCommandLine(false);
 
             WPF.Init();
