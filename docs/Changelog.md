@@ -5,6 +5,15 @@ not yet released
 - Custom conf folder location feature removed.
 - Inno Setup replaced with Microsoft Store setup.
 - Fix script-opts files being ingnored.
+- Showing the recent list in the command palette,
+  the top item gets auto selected.
+  https://github.com/stax76/mpv.net/issues/328#issuecomment-1057296054
+- If the play list is empty, the most recent file
+  gets loaded when pressing space.
+  https://github.com/stax76/mpv.net/issues/328#issuecomment-1057296054
+- Ctrl+v (previously u) opens files (or URLs) from the clipboard,
+  previously it had to be a file path (format string) and now
+  it can also be the clipboard format of type file.
 - libmpv zhongfly 2022-02-27
 
 

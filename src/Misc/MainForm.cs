@@ -713,7 +713,8 @@ namespace mpvnet
             if (App.Settings.RecentFiles.Contains(path))
                 App.Settings.RecentFiles.Remove(path);
 
-            App.Settings.RecentFiles.Insert(0, path);
+            if (path != @"bd://" && path != @"dvd://")
+                App.Settings.RecentFiles.Insert(0, path);
 
             while (App.Settings.RecentFiles.Count > App.RecentCount)
                 App.Settings.RecentFiles.RemoveAt(App.RecentCount);
@@ -1138,8 +1139,7 @@ namespace mpvnet
 
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
                 Core.LoadFiles(e.Data.GetData(DataFormats.FileDrop) as String[], true, ModifierKeys.HasFlag(Keys.Control));
-          
-            if (e.Data.GetDataPresent(DataFormats.Text))
+            else if (e.Data.GetDataPresent(DataFormats.Text))
                 Core.LoadFiles(new[] { e.Data.GetData(DataFormats.Text).ToString() }, true, ModifierKeys.HasFlag(Keys.Control));
         }
 

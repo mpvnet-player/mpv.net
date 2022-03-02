@@ -21,7 +21,7 @@
 # https://mpv.io/manual/master/#input
 
 o           script-message mpv.net open-files         #menu: Open > Open Files...
-u           script-message mpv.net open-url           #menu: Open > Open URL or file path from clipboard
+Ctrl+v      script-message mpv.net open-url           #menu: Open > Open URL or file from clipboard
 _           script-message mpv.net open-optical-media #menu: Open > Open DVD/Blu-ray Drive/Folder...
 _           ignore                                    #menu: Open > -
 Alt+a       script-message mpv.net load-audio         #menu: Open > Load external audio files...
@@ -31,11 +31,11 @@ _           script-message mpv.net open-files append  #menu: Open > Add files to
 _           ignore                                    #menu: Open > -
 _           ignore                                    #menu: Open > Recent
 
-_           ignore                 #menu: -
-Space       cycle pause            #menu: Play/Pause
-Ctrl+s      stop                   #menu: Stop
-_           ignore                 #menu: -
-Enter       cycle fullscreen       #menu: Toggle Fullscreen
+_           ignore                            #menu: -
+Space       script-message mpv.net play-pause #menu: Play/Pause
+Ctrl+s      stop                              #menu: Stop
+_           ignore                            #menu: -
+Enter       cycle fullscreen                  #menu: Toggle Fullscreen
 f           cycle fullscreen
  
 F11         playlist-prev; set pause no #menu: Navigate > Previous File

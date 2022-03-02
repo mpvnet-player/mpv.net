@@ -31,6 +31,7 @@ namespace mpvnet
                 case "open-files": OpenFiles(args); break;
                 case "open-optical-media": Open_DVD_Or_BD_Folder(); break;
                 case "open-url": OpenURL(); break;
+                case "play-pause": PlayPause(); break;
                 case "playlist-first": PlaylistFirst(); break;
                 case "playlist-last": PlaylistLast(); break;
                 case "reg-file-assoc": RegisterFileAssociations(args[0]); break;
@@ -115,6 +116,25 @@ namespace mpvnet
 
             if (pos < count - 1)
                 Core.SetPropertyInt("playlist-pos", count - 1);
+        }
+
+        public static void PlayPause()
+        {
+            int count = Core.GetPropertyInt("playlist-count");
+
+            if (count > 0)
+                Core.Command("cycle pause");
+            else if (App.Settings.RecentFiles.Count > 0)
+            {
+                foreach (string i in App.Settings.RecentFiles)
+                {
+                    if (i.Contains("://") || File.Exists(i))
+                    {
+                        Core.LoadFiles(new[] { i }, true, false);
+                        break;
+                    }
+                }
+            }
         }
 
         public static void ShowHistory()
@@ -217,16 +237,24 @@ namespace mpvnet
         public static void OpenURL()
         {
             App.InvokeOnMainThread(new Action(() => {
-                string clipboard = System.Windows.Forms.Clipboard.GetText();
-
-                if (string.IsNullOrEmpty(clipboard) || (!clipboard.Contains("://") && !File.Exists(clipboard)) ||
-                    clipboard.Contains("\n"))
+                if (WinForms.Clipboard.ContainsFileDropList())
                 {
-                    App.ShowError("No URL found, the clipboard does not contain a valid URL or file.");
-                    return;
+                    string[] files = WinForms.Clipboard.GetFileDropList().Cast<string>().ToArray();
+                    Core.LoadFiles(files, false, Control.ModifierKeys.HasFlag(Keys.Control));
                 }
+                else
+                {
+                    string clipboard = WinForms.Clipboard.GetText();
 
-                Core.LoadFiles(new [] { clipboard }, false, Control.ModifierKeys.HasFlag(Keys.Control));
+                    if (string.IsNullOrEmpty(clipboard) || (!clipboard.Contains("://") && !File.Exists(clipboard)) ||
+                        clipboard.Contains("\n"))
+                    {
+                        App.ShowError("No URL found, the clipboard does not contain a valid URL or file.");
+                        return;
+                    }
+
+                    Core.LoadFiles(new [] { clipboard }, false, Control.ModifierKeys.HasFlag(Keys.Control));
+                }
             }));
         }
 
@@ -449,7 +477,7 @@ namespace mpvnet
 
         public static void ShowRecent() => App.InvokeOnMainThread(ShowRecentInternal);
 
-        public static void ShowRecentInternal()
+        static void ShowRecentInternal()
         {
             List<CommandPaletteItem> items = new List<CommandPaletteItem>();
 
@@ -468,6 +496,7 @@ namespace mpvnet
 
             CommandPalette.Instance.SetItems(items);
             MainForm.Instance.ShowCommandPalette();
+            CommandPalette.Instance.SelectFirst();
         }
 
         public static void RegisterFileAssociations(string perceivedType)
