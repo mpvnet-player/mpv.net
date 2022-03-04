@@ -145,7 +145,7 @@ namespace MsgBoxEx
         {
             if (!IsFontFamilyValid(familyName))
                 if (!string.IsNullOrEmpty(familyName))
-                    MsgFontFamily = new System.Windows.Media.FontFamily(familyName);
+                    MsgFontFamily = new FontFamily(familyName);
             MsgFontSize = Math.Max(1.0, size);
         }
 

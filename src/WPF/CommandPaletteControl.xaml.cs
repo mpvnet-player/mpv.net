@@ -7,7 +7,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Windows.Media;
 
 namespace mpvnet
 {
@@ -90,6 +89,11 @@ namespace mpvnet
         bool Filter(CommandPaletteItem item)
         {
             string filter = SearchControl.SearchTextBox.Text.ToLower();
+
+            if (filter.Length == 1 && item.CommandItem != null)
+                return item.CommandItem.Input.ToLower().Replace("ctrl+", "")
+                                                       .Replace("shift+", "")
+                                                       .Replace("alt+", "") == filter.ToLower();
 
             if (filter == "" || item.Text.ToLower().Contains(filter) ||
                 item.SecondaryText.ToLower().Contains(filter))

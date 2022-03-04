@@ -228,6 +228,7 @@ namespace mpvnet
         public string Text { get; set; } = "";
         public string SecondaryText { get; set; } = "";
         public Action Action { get; set; }
+        public CommandItem CommandItem { get; set; }
     }
 
     public class CommandPalette
@@ -241,7 +242,8 @@ namespace mpvnet
                 .Select(i => new CommandPaletteItem() {
                     Text = i.Display,
                     SecondaryText = i.Input,
-                    Action = () => Core.Command(i.Command)
+                    Action = () => Core.Command(i.Command),
+                    CommandItem = i
                 });
         }
     }

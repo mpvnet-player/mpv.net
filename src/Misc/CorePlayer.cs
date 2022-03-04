@@ -241,7 +241,15 @@ namespace mpvnet
                     _ConfigFolder = _ConfigFolder.AddSep();
 
                     if (!File.Exists(_ConfigFolder + "input.conf"))
-                        File.WriteAllText(_ConfigFolder + "input.conf", Properties.Resources.input_conf);
+                    {
+                        string content = Properties.Resources.input_conf;
+
+                        if (Environment.GetEnvironmentVariable("username") == "frank")
+                            content = content.Replace("volume  2 ", "volume  10")
+                                             .Replace("volume -2 ", "volume -10");
+
+                        File.WriteAllText(_ConfigFolder + "input.conf", content);
+                    }
                 }
 
                 return _ConfigFolder;

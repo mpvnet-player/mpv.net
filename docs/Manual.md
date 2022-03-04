@@ -123,13 +123,30 @@ input.conf file, if it's missing mpv.net generates it with the following default
 Please be aware that once input.conf exists, mpv.net cannot update it, this means
 the menu becomes outdated when mpv.net is updated with new or changed default menu
 items. The only way to get an up-to-date menu is either resetting the menu by
-deleting input.conf or updating it by manually editing input.conf. This is
-currently the biggest design problem of mpv.net and it's difficult to overcome.
+deleting input.conf or updating it by manually editing input.conf.
 
 Global keyboard shortcuts are supported via global-input.conf file.
 
 The config folder can be opened from the context menu: `Settings > Open Config Folder`
 
+A input and config editor can be found in the context menu under 'Settings'.
+
+The input test mode can be started via command line: --input-test
+
+The input key list can be printed with --input-keylist or
+shown from the context menu under: View > Advanced > Show Keys
+
+mpv.net input.conf defaults:
+https://github.com/stax76/mpv.net/blob/master/src/Resources/input.conf.txt
+
+mpv input.conf defaults:
+https://github.com/mpv-player/mpv/blob/master/etc/input.conf
+
+mpv input commands:
+https://mpv.io/manual/master/#list-of-input-commands
+
+mpv input options:
+https://mpv.io/manual/master/#input
 
 Command Line Interface
 ----------------------

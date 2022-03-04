@@ -14,6 +14,12 @@ not yet released
 - Ctrl+v (previously u) opens files (or URLs) from the clipboard,
   previously it had to be a file path (format string) and now
   it can also be the clipboard format of type file.
+- The usability of the menu structure was improved.
+- Audio and subtitle tracks and various other features
+  are now available in the command palette.
+- Single character input in the command palette searches exclusivly
+  key bindings much like the search field of the input editor.
+- Various default key bindings improved.
 - libmpv zhongfly 2022-02-27
 
 

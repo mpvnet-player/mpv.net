@@ -13,6 +13,8 @@ using System.Windows.Interop;
 using WinForms = System.Windows.Forms;
 
 using static mpvnet.Global;
+using System.Windows.Media;
+using System.Text.RegularExpressions;
 
 namespace mpvnet
 {
@@ -22,9 +24,10 @@ namespace mpvnet
         {
             switch (id)
             {
+
                 case "add-files-to-playlist": OpenFiles("append"); break; // deprecated 2019
                 case "cycle-audio": CycleAudio(); break;
-                case "execute-mpv-command": Msg.ShowError("Command was removed, reset input.conf."); break;
+                case "execute-mpv-command": Msg.ShowError("Command was removed, reset input.conf."); break; // deprecated 2020
                 case "load-audio": LoadAudio(); break;
                 case "load-sub": LoadSubtitle(); break;
                 case "open-conf-folder": ProcessHelp.ShellExecute(Core.ConfigFolder); break;
@@ -38,22 +41,24 @@ namespace mpvnet
                 case "scale-window": ScaleWindow(float.Parse(args[0], CultureInfo.InvariantCulture)); break;
                 case "shell-execute": ProcessHelp.ShellExecute(args[0]); break;
                 case "show-about": ShowDialog(typeof(AboutWindow)); break;
-                case "show-audio-devices": ShowTextWithEditor("audio-device-list", Core.GetPropertyOsdString("audio-device-list")); break;
+                case "show-audio-devices": Msg.ShowInfo(Core.GetPropertyOsdString("audio-device-list")); break;
+                case "show-audio-tracks": ShowAudioTracks(); break;
                 case "show-command-palette": ShowCommandPalette(); break;
                 case "show-commands": ShowCommands(); break;
                 case "show-conf-editor": ShowDialog(typeof(ConfWindow)); break;
-                case "show-decoders": ShowTextWithEditor("decoder-list", mpvHelp.GetDecoders()); break;
-                case "show-demuxers": ShowTextWithEditor("demuxer-lavf-list", mpvHelp.GetDemuxers()); break;
+                case "show-decoders": ShowStrings(mpvHelp.GetDecoders().Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)); break;
+                case "show-demuxers": ShowStrings(mpvHelp.GetDemuxers().Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)); break;
                 case "show-history": ShowHistory(); break;
                 case "show-info": ShowInfo(); break;
                 case "show-input-editor": ShowDialog(typeof(InputWindow)); break;
-                case "show-keys": ShowTextWithEditor("input-key-list", Core.GetPropertyString("input-key-list").Replace(",", BR)); break;
+                case "show-keys": ShowStrings(Core.GetPropertyString("input-key-list").Split(',')); break;
                 case "show-media-info": ShowMediaInfo(args); break;
                 case "show-playlist": ShowPlaylist(); break;
-                case "show-profiles": ShowTextWithEditor("profile-list", mpvHelp.GetProfiles()); break;
+                case "show-profiles": Msg.ShowInfo(mpvHelp.GetProfiles()); break;
                 case "show-properties": ShowProperties(); break;
-                case "show-protocols": ShowTextWithEditor("protocol-list", mpvHelp.GetProtocols()); break;
+                case "show-protocols": ShowStrings(mpvHelp.GetProtocols().Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)); break;
                 case "show-recent": ShowRecent(); break;
+                case "show-subtitle-tracks": ShowSubtitleTracks(); break;
                 case "show-text": ShowText(args[0], Convert.ToInt32(args[1]), Convert.ToInt32(args[2])); break;
                 case "window-scale": WindowScale(float.Parse(args[0], CultureInfo.InvariantCulture)); break;
 
@@ -342,15 +347,7 @@ namespace mpvnet
                 }
             }
 
-            ShowTextWithEditor("command-list", sb.ToString());
-        }
-
-        public static void ShowTextWithEditor(string name, string text)
-        {
-            string file = Path.Combine(Path.GetTempPath(), name + ".txt");
-            App.TempFiles.Add(file);
-            File.WriteAllText(file, BR + text.Trim() + BR);
-            ProcessHelp.ShellExecute(file);
+            Msg.ShowInfo(sb.ToString());
         }
 
         public static void ScaleWindow(float factor) => Core.RaiseScaleWindow(factor);
@@ -383,29 +380,98 @@ namespace mpvnet
                     bool full = args.Contains("full");
                     bool raw = args.Contains("raw");
                     string text = mediaInfo.GetSummary(full, raw);
-                    ShowTextWithEditor(Path.GetFileName(path), text);
+                    text = Regex.Replace(text, "Unique ID.+", "");
+                    MsgBoxEx.MessageBoxEx.MsgFontFamily = new FontFamily("Consolas");
+                    Msg.ShowInfo(text);
+                    MsgBoxEx.MessageBoxEx.MsgFontFamily = new FontFamily("Segoe UI");
                 }
             }
         }
 
-        public static void ShowCommandPalette() => App.InvokeOnMainThread(ShowCommandPaletteInternal);
-
-        static void ShowCommandPaletteInternal()
+        public static void ShowCommandPalette() => App.InvokeOnMainThread(() =>
         {
             CommandPalette.Instance.SetItems(CommandPalette.GetItems());
             MainForm.Instance.ShowCommandPalette();
             CommandPalette.Instance.SelectFirst();
-        }
+        });
 
-        public static void ShowPlaylist() => App.InvokeOnMainThread(ShowPlaylistInternal);
+        public static void ShowAudioTracks() => App.InvokeOnMainThread(() =>
+        {
+            MediaTrack[] tracks = Core.MediaTracks.Where(track => track.Type == "a").ToArray();
+            int len = tracks.Length;
 
-        static void ShowPlaylistInternal()
+            if (len < 1)
+            {
+                Core.CommandV("show-text", "No audio tracks");
+                return;
+            }
+
+            List<CommandPaletteItem> items = new List<CommandPaletteItem>();
+
+            foreach (MediaTrack i in tracks)
+            {
+                MediaTrack track = i;
+
+                CommandPaletteItem item = new CommandPaletteItem()
+                {
+                    Text = track.Text,
+                    Action = () => {
+                        Core.CommandV("set", "aid", track.ID.ToString());
+                        Core.CommandV("show-text", track.ID + "/" + len + ": " +
+                            tracks[track.ID - 1].Text.Substring(3), "5000");
+                    }
+                };
+
+                items.Add(item);
+            }
+
+            CommandPalette.Instance.SetItems(items);
+            MainForm.Instance.ShowCommandPalette();
+            CommandPalette.Instance.SelectFirst();
+        });
+
+        public static void ShowSubtitleTracks() => App.InvokeOnMainThread(() =>
+        {
+            MediaTrack[] tracks = Core.MediaTracks.Where(track => track.Type == "s").ToArray();
+            int len = tracks.Length;
+
+            if (len < 1)
+            {
+                Core.CommandV("show-text", "No subtitle tracks");
+                return;
+            }
+
+            List<CommandPaletteItem> items = new List<CommandPaletteItem>();
+
+            foreach (MediaTrack i in tracks)
+            {
+                MediaTrack track = i;
+
+                CommandPaletteItem item = new CommandPaletteItem()
+                {
+                    Text = track.Text,
+                    Action = () => {
+                        Core.CommandV("set", "sid", track.ID.ToString());
+                        Core.CommandV("show-text", track.ID + "/" + len + ": " +
+                            tracks[track.ID - 1].Text.Substring(3), "5000");
+                    }
+                };
+
+                items.Add(item);
+            }
+
+            CommandPalette.Instance.SetItems(items);
+            MainForm.Instance.ShowCommandPalette();
+            CommandPalette.Instance.SelectFirst();
+        });
+
+        public static void ShowPlaylist() => App.InvokeOnMainThread(() =>
         {
             int count = Core.GetPropertyInt("playlist-count");
             string currentPath = Core.GetPropertyString("path");
             CommandPaletteItem currentItem = null;
 
-            if (count <= 0)
+            if (count < 1)
                 return;
 
             List<CommandPaletteItem> items = new List<CommandPaletteItem>();
@@ -414,8 +480,9 @@ namespace mpvnet
             {
                 int index = i;
                 string file = Core.GetPropertyString($"playlist/{i}/filename");
-           
-                CommandPaletteItem item = new CommandPaletteItem() {
+
+                CommandPaletteItem item = new CommandPaletteItem()
+                {
                     Text = file.FileName(),
                     Action = () => {
                         Core.SetPropertyInt("playlist-pos", index);
@@ -441,11 +508,9 @@ namespace mpvnet
             }
 
             MainForm.Instance.ShowCommandPalette();
-        }
+        });
 
-        public static void ShowProperties() => App.InvokeOnMainThread(ShowPropertiesInternal);
-
-        public static void ShowPropertiesInternal()
+        public static void ShowProperties() => App.InvokeOnMainThread(() =>
         {
             var props = Core.GetPropertyString("property-list").Split(',').OrderBy(prop => prop);
             List<CommandPaletteItem> items = new List<CommandPaletteItem>();
@@ -473,11 +538,9 @@ namespace mpvnet
 
             CommandPalette.Instance.SetItems(items);
             MainForm.Instance.ShowCommandPalette();
-        }
+        });
 
-        public static void ShowRecent() => App.InvokeOnMainThread(ShowRecentInternal);
-
-        static void ShowRecentInternal()
+        public static void ShowRecent() => App.InvokeOnMainThread(() =>
         {
             List<CommandPaletteItem> items = new List<CommandPaletteItem>();
 
@@ -497,7 +560,7 @@ namespace mpvnet
             CommandPalette.Instance.SetItems(items);
             MainForm.Instance.ShowCommandPalette();
             CommandPalette.Instance.SelectFirst();
-        }
+        });
 
         public static void RegisterFileAssociations(string perceivedType)
         {
@@ -531,5 +594,27 @@ namespace mpvnet
                 }
             } catch { }
         }
+
+        public static void ShowStrings(string[] strings) => App.InvokeOnMainThread(() =>
+        {
+            List<CommandPaletteItem> items = new List<CommandPaletteItem>();
+
+            foreach (string i in strings)
+            {
+                string str = i;
+
+                CommandPaletteItem item = new CommandPaletteItem()
+                {
+                    Text = str,
+                    Action = () => Msg.ShowInfo(str)
+                };
+
+                items.Add(item);
+            }
+
+            CommandPalette.Instance.SetItems(items);
+            MainForm.Instance.ShowCommandPalette();
+            CommandPalette.Instance.SelectFirst();
+        });
     }
 }
