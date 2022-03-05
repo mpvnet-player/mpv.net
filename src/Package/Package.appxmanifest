@@ -113,6 +113,10 @@
 				<uap:Extension Category="windows.protocol">
 					<uap:Protocol Name="ytdl" />
 				</uap:Extension>
+
+				<uap:Extension Category="windows.protocol">
+					<uap:Protocol Name="rtsp" />
+				</uap:Extension>
 			</Extensions>
 
 		</Application>

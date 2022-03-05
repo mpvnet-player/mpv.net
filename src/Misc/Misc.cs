@@ -83,6 +83,8 @@ namespace mpvnet
                 RegistryHelp.SetValue(@"HKCU\Software\Microsoft\Windows\CurrentVersion\App Paths\" + ExeFilename, null, ExePath);
                 RegistryHelp.SetValue(@"HKCR\ytdl", "URL Protocol", "");
                 RegistryHelp.SetValue(@"HKCR\ytdl\shell\open\command", null, $"\"{ExePath}\" \"%1\"");
+                RegistryHelp.SetValue(@"HKCR\rtsp", "URL Protocol", "");
+                RegistryHelp.SetValue(@"HKCR\rtsp\shell\open\command", null, $"\"{ExePath}\" \"%1\"");
                 RegistryHelp.SetValue(@"HKCR\Applications\" + ExeFilename, "FriendlyAppName", "mpv.net media player");
                 RegistryHelp.SetValue(@"HKCR\Applications\" + ExeFilename + @"\shell\open\command", null, $"\"{ExePath}\" \"%1\"");
                 RegistryHelp.SetValue(@"HKCR\SystemFileAssociations\video\OpenWithList\" + ExeFilename, null, "");
