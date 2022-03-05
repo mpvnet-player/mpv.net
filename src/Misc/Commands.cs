@@ -26,7 +26,7 @@ namespace mpvnet
             {
                 case "add-files-to-playlist": OpenFiles("append"); break; // deprecated 2019
                 case "cycle-audio": CycleAudio(); break;
-                case "execute-mpv-command": Msg.ShowError("Command was removed, reset input.conf."); break; // deprecated 2020
+                case "execute-mpv-command": Msg.ShowError("The command was removed, please reset input.conf by deleting it, in the new menu use the on screen console."); break; // deprecated 2020
                 case "load-audio": LoadAudio(); break;
                 case "load-sub": LoadSubtitle(); break;
                 case "open-conf-folder": ProcessHelp.ShellExecute(Core.ConfigFolder); break;
@@ -58,6 +58,7 @@ namespace mpvnet
                 case "show-properties": ShowProperties(); break;
                 case "show-protocols": ShowStrings(mpvHelp.GetProtocols().Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)); break;
                 case "show-recent": ShowRecent(); break;
+                case "show-setup-dialog": ShowSetupDialog(); break;  // deprecated 2022
                 case "show-subtitle-tracks": ShowSubtitleTracks(); break;
                 case "show-text": ShowText(args[0], Convert.ToInt32(args[1]), Convert.ToInt32(args[2])); break;
                 case "window-scale": WindowScale(float.Parse(args[0], CultureInfo.InvariantCulture)); break;
@@ -621,6 +622,20 @@ namespace mpvnet
             }
 
             CommandPalette.Instance.SetItems(items);
+            MainForm.Instance.ShowCommandPalette();
+            CommandPalette.Instance.SelectFirst();
+        });
+
+        public static void ShowSetupDialog() => App.InvokeOnMainThread(() =>
+        {
+            (string, string)[] pairs = {
+                ("Register video file associations", "script-message mpv.net reg-file-assoc video"),
+                ("Register audio file associations", "script-message mpv.net reg-file-assoc audio"),
+                ("Register image file associations", "script-message mpv.net reg-file-assoc image"),
+                ("Unregister file associations",     "script-message mpv.net reg-file-assoc unreg") };
+
+            var list = pairs.Select(i => new CommandPaletteItem(i.Item1, () => Core.Command(i.Item2)));
+            CommandPalette.Instance.SetItems(list);
             MainForm.Instance.ShowCommandPalette();
             CommandPalette.Instance.SelectFirst();
         });

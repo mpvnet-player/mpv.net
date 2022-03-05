@@ -71,6 +71,7 @@ _           ignore                 #menu: Video > -
 s           async screenshot       #menu: Video > Take Screenshot
 d           cycle deinterlace      #menu: Video > Toggle Deinterlace
 a           cycle-values video-aspect 16:9 4:3 2.35:1 -1 #menu: Video > Cycle Aspect Ratio
+Ctrl+r      cycle-values video-rotate 90 180 270 0       #menu: Video > Rotate Video
 
 KP7         script-message mpv.net cycle-audio #menu: Audio > Cycle/Next
 _           ignore                 #menu: Audio > -
@@ -119,7 +120,6 @@ b       cycle border                                #menu: View > Toggle Border
 Ctrl+t  cycle ontop                                 #menu: View > Toggle On Top 
 t       script-binding stats/display-stats-toggle   #menu: View > Toggle Statistics
 Del     script-binding osc/visibility               #menu: View > Toggle OSC Visibility
-Ctrl+r  cycle-values video-rotate 90 180 270 0      #menu: View > Rotate Video
 i       script-message mpv.net show-info            #menu: View > Show File/Stream Info
 p       show-progress                               #menu: View > Show Progress
 Ctrl+p  script-message mpv.net show-profiles        #menu: View > Show Profiles

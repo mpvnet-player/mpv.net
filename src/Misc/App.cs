@@ -131,7 +131,7 @@ namespace mpvnet
 
         public static string Version => "Copyright (C) 2000-2022 mpv.net/mpv/mplayer\n" +
             $"mpv.net {Application.ProductVersion} ({File.GetLastWriteTime(Application.ExecutablePath).ToShortDateString()})\n" +
-            $"{Core.GetPropertyString("mpv-version")} ({File.GetLastWriteTime(Folder.Startup + "mpv-2.dll").ToShortDateString()})\nffmpeg {Core.GetPropertyString("ffmpeg-version")}\nGPL v2 License";
+            $"{Core.GetPropertyString("mpv-version")} ({File.GetLastWriteTime(Folder.Startup + "mpv-2.dll").ToShortDateString()})\nffmpeg {Core.GetPropertyString("ffmpeg-version")}\nMediaInfo {FileVersionInfo.GetVersionInfo(Path.Combine(Application.StartupPath, "MediaInfo.dll")).FileVersion} ({File.GetLastWriteTime(Path.Combine(Application.StartupPath , "MediaInfo.dll")).ToShortDateString()})\nGPL v2 License";
 
         public static void ShowException(object obj)
         {

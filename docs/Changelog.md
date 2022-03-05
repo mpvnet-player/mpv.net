@@ -1,4 +1,13 @@
 
+5.6.2.0 Beta (2022-03-05)
+
+- Fix script-opts files being ignored, removed options are:
+  script-opts = osc-scalewindowed=1.5,osc-hidetimeout=2000,console-scale=1.5
+- Update MediaInfo to version 21.9.0.0 and
+  write version and date in About dialog.
+- Provide setup options in command palette to ensure backward
+  compatibility with previous input.conf definitions.
+
 5.6.1.0 Beta (2022-03-05)
 
 - Various conf editor improvements. (hooke007)
