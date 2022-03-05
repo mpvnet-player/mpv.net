@@ -267,7 +267,7 @@ Can be suppressed via shift key. Default: yes
 
 Defines if more then one mpv.net process is allowed.
 
-Tip: Whenever the control key is pressed when files or URLs are opened,
+Tip: Whenever the CTRL key is pressed when files or URLs are opened,
 the playlist is not cleared but the files or URLs are appended to the playlist.
 This not only works on process startup but in all mpv.net features that open files and URLs.
 

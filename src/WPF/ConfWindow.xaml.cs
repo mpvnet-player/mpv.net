@@ -344,5 +344,7 @@ namespace mpvnet
             if (e.Key == Key.Escape)
                 Close();
         }
+
+        void ShowMpvNetSpecific_MouseUp(object sender, MouseButtonEventArgs e) => SearchControl.Text = "mpv.net";
     }
 }

@@ -9,7 +9,7 @@
     mc:Ignorable="d"
     
     Title="Config Editor"
-    Height="530"
+    Height="540"
     Width="700"
     Foreground="{Binding Theme.Foreground}"
     Background="{Binding Theme.Background}"
@@ -25,7 +25,7 @@
         </Grid.RowDefinitions>
         
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100" />
+            <ColumnDefinition Width="105" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
@@ -75,7 +75,8 @@
                 </ListBox.ItemTemplate>
             </ListBox>
 
-            <TextBlock Name="OpenSettingsTextBlock" Margin="0,30,0,0" Cursor="Hand" TextWrapping="WrapWithOverflow" Foreground="{Binding Theme.Heading}" MouseUp="OpenSettingsTextBlock_MouseUp">Open config folder</TextBlock>
+            <TextBlock Name="ShowMpvNetSpecific"    Margin="0,15,0,0" Cursor="Hand" TextWrapping="WrapWithOverflow" Foreground="{Binding Theme.Heading}" MouseUp="ShowMpvNetSpecific_MouseUp">Show mpv.net specific options</TextBlock>
+            <TextBlock Name="OpenSettingsTextBlock" Margin="0,15,0,0" Cursor="Hand" TextWrapping="WrapWithOverflow" Foreground="{Binding Theme.Heading}" MouseUp="OpenSettingsTextBlock_MouseUp">Open config folder</TextBlock>
             <TextBlock Name="PreviewTextBlock"      Margin="0,15,0,0" Cursor="Hand" TextWrapping="WrapWithOverflow" Foreground="{Binding Theme.Heading}" MouseUp="PreviewTextBlock_MouseUp">Preview mpv.conf</TextBlock>
             <TextBlock Name="ShowManualTextBlock"   Margin="0,15,0,0" Cursor="Hand" TextWrapping="WrapWithOverflow" Foreground="{Binding Theme.Heading}" MouseUp="ShowManualTextBlock_MouseUp">Show mpv manual</TextBlock>
             <TextBlock Name="SupportTextBlock"      Margin="0,15,0,0" Cursor="Hand" TextWrapping="WrapWithOverflow" Foreground="{Binding Theme.Heading}" MouseUp="SupportTextBlock_MouseUp">Show support forum</TextBlock>

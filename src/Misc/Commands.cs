@@ -26,7 +26,7 @@ namespace mpvnet
             {
                 case "add-files-to-playlist": OpenFiles("append"); break; // deprecated 2019
                 case "cycle-audio": CycleAudio(); break;
-                case "execute-mpv-command": Msg.ShowError("The command was removed, please reset input.conf by deleting it, in the new menu use the on screen console."); break; // deprecated 2020
+                case "execute-mpv-command": Msg.ShowError("The command was removed, reset input.conf by deleting it, in the new menu use the on screen console."); break; // deprecated 2020
                 case "load-audio": LoadAudio(); break;
                 case "load-sub": LoadSubtitle(); break;
                 case "open-conf-folder": ProcessHelp.ShellExecute(Core.ConfigFolder); break;
@@ -63,7 +63,7 @@ namespace mpvnet
                 case "show-text": ShowText(args[0], Convert.ToInt32(args[1]), Convert.ToInt32(args[2])); break;
                 case "window-scale": WindowScale(float.Parse(args[0], CultureInfo.InvariantCulture)); break;
 
-                default: Terminal.WriteError($"No command '{id}' found."); break;
+                default: Terminal.WriteError($"No command '{id}' found, reset input.conf by deleting it."); break;
             }
         }
 
