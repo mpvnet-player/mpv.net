@@ -17,7 +17,6 @@ Space       script-message mpv.net play-pause #menu: Play/Pause
 Ctrl+s      stop                              #menu: Stop
 _           ignore                            #menu: -
 Enter       cycle fullscreen                  #menu: Toggle Fullscreen
-f           cycle fullscreen
  
 F11         playlist-prev; set pause no #menu: Navigate > Previous File
 F12         playlist-next; set pause no #menu: Navigate > Next File
@@ -75,8 +74,8 @@ a           cycle-values video-aspect 16:9 4:3 2.35:1 -1 #menu: Video > Cycle As
 
 KP7         script-message mpv.net cycle-audio #menu: Audio > Cycle/Next
 _           ignore                 #menu: Audio > -
-KP6         add audio-delay  0.1   #menu: Audio > Delay +0.1
-KP9         add audio-delay -0.1   #menu: Audio > Delay -0.1
+Ctrl+d      add audio-delay  0.1   #menu: Audio > Delay +0.1
+Ctrl+D      add audio-delay -0.1   #menu: Audio > Delay -0.1
 
 KP8         cycle sub              #menu: Subtitle > Cycle/Next
 v           cycle sub-visibility   #menu: Subtitle > Toggle Visibility
@@ -153,6 +152,7 @@ l       ab-loop                                     #menu: Tools > Set/clear A-B
 L       cycle-values loop-file inf no               #menu: Tools > Toggle infinite file looping
 _       playlist-shuffle                            #menu: Tools > Shuffle Playlist
 Ctrl+h  cycle-values hwdec auto no                  #menu: Tools > Toggle Hardware Decoding
+Q       quit-watch-later                            #menu: Tools > Exit Watch Later
 
 _ script-message mpv.net shell-execute https://mpv.io                    #menu: Help > Website mpv
 _ script-message mpv.net shell-execute https://github.com/stax76/mpv.net #menu: Help > Website mpv.net
@@ -163,31 +163,47 @@ _ ignore                                                                 #menu: 
 _ script-message mpv.net show-about                                      #menu: Help > About mpv.net
 
 F1 script-message mpv.net show-command-palette #menu: Command Palette
+_ ignore                                       #menu: -
+Esc quit                                       #menu: Exit
 
-_ ignore           #menu: -
-Esc quit           #menu: Exit
-Q quit-watch-later #menu: Exit Watch Later
-
-Power        quit
-Play         cycle pause
-Pause        cycle pause
-PlayPause    cycle pause
-MBTN_Mid     cycle pause
-Stop         stop
-Forward      seek  60
-Rewind       seek -60
-Wheel_Up     add volume  2 
-Wheel_Down   add volume -2 
-Wheel_Left   add volume -2 
-Wheel_Right  add volume  2 
-Prev         playlist-prev
-Next         playlist-next
-MBTN_Forward playlist-next
-MBTN_Back    playlist-prev
->            playlist-next
-<            playlist-prev
-Ctrl+Wheel_Up   no-osd seek  7
-Ctrl+Wheel_Down no-osd seek -7
-MBTN_Left       ignore
-MBTN_Left_DBL   cycle fullscreen
-KP_Enter        cycle fullscreen
+6             script-message mpv.net show-progress
+KP6           script-message mpv.net show-progress
+7             script-message mpv.net cycle-audio
+SHARP         script-message mpv.net cycle-audio
+8             cycle sub
+j             cycle sub
+q             quit
+Power         quit
+Play          cycle pause
+Pause         cycle pause
+PlayPause     cycle pause
+MBTN_Mid      cycle pause
+Stop          stop
+Forward       seek  60
+Rewind        seek -60
+Wheel_Up      add volume  2 
+Wheel_Down    add volume -2 
+Wheel_Left    add volume -2 
+Wheel_Right   add volume  2 
+Prev          playlist-prev
+Next          playlist-next
+MBTN_Forward  playlist-next
+MBTN_Back     playlist-prev
+>             playlist-next
+<             playlist-prev
+MBTN_Left     ignore
+f             cycle fullscreen
+MBTN_Left_DBL cycle fullscreen
+KP_Enter      cycle fullscreen
+Shift+RIGHT   no-osd seek  1 exact
+Shift+LEFT    no-osd seek -1 exact
+Shift+UP      no-osd seek  5 exact
+Shift+DOWN    no-osd seek -5 exact
+Shift+BS      revert-seek      # undo the previous (or marked) seek
+Shift+Ctrl+BS revert-seek mark # mark the position for revert-seek
+Shift+g       add sub-scale +0.1 # increase the subtitle font size
+Shift+f       add sub-scale -0.1 # decrease the subtitle font size
+Ctrl+Shift+LEFT  no-osd sub-seek -1 # seek to the previous subtitle
+Ctrl+Shift+RIGHT no-osd sub-seek  1 # seek to the next subtitle
+Ctrl+Wheel_Up    no-osd seek  7
+Ctrl+Wheel_Down  no-osd seek -7

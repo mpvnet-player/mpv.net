@@ -24,7 +24,6 @@ namespace mpvnet
         {
             switch (id)
             {
-
                 case "add-files-to-playlist": OpenFiles("append"); break; // deprecated 2019
                 case "cycle-audio": CycleAudio(); break;
                 case "execute-mpv-command": Msg.ShowError("Command was removed, reset input.conf."); break; // deprecated 2020
@@ -55,6 +54,7 @@ namespace mpvnet
                 case "show-media-info": ShowMediaInfo(args); break;
                 case "show-playlist": ShowPlaylist(); break;
                 case "show-profiles": Msg.ShowInfo(mpvHelp.GetProfiles()); break;
+                case "show-progress": ShowProgress(); break;
                 case "show-properties": ShowProperties(); break;
                 case "show-protocols": ShowStrings(mpvHelp.GetProtocols().Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)); break;
                 case "show-recent": ShowRecent(); break;
@@ -185,11 +185,12 @@ namespace mpvnet
                             duration = mediaInfo.GetInfo(MediaInfoStreamKind.Audio, "Duration/String");
 
                             if (performer != "") text += "Artist: " + performer + "\n";
-                            if (title != "") text += "Title: " + title + "\n";
-                            if (album != "") text += "Album: " + album + "\n";
-                            if (genre != "") text += "Genre: " + genre + "\n";
-                            if (date != "") text += "Year: " + date + "\n";
-                            if (duration != "") text += "Length: " + duration + "\n";
+                            if (title != "")     text += "Title: " + title + "\n";
+                            if (album != "")     text += "Album: " + album + "\n";
+                            if (genre != "")     text += "Genre: " + genre + "\n";
+                            if (date != "")      text += "Year: " + date + "\n";
+                            if (duration != "")  text += "Length: " + duration + "\n";
+
                             text += "Size: " + mediaInfo.GetInfo(MediaInfoStreamKind.General, "FileSize/String") + "\n";
                             text += "Type: " + path.Ext().ToUpper();
 
@@ -213,17 +214,10 @@ namespace mpvnet
                     }
                 }
 
-                TimeSpan position = TimeSpan.FromSeconds(Core.GetPropertyDouble("time-pos"));
-                TimeSpan duration2 = TimeSpan.FromSeconds(Core.GetPropertyDouble("duration"));
                 string videoFormat = Core.GetPropertyString("video-format").ToUpper();
                 string audioCodec = Core.GetPropertyString("audio-codec-name").ToUpper();
 
-                text = path.FileName() + "\n" +
-                    FormatTime(position.TotalMinutes) + ":" +
-                    FormatTime(position.Seconds) + " / " +
-                    FormatTime(duration2.TotalMinutes) + ":" +
-                    FormatTime(duration2.Seconds) + "\n" +
-                    $"{width} x {height}\n";
+                text = path.FileName() + $"\n{width} x {height}\n";
 
                 if (fileSize > 0)
                     text += Convert.ToInt32(fileSize / 1024.0 / 1024.0) + " MB\n";
@@ -231,14 +225,28 @@ namespace mpvnet
                 text += $"{videoFormat}\n{audioCodec}";
 
                 Core.CommandV("show-text", text, "5000");
-                string FormatTime(double value) => ((int)value).ToString("00");
             }
             catch (Exception e)
             {
                 App.ShowException(e);
             }
         }
-        
+
+        public static void ShowProgress()
+        {
+            TimeSpan position = TimeSpan.FromSeconds(Core.GetPropertyDouble("time-pos"));
+            TimeSpan duration = TimeSpan.FromSeconds(Core.GetPropertyDouble("duration"));
+
+            string text = FormatTime(position.TotalMinutes) + ":" +
+                          FormatTime(position.Seconds) + " / " +
+                          FormatTime(duration.TotalMinutes) + ":" +
+                          FormatTime(duration.Seconds);
+
+            Core.CommandV("show-text", text, "5000");
+
+            string FormatTime(double value) => ((int)value).ToString("00");
+        }
+
         public static void OpenURL()
         {
             App.InvokeOnMainThread(new Action(() => {
