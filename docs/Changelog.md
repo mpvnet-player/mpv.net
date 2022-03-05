@@ -20,6 +20,7 @@ not yet released
 - Single character input in the command palette searches exclusivly
   key bindings much like the search field of the input editor.
 - Various default key bindings improved.
+- New protocol registrations, so far supported are: ytdl, rtsp, srt, srtp
 - libmpv zhongfly 2022-02-27
 
 

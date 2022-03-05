@@ -78,13 +78,17 @@ namespace mpvnet
 
         public static void Register(string perceivedType, string[] extensions)
         {
+            string[] protocols = { "ytdl", "rtsp", "srt", "srtp" };
+
             if (perceivedType != "unreg")
             {
+                foreach (string i in protocols)
+                {
+                    RegistryHelp.SetValue($@"HKCR\{i}", $"{i.ToUpper()} Protocol", "");
+                    RegistryHelp.SetValue($@"HKCR\{i}\shell\open\command", null, $"\"{ExePath}\" \"%1\"");
+                }
+
                 RegistryHelp.SetValue(@"HKCU\Software\Microsoft\Windows\CurrentVersion\App Paths\" + ExeFilename, null, ExePath);
-                RegistryHelp.SetValue(@"HKCR\ytdl", "YTDL Protocol", "");
-                RegistryHelp.SetValue(@"HKCR\ytdl\shell\open\command", null, $"\"{ExePath}\" \"%1\"");
-                RegistryHelp.SetValue(@"HKCR\rtsp", "RTSP Protocol", "");
-                RegistryHelp.SetValue(@"HKCR\rtsp\shell\open\command", null, $"\"{ExePath}\" \"%1\"");
                 RegistryHelp.SetValue(@"HKCR\Applications\" + ExeFilename, "FriendlyAppName", "mpv.net media player");
                 RegistryHelp.SetValue(@"HKCR\Applications\" + ExeFilename + @"\shell\open\command", null, $"\"{ExePath}\" \"%1\"");
                 RegistryHelp.SetValue(@"HKCR\SystemFileAssociations\video\OpenWithList\" + ExeFilename, null, "");
@@ -105,8 +109,9 @@ namespace mpvnet
             }
             else
             {
-                RegistryHelp.RemoveKey(@"HKCR\ytdl");
-                RegistryHelp.RemoveKey(@"HKCR\rtsp");
+                foreach (string i in protocols)
+                    RegistryHelp.RemoveKey($@"HKCR\{i}");
+
                 RegistryHelp.RemoveKey(@"HKCU\Software\Microsoft\Windows\CurrentVersion\App Paths\" + ExeFilename);
                 RegistryHelp.RemoveKey(@"HKCR\Applications\" + ExeFilename);
                 RegistryHelp.RemoveKey(@"HKLM\SOFTWARE\Clients\Media\mpv.net");

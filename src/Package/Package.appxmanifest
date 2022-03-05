@@ -117,6 +117,14 @@
 				<uap:Extension Category="windows.protocol">
 					<uap:Protocol Name="rtsp" />
 				</uap:Extension>
+
+				<uap:Extension Category="windows.protocol">
+					<uap:Protocol Name="srt" />
+				</uap:Extension>
+
+				<uap:Extension Category="windows.protocol">
+					<uap:Protocol Name="srtp" />
+				</uap:Extension>
 			</Extensions>
 
 		</Application>
