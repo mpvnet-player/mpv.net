@@ -44,17 +44,13 @@ the terminal and adds a modern Windows GUI on top of it.
 Download
 --------
 
-[Changelog](Changelog.md)
-
-
-### Stable
-
 1. [Stable via Microsoft Store](https://www.microsoft.com/store/productId/9N64SQZTB3LM)
 
-2. [Portable stable and beta via GitHub download](../../../releases)
+2. [Stable and beta via GitHub download](../../../releases)
 
 3. `winget install mpv.net`
 
+[Changelog](Changelog.md)
 
 Installation
 ------------
