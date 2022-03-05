@@ -4,7 +4,7 @@
 - Various conf editor improvements. (hooke007)
 - Custom conf folder location feature removed.
 - Inno Setup replaced with Microsoft Store setup.
-- Fix script-opts files being ingnored.
+- Fix script-opts files being ignored.
 - Showing the recent list in the command palette,
   the top item gets auto selected.
   https://github.com/stax76/mpv.net/issues/328#issuecomment-1057296054
@@ -17,8 +17,8 @@
 - The usability of the menu structure was improved.
 - Audio and subtitle tracks and various other features
   are now available in the command palette.
-- Single character input in the command palette searches exclusivly
-  key bindings much like the search field of the input editor.
+- Single character input in the command palette searches exclusively
+  key bindings, much like the search field of the input editor.
 - Various default key bindings improved.
 - New protocol registrations, so far supported are: ytdl, rtsp, srt, srtp
 - libmpv zhongfly 2022-02-27

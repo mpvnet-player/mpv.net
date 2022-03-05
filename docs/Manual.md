@@ -49,18 +49,11 @@ Download
 
 ### Stable
 
-1. [Microsoft Store](https://www.microsoft.com/store/productId/9N64SQZTB3LM)
+1. [Stable via Microsoft Store](https://www.microsoft.com/store/productId/9N64SQZTB3LM)
 
-2. [Portable](../../../releases)
+2. [Portable stable and beta via GitHub download](../../../releases)
 
 3. `winget install mpv.net`
-
-
-### Beta
-
-[OneDrive](https://1drv.ms/u/s!ArwKS_ZUR01g1ldoLA90tX9DzKTj?e=xITXbC)
-
-[DropBox](https://www.dropbox.com/sh/t54p9igdwvllbpl/AADKyWpaFnIhdyosxyP5d3_xa?dl=0)
 
 
 Installation
@@ -68,7 +61,7 @@ Installation
 
 mpv.net requires the .NET Framework 4.8 and Windows 7 or higher and a modern graphics card.
 
-For internet streaming youtube-dl or yt-dlp must be downloaded and installed manually.
+For internet streaming yt-dlp must be downloaded and installed manually.
 
 #### File Associations
 
@@ -91,7 +84,7 @@ the files are opened in mpv.net in random order, this works with maximum 15 file
 Support
 -------
 
-Before making a support request, please try a newer [beta version](#beta) first.
+Before making a support request, please try a newer beta version first.
 
 Bugs and feature requests can be made on the github [issue tracker](../../../issues),
 feel free to use for anything mpv.net related, usage questions are welcome.
