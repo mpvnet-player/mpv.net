@@ -1,5 +1,5 @@
 
-not yet released
+5.6.1.0 Beta (2022-03-05)
 
 - Various conf editor improvements. (hooke007)
 - Custom conf folder location feature removed.

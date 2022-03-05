@@ -16,7 +16,7 @@ Modern GUI with customizable color themes.
 
 #### Command Line Interface
 
-mpv.net supports mpv's property based command line switches.
+mpv.net supports mpvs command line interface.
 
 
 #### High quality video output
@@ -70,12 +70,12 @@ Features that mpv and mpv.net have in common
 - Started from a terminal status, error and debug output is printed on the terminal
 - DXVA2 video decoding acceleration
 - Video output capable of features loved by videophiles, such as video scaling with popular high quality algorithms, color management, frame timing, interpolation, HDR, and more
-- Browser extensions to start mpv(.net) from the browser
+- Browser extensions to start mpv.net from the browser
 - Fast seek performance
 - Fast startup performance
 - Usable as video player, audio player and image viewer with a wide range of supported formats
 - Built-in decoders, no external codecs have to be installed
-- Build-in media streaming (requires youtube-dl being installed)
+- Build-in media streaming (requires yt-dlp being installed)
 - External audio and subtitle files can be loaded manually or automatically
 - Screenshot feature
 - Watch later feature to save the video position
@@ -84,7 +84,7 @@ Features that mpv and mpv.net have in common
 Features exclusiv to mpv.net
 ----------------------------
 
-- High degree of mpv compatibility, almost all mpv features are available
+- Very high degree of mpv compatibility, almost all mpv features are available
 - Modern graphical user interface with customizable color themes
 - Customizable context menu defined in the same file as the key bindings
 - Searchable config editor
@@ -93,11 +93,9 @@ Features exclusiv to mpv.net
 - Global keyboard shortcuts
 - Command palette to quickly and easily find commands and keys
 - Extension API for .NET languages (C#, VB.NET and F#)
-- Setup as x64 installer, portable, Chocolatey and WinGet
-- Setup dialog for system integration (file associations etc.)
+- Portable, MS Store or WinGet download and installation
 - File history feature to log time and filename
 - Files can be enqueued from File Explorer
-- Update check and update routine
 
 
 ## [Support](docs/Manual.md#support)

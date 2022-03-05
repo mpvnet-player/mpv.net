@@ -89,13 +89,6 @@
                                             </MultiTrigger.Conditions>
                                             <Setter Property="Background" TargetName="BD" Value="{DynamicResource BorderBrush}" />
                                         </MultiTrigger>
-                                        <MultiTrigger>
-                                            <MultiTrigger.Conditions>
-                                                <Condition Property="Selector.IsSelectionActive" Value="True" />
-                                                <Condition Property="IsSelected" Value="True" />
-                                            </MultiTrigger.Conditions>
-                                            <Setter Property="Background" TargetName="BD" Value="OrangeRed" />
-                                        </MultiTrigger>
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>
                             </Setter.Value>

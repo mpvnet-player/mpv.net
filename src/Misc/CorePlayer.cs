@@ -125,6 +125,7 @@ namespace mpvnet
                 SetPropertyString("msg-level", "osd/libass=fatal");
             }
 
+            SetPropertyString("script-opts", "osc-scalewindowed=1.5,osc-hidetimeout=2000,console-scale=1.5");
             SetPropertyString("watch-later-options", "mute");
             SetPropertyString("screenshot-directory", "~~desktop/");
             SetPropertyString("osd-playing-msg", "${filename}");
@@ -138,14 +139,8 @@ namespace mpvnet
 
             SetPropertyBool("keep-open", true);
             SetPropertyBool("keep-open-pause", false);
-
             SetPropertyBool("input-default-bindings", true);
-
-            try {
-                SetPropertyBool("input-builtin-bindings", false, true);
-            } catch {
-                SetPropertyBool("input-default-bindings", false);
-            }
+            SetPropertyBool("input-builtin-bindings", false);
 
             ProcessCommandLine(true);
             mpv_error err = mpv_initialize(Handle);
@@ -251,8 +246,6 @@ namespace mpvnet
                         if (!Directory.Exists(_ConfigFolder))
                             Directory.CreateDirectory(_ConfigFolder);
                     }
-
-                    Directory.CreateDirectory(_ConfigFolder);
 
                     _ConfigFolder = _ConfigFolder.AddSep();
 
