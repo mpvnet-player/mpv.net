@@ -125,7 +125,6 @@ namespace mpvnet
                 SetPropertyString("msg-level", "osd/libass=fatal");
             }
 
-            SetPropertyString("script-opts", "osc-scalewindowed=1.5,osc-hidetimeout=2000,console-scale=1.5");
             SetPropertyString("watch-later-options", "mute");
             SetPropertyString("screenshot-directory", "~~desktop/");
             SetPropertyString("osd-playing-msg", "${filename}");
