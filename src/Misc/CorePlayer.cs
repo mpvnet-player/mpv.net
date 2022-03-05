@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
@@ -236,7 +237,22 @@ namespace mpvnet
                         _ConfigFolder = Folder.AppData + "mpv.net";
 
                     if (!Directory.Exists(_ConfigFolder))
-                        Directory.CreateDirectory(_ConfigFolder);
+                    {
+                        using (Process proc = new Process())
+                        {
+                            proc.StartInfo.UseShellExecute = false;
+                            proc.StartInfo.CreateNoWindow = true;
+                            proc.StartInfo.FileName = "powershell.exe";
+                            proc.StartInfo.Arguments = $@"-Command New-Item -Path '{_ConfigFolder}' -ItemType Directory";
+                            proc.Start();
+                            proc.WaitForExit();
+                        }
+
+                        if (!Directory.Exists(_ConfigFolder))
+                            Directory.CreateDirectory(_ConfigFolder);
+                    }
+
+                    Directory.CreateDirectory(_ConfigFolder);
 
                     _ConfigFolder = _ConfigFolder.AddSep();
 
