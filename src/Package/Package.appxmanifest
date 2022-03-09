@@ -11,7 +11,7 @@
 	<Identity
 	  Name="5664FrankSkare.mpv.net"
 	  Publisher="CN=6A1A1E69-736C-4C77-B310-7B6D38E32617"
-	  Version="5.6.0.0" />
+	  Version="5.7.0.0" />
 
 	<Properties>
 		<DisplayName>mpv.net</DisplayName>

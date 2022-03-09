@@ -1509,6 +1509,10 @@ KP1 script-binding delete_current_file/confirm
                 {
                     string text = GetPropertyString($"chapter-list/{x}/title");
                     double time = GetPropertyDouble($"chapter-list/{x}/time");
+
+                    if (string.IsNullOrEmpty(text))
+                        text = "Chapter " + (x + 1);
+
                     Chapters.Add(new KeyValuePair<string, double>(text, time));
                 }
             }

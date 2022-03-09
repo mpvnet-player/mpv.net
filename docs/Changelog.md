@@ -1,4 +1,10 @@
 
+5.7.0.0 Stable (2022-03-09)
+
+- Improved title and chapter menu for Blu-Rays.
+- Fix of conf folder virtualization issue of MS Store version.
+- MS Store page no longer displays ARM and x86 support.
+
 5.6.2.0 Beta (2022-03-05)
 
 - Fix script-opts files being ignored, removed options are:

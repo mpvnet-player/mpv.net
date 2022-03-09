@@ -320,22 +320,26 @@ namespace mpvnet
 
                 lock (Core.BluRayTitles)
                 {
-                    List<(int Index, TimeSpan Len)> items = new List<(int Index, TimeSpan Len)>(); 
+                    List<(int Index, TimeSpan Length)> items = new List<(int, TimeSpan)>(); 
 
                     for (int i = 0; i < Core.BluRayTitles.Count; i++)
                         items.Add((i, Core.BluRayTitles[i]));
 
-                    var titleItems = items.OrderByDescending(item => item.Len)
-                        .Take(20).OrderBy(item => item.Index);
+                    var titleItems = items.OrderByDescending(item => item.Length)
+                                          .Take(20)
+                                          .OrderBy(item => item.Index);
 
                     foreach (var item in titleItems)
                     {
-                        if (item.Len != TimeSpan.Zero)
+                        if (item.Length != TimeSpan.Zero)
                         {
-                            var mi = MenuHelp.Add(titlesMenuItem.Items, $"{item.Len} ({item.Index})");
+                            var mi = MenuHelp.Add(titlesMenuItem.Items, $"Title {item.Index + 1}");
 
                             if (mi != null)
+                            {
+                                mi.InputGestureText = item.Length.ToString();
                                 mi.Click += (sender, args) => Core.SetBluRayTitle(item.Index);
+                            }
                         }
                     }
                 }
