@@ -1,4 +1,6 @@
 
+- Fix showing incorrect timestamps in About dialog of Store version.
+
 5.7.0.0 Stable (2022-03-09)
 
 - Improved title and chapter menu for Blu-Rays.

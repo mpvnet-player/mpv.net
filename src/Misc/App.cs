@@ -130,8 +130,21 @@ namespace mpvnet
         }
 
         public static string Version => "Copyright (C) 2000-2022 mpv.net/mpv/mplayer\n" +
-            $"mpv.net {Application.ProductVersion} ({File.GetLastWriteTime(Application.ExecutablePath).ToShortDateString()})\n" +
-            $"{Core.GetPropertyString("mpv-version")} ({File.GetLastWriteTime(Folder.Startup + "mpv-2.dll").ToShortDateString()})\nffmpeg {Core.GetPropertyString("ffmpeg-version")}\nMediaInfo {FileVersionInfo.GetVersionInfo(Path.Combine(Application.StartupPath, "MediaInfo.dll")).FileVersion} ({File.GetLastWriteTime(Path.Combine(Application.StartupPath , "MediaInfo.dll")).ToShortDateString()})\nGPL v2 License";
+            $"mpv.net {Application.ProductVersion}" + GetLastWriteTime(Application.ExecutablePath) + "\n" +
+            $"{Core.GetPropertyString("mpv-version")}" + GetLastWriteTime(Folder.Startup + "mpv-2.dll") + "\n" +
+            $"ffmpeg {Core.GetPropertyString("ffmpeg-version")}\n" +
+            $"MediaInfo {FileVersionInfo.GetVersionInfo(Path.Combine(Application.StartupPath, "MediaInfo.dll")).FileVersion}" +
+            GetLastWriteTime(Path.Combine(Application.StartupPath , "MediaInfo.dll")) + "\nGPL v2 License";
+
+        static string GetLastWriteTime(string path)
+        {
+            if (IsStoreVrsion)
+                return "";
+
+            return $" ({File.GetLastWriteTime(path).ToShortDateString()})";
+        }
+
+        static bool IsStoreVrsion => Application.StartupPath.Contains("FrankSkare.mpv.net");
 
         public static void ShowException(object obj)
         {
