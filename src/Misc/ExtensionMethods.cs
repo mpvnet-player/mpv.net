@@ -68,13 +68,25 @@ public static class ConvertStringExtension
 
 public static class PathStringExtension
 {
-    // returns the extension with lower case and without preceding dot.
-    public static string Ext(this string instance)
+    public static string Ext(this string filepath) => Ext(filepath, false);
+
+    public static string Ext(this string filepath, bool includeDot)
     {
-        if (instance == null)
+        if (string.IsNullOrEmpty(filepath))
             return "";
 
-        return Path.GetExtension(instance).TrimStart('.').ToLower();
+        char[] chars = filepath.ToCharArray();
+
+        for (int x = filepath.Length - 1; x >= 0; x--)
+        {
+            if (chars[x] == Path.DirectorySeparatorChar)
+                return "";
+
+            if (chars[x] == '.')
+                return filepath.Substring(x + (includeDot ? 0 : 1)).ToLowerInvariant();
+        }
+
+        return "";
     }
 
     public static string FileName(this string instance)

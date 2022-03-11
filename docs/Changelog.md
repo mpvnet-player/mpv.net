@@ -1,6 +1,7 @@
 
 - Fix showing incorrect timestamps in About dialog of Store version.
-- MS Store page no longer displays ARM and x86 support.
+- Fix Store page showing non existant ARM and x86 support.
+- Fix opening zip files.
 
 5.7.0.0 Stable (2022-03-09)
 
