@@ -4,6 +4,9 @@
 - Fix opening zip files.
 - The list of available input commands is like before shown
   by the text editor, so it's like everything else searchable.
+- Media Info isn't shown directly, instead the command palette
+  shows several choices. The command palette can be bypassed
+  using the arguments: textbox, editor, full, raw
 
 5.7.0.0 Stable (2022-03-09)
 

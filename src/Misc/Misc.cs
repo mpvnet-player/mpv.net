@@ -166,6 +166,14 @@ namespace mpvnet
             }
         }
 
+        public string Alias {
+            get {
+                if (Input.Contains("SHARP") || Input.Contains("sharp") || Input.Contains("Sharp"))
+                    return "#";
+                return null;
+            }
+        }
+
         public static ObservableCollection<CommandItem> GetItems(string content)
         {
             var items = new ObservableCollection<CommandItem>();

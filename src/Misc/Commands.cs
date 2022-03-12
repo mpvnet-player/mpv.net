@@ -344,16 +344,16 @@ namespace mpvnet
 
         public static void ShowCommands()
         {
-            string json = Core.GetPropertyString("command-list");
-            var o = json.FromJson<List<Dictionary<string, object>>>().OrderBy(i => i["name"]);
+            string jsonString = Core.GetPropertyString("command-list");
+            var jsonObject = jsonString.FromJson<List<Dictionary<string, object>>>().OrderBy(i => i["name"]);
             StringBuilder sb = new StringBuilder();
 
-            foreach (Dictionary<string, object> i in o)
+            foreach (Dictionary<string, object> dic in jsonObject)
             {
                 sb.AppendLine();
-                sb.AppendLine(i["name"].ToString());
+                sb.AppendLine(dic["name"].ToString());
 
-                foreach (Dictionary<string, object> i2 in i["args"] as List<object>)
+                foreach (Dictionary<string, object> i2 in dic["args"] as List<object>)
                 {
                     string value = i2["name"].ToString() + " <" + i2["type"].ToString().ToLower() + ">";
 
@@ -386,8 +386,23 @@ namespace mpvnet
                 "}${osd-ass-cc/1}" + text + "\" " + duration);
         }
 
-        public static void ShowMediaInfo(string[] args)
+        public static void ShowMediaInfo(string[] args) => App.InvokeOnMainThread(() =>
         {
+            if (args == null || args.Length == 0)
+            {
+                (string Name, string Value)[] pairs = {
+                    ("Show text box",    "script-message mpv.net show-media-info default"),
+                    ("Show text editor", "script-message mpv.net show-media-info editor"),
+                    ("Show full",        "script-message mpv.net show-media-info editor full"),
+                    ("Show raw",         "script-message mpv.net show-media-info editor full raw") };
+
+                var list = pairs.Select(i => new CommandPaletteItem(i.Name, () => Core.Command(i.Value)));
+                CommandPalette.Instance.SetItems(list);
+                MainForm.Instance.ShowCommandPalette();
+                CommandPalette.Instance.SelectFirst();
+                return;
+            }
+
             string path = Core.GetPropertyString("path");
 
             if (File.Exists(path) && !path.Contains(@"\\.\pipe\"))
@@ -396,14 +411,22 @@ namespace mpvnet
                 {
                     bool full = args.Contains("full");
                     bool raw = args.Contains("raw");
+                    bool editor = args.Contains("editor");
+
                     string text = mediaInfo.GetSummary(full, raw);
                     text = Regex.Replace(text, "Unique ID.+", "");
-                    MsgBoxEx.MessageBoxEx.MsgFontFamily = new FontFamily("Consolas");
-                    Msg.ShowInfo(text);
-                    MsgBoxEx.MessageBoxEx.MsgFontFamily = new FontFamily("Segoe UI");
+
+                    if (editor)
+                        ShowTextWithEditor("media-info", text);
+                    else
+                    {
+                        MsgBoxEx.MessageBoxEx.MsgFontFamily = new FontFamily("Consolas");
+                        Msg.ShowInfo(text);
+                        MsgBoxEx.MessageBoxEx.MsgFontFamily = new FontFamily("Segoe UI");
+                    }
                 }
             }
-        }
+        });
 
         public static void ShowCommandPalette() => App.InvokeOnMainThread(() =>
         {
@@ -636,13 +659,13 @@ namespace mpvnet
 
         public static void ShowSetupDialog() => App.InvokeOnMainThread(() =>
         {
-            (string, string)[] pairs = {
+            (string Name, string Value)[] pairs = {
                 ("Register video file associations", "script-message mpv.net reg-file-assoc video"),
                 ("Register audio file associations", "script-message mpv.net reg-file-assoc audio"),
                 ("Register image file associations", "script-message mpv.net reg-file-assoc image"),
                 ("Unregister file associations",     "script-message mpv.net reg-file-assoc unreg") };
 
-            var list = pairs.Select(i => new CommandPaletteItem(i.Item1, () => Core.Command(i.Item2)));
+            var list = pairs.Select(i => new CommandPaletteItem(i.Name, () => Core.Command(i.Value)));
             CommandPalette.Instance.SetItems(list);
             MainForm.Instance.ShowCommandPalette();
             CommandPalette.Instance.SelectFirst();

@@ -90,10 +90,19 @@ namespace mpvnet
         {
             string filter = SearchControl.SearchTextBox.Text.ToLower();
 
-            if (filter.Length == 1 && item.CommandItem != null)
-                return item.CommandItem.Input.ToLower().Replace("ctrl+", "")
-                                                       .Replace("shift+", "")
-                                                       .Replace("alt+", "") == filter.ToLower();
+            if (item.CommandItem != null)
+            {
+                if (item.CommandItem.Alias.ContainsEx(filter))
+                    return true;
+
+                if (filter.Length == 1)
+                    return item.CommandItem.Input.ToLower().Replace("ctrl+", "")
+                                                           .Replace("shift+", "")
+                                                           .Replace("alt+", "") == filter.ToLower();
+                
+                if (item.CommandItem.Command.ToLower().Contains(filter))
+                    return true;
+            }
 
             if (filter == "" || item.Text.ToLower().Contains(filter) ||
                 item.SecondaryText.ToLower().Contains(filter))
