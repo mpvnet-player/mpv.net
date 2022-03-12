@@ -67,6 +67,14 @@ namespace mpvnet
             }
         }
 
+        public static void ShowTextWithEditor(string name, string text)
+        {
+            string file = Path.Combine(Path.GetTempPath(), name + ".txt");
+            App.TempFiles.Add(file);
+            File.WriteAllText(file, BR + text.Trim() + BR);
+            ProcessHelp.ShellExecute(file);
+        }
+
         public static void ShowDialog(Type winType)
         {
             App.InvokeOnMainThread(new Action(() => {
@@ -356,7 +364,7 @@ namespace mpvnet
                 }
             }
 
-            Msg.ShowInfo(sb.ToString());
+            ShowTextWithEditor("command-list", sb.ToString());
         }
 
         public static void ScaleWindow(float factor) => Core.RaiseScaleWindow(factor);
@@ -538,7 +546,7 @@ namespace mpvnet
                         if (propValue.ContainsEx("${"))
                             propValue += BR2 + Core.Expand(propValue);
 
-                        App.ShowInfo(prop + ": " + propValue);
+                        App.ShowInfo(prop + "\n\n" + propValue);
                     }
                 };
 
