@@ -13,8 +13,10 @@ Table of contents
 * [Support](#support)
 * [Settings](#settings)
 * [Input and context menu](#input-and-context-menu)
+* [Command Palette](#command-palette)
 * [Command Line Interface](#command-line-interface)
 * [Terminal](#terminal)
+* [mpv.net specific commands](#mpvnet-specific-commands)
 * [mpv.net specific options](#mpvnet-specific-options)
 * [External Tools](#external-tools)
 * [Scripting](#scripting)
@@ -57,7 +59,9 @@ Installation
 
 mpv.net requires the .NET Framework 4.8 and Windows 7 or higher and a modern graphics card.
 
-For internet streaming yt-dlp must be downloaded and installed manually.
+For internet streaming from YouTube and similar sites, yt-dlp must be
+copied into the mpv.net folder or the user environment variable PATH
+must be edited to include the yt-dlp folder.
 
 #### File Associations
 
@@ -80,7 +84,7 @@ the files are opened in mpv.net in random order, this works with maximum 15 file
 Support
 -------
 
-Before making a support request, please try a newer beta version first.
+Before making a support request, please try the newest version first.
 
 Bugs and feature requests can be made on the github [issue tracker](../../../issues),
 feel free to use for anything mpv.net related, usage questions are welcome.
@@ -105,9 +109,7 @@ Input and context menu
 ----------------------
 
 The input (key/mouse) bindings and the context menu definitions are stored in the
-input.conf file, if it's missing mpv.net generates it with the following defaults:
-
-[input.conf defaults](../../../tree/master/src/Resources/input.conf.txt)
+input.conf file, if it's missing mpv.net generates it with default values.
 
 Please be aware that once input.conf exists, mpv.net cannot update it, this means
 the menu becomes outdated when mpv.net is updated with new or changed default menu
@@ -125,7 +127,7 @@ The input test mode can be started via command line: --input-test
 The input key list can be printed with --input-keylist or
 shown from the context menu under: View > Advanced > Show Keys
 
-mpv.net input.conf defaults:
+mpv.net input.conf defaults:  
 https://github.com/stax76/mpv.net/blob/master/src/Resources/input.conf.txt
 
 mpv input.conf defaults:
@@ -136,6 +138,37 @@ https://mpv.io/manual/master/#list-of-input-commands
 
 mpv input options:
 https://mpv.io/manual/master/#input
+
+
+Command Palette
+---------------
+
+The command palette is designed to quickly find,
+select and execute commands.
+
+It can also be used to easily find shortcut keys.
+
+The following functionality is presented with the Command Palette:
+
+- Show media info in different ways.
+- Show and select audio tracks.
+- Show and select subtitle tracks.
+- Show and select playlist files.
+- Show and select recent files.
+- Show available mpv properties.
+- Show available decoders.
+- Show available demuxers.
+- Show available keys.
+- Show available protocols.
+
+| Key    | Action                      |
+| ------ | --------------------------- |
+| F1     | Shows the command palette.  |
+| Escape | Hides the command palette.  |
+| Enter  | Executes the selected item. |
+| Up     | Moves the selection up.     |
+| Down   | Moves the selection down.   |
+
 
 Command Line Interface
 ----------------------
@@ -162,12 +195,12 @@ Supported are all mpv properties, they are documented here:
 https://mpv.io/manual/master/#properties
 
 
-mpv.net has a feature to list all properties:
+mpv.net has a feature to list all available properties:
 
-_Context Menu > View > Show Properties_
+_Context Menu > View > Advanced > Show Properties_
 
 
-Non property switches are generally not supported in mpv.net!
+mpv has a few non property based switches which are generally not supported in mpv.net.
 
 
 Terminal
@@ -176,10 +209,150 @@ Terminal
 When mpv.net is started from a terminal it will output status,
 error and debug messages to the terminal and accept input keys from the terminal.
 
-In the context menu under _Tools > Setup_ a button can be found to add
-mpv.net to the path environment variable.
-
 A common task for the terminal is debugging scripts.
+
+
+mpv.net specific commands
+-------------------------
+
+`script-message mpv.net <command> <arguments>`
+
+mpv.net commands are used when mpv commands don't exist or lack a feature.
+
+### cycle-audio
+Switches to the next audio track and shows info about that track.
+
+### load-audio
+Shows a file browser dialog to open external audio files.
+
+### load-sub
+Shows a file browser dialog to open external subtitle files.
+
+### open-conf-folder
+Opens the config folder with Windows File Explorer.
+
+### open-files [\<flags\>]
+**no-folder**  
+For single files prevents loading the complete folder into the playlist.
+
+**append**  
+Appends files to the playlist.
+
+Opens a file browser dialog in order to select files to be opened.
+The file browser dialog supports multiselect to load multiple files
+at once. Pressing CTRL appends the files to the playlist.
+
+### open-optical-media
+Shows a folder browser dialog to open a DVD or BD folder.
+ISO images don't have to be mounted, but instead can be
+opened directly with the open-files command.
+
+### open-clipboard
+Opens a single URL or filepath from the clipboard,
+or multiple files in the file clipboard format.
+
+### play-pause
+Cycles the pause property. In case the playlist is empty,
+the most recent file from the recent files list is loaded.
+
+### playlist-first
+Jumps to the first playlist entry, if the loaded file is
+already the first entry, nothing happens.
+
+### playlist-last
+Jumps to the last playlist entry, if the loaded file is
+already the last entry, nothing happens.
+
+### reg-file-assoc \<audio|video|image\>
+Registers the file associations.
+
+### scale-window \<factor\>
+Decreases or increases the Window size.
+
+### shell-execute \<file|URL\>
+Shell executes a single file or URL.
+
+### show-about
+Shows the about dialog.
+
+### show-audio-devices
+Shows available audio devices in a message box.
+
+### show-audio-tracks
+Shows available audio tracks in the command palette
+and allows to load the selected audio track.
+
+### show-command-palette
+Shows the command palette.
+
+### show-commands
+Shows available mpv imput commands.
+
+### show-conf-editor
+Shows the conf editor.
+
+### show-decoders
+Shows available decoders.
+
+### show-demuxers
+Shows available demuxers.
+
+### show-history
+
+Shows the history file when existing.
+
+### show-info
+Shows a simple file info.
+
+### show-input-editor
+Shows the input editor.
+
+### show-keys
+Shows available keys (as shown with `--input-keylist`) in the command palette.
+
+### show-media-info [\<flags\>]
+**msgbox**  
+Shows media info in a messsge box.
+
+**editor**  
+Shows media info in the text editor.
+
+**full**  
+Shows fully detailed media info.
+
+**raw**  
+Shows media info with raw property names.
+
+### show-playlist
+Shows the playlist in the command palette
+and allows to play the selected entry.
+
+### show-profiles
+Shows available profiles with a message box.
+
+### show-progress
+Shows a simple OSD progress message.
+
+### show-properties
+Shows available properties in the command palette and
+allows to display the property value of the selected property.
+
+### show-protocols
+Shows available protocols in the command palette.
+
+### show-recent
+Shows recently played files and URLs in the
+command palette and allows to select and play entries.
+
+### show-subtitle-tracks
+Shows available subtitles in the command palette
+and allows to activate the selected subtitle.
+
+### show-text \<text\> \<duration\> \<font-size\>
+Shows a OSD message with given text, duration and font size.
+
+### window-scale \<factor\>
+Works similar as the [window-scale](https://mpv.io/manual/master/#command-interface-window-scale) mpv property.
 
 
 mpv.net specific options
@@ -233,20 +406,17 @@ Window size is remembered in the current session.
 **always**  
 Window size is always remembered.
 
-
 #### --start-threshold=\<milliseconds\>
 
 Threshold in milliseconds to wait for libmpv returning the video
 resolution before the window is shown, otherwise default dimensions
 are used as defined by autofit and start-size. Default: 1500
 
-
 #### --minimum-aspect-ratio=\<float\>
 
 Minimum aspect ratio, if the AR is smaller than the defined value then
 the window AR is set to 16/9. This avoids a square window for Music
 with cover art. Default: 1.2
-
 
 #### --remember-window-position=\<yes|no\>
 
@@ -259,6 +429,11 @@ Save the window position on exit. Default: no
 
 For single files automatically load the entire directory into the playlist.
 Can be suppressed via shift key. Default: yes
+
+#### --auto-play=\<yes|no\>
+
+If the player is paused and another file is loaded,
+playback automatically resumes.
 
 
 ### General
@@ -280,26 +455,21 @@ Force a single process everytime the shell starts mpv.net. Default
 **queue**  
 Force a single process and add files to playlist.
 
-
 #### --recent-count=\<int\>
 
 Amount of recent files to be remembered. Default: 15
-
 
 #### --video-file-extensions=\<string\>
 
 Video file extensions used to create file associations and used by the auto-load-folder feature.
 
-
 #### --audio-file-extensions=\<string\>
 
 Audio file extensions used to create file associations and used by the auto-load-folder feature.
 
-
 #### --image-file-extensions=\<string\>
 
 Image file extensions used to create file associations and used by the auto-load-folder feature.
-
 
 #### --debug-mode=\<yes|no\>
 
@@ -320,13 +490,11 @@ Available on Windows 10 or higher.
 
 **never**
 
-
 #### ---dark-theme=\<string\>
 
 Color theme used in dark mode. Default: dark
 
 [Color Themes](#color-theme)
-
 
 #### --light-theme=\<string\>
 
@@ -384,6 +552,15 @@ My primary remote control solution however is a One For All Contour URC1210
 using Philips code 0556 together with FLIRC USB (gen2).
 
 
+### External Application Button
+
+Videos can be downloaded easily with External Application Button
+
+path: `wt`
+
+args: `-- pwsh -NoLogo -Command "yt-dlp --ignore-errors --download-archive 'C:\External Application Button.txt' --output 'C:\YouTube\%(channel)s - %(title)s.%(ext)s' ('[HREF]' -replace '&list=.+','')"`
+
+
 Scripting
 ---------
 
@@ -395,14 +572,17 @@ Location: `<config folder>\scripts`
 
 The Lua script host is built into libmpv.
 
-There is no debugging support, only error and debug messages printed on the terminal.
+Error and debug messages are printed on the terminal.
 
 Lua scripts are loaded before the first media file loads.
 
 [mpv Lua documentation](https://mpv.io/manual/master/#lua-scripting)
 
-[mpv user scripts](https://github.com/mpv-player/mpv/wiki/User-Scripts)
+[mpv user scripts in the wiki](https://github.com/mpv-player/mpv/wiki/User-Scripts)
 
+[mpv user scripts on GitHub](https://github.com/topics/mpv-script)
+
+[mpv user scripts found by Google](https://www.google.com/search?q=mpv+script)
 
 #### JavaScript
 
@@ -412,7 +592,7 @@ Location: `<config folder>\scripts`
 
 The JavaScript script host is built into libmpv.
 
-There is no debugging support, only error and debug messages printed on the terminal.
+Error and debug messages are printed on the terminal.
 
 JavaScript scripts are loaded before the first media file loads.
 
@@ -449,6 +629,8 @@ Script code can be written within a C# [extension](../../../tree/master/src/Exte
 that way full code completion and debugger support is available.
 Once the code was developed and debugged, it can be moved
 from the extension to a lightweight standalone script.
+The script host uses an old C# version, modern features
+like string interpolation are not available.
 
 The C# scripting host is like [extensions](../../../tree/master/src/Extensions)
 not initialized before media files are loaded.

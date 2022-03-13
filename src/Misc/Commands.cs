@@ -29,10 +29,11 @@ namespace mpvnet
                 case "execute-mpv-command": Msg.ShowError("The command was removed, reset input.conf by deleting it, in the new menu use the on screen console."); break; // deprecated 2020
                 case "load-audio": LoadAudio(); break;
                 case "load-sub": LoadSubtitle(); break;
+                case "open-clipboard": OpenFromClipboard(); break;
                 case "open-conf-folder": ProcessHelp.ShellExecute(Core.ConfigFolder); break;
                 case "open-files": OpenFiles(args); break;
                 case "open-optical-media": Open_DVD_Or_BD_Folder(); break;
-                case "open-url": OpenURL(); break;
+                case "open-url": OpenFromClipboard(); break; // deprecated 2022
                 case "play-pause": PlayPause(); break;
                 case "playlist-first": PlaylistFirst(); break;
                 case "playlist-last": PlaylistLast(); break;
@@ -75,14 +76,12 @@ namespace mpvnet
             ProcessHelp.ShellExecute(file);
         }
 
-        public static void ShowDialog(Type winType)
+        public static void ShowDialog(Type winType) => App.InvokeOnMainThread(() =>
         {
-            App.InvokeOnMainThread(new Action(() => {
-                Window win = Activator.CreateInstance(winType) as Window;
-                new WindowInteropHelper(win).Owner = MainForm.Instance.Handle;
-                win.ShowDialog();
-            }));
-        }
+            Window win = Activator.CreateInstance(winType) as Window;
+            new WindowInteropHelper(win).Owner = MainForm.Instance.Handle;
+            win.ShowDialog();
+        });
 
         public static void OpenFiles(params string[] args)
         {
@@ -105,15 +104,13 @@ namespace mpvnet
             }));
         }
 
-        public static void Open_DVD_Or_BD_Folder()
+        public static void Open_DVD_Or_BD_Folder() => App.InvokeOnMainThread(() =>
         {
-            App.InvokeOnMainThread(new Action(() => {
-                var dialog = new FolderBrowser();
+            var dialog = new FolderBrowser();
 
-                if (dialog.Show())
-                    Core.LoadDiskFolder(dialog.SelectedPath);
-            }));
-        }
+            if (dialog.Show())
+                Core.LoadDiskFolder(dialog.SelectedPath);
+        });
 
         public static void PlaylistFirst()
         {
@@ -256,67 +253,61 @@ namespace mpvnet
             string FormatTime(double value) => ((int)value).ToString("00");
         }
 
-        public static void OpenURL()
+        public static void OpenFromClipboard() => App.InvokeOnMainThread(() =>
         {
-            App.InvokeOnMainThread(new Action(() => {
-                if (WinForms.Clipboard.ContainsFileDropList())
+            if (WinForms.Clipboard.ContainsFileDropList())
+            {
+                string[] files = WinForms.Clipboard.GetFileDropList().Cast<string>().ToArray();
+                Core.LoadFiles(files, false, Control.ModifierKeys.HasFlag(Keys.Control));
+            }
+            else
+            {
+                string clipboard = WinForms.Clipboard.GetText();
+
+                if (string.IsNullOrEmpty(clipboard) || (!clipboard.Contains("://") && !File.Exists(clipboard)) ||
+                    clipboard.Contains("\n"))
                 {
-                    string[] files = WinForms.Clipboard.GetFileDropList().Cast<string>().ToArray();
-                    Core.LoadFiles(files, false, Control.ModifierKeys.HasFlag(Keys.Control));
+                    App.ShowError("The clipboard does not contain a valid URL or file.");
+                    return;
                 }
-                else
-                {
-                    string clipboard = WinForms.Clipboard.GetText();
 
-                    if (string.IsNullOrEmpty(clipboard) || (!clipboard.Contains("://") && !File.Exists(clipboard)) ||
-                        clipboard.Contains("\n"))
-                    {
-                        App.ShowError("No URL found, the clipboard does not contain a valid URL or file.");
-                        return;
-                    }
+                Core.LoadFiles(new [] { clipboard }, false, Control.ModifierKeys.HasFlag(Keys.Control));
+            }
+        });
 
-                    Core.LoadFiles(new [] { clipboard }, false, Control.ModifierKeys.HasFlag(Keys.Control));
-                }
-            }));
-        }
-
-        public static void LoadSubtitle()
+        public static void LoadSubtitle() => App.InvokeOnMainThread(() =>
         {
-            App.InvokeOnMainThread(new Action(() => {
-                using (var d = new OpenFileDialog())
-                {
-                    string path = Core.GetPropertyString("path");
+            using (var d = new OpenFileDialog())
+            {
+                string path = Core.GetPropertyString("path");
 
-                    if (File.Exists(path))
-                        d.InitialDirectory = Path.GetDirectoryName(path);
+                if (File.Exists(path))
+                    d.InitialDirectory = Path.GetDirectoryName(path);
 
-                    d.Multiselect = true;
+                d.Multiselect = true;
 
-                    if (d.ShowDialog() == DialogResult.OK)
-                        foreach (string filename in d.FileNames)
-                            Core.CommandV("sub-add", filename);
-                }
-            }));
-        }
+                if (d.ShowDialog() == DialogResult.OK)
+                    foreach (string filename in d.FileNames)
+                        Core.CommandV("sub-add", filename);
+            }
+        });
 
-        public static void LoadAudio()
+        public static void LoadAudio() => App.InvokeOnMainThread(() =>
         {
-            App.InvokeOnMainThread(new Action(() => {
-                using (var d = new OpenFileDialog())
-                {
-                    string path = Core.GetPropertyString("path");
+            using (var d = new OpenFileDialog())
+            {
+                string path = Core.GetPropertyString("path");
 
-                    if (File.Exists(path))
-                        d.InitialDirectory = Path.GetDirectoryName(path);
+                if (File.Exists(path))
+                    d.InitialDirectory = Path.GetDirectoryName(path);
 
-                    d.Multiselect = true;
+                d.Multiselect = true;
 
-                    if (d.ShowDialog() == DialogResult.OK)
-                        foreach (string i in d.FileNames)
-                            Core.CommandV("audio-add", i);
-                }
-            }));
-        }
+                if (d.ShowDialog() == DialogResult.OK)
+                    foreach (string i in d.FileNames)
+                        Core.CommandV("audio-add", i);
+            }
+        });
 
         public static void CycleAudio()
         {

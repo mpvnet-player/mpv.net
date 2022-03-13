@@ -6,7 +6,9 @@
   by the text editor, so it's like everything else searchable.
 - Media Info isn't shown directly, instead the command palette
   shows several choices. The command palette can be bypassed
-  using the arguments: textbox, editor, full, raw
+  using the arguments: msgbox, editor, full, raw.
+- mpv.net specific commands are documented in the manual.
+- The command palette and auto-play property is documented in the manual.
 
 5.7.0.0 Stable (2022-03-09)
 
