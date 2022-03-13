@@ -554,7 +554,8 @@ using Philips code 0556 together with FLIRC USB (gen2).
 
 ### External Application Button
 
-Videos can be downloaded easily with External Application Button
+Videos can be streamed or downloaded easily with the Chrome extension
+External Application Button, for download (recommended):
 
 path: `wt`
 
