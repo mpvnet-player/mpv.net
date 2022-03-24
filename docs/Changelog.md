@@ -1,4 +1,5 @@
 
+- Fix crash on Windows 7 systems without PowerShell.
 - Fix showing incorrect timestamps in About dialog of Store version.
 - Fix Store page showing non existant ARM and x86 support.
 - Fix opening zip files.
@@ -7,8 +8,9 @@
 - Media Info isn't shown directly, instead the command palette
   shows several choices. The command palette can be bypassed
   using the arguments: msgbox, editor, full, raw.
-- mpv.net specific commands are documented in the manual.
-- The command palette and auto-play property is documented in the manual.
+- mpv.net specific commands, the command palette, auto-play property
+  and various other things are documented in the manual.
+
 
 5.7.0.0 Stable (2022-03-09)
 

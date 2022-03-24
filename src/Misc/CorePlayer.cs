@@ -232,15 +232,17 @@ namespace mpvnet
 
                     if (!Directory.Exists(_ConfigFolder))
                     {
-                        using (Process proc = new Process())
-                        {
-                            proc.StartInfo.UseShellExecute = false;
-                            proc.StartInfo.CreateNoWindow = true;
-                            proc.StartInfo.FileName = "powershell.exe";
-                            proc.StartInfo.Arguments = $@"-Command New-Item -Path '{_ConfigFolder}' -ItemType Directory";
-                            proc.Start();
-                            proc.WaitForExit();
-                        }
+                        try {
+                            using (Process proc = new Process())
+                            {
+                                proc.StartInfo.UseShellExecute = false;
+                                proc.StartInfo.CreateNoWindow = true;
+                                proc.StartInfo.FileName = "powershell.exe";
+                                proc.StartInfo.Arguments = $@"-Command New-Item -Path '{_ConfigFolder}' -ItemType Directory";
+                                proc.Start();
+                                proc.WaitForExit();
+                            }
+                        } catch (Exception) {}
 
                         if (!Directory.Exists(_ConfigFolder))
                             Directory.CreateDirectory(_ConfigFolder);
