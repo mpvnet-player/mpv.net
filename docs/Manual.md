@@ -323,6 +323,9 @@ Shows fully detailed media info.
 **raw**  
 Shows media info with raw property names.
 
+### show-menu
+Shows the context menu.
+
 ### show-playlist
 Shows the playlist in the command palette
 and allows to play the selected entry.

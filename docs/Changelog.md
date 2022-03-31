@@ -10,6 +10,7 @@
   using the arguments: msgbox, editor, full, raw.
 - mpv.net specific commands, the command palette, auto-play property
   and various other things are documented in the manual.
+- The action used for the right mouse button can be configured.
 
 
 5.7.0.0 Stable (2022-03-09)
