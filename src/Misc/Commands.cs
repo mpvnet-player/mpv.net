@@ -53,6 +53,7 @@ namespace mpvnet
                 case "show-input-editor": ShowDialog(typeof(InputWindow)); break;
                 case "show-keys": ShowStrings(Core.GetPropertyString("input-key-list").Split(',')); break;
                 case "show-media-info": ShowMediaInfo(args); break;
+                case "show-menu": ShowMenu(); break;
                 case "show-playlist": ShowPlaylist(); break;
                 case "show-profiles": Msg.ShowInfo(mpvHelp.GetProfiles()); break;
                 case "show-progress": ShowProgress(); break;
@@ -661,5 +662,7 @@ namespace mpvnet
             MainForm.Instance.ShowCommandPalette();
             CommandPalette.Instance.SelectFirst();
         });
+
+        public static void ShowMenu() => Core.RaiseShowMenu();
     }
 }

@@ -53,6 +53,7 @@ namespace mpvnet
 
         public event Action Initialized;
         public event Action InitializedAsync;
+        public event Action ShowMenu;
         public event Action<float> ScaleWindow;
         public event Action<float> WindowScale;
         public event Action<int> PlaylistPosChanged;
@@ -81,7 +82,7 @@ namespace mpvnet
         public string ConfPath { get => ConfigFolder + "mpv.conf"; }
         public string GPUAPI { get; set; } = "auto";
         public string VO { get; set; } = "gpu";
-        public string InputConfPath { get => ConfigFolder + "input.conf"; }
+        public string InputConfPath => ConfigFolder + "input.conf";
 
         public string VID { get; set; } = "";
         public string AID { get; set; } = "";
@@ -109,6 +110,8 @@ namespace mpvnet
 
         public void Init()
         {
+            ApplyShowMenuFix();
+
             Handle = mpv_create();
 
             if (Handle == IntPtr.Zero)
@@ -168,23 +171,40 @@ namespace mpvnet
             InvokeAsync(InitializedAsync);
         }
 
-        void ApplyCompatibilityFixes()
+        void ApplyShowMenuFix()
         {
-            if (!App.Settings.InputDefaultBindingsFixApplied)
+            if (App.Settings.ShowMenuFixApplied)
+                return;
+
+            if (File.Exists(InputConfPath))
             {
-                if (File.Exists(ConfPath))
-                {
-                    string content = File.ReadAllText(ConfPath);
+                string content = File.ReadAllText(InputConfPath);
 
-                    if (content.Contains("input-default-bindings = no"))
-                        File.WriteAllText(ConfPath, content.Replace("input-default-bindings = no", ""));
-
-                    if (content.Contains("input-default-bindings=no"))
-                        File.WriteAllText(ConfPath, content.Replace("input-default-bindings=no", ""));
-                }
-
-                App.Settings.InputDefaultBindingsFixApplied = true;
+                if (!content.Contains("script-message mpv.net show-menu"))
+                    File.WriteAllText(InputConfPath, BR + content.Trim() + BR +
+                        "MBTN_Right script-message mpv.net show-menu" + BR);
             }
+
+            App.Settings.ShowMenuFixApplied = true;
+        }
+
+        void ApplyInputDefaultBindingsFix()
+        {
+            if (App.Settings.InputDefaultBindingsFixApplied)
+                return;
+
+            if (File.Exists(ConfPath))
+            {
+                string content = File.ReadAllText(ConfPath);
+
+                if (content.Contains("input-default-bindings = no"))
+                    File.WriteAllText(ConfPath, content.Replace("input-default-bindings = no", ""));
+
+                if (content.Contains("input-default-bindings=no"))
+                    File.WriteAllText(ConfPath, content.Replace("input-default-bindings=no", ""));
+            }
+
+            App.Settings.InputDefaultBindingsFixApplied = true;
         }
 
         public void ProcessProperty(string name, string value)
@@ -264,7 +284,7 @@ namespace mpvnet
             get {
                 if (_Conf == null)
                 {
-                    ApplyCompatibilityFixes();
+                    ApplyInputDefaultBindingsFix();
 
                     _Conf = new Dictionary<string, string>();
 
@@ -1352,6 +1372,8 @@ KP1 script-binding delete_current_file/confirm
         public void RaiseScaleWindow(float value) => ScaleWindow(value);
 
         public void RaiseWindowScale(float value) => WindowScale(value);
+        
+        public void RaiseShowMenu() => ShowMenu();
 
         void ReadMetaData()
         {

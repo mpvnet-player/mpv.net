@@ -166,10 +166,11 @@ F1 script-message mpv.net show-command-palette #menu: Command Palette
 _ ignore                                       #menu: -
 Esc quit                                       #menu: Exit
 
+MBTN_Right    script-message mpv.net show-menu
 6             script-message mpv.net show-progress
 KP6           script-message mpv.net show-progress
 7             script-message mpv.net cycle-audio
-SHARP         script-message mpv.net cycle-audio
+Sharp         script-message mpv.net cycle-audio
 8             cycle sub
 j             cycle sub
 q             quit
@@ -195,15 +196,15 @@ MBTN_Left     ignore
 f             cycle fullscreen
 MBTN_Left_DBL cycle fullscreen
 KP_Enter      cycle fullscreen
-Shift+RIGHT   no-osd seek  1 exact
-Shift+LEFT    no-osd seek -1 exact
-Shift+UP      no-osd seek  5 exact
-Shift+DOWN    no-osd seek -5 exact
+Shift+Right   no-osd seek  1 exact
+Shift+Left    no-osd seek -1 exact
+Shift+Up      no-osd seek  5 exact
+Shift+Down    no-osd seek -5 exact
 Shift+BS      revert-seek      # undo the previous (or marked) seek
 Shift+Ctrl+BS revert-seek mark # mark the position for revert-seek
 Shift+g       add sub-scale +0.1 # increase the subtitle font size
 Shift+f       add sub-scale -0.1 # decrease the subtitle font size
-Ctrl+Shift+LEFT  no-osd sub-seek -1 # seek to the previous subtitle
-Ctrl+Shift+RIGHT no-osd sub-seek  1 # seek to the next subtitle
+Ctrl+Shift+Left  no-osd sub-seek -1 # seek to the previous subtitle
+Ctrl+Shift+Right no-osd sub-seek  1 # seek to the next subtitle
 Ctrl+Wheel_Up    no-osd seek  7
 Ctrl+Wheel_Down  no-osd seek -7

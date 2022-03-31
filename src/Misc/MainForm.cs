@@ -48,6 +48,7 @@ namespace mpvnet
                 Core.Init();
 
                 Core.Shutdown += Core_Shutdown;
+                Core.ShowMenu += Core_ShowMenu;
                 Core.VideoSizeChanged += Core_VideoSizeChanged;
                 Core.ScaleWindow += Core_ScaleWindow;
                 Core.WindowScale += Core_WindowScale;
@@ -133,6 +134,18 @@ namespace mpvnet
             {
                 Msg.ShowException(ex);
             }
+        }
+
+        private void Core_ShowMenu()
+        {
+            BeginInvoke(new Action(() => {
+                if (IsMouseInOSC())
+                    return;
+
+                CursorHelp.Show();
+                UpdateMenu();
+                ContextMenu.IsOpen = true;
+            }));
         }
 
         void Core_ScaleWindow(float scale) {
@@ -791,29 +804,16 @@ namespace mpvnet
                 case 0x105: // WM_SYSKEYUP
                 case 0x201: // WM_LBUTTONDOWN
                 case 0x202: // WM_LBUTTONUP
+                case 0x204: // WM_RBUTTONDOWN
+                case 0x205: // WM_RBUTTONUP
                 case 0x207: // WM_MBUTTONDOWN
                 case 0x208: // WM_MBUTTONUP
                 case 0x20a: // WM_MOUSEWHEEL
-                case 0x20e: // WM_MOUSEHWHEEL
                 case 0x20b: // WM_XBUTTONDOWN
-                case 0x20c: // WM_XBUTTONUP         
+                case 0x20c: // WM_XBUTTONUP
+                case 0x20e: // WM_MOUSEHWHEEL
                     if (Core.WindowHandle != IntPtr.Zero)
                         m.Result = SendMessage(Core.WindowHandle, m.Msg, m.WParam, m.LParam);
-                    break;
-                case 0x0204: // WM_RBUTTONDOWN
-                    if (IsMouseInOSC() && Core.WindowHandle != IntPtr.Zero)
-                        m.Result = SendMessage(Core.WindowHandle, m.Msg, m.WParam, m.LParam);
-                    break;
-                case 0x0205: // WM_RBUTTONUP
-                    if (!IsMouseInOSC())
-                    {
-                        CursorHelp.Show();
-                        UpdateMenu();
-                        ContextMenu.IsOpen = true;
-                    }
-                    else
-                        if (Core.WindowHandle != IntPtr.Zero)
-                            m.Result = SendMessage(Core.WindowHandle, m.Msg, m.WParam, m.LParam);
                     break;
                 case 0x319: // WM_APPCOMMAND
                     {
