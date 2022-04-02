@@ -1,4 +1,6 @@
 
+5.8.0.0 Beta (2022-04-02)
+
 - Fix crash on Windows 7 systems without PowerShell.
 - Fix showing incorrect timestamps in About dialog of Store version.
 - Fix Store page showing non existant ARM and x86 support.
@@ -7,12 +9,16 @@
   by the text editor, so it's like everything else searchable.
 - Media Info isn't shown directly, instead the command palette
   shows several choices. The command palette can be bypassed
-  using the arguments: msgbox, editor, full, raw.
+  using the arguments: msgbox, editor, full, raw.  
+  https://github.com/stax76/mpv.net/blob/master/docs/Manual.md#show-media-info-flags
 - mpv.net specific commands, the command palette, auto-play property
   and various other things are documented in the manual.
-- The action used for the right mouse button can be configured.
+- The action used for the right mouse button can be configured.  
+  https://github.com/stax76/mpv.net/blob/master/docs/Manual.md#show-menu
 - Workaround not reproducible logo drawing crash.
 - Info command shows the length.
+- New mpv.net specific option `show-logo` that allows to disable
+  the drawing of the blue mpv.net logo ontop of the native OSC logo.
 - MediaInfo 22.03
 
 

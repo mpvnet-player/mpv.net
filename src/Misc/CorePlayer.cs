@@ -1330,7 +1330,7 @@ KP1 script-binding delete_current_file/confirm
 
         public void ShowLogo()
         {
-            if (MainForm.Instance == null || App.Settings.LogoCrash)
+            if (!App.ShowLogo || (MainForm.Instance == null || App.Settings.LogoCrash))
                 return;
 
             try

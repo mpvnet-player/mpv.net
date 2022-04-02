@@ -493,7 +493,7 @@ Available on Windows 10 or higher.
 
 **never**
 
-#### ---dark-theme=\<string\>
+#### --dark-theme=\<string\>
 
 Color theme used in dark mode. Default: dark
 
@@ -504,6 +504,11 @@ Color theme used in dark mode. Default: dark
 Color theme used in light mode. Default: light
 
 [Color Themes](#color-theme)
+
+#### --show-logo=\<yes|no\>
+
+Draws the blue mpv.net logo ontop of the native OSC logo.  
+Changes take effect after application restart. Default: yes
 
 
 External Tools

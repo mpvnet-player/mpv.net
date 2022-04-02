@@ -28,6 +28,7 @@ namespace mpvnet
         public static bool Queue { get; set; }
         public static bool RememberVolume { get; set; } = true;
         public static bool RememberWindowPosition { get; set; }
+        public static bool ShowLogo { get; set; } = true;
 
         public static int StartThreshold { get; set; } = 1500;
         public static int RecentCount { get; set; } = 15;
@@ -246,6 +247,7 @@ namespace mpvnet
                 case "queue": Queue = value == "yes"; return true;
                 case "recent-count": RecentCount = value.ToInt(); return true;
                 case "remember-volume": RememberVolume = value == "yes"; return true;
+                case "show-logo": ShowLogo = value == "yes"; return true;
                 case "remember-window-position": RememberWindowPosition = value == "yes"; return true;
                 case "start-size": StartSize = value; return true;
                 case "start-threshold": StartThreshold = value.ToInt(); return true;

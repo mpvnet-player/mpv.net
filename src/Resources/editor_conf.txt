@@ -681,3 +681,13 @@ file = mpvnet
 filter = UI
 url = https://github.com/stax76/mpv.net/blob/master/docs/Manual.md#color-theme
 help = Color theme used in light mode.\nmpv.net must be restarted after a change.\nmpv.net specific option. Default: light
+
+[setting]
+name = show-logo
+file = mpvnet
+default = yes
+filter = UI
+help = Draws the blue mpv.net logo ontop of the native OSC logo.
+
+option = yes
+option = no
