@@ -173,9 +173,6 @@ namespace mpvnet
                 if (path.Contains("://"))
                     path = Core.GetPropertyString("media-title");
 
-                int width = Core.GetPropertyInt("video-params/w");
-                int height = Core.GetPropertyInt("video-params/h");
-
                 if (File.Exists(path))
                 {
                     fileSize = new FileInfo(path).Length;
@@ -223,12 +220,13 @@ namespace mpvnet
 
                 string videoFormat = Core.GetPropertyString("video-format").ToUpper();
                 string audioCodec = Core.GetPropertyString("audio-codec-name").ToUpper();
-
-                text = path.FileName() + $"\n{width} x {height}\n";
-
-                if (fileSize > 0)
-                    text += Convert.ToInt32(fileSize / 1024.0 / 1024.0) + " MB\n";
-
+                int width = Core.GetPropertyInt("video-params/w");
+                int height = Core.GetPropertyInt("video-params/h");
+                TimeSpan len = TimeSpan.FromSeconds(Core.GetPropertyDouble("duration"));
+                text = path.FileName() + "\n";
+                text += FormatTime(len.TotalMinutes) + ":" + FormatTime(len.Seconds) + "\n";
+                if (fileSize > 0) text += Convert.ToInt32(fileSize / 1024.0 / 1024.0) + " MB\n";
+                text += $"{width} x {height}\n";
                 text += $"{videoFormat}\n{audioCodec}";
 
                 Core.CommandV("show-text", text, "5000");
@@ -238,6 +236,8 @@ namespace mpvnet
                 App.ShowException(e);
             }
         }
+
+        static string FormatTime(double value) => ((int)value).ToString("00");
 
         public static void ShowProgress()
         {
@@ -250,8 +250,6 @@ namespace mpvnet
                           FormatTime(duration.Seconds);
 
             Core.CommandV("show-text", text, "5000");
-
-            string FormatTime(double value) => ((int)value).ToString("00");
         }
 
         public static void OpenFromClipboard() => App.InvokeOnMainThread(() =>

@@ -11,7 +11,8 @@
 - mpv.net specific commands, the command palette, auto-play property
   and various other things are documented in the manual.
 - The action used for the right mouse button can be configured.
-- Workaround not reproducible logo drawing crash. 
+- Workaround not reproducible logo drawing crash.
+- Info command shows the length.
 - MediaInfo 22.03
 
 
