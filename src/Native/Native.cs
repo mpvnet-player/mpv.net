@@ -18,6 +18,9 @@ namespace mpvnet
         [DllImport("kernel32.dll")]
         public static extern IntPtr LoadLibrary(string path);
 
+        [DllImport("user32.dll")]
+        public static extern uint ActivateKeyboardLayout(IntPtr hkl, uint flags);
+
         [DllImport("user32.dll", CharSet = CharSet.Unicode)]
         public static extern IntPtr FindWindowEx(
             IntPtr parentHandle, IntPtr childAfter, string lclassName, string windowTitle);

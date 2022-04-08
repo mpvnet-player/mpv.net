@@ -1,9 +1,11 @@
 
+- Fix keyboard layout change not working.
+
 5.8.0.0 Beta (2022-04-02)
 
 - Fix crash on Windows 7 systems without PowerShell.
 - Fix showing incorrect timestamps in About dialog of Store version.
-- Fix Store page showing non existant ARM and x86 support.
+- Fix Store page showing non-existent ARM and x86 support.
 - Fix opening zip files.
 - The list of available input commands is like before shown
   by the text editor, so it's like everything else searchable.
@@ -18,7 +20,7 @@
 - Workaround not reproducible logo drawing crash.
 - Info command shows the length.
 - New mpv.net specific option `show-logo` that allows to disable
-  the drawing of the blue mpv.net logo ontop of the native OSC logo.
+  the drawing of the blue mpv.net logo on top of the native OSC logo.
 - MediaInfo 22.03
 
 

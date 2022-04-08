@@ -413,22 +413,7 @@ KP1 script-binding delete_current_file/confirm
                 mpv_event evt = (mpv_event)Marshal.PtrToStructure(ptr, typeof(mpv_event));
 
                 if (WindowHandle == IntPtr.Zero)
-                {
                     WindowHandle = Native.FindWindowEx(MainForm.Hwnd, IntPtr.Zero, "mpv", null);
-
-                    if (WindowHandle != IntPtr.Zero)
-                    {
-                        int GWL_STYLE = -16;
-
-                        uint WS_CHILD        = 0x40000000;
-                        uint WS_CLIPSIBLINGS = 0x04000000;
-                        uint WS_DISABLED     = 0x08000000;
-                        uint WS_VISIBLE      = 0x10000000;
-
-                        Native.SetWindowLong(WindowHandle, GWL_STYLE,
-                            WS_CHILD | WS_VISIBLE | WS_DISABLED | WS_CLIPSIBLINGS);
-                    }
-                }
 
                 try
                 {

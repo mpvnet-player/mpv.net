@@ -815,6 +815,9 @@ namespace mpvnet
                     if (Core.WindowHandle != IntPtr.Zero)
                         m.Result = SendMessage(Core.WindowHandle, m.Msg, m.WParam, m.LParam);
                     break;
+                case 0x051: // WM_INPUTLANGCHANGE
+                    ActivateKeyboardLayout(m.LParam, 0x00000100u /*KLF_SETFORPROCESS*/);
+                    break;
                 case 0x319: // WM_APPCOMMAND
                     {
                         string value = Input.WM_APPCOMMAND_to_mpv_key((int)(m.LParam.ToInt64() >> 16 & ~0xf000));
