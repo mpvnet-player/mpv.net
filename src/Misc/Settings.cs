@@ -15,7 +15,6 @@ namespace mpvnet
     public class AppSettings
     {
         public bool InputDefaultBindingsFixApplied;
-        public bool LogoCrash;
         public bool ShowMenuFixApplied;
         public int Volume = 70;
         public List<string> RecentFiles = new List<string>();

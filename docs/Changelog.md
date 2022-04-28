@@ -1,5 +1,7 @@
 
 - Fix keyboard layout change not working.
+- Fix multi monitor setup with different DPI values.
+
 
 5.8.0.0 Beta (2022-04-02)
 

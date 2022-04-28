@@ -1315,40 +1315,33 @@ KP1 script-binding delete_current_file/confirm
 
         public void ShowLogo()
         {
-            if (!App.ShowLogo || (MainForm.Instance == null || App.Settings.LogoCrash))
+            if (!App.ShowLogo || MainForm.Instance == null)
                 return;
 
-            try
+            bool december = DateTime.Now.Month == 12;
+
+            Rectangle cr = MainForm.Instance.ClientRectangle;
+            int len = Convert.ToInt32(cr.Height / (december ? 4.5 : 5));
+
+            if (len < 16 || cr.Height < 16)
+                return;
+
+            using (Bitmap bmp = new Bitmap(len, len))
             {
-                bool december = DateTime.Now.Month == 12;
-
-                Rectangle cr = MainForm.Instance.ClientRectangle;
-                int len = Convert.ToInt32(cr.Height / (december ? 4.5 : 5));
-
-                if (len == 0)
-                    return;
-
-                using (Bitmap bmp = new Bitmap(len, len))
+                using (Graphics gx = Graphics.FromImage(bmp))
                 {
-                    using (Graphics gx = Graphics.FromImage(bmp))
-                    {
-                        gx.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                        gx.Clear(Color.Black);
-                        Rectangle rect = new Rectangle(0, 0, len, len);
-                        Bitmap bmp2 = december ? Properties.Resources.mpvnet_santa : Properties.Resources.mpvnet;
-                        gx.DrawImage(bmp2, rect);
-                        BitmapData bd = bmp.LockBits(rect, ImageLockMode.ReadOnly, PixelFormat.Format32bppPArgb);
-                        int x = Convert.ToInt32((cr.Width - len) / (december ? 1.95 : 2));
-                        int y = Convert.ToInt32((cr.Height - len) / 2.0 * (december ? 0.85 : 0.9));
-                        CommandV("overlay-add", "0", $"{x}", $"{y}", "&" + bd.Scan0.ToInt64().ToString(), "0", "bgra", bd.Width.ToString(), bd.Height.ToString(), bd.Stride.ToString());
-                        bmp.UnlockBits(bd);
-                        IsLogoVisible = true;
-                    }
+                    gx.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                    gx.Clear(Color.Black);
+                    Rectangle rect = new Rectangle(0, 0, len, len);
+                    Bitmap bmp2 = december ? Properties.Resources.mpvnet_santa : Properties.Resources.mpvnet;
+                    gx.DrawImage(bmp2, rect);
+                    BitmapData bd = bmp.LockBits(rect, ImageLockMode.ReadOnly, PixelFormat.Format32bppPArgb);
+                    int x = Convert.ToInt32((cr.Width - len) / (december ? 1.95 : 2));
+                    int y = Convert.ToInt32((cr.Height - len) / 2.0 * (december ? 0.85 : 0.9));
+                    CommandV("overlay-add", "0", $"{x}", $"{y}", "&" + bd.Scan0.ToInt64().ToString(), "0", "bgra", bd.Width.ToString(), bd.Height.ToString(), bd.Stride.ToString());
+                    bmp.UnlockBits(bd);
+                    IsLogoVisible = true;
                 }
-            }
-            catch (Exception)
-            {
-                App.Settings.LogoCrash = true;
             }
         }
 
