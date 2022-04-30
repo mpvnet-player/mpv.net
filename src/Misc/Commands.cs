@@ -35,6 +35,7 @@ namespace mpvnet
                 case "open-optical-media": Open_DVD_Or_BD_Folder(); break;
                 case "open-url": OpenFromClipboard(); break; // deprecated 2022
                 case "play-pause": PlayPause(); break;
+                case "playlist-add": PlaylistAdd(Convert.ToInt32(args[0])); break;
                 case "playlist-first": PlaylistFirst(); break;
                 case "playlist-last": PlaylistLast(); break;
                 case "reg-file-assoc": RegisterFileAssociations(args[0]); break;
@@ -662,5 +663,24 @@ namespace mpvnet
         });
 
         public static void ShowMenu() => Core.RaiseShowMenu();
+
+        public static void PlaylistAdd(int value)
+        {
+            int pos = Core.GetPropertyInt("playlist-pos");
+            int count = Core.GetPropertyInt("playlist-count");
+
+            if (count < 2)
+                return;
+
+            pos = pos + value;
+
+            if (pos < 0)
+                pos = count - 1;
+
+            if (pos > count - 1)
+                pos = 0;
+
+            Core.SetPropertyInt("playlist-pos", pos);
+        }
     }
 }

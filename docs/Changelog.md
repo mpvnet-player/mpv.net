@@ -1,6 +1,9 @@
 
 - Fix keyboard layout change not working.
 - Fix multi monitor setup with different DPI values.
+- New playlist-add command added to change the playlist position.
+  Ctrl+F11 goes 10 positions backward.
+  Ctrl+F12 goes 10 positions forward.
 
 
 5.8.0.0 Beta (2022-04-02)

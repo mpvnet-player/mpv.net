@@ -255,6 +255,10 @@ or multiple files in the file clipboard format.
 Cycles the pause property. In case the playlist is empty,
 the most recent file from the recent files list is loaded.
 
+### playlist-add \<integer\>
+Changes the playlist position by adding the supplied integer value.
+If the position goes out of range, it jumpes to the opposite end.
+
 ### playlist-first
 Jumps to the first playlist entry, if the loaded file is
 already the first entry, nothing happens.
