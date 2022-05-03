@@ -518,7 +518,7 @@ option = no
 [setting]
 name = keep-open
 file = mpv
-default = no
+default = yes
 filter = Playback
 help = Using no, mpv would terminate after the last file but mpv.net never terminates automatically.
 

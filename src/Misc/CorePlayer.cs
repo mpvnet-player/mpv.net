@@ -271,7 +271,7 @@ namespace mpvnet
                     _ConfigFolder = _ConfigFolder.AddSep();
 
                     if (!File.Exists(_ConfigFolder + "input.conf"))
-                        File.WriteAllText(_ConfigFolder + "input.conf", PatchInput(Properties.Resources.input_conf));
+                        File.WriteAllText(_ConfigFolder + "input.conf", Properties.Resources.input_conf);
                 }
 
                 return _ConfigFolder;
@@ -299,28 +299,6 @@ namespace mpvnet
 
                 return _Conf;
             }
-        }
-
-        string PatchInput(string value)
-        {
-            if (Environment.GetEnvironmentVariable("username") == "frank" && Directory.Exists(@"D:\Projects\CS\mpv.net"))
-                value = value.Replace("volume  2 ", "volume  10")
-                             .Replace("volume -2 ", "volume -10");
-            value += @"
-KP2 script-message rate-file 2
-2   script-message rate-file 2
-KP3 script-message rate-file 3
-3   script-message rate-file 3
-KP4 script-message rate-file 4
-4   script-message rate-file 4
-KP5 script-message rate-file 5
-5   script-message rate-file 5
-
-KP0 script-binding delete_current_file/delete
-0   script-binding delete_current_file/delete
-KP1 script-binding delete_current_file/confirm
-1   script-binding delete_current_file/confirm";
-            return value;
         }
 
         public void LoadScripts()
