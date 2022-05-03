@@ -139,8 +139,6 @@ namespace mpvnet
 
             SetPropertyInt("osd-duration", 2000);
 
-            SetPropertyBool("keep-open", true);
-            SetPropertyBool("keep-open-pause", false);
             SetPropertyBool("input-default-bindings", true);
             SetPropertyBool("input-builtin-bindings", false);
 
@@ -162,7 +160,7 @@ namespace mpvnet
                 {
                     ShowLogo();
 
-                    if (GetPropertyString("keep-open") == "no")
+                    if (GetPropertyString("keep-open") == "no" && App.KeepOpenExit)
                         Core.CommandV("quit");
                 }
             });

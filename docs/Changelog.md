@@ -1,8 +1,11 @@
 
-- Fix keyboard layout change not working.
+- Fix keyboard layout change.
 - Fix multi monitor setup with different DPI values.
-- Fix config editor handling `keep-open` incorrectly.
-- New playlist-add command added to change the playlist position.
+- Fix config editor handling `keep-open` and `keep-open-pause` incorrectly.
+- New mpv.net specific option `keep-open-exit` added. If set to yes and
+  keep-open is set to no, mpv.net exits after the last file ends.
+- New `playlist-add` command added to change the playlist position,
+  jumps to the other end when the beginning or end is reached.
   Ctrl+F11 goes 10 positions backward.
   Ctrl+F12 goes 10 positions forward.
 
