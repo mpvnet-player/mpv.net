@@ -22,9 +22,9 @@ namespace mpvnet
     public partial class MainForm : Form
     {
         public ElementHost CommandPaletteHost { get; set; }
+        public IntPtr mpvWindowHandle { get; set; }
         public static MainForm Instance { get; set; }
-        public static IntPtr Hwnd { get; set; }
-   
+
         new WpfControls.ContextMenu ContextMenu { get; set; }
         AutoResetEvent MenuAutoResetEvent { get; } = new AutoResetEvent(false);
         Point LastCursorPosition;
@@ -44,8 +44,7 @@ namespace mpvnet
             try
             {
                 Instance = this;
-                Hwnd = Handle;
-                Core.Init();
+                Core.Init(Handle);
 
                 Core.Shutdown += Core_Shutdown;
                 Core.ShowMenu += Core_ShowMenu;
@@ -812,8 +811,11 @@ namespace mpvnet
                 case 0x20b: // WM_XBUTTONDOWN
                 case 0x20c: // WM_XBUTTONUP
                 case 0x20e: // WM_MOUSEHWHEEL
-                    if (Core.WindowHandle != IntPtr.Zero)
-                        m.Result = SendMessage(Core.WindowHandle, m.Msg, m.WParam, m.LParam);
+                    if (mpvWindowHandle == IntPtr.Zero)
+                        mpvWindowHandle = FindWindowEx(Handle, IntPtr.Zero, "mpv", null);
+
+                    if (mpvWindowHandle != IntPtr.Zero)
+                        m.Result = SendMessage(mpvWindowHandle, m.Msg, m.WParam, m.LParam);
                     break;
                 case 0x051: // WM_INPUTLANGCHANGE
                     ActivateKeyboardLayout(m.LParam, 0x00000100u /*KLF_SETFORPROCESS*/);

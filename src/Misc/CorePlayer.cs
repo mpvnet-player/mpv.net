@@ -71,7 +71,6 @@ namespace mpvnet
         public List<KeyValuePair<string, double>> Chapters { get; set; } = new List<KeyValuePair<string, double>>();
         public List<TimeSpan> BluRayTitles { get; } = new List<TimeSpan>();
         public IntPtr Handle { get; set; }
-        public IntPtr WindowHandle { get; set; }
         
         public Size VideoSize { get; set; }
         public TimeSpan Duration;
@@ -108,7 +107,7 @@ namespace mpvnet
         public float AutofitSmaller { get; set; } = 0.3f;
         public float AutofitLarger { get; set; } = 0.8f;
 
-        public void Init()
+        public void Init(IntPtr handle)
         {
             ApplyShowMenuFix();
 
@@ -116,6 +115,8 @@ namespace mpvnet
 
             if (Handle == IntPtr.Zero)
                 throw new Exception("error mpv_create");
+
+            SetPropertyLong("wid", handle.ToInt64());
 
             mpv_request_log_messages(Handle, "terminal-default");
 
@@ -127,20 +128,19 @@ namespace mpvnet
                 SetPropertyString("input-terminal", "yes");
                 SetPropertyString("msg-level", "osd/libass=fatal");
             }
-
-            SetPropertyString("watch-later-options", "mute");
-            SetPropertyString("screenshot-directory", "~~desktop/");
-            SetPropertyString("osd-playing-msg", "${filename}");
-            SetPropertyString("wid", MainForm.Hwnd.ToString());
-            SetPropertyString("osc", "yes");
-            SetPropertyString("force-window", "yes");
-            SetPropertyString("config-dir", ConfigFolder);
-            SetPropertyString("config", "yes");
-
+            
             SetPropertyInt("osd-duration", 2000);
 
             SetPropertyBool("input-default-bindings", true);
             SetPropertyBool("input-builtin-bindings", false);
+
+            SetPropertyString("watch-later-options", "mute");
+            SetPropertyString("screenshot-directory", "~~desktop/");
+            SetPropertyString("osd-playing-msg", "${filename}");
+            SetPropertyString("osc", "yes");
+            SetPropertyString("force-window", "yes");
+            SetPropertyString("config-dir", ConfigFolder);
+            SetPropertyString("config", "yes");
 
             ProcessCommandLine(true);
             mpv_error err = mpv_initialize(Handle);
@@ -387,9 +387,6 @@ namespace mpvnet
             {
                 IntPtr ptr = mpv_wait_event(Handle, -1);
                 mpv_event evt = (mpv_event)Marshal.PtrToStructure(ptr, typeof(mpv_event));
-
-                if (WindowHandle == IntPtr.Zero)
-                    WindowHandle = Native.FindWindowEx(MainForm.Hwnd, IntPtr.Zero, "mpv", null);
 
                 try
                 {
@@ -761,6 +758,14 @@ namespace mpvnet
                 HandleError(err, throwException, $"error setting property: {name} = {value}");
         }
 
+        public void SetPropertyLong(string name, long value, bool throwException = false)
+        {
+            mpv_error err = mpv_set_property(Handle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_INT64, ref value);
+
+            if (err < 0)
+                HandleError(err, throwException, $"error setting property: {name} = {value}");
+        }
+
         public long GetPropertyLong(string name, bool throwException = false)
         {
             mpv_error err = mpv_get_property(Handle, GetUtf8Bytes(name),
@@ -770,15 +775,6 @@ namespace mpvnet
                 HandleError(err, throwException, $"error getting property: {name}");
 
             return lpBuffer.ToInt64();
-        }
-
-        public void SetPropertyLong(string name, long value, bool throwException = false)
-        {
-            long val = value;
-            mpv_error err = mpv_set_property(Handle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_INT64, ref val);
-
-            if (err < 0)
-                HandleError(err, throwException, $"error setting property: {name} = {value}");
         }
 
         public double GetPropertyDouble(string name, bool throwException = false)
