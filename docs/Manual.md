@@ -446,6 +446,10 @@ Can be suppressed via shift key. Default: yes
 If the player is paused and another file is loaded,
 playback automatically resumes.
 
+#### --keep-open-exit
+
+If set to yes and keep-open is set to no, mpv.net exits after the last file ends.
+In mpv the idle property would be used, it's not possible for mpv.net to use the idle property.
 
 ### General
 

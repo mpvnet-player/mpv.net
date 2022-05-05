@@ -116,7 +116,6 @@ namespace mpvnet
             if (Handle == IntPtr.Zero)
                 throw new Exception("error mpv_create");
 
-            SetPropertyLong("wid", handle.ToInt64());
 
             mpv_request_log_messages(Handle, "terminal-default");
 
@@ -130,6 +129,7 @@ namespace mpvnet
             }
             
             SetPropertyInt("osd-duration", 2000);
+            SetPropertyLong("wid", handle.ToInt64());
 
             SetPropertyBool("input-default-bindings", true);
             SetPropertyBool("input-builtin-bindings", false);
