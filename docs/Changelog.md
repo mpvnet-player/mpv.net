@@ -1,6 +1,9 @@
 
-- Fix keyboard layout change.
-- Fix multi monitor setup with different DPI values.
+5.9.0.0 Beta (2022-05-08)
+
+- Fix startup without media file not working with gpu-api=vulkan.
+- Fix keyboard layout change not working.
+- Fix multi monitor setup with different DPI values not working.
 - Fix config editor handling `keep-open` and `keep-open-pause` incorrectly.
 - New mpv.net specific option `keep-open-exit` added. If set to yes and
   keep-open is set to no, mpv.net exits after the last file ends.

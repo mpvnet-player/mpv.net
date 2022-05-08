@@ -116,7 +116,6 @@ namespace mpvnet
             if (Handle == IntPtr.Zero)
                 throw new Exception("error mpv_create");
 
-
             mpv_request_log_messages(Handle, "terminal-default");
 
             App.RunTask(() => EventLoop());
@@ -1287,7 +1286,7 @@ namespace mpvnet
 
         public void ShowLogo()
         {
-            if (!App.ShowLogo || MainForm.Instance == null)
+            if (!App.ShowLogo || MainForm.Instance == null || Core.Handle == IntPtr.Zero)
                 return;
 
             bool december = DateTime.Now.Month == 12;

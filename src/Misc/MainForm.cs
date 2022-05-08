@@ -44,7 +44,6 @@ namespace mpvnet
             try
             {
                 Instance = this;
-                Core.Init(Handle);
 
                 Core.Shutdown += Core_Shutdown;
                 Core.ShowMenu += Core_ShowMenu;
@@ -55,27 +54,8 @@ namespace mpvnet
                 Core.Seek += () => UpdateProgressBar();
                 Core.PlaylistPosChanged += (value) => SetTitle();
 
-                Core.ObserveProperty("window-maximized", PropChangeWindowMaximized);
-                Core.ObserveProperty("window-minimized", PropChangeWindowMinimized);
-
-                Core.ObservePropertyBool("border", PropChangeBorder);
-                Core.ObservePropertyBool("fullscreen", PropChangeFullscreen);
-                Core.ObservePropertyBool("keepaspect-window", value => Core.KeepaspectWindow = value);
-                Core.ObservePropertyBool("ontop", PropChangeOnTop);
-                Core.ObservePropertyBool("pause", PropChangePause);
-
-                Core.ObservePropertyString("sid", PropChangeSid);
-                Core.ObservePropertyString("aid", PropChangeAid);
-                Core.ObservePropertyString("vid", PropChangeVid);
-
-                Core.ObservePropertyString("title", PropChangeTitle);
-
-                Core.ObservePropertyInt("edition", PropChangeEdition);
-
-                Core.ObservePropertyDouble("window-scale", WindowScale);
-
                 if (Core.GPUAPI != "vulkan")
-                    Core.ProcessCommandLine(false);
+                    Init();
 
                 AppDomain.CurrentDomain.UnhandledException += (sender, e) => App.ShowException(e.ExceptionObject);
                 Application.ThreadException += (sender, e) => App.ShowException(e.Exception);
@@ -135,7 +115,33 @@ namespace mpvnet
             }
         }
 
-        private void Core_ShowMenu()
+        void Init()
+        {
+            Core.Init(Handle);
+
+            Core.ObserveProperty("window-maximized", PropChangeWindowMaximized);
+            Core.ObserveProperty("window-minimized", PropChangeWindowMinimized);
+
+            Core.ObservePropertyBool("border", PropChangeBorder);
+            Core.ObservePropertyBool("fullscreen", PropChangeFullscreen);
+            Core.ObservePropertyBool("keepaspect-window", value => Core.KeepaspectWindow = value);
+            Core.ObservePropertyBool("ontop", PropChangeOnTop);
+            Core.ObservePropertyBool("pause", PropChangePause);
+
+            Core.ObservePropertyString("sid", PropChangeSid);
+            Core.ObservePropertyString("aid", PropChangeAid);
+            Core.ObservePropertyString("vid", PropChangeVid);
+
+            Core.ObservePropertyString("title", PropChangeTitle);
+
+            Core.ObservePropertyInt("edition", PropChangeEdition);
+
+            Core.ObservePropertyDouble("window-scale", WindowScale);
+
+            Core.ProcessCommandLine(false);
+        }
+
+        void Core_ShowMenu()
         {
             BeginInvoke(new Action(() => {
                 if (IsMouseInOSC())
@@ -1026,7 +1032,8 @@ namespace mpvnet
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            Core.VideoSizeAutoResetEvent.WaitOne(App.StartThreshold);
+            if (Core.GPUAPI != "vulkan")
+                Core.VideoSizeAutoResetEvent.WaitOne(App.StartThreshold);
             LastCycleFullscreen = Environment.TickCount;
             SetFormPosAndSize();
         }
@@ -1041,11 +1048,11 @@ namespace mpvnet
         {
             base.OnShown(e);
 
+            if (Core.GPUAPI == "vulkan")
+                Init();
+
             if (WindowState == FormWindowState.Maximized)
                 Core.SetPropertyBool("window-maximized", true);
-
-            if (Core.GPUAPI == "vulkan")
-                Core.ProcessCommandLine(false);
 
             WPF.Init();
             App.UpdateWpfColors();
