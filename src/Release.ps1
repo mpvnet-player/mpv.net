@@ -5,7 +5,7 @@ $versionInfo = [Diagnostics.FileVersionInfo]::GetVersionInfo($exePath)
 $7z          = 'C:\Program Files\7-Zip\7z.exe'
 
 $targetDir = $tmpDir + "\mpv.net-$($versionInfo.FileVersion)-beta"
-Copy-Item $PSScriptRoot\bin $targetDir -Recurse -Exclude 'System.Management.Automation.xml'
+Copy-Item $PSScriptRoot\bin $targetDir -Recurse -Exclude System.Management.Automation.xml
 
 $folders = 'Debug', 'Release', 'x64', 'x86', 'Arm'
 
