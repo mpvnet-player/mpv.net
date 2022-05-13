@@ -2,7 +2,7 @@
 mpv.net手册
 ==============
 
-同步源提交_[20220402](https://github.com/stax76/mpv.net/commit/27dc98af2195622d3443cc048b3c856c5238b9f5)
+适配版本 [v5.9.0.0-beta](https://github.com/stax76/mpv.net/releases/tag/v5.9.0.0-beta)
 
 **[ENGLISH](Manual.md)** | **简体中文**
 
@@ -40,6 +40,9 @@ mpv.net出于兼容mpv而设计，几乎所有mpv的功能都可用，因为它�
 这意味着[mpv官方手册](https://mpv.io/manual/master/) 也适用于mpv.net。
 
 mpv专注命令行与终端的使用，而mpv.net保留了这些并加入了现代化的图形界面。
+
+与mpv一样，mpv.net也是为高级用户设计的，对于普通用户，
+有一个正在建设中的 [mpv.net-next](https://github.com/mpv-net-player/mpv.net-next) 项目。
 
 
 下载
@@ -248,6 +251,9 @@ mpv.net命令可在mpv命令不存在或缺乏某种功能时使用。
 ### play-pause
 循环切换 pause 的属性。如果播放列表为空，将加载最近文件列表中的最新文件。
 
+### playlist-add \<integer\>
+通过指定的整数值来跳转播放的条目。如果已到达末尾则它会跳到开头，反之亦然。
+
 ### playlist-first
 跳转到播放列表的第一个条目，如果加载的文件已经是第一个条目，则无动作。
 
@@ -422,6 +428,12 @@ mpv.net的专属选项
 #### --auto-play=\<yes|no\>
 
 如果在播放器暂停时，加载另一个文件，会自动恢复播放。
+
+
+#### --keep-open-exit
+
+如果设置为yes并且keep-open设置为no，mpv.net将在播完最后一个文件后退出。
+在mpv中可以使用idle属性，但对mpv.net来说不可能实现它。
 
 
 ### General
