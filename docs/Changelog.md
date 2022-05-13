@@ -1,4 +1,8 @@
 
+- When input.conf is created on the very first start and
+  a script-opts folder does not exist, a script-opts folder is
+  created with defaults for osc and console.
+
 5.9.0.0 Beta (2022-05-08)
 
 - Fix startup without media file not working with gpu-api=vulkan.

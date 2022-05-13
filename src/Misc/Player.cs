@@ -268,7 +268,19 @@ namespace mpvnet
                     _ConfigFolder = _ConfigFolder.AddSep();
 
                     if (!File.Exists(_ConfigFolder + "input.conf"))
+                    {
                         File.WriteAllText(_ConfigFolder + "input.conf", Properties.Resources.input_conf);
+
+                        string scriptOptsPath = _ConfigFolder + "script-opts" + Path.DirectorySeparatorChar;
+
+                        if (!Directory.Exists(scriptOptsPath))
+                        {
+                            Directory.CreateDirectory(scriptOptsPath);
+                            File.WriteAllText(scriptOptsPath + "console.conf", BR + "scale=1.5" + BR);
+                            string content = BR + "scalewindowed=1.5" + BR + "hidetimeout=2000" + BR;
+                            File.WriteAllText(scriptOptsPath + "osc.conf", content);
+                        }
+                    }
                 }
 
                 return _ConfigFolder;
