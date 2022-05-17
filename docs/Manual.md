@@ -807,7 +807,7 @@ need an own implementation in mpv.net, so far implemented are:
 ### Other Limitations
 
 The mpv property [idle](https://mpv.io/manual/master/#options-idle) can be
-used and mpv.net functions accordingly, but Lua scripts see always `idle=yes`
+used and mpv.net functions accordingly, but Lua scripts always see `idle=yes`
 because mpv.net has to set it to function correctly, this is a difficult
 to overcome libmpv limitation.
 
