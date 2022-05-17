@@ -446,10 +446,6 @@ Can be suppressed via shift key. Default: yes
 If the player is paused and another file is loaded,
 playback automatically resumes.
 
-#### --keep-open-exit
-
-If set to yes and keep-open is set to no, mpv.net exits after the last file ends.
-In mpv the idle property would be used, it's not possible for mpv.net to use the idle property.
 
 ### General
 
@@ -790,7 +786,6 @@ https://mpv.io/manual/master/#window
 - [autofit-smaller](https://mpv.io/manual/master/#options-autofit-smaller)
 - [autofit](https://mpv.io/manual/master/#options-autofit)
 
-
 mpv.net specific window features are documented in the [screen section](#screen).
 
 
@@ -808,6 +803,13 @@ need an own implementation in mpv.net, so far implemented are:
 --profile=help  
 --vd=help  
 --version  
+
+### Other Limitations
+
+The mpv property [idle](https://mpv.io/manual/master/#options-idle) can be
+used and mpv.net functions accordingly, but Lua scripts see always `idle=yes`
+because mpv.net has to set it to function correctly, this is a difficult
+to overcome libmpv limitation.
 
 
 ### mpv.net specific options

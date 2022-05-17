@@ -24,8 +24,8 @@ namespace mpvnet
         public static bool AutoLoadFolder { get; set; } = true;
         public static bool AutoPlay { get; set; }
         public static bool DebugMode { get; set; }
+        public static bool Exit { get; set; }
         public static bool IsTerminalAttached { get; } = Environment.GetEnvironmentVariable("_started_from_console") == "yes";
-        public static bool KeepOpenExit { get; set; }
         public static bool Queue { get; set; }
         public static bool RememberVolume { get; set; } = true;
         public static bool RememberWindowPosition { get; set; }
@@ -242,7 +242,6 @@ namespace mpvnet
                 case "dark-theme": DarkTheme = value.Trim('\'', '"'); return true;
                 case "debug-mode": DebugMode = value == "yes"; return true;
                 case "image-file-extensions": CorePlayer.ImageTypes = value.Split(" ,;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries); return true;
-                case "keep-open-exit": KeepOpenExit = value == "yes"; return true;
                 case "light-theme": LightTheme = value.Trim('\'', '"'); return true;
                 case "minimum-aspect-ratio": MinimumAspectRatio = value.ToFloat(); return true;
                 case "process-instance": ProcessInstance = value; return true;

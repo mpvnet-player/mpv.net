@@ -1,7 +1,10 @@
 
-- When input.conf is created on the very first start and
-  a script-opts folder does not exist, a script-opts folder is
-  created with defaults for osc and console.
+- When input.conf is created on the very first start and a
+  script-opts folder does not exist, a script-opts folder
+  is created with defaults for osc and console.
+- Support mpv idle property, see manual for remarks.
+- libmpv shinchiro 2022-05-17 with idle fix
+
 
 5.9.0.0 Beta (2022-05-08)
 

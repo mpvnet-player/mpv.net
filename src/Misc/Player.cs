@@ -142,7 +142,14 @@ namespace mpvnet
             SetPropertyString("config", "yes");
 
             ProcessCommandLine(true);
+
             mpv_error err = mpv_initialize(Handle);
+            string idle = GetPropertyString("idle");
+            App.Exit = idle == "no" || idle == "once";
+
+            // otherwise shutdown is raised before media files are loaded,
+            // this means Lua scripts that use idle might not work correctly
+            SetPropertyString("idle", "yes");
 
             if (err < 0)
                 throw new Exception("mpv_initialize error" + BR2 + GetError(err) + BR);
@@ -159,7 +166,7 @@ namespace mpvnet
                 {
                     ShowLogo();
 
-                    if (GetPropertyString("keep-open") == "no" && App.KeepOpenExit)
+                    if (GetPropertyString("keep-open") == "no" && App.Exit)
                         Core.CommandV("quit");
                 }
             });
@@ -985,7 +992,8 @@ namespace mpvnet
             var args = Environment.GetCommandLineArgs().Skip(1);
 
             string[] preInitProperties = { "input-terminal", "terminal", "input-file", "config",
-                "config-dir", "input-conf", "load-scripts", "scripts", "player-operation-mode" };
+                "config-dir", "input-conf", "load-scripts", "scripts", "player-operation-mode",
+                "idle", "log-file", "msg-color", "dump-stats", "msg-level", "really-quiet" };
 
             foreach (string i in args)
             {
