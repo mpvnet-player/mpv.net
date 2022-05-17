@@ -204,8 +204,6 @@ Shift+Up      no-osd seek  5 exact
 Shift+Down    no-osd seek -5 exact
 Shift+BS      revert-seek      # undo the previous (or marked) seek
 Shift+Ctrl+BS revert-seek mark # mark the position for revert-seek
-Shift+g       add sub-scale +0.1 # increase the subtitle font size
-Shift+f       add sub-scale -0.1 # decrease the subtitle font size
 Ctrl+Shift+Left  no-osd sub-seek -1 # seek to the previous subtitle
 Ctrl+Shift+Right no-osd sub-seek  1 # seek to the next subtitle
 Ctrl+Wheel_Up    no-osd seek  7
