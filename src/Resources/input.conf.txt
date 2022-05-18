@@ -169,10 +169,12 @@ Esc quit                                       #menu: Exit
 MBTN_Right    script-message mpv.net show-menu
 6             script-message mpv.net show-progress
 KP6           script-message mpv.net show-progress
+9             ab-loop
+KP9           ab-loop
 7             script-message mpv.net cycle-audio
 Sharp         script-message mpv.net cycle-audio
-Ctrl+F11      script-message mpv.net playlist-add -10
-Ctrl+F12      script-message mpv.net playlist-add  10
+Ctrl+F11      script-message mpv.net playlist-add -10; set pause no
+Ctrl+F12      script-message mpv.net playlist-add  10; set pause no
 8             cycle sub
 j             cycle sub
 q             quit
