@@ -1,4 +1,5 @@
 
+- Fix auto-play not working with user scripts.
 - When input.conf is created on the very first start and a
   script-opts folder does not exist, a script-opts folder
   is created with defaults for osc and console.

@@ -17,9 +17,9 @@ Space       script-message mpv.net play-pause #menu: Play/Pause
 Ctrl+s      stop                              #menu: Stop
 _           ignore                            #menu: -
 Enter       cycle fullscreen                  #menu: Toggle Fullscreen
- 
-F11         script-message mpv.net playlist-add -1; set pause no #menu: Navigate > Previous File
-F12         script-message mpv.net playlist-add  1; set pause no #menu: Navigate > Next File
+
+F11         script-message mpv.net playlist-add -1 #menu: Navigate > Previous File
+F12         script-message mpv.net playlist-add  1 #menu: Navigate > Next File
 _           ignore                 #menu: Navigate > -
 Home        script-message mpv.net playlist-first #menu: Navigate > First File
 End         script-message mpv.net playlist-last  #menu: Navigate > Last File
@@ -173,8 +173,8 @@ KP6           script-message mpv.net show-progress
 KP9           ab-loop
 7             script-message mpv.net cycle-audio
 Sharp         script-message mpv.net cycle-audio
-Ctrl+F11      script-message mpv.net playlist-add -10; set pause no
-Ctrl+F12      script-message mpv.net playlist-add  10; set pause no
+Ctrl+F11      script-message mpv.net playlist-add -10
+Ctrl+F12      script-message mpv.net playlist-add  10
 8             cycle sub
 j             cycle sub
 q             quit

@@ -45,14 +45,15 @@ namespace mpvnet
             {
                 Instance = this;
 
-                Core.Shutdown += Core_Shutdown;
-                Core.ShowMenu += Core_ShowMenu;
-                Core.VideoSizeChanged += Core_VideoSizeChanged;
-                Core.ScaleWindow += Core_ScaleWindow;
-                Core.WindowScale += Core_WindowScale;
                 Core.FileLoaded += Core_FileLoaded;
-                Core.Seek += () => UpdateProgressBar();
+                Core.Pause += Core_Pause;
                 Core.PlaylistPosChanged += (value) => SetTitle();
+                Core.ScaleWindow += Core_ScaleWindow;
+                Core.Seek += () => UpdateProgressBar();
+                Core.ShowMenu += Core_ShowMenu;
+                Core.Shutdown += Core_Shutdown;
+                Core.VideoSizeChanged += Core_VideoSizeChanged;
+                Core.WindowScale += Core_WindowScale;
 
                 if (Core.GPUAPI != "vulkan")
                     Init();
@@ -126,7 +127,6 @@ namespace mpvnet
             Core.ObservePropertyBool("fullscreen", PropChangeFullscreen);
             Core.ObservePropertyBool("keepaspect-window", value => Core.KeepaspectWindow = value);
             Core.ObservePropertyBool("ontop", PropChangeOnTop);
-            Core.ObservePropertyBool("pause", PropChangePause);
 
             Core.ObservePropertyString("sid", PropChangeSid);
             Core.ObservePropertyString("aid", PropChangeAid);
@@ -1016,13 +1016,11 @@ namespace mpvnet
             }));
         }
 
-        void PropChangePause(bool paused)
+        void Core_Pause()
         {
-            Core.Paused = paused;
-
             if (Taskbar != null && Core.TaskbarProgress)
             {
-                if (paused)
+                if (Core.Paused)
                     Taskbar.SetState(TaskbarStates.Paused);
                 else
                     Taskbar.SetState(TaskbarStates.Normal);

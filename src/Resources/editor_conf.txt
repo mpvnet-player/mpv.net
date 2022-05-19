@@ -542,7 +542,7 @@ name = auto-play
 file = mpvnet
 default = no
 filter = Playback
-help = Sets pause=no on file load and selecting from the playlist. (mpv.net specific option)
+help = Sets pause=no on file load. (mpv.net specific option)
 
 option = yes
 option = no

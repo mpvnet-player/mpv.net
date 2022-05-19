@@ -53,6 +53,7 @@ namespace mpvnet
 
         public event Action Initialized;
         public event Action InitializedAsync;
+        public event Action Pause;
         public event Action ShowMenu;
         public event Action<float> ScaleWindow;
         public event Action<float> WindowScale;
@@ -144,6 +145,10 @@ namespace mpvnet
             ProcessCommandLine(true);
 
             mpv_error err = mpv_initialize(Handle);
+
+            if (err < 0)
+                throw new Exception("mpv_initialize error" + BR2 + GetError(err) + BR);
+
             string idle = GetPropertyString("idle");
             App.Exit = idle == "no" || idle == "once";
 
@@ -151,8 +156,10 @@ namespace mpvnet
             // this means Lua scripts that use idle might not work correctly
             SetPropertyString("idle", "yes");
 
-            if (err < 0)
-                throw new Exception("mpv_initialize error" + BR2 + GetError(err) + BR);
+            ObservePropertyBool("pause", value => {
+                Paused = value;
+                Pause();
+            });
 
             ObservePropertyInt("video-rotate", value => {
                 VideoRotate = value;
@@ -169,6 +176,13 @@ namespace mpvnet
                     if (GetPropertyString("keep-open") == "no" && App.Exit)
                         Core.CommandV("quit");
                 }
+            });
+
+            ObservePropertyString("script-opts", value => {
+                if (value.ContainsEx("osc-visibility=never"))
+                    HideLogo();
+                else if (GetPropertyInt("playlist-pos") == -1)
+                    ShowLogo();
             });
 
             Initialized?.Invoke();
@@ -463,7 +477,11 @@ namespace mpvnet
                             break;
                         case mpv_event_id.MPV_EVENT_FILE_LOADED:
                             {
+                                if (App.AutoPlay && Paused)
+                                    SetPropertyBool("pause", false);
+                                
                                 HideLogo();
+
                                 Duration = TimeSpan.FromSeconds(GetPropertyDouble("duration"));
 
                                 if (App.StartSize == "video")
@@ -1148,12 +1166,7 @@ namespace mpvnet
                 else
                 {
                     if (i == 0 && !append)
-                    {
                         CommandV("loadfile", file);
-
-                        if (App.AutoPlay && Paused)
-                            SetPropertyBool("pause", false);
-                    }
                     else
                         CommandV("loadfile", file, "append");
                 }
