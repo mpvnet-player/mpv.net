@@ -679,7 +679,8 @@ namespace mpvnet
         public void Command(string command)
         {
             mpv_error err = mpv_command_string(Handle, command);
-            HandleError(err, "error executing command:", command);
+            if (err < 0)
+                HandleError(err, "error executing command:", command);
         }
 
         public void CommandV(params string[] args)
@@ -703,7 +704,8 @@ namespace mpvnet
                 Marshal.FreeHGlobal(ptr);
 
             Marshal.FreeHGlobal(rootPtr);
-            HandleError(err, "error executing command:", string.Join("\n", args));
+            if (err < 0)
+                HandleError(err, "error executing command:", string.Join("\n", args));
         }
 
         public string Expand(string value)
@@ -754,7 +756,8 @@ namespace mpvnet
         {
             mpv_error err = mpv_get_property(Handle, GetUtf8Bytes(name),
                 mpv_format.MPV_FORMAT_FLAG, out IntPtr lpBuffer);
-            HandleError(err, $"error getting property: {name}");
+            if (err < 0)
+                HandleError(err, $"error getting property: {name}");
             return lpBuffer.ToInt32() != 0;
         }
 
@@ -762,14 +765,15 @@ namespace mpvnet
         {
             long val = value ? 1 : 0;
             mpv_error err = mpv_set_property(Handle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_FLAG, ref val);
-            HandleError(err, $"error setting property: {name} = {value}");
+            if (err < 0)
+                HandleError(err, $"error setting property: {name} = {value}");
         }
 
         public int GetPropertyInt(string name)
         {
             mpv_error err = mpv_get_property(Handle, GetUtf8Bytes(name),
                 mpv_format.MPV_FORMAT_INT64, out IntPtr lpBuffer);
-            if (App.DebugMode)
+            if (err < 0 && (App.DebugMode || App.DebuggerAttached))
                 HandleError(err, $"error getting property: {name}");
             return lpBuffer.ToInt32();
         }
@@ -778,20 +782,23 @@ namespace mpvnet
         {
             long val = value;
             mpv_error err = mpv_set_property(Handle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_INT64, ref val);
-            HandleError(err, $"error setting property: {name} = {value}");
+            if (err < 0)
+                HandleError(err, $"error setting property: {name} = {value}");
         }
 
         public void SetPropertyLong(string name, long value)
         {
             mpv_error err = mpv_set_property(Handle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_INT64, ref value);
-            HandleError(err, $"error setting property: {name} = {value}");
+            if (err < 0)
+                HandleError(err, $"error setting property: {name} = {value}");
         }
 
         public long GetPropertyLong(string name)
         {
             mpv_error err = mpv_get_property(Handle, GetUtf8Bytes(name),
                 mpv_format.MPV_FORMAT_INT64, out IntPtr lpBuffer);
-            HandleError(err, $"error getting property: {name}");
+            if (err < 0)
+                HandleError(err, $"error getting property: {name}");
             return lpBuffer.ToInt64();
         }
 
@@ -799,7 +806,7 @@ namespace mpvnet
         {
             mpv_error err = mpv_get_property(Handle, GetUtf8Bytes(name),
                 mpv_format.MPV_FORMAT_DOUBLE, out double value);
-            if (App.DebugMode)
+            if (err < 0 && (App.DebugMode || App.DebuggerAttached))
                 HandleError(err, $"error getting property: {name}");
             return value;
         }
@@ -808,7 +815,8 @@ namespace mpvnet
         {
             double val = value;
             mpv_error err = mpv_set_property(Handle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_DOUBLE, ref val);
-            HandleError(err, $"error setting property: {name} = {value}");
+            if (err < 0)
+                HandleError(err, $"error setting property: {name} = {value}");
         }
 
         public string GetPropertyString(string name)
@@ -823,7 +831,7 @@ namespace mpvnet
                 return ret;
             }
 
-            if (App.DebugMode)
+            if (err < 0 && (App.DebugMode || App.DebuggerAttached))
                 HandleError(err, $"error getting property: {name}");
 
             return "";
@@ -833,7 +841,8 @@ namespace mpvnet
         {
             byte[] bytes = GetUtf8Bytes(value);
             mpv_error err = mpv_set_property(Handle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_STRING, ref bytes);
-            HandleError(err, $"error setting property: {name} = " + value);
+            if (err < 0)
+                HandleError(err, $"error setting property: {name} = " + value);
         }
 
         public string GetPropertyOsdString(string name)
@@ -848,7 +857,9 @@ namespace mpvnet
                 return ret;
             }
 
-            HandleError(err, $"error getting property: {name}");
+            if (err < 0)
+                HandleError(err, $"error getting property: {name}");
+
             return "";
         }
 
@@ -972,13 +983,10 @@ namespace mpvnet
 
         public void HandleError(mpv_error err, params string[] messages)
         {
-            if (err < 0)
-            {
-                foreach (string msg in messages)
-                    Terminal.WriteError(msg);
+            foreach (string msg in messages)
+                Terminal.WriteError(msg);
 
-                Terminal.WriteError(GetError(err));
-            }
+            Terminal.WriteError(GetError(err));
         }
 
         public void ProcessCommandLine(bool preInit)
