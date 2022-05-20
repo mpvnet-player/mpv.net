@@ -90,15 +90,7 @@ namespace mpvnet
                     if (item.File == "mpv")
                     {
                         Core.ProcessProperty(item.Name, item.Value);
-
-                        try
-                        {
-                            Core.SetPropertyString(item.Name, item.Value, true);
-                        }
-                        catch (Exception ex)
-                        {
-                            App.ShowError(ex.Message);
-                        }
+                        Core.SetPropertyString(item.Name, item.Value);
                     }
                     else if (item.File == "mpvnet")
                         App.ProcessProperty(item.Name, item.Value, true);

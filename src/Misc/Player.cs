@@ -676,12 +676,10 @@ namespace mpvnet
             IsLogoVisible = false;
         }
 
-        public void Command(string command, bool throwException = false)
+        public void Command(string command)
         {
             mpv_error err = mpv_command_string(Handle, command);
-
-            if (err < 0)
-                HandleError(err, throwException, "error executing command:", command);
+            HandleError(err, "error executing command:", command);
         }
 
         public void CommandV(params string[] args)
@@ -705,9 +703,7 @@ namespace mpvnet
                 Marshal.FreeHGlobal(ptr);
 
             Marshal.FreeHGlobal(rootPtr);
-
-            if (err < 0)
-                HandleError(err, true, "error executing command:", string.Join("\n", args));
+            HandleError(err, "error executing command:", string.Join("\n", args));
         }
 
         public string Expand(string value)
@@ -742,7 +738,7 @@ namespace mpvnet
 
             if (err < 0)
             {
-                HandleError(err, true, "error executing command:", string.Join("\n", args));
+                HandleError(err, "error executing command:", string.Join("\n", args));
                 Marshal.FreeHGlobal(resultNodePtr);
                 return "property expansion error";
             }
@@ -754,86 +750,68 @@ namespace mpvnet
             return ret;
         }
 
-        public bool GetPropertyBool(string name, bool throwException = false)
+        public bool GetPropertyBool(string name)
         {
             mpv_error err = mpv_get_property(Handle, GetUtf8Bytes(name),
                 mpv_format.MPV_FORMAT_FLAG, out IntPtr lpBuffer);
-
-            if (err < 0)
-                HandleError(err, throwException, $"error getting property: {name}");
-
+            HandleError(err, $"error getting property: {name}");
             return lpBuffer.ToInt32() != 0;
         }
 
-        public void SetPropertyBool(string name, bool value, bool throwException = false)
+        public void SetPropertyBool(string name, bool value)
         {
             long val = value ? 1 : 0;
             mpv_error err = mpv_set_property(Handle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_FLAG, ref val);
-
-            if (err < 0)
-                HandleError(err, throwException, $"error setting property: {name} = {value}");
+            HandleError(err, $"error setting property: {name} = {value}");
         }
 
-        public int GetPropertyInt(string name, bool throwException = false)
+        public int GetPropertyInt(string name)
         {
             mpv_error err = mpv_get_property(Handle, GetUtf8Bytes(name),
                 mpv_format.MPV_FORMAT_INT64, out IntPtr lpBuffer);
-
-            if (err < 0)
-                HandleError(err, throwException, $"error getting property: {name}");
-
+            if (App.DebugMode)
+                HandleError(err, $"error getting property: {name}");
             return lpBuffer.ToInt32();
         }
 
-        public void SetPropertyInt(string name, int value, bool throwException = false)
+        public void SetPropertyInt(string name, int value)
         {
             long val = value;
             mpv_error err = mpv_set_property(Handle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_INT64, ref val);
-
-            if (err < 0)
-                HandleError(err, throwException, $"error setting property: {name} = {value}");
+            HandleError(err, $"error setting property: {name} = {value}");
         }
 
-        public void SetPropertyLong(string name, long value, bool throwException = false)
+        public void SetPropertyLong(string name, long value)
         {
             mpv_error err = mpv_set_property(Handle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_INT64, ref value);
-
-            if (err < 0)
-                HandleError(err, throwException, $"error setting property: {name} = {value}");
+            HandleError(err, $"error setting property: {name} = {value}");
         }
 
-        public long GetPropertyLong(string name, bool throwException = false)
+        public long GetPropertyLong(string name)
         {
             mpv_error err = mpv_get_property(Handle, GetUtf8Bytes(name),
                 mpv_format.MPV_FORMAT_INT64, out IntPtr lpBuffer);
-
-            if (err < 0)
-                HandleError(err, throwException, $"error getting property: {name}");
-
+            HandleError(err, $"error getting property: {name}");
             return lpBuffer.ToInt64();
         }
 
-        public double GetPropertyDouble(string name, bool throwException = false)
+        public double GetPropertyDouble(string name)
         {
             mpv_error err = mpv_get_property(Handle, GetUtf8Bytes(name),
                 mpv_format.MPV_FORMAT_DOUBLE, out double value);
-
-            if (err < 0)
-                HandleError(err, throwException, $"error getting property: {name}");
-
+            if (App.DebugMode)
+                HandleError(err, $"error getting property: {name}");
             return value;
         }
 
-        public void SetPropertyDouble(string name, double value, bool throwException = false)
+        public void SetPropertyDouble(string name, double value)
         {
             double val = value;
             mpv_error err = mpv_set_property(Handle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_DOUBLE, ref val);
-
-            if (err < 0)
-                HandleError(err, throwException, $"error setting property: {name} = {value}");
+            HandleError(err, $"error setting property: {name} = {value}");
         }
 
-        public string GetPropertyString(string name, bool throwException = false)
+        public string GetPropertyString(string name)
         {
             mpv_error err = mpv_get_property(Handle, GetUtf8Bytes(name),
                 mpv_format.MPV_FORMAT_STRING, out IntPtr lpBuffer);
@@ -845,20 +823,20 @@ namespace mpvnet
                 return ret;
             }
 
-            HandleError(err, throwException, $"error getting property: {name}");
+            if (App.DebugMode)
+                HandleError(err, $"error getting property: {name}");
+
             return "";
         }
 
-        public void SetPropertyString(string name, string value, bool throwException = false)
+        public void SetPropertyString(string name, string value)
         {
             byte[] bytes = GetUtf8Bytes(value);
             mpv_error err = mpv_set_property(Handle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_STRING, ref bytes);
-
-            if (err < 0)
-                HandleError(err, throwException, $"error setting property: {name} = " + value);
+            HandleError(err, $"error setting property: {name} = " + value);
         }
 
-        public string GetPropertyOsdString(string name, bool throwException = false)
+        public string GetPropertyOsdString(string name)
         {
             mpv_error err = mpv_get_property(Handle, GetUtf8Bytes(name),
                 mpv_format.MPV_FORMAT_OSD_STRING, out IntPtr lpBuffer);
@@ -870,7 +848,7 @@ namespace mpvnet
                 return ret;
             }
 
-            HandleError(err, throwException, $"error getting property: {name}");
+            HandleError(err, $"error getting property: {name}");
             return "";
         }
 
@@ -906,7 +884,7 @@ namespace mpvnet
                     mpv_error err = mpv_observe_property(Handle, 0, name, mpv_format.MPV_FORMAT_INT64);
 
                     if (err < 0)
-                        HandleError(err, true, $"error observing property: {name}");
+                        HandleError(err, $"error observing property: {name}");
                     else
                         IntPropChangeActions[name] = new List<Action<int>>();
                 }
@@ -925,7 +903,7 @@ namespace mpvnet
                     mpv_error err = mpv_observe_property(Handle, 0, name, mpv_format.MPV_FORMAT_DOUBLE);
 
                     if (err < 0)
-                        HandleError(err, true, $"error observing property: {name}");
+                        HandleError(err, $"error observing property: {name}");
                     else
                         DoublePropChangeActions[name] = new List<Action<double>>();
                 }
@@ -944,7 +922,7 @@ namespace mpvnet
                     mpv_error err = mpv_observe_property(Handle, 0, name, mpv_format.MPV_FORMAT_FLAG);
 
                     if (err < 0)
-                        HandleError(err, true, $"error observing property: {name}");
+                        HandleError(err, $"error observing property: {name}");
                     else
                         BoolPropChangeActions[name] = new List<Action<bool>>();
                 }
@@ -963,7 +941,7 @@ namespace mpvnet
                     mpv_error err = mpv_observe_property(Handle, 0, name, mpv_format.MPV_FORMAT_STRING);
 
                     if (err < 0)
-                        HandleError(err, true, $"error observing property: {name}");
+                        HandleError(err, $"error observing property: {name}");
                     else
                         StringPropChangeActions[name] = new List<Action<string>>();
                 }
@@ -982,7 +960,7 @@ namespace mpvnet
                     mpv_error err = mpv_observe_property(Handle, 0, name, mpv_format.MPV_FORMAT_NONE);
 
                     if (err < 0)
-                        HandleError(err, true, $"error observing property: {name}");
+                        HandleError(err, $"error observing property: {name}");
                     else
                         PropChangeActions[name] = new List<Action>();
                 }
@@ -992,15 +970,14 @@ namespace mpvnet
             }
         }
 
-        public void HandleError(mpv_error err, bool throwException, params string[] messages)
+        public void HandleError(mpv_error err, params string[] messages)
         {
-            if (throwException)
+            if (err < 0)
             {
                 foreach (string msg in messages)
                     Terminal.WriteError(msg);
 
                 Terminal.WriteError(GetError(err));
-                throw new Exception(string.Join(BR2, messages) + BR2 + GetError(err) + BR);
             }
         }
 
@@ -1019,88 +996,81 @@ namespace mpvnet
 
                 if (arg.StartsWith("-") && arg.Length > 1)
                 {
-                    try
+                    if (!preInit)
                     {
-                        if (!preInit)
+                        if (arg == "--profile=help")
                         {
-                            if (arg == "--profile=help")
-                            {
-                                Console.WriteLine(mpvHelp.GetProfiles());
-                                continue;
-                            }
-                            else if (arg == "--vd=help" || arg == "--ad=help")
-                            {
-                                Console.WriteLine(mpvHelp.GetDecoders());
-                                continue;
-                            }
-                            else if (arg == "--audio-device=help")
-                            {
-                                Console.WriteLine(GetPropertyOsdString("audio-device-list"));
-                                continue;
-                            }
-                            else if (arg == "--version")
-                            {
-                                Console.WriteLine(App.Version);
-                                continue;
-                            }
-                            else if (arg == "--input-keylist")
-                            {
-                                Console.WriteLine(GetPropertyString("input-key-list").Replace(",", BR));
-                                continue;
-                            }
-                            else if (arg.StartsWith("--command="))
-                            {
-                                Command(arg.Substring(10));
-                                continue;
-                            }
+                            Console.WriteLine(mpvHelp.GetProfiles());
+                            continue;
                         }
-
-                        if (!arg.StartsWith("--"))
-                            arg = "-" + arg;
-
-                        if (!arg.Contains("="))
+                        else if (arg == "--vd=help" || arg == "--ad=help")
                         {
-                            if (arg.Contains("--no-"))
-                            {
-                                arg = arg.Replace("--no-", "--");
-                                arg += "=no";
-                            }
-                            else
-                                arg += "=yes";
+                            Console.WriteLine(mpvHelp.GetDecoders());
+                            continue;
                         }
-
-                        string left = arg.Substring(2, arg.IndexOf("=") - 2);
-                        string right = arg.Substring(left.Length + 3);
-
-                        if (left == "script")
-                            left = "scripts";
-
-                        if (left == "external-file")
-                            left = "external-files";
-
-                        if (preInit && preInitProperties.Contains(left))
+                        else if (arg == "--audio-device=help")
                         {
-                            ProcessProperty(left, right);
-
-                            if (!App.ProcessProperty(left, right))
-                                SetPropertyString(left, right, true);
+                            Console.WriteLine(GetPropertyOsdString("audio-device-list"));
+                            continue;
                         }
-                        else if (!preInit && !preInitProperties.Contains(left))
+                        else if (arg == "--version")
                         {
-                            ProcessProperty(left, right);
-
-                            if (!App.ProcessProperty(left, right))
-                            {
-                                SetPropertyString(left, right, true);
-
-                                if (left == "shuffle" && right == "yes")
-                                    shuffle = true;
-                            }
+                            Console.WriteLine(App.Version);
+                            continue;
+                        }
+                        else if (arg == "--input-keylist")
+                        {
+                            Console.WriteLine(GetPropertyString("input-key-list").Replace(",", BR));
+                            continue;
+                        }
+                        else if (arg.StartsWith("--command="))
+                        {
+                            Command(arg.Substring(10));
+                            continue;
                         }
                     }
-                    catch (Exception e)
+
+                    if (!arg.StartsWith("--"))
+                        arg = "-" + arg;
+
+                    if (!arg.Contains("="))
                     {
-                        App.ShowException(e);
+                        if (arg.Contains("--no-"))
+                        {
+                            arg = arg.Replace("--no-", "--");
+                            arg += "=no";
+                        }
+                        else
+                            arg += "=yes";
+                    }
+
+                    string left = arg.Substring(2, arg.IndexOf("=") - 2);
+                    string right = arg.Substring(left.Length + 3);
+
+                    if (left == "script")
+                        left = "scripts";
+
+                    if (left == "external-file")
+                        left = "external-files";
+
+                    if (preInit && preInitProperties.Contains(left))
+                    {
+                        ProcessProperty(left, right);
+
+                        if (!App.ProcessProperty(left, right))
+                            SetPropertyString(left, right);
+                    }
+                    else if (!preInit && !preInitProperties.Contains(left))
+                    {
+                        ProcessProperty(left, right);
+
+                        if (!App.ProcessProperty(left, right))
+                        {
+                            SetPropertyString(left, right);
+
+                            if (left == "shuffle" && right == "yes")
+                                shuffle = true;
+                        }
                     }
                 }
             }
@@ -1503,8 +1473,11 @@ namespace mpvnet
 
                         for (int i = 0; i < editionCount; i++)
                         {
+                            string title = GetPropertyString($"edition-list/{i}/title");
+                            if (string.IsNullOrEmpty(title))
+                                title = "Edition " + i;
                             MediaTrack track = new MediaTrack();
-                            track.Text = "E: " + GetPropertyString($"edition-list/{i}/title");
+                            track.Text = "E: " + title;
                             track.Type = "e";
                             track.ID = i;
                             MediaTracks.Add(track);
