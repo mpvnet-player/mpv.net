@@ -25,7 +25,7 @@ namespace mpvnet
         static void Execute(string file)
         {
             string code = File.ReadAllText(file);
-            string filename = Path.GetFileNameWithoutExtension(file) + " " + StringHelp.GetMD5Hash(code) + "-v5.dll";
+            string filename = Path.GetFileNameWithoutExtension(file) + " " + StringHelp.GetMD5Hash(code) + "-v6.dll";
             string outputFile = Path.Combine(Path.GetTempPath(), filename);
 
             if (!File.Exists(outputFile))

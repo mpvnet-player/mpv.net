@@ -1,4 +1,5 @@
 
+- Progress command shows time and date.
 - New show-santa-logo (green and grumpy) option.
 - New quick bookmark feature, see manual.
 - Fix crash choosing Matroska edition in the menu.

@@ -74,6 +74,7 @@ Features that mpv and mpv.net have in common
 --------------------------------------------
 
 - Lua and JavaScript Scripting
+- Hundreds available user scripts make mpv the most feature rich desktop video player
 - Simple config files that are easy to read and edit
 - JSON IPC to control the player with a external programs
 - On Screen Controler (OSC, play control buttons) with modern flat design

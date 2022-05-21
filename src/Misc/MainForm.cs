@@ -954,7 +954,7 @@ namespace mpvnet
         void UpdateProgressBar()
         {
             if (Core.TaskbarProgress && Taskbar != null)
-                Taskbar.SetValue(Core.GetPropertyDouble("time-pos"), Core.Duration.TotalSeconds);
+                Taskbar.SetValue(Core.GetPropertyDouble("time-pos", false), Core.Duration.TotalSeconds);
         }
 
         void PropChangeOnTop(bool value) => BeginInvoke(new Action(() => TopMost = value));

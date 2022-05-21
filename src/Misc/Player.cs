@@ -802,11 +802,11 @@ namespace mpvnet
             return lpBuffer.ToInt64();
         }
 
-        public double GetPropertyDouble(string name)
+        public double GetPropertyDouble(string name, bool handleError = true)
         {
             mpv_error err = mpv_get_property(Handle, GetUtf8Bytes(name),
                 mpv_format.MPV_FORMAT_DOUBLE, out double value);
-            if (err < 0 && (App.DebugMode || App.DebuggerAttached))
+            if (err < 0 && handleError && (App.DebugMode || App.DebuggerAttached))
                 HandleError(err, $"error getting property: {name}");
             return value;
         }

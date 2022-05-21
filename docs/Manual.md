@@ -348,7 +348,7 @@ and allows to play the selected entry.
 Shows available profiles with a message box.
 
 ### show-progress
-Shows a simple OSD progress message.
+Shows a simple OSD progress message with time and date.
 
 ### show-properties
 Shows available properties in the command palette and

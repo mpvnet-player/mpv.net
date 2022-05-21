@@ -678,7 +678,9 @@ namespace mpvnet
             if (App.QuickBookmark == 0)
             {
                 App.QuickBookmark = (float)Core.GetPropertyDouble("time-pos");
-                Core.Command("show-text 'Bookmark Saved'");
+
+                if (App.QuickBookmark != 0)
+                    Core.Command("show-text 'Bookmark Saved'");
             }
             else
             {
