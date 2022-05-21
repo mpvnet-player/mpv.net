@@ -31,6 +31,7 @@ namespace mpvnet
         public static bool RememberVolume { get; set; } = true;
         public static bool RememberWindowPosition { get; set; }
         public static bool ShowLogo { get; set; } = true;
+        public static bool ShowSantaLogo { get; set; } = true;
 
         public static int StartThreshold { get; set; } = 1500;
         public static int RecentCount { get; set; } = 15;
@@ -252,6 +253,7 @@ namespace mpvnet
                 case "remember-volume": RememberVolume = value == "yes"; return true;
                 case "remember-window-position": RememberWindowPosition = value == "yes"; return true;
                 case "show-logo": ShowLogo = value == "yes"; return true;
+                case "show-santa-logo": ShowSantaLogo = value == "yes"; return true;
                 case "start-size": StartSize = value; return true;
                 case "start-threshold": StartThreshold = value.ToInt(); return true;
                 case "video-file-extensions": CorePlayer.VideoTypes = value.Split(" ,;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries); return true;

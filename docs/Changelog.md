@@ -1,4 +1,5 @@
 
+- New show-santa-logo (green and grumpy) option.
 - New quick bookmark feature, see manual.
 - Fix crash choosing Matroska edition in the menu.
 - Fix auto-play not working with user scripts.

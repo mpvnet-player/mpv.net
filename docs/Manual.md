@@ -521,9 +521,12 @@ Color theme used in light mode. Default: light
 
 #### --show-logo=\<yes|no\>
 
-Draws the blue mpv.net logo ontop of the native OSC logo.  
-Changes take effect after application restart. Default: yes
+Draws the blue mpv.net logo ontop of the native OSC logo. Default: yes
 
+#### --show-santa-logo=\<yes|no\>
+
+Draws the blue mpv.net logo with a santa hat in december,
+the option is called green and grumpy in mpv. Default: yes
 
 External Tools
 --------------

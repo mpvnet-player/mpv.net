@@ -702,3 +702,13 @@ help = Draws the blue mpv.net logo ontop of the native OSC logo.
 
 option = yes
 option = no
+
+[setting]
+name = show-santa-logo
+file = mpvnet
+default = yes
+filter = UI
+help = Draws the blue mpv.net logo with a santa hat in december, the option is called green and grumpy in mpv.
+
+option = yes
+option = no

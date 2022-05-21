@@ -1301,7 +1301,6 @@ namespace mpvnet
                 return;
 
             bool december = DateTime.Now.Month == 12;
-
             Rectangle cr = MainForm.Instance.ClientRectangle;
             int len = Convert.ToInt32(cr.Height / (december ? 4.5 : 5));
 
@@ -1315,7 +1314,7 @@ namespace mpvnet
                     gx.InterpolationMode = InterpolationMode.HighQualityBicubic;
                     gx.Clear(Color.Black);
                     Rectangle rect = new Rectangle(0, 0, len, len);
-                    Bitmap bmp2 = december ? Properties.Resources.mpvnet_santa : Properties.Resources.mpvnet;
+                    Bitmap bmp2 = (december && App.ShowSantaLogo) ? Properties.Resources.mpvnet_santa : Properties.Resources.mpvnet;
                     gx.DrawImage(bmp2, rect);
                     BitmapData bd = bmp.LockBits(rect, ImageLockMode.ReadOnly, PixelFormat.Format32bppPArgb);
                     int x = Convert.ToInt32((cr.Width - len) / (december ? 1.95 : 2));
