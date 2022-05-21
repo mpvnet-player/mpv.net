@@ -271,6 +271,12 @@ already the first entry, nothing happens.
 Jumps to the last playlist entry, if the loaded file is
 already the last entry, nothing happens.
 
+### quick-bookmark
+
+On the first press a bookmark is saved, on the second
+press it is restored and removed. When a new file is
+loaded the bookmark is removed.
+
 ### reg-file-assoc \<audio|video|image\>
 Registers the file associations.
 

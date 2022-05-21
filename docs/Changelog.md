@@ -1,4 +1,5 @@
 
+- New quick bookmark feature, see manual.
 - Fix crash choosing Matroska edition in the menu.
 - Fix auto-play not working with user scripts.
 - When input.conf is created on the very first start and a

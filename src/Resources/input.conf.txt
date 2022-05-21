@@ -175,6 +175,7 @@ KP9           ab-loop
 Sharp         script-message mpv.net cycle-audio
 Ctrl+F11      script-message mpv.net playlist-add -10
 Ctrl+F12      script-message mpv.net playlist-add  10
+Alt+q         script-message mpv.net quick-bookmark
 8             cycle sub
 j             cycle sub
 q             quit

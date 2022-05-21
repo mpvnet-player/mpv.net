@@ -479,9 +479,9 @@ namespace mpvnet
                             {
                                 if (App.AutoPlay && Paused)
                                     SetPropertyBool("pause", false);
-                                
-                                HideLogo();
 
+                                App.QuickBookmark = 0;
+                                HideLogo();
                                 Duration = TimeSpan.FromSeconds(GetPropertyDouble("duration"));
 
                                 if (App.StartSize == "video")

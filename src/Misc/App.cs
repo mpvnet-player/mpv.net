@@ -36,6 +36,7 @@ namespace mpvnet
         public static int RecentCount { get; set; } = 15;
 
         public static float MinimumAspectRatio { get; set; } = 1.2f;
+        public static float QuickBookmark { get; set; }
 
         public static Extension Extension { get; set; }
 

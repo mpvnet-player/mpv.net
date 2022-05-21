@@ -38,6 +38,7 @@ namespace mpvnet
                 case "playlist-add": PlaylistAdd(Convert.ToInt32(args[0])); break;
                 case "playlist-first": PlaylistFirst(); break;
                 case "playlist-last": PlaylistLast(); break;
+                case "quick-bookmark": QuickBookmark(); break;
                 case "reg-file-assoc": RegisterFileAssociations(args[0]); break;
                 case "scale-window": ScaleWindow(float.Parse(args[0], CultureInfo.InvariantCulture)); break;
                 case "shell-execute": ProcessHelp.ShellExecute(args[0]); break;
@@ -241,7 +242,8 @@ namespace mpvnet
             string text = FormatTime(position.TotalMinutes) + ":" +
                           FormatTime(position.Seconds) + " / " +
                           FormatTime(duration.TotalMinutes) + ":" +
-                          FormatTime(duration.Seconds);
+                          FormatTime(duration.Seconds) + "    " +
+                          DateTime.Now.ToString("H:mm dddd d MMMM", CultureInfo.InvariantCulture);
 
             Core.CommandV("show-text", text, "5000");
         }
@@ -669,6 +671,20 @@ namespace mpvnet
                 pos = 0;
 
             Core.SetPropertyInt("playlist-pos", pos);
+        }
+
+        public static void QuickBookmark()
+        {
+            if (App.QuickBookmark == 0)
+            {
+                App.QuickBookmark = (float)Core.GetPropertyDouble("time-pos");
+                Core.Command("show-text 'Bookmark Saved'");
+            }
+            else
+            {
+                Core.SetPropertyDouble("time-pos", App.QuickBookmark);
+                App.QuickBookmark = 0;
+            }
         }
     }
 }
