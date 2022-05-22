@@ -259,15 +259,19 @@ namespace mpvnet
             else
             {
                 string clipboard = WinForms.Clipboard.GetText();
+                List<string> files = new List<string>();
 
-                if (string.IsNullOrEmpty(clipboard) || (!clipboard.Contains("://") && !File.Exists(clipboard)) ||
-                    clipboard.Contains("\n"))
+                foreach (string i in clipboard.Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries))
+                    if (i.Contains("://") || File.Exists(i))
+                        files.Add(i);
+
+                if (files.Count == 0)
                 {
                     App.ShowError("The clipboard does not contain a valid URL or file.");
                     return;
                 }
 
-                Core.LoadFiles(new [] { clipboard }, false, Control.ModifierKeys.HasFlag(Keys.Control));
+                Core.LoadFiles(files.ToArray(), false, Control.ModifierKeys.HasFlag(Keys.Control));
             }
         });
 

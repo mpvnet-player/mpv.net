@@ -583,6 +583,7 @@ namespace mpvnet
                             break;
                         case mpv_event_id.MPV_EVENT_START_FILE:
                             InvokeEvent(StartFile, StartFileAsync);
+                            App.RunTask(() => LoadFolder());
                             break;
                         case mpv_event_id.MPV_EVENT_AUDIO_RECONFIG:
                             InvokeEvent(AudioReconfig, AudioReconfigAsync);
@@ -1225,7 +1226,10 @@ namespace mpvnet
 
             string dir = Environment.CurrentDirectory;
 
-            if (path.Contains(Path.DirectorySeparatorChar))
+            if (path.Contains(":/") && !path.Contains("://"))
+                path = path.Replace("/", "\\");
+
+            if (path.Contains("\\"))
                 dir = Path.GetDirectoryName(path);
 
             List<string> files = Directory.GetFiles(dir).ToList();
