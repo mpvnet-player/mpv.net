@@ -63,9 +63,11 @@ Installation
 
 mpv.net requires the .NET Framework 4.8 and Windows 7 or higher and a modern graphics card.
 
-For internet streaming from YouTube and similar sites, yt-dlp must be
-copied into the mpv.net folder or the user environment variable PATH
-must be edited to include the yt-dlp folder.
+Internet streaming requires:
+
+- Downloading [yt-dlp](https://github.com/yt-dlp/yt-dlp) and adding its folder
+  to the [user environment variable PATH](https://www.google.com/search?q=user+environment+variable+PATH).
+- [Manual proxy server configuration](https://github.com/stax76/mpv.net/issues/401).
 
 #### File Associations
 
