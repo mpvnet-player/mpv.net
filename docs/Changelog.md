@@ -1,14 +1,15 @@
 
 - New feature to change profile using the command palette.
-- Progress command shows time and date.
 - New show-santa-logo (green and grumpy) option.
 - New quick bookmark feature, see manual.
-- Fix crash choosing Matroska edition in the menu.
-- Fix auto-play not working with user scripts.
+- Progress command shows time and date.
 - When input.conf is created on the very first start and a
   script-opts folder does not exist, a script-opts folder
   is created with defaults for osc and console.
 - Support mpv idle property, see manual for remarks.
+- Fix crash choosing Matroska edition in the menu.
+- Fix auto-play not working with user scripts.
+- Fix slow startup using osd-scale-by-window=no.
 - libmpv shinchiro 2022-05-17 with idle fix
 
 

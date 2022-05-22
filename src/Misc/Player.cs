@@ -185,6 +185,9 @@ namespace mpvnet
                     ShowLogo();
             });
 
+            if (!GetPropertyBool("osd-scale-by-window"))
+                App.StartThreshold = 0;
+
             Initialized?.Invoke();
             InvokeAsync(InitializedAsync);
         }
