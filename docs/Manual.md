@@ -67,7 +67,7 @@ Internet streaming requires:
 
 - Downloading [yt-dlp](https://github.com/yt-dlp/yt-dlp) and adding its folder
   to the [user environment variable PATH](https://www.google.com/search?q=user+environment+variable+PATH).
-- [Manual proxy server configuration](https://github.com/stax76/mpv.net/issues/401).
+- In case of proxy server usage, [manual configuration](https://github.com/stax76/mpv.net/issues/401).
 
 #### File Associations
 
