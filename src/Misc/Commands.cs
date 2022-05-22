@@ -90,21 +90,15 @@ namespace mpvnet
         public static void OpenFiles(params string[] args)
         {
             bool append = Control.ModifierKeys.HasFlag(Keys.Control);
-            bool loadFolder = true;
 
             foreach (string arg in args)
-            {
                 if (arg == "append")
                     append = true;
-
-                if (arg == "no-folder")
-                    loadFolder = false;
-            }
 
             App.InvokeOnMainThread(new Action(() => {
                 using (var d = new OpenFileDialog() { Multiselect = true })
                     if (d.ShowDialog() == DialogResult.OK)
-                        Core.LoadFiles(d.FileNames, loadFolder, append);
+                        Core.LoadFiles(d.FileNames, true, append);
             }));
         }
 

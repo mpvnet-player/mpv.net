@@ -238,9 +238,6 @@ Shows a file browser dialog to open external subtitle files.
 Opens the config folder with Windows File Explorer.
 
 ### open-files [\<flags\>]
-**no-folder**  
-For single files prevents loading the complete folder into the playlist.
-
 **append**  
 Appends files to the playlist.
 

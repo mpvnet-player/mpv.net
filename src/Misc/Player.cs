@@ -1156,9 +1156,6 @@ namespace mpvnet
 
             if (string.IsNullOrEmpty(GetPropertyString("path")))
                 SetPropertyInt("playlist-pos", 0);
-
-            if (loadFolder && !append)
-                App.RunTask(() => LoadFolder());
         }
 
         public void LoadISO(string path)
