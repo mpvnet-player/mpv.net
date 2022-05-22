@@ -41,6 +41,7 @@ namespace mpvnet
                 case "quick-bookmark": QuickBookmark(); break;
                 case "reg-file-assoc": RegisterFileAssociations(args[0]); break;
                 case "scale-window": ScaleWindow(float.Parse(args[0], CultureInfo.InvariantCulture)); break;
+                case "select-profile": SelectProfile(); break;
                 case "shell-execute": ProcessHelp.ShellExecute(args[0]); break;
                 case "show-about": ShowDialog(typeof(AboutWindow)); break;
                 case "show-audio-devices": Msg.ShowInfo(Core.GetPropertyOsdString("audio-device-list")); break;
@@ -648,6 +649,19 @@ namespace mpvnet
 
             var list = pairs.Select(i => new CommandPaletteItem(i.Name, () => Core.Command(i.Value)));
             CommandPalette.Instance.SetItems(list);
+            MainForm.Instance.ShowCommandPalette();
+            CommandPalette.Instance.SelectFirst();
+        });
+
+        public static void SelectProfile() => App.InvokeOnMainThread(() =>
+        {
+            var items = Core.ProfileNames.Where(i => !i.StartsWith("extension."))
+                                         .Select(i => new CommandPaletteItem(i, () => {
+                                             Core.CommandV("show-text", i);
+                                             Core.CommandV("apply-profile", i);
+                                         }));
+
+            CommandPalette.Instance.SetItems(items);
             MainForm.Instance.ShowCommandPalette();
             CommandPalette.Instance.SelectFirst();
         });

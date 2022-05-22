@@ -369,7 +369,7 @@ namespace mpvnet
             {
                 profilesMenuItem.Items.Clear();
 
-                foreach (string profile in ProfileNames)
+                foreach (string profile in Core.ProfileNames)
                 {
                     if (!profile.StartsWith("extension."))
                     {
@@ -384,23 +384,6 @@ namespace mpvnet
                         }
                     }
                 }
-            }
-        }
-
-        private string[] _ProfileNames;
-
-        public string[] ProfileNames {
-            get {
-                if (_ProfileNames == null)
-                {
-                    string[] ignore = { "builtin-pseudo-gui", "encoding", "libmpv", "pseudo-gui", "default" };
-                    string profileList = Core.GetPropertyString("profile-list");
-                    var json = profileList.FromJson<List<Dictionary<string, object>>>();
-                    _ProfileNames = json.Select(i => i["name"].ToString())
-                                        .Where(i => !ignore.Contains(i)).ToArray();
-                }
-
-                return _ProfileNames;
             }
         }
 

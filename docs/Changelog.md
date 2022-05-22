@@ -1,4 +1,5 @@
 
+- New feature to change profile using the command palette.
 - Progress command shows time and date.
 - New show-santa-logo (green and grumpy) option.
 - New quick bookmark feature, see manual.

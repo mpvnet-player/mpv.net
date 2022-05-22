@@ -114,6 +114,8 @@ Alt+2   script-message mpv.net window-scale 2.0     #menu: View > Zoom > 200 %
 Alt+3   script-message mpv.net window-scale 3.0     #menu: View > Zoom > 300 %
 
 F8      script-message mpv.net show-playlist        #menu: View > Show Playlist
+Ctrl+p  script-message mpv.net select-profile       #menu: View > Show Profile Selection
+Ctrl+P  script-message mpv.net show-profiles        #menu: View > Show Profiles
 Ctrl+7  script-message mpv.net show-audio-tracks    #menu: View > Show Audio Tracks
 Ctrl+8  script-message mpv.net show-subtitle-tracks #menu: View > Show Subtitle Tracks
 b       cycle border                                #menu: View > Toggle Border
@@ -122,7 +124,6 @@ t       script-binding stats/display-stats-toggle   #menu: View > Toggle Statist
 Del     script-binding osc/visibility               #menu: View > Toggle OSC Visibility
 i       script-message mpv.net show-info            #menu: View > Show File/Stream Info
 p       show-progress                               #menu: View > Show Progress
-Ctrl+p  script-message mpv.net show-profiles        #menu: View > Show Profiles
 F9      show-text ${track-list} 5000                #menu: View > Show Tracks
 Ctrl+m  script-message mpv.net show-media-info      #menu: View > Show Media Info
 Alt+r   script-message mpv.net show-recent          #menu: View > Show Recent
