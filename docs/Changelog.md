@@ -10,6 +10,7 @@
 - Fix crash choosing Matroska edition in the menu.
 - Fix auto-play not working with user scripts.
 - Fix slow startup using osd-scale-by-window=no.
+- Fix chapter time display in menu.
 - libmpv shinchiro 2022-05-17 with idle fix
 
 

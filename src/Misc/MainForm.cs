@@ -301,8 +301,13 @@ namespace mpvnet
 
                     foreach (var pair in Core.Chapters)
                     {
+                        string caption = TimeSpan.FromSeconds(pair.Value).ToString();
+
+                        if (caption.ContainsEx("."))
+                            caption = caption.Substring(0, caption.LastIndexOf("."));
+
                         var chapterMenuItem = new WpfControls.MenuItem() { Header = pair.Key };
-                        chapterMenuItem.InputGestureText = TimeSpan.FromSeconds(pair.Value).ToString().Substring(0, 8);
+                        chapterMenuItem.InputGestureText = caption;
                         chapterMenuItem.Click += (sender, args) => Core.CommandV("seek", pair.Value.ToString(CultureInfo.InvariantCulture), "absolute");
                         chaptersMenuItem.Items.Add(chapterMenuItem);
                     }
