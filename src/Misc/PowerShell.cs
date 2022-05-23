@@ -70,7 +70,7 @@ namespace mpvnet
             }
             catch (Exception e)
             {
-                throw e;
+                throw;
             }        
         }
 
@@ -133,31 +133,39 @@ namespace mpvnet
         {
             PropChangedHandlers.Add(new KeyValuePair<string, ScriptBlock>(name, sb));
 
-            switch (type)
+            if (PropertyChanged != null)
             {
-                case "bool": case "boolean":
-                    Core.ObservePropertyBool(name, value => App.RunTask(() => PropertyChanged.Invoke(name, value)));
-                    break;
+                switch (type)
+                {
+                    case "bool":
+                    case "boolean":
+                        Core.ObservePropertyBool(name, value => App.RunTask(() => PropertyChanged.Invoke(name, value)));
+                        break;
 
-                case "string":
-                    Core.ObservePropertyString(name, value => App.RunTask(() => PropertyChanged.Invoke(name, value)));
-                    break;
+                    case "string":
+                        Core.ObservePropertyString(name, value => App.RunTask(() => PropertyChanged.Invoke(name, value)));
+                        break;
 
-                case "int": case "integer":
-                    Core.ObservePropertyInt(name, value => App.RunTask(() => PropertyChanged.Invoke(name, value)));
-                    break;
+                    case "int":
+                    case "integer":
+                        Core.ObservePropertyInt(name, value => App.RunTask(() => PropertyChanged.Invoke(name, value)));
+                        break;
 
-                case "float": case "double":
-                    Core.ObservePropertyDouble(name, value => App.RunTask(() => PropertyChanged.Invoke(name, value)));
-                    break;
+                    case "float":
+                    case "double":
+                        Core.ObservePropertyDouble(name, value => App.RunTask(() => PropertyChanged.Invoke(name, value)));
+                        break;
 
-                case "nil": case "none": case "native":
-                    Core.ObserveProperty(name, () => App.RunTask(() => PropertyChanged.Invoke(name, null)));
-                    break;
+                    case "nil":
+                    case "none":
+                    case "native":
+                        Core.ObserveProperty(name, () => App.RunTask(() => PropertyChanged.Invoke(name, null)));
+                        break;
 
-                default:
-                    App.ShowError("Invalid Type, valid types are: bool or boolean, string, int or integer, float or double, nil or none or native");
-                    break;
+                    default:
+                        App.ShowError("Invalid Type, valid types are: bool or boolean, string, int or integer, float or double, nil or none or native");
+                        break;
+                }
             }
         }
 
@@ -165,59 +173,62 @@ namespace mpvnet
         {
             EventHandlers.Add(new KeyValuePair<string, ScriptBlock>(name, sb));
 
-            switch (name)
+            if (Event != null)
             {
-                case "log-message":
-                    Core.LogMessageAsync += (level, msg) => Event.Invoke("log-message", new object[] { level, msg });
-                    break;
+                switch (name)
+                {
+                    case "log-message":
+                        Core.LogMessageAsync += (level, msg) => Event.Invoke("log-message", new object[] { level, msg });
+                        break;
 
-                case "end-file":
-                    Core.EndFileAsync += reason => Event.Invoke("end-file", new object[] { reason });
-                    break;
+                    case "end-file":
+                        Core.EndFileAsync += reason => Event.Invoke("end-file", new object[] { reason });
+                        break;
 
-                case "client-message":
-                    Core.ClientMessageAsync += args => Event.Invoke("client-message", args);
-                    break;
+                    case "client-message":
+                        Core.ClientMessageAsync += args => Event.Invoke("client-message", args);
+                        break;
 
-                case "shutdown":
-                    Core.Shutdown += () => Event.Invoke("shutdown", null);
-                    break;
+                    case "shutdown":
+                        Core.Shutdown += () => Event.Invoke("shutdown", null);
+                        break;
 
-                case "get-property-reply":
-                    Core.GetPropertyReplyAsync += () => Event.Invoke("get-property-reply", null);
-                    break;
+                    case "get-property-reply":
+                        Core.GetPropertyReplyAsync += () => Event.Invoke("get-property-reply", null);
+                        break;
 
-                case "set-property-reply":
-                    Core.SetPropertyReplyAsync += () => Event.Invoke("set-property-reply", null);
-                    break;
+                    case "set-property-reply":
+                        Core.SetPropertyReplyAsync += () => Event.Invoke("set-property-reply", null);
+                        break;
 
-                case "command-reply":
-                    Core.CommandReplyAsync += () => Event.Invoke("command-reply", null);
-                    break;
+                    case "command-reply":
+                        Core.CommandReplyAsync += () => Event.Invoke("command-reply", null);
+                        break;
 
-                case "start-file":
-                    Core.StartFileAsync += () => Event.Invoke("start-file", null);
-                    break;
+                    case "start-file":
+                        Core.StartFileAsync += () => Event.Invoke("start-file", null);
+                        break;
 
-                case "file-loaded":
-                    Core.FileLoadedAsync += () => Event.Invoke("file-loaded", null);
-                    break;
+                    case "file-loaded":
+                        Core.FileLoadedAsync += () => Event.Invoke("file-loaded", null);
+                        break;
 
-                case "video-reconfig":
-                    Core.VideoReconfigAsync += () => Event.Invoke("video-reconfig", null);
-                    break;
+                    case "video-reconfig":
+                        Core.VideoReconfigAsync += () => Event.Invoke("video-reconfig", null);
+                        break;
 
-                case "audio-reconfig":
-                    Core.AudioReconfigAsync += () => Event.Invoke("audio-reconfig", null);
-                    break;
+                    case "audio-reconfig":
+                        Core.AudioReconfigAsync += () => Event.Invoke("audio-reconfig", null);
+                        break;
 
-                case "seek":
-                    Core.SeekAsync += () => Event.Invoke("seek", null);
-                    break;
+                    case "seek":
+                        Core.SeekAsync += () => Event.Invoke("seek", null);
+                        break;
 
-                case "playback-restart":
-                    Core.PlaybackRestartAsync += () => Event.Invoke("playback-restart", null);
-                    break;
+                    case "playback-restart":
+                        Core.PlaybackRestartAsync += () => Event.Invoke("playback-restart", null);
+                        break;
+                }
             }
         }
 

@@ -29,6 +29,7 @@ public class StockIcon
         string szPath;
     }
 
+    [Flags]
     public enum SHSTOCKICONFLAGS : uint
     {
         SHGSI_ICONLOCATION = 0,

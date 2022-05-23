@@ -39,7 +39,10 @@ namespace MsgBoxEx
             get => checkBoxText;
             set {
                 if (value != checkBoxText)
-                    checkBoxText = value; NotifyPropertyChanged();
+                {
+                    checkBoxText = value;
+                    NotifyPropertyChanged();
+                }
             }
         }
 

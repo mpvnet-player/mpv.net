@@ -45,6 +45,7 @@ public class Taskbar
     }
 }
 
+[Flags]
 public enum TaskbarStates
 {
     NoProgress = 0,

@@ -156,10 +156,14 @@ namespace mpvnet
             // this means Lua scripts that use idle might not work correctly
             SetPropertyString("idle", "yes");
 
-            ObservePropertyBool("pause", value => {
-                Paused = value;
-                Pause();
-            });
+            if (Pause != null)
+            {
+                ObservePropertyBool("pause", value =>
+                {
+                    Paused = value;
+                    Pause();
+                });
+            }
 
             ObservePropertyInt("video-rotate", value => {
                 VideoRotate = value;
