@@ -8,9 +8,10 @@
   is created with defaults for osc and console.
 - Support mpv idle property, see manual for remarks.
 - Fix crash choosing Matroska edition in the menu.
-- Fix auto-play and auto-load-folder not working
-  with user scripts.
+- Fix auto-play and auto-load-folder not working with user scripts.
 - Fix slow startup using osd-scale-by-window=no.
+- Fix URL shown instead of media title on file change OSD,
+  in recent menu and in recent command palette.
 - Fix chapter time display in menu.
 - libmpv shinchiro 2022-05-17 with idle fix
 

@@ -136,7 +136,7 @@ namespace mpvnet
 
             SetPropertyString("watch-later-options", "mute");
             SetPropertyString("screenshot-directory", "~~desktop/");
-            SetPropertyString("osd-playing-msg", "${filename}");
+            SetPropertyString("osd-playing-msg", "${media-title}");
             SetPropertyString("osc", "yes");
             SetPropertyString("force-window", "yes");
             SetPropertyString("config-dir", ConfigFolder);

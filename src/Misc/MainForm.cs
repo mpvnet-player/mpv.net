@@ -322,11 +322,20 @@ namespace mpvnet
 
                 foreach (string path in App.Settings.RecentFiles)
                 {
-                    var mi = MenuHelp.Add(recentMenuItem.Items, path.ShortPath(100));
+                    string file = path;
+                    string title = path;
+
+                    if (title.Contains("|"))
+                    {
+                        title = title.Substring(title.IndexOf("|") + 1);
+                        file = file.Substring(0, file.IndexOf("|"));
+                    }
+
+                    var mi = MenuHelp.Add(recentMenuItem.Items, title.ShortPath(100));
 
                     if (mi != null)
                         mi.Click += (sender, args) =>
-                            Core.LoadFiles(new[] { path }, true, ModifierKeys.HasFlag(Keys.Control));
+                            Core.LoadFiles(new[] { file }, true, ModifierKeys.HasFlag(Keys.Control));
                 }
 
                 recentMenuItem.Items.Add(new WpfControls.Separator());
@@ -703,8 +712,6 @@ namespace mpvnet
 
         void Core_FileLoaded()
         {
-            string path = Core.GetPropertyString("path");
-
             BeginInvoke(new Action(() => {
                 Text = Core.Expand(Title);
 
@@ -719,6 +726,16 @@ namespace mpvnet
                 ProgressTimer.Interval = interval;
                 UpdateProgressBar();
             }));
+
+            string path = Core.GetPropertyString("path");
+
+            if (path.Contains("://"))
+            {
+                string title = Core.GetPropertyString("media-title");
+
+                if (!string.IsNullOrEmpty(title) && path != title)
+                    path = path + "|" + title;
+            }
 
             if (App.Settings.RecentFiles.Contains(path))
                 App.Settings.RecentFiles.Remove(path);
