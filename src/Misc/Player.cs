@@ -301,7 +301,8 @@ namespace mpvnet
                         {
                             Directory.CreateDirectory(scriptOptsPath);
                             File.WriteAllText(scriptOptsPath + "console.conf", BR + "scale=1.5" + BR);
-                            string content = BR + "scalewindowed=1.5" + BR + "hidetimeout=2000" + BR;
+                            string content = BR + "scalewindowed=1.5" + BR + "hidetimeout=2000" + BR +
+                                             "idlelogo=no" + BR;
                             File.WriteAllText(scriptOptsPath + "osc.conf", content);
                         }
                     }
@@ -458,8 +459,14 @@ namespace mpvnet
                                 var data = (mpv_event_client_message)Marshal.PtrToStructure(evt.data, typeof(mpv_event_client_message));
                                 string[] args = ConvertFromUtf8Strings(data.args, data.num_args);
 
-                                if (args.Length > 1 && args[0] == "mpv.net")
-                                    App.RunTask(() => Commands.Execute(args[1], args.Skip(2).ToArray()));
+                                if (args.Length > 1)
+                                {
+                                    if (args[0] == "mpv.net")
+                                        App.RunTask(() => Commands.Execute(args[1], args.Skip(2).ToArray()));
+                         
+                                    if (args[0] == "osc-idlelogo" && args[1] == "no")
+                                        HideLogo();
+                                }
 
                                 InvokeAsync(ClientMessageAsync, args);
                                 ClientMessage?.Invoke(args);
