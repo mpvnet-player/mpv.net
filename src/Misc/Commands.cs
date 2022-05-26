@@ -566,19 +566,12 @@ namespace mpvnet
 
             foreach (string path in App.Settings.RecentFiles)
             {
-                string file = path;
-                string title = path;
-
-                if (title.Contains("|"))
-                {
-                    title = title.Substring(title.IndexOf("|") + 1);
-                    file = file.Substring(0, file.IndexOf("|"));
-                }
+                var file = App.GetTitleAndPath(path);
 
                 CommandPaletteItem item = new CommandPaletteItem()
                 {
-                    Text = title.ShortPath(60),
-                    Action = () => Core.LoadFiles(new[] { file }, true, Control.ModifierKeys.HasFlag(Keys.Control))
+                    Text = file.Title.ShortPath(60),
+                    Action = () => Core.LoadFiles(new[] { file.Path }, true, Control.ModifierKeys.HasFlag(Keys.Control))
                 };
 
                 items.Add(item);

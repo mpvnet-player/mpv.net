@@ -272,5 +272,16 @@ namespace mpvnet
             if (File.Exists(dir + "mpvnet.exe") && !File.Exists(dir + "mpvnet.com"))
                 File.Copy(Folder.Startup + "mpvnet.com", dir + "mpvnet.com");
         }
+
+        public static (string Title, string Path) GetTitleAndPath(string input)
+        {
+            if (input.Contains("|"))
+            {
+                var a = input.Split('|');
+                return (a[1], a[0]);
+            }
+
+            return (input, input);
+        }
     }
 }

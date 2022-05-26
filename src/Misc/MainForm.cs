@@ -322,20 +322,12 @@ namespace mpvnet
 
                 foreach (string path in App.Settings.RecentFiles)
                 {
-                    string file = path;
-                    string title = path;
-
-                    if (title.Contains("|"))
-                    {
-                        title = title.Substring(title.IndexOf("|") + 1);
-                        file = file.Substring(0, file.IndexOf("|"));
-                    }
-
-                    var mi = MenuHelp.Add(recentMenuItem.Items, title.ShortPath(100));
+                    var file = App.GetTitleAndPath(path);
+                    var mi = MenuHelp.Add(recentMenuItem.Items, file.Title.ShortPath(100));
 
                     if (mi != null)
                         mi.Click += (sender, args) =>
-                            Core.LoadFiles(new[] { file }, true, ModifierKeys.HasFlag(Keys.Control));
+                            Core.LoadFiles(new[] { file.Path }, true, ModifierKeys.HasFlag(Keys.Control));
                 }
 
                 recentMenuItem.Items.Add(new WpfControls.Separator());
