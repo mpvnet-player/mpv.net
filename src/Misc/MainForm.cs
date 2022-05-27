@@ -119,6 +119,7 @@ namespace mpvnet
         {
             Core.Init(Handle);
 
+            // bool methods not working correctly
             Core.ObserveProperty("window-maximized", PropChangeWindowMaximized);
             Core.ObserveProperty("window-minimized", PropChangeWindowMinimized);
 
