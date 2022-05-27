@@ -1,28 +1,28 @@
 
 # https://github.com/stax76/mpv.net/blob/master/docs/Manual.md#input-and-context-menu
 
-o           script-message mpv.net open-files         #menu: Open > Open Files...
-V           script-message mpv.net open-clipboard     #menu: Open > Open URL or file from clipboard
-_           script-message mpv.net open-optical-media #menu: Open > Open DVD/Blu-ray Drive/Folder...
-_           ignore                                    #menu: Open > -
-Alt+a       script-message mpv.net load-audio         #menu: Open > Load external audio files...
-Alt+s       script-message mpv.net load-sub           #menu: Open > Load external subtitle files...
-_           ignore                                    #menu: Open > -
-_           script-message mpv.net open-files append  #menu: Open > Add files to playlist...
-_           ignore                                    #menu: Open > -
-_           ignore                                    #menu: Open > Recent
+o           script-message-to mpvnet open-files         #menu: Open > Open Files...
+V           script-message-to mpvnet open-clipboard     #menu: Open > Open URL or file from clipboard
+_           script-message-to mpvnet open-optical-media #menu: Open > Open DVD/Blu-ray Drive/Folder...
+_           ignore                                      #menu: Open > -
+Alt+a       script-message-to mpvnet load-audio         #menu: Open > Load external audio files...
+Alt+s       script-message-to mpvnet load-sub           #menu: Open > Load external subtitle files...
+_           ignore                                      #menu: Open > -
+_           script-message-to mpvnet open-files append  #menu: Open > Add files to playlist...
+_           ignore                                      #menu: Open > -
+_           ignore                                      #menu: Open > Recent
 
-_           ignore                            #menu: -
-Space       script-message mpv.net play-pause #menu: Play/Pause
-Ctrl+s      stop                              #menu: Stop
-_           ignore                            #menu: -
-Enter       cycle fullscreen                  #menu: Toggle Fullscreen
+_           ignore                              #menu: -
+Space       script-message-to mpvnet play-pause #menu: Play/Pause
+Ctrl+s      stop                                #menu: Stop
+_           ignore                              #menu: -
+Enter       cycle fullscreen                    #menu: Toggle Fullscreen
 
-F11         script-message mpv.net playlist-add -1 #menu: Navigate > Previous File
-F12         script-message mpv.net playlist-add  1 #menu: Navigate > Next File
+F11         script-message-to mpvnet playlist-add -1 #menu: Navigate > Previous File
+F12         script-message-to mpvnet playlist-add  1 #menu: Navigate > Next File
 _           ignore                 #menu: Navigate > -
-Home        script-message mpv.net playlist-first #menu: Navigate > First File
-End         script-message mpv.net playlist-last  #menu: Navigate > Last File
+Home        script-message-to mpvnet playlist-first  #menu: Navigate > First File
+End         script-message-to mpvnet playlist-last   #menu: Navigate > Last File
 _           ignore                 #menu: Navigate > -
 PGUP        add chapter  1         #menu: Navigate > Next Chapter
 PGDWN       add chapter -1         #menu: Navigate > Previous Chapter
@@ -73,7 +73,7 @@ d           cycle deinterlace      #menu: Video > Toggle Deinterlace
 a           cycle-values video-aspect 16:9 4:3 2.35:1 -1 #menu: Video > Cycle Aspect Ratio
 Ctrl+r      cycle-values video-rotate 90 180 270 0       #menu: Video > Rotate Video
 
-KP7         script-message mpv.net cycle-audio #menu: Audio > Cycle/Next
+KP7         script-message-to mpvnet cycle-audio #menu: Audio > Cycle/Next
 _           ignore                 #menu: Audio > -
 Ctrl+d      add audio-delay  0.1   #menu: Audio > Delay +0.1
 Ctrl+D      add audio-delay -0.1   #menu: Audio > Delay -0.1
@@ -105,78 +105,78 @@ _           ignore                 #menu: Speed > -
 _           ignore                 #menu: Speed > -
 BS          set speed 1            #menu: Speed > Reset
 
-Alt++   script-message mpv.net scale-window 1.2     #menu: View > Zoom > Enlarge
-Alt+-   script-message mpv.net scale-window 0.8     #menu: View > Zoom > Shrink
-_       ignore                                      #menu: View > Zoom > -
-Alt+0   script-message mpv.net window-scale 0.5     #menu: View > Zoom > 50 %
-Alt+1   script-message mpv.net window-scale 1.0     #menu: View > Zoom > 100 %
-Alt+2   script-message mpv.net window-scale 2.0     #menu: View > Zoom > 200 %
-Alt+3   script-message mpv.net window-scale 3.0     #menu: View > Zoom > 300 %
+Alt++   script-message-to mpvnet scale-window 1.2     #menu: View > Zoom > Enlarge
+Alt+-   script-message-to mpvnet scale-window 0.8     #menu: View > Zoom > Shrink
+_       ignore                                        #menu: View > Zoom > -
+Alt+0   script-message-to mpvnet window-scale 0.5     #menu: View > Zoom > 50 %
+Alt+1   script-message-to mpvnet window-scale 1.0     #menu: View > Zoom > 100 %
+Alt+2   script-message-to mpvnet window-scale 2.0     #menu: View > Zoom > 200 %
+Alt+3   script-message-to mpvnet window-scale 3.0     #menu: View > Zoom > 300 %
 
-F8      script-message mpv.net show-playlist        #menu: View > Show Playlist
-Ctrl+p  script-message mpv.net select-profile       #menu: View > Show Profile Selection
-Ctrl+P  script-message mpv.net show-profiles        #menu: View > Show Profiles
-Ctrl+7  script-message mpv.net show-audio-tracks    #menu: View > Show Audio Tracks
-Ctrl+8  script-message mpv.net show-subtitle-tracks #menu: View > Show Subtitle Tracks
-b       cycle border                                #menu: View > Toggle Border
-Ctrl+t  cycle ontop                                 #menu: View > Toggle On Top 
-t       script-binding stats/display-stats-toggle   #menu: View > Toggle Statistics
-Del     script-binding osc/visibility               #menu: View > Toggle OSC Visibility
-i       script-message mpv.net show-info            #menu: View > Show File/Stream Info
-p       show-progress                               #menu: View > Show Progress
-F9      show-text ${track-list} 5000                #menu: View > Show Tracks
-Ctrl+m  script-message mpv.net show-media-info      #menu: View > Show Media Info
-Alt+r   script-message mpv.net show-recent          #menu: View > Show Recent
+F8      script-message-to mpvnet show-playlist        #menu: View > Show Playlist
+Ctrl+p  script-message-to mpvnet select-profile       #menu: View > Show Profile Selection
+Ctrl+P  script-message-to mpvnet show-profiles        #menu: View > Show Profiles
+Ctrl+7  script-message-to mpvnet show-audio-tracks    #menu: View > Show Audio Tracks
+Ctrl+8  script-message-to mpvnet show-subtitle-tracks #menu: View > Show Subtitle Tracks
+b       cycle border                                  #menu: View > Toggle Border
+Ctrl+t  cycle ontop                                   #menu: View > Toggle On Top 
+t       script-binding stats/display-stats-toggle     #menu: View > Toggle Statistics
+Del     script-binding osc/visibility                 #menu: View > Toggle OSC Visibility
+i       script-message-to mpvnet show-info            #menu: View > Show File/Stream Info
+p       show-progress                                 #menu: View > Show Progress
+F9      show-text ${track-list} 5000                  #menu: View > Show Tracks
+Ctrl+m  script-message-to mpvnet show-media-info      #menu: View > Show Media Info
+Alt+r   script-message-to mpvnet show-recent          #menu: View > Show Recent
 
-`       script-binding console/enable               #menu: View > Advanced > Show Console
-_       script-message mpv.net show-audio-devices   #menu: View > Advanced > Show Audio Devices
-P       script-message mpv.net show-properties      #menu: View > Advanced > Show Properties
-C       script-message mpv.net show-commands        #menu: View > Advanced > Show Commands
-_       script-message mpv.net show-demuxers        #menu: View > Advanced > Show Demuxers
-_       script-message mpv.net show-decoders        #menu: View > Advanced > Show Decoders
-_       script-message mpv.net show-protocols       #menu: View > Advanced > Show Protocols
-_       script-message mpv.net show-keys            #menu: View > Advanced > Show Keys
+`       script-binding console/enable                 #menu: View > Advanced > Show Console
+_       script-message-to mpvnet show-audio-devices   #menu: View > Advanced > Show Audio Devices
+P       script-message-to mpvnet show-properties      #menu: View > Advanced > Show Properties
+C       script-message-to mpvnet show-commands        #menu: View > Advanced > Show Commands
+_       script-message-to mpvnet show-demuxers        #menu: View > Advanced > Show Demuxers
+_       script-message-to mpvnet show-decoders        #menu: View > Advanced > Show Decoders
+_       script-message-to mpvnet show-protocols       #menu: View > Advanced > Show Protocols
+_       script-message-to mpvnet show-keys            #menu: View > Advanced > Show Keys
 
-_       ignore                                      #menu: Profile
+_       ignore                                        #menu: Profile
 
-c       script-message mpv.net show-conf-editor     #menu: Settings > Show Config Editor
-Ctrl+i  script-message mpv.net show-input-editor    #menu: Settings > Show Input Editor
-Ctrl+f  script-message mpv.net open-conf-folder     #menu: Settings > Open Config Folder
+c       script-message-to mpvnet show-conf-editor     #menu: Settings > Show Config Editor
+Ctrl+i  script-message-to mpvnet show-input-editor    #menu: Settings > Show Input Editor
+Ctrl+f  script-message-to mpvnet open-conf-folder     #menu: Settings > Open Config Folder
 
-_       script-message mpv.net reg-file-assoc video #menu: Settings > Setup > Register video file associations
-_       script-message mpv.net reg-file-assoc audio #menu: Settings > Setup > Register audio file associations
-_       script-message mpv.net reg-file-assoc image #menu: Settings > Setup > Register image file associations
-_       script-message mpv.net reg-file-assoc unreg #menu: Settings > Setup > Unregister file associations
+_       script-message-to mpvnet reg-file-assoc video #menu: Settings > Setup > Register video file associations
+_       script-message-to mpvnet reg-file-assoc audio #menu: Settings > Setup > Register audio file associations
+_       script-message-to mpvnet reg-file-assoc image #menu: Settings > Setup > Register image file associations
+_       script-message-to mpvnet reg-file-assoc unreg #menu: Settings > Setup > Unregister file associations
 
-h       script-message mpv.net show-history         #menu: Tools > Show History
-l       ab-loop                                     #menu: Tools > Set/clear A-B loop points
-L       cycle-values loop-file inf no               #menu: Tools > Toggle infinite file looping
-_       playlist-shuffle                            #menu: Tools > Shuffle Playlist
-Ctrl+h  cycle-values hwdec auto no                  #menu: Tools > Toggle Hardware Decoding
-Q       quit-watch-later                            #menu: Tools > Exit Watch Later
+h       script-message-to mpvnet show-history         #menu: Tools > Show History
+l       ab-loop                                       #menu: Tools > Set/clear A-B loop points
+L       cycle-values loop-file inf no                 #menu: Tools > Toggle infinite file looping
+_       playlist-shuffle                              #menu: Tools > Shuffle Playlist
+Ctrl+h  cycle-values hwdec auto no                    #menu: Tools > Toggle Hardware Decoding
+Q       quit-watch-later                              #menu: Tools > Exit Watch Later
 
-_ script-message mpv.net shell-execute https://mpv.io                    #menu: Help > Website mpv
-_ script-message mpv.net shell-execute https://github.com/stax76/mpv.net #menu: Help > Website mpv.net
-_ ignore                                                                 #menu: Help > -
-_ script-message mpv.net shell-execute https://mpv.io/manual/stable/     #menu: Help > Manual mpv
-_ script-message mpv.net shell-execute https://github.com/stax76/mpv.net/blob/master/docs/Manual.md #menu: Help > Manual mpv.net
-_ ignore                                                                 #menu: Help > -
-_ script-message mpv.net show-about                                      #menu: Help > About mpv.net
+_ script-message-to mpvnet shell-execute https://mpv.io                    #menu: Help > Website mpv
+_ script-message-to mpvnet shell-execute https://github.com/stax76/mpv.net #menu: Help > Website mpv.net
+_ ignore                                                                   #menu: Help > -
+_ script-message-to mpvnet shell-execute https://mpv.io/manual/stable/     #menu: Help > Manual mpv
+_ script-message-to mpvnet shell-execute https://github.com/stax76/mpv.net/blob/master/docs/Manual.md #menu: Help > Manual mpv.net
+_ ignore                                                                   #menu: Help > -
+_ script-message-to mpvnet show-about                                      #menu: Help > About mpv.net
 
-F1 script-message mpv.net show-command-palette #menu: Command Palette
-_ ignore                                       #menu: -
-Esc quit                                       #menu: Exit
+F1 script-message-to mpvnet show-command-palette #menu: Command Palette
+_ ignore                                         #menu: -
+Esc quit                                         #menu: Exit
 
-MBTN_Right    script-message mpv.net show-menu
-6             script-message mpv.net show-progress
-KP6           script-message mpv.net show-progress
+MBTN_Right    script-message-to mpvnet show-menu
+6             script-message-to mpvnet show-progress
+KP6           script-message-to mpvnet show-progress
 9             ab-loop
 KP9           ab-loop
-7             script-message mpv.net cycle-audio
-Sharp         script-message mpv.net cycle-audio
-Ctrl+F11      script-message mpv.net playlist-add -10
-Ctrl+F12      script-message mpv.net playlist-add  10
-Alt+q         script-message mpv.net quick-bookmark
+7             script-message-to mpvnet cycle-audio
+Sharp         script-message-to mpvnet cycle-audio
+Ctrl+F11      script-message-to mpvnet playlist-add -10
+Ctrl+F12      script-message-to mpvnet playlist-add  10
+Alt+q         script-message-to mpvnet quick-bookmark
 8             cycle sub
 j             cycle sub
 q             quit

@@ -227,7 +227,6 @@ namespace mpvnet
             get {
                 if (_Items is null)
                     _Items = GetItems(File.ReadAllText(Core.InputConfPath));
-
                 return _Items;
             }
         }

@@ -9,6 +9,9 @@ public class libmpv
     public static extern IntPtr mpv_create();
 
     [DllImport("mpv-2.dll", CallingConvention = CallingConvention.Cdecl)]
+    public static extern IntPtr mpv_create_client(IntPtr mpvHandle, [MarshalAs(UnmanagedType.LPUTF8Str)] string command);
+
+    [DllImport("mpv-2.dll", CallingConvention = CallingConvention.Cdecl)]
     public static extern mpv_error mpv_initialize(IntPtr mpvHandle);
 
     [DllImport("mpv-2.dll", CallingConvention = CallingConvention.Cdecl)]
@@ -25,9 +28,6 @@ public class libmpv
 
     [DllImport("mpv-2.dll", CallingConvention = CallingConvention.Cdecl)]
     public static extern IntPtr mpv_error_string(mpv_error error);
-
-    [DllImport("mpv-2.dll", CallingConvention = CallingConvention.Cdecl)]
-    public static extern int mpv_terminate_destroy(IntPtr mpvHandle);
 
     [DllImport("mpv-2.dll", CallingConvention = CallingConvention.Cdecl)]
     public static extern mpv_error mpv_request_log_messages(IntPtr mpvHandle, [MarshalAs(UnmanagedType.LPUTF8Str)] string min_level);

@@ -72,6 +72,7 @@ namespace mpvnet
         public List<KeyValuePair<string, double>> Chapters { get; set; } = new List<KeyValuePair<string, double>>();
         public List<TimeSpan> BluRayTitles { get; } = new List<TimeSpan>();
         public IntPtr Handle { get; set; }
+        public IntPtr NamedHandle { get; set; }
         
         public Size VideoSize { get; set; }
         public TimeSpan Duration;
@@ -114,12 +115,12 @@ namespace mpvnet
 
             Handle = mpv_create();
 
+            mpv_request_log_messages(Handle, "no");
+
+            App.RunTask(() => MainEventLoop());
+
             if (Handle == IntPtr.Zero)
                 throw new Exception("error mpv_create");
-
-            mpv_request_log_messages(Handle, "terminal-default");
-
-            App.RunTask(() => EventLoop());
 
             if (App.IsTerminalAttached)
             {
@@ -151,6 +152,15 @@ namespace mpvnet
 
             string idle = GetPropertyString("idle");
             App.Exit = idle == "no" || idle == "once";
+
+            NamedHandle = mpv_create_client(Handle, "mpvnet");
+
+            if (NamedHandle == IntPtr.Zero)
+                throw new Exception("mpv_create_client error");
+
+            mpv_request_log_messages(NamedHandle, "terminal-default");
+
+            App.RunTask(() => EventLoop());
 
             // otherwise shutdown is raised before media files are loaded,
             // this means Lua scripts that use idle might not work correctly
@@ -258,6 +268,26 @@ namespace mpvnet
 
             if (AutofitLarger > 1)
                 AutofitLarger = 1;
+        }
+
+        bool? _UseNewMsgModel;
+
+        public bool UseNewMsgModel {
+            get {
+                if (!_UseNewMsgModel.HasValue)
+                    _UseNewMsgModel = InputConfContent.Contains("script-message-to mpvnet");
+                return _UseNewMsgModel.Value;
+            }
+        }
+
+        string _InputConfContent;
+
+        public string InputConfContent {
+            get {
+                if (_InputConfContent == null)
+                    _InputConfContent = File.ReadAllText(Core.InputConfPath);
+                return _InputConfContent;
+            }
         }
 
         string _ConfigFolder;
@@ -417,11 +447,17 @@ namespace mpvnet
             }
         }
 
+        public void MainEventLoop()
+        {
+            while (true)
+                mpv_wait_event(Handle, -1);
+        }
+
         public void EventLoop()
         {
             while (true)
             {
-                IntPtr ptr = mpv_wait_event(Handle, -1);
+                IntPtr ptr = mpv_wait_event(NamedHandle, -1);
                 mpv_event evt = (mpv_event)Marshal.PtrToStructure(ptr, typeof(mpv_event));
 
                 try
@@ -459,14 +495,13 @@ namespace mpvnet
                                 var data = (mpv_event_client_message)Marshal.PtrToStructure(evt.data, typeof(mpv_event_client_message));
                                 string[] args = ConvertFromUtf8Strings(data.args, data.num_args);
 
-                                if (args.Length > 1)
-                                {
-                                    if (args[0] == "mpv.net")
-                                        App.RunTask(() => Commands.Execute(args[1], args.Skip(2).ToArray()));
-                         
-                                    if (args[0] == "osc-idlelogo" && args[1] == "no")
-                                        HideLogo();
-                                }
+                                if (UseNewMsgModel && args[0] != "mpv.net")
+                                    App.RunTask(() => Commands.Execute(args[0], args.Skip(1).ToArray()));
+                                else if (args.Length > 1 && args[0] == "mpv.net")
+                                    App.RunTask(() => Commands.Execute(args[1], args.Skip(2).ToArray()));
+
+                                if (args.Length > 1 && args[0] == "osc-idlelogo" && args[1] == "no")
+                                    HideLogo();
 
                                 InvokeAsync(ClientMessageAsync, args);
                                 ClientMessage?.Invoke(args);
@@ -679,12 +714,6 @@ namespace mpvnet
                     App.RunTask(() => a2.Invoke(t1, t2));
                 }
             }
-        }
-
-        void HideLogo()
-        {
-            Command("overlay-remove 0");
-            IsLogoVisible = false;
         }
 
         public void Command(string command)
@@ -903,7 +932,7 @@ namespace mpvnet
             {
                 if (!IntPropChangeActions.ContainsKey(name))
                 {
-                    mpv_error err = mpv_observe_property(Handle, 0, name, mpv_format.MPV_FORMAT_INT64);
+                    mpv_error err = mpv_observe_property(NamedHandle, 0, name, mpv_format.MPV_FORMAT_INT64);
 
                     if (err < 0)
                         HandleError(err, $"error observing property: {name}");
@@ -922,7 +951,7 @@ namespace mpvnet
             {
                 if (!DoublePropChangeActions.ContainsKey(name))
                 {
-                    mpv_error err = mpv_observe_property(Handle, 0, name, mpv_format.MPV_FORMAT_DOUBLE);
+                    mpv_error err = mpv_observe_property(NamedHandle, 0, name, mpv_format.MPV_FORMAT_DOUBLE);
 
                     if (err < 0)
                         HandleError(err, $"error observing property: {name}");
@@ -941,7 +970,7 @@ namespace mpvnet
             {
                 if (!BoolPropChangeActions.ContainsKey(name))
                 {
-                    mpv_error err = mpv_observe_property(Handle, 0, name, mpv_format.MPV_FORMAT_FLAG);
+                    mpv_error err = mpv_observe_property(NamedHandle, 0, name, mpv_format.MPV_FORMAT_FLAG);
 
                     if (err < 0)
                         HandleError(err, $"error observing property: {name}");
@@ -960,7 +989,7 @@ namespace mpvnet
             {
                 if (!StringPropChangeActions.ContainsKey(name))
                 {
-                    mpv_error err = mpv_observe_property(Handle, 0, name, mpv_format.MPV_FORMAT_STRING);
+                    mpv_error err = mpv_observe_property(NamedHandle, 0, name, mpv_format.MPV_FORMAT_STRING);
 
                     if (err < 0)
                         HandleError(err, $"error observing property: {name}");
@@ -979,7 +1008,7 @@ namespace mpvnet
             {
                 if (!PropChangeActions.ContainsKey(name))
                 {
-                    mpv_error err = mpv_observe_property(Handle, 0, name, mpv_format.MPV_FORMAT_NONE);
+                    mpv_error err = mpv_observe_property(NamedHandle, 0, name, mpv_format.MPV_FORMAT_NONE);
 
                     if (err < 0)
                         HandleError(err, $"error observing property: {name}");
@@ -1335,6 +1364,12 @@ namespace mpvnet
                     IsLogoVisible = true;
                 }
             }
+        }
+
+        void HideLogo()
+        {
+            Command("overlay-remove 0");
+            IsLogoVisible = false;
         }
 
         string GetLanguage(string id)

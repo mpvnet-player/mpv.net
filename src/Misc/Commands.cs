@@ -67,8 +67,6 @@ namespace mpvnet
                 case "show-subtitle-tracks": ShowSubtitleTracks(); break;
                 case "show-text": ShowText(args[0], Convert.ToInt32(args[1]), Convert.ToInt32(args[2])); break;
                 case "window-scale": WindowScale(float.Parse(args[0], CultureInfo.InvariantCulture)); break;
-
-                default: Terminal.WriteError($"No command '{id}' found, reset input.conf by deleting it."); break;
             }
         }
 

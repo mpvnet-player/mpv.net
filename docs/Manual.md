@@ -221,7 +221,7 @@ A common task for the terminal is debugging scripts.
 mpv.net specific commands
 -------------------------
 
-`script-message mpv.net <command> <arguments>`
+`script-message-to mpvnet <command> <arguments>`
 
 mpv.net commands are used when mpv commands don't exist or lack a feature.
 

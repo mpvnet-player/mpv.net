@@ -1,4 +1,5 @@
 
+- Command messages are dispatched with `script-message-to mpvnet`.
 - New feature to change profile using the command palette.
 - New show-santa-logo (green and grumpy) option.
 - New quick bookmark feature, see manual.

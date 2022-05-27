@@ -656,10 +656,9 @@ namespace mpvnet
 
         public void BuildMenu()
         {
-            string content = File.ReadAllText(Core.InputConfPath);
-            var items = CommandItem.GetItems(content);
+            var items = CommandItem.GetItems(Core.InputConfContent);
 
-            if (!content.Contains("#menu:"))
+            if (!Core.InputConfContent.Contains("#menu:"))
             {
                 var defaultItems = CommandItem.GetItems(Properties.Resources.input_conf);
 
