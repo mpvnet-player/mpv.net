@@ -1387,6 +1387,47 @@ namespace mpvnet
         
         public void RaiseShowMenu() => ShowMenu();
 
+        public List<MediaTrack> GetExternalTracks()
+        {
+            List<MediaTrack> tracks = new List<MediaTrack>();
+            int count = GetPropertyInt("track-list/count");
+
+            for (int i = 0; i < count; i++)
+            {
+                bool external = GetPropertyBool($"track-list/{i}/external");
+
+                if (external)
+                {
+                    string type = GetPropertyString($"track-list/{i}/type");
+
+                    if (type == "audio")
+                    {
+                        MediaTrack track = new MediaTrack();
+                        Add(track, GetLanguage(GetPropertyString($"track-list/{i}/lang")));
+                        Add(track, GetPropertyString($"track-list/{i}/codec").ToUpperEx());
+                        Add(track, GetPropertyInt($"track-list/{i}/audio-channels") + " channels");
+                        Add(track, "External");
+                        track.Text = "A: " + track.Text.Trim(' ', ',');
+                        track.Type = "a";
+                        track.ID = GetPropertyInt($"track-list/{i}/id");
+                        tracks.Add(track);
+                    }
+                    else if (type == "sub")
+                    {
+                        MediaTrack track = new MediaTrack();
+                        Add(track, GetLanguage(GetPropertyString($"track-list/{i}/lang")));
+                        Add(track, "External");
+                        track.Text = "S: " + track.Text.Trim(' ', ',');
+                        track.Type = "s";
+                        track.ID = GetPropertyInt($"track-list/{i}/id");
+                        tracks.Add(track);
+                    }
+                }
+            }
+
+            return tracks;
+        }
+
         void ReadMetaData()
         {
             string path = GetPropertyString("path");
@@ -1555,12 +1596,12 @@ namespace mpvnet
                     Chapters.Add(new KeyValuePair<string, double>(text, time));
                 }
             }
+        }
 
-            void Add(MediaTrack track, object value)
-            {
-                if (value != null && !(track.Text != null && track.Text.Contains(value.ToString())))
-                    track.Text += " " + value + ",";
-            }
+        void Add(MediaTrack track, object value)
+        {
+            if (value != null && !(track.Text != null && track.Text.Contains(value.ToString())))
+                track.Text += " " + value + ",";
         }
 
         private string[] _ProfileNames;

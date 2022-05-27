@@ -303,8 +303,13 @@ namespace mpvnet
 
         public static void CycleAudio()
         {
-            MediaTrack[] audioTracks = Core.MediaTracks.Where(track => track.Type == "a").ToArray();
-            int len = audioTracks.Length;
+            var tracks = Core.MediaTracks.Where(track => track.Type == "a").ToArray();
+            var externalTracks = Core.GetExternalTracks().Where(track => track.Type == "a");
+             
+            if (externalTracks.Count() > 0)
+                tracks = tracks.Concat(externalTracks).ToArray();
+
+            int len = tracks.Length;
 
             if (len < 1)
             {
@@ -322,7 +327,7 @@ namespace mpvnet
                 Core.CommandV("set", "aid", aid.ToString());
             }
 
-            Core.CommandV("show-text", aid + "/" + len + ": " + audioTracks[aid - 1].Text.Substring(3), "5000");
+            Core.CommandV("show-text", aid + "/" + len + ": " + tracks[aid - 1].Text.Substring(3), "5000");
         }
 
         public static void ShowCommands()
@@ -420,10 +425,13 @@ namespace mpvnet
 
         public static void ShowAudioTracks() => App.InvokeOnMainThread(() =>
         {
-            MediaTrack[] tracks = Core.MediaTracks.Where(track => track.Type == "a").ToArray();
-            int len = tracks.Length;
+            var tracks = Core.MediaTracks.Where(track => track.Type == "a").ToArray();
+            var externalTracks = Core.GetExternalTracks().Where(track => track.Type == "a");
 
-            if (len < 1)
+            if (externalTracks.Count() > 0)
+                tracks = tracks.Concat(externalTracks).ToArray();
+
+            if (tracks.Length < 1)
             {
                 Core.CommandV("show-text", "No audio tracks");
                 return;
@@ -440,7 +448,7 @@ namespace mpvnet
                     Text = track.Text,
                     Action = () => {
                         Core.CommandV("set", "aid", track.ID.ToString());
-                        Core.CommandV("show-text", track.ID + "/" + len + ": " +
+                        Core.CommandV("show-text", track.ID + "/" + tracks.Length + ": " +
                             tracks[track.ID - 1].Text.Substring(3), "5000");
                     }
                 };
@@ -455,10 +463,13 @@ namespace mpvnet
 
         public static void ShowSubtitleTracks() => App.InvokeOnMainThread(() =>
         {
-            MediaTrack[] tracks = Core.MediaTracks.Where(track => track.Type == "s").ToArray();
-            int len = tracks.Length;
+            var tracks = Core.MediaTracks.Where(track => track.Type == "s").ToArray();
+            var externalTracks = Core.GetExternalTracks().Where(track => track.Type == "s");
 
-            if (len < 1)
+            if (externalTracks.Count() > 0)
+                tracks = tracks.Concat(externalTracks).ToArray();
+
+            if (tracks.Length < 1)
             {
                 Core.CommandV("show-text", "No subtitle tracks");
                 return;
@@ -475,7 +486,7 @@ namespace mpvnet
                     Text = track.Text,
                     Action = () => {
                         Core.CommandV("set", "sid", track.ID.ToString());
-                        Core.CommandV("show-text", track.ID + "/" + len + ": " +
+                        Core.CommandV("show-text", track.ID + "/" + tracks.Length + ": " +
                             tracks[track.ID - 1].Text.Substring(3), "5000");
                     }
                 };

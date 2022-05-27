@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -235,10 +234,24 @@ namespace mpvnet
                 {
                     trackMenuItem.Items.Clear();
 
-                    MediaTrack[] audTracks = Core.MediaTracks.Where(track => track.Type == "a").ToArray();
-                    MediaTrack[] subTracks = Core.MediaTracks.Where(track => track.Type == "s").ToArray();
-                    MediaTrack[] vidTracks = Core.MediaTracks.Where(track => track.Type == "v").ToArray();
-                    MediaTrack[] ediTracks = Core.MediaTracks.Where(track => track.Type == "e").ToArray();
+                    var audTracks = Core.MediaTracks.Where(track => track.Type == "a");
+                    var subTracks = Core.MediaTracks.Where(track => track.Type == "s");
+                    var vidTracks = Core.MediaTracks.Where(track => track.Type == "v");
+                    var ediTracks = Core.MediaTracks.Where(track => track.Type == "e");
+
+                    var externalTracks = Core.GetExternalTracks();
+
+                    if (externalTracks.Count > 0)
+                    {
+                        var exAudTracks = externalTracks.Where(track => track.Type == "a");
+                        var exSubTracks = externalTracks.Where(track => track.Type == "s");
+
+                        if (exAudTracks.Count() > 0)
+                            audTracks = audTracks.Concat(exAudTracks);
+
+                        if (exSubTracks.Count() > 0)
+                            subTracks = subTracks.Concat(exSubTracks);
+                    }
 
                     foreach (MediaTrack track in vidTracks)
                     {
@@ -248,7 +261,7 @@ namespace mpvnet
                         trackMenuItem.Items.Add(mi);
                     }
 
-                    if (vidTracks.Length > 0)
+                    if (vidTracks.Count() > 0)
                         trackMenuItem.Items.Add(new WpfControls.Separator());
 
                     foreach (MediaTrack track in audTracks)
@@ -259,7 +272,7 @@ namespace mpvnet
                         trackMenuItem.Items.Add(mi);
                     }
 
-                    if (subTracks.Length > 0)
+                    if (subTracks.Count() > 0)
                         trackMenuItem.Items.Add(new WpfControls.Separator());
 
                     foreach (MediaTrack track in subTracks)
@@ -270,7 +283,7 @@ namespace mpvnet
                         trackMenuItem.Items.Add(mi);
                     }
 
-                    if (subTracks.Length > 0)
+                    if (subTracks.Count() > 0)
                     {
                         var mi = new WpfControls.MenuItem() { Header = "S: No subtitles" };
                         mi.Click += (sender, args) => Core.CommandV("set", "sid", "no");
@@ -278,7 +291,7 @@ namespace mpvnet
                         trackMenuItem.Items.Add(mi);
                     }
 
-                    if (ediTracks.Length > 0)
+                    if (ediTracks.Count() > 0)
                         trackMenuItem.Items.Add(new WpfControls.Separator());
 
                     foreach (MediaTrack track in ediTracks)

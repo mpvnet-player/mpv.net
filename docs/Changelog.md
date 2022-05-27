@@ -1,4 +1,6 @@
 
+- External audio and subtitle tracks are shown in the menu and
+  command palette and can be cycled via keyboard.
 - Command messages are dispatched with `script-message-to mpvnet`.
 - New feature to change profile using the command palette.
 - New show-santa-logo (green and grumpy) option.
