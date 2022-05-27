@@ -1439,10 +1439,11 @@ namespace mpvnet
             lock (MediaTracks)
             {
                 MediaTracks.Clear();
-                int trackListCount = GetPropertyInt("track-list/count");
 
                 if (path.ToLowerEx().Contains("://"))
                 {
+                    int trackListCount = GetPropertyInt("track-list/count");
+
                     for (int i = 0; i < trackListCount; i++)
                     {
                         string type = GetPropertyString($"track-list/{i}/type");
@@ -1512,24 +1513,6 @@ namespace mpvnet
                             MediaTracks.Add(track);
                         }
 
-                        for (int i = 0; i < trackListCount; i++)
-                        {
-                            string type     = GetPropertyString($"track-list/{i}/type");
-                            string external = GetPropertyString($"track-list/{i}/external");
-
-                            if (type == "audio" && external == "yes")
-                            {
-                                MediaTrack track = new MediaTrack();
-                                Add(track, GetLanguage(GetPropertyString($"track-list/{i}/lang")));
-                                Add(track, GetPropertyString($"track-list/{i}/codec").ToUpperEx());
-                                Add(track, GetPropertyInt($"track-list/{i}/audio-channels") + " channels");
-                                track.Text = "A: " + (track.Text.Trim(' ', ',') + ", External").Trim(' ', ',');
-                                track.Type = "a";
-                                track.ID = GetPropertyInt($"track-list/{i}/id");
-                                MediaTracks.Add(track);
-                            }
-                        }
-
                         int subCount = mi.GetCount(MediaInfoStreamKind.Text);
 
                         for (int i = 0; i < subCount; i++)
@@ -1545,22 +1528,6 @@ namespace mpvnet
                             track.Type = "s";
                             track.ID = i + 1;
                             MediaTracks.Add(track);
-                        }
-
-                        for (int i = 0; i < trackListCount; i++)
-                        {
-                            string type     = GetPropertyString($"track-list/{i}/type");
-                            string external = GetPropertyString($"track-list/{i}/external");
-
-                            if (type == "sub" && external == "yes")
-                            {
-                                MediaTrack track = new MediaTrack();
-                                Add(track, GetLanguage(GetPropertyString($"track-list/{i}/lang")));
-                                track.Text = "S: " + (track.Text.Trim(' ', ',') + ", External").Trim(' ', ',');
-                                track.Type = "s";
-                                track.ID = GetPropertyInt($"track-list/{i}/id");
-                                MediaTracks.Add(track);
-                            }
                         }
 
                         int editionCount = GetPropertyInt("edition-list/count");
