@@ -21,7 +21,7 @@ namespace mpvnet
         public Point WindowLocation;
         public Point WindowPosition;
         public Size WindowSize;
-        public string ConfigEditorSearch = "";
+        public string ConfigEditorSearch = "Video:";
         public string Mute = "no";
         public string UpdateCheckVersion = "";
     }

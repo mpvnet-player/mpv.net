@@ -63,10 +63,10 @@ namespace mpvnet
                 switch (setting)
                 {
                     case StringSetting s:
-                        MainStackPanel.Children.Add(new StringSettingControl(s));
+                        MainStackPanel.Children.Add(new StringSettingControl(s) { Visibility = Visibility.Collapsed });
                         break;
                     case OptionSetting s:
-                        MainStackPanel.Children.Add(new OptionSettingControl(s));
+                        MainStackPanel.Children.Add(new OptionSettingControl(s) { Visibility = Visibility.Collapsed });
                         break;
                 }
             }
@@ -277,15 +277,16 @@ namespace mpvnet
         void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             string activeFilter = "";
+            string searchText = SearchControl.Text;
 
-            foreach (var i in FilterStrings)
-                if (SearchControl.Text == i + ":")
+            foreach (string i in FilterStrings)
+                if (searchText == i + ":")
                     activeFilter = i;
 
             if (activeFilter == "")
             {
                 foreach (UIElement i in MainStackPanel.Children)
-                    if ((i as ISettingControl).Contains(SearchControl.Text))
+                    if ((i as ISettingControl).Contains(searchText) && searchText.Length > 1)
                         i.Visibility = Visibility.Visible;
                     else
                         i.Visibility = Visibility.Collapsed;
