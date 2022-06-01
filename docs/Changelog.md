@@ -1,5 +1,6 @@
 
-- Fix delay loaded external audio and subtitle tracks.
+- The options `cache` and `demuxer-max-bytes`have been added
+  to the conf editor.
 - Command messages are dispatched with `script-message-to mpvnet`.
 - New feature to change profile using the command palette.
 - New show-santa-logo (green and grumpy) option.
@@ -9,6 +10,7 @@
   script-opts folder does not exist, a script-opts folder
   is created with defaults for osc and console.
 - Support mpv idle property, see manual for remarks.
+- Fix delay loaded external audio and subtitle tracks.
 - Fix crash choosing Matroska edition in the menu.
 - Fix auto-play and auto-load-folder not working with user scripts.
 - Fix slow startup using osd-scale-by-window=no.
