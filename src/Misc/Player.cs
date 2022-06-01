@@ -1399,6 +1399,8 @@ namespace mpvnet
                 if (external)
                 {
                     string type = GetPropertyString($"track-list/{i}/type");
+                    string filepath = GetPropertyString($"track-list/{i}/external-filename");
+                    string filename = Path.GetFileName(filepath).Replace("_", "__");
 
                     if (type == "audio")
                     {
@@ -1406,7 +1408,7 @@ namespace mpvnet
                         Add(track, GetLanguage(GetPropertyString($"track-list/{i}/lang")));
                         Add(track, GetPropertyString($"track-list/{i}/codec").ToUpperEx());
                         Add(track, GetPropertyInt($"track-list/{i}/audio-channels") + " channels");
-                        Add(track, "External");
+                        Add(track, $"External ({filename})");
                         track.Text = "A: " + track.Text.Trim(' ', ',');
                         track.Type = "a";
                         track.ID = GetPropertyInt($"track-list/{i}/id");
@@ -1416,7 +1418,7 @@ namespace mpvnet
                     {
                         MediaTrack track = new MediaTrack();
                         Add(track, GetLanguage(GetPropertyString($"track-list/{i}/lang")));
-                        Add(track, "External");
+                        Add(track, $"External ({filename})");
                         track.Text = "S: " + track.Text.Trim(' ', ',');
                         track.Type = "s";
                         track.ID = GetPropertyInt($"track-list/{i}/id");
