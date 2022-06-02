@@ -541,6 +541,7 @@ namespace mpvnet
                                 }
 
                                 App.RunTask(new Action(() => ReadMetaData()));
+                                //Debug.WriteLine("################# " + GetPropertyString("media-title"));
 
                                 App.RunTask(new Action(() => {
                                     if (path.Contains("://"))
@@ -1429,6 +1430,177 @@ namespace mpvnet
         }
 
         void ReadMetaData()
+        {
+            if (App.MediaInfo)
+                ReadMetaDataUsingMediaInfo();
+            else
+            {
+                ReadMetaDataUsingMediaInfo();
+                ReadMetaDataUsingMpv();
+            }
+        }
+
+        void ReadMetaDataUsingMpv()
+        {
+            string path = GetPropertyString("path");
+
+            if (!path.ToLowerEx().StartsWithEx("bd://"))
+                lock (BluRayTitles)
+                    BluRayTitles.Clear();
+
+            lock (MediaTracks)
+            {
+                //MediaTracks.Clear();
+
+                int trackListCount = GetPropertyInt("track-list/count");
+
+                for (int i = 0; i < trackListCount; i++)
+                {
+                    string type = GetPropertyString($"track-list/{i}/type");
+                    string test = GetPropertyString($"track-list");
+
+                    if (type == "video")
+                    {
+                        MediaTrack track = new MediaTrack();
+                        Add(track, GetPropertyString($"track-list/{i}/codec").ToUpperEx());
+                        Add(track, GetPropertyString($"track-list/{i}/demux-w") + "x" + GetPropertyString($"track-list/{i}/demux-h"));
+                        Add(track, GetPropertyString($"track-list/{i}/demux-fps").Replace(".000000", "") + " FPS");
+                        Add(track, GetPropertyBool($"track-list/{i}/default") ? "Default" : "");
+                        track.Text = "V: " + track.Text.Trim(' ', ',');
+                        track.Type = "v";
+                        track.ID = GetPropertyInt($"track-list/{i}/id");
+                        MediaTracks.Add(track);
+                    }
+                    else if (type == "audio")
+                    {
+                        //Add(track, mi.GetAudio(i, "Language/String"));
+                        //Add(track, mi.GetAudio(i, "Format"));
+                        //Add(track, mi.GetAudio(i, "Format_Profile"));
+                        //Add(track, mi.GetAudio(i, "BitRate/String"));
+                        //Add(track, mi.GetAudio(i, "Channel(s)/String"));
+                        //Add(track, mi.GetAudio(i, "SamplingRate/String"));
+
+                        //Add(track, mi.GetAudio(i, "Forced") == "Yes" ? "Forced" : "");
+                        //Add(track, mi.GetAudio(i, "Default") == "Yes" ? "Default" : "");
+                        
+                        //Add(track, mi.GetAudio(i, "Title"));
+
+                        MediaTrack track = new MediaTrack();
+                        Add(track, GetLanguage(GetPropertyString($"track-list/{i}/lang")));
+                        Add(track, GetPropertyString($"track-list/{i}/codec").ToUpperEx());
+                        Add(track, GetPropertyInt($"track-list/{i}/audio-channels") + " channels");
+                        Add(track, GetPropertyInt($"track-list/{i}/demux-samplerate") + " Hz");
+                        Add(track, GetPropertyBool($"track-list/{i}/forced") ? "Forced" : "");
+                        Add(track, GetPropertyBool($"track-list/{i}/default") ? "Default" : "");
+                        track.Text = "A: " + track.Text.Trim(' ', ',');
+                        track.Type = "a";
+                        track.ID = GetPropertyInt($"track-list/{i}/id");
+                        MediaTracks.Add(track);
+                    }
+                    else if (type == "sub")
+                    {
+                        //MediaTrack track = new MediaTrack();
+                        //Add(track, GetLanguage(GetPropertyString($"track-list/{i}/lang")));
+                        //track.Text = "S: " + track.Text.Trim(' ', ',');
+                        //track.Type = "s";
+                        //track.ID = GetPropertyInt($"track-list/{i}/id");
+                        //MediaTracks.Add(track);
+                    }
+                }
+
+                //using (MediaInfo mi = new MediaInfo(path))
+                //{
+                //    int videoCount = mi.GetCount(MediaInfoStreamKind.Video);
+
+                //    for (int i = 0; i < videoCount; i++)
+                //    {
+                //        MediaTrack track = new MediaTrack();
+                //        Add(track, mi.GetVideo(i, "Format"));
+                //        Add(track, mi.GetVideo(i, "Format_Profile"));
+                //        Add(track, mi.GetVideo(i, "Width") + "x" + mi.GetVideo(i, "Height"));
+                //        Add(track, mi.GetVideo(i, "FrameRate") + " FPS");
+                //        Add(track, mi.GetVideo(i, "Language/String"));
+                //        Add(track, mi.GetVideo(i, "Forced") == "Yes" ? "Forced" : "");
+                //        Add(track, mi.GetVideo(i, "Default") == "Yes" ? "Default" : "");
+                //        Add(track, mi.GetVideo(i, "Title"));
+                //        track.Text = "V: " + track.Text.Trim(' ', ',');
+                //        track.Type = "v";
+                //        track.ID = i + 1;
+                //        MediaTracks.Add(track);
+                //    }
+
+                //    int audioCount = mi.GetCount(MediaInfoStreamKind.Audio);
+
+                //    for (int i = 0; i < audioCount; i++)
+                //    {
+                //        MediaTrack track = new MediaTrack();
+                //        Add(track, mi.GetAudio(i, "Language/String"));
+                //        Add(track, mi.GetAudio(i, "Format"));
+                //        Add(track, mi.GetAudio(i, "Format_Profile"));
+                //        Add(track, mi.GetAudio(i, "BitRate/String"));
+                //        Add(track, mi.GetAudio(i, "Channel(s)/String"));
+                //        Add(track, mi.GetAudio(i, "SamplingRate/String"));
+                //        Add(track, mi.GetAudio(i, "Forced") == "Yes" ? "Forced" : "");
+                //        Add(track, mi.GetAudio(i, "Default") == "Yes" ? "Default" : "");
+                //        Add(track, mi.GetAudio(i, "Title"));
+                //        track.Text = "A: " + track.Text.Trim(' ', ',');
+                //        track.Type = "a";
+                //        track.ID = i + 1;
+                //        MediaTracks.Add(track);
+                //    }
+
+                //    int subCount = mi.GetCount(MediaInfoStreamKind.Text);
+
+                //    for (int i = 0; i < subCount; i++)
+                //    {
+                //        MediaTrack track = new MediaTrack();
+                //        Add(track, mi.GetText(i, "Language/String"));
+                //        Add(track, mi.GetText(i, "Format"));
+                //        Add(track, mi.GetText(i, "Format_Profile"));
+                //        Add(track, mi.GetText(i, "Forced") == "Yes" ? "Forced" : "");
+                //        Add(track, mi.GetText(i, "Default") == "Yes" ? "Default" : "");
+                //        Add(track, mi.GetText(i, "Title"));
+                //        track.Text = "S: " + track.Text.Trim(' ', ',');
+                //        track.Type = "s";
+                //        track.ID = i + 1;
+                //        MediaTracks.Add(track);
+                //    }
+
+                //    int editionCount = GetPropertyInt("edition-list/count");
+
+                //    for (int i = 0; i < editionCount; i++)
+                //    {
+                //        string title = GetPropertyString($"edition-list/{i}/title");
+                //        if (string.IsNullOrEmpty(title))
+                //            title = "Edition " + i;
+                //        MediaTrack track = new MediaTrack();
+                //        track.Text = "E: " + title;
+                //        track.Type = "e";
+                //        track.ID = i;
+                //        MediaTracks.Add(track);
+                //    }
+                //}
+            }
+
+            //lock (Chapters)
+            //{
+            //    Chapters.Clear();
+            //    int count = GetPropertyInt("chapter-list/count");
+
+            //    for (int x = 0; x < count; x++)
+            //    {
+            //        string text = GetPropertyString($"chapter-list/{x}/title");
+            //        double time = GetPropertyDouble($"chapter-list/{x}/time");
+
+            //        if (string.IsNullOrEmpty(text))
+            //            text = "Chapter " + (x + 1);
+
+            //        Chapters.Add(new KeyValuePair<string, double>(text, time));
+            //    }
+            //}
+        }
+
+        void ReadMetaDataUsingMediaInfo()
         {
             string path = GetPropertyString("path");
 
