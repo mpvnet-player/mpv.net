@@ -318,8 +318,7 @@ namespace mpvnet
                 SearchControl.Text = e.AddedItems[0] + ":";
         }
 
-        void PreviewTextBlock_MouseUp(object sender, MouseButtonEventArgs e) =>
-            Msg.ShowInfo("mpv.conf Preview" + BR2 + GetContent("mpv"));
+        void PreviewTextBlock_MouseUp(object sender, MouseButtonEventArgs e) => Msg.ShowInfo(GetContent("mpv"));
 
         void ShowManualTextBlock_MouseUp(object sender, MouseButtonEventArgs e) =>
             ProcessHelp.ShellExecute("https://mpv.io/manual/master/");
