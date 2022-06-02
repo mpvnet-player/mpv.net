@@ -303,11 +303,18 @@ namespace mpvnet
 
         public static void CycleAudio()
         {
+            if (!App.MediaInfo)
+                Core.UpdateTrackData();
+
             var tracks = Core.MediaTracks.Where(track => track.Type == "a").ToArray();
-            var externalTracks = Core.GetExternalTracks().Where(track => track.Type == "a");
+       
+            if (App.MediaInfo)
+            {
+                var externalTracks = Core.GetExternalTracks().Where(track => track.Type == "a");
              
-            if (externalTracks.Count() > 0)
-                tracks = tracks.Concat(externalTracks).ToArray();
+                if (externalTracks.Count() > 0)
+                    tracks = tracks.Concat(externalTracks).ToArray();
+            }
 
             int len = tracks.Length;
 
@@ -425,11 +432,18 @@ namespace mpvnet
 
         public static void ShowAudioTracks() => App.InvokeOnMainThread(() =>
         {
-            var tracks = Core.MediaTracks.Where(track => track.Type == "a").ToArray();
-            var externalTracks = Core.GetExternalTracks().Where(track => track.Type == "a");
+            if (!App.MediaInfo)
+                Core.UpdateTrackData();
 
-            if (externalTracks.Count() > 0)
-                tracks = tracks.Concat(externalTracks).ToArray();
+            var tracks = Core.MediaTracks.Where(track => track.Type == "a").ToArray();
+       
+            if (App.MediaInfo)
+            {
+                var externalTracks = Core.GetExternalTracks().Where(track => track.Type == "a");
+
+                if (externalTracks.Count() > 0)
+                    tracks = tracks.Concat(externalTracks).ToArray();
+            }
 
             if (tracks.Length < 1)
             {
@@ -463,11 +477,18 @@ namespace mpvnet
 
         public static void ShowSubtitleTracks() => App.InvokeOnMainThread(() =>
         {
-            var tracks = Core.MediaTracks.Where(track => track.Type == "s").ToArray();
-            var externalTracks = Core.GetExternalTracks().Where(track => track.Type == "s");
+            if (!App.MediaInfo)
+                Core.UpdateTrackData();
 
-            if (externalTracks.Count() > 0)
-                tracks = tracks.Concat(externalTracks).ToArray();
+            var tracks = Core.MediaTracks.Where(track => track.Type == "s").ToArray();
+         
+            if (App.MediaInfo)
+            {
+                var externalTracks = Core.GetExternalTracks().Where(track => track.Type == "s");
+
+                if (externalTracks.Count() > 0)
+                    tracks = tracks.Concat(externalTracks).ToArray();
+            }
 
             if (tracks.Length < 1)
             {

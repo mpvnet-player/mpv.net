@@ -227,6 +227,9 @@ namespace mpvnet
 
         void UpdateMenu()
         {
+            if (!App.MediaInfo)
+                Core.UpdateTrackData();
+
             lock (Core.MediaTracks)
             {
                 var trackMenuItem = FindMenuItem("Track");
@@ -240,18 +243,21 @@ namespace mpvnet
                     var vidTracks = Core.MediaTracks.Where(track => track.Type == "v");
                     var ediTracks = Core.MediaTracks.Where(track => track.Type == "e");
 
-                    var externalTracks = Core.GetExternalTracks();
-
-                    if (externalTracks.Count > 0)
+                    if (App.MediaInfo)
                     {
-                        var exAudTracks = externalTracks.Where(track => track.Type == "a");
-                        var exSubTracks = externalTracks.Where(track => track.Type == "s");
+                        var externalTracks = Core.GetExternalTracks();
 
-                        if (exAudTracks.Count() > 0)
-                            audTracks = audTracks.Concat(exAudTracks);
+                        if (externalTracks.Count > 0)
+                        {
+                            var exAudTracks = externalTracks.Where(track => track.Type == "a");
+                            var exSubTracks = externalTracks.Where(track => track.Type == "s");
 
-                        if (exSubTracks.Count() > 0)
-                            subTracks = subTracks.Concat(exSubTracks);
+                            if (exAudTracks.Count() > 0)
+                                audTracks = audTracks.Concat(exAudTracks);
+
+                            if (exSubTracks.Count() > 0)
+                                subTracks = subTracks.Concat(exSubTracks);
+                        }
                     }
 
                     foreach (MediaTrack track in vidTracks)
