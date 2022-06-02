@@ -14,6 +14,7 @@ using System.Windows.Forms;
 
 using static libmpv;
 using static mpvnet.Global;
+using System.Text.RegularExpressions;
 
 namespace mpvnet
 {
@@ -128,7 +129,7 @@ namespace mpvnet
                 SetPropertyString("input-terminal", "yes");
                 SetPropertyString("msg-level", "osd/libass=fatal");
             }
-            
+
             SetPropertyInt("osd-duration", 2000);
             SetPropertyLong("wid", handle.ToInt64());
 
@@ -1400,6 +1401,9 @@ namespace mpvnet
                 if (external)
                 {
                     string type = GetPropertyString($"track-list/{i}/type");
+                    string filename = GetPropertyString($"filename/no-ext");
+                    string title = GetPropertyString($"track-list/{i}/title").Replace(filename, "");
+                    title = Regex.Replace(title, @"^[\._\-]", "").Replace("_", "__");
 
                     if (type == "audio")
                     {
@@ -1408,6 +1412,7 @@ namespace mpvnet
                         Add(track, GetPropertyString($"track-list/{i}/codec").ToUpperEx());
                         Add(track, GetPropertyInt($"track-list/{i}/audio-channels") + " channels");
                         Add(track, "External");
+                        Add(track, $"{title}");
                         track.Text = "A: " + track.Text.Trim(' ', ',');
                         track.Type = "a";
                         track.ID = GetPropertyInt($"track-list/{i}/id");
@@ -1417,7 +1422,9 @@ namespace mpvnet
                     {
                         MediaTrack track = new MediaTrack();
                         Add(track, GetLanguage(GetPropertyString($"track-list/{i}/lang")));
+                        Add(track, GetPropertyString($"track-list/{i}/codec").ToUpperEx());
                         Add(track, "External");
+                        Add(track, $"{title}");
                         track.Text = "S: " + track.Text.Trim(' ', ',');
                         track.Type = "s";
                         track.ID = GetPropertyInt($"track-list/{i}/id");
@@ -1635,6 +1642,7 @@ namespace mpvnet
                         {
                             MediaTrack track = new MediaTrack();
                             Add(track, GetLanguage(GetPropertyString($"track-list/{i}/lang")));
+                            Add(track, GetPropertyString($"track-list/{i}/codec").ToUpperEx());
                             track.Text = "S: " + track.Text.Trim(' ', ',');
                             track.Type = "s";
                             track.ID = GetPropertyInt($"track-list/{i}/id");
