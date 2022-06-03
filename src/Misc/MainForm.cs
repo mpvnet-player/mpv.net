@@ -722,6 +722,9 @@ namespace mpvnet
 
             string path = Core.GetPropertyString("path");
 
+            if (path.Contains(":/") && !path.Contains("://"))
+                path = path.Replace("/", "\\");
+
             if (path.Contains("://"))
             {
                 string title = Core.GetPropertyString("media-title");

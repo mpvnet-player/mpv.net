@@ -157,8 +157,19 @@ namespace mpvnet
             }
         }
 
+        static int LastShowInfo;
+
         public static void ShowInfo()
         {
+            if (Environment.TickCount - LastShowInfo < 5000)
+            {
+                Core.Command("script-message mpv.net show-media-info osd");
+                LastShowInfo = 0;
+                return;
+            }
+
+            LastShowInfo = Environment.TickCount;
+
             string performer, title, album, genre, date, duration, text = "";
             long fileSize = 0;
             string path = Core.GetPropertyString("path");
@@ -438,7 +449,7 @@ namespace mpvnet
                 if (editor)
                     ShowTextWithEditor("media-info", text);
                 else if (osd)
-                    Core.CommandV("show-text", text.Replace("\r", ""), "5000");
+                    ShowText(text.Replace("\r", ""), 5000, 15);
                 else
                 {
                     MsgBoxEx.MessageBoxEx.MsgFontFamily = new FontFamily("Consolas");

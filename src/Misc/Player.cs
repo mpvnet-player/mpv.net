@@ -722,7 +722,7 @@ namespace mpvnet
         {
             mpv_error err = mpv_command_string(Handle, command);
             if (err < 0)
-                HandleError(err, "error executing command:", command);
+                HandleError(err, "error executing command: " + command);
         }
 
         public void CommandV(params string[] args)
@@ -747,7 +747,7 @@ namespace mpvnet
 
             Marshal.FreeHGlobal(rootPtr);
             if (err < 0)
-                HandleError(err, "error executing command:", string.Join("\n", args));
+                HandleError(err, "error executing command: " + string.Join("\n", args));
         }
 
         public string Expand(string value)
@@ -782,7 +782,7 @@ namespace mpvnet
 
             if (err < 0)
             {
-                HandleError(err, "error executing command:", string.Join("\n", args));
+                HandleError(err, "error executing command: " + string.Join("\n", args));
                 Marshal.FreeHGlobal(resultNodePtr);
                 return "property expansion error";
             }
@@ -799,7 +799,7 @@ namespace mpvnet
             mpv_error err = mpv_get_property(Handle, GetUtf8Bytes(name),
                 mpv_format.MPV_FORMAT_FLAG, out IntPtr lpBuffer);
             if (err < 0)
-                HandleError(err, $"error getting property: {name}");
+                HandleError(err, "error getting property: " + name);
             return lpBuffer.ToInt32() != 0;
         }
 
@@ -815,8 +815,8 @@ namespace mpvnet
         {
             mpv_error err = mpv_get_property(Handle, GetUtf8Bytes(name),
                 mpv_format.MPV_FORMAT_INT64, out IntPtr lpBuffer);
-            if (err < 0 && (App.DebugMode || App.DebuggerAttached))
-                HandleError(err, $"error getting property: {name}");
+            if (err < 0 && App.DebugMode)
+                HandleError(err, "error getting property: " + name);
             return lpBuffer.ToInt32();
         }
 
@@ -840,7 +840,7 @@ namespace mpvnet
             mpv_error err = mpv_get_property(Handle, GetUtf8Bytes(name),
                 mpv_format.MPV_FORMAT_INT64, out IntPtr lpBuffer);
             if (err < 0)
-                HandleError(err, $"error getting property: {name}");
+                HandleError(err, "error getting property: " + name);
             return lpBuffer.ToInt64();
         }
 
@@ -848,8 +848,8 @@ namespace mpvnet
         {
             mpv_error err = mpv_get_property(Handle, GetUtf8Bytes(name),
                 mpv_format.MPV_FORMAT_DOUBLE, out double value);
-            if (err < 0 && handleError && (App.DebugMode || App.DebuggerAttached))
-                HandleError(err, $"error getting property: {name}");
+            if (err < 0 && handleError && App.DebugMode)
+                HandleError(err, "error getting property: " + name);
             return value;
         }
 
@@ -873,8 +873,8 @@ namespace mpvnet
                 return ret;
             }
 
-            if (err < 0 && (App.DebugMode || App.DebuggerAttached))
-                HandleError(err, $"error getting property: {name}");
+            if (err < 0 && App.DebugMode)
+                HandleError(err, "error getting property: " + name);
 
             return "";
         }
@@ -884,7 +884,7 @@ namespace mpvnet
             byte[] bytes = GetUtf8Bytes(value);
             mpv_error err = mpv_set_property(Handle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_STRING, ref bytes);
             if (err < 0)
-                HandleError(err, $"error setting property: {name} = " + value);
+                HandleError(err, $"error setting property: {name} = {value}");
         }
 
         public string GetPropertyOsdString(string name)
@@ -900,7 +900,7 @@ namespace mpvnet
             }
 
             if (err < 0)
-                HandleError(err, $"error getting property: {name}");
+                HandleError(err, "error getting property: " + name);
 
             return "";
         }
@@ -937,7 +937,7 @@ namespace mpvnet
                     mpv_error err = mpv_observe_property(NamedHandle, 0, name, mpv_format.MPV_FORMAT_INT64);
 
                     if (err < 0)
-                        HandleError(err, $"error observing property: {name}");
+                        HandleError(err, "error observing property: " + name);
                     else
                         IntPropChangeActions[name] = new List<Action<int>>();
                 }
@@ -956,7 +956,7 @@ namespace mpvnet
                     mpv_error err = mpv_observe_property(NamedHandle, 0, name, mpv_format.MPV_FORMAT_DOUBLE);
 
                     if (err < 0)
-                        HandleError(err, $"error observing property: {name}");
+                        HandleError(err, "error observing property: " + name);
                     else
                         DoublePropChangeActions[name] = new List<Action<double>>();
                 }
@@ -975,7 +975,7 @@ namespace mpvnet
                     mpv_error err = mpv_observe_property(NamedHandle, 0, name, mpv_format.MPV_FORMAT_FLAG);
 
                     if (err < 0)
-                        HandleError(err, $"error observing property: {name}");
+                        HandleError(err, "error observing property: " + name);
                     else
                         BoolPropChangeActions[name] = new List<Action<bool>>();
                 }
@@ -994,7 +994,7 @@ namespace mpvnet
                     mpv_error err = mpv_observe_property(NamedHandle, 0, name, mpv_format.MPV_FORMAT_STRING);
 
                     if (err < 0)
-                        HandleError(err, $"error observing property: {name}");
+                        HandleError(err, "error observing property: " + name);
                     else
                         StringPropChangeActions[name] = new List<Action<string>>();
                 }
@@ -1013,7 +1013,7 @@ namespace mpvnet
                     mpv_error err = mpv_observe_property(NamedHandle, 0, name, mpv_format.MPV_FORMAT_NONE);
 
                     if (err < 0)
-                        HandleError(err, $"error observing property: {name}");
+                        HandleError(err, "error observing property: " + name);
                     else
                         PropChangeActions[name] = new List<Action>();
                 }
@@ -1023,11 +1023,9 @@ namespace mpvnet
             }
         }
 
-        public void HandleError(mpv_error err, params string[] messages)
+        public void HandleError(mpv_error err, string msg)
         {
-            foreach (string msg in messages)
-                Terminal.WriteError(msg);
-
+            Terminal.WriteError(msg);
             Terminal.WriteError(GetError(err));
         }
 

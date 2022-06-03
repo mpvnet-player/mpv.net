@@ -315,7 +315,7 @@ Shows available demuxers.
 Shows the history file when existing.
 
 ### show-info
-Shows a simple file info.
+Shows media info on screen, a second key press shows more detailed media info.
 
 ### show-input-editor
 Shows the input editor.
@@ -477,6 +477,10 @@ Force a single process and add files to playlist.
 #### --recent-count=\<int\>
 
 Amount of recent files to be remembered. Default: 15
+
+#### --media-info=\<yes|no\>
+
+Usage of the media info library instead of mpv to access media information. Default: no (mpv.net specific option)
 
 #### --video-file-extensions=\<string\>
 

@@ -1,5 +1,63 @@
 
 [setting]
+name = process-instance
+file = mpvnet
+default = single
+filter = General
+help = Defines if more then one mpv.net process is allowed. (mpv.net specific option)\n\nTip: Whenever the control key is pressed when files or URLs are opened, the playlist is not cleared but the files or URLs are appended to the playlist. This not only works on process startup but in all mpv.net features that open files and URLs.
+
+option = multi   Create a new process everytime the shell starts mpv.net
+option = single  Force a single process everytime the shell starts mpv.net
+option = queue   Force a single process and add files to playlist
+
+[setting]
+name = recent-count
+file = mpvnet
+filter = General
+help = <int> Amount of recent files to be remembered. Default: 15 (mpv.net specific option)
+
+[setting]
+name = media-info
+file = mpvnet
+default = no
+filter = General
+help = Usage of the media info library instead of mpv to access media information. Default: no (mpv.net specific option)
+
+option = yes
+option = no
+
+[setting]
+name = video-file-extensions
+file = mpvnet
+filter = General
+width = 500
+help = Video file extensions used to create file associations and used by the auto-load-folder feature. (mpv.net specific option)
+
+[setting]
+name = audio-file-extensions
+file = mpvnet
+filter = General
+width = 500
+help = Audio file extensions used to create file associations and used by the auto-load-folder feature. (mpv.net specific option)
+
+[setting]
+name = image-file-extensions
+file = mpvnet
+filter = General
+width = 500
+help = Image file extensions used to create file associations and used by the auto-load-folder feature. (mpv.net specific option)
+
+[setting]
+name = debug-mode
+file = mpvnet
+default = no
+filter = General
+help = Enable this only when a developer asks for it. (mpv.net specific option)
+
+option = yes
+option = no
+
+[setting]
 name = vo
 file = mpv
 default = gpu
@@ -545,54 +603,6 @@ name = input-ar-rate
 file = mpv
 filter = Input
 help = Number of key presses to generate per second on autorepeat.
-
-[setting]
-name = process-instance
-file = mpvnet
-default = single
-filter = General
-help = Defines if more then one mpv.net process is allowed. (mpv.net specific option)\n\nTip: Whenever the control key is pressed when files or URLs are opened, the playlist is not cleared but the files or URLs are appended to the playlist. This not only works on process startup but in all mpv.net features that open files and URLs.
-
-option = multi   Create a new process everytime the shell starts mpv.net
-option = single  Force a single process everytime the shell starts mpv.net
-option = queue   Force a single process and add files to playlist
-
-[setting]
-name = recent-count
-file = mpvnet
-filter = General
-help = <int> Amount of recent files to be remembered. Default: 15 (mpv.net specific option)
-
-[setting]
-name = video-file-extensions
-file = mpvnet
-filter = General
-width = 500
-help = Video file extensions used to create file associations and used by the auto-load-folder feature. (mpv.net specific option)
-
-[setting]
-name = audio-file-extensions
-file = mpvnet
-filter = General
-width = 500
-help = Audio file extensions used to create file associations and used by the auto-load-folder feature. (mpv.net specific option)
-
-[setting]
-name = image-file-extensions
-file = mpvnet
-filter = General
-width = 500
-help = Image file extensions used to create file associations and used by the auto-load-folder feature. (mpv.net specific option)
-
-[setting]
-name = debug-mode
-file = mpvnet
-default = no
-filter = General
-help = Enable this only when a developer asks for it. (mpv.net specific option)
-
-option = yes
-option = no
 
 [setting]
 name = dark-mode

@@ -23,11 +23,10 @@ namespace mpvnet
 
         public static bool AutoLoadFolder { get; set; } = true;
         public static bool AutoPlay { get; set; }
-        public static bool DebuggerAttached { get; set; } = Debugger.IsAttached;
         public static bool DebugMode { get; set; }
         public static bool Exit { get; set; }
         public static bool IsTerminalAttached { get; } = Environment.GetEnvironmentVariable("_started_from_console") == "yes";
-        public static bool MediaInfo { get; set; } = true;
+        public static bool MediaInfo { get; set; }
         public static bool Queue { get; set; }
         public static bool RememberVolume { get; set; } = true;
         public static bool RememberWindowPosition { get; set; }
