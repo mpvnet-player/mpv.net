@@ -330,6 +330,9 @@ Shows media info in a messsge box.
 **editor**  
 Shows media info in the text editor.
 
+**osd**
+Displays media info on screen.
+
 **full**  
 Shows fully detailed media info.
 

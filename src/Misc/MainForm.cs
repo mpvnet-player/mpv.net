@@ -227,10 +227,9 @@ namespace mpvnet
 
         void UpdateMenu()
         {
-            if (!App.MediaInfo)
-                Core.UpdateTrackData();
+            Core.UpdateExternalTracks();
 
-            lock (Core.MediaTracks)
+            lock (Core.MediaTracksLock)
             {
                 var trackMenuItem = FindMenuItem("Track");
 
@@ -242,23 +241,6 @@ namespace mpvnet
                     var subTracks = Core.MediaTracks.Where(track => track.Type == "s");
                     var vidTracks = Core.MediaTracks.Where(track => track.Type == "v");
                     var ediTracks = Core.MediaTracks.Where(track => track.Type == "e");
-
-                    if (App.MediaInfo)
-                    {
-                        var externalTracks = Core.GetExternalTracks();
-
-                        if (externalTracks.Count > 0)
-                        {
-                            var exAudTracks = externalTracks.Where(track => track.Type == "a");
-                            var exSubTracks = externalTracks.Where(track => track.Type == "s");
-
-                            if (exAudTracks.Count() > 0)
-                                audTracks = audTracks.Concat(exAudTracks);
-
-                            if (exSubTracks.Count() > 0)
-                                subTracks = subTracks.Concat(exSubTracks);
-                        }
-                    }
 
                     foreach (MediaTrack track in vidTracks)
                     {
@@ -748,14 +730,16 @@ namespace mpvnet
                     path = path + "|" + title;
             }
 
-            if (App.Settings.RecentFiles.Contains(path))
-                App.Settings.RecentFiles.Remove(path);
+            if (!string.IsNullOrEmpty(path) && path != @"bd://" && path != @"dvd://")
+            {
+                if (App.Settings.RecentFiles.Contains(path))
+                    App.Settings.RecentFiles.Remove(path);
 
-            if (path != @"bd://" && path != @"dvd://")
                 App.Settings.RecentFiles.Insert(0, path);
 
-            while (App.Settings.RecentFiles.Count > App.RecentCount)
-                App.Settings.RecentFiles.RemoveAt(App.RecentCount);
+                while (App.Settings.RecentFiles.Count > App.RecentCount)
+                    App.Settings.RecentFiles.RemoveAt(App.RecentCount);
+            }
         }
 
         void SetTitle() => BeginInvoke(new Action(() => Text = Core.Expand(Title)));

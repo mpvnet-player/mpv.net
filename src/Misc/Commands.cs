@@ -6,15 +6,15 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Interop;
+using System.Windows.Media;
 
 using WinForms = System.Windows.Forms;
 
 using static mpvnet.Global;
-using System.Windows.Media;
-using System.Text.RegularExpressions;
 
 namespace mpvnet
 {
@@ -172,42 +172,65 @@ namespace mpvnet
 
                 if (CorePlayer.AudioTypes.Contains(path.Ext()))
                 {
-                    using (MediaInfo mediaInfo = new MediaInfo(path))
+                    if (App.MediaInfo)
                     {
-                        performer = mediaInfo.GetInfo(MediaInfoStreamKind.General, "Performer");
-                        title = mediaInfo.GetInfo(MediaInfoStreamKind.General, "Title");
-                        album = mediaInfo.GetInfo(MediaInfoStreamKind.General, "Album");
-                        genre = mediaInfo.GetInfo(MediaInfoStreamKind.General, "Genre");
-                        date = mediaInfo.GetInfo(MediaInfoStreamKind.General, "Recorded_Date");
-                        duration = mediaInfo.GetInfo(MediaInfoStreamKind.Audio, "Duration/String");
+                        using (MediaInfo mediaInfo = new MediaInfo(path))
+                        {
+                            performer = mediaInfo.GetInfo(MediaInfoStreamKind.General, "Performer");
+                            title = mediaInfo.GetInfo(MediaInfoStreamKind.General, "Title");
+                            album = mediaInfo.GetInfo(MediaInfoStreamKind.General, "Album");
+                            genre = mediaInfo.GetInfo(MediaInfoStreamKind.General, "Genre");
+                            date = mediaInfo.GetInfo(MediaInfoStreamKind.General, "Recorded_Date");
+                            duration = mediaInfo.GetInfo(MediaInfoStreamKind.Audio, "Duration/String");
 
-                        if (performer != "") text += "Artist: " + performer + "\n";
-                        if (title != "") text += "Title: " + title + "\n";
-                        if (album != "") text += "Album: " + album + "\n";
-                        if (genre != "") text += "Genre: " + genre + "\n";
-                        if (date != "") text += "Year: " + date + "\n";
-                        if (duration != "") text += "Length: " + duration + "\n";
+                            if (performer != "") text += "Artist: " + performer + "\n";
+                            if (title != "") text += "Title: " + title + "\n";
+                            if (album != "") text += "Album: " + album + "\n";
+                            if (genre != "") text += "Genre: " + genre + "\n";
+                            if (date != "") text += "Year: " + date + "\n";
+                            if (duration != "") text += "Length: " + duration + "\n";
 
-                        text += "Size: " + mediaInfo.GetInfo(MediaInfoStreamKind.General, "FileSize/String") + "\n";
-                        text += "Type: " + path.Ext().ToUpper();
-
-                        Core.CommandV("show-text", text, "5000");
-                        return;
+                            text += "Size: " + mediaInfo.GetInfo(MediaInfoStreamKind.General, "FileSize/String") + "\n";
+                            text += "Type: " + path.Ext().ToUpper();
+                        }
                     }
+                    else
+                    {
+                        text = "File: " + path.FileName() + "\n";
+                        duration = TimeSpan.FromSeconds((int)Core.GetPropertyDouble("duration")).ToString();
+
+                        if (duration != "") text += "Length: " + duration + "\n";
+                        if (fileSize > 0) text += "Size: " + Convert.ToInt32(fileSize / 1024.0 / 1024.0) + " MB\n";
+
+                        text += "Type: " + path.Ext().ToUpper();
+                    }
+
+                    Core.CommandV("show-text", text, "5000");
+                    return;
+
                 }
                 else if (CorePlayer.ImageTypes.Contains(path.Ext()))
                 {
-                    using (MediaInfo mediaInfo = new MediaInfo(path))
+                    if (App.MediaInfo)
                     {
-                        text =
-                            "Width: " + mediaInfo.GetInfo(MediaInfoStreamKind.Image, "Width") + "\n" +
-                            "Height: " + mediaInfo.GetInfo(MediaInfoStreamKind.Image, "Height") + "\n" +
-                            "Size: " + mediaInfo.GetInfo(MediaInfoStreamKind.General, "FileSize/String") + "\n" +
-                            "Type: " + path.Ext().ToUpper();
-
-                        Core.CommandV("show-text", text, "5000");
-                        return;
+                        using (MediaInfo mediaInfo = new MediaInfo(path))
+                        {
+                            text = "Width: " + mediaInfo.GetInfo(MediaInfoStreamKind.Image, "Width") + "\n" +
+                                   "Height: " + mediaInfo.GetInfo(MediaInfoStreamKind.Image, "Height") + "\n" +
+                                   "Size: " + mediaInfo.GetInfo(MediaInfoStreamKind.General, "FileSize/String") + "\n" +
+                                   "Type: " + path.Ext().ToUpper();
+                        }
                     }
+                    else
+                    {
+                        text = "Width: " + Core.GetPropertyInt("width") + "\n" +
+                               "Height: " + Core.GetPropertyInt("height") + "\n" +
+                               "Size: " + Convert.ToInt32(fileSize / 1024.0) + " KB\n" +
+                               "Type: " + path.Ext().ToUpper();
+                    }
+
+                    Core.CommandV("show-text", text, "5000");
+                    return;
                 }
             }
 
@@ -303,38 +326,30 @@ namespace mpvnet
 
         public static void CycleAudio()
         {
-            if (!App.MediaInfo)
-                Core.UpdateTrackData();
+            Core.UpdateExternalTracks();
 
-            var tracks = Core.MediaTracks.Where(track => track.Type == "a").ToArray();
-       
-            if (App.MediaInfo)
+            lock (Core.MediaTracksLock)
             {
-                var externalTracks = Core.GetExternalTracks().Where(track => track.Type == "a");
-             
-                if (externalTracks.Count() > 0)
-                    tracks = tracks.Concat(externalTracks).ToArray();
+                MediaTrack[] tracks = Core.MediaTracks.Where(track => track.Type == "a").ToArray();
+
+                if (tracks.Length < 1)
+                {
+                    Core.CommandV("show-text", "No audio tracks");
+                    return;
+                }
+
+                int aid = Core.GetPropertyInt("aid");
+
+                if (tracks.Length > 1)
+                {
+                    if (++aid > tracks.Length)
+                        aid = 1;
+
+                    Core.CommandV("set", "aid", aid.ToString());
+                }
+
+                Core.CommandV("show-text", aid + "/" + tracks.Length + ": " + tracks[aid - 1].Text.Substring(3), "5000");
             }
-
-            int len = tracks.Length;
-
-            if (len < 1)
-            {
-                Core.CommandV("show-text", "No audio tracks");
-                return;
-            }
-
-            int aid = Core.GetPropertyInt("aid");
-
-            if (len > 1)
-            {
-                if (++aid > len)
-                    aid = 1;
-
-                Core.CommandV("set", "aid", aid.ToString());
-            }
-
-            Core.CommandV("show-text", aid + "/" + len + ": " + tracks[aid - 1].Text.Substring(3), "5000");
         }
 
         public static void ShowCommands()
@@ -388,6 +403,7 @@ namespace mpvnet
                 (string Name, string Value)[] pairs = {
                     ("Show text box",    "script-message mpv.net show-media-info default"),
                     ("Show text editor", "script-message mpv.net show-media-info editor"),
+                    ("Show on screen",   "script-message mpv.net show-media-info osd"),
                     ("Show full",        "script-message mpv.net show-media-info editor full"),
                     ("Show raw",         "script-message mpv.net show-media-info editor full raw") };
 
@@ -402,23 +418,32 @@ namespace mpvnet
 
             if (File.Exists(path) && !path.Contains(@"\\.\pipe\"))
             {
-                using (MediaInfo mediaInfo = new MediaInfo(path))
+                string text = "";
+
+                bool full = args.Contains("full");
+                bool raw = args.Contains("raw");
+                bool editor = args.Contains("editor");
+                bool osd = args.Contains("osd");
+
+                if (App.MediaInfo && !osd)
+                    using (MediaInfo mediaInfo = new MediaInfo(path))
+                        text = Regex.Replace(mediaInfo.GetSummary(full, raw), "Unique ID.+", "");
+                else
+                    lock (Core.MediaTracksLock)
+                        foreach (MediaTrack track in Core.MediaTracks)
+                            text += track.Text + BR;
+
+                text = text.TrimEx();
+
+                if (editor)
+                    ShowTextWithEditor("media-info", text);
+                else if (osd)
+                    Core.CommandV("show-text", text.Replace("\r", ""), "5000");
+                else
                 {
-                    bool full = args.Contains("full");
-                    bool raw = args.Contains("raw");
-                    bool editor = args.Contains("editor");
-
-                    string text = mediaInfo.GetSummary(full, raw);
-                    text = Regex.Replace(text, "Unique ID.+", "");
-
-                    if (editor)
-                        ShowTextWithEditor("media-info", text);
-                    else
-                    {
-                        MsgBoxEx.MessageBoxEx.MsgFontFamily = new FontFamily("Consolas");
-                        Msg.ShowInfo(text);
-                        MsgBoxEx.MessageBoxEx.MsgFontFamily = new FontFamily("Segoe UI");
-                    }
+                    MsgBoxEx.MessageBoxEx.MsgFontFamily = new FontFamily("Consolas");
+                    Msg.ShowInfo(text);
+                    MsgBoxEx.MessageBoxEx.MsgFontFamily = new FontFamily("Segoe UI");
                 }
             }
         });
@@ -432,92 +457,81 @@ namespace mpvnet
 
         public static void ShowAudioTracks() => App.InvokeOnMainThread(() =>
         {
-            if (!App.MediaInfo)
-                Core.UpdateTrackData();
+            Core.UpdateExternalTracks();
 
-            var tracks = Core.MediaTracks.Where(track => track.Type == "a").ToArray();
+            lock (Core.MediaTracksLock)
+            {
+                MediaTrack[] tracks = Core.MediaTracks.Where(track => track.Type == "a").ToArray();
        
-            if (App.MediaInfo)
-            {
-                var externalTracks = Core.GetExternalTracks().Where(track => track.Type == "a");
-
-                if (externalTracks.Count() > 0)
-                    tracks = tracks.Concat(externalTracks).ToArray();
-            }
-
-            if (tracks.Length < 1)
-            {
-                Core.CommandV("show-text", "No audio tracks");
-                return;
-            }
-
-            List<CommandPaletteItem> items = new List<CommandPaletteItem>();
-
-            foreach (MediaTrack i in tracks)
-            {
-                MediaTrack track = i;
-
-                CommandPaletteItem item = new CommandPaletteItem()
+                if (tracks.Length < 1)
                 {
-                    Text = track.Text,
-                    Action = () => {
-                        Core.CommandV("set", "aid", track.ID.ToString());
-                        Core.CommandV("show-text", track.ID + "/" + tracks.Length + ": " +
-                            tracks[track.ID - 1].Text.Substring(3), "5000");
-                    }
-                };
+                    Core.CommandV("show-text", "No audio tracks");
+                    return;
+                }
 
-                items.Add(item);
+                List<CommandPaletteItem> items = new List<CommandPaletteItem>();
+
+                foreach (MediaTrack i in tracks)
+                {
+                    MediaTrack track = i;
+
+                    CommandPaletteItem item = new CommandPaletteItem()
+                    {
+                        Text = track.Text,
+                        Action = () => {
+                            Core.CommandV("set", "aid", track.ID.ToString());
+                            Core.CommandV("show-text", track.ID + "/" + tracks.Length + ": " +
+                                tracks[track.ID - 1].Text.Substring(3), "5000");
+                        }
+                    };
+
+                    items.Add(item);
+                }
+
+                CommandPalette.Instance.SetItems(items);
+                MainForm.Instance.ShowCommandPalette();
+                CommandPalette.Instance.SelectFirst();
             }
 
-            CommandPalette.Instance.SetItems(items);
-            MainForm.Instance.ShowCommandPalette();
-            CommandPalette.Instance.SelectFirst();
         });
 
         public static void ShowSubtitleTracks() => App.InvokeOnMainThread(() =>
         {
-            if (!App.MediaInfo)
-                Core.UpdateTrackData();
+            Core.UpdateExternalTracks();
 
-            var tracks = Core.MediaTracks.Where(track => track.Type == "s").ToArray();
+            lock (Core.MediaTracksLock)
+            {
+                MediaTrack[] tracks = Core.MediaTracks.Where(track => track.Type == "s").ToArray();
          
-            if (App.MediaInfo)
-            {
-                var externalTracks = Core.GetExternalTracks().Where(track => track.Type == "s");
-
-                if (externalTracks.Count() > 0)
-                    tracks = tracks.Concat(externalTracks).ToArray();
-            }
-
-            if (tracks.Length < 1)
-            {
-                Core.CommandV("show-text", "No subtitle tracks");
-                return;
-            }
-
-            List<CommandPaletteItem> items = new List<CommandPaletteItem>();
-
-            foreach (MediaTrack i in tracks)
-            {
-                MediaTrack track = i;
-
-                CommandPaletteItem item = new CommandPaletteItem()
+                if (tracks.Length < 1)
                 {
-                    Text = track.Text,
-                    Action = () => {
-                        Core.CommandV("set", "sid", track.ID.ToString());
-                        Core.CommandV("show-text", track.ID + "/" + tracks.Length + ": " +
-                            tracks[track.ID - 1].Text.Substring(3), "5000");
-                    }
-                };
+                    Core.CommandV("show-text", "No subtitle tracks");
+                    return;
+                }
 
-                items.Add(item);
+                List<CommandPaletteItem> items = new List<CommandPaletteItem>();
+
+                foreach (MediaTrack i in tracks)
+                {
+                    MediaTrack track = i;
+
+                    CommandPaletteItem item = new CommandPaletteItem()
+                    {
+                        Text = track.Text,
+                        Action = () => {
+                            Core.CommandV("set", "sid", track.ID.ToString());
+                            Core.CommandV("show-text", track.ID + "/" + tracks.Length + ": " +
+                                tracks[track.ID - 1].Text.Substring(3), "5000");
+                        }
+                    };
+
+                    items.Add(item);
+                }
+
+                CommandPalette.Instance.SetItems(items);
+                MainForm.Instance.ShowCommandPalette();
+                CommandPalette.Instance.SelectFirst();
             }
-
-            CommandPalette.Instance.SetItems(items);
-            MainForm.Instance.ShowCommandPalette();
-            CommandPalette.Instance.SelectFirst();
         });
 
         public static void ShowPlaylist() => App.InvokeOnMainThread(() =>
