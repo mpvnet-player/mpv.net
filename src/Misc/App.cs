@@ -26,7 +26,7 @@ namespace mpvnet
         public static bool DebugMode { get; set; }
         public static bool Exit { get; set; }
         public static bool IsTerminalAttached { get; } = Environment.GetEnvironmentVariable("_started_from_console") == "yes";
-        public static bool MediaInfo { get; set; }
+        public static bool MediaInfo { get; set; } = true;
         public static bool Queue { get; set; }
         public static bool RememberVolume { get; set; } = true;
         public static bool RememberWindowPosition { get; set; }

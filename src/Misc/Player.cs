@@ -1578,6 +1578,7 @@ namespace mpvnet
                     Add(track, mi.GetVideo(i, "Format"));
                     Add(track, mi.GetVideo(i, "Format_Profile"));
                     Add(track, mi.GetVideo(i, "Width") + "x" + mi.GetVideo(i, "Height"));
+                    Add(track, mi.GetVideo(i, "BitRate/String"));
                     Add(track, fps + " FPS");
                     Add(track, mi.GetVideo(i, "Language/String"));
                     Add(track, mi.GetVideo(i, "Forced") == "Yes" ? "Forced" : "");

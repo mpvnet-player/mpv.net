@@ -19,7 +19,7 @@ help = <int> Amount of recent files to be remembered. Default: 15 (mpv.net speci
 [setting]
 name = media-info
 file = mpvnet
-default = no
+default = yes
 filter = General
 help = Usage of the media info library instead of mpv to access media information. Default: no (mpv.net specific option)
 

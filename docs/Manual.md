@@ -480,7 +480,7 @@ Amount of recent files to be remembered. Default: 15
 
 #### --media-info=\<yes|no\>
 
-Usage of the media info library instead of mpv to access media information. Default: no (mpv.net specific option)
+Usage of the media info library instead of mpv to access media information. Default: yes (mpv.net specific option)
 
 #### --video-file-extensions=\<string\>
 
