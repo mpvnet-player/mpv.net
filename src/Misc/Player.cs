@@ -1476,7 +1476,7 @@ namespace mpvnet
                 string filename = GetPropertyString($"filename/no-ext");
                 string title = GetPropertyString($"track-list/{i}/title").Replace(filename, "");
 
-                title = Regex.Replace(title, @"^[\._\-]", "").Replace("_", "__");
+                title = Regex.Replace(title, @"^[\._\-]", "");
 
                 if (type == "video")
                 {

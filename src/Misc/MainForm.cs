@@ -244,7 +244,7 @@ namespace mpvnet
 
                     foreach (MediaTrack track in vidTracks)
                     {
-                        var mi = new WpfControls.MenuItem() { Header = track.Text };
+                        var mi = new WpfControls.MenuItem() { Header = track.Text.Replace("_", "__") };
                         mi.Click += (sender, args) => Core.CommandV("set", "vid", track.ID.ToString());
                         mi.IsChecked = Core.VID == track.ID.ToString();
                         trackMenuItem.Items.Add(mi);
@@ -255,7 +255,7 @@ namespace mpvnet
 
                     foreach (MediaTrack track in audTracks)
                     {
-                        var mi = new WpfControls.MenuItem() { Header = track.Text };
+                        var mi = new WpfControls.MenuItem() { Header = track.Text.Replace("_", "__") };
                         mi.Click += (sender, args) => Core.CommandV("set", "aid", track.ID.ToString());
                         mi.IsChecked = Core.AID == track.ID.ToString();
                         trackMenuItem.Items.Add(mi);
@@ -266,7 +266,7 @@ namespace mpvnet
 
                     foreach (MediaTrack track in subTracks)
                     {
-                        var mi = new WpfControls.MenuItem() { Header = track.Text };
+                        var mi = new WpfControls.MenuItem() { Header = track.Text.Replace("_", "__") };
                         mi.Click += (sender, args) => Core.CommandV("set", "sid", track.ID.ToString());
                         mi.IsChecked = Core.SID == track.ID.ToString();
                         trackMenuItem.Items.Add(mi);
@@ -285,7 +285,7 @@ namespace mpvnet
 
                     foreach (MediaTrack track in ediTracks)
                     {
-                        var mi = new WpfControls.MenuItem() { Header = track.Text };
+                        var mi = new WpfControls.MenuItem() { Header = track.Text.Replace("_", "__") };
                         mi.Click += (sender, args) => Core.CommandV("set", "edition", track.ID.ToString());
                         mi.IsChecked = Core.Edition == track.ID;
                         trackMenuItem.Items.Add(mi);
