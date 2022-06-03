@@ -440,9 +440,12 @@ namespace mpvnet
                     using (MediaInfo mediaInfo = new MediaInfo(path))
                         text = Regex.Replace(mediaInfo.GetSummary(full, raw), "Unique ID.+", "");
                 else
+                {
+                    Core.UpdateExternalTracks();
                     lock (Core.MediaTracksLock)
                         foreach (MediaTrack track in Core.MediaTracks)
                             text += track.Text + BR;
+                }
 
                 text = text.TrimEx();
 
