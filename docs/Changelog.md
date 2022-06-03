@@ -6,9 +6,8 @@
 - New feature to show media info on screen, the command palette shows
   an osd option and the show-info command shows more detailed info
   after a second key press.
-- New `media-info` option allowing to fully disable the usage of the
-  media info library, media info is disabled by default and considered
-  to be deprecated.
+- New `media-info` option allowing to use mpv `track-list`
+  instead of the media info library.
 - New show-santa-logo (green and grumpy) option.
 - New quick bookmark feature, see manual.
 - Progress command shows time and date.
