@@ -213,9 +213,11 @@ namespace mpvnet
             {
                 string content = File.ReadAllText(InputConfPath);
 
-                if (!content.Contains("script-message mpv.net show-menu"))
+                if (!content.Contains("script-message mpv.net show-menu") &&
+                    !content.Contains("script-message-to mpvnet show-menu"))
+
                     File.WriteAllText(InputConfPath, BR + content.Trim() + BR +
-                        "MBTN_Right script-message mpv.net show-menu" + BR);
+                        "MBTN_Right script-message-to mpvnet show-menu" + BR);
             }
 
             App.Settings.ShowMenuFixApplied = true;

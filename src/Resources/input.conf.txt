@@ -124,7 +124,7 @@ t       script-binding stats/display-stats-toggle     #menu: View > Toggle Stati
 Del     script-binding osc/visibility                 #menu: View > Toggle OSC Visibility
 i       script-message-to mpvnet show-info            #menu: View > Show File/Stream Info
 p       show-progress                                 #menu: View > Show Progress
-F9      script-message mpv.net show-media-info osd    #menu: View > Show Tracks
+F9      script-message-to mpvnet show-media-info osd    #menu: View > Show Tracks
 Ctrl+m  script-message-to mpvnet show-media-info      #menu: View > Show Media Info
 Alt+r   script-message-to mpvnet show-recent          #menu: View > Show Recent
 

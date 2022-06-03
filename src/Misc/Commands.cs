@@ -163,7 +163,7 @@ namespace mpvnet
         {
             if (Environment.TickCount - LastShowInfo < 5000)
             {
-                Core.Command("script-message mpv.net show-media-info osd");
+                Core.Command("script-message-to mpvnet show-media-info osd");
                 LastShowInfo = 0;
                 return;
             }
@@ -412,11 +412,11 @@ namespace mpvnet
             if (args == null || args.Length == 0)
             {
                 (string Name, string Value)[] pairs = {
-                    ("Show text box",    "script-message mpv.net show-media-info default"),
-                    ("Show text editor", "script-message mpv.net show-media-info editor"),
-                    ("Show on screen",   "script-message mpv.net show-media-info osd"),
-                    ("Show full",        "script-message mpv.net show-media-info editor full"),
-                    ("Show raw",         "script-message mpv.net show-media-info editor full raw") };
+                    ("Show text box",    "script-message-to mpvnet show-media-info default"),
+                    ("Show text editor", "script-message-to mpvnet show-media-info editor"),
+                    ("Show on screen",   "script-message-to mpvnet show-media-info osd"),
+                    ("Show full",        "script-message-to mpvnet show-media-info editor full"),
+                    ("Show raw",         "script-message-to mpvnet show-media-info editor full raw") };
 
                 var list = pairs.Select(i => new CommandPaletteItem(i.Name, () => Core.Command(i.Value)));
                 CommandPalette.Instance.SetItems(list);
@@ -695,10 +695,10 @@ namespace mpvnet
         public static void ShowSetupDialog() => App.InvokeOnMainThread(() =>
         {
             (string Name, string Value)[] pairs = {
-                ("Register video file associations", "script-message mpv.net reg-file-assoc video"),
-                ("Register audio file associations", "script-message mpv.net reg-file-assoc audio"),
-                ("Register image file associations", "script-message mpv.net reg-file-assoc image"),
-                ("Unregister file associations",     "script-message mpv.net reg-file-assoc unreg") };
+                ("Register video file associations", "script-message-to mpvnet reg-file-assoc video"),
+                ("Register audio file associations", "script-message-to mpvnet reg-file-assoc audio"),
+                ("Register image file associations", "script-message-to mpvnet reg-file-assoc image"),
+                ("Unregister file associations",     "script-message-to mpvnet reg-file-assoc unreg") };
 
             var list = pairs.Select(i => new CommandPaletteItem(i.Name, () => Core.Command(i.Value)));
             CommandPalette.Instance.SetItems(list);
