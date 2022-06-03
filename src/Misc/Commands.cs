@@ -426,39 +426,35 @@ namespace mpvnet
             }
 
             string path = Core.GetPropertyString("path");
+            string text = "";
 
-            if (File.Exists(path) && !path.Contains(@"\\.\pipe\"))
+            bool full = args.Contains("full");
+            bool raw = args.Contains("raw");
+            bool editor = args.Contains("editor");
+            bool osd = args.Contains("osd");
+
+            if (App.MediaInfo && !osd && File.Exists(path) && !path.Contains(@"\\.\pipe\"))
+                using (MediaInfo mediaInfo = new MediaInfo(path))
+                    text = Regex.Replace(mediaInfo.GetSummary(full, raw), "Unique ID.+", "");
+            else
             {
-                string text = "";
+                Core.UpdateExternalTracks();
+                lock (Core.MediaTracksLock)
+                    foreach (MediaTrack track in Core.MediaTracks)
+                        text += track.Text + BR;
+            }
 
-                bool full = args.Contains("full");
-                bool raw = args.Contains("raw");
-                bool editor = args.Contains("editor");
-                bool osd = args.Contains("osd");
+            text = text.TrimEx();
 
-                if (App.MediaInfo && !osd)
-                    using (MediaInfo mediaInfo = new MediaInfo(path))
-                        text = Regex.Replace(mediaInfo.GetSummary(full, raw), "Unique ID.+", "");
-                else
-                {
-                    Core.UpdateExternalTracks();
-                    lock (Core.MediaTracksLock)
-                        foreach (MediaTrack track in Core.MediaTracks)
-                            text += track.Text + BR;
-                }
-
-                text = text.TrimEx();
-
-                if (editor)
-                    ShowTextWithEditor("media-info", text);
-                else if (osd)
-                    ShowText(text.Replace("\r", ""), 5000, 15);
-                else
-                {
-                    MsgBoxEx.MessageBoxEx.MsgFontFamily = new FontFamily("Consolas");
-                    Msg.ShowInfo(text);
-                    MsgBoxEx.MessageBoxEx.MsgFontFamily = new FontFamily("Segoe UI");
-                }
+            if (editor)
+                ShowTextWithEditor("media-info", text);
+            else if (osd)
+                ShowText(text.Replace("\r", ""), 5000, 17);
+            else
+            {
+                MsgBoxEx.MessageBoxEx.MsgFontFamily = new FontFamily("Consolas");
+                Msg.ShowInfo(text);
+                MsgBoxEx.MessageBoxEx.MsgFontFamily = new FontFamily("Segoe UI");
             }
         });
 

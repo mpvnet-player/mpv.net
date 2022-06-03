@@ -1480,8 +1480,13 @@ namespace mpvnet
 
                 if (type == "video")
                 {
+                    string codec = GetPropertyString($"track-list/{i}/codec").ToUpperEx();
+                    if (codec == "MPEG2VIDEO")
+                        codec = "MPEG2";
+                    else if (codec == "DVVIDEO")
+                        codec = "DV";
                     MediaTrack track = new MediaTrack();
-                    Add(track, GetPropertyString($"track-list/{i}/codec").ToUpperEx());
+                    Add(track, codec);
                     Add(track, GetPropertyString($"track-list/{i}/demux-w") + "x" + GetPropertyString($"track-list/{i}/demux-h"));
                     Add(track, GetPropertyString($"track-list/{i}/demux-fps").Replace(".000000", "") + " FPS");
                     Add(track, GetPropertyBool($"track-list/{i}/default") ? "Default" : null);
@@ -1492,10 +1497,13 @@ namespace mpvnet
                 }
                 else if (type == "audio")
                 {
+                    string codec = GetPropertyString($"track-list/{i}/codec").ToUpperEx();
+                    if (codec.Contains("PCM"))
+                        codec = "PCM";
                     MediaTrack track = new MediaTrack();
                     Add(track, GetLanguage(GetPropertyString($"track-list/{i}/lang")));
-                    Add(track, GetPropertyString($"track-list/{i}/codec").ToUpperEx());
-                    Add(track, GetPropertyInt($"track-list/{i}/audio-channels") + " channels");
+                    Add(track, codec);
+                    Add(track, GetPropertyInt($"track-list/{i}/audio-channels") + " ch");
                     Add(track, GetPropertyInt($"track-list/{i}/demux-samplerate") / 1000 + " kHz");
                     Add(track, GetPropertyBool($"track-list/{i}/forced") ? "Forced" : null);
                     Add(track, GetPropertyBool($"track-list/{i}/default") ? "Default" : null);
@@ -1509,12 +1517,16 @@ namespace mpvnet
                 }
                 else if (type == "sub")
                 {
-                    string codec = GetPropertyString($"track-list/{i}/codec");
-                    if (codec.Contains("pgs"))
-                        codec = "pgs";
+                    string codec = GetPropertyString($"track-list/{i}/codec").ToUpperEx();
+                    if (codec.Contains("PGS"))
+                        codec = "PGS";
+                    else if (codec == "DVB_SUBTITLE")
+                        codec = "DVB";
+                    else if (codec == "DVD_SUBTITLE")
+                        codec = "VOB";
                     MediaTrack track = new MediaTrack();
                     Add(track, GetLanguage(GetPropertyString($"track-list/{i}/lang")));
-                    Add(track, codec.ToUpperEx());
+                    Add(track, codec);
                     Add(track, GetPropertyBool($"track-list/{i}/forced") ? "Forced" : null);
                     Add(track, GetPropertyBool($"track-list/{i}/default") ? "Default" : null);
                     Add(track, GetPropertyBool($"track-list/{i}/external") ? "External" : null);
@@ -1524,7 +1536,6 @@ namespace mpvnet
                     track.ID = GetPropertyInt($"track-list/{i}/id");
                     track.External = external;
                     tracks.Add(track);
-                    Debug.WriteLine(GetPropertyString($"track-list/{i}/codec"));
                 }
             }
 
@@ -1558,11 +1569,16 @@ namespace mpvnet
 
                 for (int i = 0; i < videoCount; i++)
                 {
+                    string fps = mi.GetVideo(i, "FrameRate");
+
+                    if (float.TryParse(fps, NumberStyles.Float, CultureInfo.InvariantCulture, out float result))
+                        fps = result.ToString(CultureInfo.InvariantCulture);
+
                     MediaTrack track = new MediaTrack();
                     Add(track, mi.GetVideo(i, "Format"));
                     Add(track, mi.GetVideo(i, "Format_Profile"));
                     Add(track, mi.GetVideo(i, "Width") + "x" + mi.GetVideo(i, "Height"));
-                    Add(track, mi.GetVideo(i, "FrameRate") + " FPS");
+                    Add(track, fps + " FPS");
                     Add(track, mi.GetVideo(i, "Language/String"));
                     Add(track, mi.GetVideo(i, "Forced") == "Yes" ? "Forced" : "");
                     Add(track, mi.GetVideo(i, "Default") == "Yes" ? "Default" : "");
@@ -1582,7 +1598,7 @@ namespace mpvnet
                     Add(track, mi.GetAudio(i, "Format"));
                     Add(track, mi.GetAudio(i, "Format_Profile"));
                     Add(track, mi.GetAudio(i, "BitRate/String"));
-                    Add(track, mi.GetAudio(i, "Channel(s)/String"));
+                    Add(track, mi.GetAudio(i, "Channel(s)") + " ch");
                     Add(track, mi.GetAudio(i, "SamplingRate/String"));
                     Add(track, mi.GetAudio(i, "Forced") == "Yes" ? "Forced" : "");
                     Add(track, mi.GetAudio(i, "Default") == "Yes" ? "Default" : "");
