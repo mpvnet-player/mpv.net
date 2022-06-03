@@ -1496,7 +1496,7 @@ namespace mpvnet
                     Add(track, GetLanguage(GetPropertyString($"track-list/{i}/lang")));
                     Add(track, GetPropertyString($"track-list/{i}/codec").ToUpperEx());
                     Add(track, GetPropertyInt($"track-list/{i}/audio-channels") + " channels");
-                    Add(track, GetPropertyInt($"track-list/{i}/demux-samplerate") + " Hz");
+                    Add(track, GetPropertyInt($"track-list/{i}/demux-samplerate") / 1000 + " kHz");
                     Add(track, GetPropertyBool($"track-list/{i}/forced") ? "Forced" : null);
                     Add(track, GetPropertyBool($"track-list/{i}/default") ? "Default" : null);
                     Add(track, GetPropertyBool($"track-list/{i}/external") ? "External" : null);
@@ -1510,7 +1510,7 @@ namespace mpvnet
                 else if (type == "sub")
                 {
                     string codec = GetPropertyString($"track-list/{i}/codec");
-                    if (codec == "hdmv_pgs_subtitle")
+                    if (codec.Contains("pgs"))
                         codec = "pgs";
                     MediaTrack track = new MediaTrack();
                     Add(track, GetLanguage(GetPropertyString($"track-list/{i}/lang")));
