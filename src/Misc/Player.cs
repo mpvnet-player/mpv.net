@@ -336,7 +336,7 @@ namespace mpvnet
                             Directory.CreateDirectory(scriptOptsPath);
                             File.WriteAllText(scriptOptsPath + "console.conf", BR + "scale=1.5" + BR);
                             string content = BR + "scalewindowed=1.5" + BR + "hidetimeout=2000" + BR +
-                                             "idlelogo=no" + BR;
+                                             "idlescreen=no" + BR;
                             File.WriteAllText(scriptOptsPath + "osc.conf", content);
                         }
                     }

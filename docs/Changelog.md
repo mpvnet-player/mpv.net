@@ -5,7 +5,8 @@
 - New feature to change profile using the command palette.
 - New feature to show media info on screen, the command palette shows
   an osd option and the show-info command shows more detailed info
-  after a second key press.
+  after a second key press. Media info display in the track menu
+  was also improved. Thanks to dyphire helping with code.
 - New `media-info` option allowing to use mpv `track-list`
   instead of the media info library.
 - New show-santa-logo (green and grumpy) option.
@@ -15,14 +16,32 @@
   script-opts folder does not exist, a script-opts folder
   is created with defaults for osc and console.
 - Support mpv idle property, see manual for remarks.
-- Fix delay loaded external audio and subtitle tracks.
+- Fix external audio and subtitle files not shown in all use cases.
 - Fix crash choosing Matroska edition in the menu.
 - Fix auto-play and auto-load-folder not working with user scripts.
-- Fix slow startup using osd-scale-by-window=no.
+- Fix slow startup using `osd-scale-by-window=no`.
 - Fix URL shown instead of media title on file change OSD,
   in recent menu and in recent command palette.
 - Fix chapter time display in menu.
-- libmpv shinchiro 2022-05-17 with idle fix
+- libmpv zhongfly 2022-06-03
+
+input.conf changes:
+
+Old:
+
+```
+F9      show-text ${track-list} 5000                #menu: View > Show Tracks
+```
+
+New:
+
+```
+F9      script-message-to mpvnet show-media-info osd  #menu: View > Show Tracks
+Ctrl+p  script-message-to mpvnet select-profile       #menu: View > Show Profile Selection
+Alt+q   script-message-to mpvnet quick-bookmark
+```
+
+All occurrences of `script-message mpv.net` were changed to `script-message-to mpvnet`.
 
 
 5.9.0.0 Beta (2022-05-08)
