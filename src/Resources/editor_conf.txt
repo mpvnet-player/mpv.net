@@ -494,10 +494,9 @@ name = keep-open
 file = mpv
 default = no
 filter = Playback
-help = Using no, mpv would terminate after the last file but mpv.net never terminates automatically.
 
 option = yes     If the current file ends, go to the next file, keep the last file open.
-option = no      If the current file ends, go to the next file. If idle is set to no, mpv.net exits after the last file.
+option = no      If the current file ends, go to the next file. If idle is set to no, the player exits after the last file.
 option = always  Playback will never automatically advance to the next file.
 
 [setting]
@@ -515,7 +514,7 @@ name = idle
 file = mpv
 default = yes
 filter = Playback
-help = If set to no and keep-open is also set to no, mpv.net exits after the last file ends.
+help = If set to no and keep-open is also set to no, the player exits after the last file ends.
 
 option = yes
 option = no
