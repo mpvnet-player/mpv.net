@@ -1520,6 +1520,10 @@ namespace mpvnet
                     string codec = GetPropertyString($"track-list/{i}/codec").ToUpperEx();
                     if (codec.Contains("PGS"))
                         codec = "PGS";
+                    else if (codec == "SUBRIP")
+                        codec = "SRT";
+                    else if (codec == "WEBVTT")
+                        codec = "VTT";
                     else if (codec == "DVB_SUBTITLE")
                         codec = "DVB";
                     else if (codec == "DVD_SUBTITLE")
@@ -1614,9 +1618,17 @@ namespace mpvnet
 
                 for (int i = 0; i < subCount; i++)
                 {
+                    string codec = mi.GetText(i, "Format").ToUpperEx();
+                    if (codec == "UTF-8")
+                        codec = "SRT";
+                    else if (codec == "WEBVTT")
+                        codec = "VTT";
+                    else if (codec == "VOBSUB")
+                        codec = "VOB";
+
                     MediaTrack track = new MediaTrack();
                     Add(track, mi.GetText(i, "Language/String"));
-                    Add(track, mi.GetText(i, "Format"));
+                    Add(track, codec);
                     Add(track, mi.GetText(i, "Format_Profile"));
                     Add(track, mi.GetText(i, "Forced") == "Yes" ? "Forced" : "");
                     Add(track, mi.GetText(i, "Default") == "Yes" ? "Default" : "");
