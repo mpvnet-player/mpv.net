@@ -17,6 +17,7 @@
   is created with defaults for osc and console.
 - Support mpv idle property, see manual for remarks.
 - Fix external audio and subtitle files not shown in all use cases.
+- Fix mpv options not working in case of existing same line comments.
 - Fix crash choosing Matroska edition in the menu.
 - Fix auto-play and auto-load-folder not working with user scripts.
 - Fix slow startup using `osd-scale-by-window=no`.

@@ -359,7 +359,17 @@ namespace mpvnet
                     if (File.Exists(ConfPath))
                         foreach (var i in File.ReadAllLines(ConfPath))
                             if (i.Contains("=") && !i.TrimStart().StartsWith("#"))
-                                _Conf[i.Substring(0, i.IndexOf("=")).Trim()] = i.Substring(i.IndexOf("=") + 1).Trim();
+                            {
+                                string key = i.Substring(0, i.IndexOf("=")).Trim();
+                                string value = i.Substring(i.IndexOf("=") + 1).Trim();
+
+                                if (value.Contains("#") && !value.StartsWith("#") &&
+                                    !value.StartsWith("'#") && !value.StartsWith("\"#"))
+
+                                    value = value.Substring(0, value.IndexOf("#")).Trim();
+
+                                _Conf[key] = value;
+                            }
 
                     foreach (var i in _Conf)
                         ProcessProperty(i.Key, i.Value);
