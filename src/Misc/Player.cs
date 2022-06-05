@@ -194,18 +194,9 @@ namespace mpvnet
 
                 if (FileEnded && value == -1)
                 {
-                    //ShowLogo();
-
                     if (GetPropertyString("keep-open") == "no" && App.Exit)
                         Core.CommandV("quit");
                 }
-            });
-
-            ObservePropertyString("script-opts", value => {
-                if (value.ContainsEx("osc-visibility=never"))
-                    HideLogo();
-                else if (PlaylistPos == -1 && Shown)
-                    ShowLogo();
             });
 
             if (!GetPropertyBool("osd-scale-by-window"))
@@ -525,8 +516,13 @@ namespace mpvnet
                                 else if (args.Length > 1 && args[0] == "mpv.net")
                                     App.RunTask(() => Commands.Execute(args[1], args.Skip(2).ToArray()));
 
-                                if (args.Length > 1 && args[0] == "osc-idlelogo" && args[1] == "no")
-                                    HideLogo();
+                                if (args.Length > 1 && args[0] == "osc-idlescreen")
+                                {
+                                    if (args[1] == "no")
+                                        HideLogo();
+                                    else if (args[1] == "yes" && PlaylistPos == -1)
+                                        ShowLogo();
+                                }
 
                                 InvokeAsync(ClientMessageAsync, args);
                                 ClientMessage?.Invoke(args);

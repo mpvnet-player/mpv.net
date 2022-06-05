@@ -158,6 +158,9 @@ namespace mpvnet
 
         public static void ShowInfo()
         {
+            if (Core.PlaylistPos == -1)
+                return;
+
             if (Environment.TickCount - LastShowInfo < 5000)
             {
                 Core.Command("script-message-to mpvnet show-media-info osd");

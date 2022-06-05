@@ -1,4 +1,6 @@
 
+6.0.0.0 Beta (2022-06-05)
+
 - The options `cache` and `demuxer-max-bytes`have been added
   to the conf editor.
 - Command messages are dispatched with `script-message-to mpvnet`.
@@ -14,7 +16,11 @@
 - Progress command shows time and date.
 - When input.conf is created on the very first start and a
   script-opts folder does not exist, a script-opts folder
-  is created with defaults for osc and console.
+  is created with osc and console defaults:
+  `console-scale=1.5`  
+  `osc-idlescreen=no`  (hides the original mpv logo)
+  `osc-hidetimeout=2000`  
+  `osc-scalewindowed=1.5`  
 - Support mpv idle property, see manual for remarks.
 - Fix external audio and subtitle files not shown in all use cases.
 - Fix various mpv options not working in case of existing same line comments.
