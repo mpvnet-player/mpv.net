@@ -21,7 +21,7 @@ name = media-info
 file = mpvnet
 default = yes
 filter = General
-help = Usage of the media info library instead of mpv to access media information. Default: no (mpv.net specific option)
+help = Usage of the media info library instead of mpv to access media information. (mpv.net specific option)
 
 option = yes
 option = no
