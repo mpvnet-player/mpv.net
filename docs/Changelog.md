@@ -1,5 +1,5 @@
 
-6.0.0.0 Beta (2022-06-05)
+# 6.0.0.0 Beta (2022-06-05)
 
 - The options `cache` and `demuxer-max-bytes`have been added
   to the conf editor.
@@ -53,7 +53,7 @@ Alt+q   script-message-to mpvnet quick-bookmark
 All occurrences of `script-message mpv.net` were changed to `script-message-to mpvnet`.
 
 
-5.9.0.0 Beta (2022-05-08)
+# 5.9.0.0 Beta (2022-05-08)
 
 - Fix startup without media file not working with gpu-api=vulkan.
 - Fix keyboard layout change not working.
