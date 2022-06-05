@@ -34,7 +34,6 @@ namespace mpvnet
         int TaskbarButtonCreatedMessage;
 
         bool WasMaximized;
-        bool WasShown;
 
         public MainForm()
         {
@@ -52,7 +51,8 @@ namespace mpvnet
                 Core.ShowMenu += Core_ShowMenu;
                 Core.Shutdown += Core_Shutdown;
                 Core.VideoSizeChanged += Core_VideoSizeChanged;
-                Core.WindowScale += Core_WindowScale;
+                Core.WindowScaleMpv += Core_WindowScaleMpv;
+                Core.WindowScaleNET += Core_WindowScaleNET;
 
                 if (Core.GPUAPI != "vulkan")
                     Init();
@@ -136,8 +136,6 @@ namespace mpvnet
 
             Core.ObservePropertyInt("edition", PropChangeEdition);
 
-            Core.ObservePropertyDouble("window-scale", WindowScale);
-
             Core.ProcessCommandLine(false);
         }
 
@@ -172,7 +170,7 @@ namespace mpvnet
             }));
         }
 
-        void Core_WindowScale(float scale)
+        void Core_WindowScaleNET(float scale)
         {
             BeginInvoke(new Action(() => {
                 SetSize(
@@ -183,9 +181,9 @@ namespace mpvnet
             }));
         }
 
-        void WindowScale(double scale)
+        void Core_WindowScaleMpv(double scale)
         {
-            if (!WasShown)
+            if (!Core.Shown)
                 return;
 
             BeginInvoke(new Action(() => {
@@ -755,7 +753,7 @@ namespace mpvnet
 
         void SaveWindowProperties()
         {
-            if (WindowState == FormWindowState.Normal && WasShown)
+            if (WindowState == FormWindowState.Normal && Core.Shown)
             {
                 SavePosition();
                 App.Settings.WindowSize = ClientSize;
@@ -866,7 +864,7 @@ namespace mpvnet
                     break;
                 case 0x02E0: // WM_DPICHANGED
                     {
-                        if (!WasShown)
+                        if (!Core.Shown)
                             break;
 
                         RECT rect = Marshal.PtrToStructure<RECT>(m.LParam);
@@ -974,7 +972,7 @@ namespace mpvnet
         
         void PropChangeWindowMaximized()
         {
-            if (!WasShown)
+            if (!Core.Shown)
                 return;
 
             BeginInvoke(new Action(() =>
@@ -990,7 +988,7 @@ namespace mpvnet
 
         void PropChangeWindowMinimized()
         {
-            if (!WasShown)
+            if (!Core.Shown)
                 return;
 
             BeginInvoke(new Action(() =>
@@ -1037,6 +1035,8 @@ namespace mpvnet
                 Core.VideoSizeAutoResetEvent.WaitOne(App.StartThreshold);
             LastCycleFullscreen = Environment.TickCount;
             SetFormPosAndSize();
+            if (Core.PlaylistPos == -1)
+                Core.ShowLogo();
         }
 
         protected override void OnActivated(EventArgs e)
@@ -1071,7 +1071,7 @@ namespace mpvnet
             App.RunTask(() => App.Extension = new Extension());
             App.RunTask(() => App.CopyMpvnetCom());
             CSharpScriptHost.ExecuteScriptsInFolder(Core.ConfigFolder + "scripts-cs");
-            WasShown = true;
+            Core.Shown = true;
         }
 
         void ContextMenu_Closed(object sender, System.Windows.RoutedEventArgs e)
@@ -1084,7 +1084,7 @@ namespace mpvnet
             base.OnResize(e);
             SaveWindowProperties();
 
-            if (Core.IsLogoVisible)
+            if (Core.PlaylistPos == -1 && Core.Shown)
                 Core.ShowLogo();
 
             if (FormBorderStyle != FormBorderStyle.None)
@@ -1095,7 +1095,7 @@ namespace mpvnet
                     WasMaximized = false;
             }
 
-            if (WasShown)
+            if (Core.Shown)
             {
                 if (WindowState == FormWindowState.Minimized)
                     Core.SetPropertyBool("window-minimized", true);

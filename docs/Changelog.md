@@ -17,13 +17,15 @@
   is created with defaults for osc and console.
 - Support mpv idle property, see manual for remarks.
 - Fix external audio and subtitle files not shown in all use cases.
-- Fix mpv options not working in case of existing same line comments.
+- Fix various mpv options not working in case of existing same line comments.
 - Fix crash choosing Matroska edition in the menu.
 - Fix auto-play and auto-load-folder not working with user scripts.
 - Fix slow startup using `osd-scale-by-window=no`.
 - Fix URL shown instead of media title on file change OSD,
   in recent menu and in recent command palette.
 - Fix chapter time display in menu.
+- Fix incorrect startup window size using gpu-api=vulkan.
+- Fix logo not hiding sometimes using gpu-api=vulkan.
 - libmpv zhongfly 2022-06-03
 
 input.conf changes:

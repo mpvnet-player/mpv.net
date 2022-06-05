@@ -110,18 +110,15 @@ namespace mpvnet
 
         public static void PlaylistFirst()
         {
-            int pos = Core.GetPropertyInt("playlist-pos");
-
-            if (pos != 0)
+            if (Core.PlaylistPos != 0)
                 Core.SetPropertyInt("playlist-pos", 0);
         }
 
         public static void PlaylistLast()
         {
-            int pos = Core.GetPropertyInt("playlist-pos");
             int count = Core.GetPropertyInt("playlist-count");
 
-            if (pos < count - 1)
+            if (Core.PlaylistPos < count - 1)
                 Core.SetPropertyInt("playlist-pos", count - 1);
         }
 
@@ -390,7 +387,7 @@ namespace mpvnet
 
         public static void ScaleWindow(float factor) => Core.RaiseScaleWindow(factor);
 
-        public static void WindowScale(float value) => Core.RaiseWindowScale(value);
+        public static void WindowScale(float value) => Core.RaiseWindowScaleNET(value);
 
         public static void ShowText(string text, int duration = 0, int fontSize = 0)
         {
@@ -722,7 +719,7 @@ namespace mpvnet
 
         public static void PlaylistAdd(int value)
         {
-            int pos = Core.GetPropertyInt("playlist-pos");
+            int pos = Core.PlaylistPos;
             int count = Core.GetPropertyInt("playlist-count");
 
             if (count < 2)

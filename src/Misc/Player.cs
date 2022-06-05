@@ -57,7 +57,8 @@ namespace mpvnet
         public event Action Pause;
         public event Action ShowMenu;
         public event Action<float> ScaleWindow;
-        public event Action<float> WindowScale;
+        public event Action<float> WindowScaleNET;
+        public event Action<double> WindowScaleMpv;
         public event Action<int> PlaylistPosChanged;
         public event Action<int> PlaylistPosChangedAsync;
         public event Action<Size> VideoSizeChanged;
@@ -94,17 +95,18 @@ namespace mpvnet
         public bool Border { get; set; } = true;
         public bool FileEnded { get; set; }
         public bool Fullscreen { get; set; }
-        public bool IsLogoVisible { set; get; } = true;
         public bool IsQuitNeeded { set; get; } = true;
         public bool KeepaspectWindow { get; set; }
         public bool Paused { get; set; }
+        public bool Shown { get; set; }
         public bool TaskbarProgress { get; set; } = true;
         public bool WasInitialSizeSet;
         public bool WindowMaximized { get; set; }
         public bool WindowMinimized { get; set; }
 
-        public int Screen { get; set; } = -1;
         public int Edition { get; set; }
+        public int PlaylistPos { get; set; } = -1;
+        public int Screen { get; set; } = -1;
         public int VideoRotate { get; set; }
 
         public float Autofit { get; set; } = 0.6f;
@@ -168,6 +170,8 @@ namespace mpvnet
             // this means Lua scripts that use idle might not work correctly
             SetPropertyString("idle", "yes");
 
+            ObservePropertyDouble("window-scale", value => WindowScaleMpv(value));
+
             ObservePropertyBool("pause", value => {
                 Paused = value;
                 Pause();
@@ -179,11 +183,18 @@ namespace mpvnet
             });
 
             ObservePropertyInt("playlist-pos", value => {
+                PlaylistPos = value;
                 InvokeEvent(PlaylistPosChanged, PlaylistPosChangedAsync, value);
+
+                if (value == -1 && Core.Shown)
+                    ShowLogo();
+                
+                if (value != -1)
+                    HideLogo();
 
                 if (FileEnded && value == -1)
                 {
-                    ShowLogo();
+                    //ShowLogo();
 
                     if (GetPropertyString("keep-open") == "no" && App.Exit)
                         Core.CommandV("quit");
@@ -193,7 +204,7 @@ namespace mpvnet
             ObservePropertyString("script-opts", value => {
                 if (value.ContainsEx("osc-visibility=never"))
                     HideLogo();
-                else if (GetPropertyInt("playlist-pos") == -1)
+                else if (PlaylistPos == -1 && Shown)
                     ShowLogo();
             });
 
@@ -540,7 +551,9 @@ namespace mpvnet
                                     SetPropertyBool("pause", false);
 
                                 App.QuickBookmark = 0;
+
                                 HideLogo();
+
                                 Duration = TimeSpan.FromSeconds(GetPropertyDouble("duration"));
 
                                 if (App.StartSize == "video")
@@ -1168,8 +1181,6 @@ namespace mpvnet
             if (files is null || files.Length == 0)
                 return;
 
-            HideLogo();
-
             if ((DateTime.Now - LastLoad).TotalMilliseconds < 1000)
                 append = true;
 
@@ -1373,16 +1384,11 @@ namespace mpvnet
                     int y = Convert.ToInt32((cr.Height - len) / 2.0 * (december ? 0.85 : 0.9));
                     CommandV("overlay-add", "0", $"{x}", $"{y}", "&" + bd.Scan0.ToInt64().ToString(), "0", "bgra", bd.Width.ToString(), bd.Height.ToString(), bd.Stride.ToString());
                     bmp.UnlockBits(bd);
-                    IsLogoVisible = true;
                 }
             }
         }
 
-        void HideLogo()
-        {
-            Command("overlay-remove 0");
-            IsLogoVisible = false;
-        }
+        void HideLogo() => Command("overlay-remove 0");
 
         string GetLanguage(string id)
         {
@@ -1416,7 +1422,7 @@ namespace mpvnet
 
         public void RaiseScaleWindow(float value) => ScaleWindow(value);
 
-        public void RaiseWindowScale(float value) => WindowScale(value);
+        public void RaiseWindowScaleNET(float value) => WindowScaleNET(value);
         
         public void RaiseShowMenu() => ShowMenu();
 
