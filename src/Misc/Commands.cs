@@ -170,12 +170,9 @@ namespace mpvnet
 
             LastShowInfo = Environment.TickCount;
 
-            string performer, title, album, genre, date, duration, text = "";
+            string text;
             long fileSize = 0;
             string path = Core.GetPropertyString("path");
-
-            if (path.Contains("://"))
-                path = Core.GetPropertyString("media-title");
 
             if (File.Exists(path))
             {
@@ -183,68 +180,23 @@ namespace mpvnet
 
                 if (CorePlayer.AudioTypes.Contains(path.Ext()))
                 {
-                    if (App.MediaInfo)
-                    {
-                        using (MediaInfo mediaInfo = new MediaInfo(path))
-                        {
-                            performer = mediaInfo.GetInfo(MediaInfoStreamKind.General, "Performer");
-                            title = mediaInfo.GetInfo(MediaInfoStreamKind.General, "Title");
-                            album = mediaInfo.GetInfo(MediaInfoStreamKind.General, "Album");
-                            genre = mediaInfo.GetInfo(MediaInfoStreamKind.General, "Genre");
-                            date = mediaInfo.GetInfo(MediaInfoStreamKind.General, "Recorded_Date");
-                            duration = mediaInfo.GetInfo(MediaInfoStreamKind.Audio, "Duration/String");
-
-                            if (performer != "") text += "Artist: " + performer + "\n";
-                            if (title != "") text += "Title: " + title + "\n";
-                            if (album != "") text += "Album: " + album + "\n";
-                            if (genre != "") text += "Genre: " + genre + "\n";
-                            if (date != "") text += "Year: " + date + "\n";
-                            if (duration != "") text += "Length: " + duration + "\n";
-
-                            text += "Size: " + mediaInfo.GetInfo(MediaInfoStreamKind.General, "FileSize/String") + "\n";
-                            text += "Type: " + path.Ext().ToUpper();
-                        }
-                    }
-                    else
-                    {
-                        text = "File: " + path.FileName() + "\n";
-                        duration = TimeSpan.FromSeconds((int)Core.GetPropertyDouble("duration")).ToString();
-
-                        if (duration != "") text += "Length: " + duration + "\n";
-                        if (fileSize > 0) text += "Size: " + Convert.ToInt32(fileSize / 1024.0 / 1024.0) + " MB\n";
-
-                        text += "Type: " + path.Ext().ToUpper();
-                    }
-
+                    text = Core.GetPropertyOsdString("filtered-metadata");
                     Core.CommandV("show-text", text, "5000");
                     return;
-
                 }
                 else if (CorePlayer.ImageTypes.Contains(path.Ext()))
                 {
-                    if (App.MediaInfo)
-                    {
-                        using (MediaInfo mediaInfo = new MediaInfo(path))
-                        {
-                            text = "Width: " + mediaInfo.GetInfo(MediaInfoStreamKind.Image, "Width") + "\n" +
-                                   "Height: " + mediaInfo.GetInfo(MediaInfoStreamKind.Image, "Height") + "\n" +
-                                   "Size: " + mediaInfo.GetInfo(MediaInfoStreamKind.General, "FileSize/String") + "\n" +
-                                   "Type: " + path.Ext().ToUpper();
-                        }
-                    }
-                    else
-                    {
-                        text = "Width: " + Core.GetPropertyInt("width") + "\n" +
-                               "Height: " + Core.GetPropertyInt("height") + "\n" +
-                               "Size: " + Convert.ToInt32(fileSize / 1024.0) + " KB\n" +
-                               "Type: " + path.Ext().ToUpper();
-                    }
+                    text = "Width: " + Core.GetPropertyInt("width") + "\n" +
+                           "Height: " + Core.GetPropertyInt("height") + "\n" +
+                           "Size: " + Convert.ToInt32(fileSize / 1024.0) + " KB\n" +
+                           "Type: " + path.Ext().ToUpper();
 
                     Core.CommandV("show-text", text, "5000");
                     return;
                 }
             }
 
+            if (path.Contains("://")) path = Core.GetPropertyString("media-title");
             string videoFormat = Core.GetPropertyString("video-format").ToUpper();
             string audioCodec = Core.GetPropertyString("audio-codec-name").ToUpper();
             int width = Core.GetPropertyInt("video-params/w");
@@ -255,7 +207,6 @@ namespace mpvnet
             if (fileSize > 0) text += Convert.ToInt32(fileSize / 1024.0 / 1024.0) + " MB\n";
             text += $"{width} x {height}\n";
             text += $"{videoFormat}\n{audioCodec}";
-
             Core.CommandV("show-text", text, "5000");
         }
 
