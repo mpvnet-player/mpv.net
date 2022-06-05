@@ -26,7 +26,7 @@
 - Fix chapter time display in menu.
 - Fix incorrect startup window size using gpu-api=vulkan.
 - Fix logo not hiding sometimes using gpu-api=vulkan.
-- libmpv zhongfly 2022-06-03
+- libmpv shinchiro 2022-06-05
 
 input.conf changes:
 
