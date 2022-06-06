@@ -2,7 +2,7 @@
 mpv.net手册
 ==============
 
-适配版本 [v5.9.0.0-beta](https://github.com/stax76/mpv.net/releases/tag/v5.9.0.0-beta)
+适配版本 [v6.0.0.0-beta](https://github.com/stax76/mpv.net/releases/tag/v6.0.0.0-beta)
 
 **[ENGLISH](Manual.md)** | **简体中文**
 
@@ -62,8 +62,10 @@ mpv专注命令行与终端的使用，而mpv.net保留了这些并加入了现�
 
 mpv.net需要.NET Framework 4.8运行库和高于win7版本的系统以及一张不太旧的显卡。
 
-对于来自YouTube和类似网站的网络流，必须将yt-dlp复制到mpv.net的文件夹中，
-或编辑用户环境变量PATH，使其包括yt-dlp的文件夹。
+互联网流媒体需要：
+
+- 下载[yt-dlp](https://github.com/yt-dlp/yt-dlp)并将其添加到[用户环境变量PATH](https://www.google.com/search?q=user+environment+variable+PATH)；
+- 在使用代理服务器的情况下，需要[手动配置](https://github.com/stax76/mpv.net/issues/401)。
 
 #### 文件关联
 
@@ -215,7 +217,7 @@ mpv有一些基于非属性的开关，在mpv.net中一般不受支持。
 mpv.net的专属命令
 -------------------------
 
-`script-message mpv.net <command> <arguments>`
+`script-message-to mpvnet <command> <arguments>`
 
 mpv.net命令可在mpv命令不存在或缺乏某种功能时使用。
 
@@ -232,14 +234,11 @@ mpv.net命令可在mpv命令不存在或缺乏某种功能时使用。
 用Windows资源管理器打开配置文件夹。
 
 ### open-files [\<flags\>]
-**no-folder**  
-对于单个文件，防止将文件夹内的全部文件加载到播放列表中。
-
 **append**  
 追加文件到播放列表中。
 
-打开一个资源管理器的对话框，以便选择要打开的文件。资源管理器的对话框支持多选以
-一次性加载多个文件。按住CTRL键可以将这些文件追加到播放列表中。
+打开一个资源管理器的对话框，以便选择要打开的文件。资源管理器的对话框
+支持多选以一次性加载多个文件。按住CTRL键可以将这些文件追加到播放列表中。
 
 ### open-optical-media
 显示一个资源管理器的对话框来打开一个DVD或BD文件夹。ISO镜像不需要被挂载，
@@ -259,6 +258,10 @@ mpv.net命令可在mpv命令不存在或缺乏某种功能时使用。
 
 ### playlist-last
 跳转到播放列表的最后一个条目，如果加载的文件已经是最后一个条目，则无动作。
+
+### quick-bookmark
+第一次触发时，书签被保存，第二次触发时，它被恢复并移除。当加载新文件时，
+书签也会被移除。
 
 ### reg-file-assoc \<audio|video|image\>
 注册文件关联。
@@ -297,7 +300,7 @@ Shell执行单个文件或URL。
 显示已有的历史文件。
 
 ### show-info
-显示一个简易的文件信息。
+在屏幕上显示mediainfo，第二次触发可显示更详细的媒体信息。
 
 ### show-input-editor
 显示器快捷键编辑器。
@@ -311,6 +314,9 @@ Shell执行单个文件或URL。
 
 **editor**  
 在一个文本编辑器中显示mediainfo
+
+**osd**
+OSD上显示mediainfo
 
 **full**  
 显示mediainfo的完整细节
@@ -328,7 +334,7 @@ Shell执行单个文件或URL。
 用一个信息框显示可用的profile
 
 ### show-progress
-显示一个简易的OSD进度条信息。
+显示一个简易的OSD进度条信息，附带时间和日期。
 
 ### show-properties
 在命令面板中显示可用的属性，并允许显示所选属性的值。
@@ -363,8 +369,8 @@ mpv.net的专属选项
 
 #### --command=\<input command\>
 
-通过命令行向正在运行的mpv.net实例发送输入命令，例如使用 AutoHotkey 创建全局热键，
-必须设置 [process-instance=single](#--process-instancevalue) 。
+通过命令行向正在运行的mpv.net实例发送输入命令，例如使用 AutoHotkey 创建
+全局热键，必须设置 [process-instance=single](#--process-instancevalue) 。
 
 ### Audio
 
@@ -430,12 +436,6 @@ mpv.net的专属选项
 如果在播放器暂停时，加载另一个文件，会自动恢复播放。
 
 
-#### --keep-open-exit
-
-如果设置为yes并且keep-open设置为no，mpv.net将在播完最后一个文件后退出。
-在mpv中可以使用idle属性，但对mpv.net来说不可能实现它。
-
-
 ### General
 
 #### --process-instance=\<value\>
@@ -458,6 +458,11 @@ mpv.net的专属选项
 #### --recent-count=\<int\>
 
 最近文件的记录数量。默认：15
+
+
+#### --media-info=\<yes|no\>
+
+使用MediaInfo而不是mpv来访问媒体信息。默认：yes
 
 
 #### --video-file-extensions=\<string\>
@@ -512,7 +517,12 @@ mpv.net的专属选项
 
 #### --show-logo=\<yes|no\>
 
-在原始OSC标志的基础上绘制蓝色的mpvnet图标。更改将在应用程序重新启动后生效。默认：yes
+在原始OSC标志的基础上绘制蓝色的mpvnet图标。默认：yes
+
+
+#### --show-santa-logo=\<yes|no\>
+
+在12月绘制蓝色的mpvnet图标时使用圣诞彩蛋。默认：yes
 
 
 外部工具
@@ -642,9 +652,10 @@ mpv.net没有定义脚本接口，而是公开了它的完整内部，没有兼�
 
 mpv.net没有定义脚本接口，而是公开了它的完整内部，没有兼容性保证。
 
-脚本代码可以在C#[扩展](../../../tree/master/src/Extensions)中编写，这样就可以获得
-完整的代码和调试器支持。一旦代码被调试和开发完成，就可以将其从扩展转移到轻量级的独立脚本。
-脚本host使用的是旧的C#版本，像字符串插值这样的现代功能是不存在的。
+脚本代码可以在C#[扩展](../../../tree/master/src/Extensions)中编写，这样
+就可以获得完整的代码和调试器支持。一旦代码被调试和开发完成，就可以将其
+从扩展转移到轻量级的独立脚本。脚本host使用的是旧的C#版本，像字符串插值
+这样的现代功能是不存在的。
 
 C#脚本的host类似于[扩展](../../../tree/master/src/Extensions)，在打开媒体文件前尚未初始化。
 
@@ -787,6 +798,13 @@ mpv.net支持基于属性的mpv命令行选项，这意味着它支持mpv几乎�
 --profile=help  
 --vd=help  
 --version  
+
+
+### 其它限制
+
+mpv的属性 [idle](https://mpv.io/manual/master/#options-idle) 在mpv.net中
+也会相应的发挥作用，但是LUA脚本获取到的值始终是 `yes` ，因为mpv.net必须
+设置它才能正常工作，这是一个难以攻克的来自libmpv的限制。
 
 
 ### mpv.net的专属选项
@@ -1481,8 +1499,8 @@ input.conf 文件内涵mpv的键鼠绑定
 
 ### Tools > Show History
 
-显示包含历史记录的文本文件。如果文件不存在，则会询问是否在设置文件夹中创建该文件。
-一旦文件存在，则写入历史记录（包括时间和文件名）
+显示包含历史记录的文本文件。如果文件不存在，则会询问是否在设置文件夹中
+创建该文件。一旦文件存在，则写入历史记录（包括时间和文件名）
 
 屏蔽部分路径的参数：
 
