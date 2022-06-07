@@ -435,7 +435,7 @@ are used as defined by autofit and start-size. Default: 1500
 
 Minimum aspect ratio, if the AR is smaller than the defined value then
 the window AR is set to 16/9. This avoids a square window for Music
-with cover art. Default: 1.2
+with cover art. Default: 1
 
 #### --remember-window-position=\<yes|no\>
 

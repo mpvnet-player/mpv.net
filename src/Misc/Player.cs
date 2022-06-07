@@ -149,6 +149,8 @@ namespace mpvnet
 
             ProcessCommandLine(true);
 
+            Environment.SetEnvironmentVariable("mpv_client", "mpvnet");
+
             mpv_error err = mpv_initialize(Handle);
 
             if (err < 0)
