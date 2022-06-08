@@ -1,8 +1,11 @@
 
-- New options `autofit-image` and `autofit-audio`, like
-  autofit but used for image and audio files. Default 80.
-- Fix long commands causing key bindings not visible in the
-  command palette.
+# 6.1.0.0 Beta (not yet released)
+
+- New tutorial: [Extending mpv and mpv.net via Lua scripting](https://github.com/stax76/mpv.net/wiki/Extending-mpv-and-mpv.net-via-Lua-scripting)
+- New options `autofit-image` and `autofit-audio`, like autofit but used for image and audio files. Default 80.
+- New [auto-mode](https://github.com/stax76/mpv-scripts) script to use mpv and mpv.net as image viewer and audio player.
+- Fix long commands causing key bindings not visible in the command palette.
+
 
 # 6.0.0.0 Beta (2022-06-05)
 
