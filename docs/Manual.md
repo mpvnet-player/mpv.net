@@ -282,6 +282,9 @@ Registers the file associations.
 ### scale-window \<factor\>
 Decreases or increases the Window size.
 
+### select-profile
+Shows the command palette to select a profile.
+
 ### shell-execute \<file|URL\>
 Shell executes a single file or URL.
 
@@ -380,6 +383,12 @@ mpv.net specific options
 mpv.net specific options can be found in the conf editor searching for 'mpv.net'.
 
 The options are saved in the mpvnet.conf file.
+
+#### --autofit-audio \<integer\>
+Initial window height in percent for audio files. Default: 80
+
+#### --autofit-image \<integer\>
+Initial window height in percent for image files. Default: 80
 
 #### --queue \<files\>
 

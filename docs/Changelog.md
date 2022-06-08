@@ -1,4 +1,9 @@
 
+- New options `autofit-image` and `autofit-audio`, like
+  autofit but used for image and audio files. Default 80.
+- Fix long commands causing key bindings not visible in the
+  command palette.
+
 # 6.0.0.0 Beta (2022-06-05)
 
 - The options `cache` and `demuxer-max-bytes`have been added

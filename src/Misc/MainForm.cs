@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
@@ -432,6 +433,12 @@ namespace mpvnet
 
             Screen screen = Screen.FromControl(this);
             int autoFitHeight = Convert.ToInt32(screen.WorkingArea.Height * Core.Autofit);
+
+            if (App.AutofitAudio > 1) App.AutofitAudio = 1;
+            if (App.AutofitImage > 1) App.AutofitImage = 1;
+
+            if (Core.IsAudio) autoFitHeight = Convert.ToInt32(screen.WorkingArea.Height * App.AutofitAudio);
+            if (Core.IsImage) autoFitHeight = Convert.ToInt32(screen.WorkingArea.Height * App.AutofitImage);
 
             if (Core.VideoSize.Height == 0 || Core.VideoSize.Width == 0 ||
                 Core.VideoSize.Width / (float)Core.VideoSize.Height < App.MinimumAspectRatio)

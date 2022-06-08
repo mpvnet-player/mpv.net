@@ -21,8 +21,8 @@ namespace mpvnet
     public class CorePlayer
     {
         public static string[] VideoTypes { get; set; } = "264 265 asf avc avi avs dav flv h264 h265 hevc m2t m2ts m2v m4v mkv mov mp4 mpeg mpg mpv mts ts vob vpy webm wmv y4m".Split(' ');
-        public static string[] AudioTypes { get; set; } = "aac ac3 dts dtshd dtshr dtsma eac3 flac m4a mka mp2 mp3 mpa mpc ogg opus thd thd+ac3 w64 wav".Split(' ');
-        public static string[] ImageTypes { get; set; } = { "jpg", "bmp", "png", "gif" };
+        public static string[] AudioTypes { get; set; } = "aac ac3 dts dtshd dtshr dtsma eac3 flac m4a mka mp2 mp3 mpa mpc ogg opus thd w64 wav".Split(' ');
+        public static string[] ImageTypes { get; set; } = { "jpg", "bmp", "png", "gif", "webp" };
         public static string[] SubtitleTypes { get; } = { "srt", "ass", "idx", "sub", "sup", "ttxt", "txt", "ssa", "smi", "mks" };
 
         public event Action<mpv_log_level, string> LogMessageAsync; // log-message        MPV_EVENT_LOG_MESSAGE
@@ -56,9 +56,9 @@ namespace mpvnet
         public event Action InitializedAsync;
         public event Action Pause;
         public event Action ShowMenu;
+        public event Action<double> WindowScaleMpv;
         public event Action<float> ScaleWindow;
         public event Action<float> WindowScaleNET;
-        public event Action<double> WindowScaleMpv;
         public event Action<int> PlaylistPosChanged;
         public event Action<int> PlaylistPosChangedAsync;
         public event Action<Size> VideoSizeChanged;
@@ -85,8 +85,9 @@ namespace mpvnet
 
         public string ConfPath { get => ConfigFolder + "mpv.conf"; }
         public string GPUAPI { get; set; } = "auto";
-        public string VO { get; set; } = "gpu";
         public string InputConfPath => ConfigFolder + "input.conf";
+        public string Path { get; set; } = "";
+        public string VO { get; set; } = "gpu";
 
         public string VID { get; set; } = "";
         public string AID { get; set; } = "";
@@ -173,6 +174,7 @@ namespace mpvnet
             SetPropertyString("idle", "yes");
 
             ObservePropertyDouble("window-scale", value => WindowScaleMpv(value));
+            ObservePropertyString("path", value => Path = value);
 
             ObservePropertyBool("pause", value => {
                 Paused = value;
@@ -251,16 +253,22 @@ namespace mpvnet
             switch (name)
             {
                 case "autofit":
-                    if (int.TryParse(value.Trim('%'), out int result))
-                        Autofit = result / 100f;
+                    {
+                        if (int.TryParse(value.Trim('%'), out int result))
+                            Autofit = result / 100f;
+                    }
                     break;
                 case "autofit-smaller":
-                    if (int.TryParse(value.Trim('%'), out int result2))
-                        AutofitSmaller = result2 / 100f;
+                    {
+                        if (int.TryParse(value.Trim('%'), out int result))
+                            AutofitSmaller = result / 100f;
+                    }
                     break;
                 case "autofit-larger":
-                    if (int.TryParse(value.Trim('%'), out int result3))
-                        AutofitLarger = result3 / 100f;
+                    {
+                        if (int.TryParse(value.Trim('%'), out int result))
+                            AutofitLarger = result / 100f;
+                    }
                     break;
                 case "fs":
                 case "fullscreen": Fullscreen = value == "yes"; break;
@@ -333,7 +341,7 @@ namespace mpvnet
                     {
                         File.WriteAllText(_ConfigFolder + "input.conf", Properties.Resources.input_conf);
 
-                        string scriptOptsPath = _ConfigFolder + "script-opts" + Path.DirectorySeparatorChar;
+                        string scriptOptsPath = _ConfigFolder + "script-opts" + System.IO.Path.DirectorySeparatorChar;
 
                         if (!Directory.Exists(scriptOptsPath))
                         {
@@ -438,7 +446,7 @@ namespace mpvnet
             ps.Scripts.Add(eventCode);
             ps.Scripts.Add(propertyChangedCode);
             ps.Scripts.Add(File.ReadAllText(file));
-            ps.Module = Path.GetFileName(file);
+            ps.Module = System.IO.Path.GetFileName(file);
             ps.Print = true;
 
             lock (PowerShell.References)
@@ -1195,7 +1203,7 @@ namespace mpvnet
                     LoadISO(file);
                 else if(SubtitleTypes.Contains(file.Ext()))
                     CommandV("sub-add", file);
-                else if (file.Ext().Length != 3 && File.Exists(Path.Combine(file, "BDMV\\index.bdmv")))
+                else if (file.Ext().Length != 3 && File.Exists(System.IO.Path.Combine(file, "BDMV\\index.bdmv")))
                 {
                     Command("stop");
                     Thread.Sleep(500);
@@ -1284,7 +1292,7 @@ namespace mpvnet
                 path = path.Replace("/", "\\");
 
             if (path.Contains("\\"))
-                dir = Path.GetDirectoryName(path);
+                dir = System.IO.Path.GetDirectoryName(path);
 
             List<string> files = Directory.GetFiles(dir).ToList();
 
@@ -1388,6 +1396,10 @@ namespace mpvnet
 
         void HideLogo() => Command("overlay-remove 0");
 
+        public bool IsImage => ImageTypes.Contains(Path.Ext());
+        
+        public bool IsAudio => AudioTypes.Contains(Path.Ext());
+
         string GetLanguage(string id)
         {
             foreach (CultureInfo ci in CultureInfo.GetCultures(CultureTypes.NeutralCultures))
@@ -1419,7 +1431,7 @@ namespace mpvnet
         }
 
         public void RaiseScaleWindow(float value) => ScaleWindow(value);
-
+        
         public void RaiseWindowScaleNET(float value) => WindowScaleNET(value);
         
         public void RaiseShowMenu() => ShowMenu();

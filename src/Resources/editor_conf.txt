@@ -411,6 +411,18 @@ filter = Screen
 help = <int> Initial window height in percent. Default: 60
 
 [setting]
+name = autofit-image
+file = mpvnet
+filter = Screen
+help = <int> Initial window height in percent for image files. Default: 80
+
+[setting]
+name = autofit-audio
+file = mpvnet
+filter = Screen
+help = <int> Initial window height in percent for audio files. Default: 80
+
+[setting]
 name = autofit-smaller
 file = mpv
 filter = Screen

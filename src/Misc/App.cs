@@ -36,6 +36,8 @@ namespace mpvnet
         public static int StartThreshold { get; set; } = 1500;
         public static int RecentCount { get; set; } = 15;
 
+        public static float AutofitAudio { get; set; } = 0.8f;
+        public static float AutofitImage { get; set; } = 0.8f;
         public static float MinimumAspectRatio { get; set; }
         public static float QuickBookmark { get; set; }
 
@@ -241,6 +243,8 @@ namespace mpvnet
                 case "audio-file-extensions": CorePlayer.AudioTypes = value.Split(" ,;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries); return true;
                 case "auto-load-folder": AutoLoadFolder = value == "yes"; return true;
                 case "auto-play": AutoPlay = value == "yes"; return true;
+                case "autofit-image": AutofitImage = value.Trim('%').ToInt() / 100f; return true;
+                case "autofit-audio": AutofitAudio = value.Trim('%').ToInt() / 100f; return true;
                 case "dark-mode": DarkMode = value; return true;
                 case "dark-theme": DarkTheme = value.Trim('\'', '"'); return true;
                 case "debug-mode": DebugMode = value == "yes"; return true;
