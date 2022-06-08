@@ -607,64 +607,28 @@ Scripting
 
 #### Lua
 
-File Type: `lua`
+A very large collection of Lua user scripts can be found in the mpv wiki [here](https://github.com/mpv-player/mpv/wiki/User-Scripts).
 
-Location: `<config folder>\scripts`
-
-The Lua script host is built into libmpv.
-
-Error and debug messages are printed on the terminal.
-
-Lua scripts are loaded before the first media file loads.
-
-[mpv Lua documentation](https://mpv.io/manual/master/#lua-scripting)
-
-[mpv user scripts in the wiki](https://github.com/mpv-player/mpv/wiki/User-Scripts)
-
-[mpv user scripts on GitHub](https://github.com/topics/mpv-script)
-
-[mpv user scripts found by Google](https://www.google.com/search?q=mpv+script)
+Lua scripting is documented in the mpv.net wiki [here](https://github.com/stax76/mpv.net/wiki/Extending-mpv-and-mpv.net-via-Lua-scripting).
 
 #### JavaScript
 
-File Type: `js`
-
-Location: `<config folder>\scripts`
-
-The JavaScript script host is built into libmpv.
-
-Error and debug messages are printed on the terminal.
-
-JavaScript scripts are loaded before the first media file loads.
-
 [mpv JavaScript documentation](https://mpv.io/manual/master/#javascript)
-
-[mpv user scripts](https://github.com/mpv-player/mpv/wiki/User-Scripts)
-
 
 #### PowerShell
 
-File Type: `ps1`
-
 Location: `<config folder>\scripts-ps`
 
-The PowerShell scripting host is like extensions not
-initialized before media files are loaded.
-
-mpv.net does not define scripting interfaces but instead exposed
-its complete internals, there are no compatibility guaranties.
+The PowerShell scripting host is not initialized before media files are loaded.
 
 [Example Scripts](../../../tree/master/src/Scripts)
 
 
 #### C#
 
-File Type: `cs`
-
 Location: `<config folder>\scripts-cs`
 
-mpv.net does not define scripting interfaces but instead exposed
-its complete internals, there are no compatibility guaranties.
+There are no compatibility guaranties.
 
 Script code can be written within a C# [extension](../../../tree/master/src/Extensions),
 that way full code completion and debugger support is available.
@@ -672,6 +636,10 @@ Once the code was developed and debugged, it can be moved
 from the extension to a lightweight standalone script.
 The script host uses an old C# version, modern features
 like string interpolation are not available.
+
+There are synchronous and asynchronous events, prefer asynchronous events
+and don't block synchronous events and observed properties, as it would
+block the main event loop.
 
 The C# scripting host is like [extensions](../../../tree/master/src/Extensions)
 not initialized before media files are loaded.
@@ -689,9 +657,9 @@ and the filename must have the same name as the directory:
 <config folder>\extensions\ExampleExtension\ExampleExtension.dll
 ```
 
-mpv.net does not define extension interfaces but instead exposed
-its complete internals, there are no compatibility guaranties.
-
+There are synchronous and asynchronous events, prefer asynchronous events
+and don't block synchronous events and observed properties, as it would
+block the main event loop.
 
 ### Walkthrough creating an extension
 
