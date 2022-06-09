@@ -930,6 +930,66 @@ namespace mpvnet
                         Activate();
                     }
                     return;
+                case 0x84: // WM_NCHITTEST
+                    {
+                        // resize borderless window
+                        const int HTLEFT = 10;
+                        const int HTRIGHT = 11;
+                        const int HTTOP = 12;
+                        const int HTTOPLEFT = 13;
+                        const int HTTOPRIGHT = 14;
+                        const int HTBOTTOM = 15;
+                        const int HTBOTTOMLEFT = 16;
+                        const int HTBOTTOMRIGHT = 17;
+
+                        int x = (int)(m.LParam.ToInt64() & 0xFFFF);
+                        int y = (int)((m.LParam.ToInt64() & 0xFFFF0000) >> 16);
+
+                        Point pt = PointToClient(new Point(x, y));
+                        Size cs = ClientSize;
+
+                        if (pt.X >= cs.Width - 16 && pt.Y >= cs.Height - 16 && cs.Height >= 16)
+                        {
+                            m.Result = (IntPtr)(IsMirrored ? HTBOTTOMLEFT : HTBOTTOMRIGHT);
+                            return;
+                        }
+                        if (pt.X <= 16 && pt.Y >= cs.Height - 16 && cs.Height >= 16)
+                        {
+                            m.Result = (IntPtr)(IsMirrored ? HTBOTTOMRIGHT : HTBOTTOMLEFT);
+                            return;
+                        }
+                        if (pt.X <= 16 && pt.Y <= 16 && cs.Height >= 16)
+                        {
+                            m.Result = (IntPtr)(IsMirrored ? HTTOPRIGHT : HTTOPLEFT);
+                            return;
+                        }
+                        if (pt.X >= cs.Width - 16 && pt.Y <= 16 && cs.Height >= 16)
+                        {
+                            m.Result = (IntPtr)(IsMirrored ? HTTOPLEFT : HTTOPRIGHT);
+                            return;
+                        }
+                        if (pt.Y <= 16 && cs.Height >= 16)
+                        {
+                            m.Result = (IntPtr)HTTOP;
+                            return;
+                        }
+                        if (pt.Y >= cs.Height - 16 && cs.Height >= 16)
+                        {
+                            m.Result = (IntPtr)HTBOTTOM;
+                            return;
+                        }
+                        if (pt.X <= 16 && cs.Height >= 16)
+                        {
+                            m.Result = (IntPtr)HTLEFT;
+                            return;
+                        }
+                        if (pt.X >= cs.Width - 16 && cs.Height >= 16)
+                        {
+                            m.Result = (IntPtr)HTRIGHT;
+                            return;
+                        }
+                    }
+                    break;
             }
 
             if (m.Msg == TaskbarButtonCreatedMessage && Core.TaskbarProgress)

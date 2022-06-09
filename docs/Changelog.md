@@ -6,6 +6,7 @@
 - New [auto-mode](https://github.com/stax76/mpv-scripts) script to use mpv and mpv.net as image viewer and audio player.
 - Fix long commands causing key bindings not visible in the command palette.
 - Fix compatibility with mpv-osc-tethys, which is a new osc script.
+- Fix borderless window not resizable with mouse.
 
 
 # 6.0.0.0 Beta (2022-06-05)
