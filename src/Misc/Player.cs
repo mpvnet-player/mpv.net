@@ -79,7 +79,6 @@ namespace mpvnet
         public List<TimeSpan> BluRayTitles { get; } = new List<TimeSpan>();
         public object MediaTracksLock { get; } = new object();
         public Size VideoSize { get; set; }
-        public List<string> Scripts { get; } = new List<string>();
         public TimeSpan Duration;
 
         public string ConfPath { get => ConfigFolder + "mpv.conf"; }
@@ -150,12 +149,6 @@ namespace mpvnet
             ProcessCommandLine(true);
 
             Environment.SetEnvironmentVariable("mpv_client", "mpvnet");
-
-            string scriptsFolder = ConfigFolder + "scripts";
-
-            if (Directory.Exists(scriptsFolder))
-                foreach (string i in Directory.GetFiles(scriptsFolder))
-                    Scripts.Add(i.FileName().ToLower());
 
             mpv_error err = mpv_initialize(Handle);
 
@@ -1373,10 +1366,6 @@ namespace mpvnet
         {
             if (!App.ShowLogo || MainForm.Instance == null || Core.Handle == IntPtr.Zero)
                 return;
-
-            foreach (string i in Scripts)
-                if (i == "mordenx.lua")
-                    return;
 
             bool december = DateTime.Now.Month == 12;
             Rectangle cr = MainForm.Instance.ClientRectangle;

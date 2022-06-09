@@ -541,7 +541,7 @@ Draws the blue mpv.net logo ontop of the native OSC logo. Default: yes
 #### --show-santa-logo=\<yes|no\>
 
 Draws the blue mpv.net logo with a santa hat in december,
-the option is called green and grumpy in mpv. Default: yes
+the option is called greenandgrumpy in mpv. Default: yes
 
 External Tools
 --------------
