@@ -21,6 +21,9 @@ namespace mpvnet
         [DllImport("user32.dll")]
         public static extern uint ActivateKeyboardLayout(IntPtr hkl, uint flags);
 
+        [DllImport("user32.dll")]
+        public static extern bool GetWindowRect(IntPtr hwnd, out RECT lpRect);
+
         [DllImport("user32.dll", CharSet = CharSet.Unicode)]
         public static extern IntPtr FindWindowEx(
             IntPtr parentHandle, IntPtr childAfter, string lclassName, string windowTitle);
@@ -88,6 +91,37 @@ namespace mpvnet
         [DllImport("gdi32.dll")]
         public static extern int GetDeviceCaps(IntPtr hdc, int nIndex);
 
+        [DllImport("dwmapi.dll")]
+        public static extern int DwmGetWindowAttribute(
+            IntPtr hwnd, uint dwAttribute, out RECT pvAttribute, uint cbAttribute);
+
+        public static bool GetDwmWindowRect(IntPtr handle, out RECT rect)
+        {
+            const uint DWMWA_EXTENDED_FRAME_BOUNDS = 9;
+            return 0 == DwmGetWindowAttribute(handle, DWMWA_EXTENDED_FRAME_BOUNDS, out rect, (uint)Marshal.SizeOf<RECT>());
+        }
+
+        public static Rectangle GetWorkingArea(IntPtr handle, Rectangle workingArea)
+        {
+            if (handle != IntPtr.Zero && GetDwmWindowRect(handle, out RECT dwmRect) &&
+                GetWindowRect(handle, out RECT rect))
+            {
+                int left = workingArea.Left;
+                int top = workingArea.Top;
+                int right = workingArea.Right;
+                int bottom = workingArea.Bottom;
+
+                left += rect.Left - dwmRect.Left;
+                top -= rect.Top - dwmRect.Top;
+                right -= dwmRect.Right - rect.Right;
+                bottom -= dwmRect.Bottom - rect.Bottom;
+
+                return new Rectangle(left, top, right - left, bottom - top);
+            }
+
+            return workingArea;
+        }
+
         [StructLayout(LayoutKind.Sequential)]
         public struct RECT
         {
@@ -116,6 +150,16 @@ namespace mpvnet
             public Size Size => new Size(Right - Left, Bottom - Top);
             public int Width => Right - Left;
             public int Height => Bottom - Top;
+
+            public static RECT FromRectangle(Rectangle rect)
+            {
+                return new RECT(rect.X, rect.Y, rect.X + rect.Width, rect.Y + rect.Height);
+            }
+
+            public override string ToString()
+            {
+                return "{Left=" + Left + ",Top=" + Top + ",Right=" + Right + ",Bottom=" + Bottom + "}";
+            }
         }
 
         [StructLayout(LayoutKind.Sequential)]

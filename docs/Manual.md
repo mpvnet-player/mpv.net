@@ -434,12 +434,6 @@ Window size is remembered in the current session.
 **always**  
 Window size is always remembered.
 
-#### --start-threshold=\<milliseconds\>
-
-Threshold in milliseconds to wait for libmpv returning the video
-resolution before the window is shown, otherwise default dimensions
-are used as defined by autofit and start-size. Default: 1500
-
 #### --minimum-aspect-ratio=\<float\>
 
 Minimum aspect ratio, if the AR is smaller than the defined value then
@@ -450,6 +444,11 @@ with cover art. Default: 0
 
 Save the window position on exit. Default: no
 
+#### --start-threshold=\<milliseconds\>
+
+Threshold in milliseconds to wait for libmpv returning the video
+resolution before the window is shown, otherwise default dimensions
+are used as defined by autofit and start-size. Default: 1500
 
 ### Playback
 
@@ -766,6 +765,7 @@ https://mpv.io/manual/master/#window
 - [keepaspect-window](https://mpv.io/manual/master/#options-keepaspect-window)
 - [ontop](https://mpv.io/manual/master/#options-ontop)
 - [screen](https://mpv.io/manual/master/#options-screen)
+- [snap-window](https://mpv.io/manual/master/#options-snap-window)
 - [title](https://mpv.io/manual/master/#options-title)
 - [window-maximized](https://mpv.io/manual/master/#options-window-maximized)
 - [window-minimized](https://mpv.io/manual/master/#options-window-minimized)
@@ -774,9 +774,12 @@ https://mpv.io/manual/master/#window
 
 **Partly implemented are:**
 
-- [autofit-larger](https://mpv.io/manual/master/#options-autofit-larger)
-- [autofit-smaller](https://mpv.io/manual/master/#options-autofit-smaller)
-- [autofit](https://mpv.io/manual/master/#options-autofit)
+- [autofit-larger](https://mpv.io/manual/master/#options-autofit-larger)  
+  Supported is a single integer value in the range 0-100.
+- [autofit-smaller](https://mpv.io/manual/master/#options-autofit-smaller)  
+  Supported is a single integer value in the range 0-100.
+- [autofit](https://mpv.io/manual/master/#options-autofit)  
+  Supported is a single integer value in the range 0-100.
 
 mpv.net specific window features are documented in the [screen section](#screen).
 

@@ -98,6 +98,7 @@ namespace mpvnet
         public bool KeepaspectWindow { get; set; }
         public bool Paused { get; set; }
         public bool Shown { get; set; }
+        public bool SnapWindow { get; set; }
         public bool TaskbarProgress { get; set; } = true;
         public bool WasInitialSizeSet;
         public bool WindowMaximized { get; set; }
@@ -268,16 +269,17 @@ namespace mpvnet
                             AutofitLarger = result / 100f;
                     }
                     break;
+                case "border": Border = value == "yes"; break;
                 case "fs":
                 case "fullscreen": Fullscreen = value == "yes"; break;
-                case "border":     Border = value == "yes"; break;
+                case "gpu-api": GPUAPI = value; break;
                 case "keepaspect-window": KeepaspectWindow = value == "yes"; break;
+                case "screen": Screen = Convert.ToInt32(value); break;
+                case "snap-window": SnapWindow = value == "yes"; break;
+                case "taskbar-progress": TaskbarProgress = value == "yes"; break;
+                case "vo": VO = value; break;
                 case "window-maximized": WindowMaximized = value == "yes"; break;
                 case "window-minimized": WindowMinimized = value == "yes"; break;
-                case "taskbar-progress": TaskbarProgress = value == "yes"; break;
-                case "screen": Screen = Convert.ToInt32(value); break;
-                case "gpu-api": GPUAPI = value; break;
-                case "vo": VO = value; break;
             }
 
             if (AutofitLarger > 1)

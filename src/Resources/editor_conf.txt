@@ -460,12 +460,6 @@ option = yes
 option = no
 
 [setting]
-name = start-threshold
-file = mpvnet
-filter = Screen
-help = Threshold in milliseconds to wait for libmpv returning the video resolution before the window is shown, otherwise default dimensions are used as defined by autofit and start-size. Default: 1500 (mpv.net specific option)
-
-[setting]
 name = minimum-aspect-ratio
 file = mpvnet
 filter = Screen
@@ -482,6 +476,16 @@ option = yes
 option = no
 
 [setting]
+name = snap-window
+file = mpv
+default = no
+filter = Screen
+help = Snap the player window to screen edges.
+
+option = yes
+option = no
+
+[setting]
 name = window-maximized
 file = mpv
 default = no
@@ -490,6 +494,12 @@ help = Start with a maximized window.
 
 option = yes
 option = no
+
+[setting]
+name = start-threshold
+file = mpvnet
+filter = Screen
+help = Threshold in milliseconds to wait for libmpv returning the video resolution before the window is shown, otherwise default dimensions are used as defined by autofit and start-size. Default: 1500 (mpv.net specific option)
 
 [setting]
 name = taskbar-progress

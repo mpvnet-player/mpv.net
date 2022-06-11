@@ -21,6 +21,7 @@ namespace mpvnet
 {
     public partial class MainForm : Form
     {
+        public SnapManager SnapManager = new SnapManager();
         public ElementHost CommandPaletteHost { get; set; }
         public IntPtr mpvWindowHandle { get; set; }
         public static MainForm Instance { get; set; }
@@ -221,7 +222,7 @@ namespace mpvnet
             if (FormBorderStyle == FormBorderStyle.None)
                 top = ClientSize.Height * 0.1f;
 
-            return pos.Y > ClientSize.Height * 0.8 || pos.Y < top;
+            return pos.Y > ClientSize.Height * 0.78 || pos.Y < top;
         }
 
         void UpdateMenu()
@@ -432,13 +433,14 @@ namespace mpvnet
             }
 
             Screen screen = Screen.FromControl(this);
-            int autoFitHeight = Convert.ToInt32(screen.WorkingArea.Height * Core.Autofit);
+            Rectangle workingArea = GetWorkingArea(Handle, screen.WorkingArea);
+            int autoFitHeight = Convert.ToInt32(workingArea.Height * Core.Autofit);
 
             if (App.AutofitAudio > 1) App.AutofitAudio = 1;
             if (App.AutofitImage > 1) App.AutofitImage = 1;
 
-            if (Core.IsAudio) autoFitHeight = Convert.ToInt32(screen.WorkingArea.Height * App.AutofitAudio);
-            if (Core.IsImage) autoFitHeight = Convert.ToInt32(screen.WorkingArea.Height * App.AutofitImage);
+            if (Core.IsAudio) autoFitHeight = Convert.ToInt32(workingArea.Height * App.AutofitAudio);
+            if (Core.IsImage) autoFitHeight = Convert.ToInt32(workingArea.Height * App.AutofitImage);
 
             if (Core.VideoSize.Height == 0 || Core.VideoSize.Width == 0 ||
                 Core.VideoSize.Width / (float)Core.VideoSize.Height < App.MinimumAspectRatio)
@@ -509,8 +511,10 @@ namespace mpvnet
 
         void SetSize(int width, int height, Screen screen, bool checkAutofit = true)
         {
-            int maxHeight = screen.WorkingArea.Height - (Height - ClientSize.Height) - 2;
-            int maxWidth = screen.WorkingArea.Width - (Width - ClientSize.Width);
+            Rectangle workingArea = GetWorkingArea(Handle, screen.WorkingArea);
+
+            int maxHeight = workingArea.Height - (Height - ClientSize.Height) - 2;
+            int maxWidth = workingArea.Width - (Width - ClientSize.Width);
 
             int startWidth = width;
             int startHeight = height;
@@ -565,10 +569,10 @@ namespace mpvnet
 
             Screen[] screens = Screen.AllScreens;
 
-            int minLeft   = screens.Select(val => val.WorkingArea.X).Min();
-            int maxRight  = screens.Select(val => val.WorkingArea.Right).Max();
-            int minTop    = screens.Select(val => val.WorkingArea.Y).Min();
-            int maxBottom = screens.Select(val => val.WorkingArea.Bottom).Max();
+            int minLeft   = screens.Select(val => GetWorkingArea(Handle, val.WorkingArea).X).Min();
+            int maxRight  = screens.Select(val => GetWorkingArea(Handle, val.WorkingArea).Right).Max();
+            int minTop    = screens.Select(val => GetWorkingArea(Handle, val.WorkingArea).Y).Min();
+            int maxBottom = screens.Select(val => GetWorkingArea(Handle, val.WorkingArea).Bottom).Max();
 
             if (left < minLeft)
                 left = minLeft;
@@ -629,7 +633,7 @@ namespace mpvnet
 
         public int GetHorizontalLocation(Screen screen)
         {
-            Rectangle workingArea = screen.WorkingArea;
+            Rectangle workingArea = GetWorkingArea(Handle, screen.WorkingArea);
             Rectangle rect = new Rectangle(Left - workingArea.X, Top - workingArea.Y, Width, Height);
 
             if (workingArea.Width / (float)Width < 1.1)
@@ -646,7 +650,7 @@ namespace mpvnet
 
         public int GetVerticalLocation(Screen screen)
         {
-            Rectangle workingArea = screen.WorkingArea;
+            Rectangle workingArea = GetWorkingArea(Handle, screen.WorkingArea);
             Rectangle rect = new Rectangle(Left - workingArea.X, Top - workingArea.Y, Width, Height);
 
             if (workingArea.Height / (float)Height < 1.1)
@@ -831,7 +835,7 @@ namespace mpvnet
                     if (mpvWindowHandle != IntPtr.Zero)
                         m.Result = SendMessage(mpvWindowHandle, m.Msg, m.WParam, m.LParam);
                     break;
-                case 0x051: // WM_INPUTLANGCHANGE
+                case 0x51: // WM_INPUTLANGCHANGE
                     ActivateKeyboardLayout(m.LParam, 0x00000100u /*KLF_SETFORPROCESS*/);
                     break;
                 case 0x319: // WM_APPCOMMAND
@@ -846,10 +850,10 @@ namespace mpvnet
                         }
                     }
                     break;
-                case 0x0312: // WM_HOTKEY
+                case 0x312: // WM_HOTKEY
                     GlobalHotkey.Execute(m.WParam.ToInt32());
                     break;
-                case 0x0200: // WM_MOUSEMOVE
+                case 0x200: // WM_MOUSEMOVE
                     if (Environment.TickCount - LastCycleFullscreen > 500)
                     {
                         Point pos = PointToClient(Cursor.Position);
@@ -869,7 +873,7 @@ namespace mpvnet
                         Core.Command($"mouse {pos.X} {pos.Y} 0 double");
                     }
                     break;
-                case 0x02E0: // WM_DPICHANGED
+                case 0x2E0: // WM_DPICHANGED
                     {
                         if (!Core.Shown)
                             break;
@@ -878,7 +882,7 @@ namespace mpvnet
                         SetWindowPos(Handle, IntPtr.Zero, rect.Left, rect.Top, rect.Width, rect.Height, 0);
                     }
                     break;
-                case 0x0214: // WM_SIZING
+                case 0x214: // WM_SIZING
                     if (Core.KeepaspectWindow)
                     {
                         RECT rc = Marshal.PtrToStructure<RECT>(m.LParam);
@@ -906,7 +910,7 @@ namespace mpvnet
                         m.Result = new IntPtr(1);
                     }
                     return;
-                case 0x004A: // WM_COPYDATA
+                case 0x4A: // WM_COPYDATA
                     {
                         var copyData = (COPYDATASTRUCT)m.GetLParam(typeof(COPYDATASTRUCT));
                         string[] args = copyData.lpData.Split('\n');
@@ -989,6 +993,15 @@ namespace mpvnet
                             return;
                         }
                     }
+                    break;
+                case 0x231: // WM_ENTERSIZEMOVE
+                case 0x005: // WM_SIZE
+                    if (Core.SnapWindow)
+                        SnapManager.OnSizeAndEnterSizeMove(this);
+                    break;
+                case 0x216: // WM_MOVING
+                    if (Core.SnapWindow)
+                        SnapManager.OnMoving(ref m);
                     break;
             }
 
