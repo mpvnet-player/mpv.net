@@ -1,5 +1,5 @@
 
-# 6.1.0.0 Beta (not yet released)
+# 6.0.0.1 Beta (not yet released)
 
 - New tutorial: [Extending mpv and mpv.net via Lua scripting](https://github.com/stax76/mpv.net/wiki/Extending-mpv-and-mpv.net-via-Lua-scripting)
 - New options `autofit-image` and `autofit-audio`, like autofit but used for image and audio files. Default 80.

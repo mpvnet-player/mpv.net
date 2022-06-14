@@ -130,7 +130,6 @@ namespace mpvnet
             {
                 SetPropertyString("terminal", "yes");
                 SetPropertyString("input-terminal", "yes");
-                SetPropertyString("msg-level", "osd/libass=fatal");
             }
 
             SetPropertyInt("osd-duration", 2000);
@@ -149,7 +148,7 @@ namespace mpvnet
 
             ProcessCommandLine(true);
 
-            Environment.SetEnvironmentVariable("mpv_client", "mpvnet");
+            Environment.SetEnvironmentVariable("MPVNET_VERSION", Application.ProductVersion);
 
             mpv_error err = mpv_initialize(Handle);
 
