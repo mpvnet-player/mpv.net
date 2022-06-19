@@ -261,6 +261,13 @@ namespace mpvnet
             Action = action;
         }
 
+        public CommandPaletteItem(string text, string secondaryText, Action action)
+        {
+            Text = text;
+            Action = action;
+            SecondaryText = secondaryText;
+        }
+
         public string Text { get; set; } = "";
         public string SecondaryText { get; set; } = "";
         public Action Action { get; set; }
@@ -281,6 +288,28 @@ namespace mpvnet
                     Action = () => Core.Command(i.Command),
                     CommandItem = i
                 });
+        }
+    }
+
+    public class Chapter
+    {
+        public string Title { get; set; }
+        public double Time { get; set; }
+
+        string _TimeDisplay;
+
+        public string TimeDisplay {
+            get {
+                if (_TimeDisplay == null)
+                {
+                    _TimeDisplay = TimeSpan.FromSeconds(Time).ToString();
+
+                    if (_TimeDisplay.ContainsEx("."))
+                        _TimeDisplay = _TimeDisplay.Substring(0, _TimeDisplay.LastIndexOf("."));
+                }
+
+                return _TimeDisplay;
+            }
         }
     }
 }

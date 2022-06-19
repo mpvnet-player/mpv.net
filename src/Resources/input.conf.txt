@@ -118,6 +118,7 @@ Ctrl+p  script-message-to mpvnet select-profile       #menu: View > Show Profile
 Ctrl+P  script-message-to mpvnet show-profiles        #menu: View > Show Profiles
 Ctrl+7  script-message-to mpvnet show-audio-tracks    #menu: View > Show Audio Tracks
 Ctrl+8  script-message-to mpvnet show-subtitle-tracks #menu: View > Show Subtitle Tracks
+Ctrl+c  script-message-to mpvnet show-chapters        #menu: View > Show Chapters
 b       cycle border                                  #menu: View > Toggle Border
 Ctrl+t  cycle ontop                                   #menu: View > Toggle On Top 
 t       script-binding stats/display-stats-toggle     #menu: View > Toggle Statistics

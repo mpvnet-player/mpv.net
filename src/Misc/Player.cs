@@ -74,7 +74,7 @@ namespace mpvnet
         public AutoResetEvent VideoSizeAutoResetEvent { get; } = new AutoResetEvent(false);
         public IntPtr Handle { get; set; }
         public IntPtr NamedHandle { get; set; }
-        public List<KeyValuePair<string, double>> Chapters { get; set; } = new List<KeyValuePair<string, double>>();
+        public List<Chapter> Chapters { get; set; } = new List<Chapter>();
         public List<MediaTrack> MediaTracks { get; set; } = new List<MediaTrack>();
         public List<TimeSpan> BluRayTitles { get; } = new List<TimeSpan>();
         public object MediaTracksLock { get; } = new object();
@@ -1458,13 +1458,15 @@ namespace mpvnet
 
                 for (int x = 0; x < count; x++)
                 {
-                    string text = GetPropertyString($"chapter-list/{x}/title");
+                    string title = GetPropertyString($"chapter-list/{x}/title");
                     double time = GetPropertyDouble($"chapter-list/{x}/time");
 
-                    if (string.IsNullOrEmpty(text))
-                        text = "Chapter " + (x + 1);
+                    if (string.IsNullOrEmpty(title) ||
+                        (title.Length == 12 && title.Contains(":") && title.Contains(".")))
 
-                    Chapters.Add(new KeyValuePair<string, double>(text, time));
+                        title = "Chapter " + (x + 1);
+
+                    Chapters.Add(new Chapter() { Title = title, Time = time });
                 }
             }
         }

@@ -5,10 +5,18 @@
 - New options `autofit-image` and `autofit-audio`, like autofit but used for image and audio files. Default 80.
 - New [auto-mode](https://github.com/stax76/mpv-scripts) script to use mpv and mpv.net as image viewer and audio player.
 - New support of the mpv option `snap-window`.
+- New feature to show chapters in the command palette, see binding and menu definition below.
 - Fix long commands causing key bindings not visible in the command palette.
 - Fix script compatibility with mordenx and mpv-osc-tethys.
 - Fix borderless window not resizable with mouse.
 
+input.conf changes:
+
+New:
+
+```
+Ctrl+c  script-message-to mpvnet show-chapters        #menu: View > Show Chapters
+```
 
 # 6.0.0.0 Beta (2022-06-05)
 

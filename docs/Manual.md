@@ -298,6 +298,9 @@ Shows available audio devices in a message box.
 Shows available audio tracks in the command palette
 and allows to load the selected audio track.
 
+### show-chapters
+Shows chapters in the command palette.
+
 ### show-command-palette
 Shows the command palette.
 

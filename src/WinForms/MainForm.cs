@@ -301,16 +301,11 @@ namespace mpvnet
                 {
                     chaptersMenuItem.Items.Clear();
 
-                    foreach (var pair in Core.Chapters)
+                    foreach (Chapter chapter in Core.Chapters)
                     {
-                        string caption = TimeSpan.FromSeconds(pair.Value).ToString();
-
-                        if (caption.ContainsEx("."))
-                            caption = caption.Substring(0, caption.LastIndexOf("."));
-
-                        var chapterMenuItem = new WpfControls.MenuItem() { Header = pair.Key };
-                        chapterMenuItem.InputGestureText = caption;
-                        chapterMenuItem.Click += (sender, args) => Core.CommandV("seek", pair.Value.ToString(CultureInfo.InvariantCulture), "absolute");
+                        var chapterMenuItem = new WpfControls.MenuItem() { Header = chapter.Title };
+                        chapterMenuItem.InputGestureText = chapter.TimeDisplay;
+                        chapterMenuItem.Click += (sender, args) => Core.CommandV("seek", chapter.Time.ToString(CultureInfo.InvariantCulture), "absolute");
                         chaptersMenuItem.Items.Add(chapterMenuItem);
                     }
                 }

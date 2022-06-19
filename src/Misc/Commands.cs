@@ -46,6 +46,7 @@ namespace mpvnet
                 case "show-about": ShowDialog(typeof(AboutWindow)); break;
                 case "show-audio-devices": Msg.ShowInfo(Core.GetPropertyOsdString("audio-device-list")); break;
                 case "show-audio-tracks": ShowAudioTracks(); break;
+                case "show-chapters": ShowChapters(); break;
                 case "show-command-palette": ShowCommandPalette(); break;
                 case "show-commands": ShowCommands(); break;
                 case "show-conf-editor": ShowDialog(typeof(ConfWindow)); break;
@@ -663,6 +664,16 @@ namespace mpvnet
                                              Core.CommandV("show-text", i);
                                              Core.CommandV("apply-profile", i);
                                          }));
+
+            CommandPalette.Instance.SetItems(items);
+            MainForm.Instance.ShowCommandPalette();
+            CommandPalette.Instance.SelectFirst();
+        });
+
+        public static void ShowChapters() => App.InvokeOnMainThread(() =>
+        {
+            var items = Core.Chapters.Select(i => new CommandPaletteItem(i.Title, i.TimeDisplay, () =>
+                Core.CommandV("seek", i.Time.ToString(CultureInfo.InvariantCulture), "absolute")));
 
             CommandPalette.Instance.SetItems(items);
             MainForm.Instance.ShowCommandPalette();
