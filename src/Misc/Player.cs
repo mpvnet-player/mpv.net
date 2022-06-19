@@ -1613,7 +1613,7 @@ namespace mpvnet
                     Add(track, fps + " FPS");
                     Add(track, mi.GetVideo(i, "Language/String"));
                     Add(track, mi.GetVideo(i, "Forced") == "Yes" ? "Forced" : "");
-                    Add(track, mi.GetVideo(i, "Default") == "Yes" ? "Default" : "");
+                    Add(track, (videoCount > 1 && mi.GetVideo(i, "Default") == "Yes") ? "Default" : "");
                     Add(track, mi.GetVideo(i, "Title"));
                     track.Text = "V: " + track.Text.Trim(' ', ',');
                     track.Type = "v";
@@ -1633,7 +1633,7 @@ namespace mpvnet
                     Add(track, mi.GetAudio(i, "Channel(s)") + " ch");
                     Add(track, mi.GetAudio(i, "SamplingRate/String"));
                     Add(track, mi.GetAudio(i, "Forced") == "Yes" ? "Forced" : "");
-                    Add(track, mi.GetAudio(i, "Default") == "Yes" ? "Default" : "");
+                    Add(track, (audioCount > 1 && mi.GetAudio(i, "Default") == "Yes") ? "Default" : "");
                     Add(track, mi.GetAudio(i, "Title"));
                     track.Text = "A: " + track.Text.Trim(' ', ',');
                     track.Type = "a";
@@ -1658,7 +1658,7 @@ namespace mpvnet
                     Add(track, codec);
                     Add(track, mi.GetText(i, "Format_Profile"));
                     Add(track, mi.GetText(i, "Forced") == "Yes" ? "Forced" : "");
-                    Add(track, mi.GetText(i, "Default") == "Yes" ? "Default" : "");
+                    Add(track, (subCount > 1 && mi.GetText(i, "Default") == "Yes") ? "Default" : "");
                     Add(track, mi.GetText(i, "Title"));
                     track.Text = "S: " + track.Text.Trim(' ', ',');
                     track.Type = "s";
