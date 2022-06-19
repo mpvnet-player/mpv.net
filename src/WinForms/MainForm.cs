@@ -477,7 +477,7 @@ namespace mpvnet
                     height = windowSize.Height;
                     width = height * videoSize.Width / videoSize.Height;
                 }
-                else if (App.StartSize == "height-session")
+                else if (App.StartSize == "height-session" || App.StartSize == "session")
                 {
                     height = autoFitHeight;
                     width = height * videoSize.Width / videoSize.Height;
@@ -492,7 +492,7 @@ namespace mpvnet
                     width = autoFitHeight / 9 * 16;
                     height = (int)Math.Ceiling(width * videoSize.Height / (double)videoSize.Width);
                 }
-                else if (KeepSize() && windowSize.Height != 0)
+                else if (App.StartSize == "always" && windowSize.Height != 0)
                 {
                     height = windowSize.Height;
                     width = windowSize.Width;

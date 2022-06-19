@@ -9,6 +9,7 @@
 - Fix long commands causing key bindings not visible in the command palette.
 - Fix script compatibility with mordenx and mpv-osc-tethys.
 - Fix borderless window not resizable with mouse.
+- Fix start-size=session not working.
 
 input.conf changes:
 
