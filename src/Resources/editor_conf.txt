@@ -420,7 +420,7 @@ help = <int> Initial window height in percent for image files. Default: 80
 name = autofit-audio
 file = mpvnet
 filter = Screen
-help = <int> Initial window height in percent for audio files. Default: 80
+help = <int> Initial window height in percent for audio files. Default: 70
 
 [setting]
 name = autofit-smaller
@@ -463,7 +463,13 @@ option = no
 name = minimum-aspect-ratio
 file = mpvnet
 filter = Screen
-help = <float> Minimum aspect ratio, if the AR is smaller than the defined value then the window AR is set to 16/9. This avoids a square window for Music with cover art. Default: 0 (mpv.net specific option)
+help = <float> Minimum aspect ratio of the window. Useful to force a wider window and therefore a larger OSC. (mpv.net specific option)
+
+[setting]
+name = minimum-aspect-ratio-audio
+file = mpvnet
+filter = Screen
+help = Same as minimum-aspect-ratio but used for audio files.
 
 [setting]
 name = remember-window-position

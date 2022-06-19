@@ -36,9 +36,10 @@ namespace mpvnet
         public static int StartThreshold { get; set; } = 1500;
         public static int RecentCount { get; set; } = 15;
 
-        public static float AutofitAudio { get; set; } = 0.8f;
+        public static float AutofitAudio { get; set; } = 0.7f;
         public static float AutofitImage { get; set; } = 0.8f;
         public static float MinimumAspectRatio { get; set; }
+        public static float MinimumAspectRatioAudio { get; set; }
         public static float QuickBookmark { get; set; }
 
         public static Extension Extension { get; set; }
@@ -252,6 +253,7 @@ namespace mpvnet
                 case "light-theme": LightTheme = value.Trim('\'', '"'); return true;
                 case "media-info": MediaInfo = value == "yes"; return true;
                 case "minimum-aspect-ratio": MinimumAspectRatio = value.ToFloat(); return true;
+                case "minimum-aspect-ratio-audio": MinimumAspectRatioAudio = value.ToFloat(); return true;
                 case "process-instance": ProcessInstance = value; return true;
                 case "queue": Queue = value == "yes"; return true;
                 case "recent-count": RecentCount = value.ToInt(); return true;

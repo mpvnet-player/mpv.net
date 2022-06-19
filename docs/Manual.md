@@ -388,7 +388,7 @@ mpv.net specific options can be found in the conf editor searching for 'mpv.net'
 The options are saved in the mpvnet.conf file.
 
 #### --autofit-audio \<integer\>
-Initial window height in percent for audio files. Default: 80
+Initial window height in percent for audio files. Default: 70
 
 #### --autofit-image \<integer\>
 Initial window height in percent for image files. Default: 80
@@ -439,9 +439,12 @@ Window size is always remembered.
 
 #### --minimum-aspect-ratio=\<float\>
 
-Minimum aspect ratio, if the AR is smaller than the defined value then
-the window AR is set to 16/9. This avoids a square window for Music
-with cover art. Default: 0
+Minimum aspect ratio of the window. Useful to force
+a wider window and therefore a larger OSC.
+
+#### --minimum-aspect-ratio-audio=\<float\>
+
+Same as minimum-aspect-ratio but used for audio files.
 
 #### --remember-window-position=\<yes|no\>
 

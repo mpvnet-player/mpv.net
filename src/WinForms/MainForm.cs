@@ -437,10 +437,13 @@ namespace mpvnet
             if (Core.IsAudio) autoFitHeight = Convert.ToInt32(workingArea.Height * App.AutofitAudio);
             if (Core.IsImage) autoFitHeight = Convert.ToInt32(workingArea.Height * App.AutofitImage);
 
-            if (Core.VideoSize.Height == 0 || Core.VideoSize.Width == 0 ||
-                Core.VideoSize.Width / (float)Core.VideoSize.Height < App.MinimumAspectRatio)
-
+            if (Core.VideoSize.Height == 0 || Core.VideoSize.Width == 0)
                 Core.VideoSize = new Size((int)(autoFitHeight * (16 / 9f)), autoFitHeight);
+
+            float minAspectRatio = Core.IsAudio ? App.MinimumAspectRatioAudio : App.MinimumAspectRatio;
+
+            if (minAspectRatio != 0 && Core.VideoSize.Width / (float)Core.VideoSize.Height < minAspectRatio)
+                Core.VideoSize = new Size((int)(autoFitHeight * minAspectRatio), autoFitHeight);
 
             Size videoSize = Core.VideoSize;
 
