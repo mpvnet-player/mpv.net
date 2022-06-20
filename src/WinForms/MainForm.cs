@@ -1333,7 +1333,7 @@ namespace mpvnet
             if (CommandPaletteHost == null)
                 return;
 
-            CommandPaletteHost.Width = FontHeight * 25;
+            CommandPaletteHost.Width = FontHeight * 27;
 
             if (CommandPaletteHost.Width > ClientSize.Width)
                 CommandPaletteHost.Width = ClientSize.Width;

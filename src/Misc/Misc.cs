@@ -151,8 +151,8 @@ namespace mpvnet
             get {
                 if (string.IsNullOrEmpty(Path))
                 {
-                    if (Command.Length > 50)
-                        return Command.Substring(0, 50) + "...";
+                    if (Command.Length > 47)
+                        return Command.Substring(0, 47) + "...";
                     return Command;
                 }
                 else

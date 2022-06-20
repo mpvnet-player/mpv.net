@@ -11,6 +11,8 @@
 - Fix script compatibility with mordenx and mpv-osc-tethys.
 - Fix borderless window not resizable with mouse.
 - Fix start-size=session not working.
+- Width of command palette slightly increased.
+- libmpv zhongfly 2022-06-19
 
 input.conf changes:
 
