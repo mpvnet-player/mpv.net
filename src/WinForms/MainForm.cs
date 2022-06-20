@@ -729,7 +729,7 @@ namespace mpvnet
 
             string path = Core.GetPropertyString("path");
 
-            if (path.Contains(":/") && !path.Contains("://"))
+            if ((path.Contains(":/") && !path.Contains("://")) || (path.Contains(":\\") && path.Contains("/")))
                 path = path.Replace("/", "\\");
 
             if (path.Contains("://"))
