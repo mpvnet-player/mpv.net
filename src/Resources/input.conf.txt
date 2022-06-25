@@ -94,6 +94,8 @@ _           ignore                 #menu: Track
 
 +           add volume  2          #menu: Volume > Up
 -           add volume -2          #menu: Volume > Down
+0           add volume  2          #menu: Volume > Up
+9           add volume -2          #menu: Volume > Down
 _           ignore                 #menu: Volume > -
 m           cycle mute             #menu: Volume > Mute
 
