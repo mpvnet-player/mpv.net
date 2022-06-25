@@ -11,6 +11,7 @@
 - Fix script compatibility with mordenx and mpv-osc-tethys.
 - Fix borderless window not resizable with mouse.
 - Fix start-size=session not working.
+- Fix chapters that are script created after the media file is loaded.
 - Width of command palette slightly increased.
 - libmpv zhongfly 2022-06-19
 

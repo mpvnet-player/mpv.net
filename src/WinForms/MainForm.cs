@@ -293,21 +293,18 @@ namespace mpvnet
                 }
             }
 
-            lock (Core.Chapters)
+            var chaptersMenuItem = FindMenuItem("Chapters");
+
+            if (chaptersMenuItem != null)
             {
-                var chaptersMenuItem = FindMenuItem("Chapters");
+                chaptersMenuItem.Items.Clear();
 
-                if (chaptersMenuItem != null)
+                foreach (Chapter chapter in Core.GetChapters())
                 {
-                    chaptersMenuItem.Items.Clear();
-
-                    foreach (Chapter chapter in Core.Chapters)
-                    {
-                        var chapterMenuItem = new WpfControls.MenuItem() { Header = chapter.Title };
-                        chapterMenuItem.InputGestureText = chapter.TimeDisplay;
-                        chapterMenuItem.Click += (sender, args) => Core.CommandV("seek", chapter.Time.ToString(CultureInfo.InvariantCulture), "absolute");
-                        chaptersMenuItem.Items.Add(chapterMenuItem);
-                    }
+                    var chapterMenuItem = new WpfControls.MenuItem() { Header = chapter.Title };
+                    chapterMenuItem.InputGestureText = chapter.TimeDisplay;
+                    chapterMenuItem.Click += (sender, args) => Core.CommandV("seek", chapter.Time.ToString(CultureInfo.InvariantCulture), "absolute");
+                    chaptersMenuItem.Items.Add(chapterMenuItem);
                 }
             }
 
@@ -1333,7 +1330,7 @@ namespace mpvnet
             if (CommandPaletteHost == null)
                 return;
 
-            CommandPaletteHost.Width = FontHeight * 27;
+            CommandPaletteHost.Width = FontHeight * 26;
 
             if (CommandPaletteHost.Width > ClientSize.Width)
                 CommandPaletteHost.Width = ClientSize.Width;

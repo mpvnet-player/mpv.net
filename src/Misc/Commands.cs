@@ -672,7 +672,7 @@ namespace mpvnet
 
         public static void ShowChapters() => App.InvokeOnMainThread(() =>
         {
-            var items = Core.Chapters.Select(i => new CommandPaletteItem(i.Title, i.TimeDisplay, () =>
+            var items = Core.GetChapters().Select(i => new CommandPaletteItem(i.Title, i.TimeDisplay, () =>
                 Core.CommandV("seek", i.Time.ToString(CultureInfo.InvariantCulture), "absolute")));
 
             CommandPalette.Instance.SetItems(items);

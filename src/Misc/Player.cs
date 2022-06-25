@@ -74,7 +74,6 @@ namespace mpvnet
         public AutoResetEvent VideoSizeAutoResetEvent { get; } = new AutoResetEvent(false);
         public IntPtr Handle { get; set; }
         public IntPtr NamedHandle { get; set; }
-        public List<Chapter> Chapters { get; set; } = new List<Chapter>();
         public List<MediaTrack> MediaTracks { get; set; } = new List<MediaTrack>();
         public List<TimeSpan> BluRayTitles { get; } = new List<TimeSpan>();
         public object MediaTracksLock { get; } = new object();
@@ -1450,25 +1449,26 @@ namespace mpvnet
                 else
                     MediaTracks = GetTracks();
             }
+        }
 
-            lock (Chapters)
+        public List<Chapter> GetChapters() {
+            List<Chapter> chapters = new List<Chapter>();
+            int count = GetPropertyInt("chapter-list/count");
+
+            for (int x = 0; x < count; x++)
             {
-                Chapters.Clear();
-                int count = GetPropertyInt("chapter-list/count");
+                string title = GetPropertyString($"chapter-list/{x}/title");
+                double time = GetPropertyDouble($"chapter-list/{x}/time");
 
-                for (int x = 0; x < count; x++)
-                {
-                    string title = GetPropertyString($"chapter-list/{x}/title");
-                    double time = GetPropertyDouble($"chapter-list/{x}/time");
+                if (string.IsNullOrEmpty(title) ||
+                    (title.Length == 12 && title.Contains(":") && title.Contains(".")))
 
-                    if (string.IsNullOrEmpty(title) ||
-                        (title.Length == 12 && title.Contains(":") && title.Contains(".")))
+                    title = "Chapter " + (x + 1);
 
-                        title = "Chapter " + (x + 1);
-
-                    Chapters.Add(new Chapter() { Title = title, Time = time });
-                }
+                chapters.Add(new Chapter() { Title = title, Time = time });
             }
+
+            return chapters;
         }
 
         public void UpdateExternalTracks()
