@@ -25,6 +25,7 @@ namespace mpvnet
         public ElementHost CommandPaletteHost { get; set; }
         public IntPtr mpvWindowHandle { get; set; }
         public static MainForm Instance { get; set; }
+        public Dictionary<string, WpfControls.MenuItem> MenuItemDuplicate = new Dictionary<string, WpfControls.MenuItem>();
 
         new WpfControls.ContextMenu ContextMenu { get; set; }
         AutoResetEvent MenuAutoResetEvent { get; } = new AutoResetEvent(false);
@@ -678,31 +679,40 @@ namespace mpvnet
 
             foreach (CommandItem item in items)
             {
-                var tempItem = item;
+                CommandItem tempItem = item;
 
                 if (string.IsNullOrEmpty(tempItem.Path))
                     continue;
 
-                var menuItem = MenuHelp.Add(ContextMenu.Items, tempItem.Path);
-
-                if (menuItem != null)
+                if (MenuItemDuplicate.ContainsKey(tempItem.Path))
                 {
-                    menuItem.Click += (sender, args) => {
-                        try {
-                            App.RunTask(() => {
-                                MenuAutoResetEvent.WaitOne();
-                                System.Windows.Application.Current.Dispatcher.Invoke(
-                                    DispatcherPriority.Background, new Action(delegate { }));
-                                if (!string.IsNullOrEmpty(tempItem.Command))
-                                    Core.Command(tempItem.Command);                
-                            });
-                        }
-                        catch (Exception ex) {
-                            Msg.ShowException(ex);
-                        }
-                    };
+                    var mi = MenuItemDuplicate[tempItem.Path];
+                    mi.InputGestureText = mi.InputGestureText + ", " + tempItem.Input;
+                }
+                else
+                {
+                    var menuItem = MenuHelp.Add(ContextMenu.Items, tempItem.Path);             
 
-                    menuItem.InputGestureText = tempItem.Input;
+                    if (menuItem != null)
+                    {
+                        MenuItemDuplicate[tempItem.Path] = menuItem;
+                        menuItem.Click += (sender, args) => {
+                            try {
+                                App.RunTask(() => {
+                                    MenuAutoResetEvent.WaitOne();
+                                    System.Windows.Application.Current.Dispatcher.Invoke(
+                                        DispatcherPriority.Background, new Action(delegate { }));
+                                    if (!string.IsNullOrEmpty(tempItem.Command))
+                                        Core.Command(tempItem.Command);                
+                                });
+                            }
+                            catch (Exception ex) {
+                                Msg.ShowException(ex);
+                            }
+                        };
+
+                        menuItem.InputGestureText = tempItem.Input;
+                    }
                 }
             }
         }

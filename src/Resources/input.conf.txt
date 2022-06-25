@@ -173,7 +173,6 @@ Esc quit                                         #menu: Exit
 MBTN_Right    script-message-to mpvnet show-menu
 6             script-message-to mpvnet show-progress
 KP6           script-message-to mpvnet show-progress
-9             ab-loop
 KP9           ab-loop
 7             script-message-to mpvnet cycle-audio
 Sharp         script-message-to mpvnet cycle-audio
