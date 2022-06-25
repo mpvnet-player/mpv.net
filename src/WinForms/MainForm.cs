@@ -930,7 +930,7 @@ namespace mpvnet
                     }
                     return;
                 case 0x84: // WM_NCHITTEST
-                    {
+                    if (!Core.Border) {
                         // resize borderless window
                         const int HTLEFT = 10;
                         const int HTRIGHT = 11;
