@@ -15,7 +15,7 @@
 - Width of command palette slightly increased.
 - The default key bindings for 0 and 9 change the volume like mpv.
 - When a menu item is defined multiple times with different key bindings,
-  all key bindings are shown in the menu.
+  only one menu item is created, it shows all bindings.
 - libmpv zhongfly 2022-06-19
 
 input.conf changes:
