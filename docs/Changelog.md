@@ -4,6 +4,8 @@
 - New tutorial: [Extending mpv and mpv.net via Lua scripting](https://github.com/stax76/mpv.net/wiki/Extending-mpv-and-mpv.net-via-Lua-scripting)
 - New options `autofit-image` and `autofit-audio`, like autofit but used for image and audio files.
 - New [auto-mode](https://github.com/stax76/mpv-scripts) script to use mpv and mpv.net as image viewer and audio player.
+- New [smart-volume](https://github.com/stax76/mpv-scripts) script. Records the volume per file in order to restore it
+  in future sessions. What is recorded and restored is the volume offset relative to the session average volume.
 - New support of the mpv option `snap-window`.
 - New feature to show chapters in the command palette, see binding and menu definition below.
 - New option minimum-aspect-ratio-audio, same as minimum-aspect-ratio but used for audio files.
