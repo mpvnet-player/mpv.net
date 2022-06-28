@@ -952,28 +952,29 @@ namespace mpvnet
                         const int HTBOTTOMLEFT = 16;
                         const int HTBOTTOMRIGHT = 17;
 
-                        int x = (int)(m.LParam.ToInt64() & 0xFFFF); // loword
-                        int y = (int)((m.LParam.ToInt64() & 0xFFFF0000) >> 16); // hiword
+                        int x = (short)(m.LParam.ToInt32() & 0xFFFF); // LoWord
+                        int y = (short)(m.LParam.ToInt32() >> 16);    // HiWord
 
                         Point pt = PointToClient(new Point(x, y));
                         Size cs = ClientSize;
                         m.Result = new IntPtr(HTCLIENT);
+                        int distance = FontHeight / 3;
 
-                        if (pt.X >= cs.Width - 16 && pt.Y >= cs.Height - 16 && cs.Height >= 16)
-                            m.Result = (IntPtr)(IsMirrored ? HTBOTTOMLEFT : HTBOTTOMRIGHT);
-                        else if (pt.X <= 16 && pt.Y >= cs.Height - 16 && cs.Height >= 16)
-                            m.Result = (IntPtr)(IsMirrored ? HTBOTTOMRIGHT : HTBOTTOMLEFT);
-                        else if (pt.X <= 16 && pt.Y <= 16 && cs.Height >= 16)
-                            m.Result = (IntPtr)(IsMirrored ? HTTOPRIGHT : HTTOPLEFT);
-                        else if (pt.X >= cs.Width - 16 && pt.Y <= 16 && cs.Height >= 16)
-                            m.Result = (IntPtr)(IsMirrored ? HTTOPLEFT : HTTOPRIGHT);
-                        else if (pt.Y <= 16 && cs.Height >= 16)
+                        if (pt.X >= cs.Width - distance && pt.Y >= cs.Height - distance && cs.Height >= distance)
+                            m.Result = (IntPtr)HTBOTTOMRIGHT;
+                        else if (pt.X <= distance && pt.Y >= cs.Height - distance && cs.Height >= distance)
+                            m.Result = (IntPtr)HTBOTTOMLEFT;
+                        else if (pt.X <= distance && pt.Y <= distance && cs.Height >= distance)
+                            m.Result = (IntPtr)HTTOPLEFT;
+                        else if (pt.X >= cs.Width - distance && pt.Y <= distance && cs.Height >= distance)
+                            m.Result = (IntPtr)HTTOPRIGHT;
+                        else if (pt.Y <= distance && cs.Height >= distance)
                             m.Result = (IntPtr)HTTOP;
-                        else if (pt.Y >= cs.Height - 16 && cs.Height >= 16)
+                        else if (pt.Y >= cs.Height - distance && cs.Height >= distance)
                             m.Result = (IntPtr)HTBOTTOM;
-                        else if (pt.X <= 16 && cs.Height >= 16)
+                        else if (pt.X <= distance && cs.Height >= distance)
                             m.Result = (IntPtr)HTLEFT;
-                        else if (pt.X >= cs.Width - 16 && cs.Height >= 16)
+                        else if (pt.X >= cs.Width - distance && cs.Height >= distance)
                             m.Result = (IntPtr)HTRIGHT;
 
                         return;
