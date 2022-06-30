@@ -1,8 +1,8 @@
 
-# 6.0.0.1 Beta (not yet released)
+# 6.0.1.0
 
 - New tutorial: [Extending mpv and mpv.net via Lua scripting](https://github.com/stax76/mpv.net/wiki/Extending-mpv-and-mpv.net-via-Lua-scripting)
-- New options `autofit-image` and `autofit-audio`, like autofit but used for image and audio files.
+- New options `autofit-image` and `autofit-audio`, like autofit, but used for image and audio files.
 - New [auto-mode](https://github.com/stax76/mpv-scripts) script to use mpv and mpv.net as image viewer and audio player.
 - New [smart-volume](https://github.com/stax76/mpv-scripts) script. Records the volume per file in order to restore it
   in future sessions. What is recorded and restored is the volume offset relative to the session average volume.
@@ -15,7 +15,7 @@
 - Fix start-size=session not working.
 - Fix chapters that are script created after the media file is loaded.
 - Width of command palette slightly increased.
-- The default key bindings for 0 and 9 change the volume like mpv.
+- The default key bindings for 0 and 9 change the volume, like mpv.
 - When a menu item is defined multiple times with different key bindings,
   only one menu item is created, it shows all bindings.
 - libmpv zhongfly 2022-06-19
