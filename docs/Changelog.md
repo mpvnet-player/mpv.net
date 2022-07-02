@@ -1,4 +1,9 @@
 
+# 6.0.2.0 (2022-07-02)
+
+- Fix main window shown collapsed when the player was started with full screen.
+
+
 # 6.0.1.0 (2022-06-30)
 
 - New tutorial: [Extending mpv and mpv.net via Lua scripting](https://github.com/stax76/mpv.net/wiki/Extending-mpv-and-mpv.net-via-Lua-scripting)

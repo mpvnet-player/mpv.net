@@ -620,7 +620,12 @@ namespace mpvnet
                     if (WasMaximized)
                         WindowState = FormWindowState.Maximized;
                     else
+                    {
                         WindowState = FormWindowState.Normal;
+                        
+                        if (!Core.WasInitialSizeSet)
+                            SetFormPosAndSize();
+                    }
 
                     if (Core.Border)
                         FormBorderStyle = FormBorderStyle.Sizable;
