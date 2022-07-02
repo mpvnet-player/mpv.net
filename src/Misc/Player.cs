@@ -1194,6 +1194,9 @@ namespace mpvnet
             {
                 string file = files[i];
 
+                if (file.Contains("|"))
+                    file = file.Substring(0, file.IndexOf("|"));
+
                 if (file.Ext() == "avs")
                     LoadAviSynth();
 

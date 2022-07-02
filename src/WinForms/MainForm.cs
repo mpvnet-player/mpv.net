@@ -48,7 +48,7 @@ namespace mpvnet
 
                 Core.FileLoaded += Core_FileLoaded;
                 Core.Pause += Core_Pause;
-                Core.PlaylistPosChanged += (value) => SetTitle();
+                Core.PlaylistPosChanged += Core_PlaylistPosChanged;
                 Core.ScaleWindow += Core_ScaleWindow;
                 Core.Seek += () => UpdateProgressBar();
                 Core.ShowMenu += Core_ShowMenu;
@@ -116,6 +116,12 @@ namespace mpvnet
             {
                 Msg.ShowException(ex);
             }
+        }
+
+        private void Core_PlaylistPosChanged(int pos)
+        {
+            if (pos == -1)
+                SetTitle();
         }
 
         void Init()
@@ -720,7 +726,7 @@ namespace mpvnet
         void Core_FileLoaded()
         {
             BeginInvoke(new Action(() => {
-                Text = Core.Expand(Title);
+                SetTitleInternal();
 
                 int interval = (int)(Core.Duration.TotalMilliseconds / 100);
 
@@ -759,7 +765,22 @@ namespace mpvnet
             }
         }
 
-        void SetTitle() => BeginInvoke(new Action(() => Text = Core.Expand(Title)));
+        void SetTitle() => BeginInvoke(new Action(() => SetTitleInternal()));
+
+        void SetTitleInternal()
+        {
+            string title = Title;
+
+            if (title == "${filename}" && Core.Path.ContainsEx("://"))
+                title = "${media-title}";
+
+            string text = Core.Expand(title);
+
+            if (text == "(unavailable)")
+                text = "mpv.net";
+
+            Text = text;
+        }
 
         public void Voodoo()
         {
