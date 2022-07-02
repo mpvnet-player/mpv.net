@@ -1276,41 +1276,47 @@ namespace mpvnet
             }
         }
 
+        static object LoadFolderLockObject = new object();
+
         public void LoadFolder()
         {
             if (!App.AutoLoadFolder || Control.ModifierKeys.HasFlag(Keys.Shift))
                 return;
 
             Thread.Sleep(1000);
-            string path = GetPropertyString("path");
 
-            if (!File.Exists(path) || GetPropertyInt("playlist-count") != 1)
-                return;
+            lock (LoadFolderLockObject)
+            {
+                string path = GetPropertyString("path");
 
-            string dir = Environment.CurrentDirectory;
+                if (!File.Exists(path) || GetPropertyInt("playlist-count") != 1)
+                    return;
 
-            if (path.Contains(":/") && !path.Contains("://"))
-                path = path.Replace("/", "\\");
+                string dir = Environment.CurrentDirectory;
 
-            if (path.Contains("\\"))
-                dir = System.IO.Path.GetDirectoryName(path);
+                if (path.Contains(":/") && !path.Contains("://"))
+                    path = path.Replace("/", "\\");
 
-            List<string> files = Directory.GetFiles(dir).ToList();
+                if (path.Contains("\\"))
+                    dir = System.IO.Path.GetDirectoryName(path);
 
-            files = files.Where(file =>
-                VideoTypes.Contains(file.Ext()) ||
-                AudioTypes.Contains(file.Ext()) ||
-                ImageTypes.Contains(file.Ext())).ToList();
+                List<string> files = Directory.GetFiles(dir).ToList();
 
-            files.Sort(new StringLogicalComparer());
-            int index = files.IndexOf(path);
-            files.Remove(path);
+                files = files.Where(file =>
+                    VideoTypes.Contains(file.Ext()) ||
+                    AudioTypes.Contains(file.Ext()) ||
+                    ImageTypes.Contains(file.Ext())).ToList();
 
-            foreach (string i in files)
-                CommandV("loadfile", i, "append");
+                files.Sort(new StringLogicalComparer());
+                int index = files.IndexOf(path);
+                files.Remove(path);
 
-            if (index > 0)
-                CommandV("playlist-move", "0", (index + 1).ToString());
+                foreach (string i in files)
+                    CommandV("loadfile", i, "append");
+
+                if (index > 0)
+                    CommandV("playlist-move", "0", (index + 1).ToString());
+            }
         }
 
         bool WasAviSynthLoaded;
