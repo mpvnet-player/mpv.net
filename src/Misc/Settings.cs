@@ -23,7 +23,6 @@ namespace mpvnet
         public Size WindowSize;
         public string ConfigEditorSearch = "Video:";
         public string Mute = "no";
-        public string UpdateCheckVersion = "";
     }
 
     class SettingsManager

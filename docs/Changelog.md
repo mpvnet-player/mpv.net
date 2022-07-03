@@ -1,4 +1,9 @@
 
+# 6.0.3.0 (2022-07-03)
+
+- Fix the rare occasion of duplicated playlist entries produced by the auto-load-folder feature.
+
+
 # 6.0.2.0 (2022-07-02)
 
 - Fix main window shown collapsed when the player was started with full screen.
