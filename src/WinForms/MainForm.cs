@@ -860,6 +860,7 @@ namespace mpvnet
                 case 0x20b: // WM_XBUTTONDOWN
                 case 0x20c: // WM_XBUTTONUP
                 case 0x20e: // WM_MOUSEHWHEEL
+                case 0x2a3: // WM_MOUSELEAVE
                     if (mpvWindowHandle == IntPtr.Zero)
                         mpvWindowHandle = FindWindowEx(Handle, IntPtr.Zero, "mpv", null);
 
@@ -893,10 +894,6 @@ namespace mpvnet
 
                     if (CursorHelp.IsPosDifferent(LastCursorPosition))
                         CursorHelp.Show();
-                    break;
-                case 0x2a3: // WM_MOUSELEAVE
-                    //osc won't auto hide after mouse left window in borderless mode
-                    Core.Command($"mouse {ClientSize.Width / 2} {ClientSize.Height / 3}");
                     break;
                 case 0x203: // WM_LBUTTONDBLCLK
                     {
