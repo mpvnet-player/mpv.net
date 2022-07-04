@@ -1,4 +1,11 @@
 
+# 6.0.3.1 (202?-??-??)
+
+- Fix OSC hide behavior on mouse move.
+- MediaInfo v22.06
+- libmpv shinchiro 2022-07-04
+
+
 # 6.0.3.0 (2022-07-03)
 
 - Fix the rare occasion of duplicated playlist entries produced by the auto-load-folder feature.
