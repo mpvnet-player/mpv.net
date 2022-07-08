@@ -3,7 +3,7 @@
 
 - Fix OSC hide behavior on mouse move.
 - MediaInfo v22.06
-- libmpv shinchiro 2022-07-04
+- libmpv shinchiro 2022-07-02
 
 
 # 6.0.3.0 (2022-07-03)
