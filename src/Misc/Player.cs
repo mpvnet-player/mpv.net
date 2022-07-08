@@ -1194,22 +1194,36 @@ namespace mpvnet
             {
                 string file = files[i];
 
+                if (string.IsNullOrEmpty(file))
+                    continue;
+
                 if (file.Contains("|"))
                     file = file.Substring(0, file.IndexOf("|"));
 
-                if (file.Ext() == "avs")
+                string ext = file.Ext();
+
+                if (ext == "avs")
                     LoadAviSynth();
 
-                if (file.Ext() == "iso")
+                if (ext == "iso")
                     LoadISO(file);
-                else if(SubtitleTypes.Contains(file.Ext()))
+                else if(SubtitleTypes.Contains(ext))
                     CommandV("sub-add", file);
-                else if (file.Ext().Length != 3 && File.Exists(System.IO.Path.Combine(file, "BDMV\\index.bdmv")))
+                else if (ext == "" && !file.Contains("://") && Directory.Exists(file))
                 {
-                    Command("stop");
-                    Thread.Sleep(500);
-                    SetPropertyString("bluray-device", file);
-                    CommandV("loadfile", @"bd://");
+                    if (File.Exists(System.IO.Path.Combine(file, "BDMV\\index.bdmv")))
+                    {
+                        Command("stop");
+                        Thread.Sleep(500);
+                        SetPropertyString("bluray-device", file);
+                        CommandV("loadfile", @"bd://");
+                    }
+                    else
+                    {
+                        files = GetMediaFiles(Directory.GetFiles(file, "*.*", SearchOption.AllDirectories)).ToArray();
+                        LoadFiles(files, loadFolder, append);
+                        return;
+                    }
                 }
                 else
                 {
@@ -1300,13 +1314,7 @@ namespace mpvnet
                 if (path.Contains("\\"))
                     dir = System.IO.Path.GetDirectoryName(path);
 
-                List<string> files = Directory.GetFiles(dir).ToList();
-
-                files = files.Where(file =>
-                    VideoTypes.Contains(file.Ext()) ||
-                    AudioTypes.Contains(file.Ext()) ||
-                    ImageTypes.Contains(file.Ext())).ToList();
-
+                List<string> files = GetMediaFiles(Directory.GetFiles(dir)).ToList();
                 files.Sort(new StringLogicalComparer());
                 int index = files.IndexOf(path);
                 files.Remove(path);
@@ -1317,6 +1325,13 @@ namespace mpvnet
                 if (index > 0)
                     CommandV("playlist-move", "0", (index + 1).ToString());
             }
+        }
+
+        IEnumerable<string> GetMediaFiles(IEnumerable<string> files)
+        {
+            return files.Where(i => VideoTypes.Contains(i.Ext()) || 
+                                    AudioTypes.Contains(i.Ext()) ||
+                                    ImageTypes.Contains(i.Ext()));
         }
 
         bool WasAviSynthLoaded;

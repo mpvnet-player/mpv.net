@@ -518,6 +518,9 @@ namespace mpvnet
                     Action = () => Core.SetPropertyInt("playlist-pos", index)
                 };
 
+                if (string.IsNullOrEmpty(item.Text))
+                    item.Text = file;
+
                 items.Add(item);
 
                 if (currentPath.ToLowerEx() == file.ToLowerEx())
