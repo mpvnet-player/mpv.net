@@ -3,6 +3,7 @@
 
 - Creating a playlist from a folder uses absolute normalized paths, non media files are ignored.
 - The basic view of the show-info command was removed, the advanced view was enhanced with a General section and the filename.
+- Media info titles are shortened if they contain duplicated or obvious information.
 - Fix OSC hide behavior on mouse move.
 - MediaInfo v22.06
 - libmpv shinchiro 2022-07-02

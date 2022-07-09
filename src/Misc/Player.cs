@@ -1452,6 +1452,15 @@ namespace mpvnet
             }
         }
 
+        string GetNativeLanguage(string name)
+        {
+            foreach (CultureInfo ci in CultureInfo.GetCultures(CultureTypes.NeutralCultures))
+                if (ci.EnglishName == name)
+                    return ci.NativeName;
+
+            return name;
+        }
+
         public void RaiseScaleWindow(float value) => ScaleWindow(value);
         
         public void RaiseWindowScaleNET(float value) => WindowScaleNET(value);
@@ -1644,8 +1653,6 @@ namespace mpvnet
                     Add(track, mi.GetVideo(i, "Width") + "x" + mi.GetVideo(i, "Height"));
                     Add(track, mi.GetVideo(i, "BitRate/String"));
                     Add(track, fps + " FPS");
-                    Add(track, mi.GetVideo(i, "Language/String"));
-                    Add(track, mi.GetVideo(i, "Forced") == "Yes" ? "Forced" : "");
                     Add(track, (videoCount > 1 && mi.GetVideo(i, "Default") == "Yes") ? "Default" : "");
                     Add(track, mi.GetVideo(i, "Title"));
                     track.Text = "V: " + track.Text.Trim(' ', ',');
@@ -1658,16 +1665,80 @@ namespace mpvnet
 
                 for (int i = 0; i < audioCount; i++)
                 {
+                    string lang = mi.GetAudio(i, "Language/String");
+                    string nativeLang = GetNativeLanguage(lang);
+                    string title = mi.GetAudio(i, "Title");
+                    string format = mi.GetAudio(i, "Format");
+
+                    if (!string.IsNullOrEmpty(title))
+                    {
+                        if (title.ContainsEx("DTS-HD MA"))
+                            format = "DTS-MA";
+
+                        if (title.ContainsEx("DTS-HD MA"))
+                            title = title.Replace("DTS-HD MA", "");
+
+                        if (title.ContainsEx("Blu-ray"))
+                            title = title.Replace("Blu-ray", "");
+
+                        if (title.ContainsEx("UHD "))
+                            title = title.Replace("UHD ", "");
+
+                        if (title.ContainsEx("EAC"))
+                            title = title.Replace("EAC", "E-AC");
+
+                        if (title.ContainsEx("AC3"))
+                            title = title.Replace("AC3", "AC-3");
+
+                        if (title.ContainsEx(lang))
+                            title = title.Replace(lang, "").Trim();
+
+                        if (title.ContainsEx(nativeLang))
+                            title = title.Replace(nativeLang, "").Trim();
+
+                        if (title.ContainsEx("Surround"))
+                            title = title.Replace("Surround", "");
+
+                        if (title.ContainsEx("Dolby Digital"))
+                            title = title.Replace("Dolby Digital", "");
+
+                        if (title.ContainsEx("Stereo"))
+                            title = title.Replace("Stereo", "");
+
+                        if (title.StartsWith(format + " "))
+                            title = title.Replace(format + " ", "");
+
+                        foreach (string i2 in new [] { "2.0", "5.1", "6.1", "7.1" })
+                            if (title.ContainsEx(i2))
+                                title = title.Replace(i2, "");
+
+                        if (title.ContainsEx("()"))
+                            title = title.Replace("()", "");
+
+                        if (title.ContainsEx("[]"))
+                            title = title.Replace("[]", "");
+
+                        if (title.TrimEx() == format)
+                            title = null;
+                    }
+
                     track = new MediaTrack();
-                    Add(track, mi.GetAudio(i, "Language/String"));
-                    Add(track, mi.GetAudio(i, "Format"));
+                    Add(track, lang);
+                    Add(track, format);
                     Add(track, mi.GetAudio(i, "Format_Profile"));
                     Add(track, mi.GetAudio(i, "BitRate/String"));
                     Add(track, mi.GetAudio(i, "Channel(s)") + " ch");
                     Add(track, mi.GetAudio(i, "SamplingRate/String"));
                     Add(track, mi.GetAudio(i, "Forced") == "Yes" ? "Forced" : "");
                     Add(track, (audioCount > 1 && mi.GetAudio(i, "Default") == "Yes") ? "Default" : "");
-                    Add(track, mi.GetAudio(i, "Title"));
+                    Add(track, title);
+
+                    if (track.Text.Contains("MPEG Audio, Layer 2"))
+                        track.Text = track.Text.Replace("MPEG Audio, Layer 2", "MP2");
+
+                    if (track.Text.Contains("MPEG Audio, Layer 3"))
+                        track.Text = track.Text.Replace("MPEG Audio, Layer 2", "MP3");
+
                     track.Text = "A: " + track.Text.Trim(' ', ',');
                     track.Type = "a";
                     track.ID = i + 1;
@@ -1679,6 +1750,7 @@ namespace mpvnet
                 for (int i = 0; i < subCount; i++)
                 {
                     string codec = mi.GetText(i, "Format").ToUpperEx();
+
                     if (codec == "UTF-8")
                         codec = "SRT";
                     else if (codec == "WEBVTT")
@@ -1686,13 +1758,47 @@ namespace mpvnet
                     else if (codec == "VOBSUB")
                         codec = "VOB";
 
+                    string lang = mi.GetText(i, "Language/String");
+                    string nativeLang = GetNativeLanguage(lang);
+                    string title = mi.GetText(i, "Title");
+
+                    if (!string.IsNullOrEmpty(title))
+                    {
+                        if (title.ContainsEx("VobSub"))
+                            title = title.Replace("VobSub", "VOB");
+
+                        if (title.ContainsEx(codec))
+                            title = title.Replace(codec, "");
+
+                        if (title.ContainsEx(lang))
+                            title = title.Replace(lang, "");
+
+                        if (title.ContainsEx(nativeLang))
+                            title = title.Replace(nativeLang, "").Trim();
+
+                        if (title.ContainsEx("full"))
+                            title = title.Replace("full", "").Trim();
+
+                        if (title.ContainsEx("Full"))
+                            title = title.Replace("Full", "").Trim();
+
+                        if (title.ContainsEx("forced"))
+                            title = title.Replace("forced", "Forced").Trim();
+
+                        if (title.ContainsEx("()"))
+                            title = title.Replace("()", "");
+
+                        if (title.ContainsEx("[]"))
+                            title = title.Replace("[]", "");
+                    }
+
                     track = new MediaTrack();
-                    Add(track, mi.GetText(i, "Language/String"));
+                    Add(track, lang);
                     Add(track, codec);
                     Add(track, mi.GetText(i, "Format_Profile"));
                     Add(track, mi.GetText(i, "Forced") == "Yes" ? "Forced" : "");
                     Add(track, (subCount > 1 && mi.GetText(i, "Default") == "Yes") ? "Default" : "");
-                    Add(track, mi.GetText(i, "Title"));
+                    Add(track, title);
                     track.Text = "S: " + track.Text.Trim(' ', ',');
                     track.Type = "s";
                     track.ID = i + 1;
@@ -1719,8 +1825,10 @@ namespace mpvnet
 
         void Add(MediaTrack track, object value)
         {
-            if (value != null && !(track.Text != null && track.Text.Contains(value.ToString())))
-                track.Text += " " + value + ",";
+            string str = value.ToStringEx().Trim();
+
+            if (str != "" && !(track.Text != null && track.Text.Contains(str)))
+                track.Text += " " + str + ",";
         }
 
         private string[] _ProfileNames;

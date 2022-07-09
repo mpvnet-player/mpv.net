@@ -7,7 +7,7 @@ public static class TestStringExtension
 {
     public static bool ContainsEx(this string instance, string value)
     {
-        if (instance != null && value != null)
+        if (!string.IsNullOrEmpty(instance) && !string.IsNullOrEmpty(value))
             return instance.Contains(value);
 
         return false;
@@ -47,6 +47,8 @@ public static class ConvertToStringExtension
 
         return instance.Trim();
     }
+
+    public static string ToStringEx(this object instance) => instance?.ToString() ?? "";
 }
 
 public static class ConvertStringExtension
