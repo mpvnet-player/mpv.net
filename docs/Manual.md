@@ -321,7 +321,7 @@ Shows available demuxers.
 Shows the history file when existing.
 
 ### show-info
-Shows media info on screen, a second key press shows more detailed media info.
+Shows media info on screen.
 
 ### show-input-editor
 Shows the input editor.

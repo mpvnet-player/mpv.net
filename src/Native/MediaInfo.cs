@@ -23,6 +23,12 @@ public class MediaInfo : IDisposable
 
     public int GetCount(MediaInfoStreamKind kind) => MediaInfo_Count_Get(Handle, kind, -1);
 
+    public string GetGeneral(string parameter)
+    {
+        return Marshal.PtrToStringUni(MediaInfo_Get(Handle, MediaInfoStreamKind.General,
+            0, parameter, MediaInfoKind.Text, MediaInfoKind.Name));
+    }
+
     public string GetVideo(int stream, string parameter)
     {
         return Marshal.PtrToStringUni(MediaInfo_Get(Handle, MediaInfoStreamKind.Video,

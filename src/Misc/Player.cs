@@ -1620,6 +1620,15 @@ namespace mpvnet
 
             using (MediaInfo mi = new MediaInfo(path))
             {
+                MediaTrack track = new MediaTrack();
+                Add(track, mi.GetGeneral("Format"));
+                Add(track, mi.GetGeneral("FileSize/String"));
+                Add(track, mi.GetGeneral("Duration/String"));
+                Add(track, mi.GetGeneral("OverallBitRate/String"));
+                track.Text = "G: " + track.Text.Trim(' ', ',');
+                track.Type = "g";
+                tracks.Add(track);
+
                 int videoCount = mi.GetCount(MediaInfoStreamKind.Video);
 
                 for (int i = 0; i < videoCount; i++)
@@ -1629,7 +1638,7 @@ namespace mpvnet
                     if (float.TryParse(fps, NumberStyles.Float, CultureInfo.InvariantCulture, out float result))
                         fps = result.ToString(CultureInfo.InvariantCulture);
 
-                    MediaTrack track = new MediaTrack();
+                    track = new MediaTrack();
                     Add(track, mi.GetVideo(i, "Format"));
                     Add(track, mi.GetVideo(i, "Format_Profile"));
                     Add(track, mi.GetVideo(i, "Width") + "x" + mi.GetVideo(i, "Height"));
@@ -1649,7 +1658,7 @@ namespace mpvnet
 
                 for (int i = 0; i < audioCount; i++)
                 {
-                    MediaTrack track = new MediaTrack();
+                    track = new MediaTrack();
                     Add(track, mi.GetAudio(i, "Language/String"));
                     Add(track, mi.GetAudio(i, "Format"));
                     Add(track, mi.GetAudio(i, "Format_Profile"));
@@ -1677,7 +1686,7 @@ namespace mpvnet
                     else if (codec == "VOBSUB")
                         codec = "VOB";
 
-                    MediaTrack track = new MediaTrack();
+                    track = new MediaTrack();
                     Add(track, mi.GetText(i, "Language/String"));
                     Add(track, codec);
                     Add(track, mi.GetText(i, "Format_Profile"));

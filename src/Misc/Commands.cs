@@ -155,21 +155,10 @@ namespace mpvnet
             }
         }
 
-        static int LastShowInfo;
-
         public static void ShowInfo()
         {
             if (Core.PlaylistPos == -1)
                 return;
-
-            if (Environment.TickCount - LastShowInfo < 5000)
-            {
-                Core.Command("script-message-to mpvnet show-media-info osd");
-                LastShowInfo = 0;
-                return;
-            }
-
-            LastShowInfo = Environment.TickCount;
 
             string text;
             long fileSize = 0;
@@ -177,8 +166,6 @@ namespace mpvnet
 
             if (File.Exists(path))
             {
-                fileSize = new FileInfo(path).Length;
-
                 if (CorePlayer.AudioTypes.Contains(path.Ext()))
                 {
                     text = Core.GetPropertyOsdString("filtered-metadata");
@@ -187,12 +174,18 @@ namespace mpvnet
                 }
                 else if (CorePlayer.ImageTypes.Contains(path.Ext()))
                 {
+                    fileSize = new FileInfo(path).Length;
                     text = "Width: " + Core.GetPropertyInt("width") + "\n" +
                            "Height: " + Core.GetPropertyInt("height") + "\n" +
                            "Size: " + Convert.ToInt32(fileSize / 1024.0) + " KB\n" +
                            "Type: " + path.Ext().ToUpper();
 
                     Core.CommandV("show-text", text, "5000");
+                    return;
+                }
+                else
+                {
+                    Core.Command("script-message-to mpvnet show-media-info osd");
                     return;
                 }
             }
@@ -391,6 +384,7 @@ namespace mpvnet
             else
             {
                 Core.UpdateExternalTracks();
+                text = "N: " + Core.GetPropertyString("filename") + BR;
                 lock (Core.MediaTracksLock)
                     foreach (MediaTrack track in Core.MediaTracks)
                         text += track.Text + BR;
