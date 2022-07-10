@@ -24,16 +24,13 @@ namespace mpvnet
         {
             switch (id)
             {
-                case "add-files-to-playlist": OpenFiles("append"); break; // deprecated 2019
                 case "cycle-audio": CycleAudio(); break;
-                case "execute-mpv-command": Msg.ShowError("The command was removed, reset input.conf by deleting it, in the new menu use the on screen console."); break; // deprecated 2020
                 case "load-audio": LoadAudio(); break;
                 case "load-sub": LoadSubtitle(); break;
                 case "open-clipboard": OpenFromClipboard(); break;
                 case "open-conf-folder": ProcessHelp.ShellExecute(Core.ConfigFolder); break;
                 case "open-files": OpenFiles(args); break;
                 case "open-optical-media": Open_DVD_Or_BD_Folder(); break;
-                case "open-url": OpenFromClipboard(); break; // deprecated 2022
                 case "play-pause": PlayPause(); break;
                 case "playlist-add": PlaylistAdd(Convert.ToInt32(args[0])); break;
                 case "playlist-first": PlaylistFirst(); break;
@@ -64,10 +61,20 @@ namespace mpvnet
                 case "show-properties": ShowProperties(); break;
                 case "show-protocols": ShowStrings(mpvHelp.GetProtocols().Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)); break;
                 case "show-recent": ShowRecent(); break;
-                case "show-setup-dialog": ShowSetupDialog(); break;  // deprecated 2022
                 case "show-subtitle-tracks": ShowSubtitleTracks(); break;
                 case "show-text": ShowText(args[0], Convert.ToInt32(args[1]), Convert.ToInt32(args[2])); break;
                 case "window-scale": WindowScale(float.Parse(args[0], CultureInfo.InvariantCulture)); break;
+
+                // deprecated 2019
+                case "add-files-to-playlist": OpenFiles("append"); break;
+
+                // deprecated 2020
+                case "execute-mpv-command": Msg.ShowError("command was removed, reset input.conf by deleting it, in the new menu use the on screen console."); break;
+                case "key-binding": if (args[0] == "show-playlist") ShowPlaylist(); break;
+
+                // deprecated 2022
+                case "show-setup-dialog": ShowSetupDialog(); break;
+                case "open-url": OpenFromClipboard(); break;
             }
         }
 
