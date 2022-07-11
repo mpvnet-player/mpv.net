@@ -118,14 +118,7 @@ namespace mpvnet
 
             Handle = mpv_create();
 
-            mpv_event_id[] events = {
-                mpv_event_id.MPV_EVENT_START_FILE,
-                mpv_event_id.MPV_EVENT_AUDIO_RECONFIG,
-                mpv_event_id.MPV_EVENT_FILE_LOADED,
-                mpv_event_id.MPV_EVENT_VIDEO_RECONFIG,
-                mpv_event_id.MPV_EVENT_PLAYBACK_RESTART,
-                mpv_event_id.MPV_EVENT_END_FILE
-            };
+            var events = Enum.GetValues(typeof(mpv_event_id)).Cast<mpv_event_id>();
 
             foreach (mpv_event_id i in events)
                 mpv_request_event(Handle, i, 0);
