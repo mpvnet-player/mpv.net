@@ -65,6 +65,9 @@ public class libmpv
     [DllImport("mpv-2.dll", CallingConvention = CallingConvention.Cdecl)]
     public static extern IntPtr mpv_wait_event(IntPtr mpvHandle, double timeout);
 
+    [DllImport("mpv-2.dll", CallingConvention = CallingConvention.Cdecl)]
+    public static extern mpv_error mpv_request_event(IntPtr mpvHandle, mpv_event_id id, int enable);
+
     public enum mpv_error
     {
         MPV_ERROR_SUCCESS = 0,
