@@ -1202,8 +1202,11 @@ namespace mpvnet
 
                 string ext = file.Ext();
 
-                if (ext == "avs")
-                    LoadAviSynth();
+                switch (ext)
+                {
+                    case "avs": LoadAviSynth(); break;
+                    case "lnk": file = GetShortcutTarget(file); break;
+                }
 
                 if (ext == "iso")
                     LoadISO(file);
@@ -1459,6 +1462,13 @@ namespace mpvnet
                     return ci.NativeName;
 
             return name;
+        }
+
+        public static string GetShortcutTarget(string path)
+        {
+            Type t = Type.GetTypeFromProgID("WScript.Shell");
+            dynamic sh = Activator.CreateInstance(t);
+            return sh.CreateShortcut(path).TargetPath;
         }
 
         public void RaiseScaleWindow(float value) => ScaleWindow(value);
