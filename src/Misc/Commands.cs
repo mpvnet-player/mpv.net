@@ -35,6 +35,7 @@ namespace mpvnet
                 case "playlist-add": PlaylistAdd(Convert.ToInt32(args[0])); break;
                 case "playlist-first": PlaylistFirst(); break;
                 case "playlist-last": PlaylistLast(); break;
+                case "playlist-random": PlaylistRandom(); break;
                 case "quick-bookmark": QuickBookmark(); break;
                 case "reg-file-assoc": RegisterFileAssociations(args[0]); break;
                 case "scale-window": ScaleWindow(float.Parse(args[0], CultureInfo.InvariantCulture)); break;
@@ -703,6 +704,12 @@ namespace mpvnet
                 pos = 0;
 
             Core.SetPropertyInt("playlist-pos", pos);
+        }
+
+        public static void PlaylistRandom()
+        {
+            int count = Core.GetPropertyInt("playlist-count");
+            Core.SetPropertyInt("playlist-pos", new Random().Next(count));
         }
 
         public static void QuickBookmark()

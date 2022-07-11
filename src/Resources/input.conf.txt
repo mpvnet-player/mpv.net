@@ -24,6 +24,8 @@ _           ignore                 #menu: Navigate > -
 Home        script-message-to mpvnet playlist-first  #menu: Navigate > First File
 End         script-message-to mpvnet playlist-last   #menu: Navigate > Last File
 _           ignore                 #menu: Navigate > -
+F9          script-message-to mpvnet playlist-random #menu: Navigate > Random File
+_           ignore                 #menu: Navigate > -
 PGUP        add chapter  1         #menu: Navigate > Next Chapter
 PGDWN       add chapter -1         #menu: Navigate > Previous Chapter
 _           ignore                 #menu: Navigate > -
@@ -125,10 +127,9 @@ b       cycle border                                  #menu: View > Toggle Borde
 Ctrl+t  cycle ontop                                   #menu: View > Toggle On Top 
 t       script-binding stats/display-stats-toggle     #menu: View > Toggle Statistics
 Del     script-binding osc/visibility                 #menu: View > Toggle OSC Visibility
-i       script-message-to mpvnet show-info            #menu: View > Show File/Stream Info
+i       script-message-to mpvnet show-info            #menu: View > Show Media Info
+Ctrl+m  script-message-to mpvnet show-media-info      #menu: View > Show Media Info Advanced
 p       show-progress                                 #menu: View > Show Progress
-F9      script-message-to mpvnet show-media-info osd    #menu: View > Show Tracks
-Ctrl+m  script-message-to mpvnet show-media-info      #menu: View > Show Media Info
 Alt+r   script-message-to mpvnet show-recent          #menu: View > Show Recent
 
 `       script-binding console/enable                 #menu: View > Advanced > Show Console

@@ -270,6 +270,9 @@ already the first entry, nothing happens.
 Jumps to the last playlist entry, if the loaded file is
 already the last entry, nothing happens.
 
+### playlist-random
+Jumps to a random playlist entry.
+
 ### quick-bookmark
 
 On the first press a bookmark is saved, on the second
@@ -319,9 +322,6 @@ Shows available demuxers.
 ### show-history
 
 Shows the history file when existing.
-
-### show-info
-Shows media info on screen.
 
 ### show-input-editor
 Shows the input editor.
