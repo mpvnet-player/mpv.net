@@ -80,7 +80,7 @@ _           ignore                 #menu: Audio > -
 Ctrl+d      add audio-delay  0.1   #menu: Audio > Delay +0.1
 Ctrl+D      add audio-delay -0.1   #menu: Audio > Delay -0.1
 
-KP8         cycle sub              #menu: Subtitle > Cycle/Next
+KP8         script-message-to mpvnet cycle-subtitles #menu: Subtitle > Cycle/Next #menu: Subtitle > Cycle/Next
 v           cycle sub-visibility   #menu: Subtitle > Toggle Visibility
 _           ignore                 #menu: Subtitle > -
 z           add sub-delay -0.1     #menu: Subtitle > Delay -0.1

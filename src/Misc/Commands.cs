@@ -25,6 +25,7 @@ namespace mpvnet
             switch (id)
             {
                 case "cycle-audio": CycleAudio(); break;
+                case "cycle-subtitles": CycleSubtitles(); break;
                 case "load-audio": LoadAudio(); break;
                 case "load-sub": LoadSubtitle(); break;
                 case "open-clipboard": OpenFromClipboard(); break;
@@ -309,10 +310,41 @@ namespace mpvnet
                     if (++aid > tracks.Length)
                         aid = 1;
 
-                    Core.CommandV("set", "aid", aid.ToString());
+                    Core.SetPropertyInt("aid", aid);
                 }
 
                 Core.CommandV("show-text", aid + "/" + tracks.Length + ": " + tracks[aid - 1].Text.Substring(3), "5000");
+            }
+        }
+
+        public static void CycleSubtitles()
+        {
+            Core.UpdateExternalTracks();
+
+            lock (Core.MediaTracksLock)
+            {
+                MediaTrack[] tracks = Core.MediaTracks.Where(track => track.Type == "s").ToArray();
+
+                if (tracks.Length < 1)
+                {
+                    Core.CommandV("show-text", "No subtitles");
+                    return;
+                }
+
+                int sid = Core.GetPropertyInt("sid");
+
+                if (tracks.Length > 1)
+                {
+                    if (++sid > tracks.Length)
+                        sid = 0;
+
+                    Core.SetPropertyInt("sid", sid);
+                }
+
+                if (sid == 0)
+                    Core.CommandV("show-text", "No subtitle");
+                else
+                    Core.CommandV("show-text", sid + "/" + tracks.Length + ": " + tracks[sid - 1].Text.Substring(3), "5000");
             }
         }
 
