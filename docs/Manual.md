@@ -42,9 +42,7 @@ mpv focuses on the usage of the command line and the terminal,
 mpv.net retains the ability to be used from the command line and
 the terminal and adds a modern Windows GUI on top of it.
 
-Like mpv, mpv.net is designed for power users, for regular users there is a
-[mpv.net-next](https://github.com/mpv-net-player/mpv.net-next)
-project under construction.
+Like mpv, mpv.net is designed for power users.
 
 
 Download
@@ -90,12 +88,21 @@ the files are opened in mpv.net in random order, this works with maximum 15 file
 Support
 -------
 
-Before making a support request, please try the newest version first.
+Before making a support request, please try the newest [beta version](../../../releases) first.
 
-Bugs and feature requests can be made on the github [issue tracker](../../../issues),
-feel free to use for anything mpv.net related, usage questions are welcome.
+Support can be requested here:
 
-Or use the [support thread](https://forum.videohelp.com/threads/392514-mpv-net-a-extendable-media-player-for-windows) in the VideoHelp forum.
+Beginner questions:
+
+https://www.reddit.com/r/mpv
+
+mpv.net bug reports, feature requests and advanced questions:
+
+https://github.com/stax76/mpv.net/issues
+
+Advanced mpv questions:
+
+https://github.com/mpv-player/mpv/issues
 
 
 Settings
