@@ -579,31 +579,6 @@ Alternatively the Chrome/Firefox extension [Open With](../../../issues/119) can 
 [Open with++](https://github.com/stax76/OpenWithPlusPlus) can be used to extend the File Explorer context menu to get menu items for [Play with mpv.net](https://github.com/stax76/OpenWithPlusPlus#play-with-mpvnet) and [Add to mpv.net playlist](https://github.com/stax76/OpenWithPlusPlus#add-to-mpvnet-playlist).
 
 
-### Universal Remote Android app
-
-Universal Remote is Android remote control app which costs 5 €.
-
-https://www.unifiedremote.com
-
-https://play.google.com/store/apps/details?id=com.Relmtech.Remote
-
-https://play.google.com/store/apps/details?id=com.Relmtech.RemotePaid
-
-https://www.unifiedremote.com/tutorials/how-to-create-a-custom-keyboard-shortcuts-remote
-
-https://www.unifiedremote.com/tutorials/how-to-install-a-custom-remote
-
-[My config](./Universal%20Remote)
-
-Very useful is the Universal Remote File Browser feature.
-
-
-### One For All Contour URC1210 and FLIRC USB
-
-My primary remote control solution however is a One For All Contour URC1210
-using Philips code 0556 together with FLIRC USB (gen2).
-
-
 ### External Application Button
 
 Videos can be streamed or downloaded easily with the Chrome extension
@@ -1248,7 +1223,7 @@ Adds a negative audio delay using the following command:
 
 Shows the next subtitle track using the following command:
 
-`cycle sub`
+`script-message-to mpvnet cycle-subtitles`
 
 [cycle command](https://mpv.io/manual/master/#command-interface-cycle-%3Cname%3E-[%3Cvalue%3E])
 

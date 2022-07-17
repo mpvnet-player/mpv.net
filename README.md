@@ -16,10 +16,6 @@ mpv focuses on the usage of the command line and the terminal,
 mpv.net retains the ability to be used from the command line and
 the terminal and adds a modern Windows GUI on top of it.
 
-Like mpv, mpv.net is designed for power users, for regular users there is a
-[mpv.net-next](https://github.com/mpv-net-player/mpv.net-next)
-project under construction.
-
 #### Graphical User Interface
 
 Modern GUI with customizable color themes.

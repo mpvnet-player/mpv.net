@@ -158,6 +158,7 @@ L       cycle-values loop-file inf no                 #menu: Tools > Toggle infi
 _       playlist-shuffle                              #menu: Tools > Shuffle Playlist
 Ctrl+h  cycle-values hwdec auto no                    #menu: Tools > Toggle Hardware Decoding
 Q       quit-watch-later                              #menu: Tools > Exit Watch Later
+e       run powershell -command "explorer.exe '/select,' ( \"${path}\" -replace '/', '\\' )" #menu: Tools > Show current file in File Explorer
 
 _ script-message-to mpvnet shell-execute https://mpv.io                    #menu: Help > Website mpv
 _ script-message-to mpvnet shell-execute https://github.com/stax76/mpv.net #menu: Help > Website mpv.net
@@ -180,8 +181,8 @@ Sharp         script-message-to mpvnet cycle-audio
 Ctrl+F11      script-message-to mpvnet playlist-add -10
 Ctrl+F12      script-message-to mpvnet playlist-add  10
 Alt+q         script-message-to mpvnet quick-bookmark
-8             cycle sub
-j             cycle sub
+8             script-message-to mpvnet cycle-subtitles
+j             script-message-to mpvnet cycle-subtitles
 q             quit
 Power         quit
 Play          cycle pause
