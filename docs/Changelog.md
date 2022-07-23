@@ -8,6 +8,7 @@
 - playlist-random command jumps to a random playlist entry, default key binding is F9.
 - Fix OSC hide behavior on mouse move.
 - New binding to show the current file in File Explorer.
+- Shift key enables `process-instance=multi`.
 - MediaInfo v22.06
 - libmpv shinchiro 2022-07-02
 

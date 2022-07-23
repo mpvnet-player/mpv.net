@@ -32,6 +32,9 @@ namespace mpvnet
                 App.Init();
                 Mutex mutex = new Mutex(true, StringHelp.GetMD5Hash(App.ConfPath), out bool isFirst);
 
+                if (Control.ModifierKeys.HasFlag(Keys.Shift))
+                    App.ProcessInstance = "multi";
+
                 if ((App.ProcessInstance == "single" || App.ProcessInstance == "queue") && !isFirst)
                 {
                     List<string> args2 = new List<string>();
