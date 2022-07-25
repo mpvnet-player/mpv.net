@@ -37,3 +37,4 @@ Add any other context about the problem here.
 1. mpv.net version
 2. Windows version
 3. GPU name
+4. Media info
