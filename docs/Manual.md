@@ -482,9 +482,11 @@ playback automatically resumes.
 
 Defines if more then one mpv.net process is allowed.
 
-Tip: Whenever the CTRL key is pressed when files or URLs are opened,
+Whenever the CTRL key is pressed when files or URLs are opened,
 the playlist is not cleared but the files or URLs are appended to the playlist.
 This not only works on process startup but in all mpv.net features that open files and URLs.
+
+Multi can alternatively be enabled by pressing the SHIFT key.
 
 **multi**  
 Create a new process everytime the shell starts mpv.net.

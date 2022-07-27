@@ -378,6 +378,9 @@ namespace mpvnet
                                 string key = i.Substring(0, i.IndexOf("=")).Trim();
                                 string value = i.Substring(i.IndexOf("=") + 1).Trim();
 
+                                if (key.StartsWith("-"))
+                                    key = key.TrimStart('-');
+
                                 if (value.Contains("#") && !value.StartsWith("#") &&
                                     !value.StartsWith("'#") && !value.StartsWith("\"#"))
 

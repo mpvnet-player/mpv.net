@@ -9,6 +9,7 @@
 - Fix OSC hide behavior on mouse move.
 - New binding to show the current file in File Explorer.
 - Shift key enables `process-instance=multi`.
+- Command line syntax (preceding double hyphen) is supported in mpv.conf for options implemented by mpv.net.
 - MediaInfo v22.06
 - libmpv shinchiro 2022-07-02
 
