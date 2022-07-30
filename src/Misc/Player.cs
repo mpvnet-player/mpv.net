@@ -1782,6 +1782,7 @@ namespace mpvnet
                     string lang = mi.GetText(i, "Language/String");
                     string nativeLang = GetNativeLanguage(lang);
                     string title = mi.GetText(i, "Title");
+                    bool forced = mi.GetText(i, "Forced") == "Yes";
 
                     if (!string.IsNullOrEmpty(title))
                     {
@@ -1790,6 +1791,12 @@ namespace mpvnet
 
                         if (title.ContainsEx(codec))
                             title = title.Replace(codec, "");
+
+                        if (title.ContainsEx(lang.ToLowerEx()))
+                            title = title.Replace(lang.ToLowerEx(), lang);
+
+                        if (title.ContainsEx(nativeLang.ToLowerEx()))
+                            title = title.Replace(nativeLang.ToLowerEx(), nativeLang).Trim();
 
                         if (title.ContainsEx(lang))
                             title = title.Replace(lang, "");
@@ -1806,6 +1813,9 @@ namespace mpvnet
                         if (title.ContainsEx("forced"))
                             title = title.Replace("forced", "Forced").Trim();
 
+                        if (forced && title.ContainsEx("Forced"))
+                            title = title.Replace("Forced", "").Trim();
+
                         if (title.ContainsEx("()"))
                             title = title.Replace("()", "");
 
@@ -1817,7 +1827,7 @@ namespace mpvnet
                     Add(track, lang);
                     Add(track, codec);
                     Add(track, mi.GetText(i, "Format_Profile"));
-                    Add(track, mi.GetText(i, "Forced") == "Yes" ? "Forced" : "");
+                    Add(track, forced ? "Forced" : "");
                     Add(track, (subCount > 1 && mi.GetText(i, "Default") == "Yes") ? "Default" : "");
                     Add(track, title);
                     track.Text = "S: " + track.Text.Trim(' ', ',');

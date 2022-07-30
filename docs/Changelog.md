@@ -1,5 +1,5 @@
 
-# 6.0.3.1 (202?-??-??)
+# 6.0.3.1 (2022-07-30)
 
 - Creating a playlist from a folder uses absolute normalized paths, non media files are ignored.
 - The show-info command shows directly an advanced view which was enhanced with a General section and the filename.
@@ -13,7 +13,7 @@
 - Shift key enables `process-instance=multi`.
 - Command line syntax (preceding double hyphen) is supported in mpv.conf for options implemented by mpv.net.
 - MediaInfo v22.06
-- libmpv shinchiro 2022-07-02
+- libmpv shinchiro 2022-07-30
 
 
 # 6.0.3.0 (2022-07-03)
