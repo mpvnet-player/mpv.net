@@ -6,11 +6,10 @@
 - Media info titles are shortened if they contain duplicated or obvious information.
 - Support of shortcuts (.lnk files) with media file target.
 - Support --audio-file and --sub-file aliases.
-- playlist-random command jumps to a random playlist entry, default key binding is F9.
+- playlist-random (F9 key) command jumps to a random playlist entry.
 - Fix OSC hide behavior on mouse move.
-- Fix external audio tracks not shown correctly in tracks context menu.
 - New binding (e key) to show the current file in File Explorer.
-- Shift key enables `process-instance=multi`.
+- Shift key enables process-instance=multi.
 - Command line syntax (preceding double hyphen) is supported in mpv.conf for options implemented by mpv.net.
 - MediaInfo v22.06
 - libmpv shinchiro 2022-07-30
