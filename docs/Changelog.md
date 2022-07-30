@@ -1,8 +1,8 @@
 
 # 6.0.3.1 (2022-07-30)
 
-- Creating a playlist from a folder uses absolute normalized paths, non media files are ignored.
-- The show-info command shows directly an advanced view which was enhanced with a General section and the filename.
+- Creating a playlist from a folder uses absolute normalized paths, non-media files are ignored.
+- The show-info command shows directly an advanced view, which was enhanced with a General section and the filename.
 - Media info titles are shortened if they contain duplicated or obvious information.
 - Support of shortcuts (.lnk files) with media file target.
 - Support --audio-file and --sub-file aliases.
