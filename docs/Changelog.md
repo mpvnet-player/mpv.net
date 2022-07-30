@@ -5,6 +5,7 @@
 - The show-info command shows directly an advanced view which was enhanced with a General section and the filename.
 - Media info titles are shortened if they contain duplicated or obvious information.
 - Support of shortcuts (.lnk files) with media file target.
+- Support --audio-file and --sub-file aliases.
 - playlist-random command jumps to a random playlist entry, default key binding is F9.
 - Fix OSC hide behavior on mouse move.
 - Fix external audio tracks not shown correctly in tracks context menu.

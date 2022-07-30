@@ -1132,11 +1132,13 @@ namespace mpvnet
                     string left = arg.Substring(2, arg.IndexOf("=") - 2);
                     string right = arg.Substring(left.Length + 3);
 
-                    if (left == "script")
-                        left = "scripts";
-
-                    if (left == "external-file")
-                        left = "external-files";
+                    switch (left)
+                    {
+                        case "script":        left = "scripts";        break;
+                        case "audio-file":    left = "audio-files";    break;
+                        case "sub-file":      left = "sub-files";      break;
+                        case "external-file": left = "external-files"; break;
+                    }
 
                     if (preInit && preInitProperties.Contains(left))
                     {
