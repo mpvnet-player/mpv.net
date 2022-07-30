@@ -4,7 +4,7 @@ name = process-instance
 file = mpvnet
 default = single
 filter = General
-help = Defines if more then one mpv.net process is allowed. (mpv.net specific option)\n\nTip: Whenever the control key is pressed when files or URLs are opened, the playlist is not cleared but the files or URLs are appended to the playlist. This not only works on process startup but in all mpv.net features that open files and URLs.
+help = Defines if more then one mpv.net process is allowed. (mpv.net specific option)\n\nMulti can alternatively be enabled by pressing the SHIFT key.\n\nWhenever the control key is pressed when files or URLs are opened, the playlist is not cleared but the files or URLs are appended to the playlist. This not only works on process startup but in all mpv.net features that open files and URLs.
 
 option = multi   Create a new process everytime the shell starts mpv.net
 option = single  Force a single process everytime the shell starts mpv.net
