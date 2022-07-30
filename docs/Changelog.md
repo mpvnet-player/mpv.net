@@ -9,11 +9,20 @@
 - playlist-random command jumps to a random playlist entry, default key binding is F9.
 - Fix OSC hide behavior on mouse move.
 - Fix external audio tracks not shown correctly in tracks context menu.
-- New binding to show the current file in File Explorer.
+- New binding (e key) to show the current file in File Explorer.
 - Shift key enables `process-instance=multi`.
 - Command line syntax (preceding double hyphen) is supported in mpv.conf for options implemented by mpv.net.
 - MediaInfo v22.06
 - libmpv shinchiro 2022-07-30
+
+input.conf changes:
+
+New:
+
+```
+e    run powershell -command "explorer.exe '/select,' ( \"${path}\" -replace '/', '\\' )" #menu: Tools > Show current file in File Explorer
+F9   script-message-to mpvnet playlist-random #menu: Navigate > Random File
+```
 
 
 # 6.0.3.0 (2022-07-03)
