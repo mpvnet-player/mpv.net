@@ -1524,12 +1524,13 @@ namespace mpvnet
 
         public void UpdateExternalTracks()
         { 
-            int trackCount = GetPropertyInt("track-list/count");
+            int trackListTrackCount = GetPropertyInt("track-list/count");
             int editionCount = GetPropertyInt("edition-list/count");
+            int count = MediaTracks.Where(i => i.Type != "g").Count();
 
             lock (MediaTracksLock)
             {
-                if (MediaTracks.Count != (trackCount + editionCount))
+                if (count != (trackListTrackCount + editionCount))
                 {
                     MediaTracks = MediaTracks.Where(i => !i.External).ToList();
                     MediaTracks.AddRange(GetTracks(false));

@@ -7,6 +7,7 @@
 - Support of shortcuts (.lnk files) with media file target.
 - playlist-random command jumps to a random playlist entry, default key binding is F9.
 - Fix OSC hide behavior on mouse move.
+- Fix external audio tracks not shown correctly in tracks context menu.
 - New binding to show the current file in File Explorer.
 - Shift key enables `process-instance=multi`.
 - Command line syntax (preceding double hyphen) is supported in mpv.conf for options implemented by mpv.net.
