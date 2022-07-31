@@ -2,7 +2,7 @@
 mpv.net手册
 ==============
 
-适配版本 [v6.0.0.0-beta](https://github.com/stax76/mpv.net/releases/tag/v6.0.0.0-beta)
+适配版本 [v6.0.3.1](https://github.com/stax76/mpv.net/releases/tag/v6.0.3.1)
 
 **[ENGLISH](Manual.md)** | **简体中文**
 
@@ -36,13 +36,11 @@ mpv.net手册
 
 mpv.net是基于受欢迎的mpv的Windows现代媒体播放器。
 
-mpv.net出于兼容mpv而设计，几乎所有mpv的功能都可用，因为它们都包含在libmpv中，
-这意味着[mpv官方手册](https://mpv.io/manual/master/) 也适用于mpv.net。
+mpv.net出于兼容mpv而设计，几乎所有mpv的功能都可用，因为它们都包含在libmpv中，这意味着[mpv官方手册](https://mpv.io/manual/master/) 也适用于mpv.net。
 
 mpv专注命令行与终端的使用，而mpv.net保留了这些并加入了现代化的图形界面。
 
-与mpv一样，mpv.net也是为高级用户设计的，对于普通用户，
-有一个正在建设中的 [mpv.net-next](https://github.com/mpv-net-player/mpv.net-next) 项目。
+与mpv一样，mpv.net也是为高级用户设计的。
 
 
 下载
@@ -71,30 +69,33 @@ mpv.net需要.NET Framework 4.8运行库和高于win7版本的系统以及一张
 
 可以使用上下文菜单注册文件关联。 'Settings > Setup'
 
-注册完文件关联后，进入 "Windows设置 > 应用 > 默认应用" (Win+I, ms-settings:defaultapps)
-然后选择mpv. net作为视频/音频/图像的默认程序。
+注册完文件关联后，进入 "Windows设置 > 应用 > 默认应用" (Win+I, ms-settings:defaultapps) 然后选择mpv. net作为视频/音频/图像的默认程序。
 
-另一种注册文件关联的方式是使用文件资源管理器，选中媒体文件后，
-选择上下文菜单的 '打开方式 > 选择其它应用' 。
+另一种注册文件关联的方式是使用文件资源管理器，选中媒体文件后，选择上下文菜单的 '打开方式 > 选择其它应用' 。
 
-[Open with++](#open-with) 可用来扩展资源管理器的上下文菜单
-[Play with mpv.net](https://github.com/stax76/OpenWithPlusPlus#play-with-mpvnet) 和 
-[Add to mpv.net playlist](https://github.com/stax76/OpenWithPlusPlus#add-to-mpvnet-playlist).
-可用来获取 'Play with mpv.net' 和 'Add to mpv.net playlist' 的菜单子项
+[Open with++](#open-with) 可用来扩展资源管理器的上下文菜单。[Play with mpv.net](https://github.com/stax76/OpenWithPlusPlus#play-with-mpvnet) 和 [Add to mpv.net playlist](https://github.com/stax76/OpenWithPlusPlus#add-to-mpvnet-playlist) 可用来获取 'Play with mpv.net' 和 'Add to mpv.net playlist' 的菜单子项
 
-当在资源管理器中选择多个文件并按 enter 键时，文件会在mpv.net随机排序打开，
-最多限制15个文件。
+当在资源管理器中选择多个文件并按 enter 键时，文件会在mpv.net随机排序打开，最多限制15个文件。
 
 
 支持
 -------
 
-在提出支持请求之前，先尝试最新的测试版。
+在提出支持请求之前，先尝试最新的 [测试版](../../../releases)。
 
-程序错误和功能请求可以在github的 [问题追踪](../../../issues) 上提出，
-任何与mpv. net相关的东西都可以使用，欢迎提交使用上出现的问题。
+可以在这些地方请求支持：
 
-或者浏览VideoHelp论坛的 [讨论帖](https://forum.videohelp.com/threads/392514-mpv-net-a-extendable-media-player-for-windows)
+初学者提问：
+
+https://www.reddit.com/r/mpv
+
+mpv.net的错误报告、功能请求和高级问题：
+
+https://github.com/stax76/mpv.net/issues
+
+高级的mpv问题：
+
+https://github.com/mpv-player/mpv/issues
 
 
 设置
@@ -105,20 +106,15 @@ mpv.net在以下路径寻找设置文件夹：
 1. <程序启动目录>\portable_config
 2. %APPDATA%\mpv.net (`C:\Users\%USERNAME%\AppData\Roaming\mpv.net`)
 
-mpv的选项保存在mpv.conf文件中，
-mpv.net的专属选项保存在 mpvnet.conf 文件中，
-参数解释请参阅 [此处](#mpvnet的专属选项)
+mpv的选项保存在mpv.conf文件中，mpv.net的专属选项保存在 mpvnet.conf 文件中，参数解释请参阅 [此处](#mpvnet的专属选项)
 
 
 快捷键和上下文菜单
 ----------------------
 
-键鼠的快捷键和上下文菜单的操作保存在 input.conf 文件中，
-如果设置目录中不存在，mpv.net会用默认值生成它。
+键鼠的快捷键和上下文菜单的操作保存在 input.conf 文件中，如果设置目录中不存在，mpv.net会用默认值生成它。
 
-请注意，一旦 input.conf 存在， mpv.net 就不能更新它，这意味着当 mpv.net 升级了
-新的版本或改变了的默认菜单项时，菜单条目就会过时。获得最新菜单的唯一方法是
-通过删除 input.conf 来重置菜单，或者通过手动编辑 input.conf 来更新它。
+请注意，一旦 input.conf 存在， mpv.net 就不能更新它，这意味着当 mpv.net 升级了新的版本或改变了的默认菜单项时，菜单条目就会过时。获得最新菜单的唯一方法是通过删除 input.conf 来重置菜单，或者通过手动编辑 input.conf 来更新它。
 
 通过 global-input.conf 文件支持全局热键。
 
@@ -128,8 +124,7 @@ input 和 config editor 可以在上下文菜单的该条目中找到 'Settings'
 
 输入测试模式可以通过命令行启动： --input-test
 
-输入的键位列表可由该参数输出 --input-keylist
-或从上下文菜单的该条目获取 `View > Advanced > Show Keys`
+输入的键位列表可由该参数输出 --input-keylist 或从上下文菜单的该条目获取 `View > Advanced > Show Keys`
 
 mpv.net的默认input.conf文件：
 https://github.com/stax76/mpv.net/blob/master/src/Resources/input.conf.txt
@@ -237,12 +232,10 @@ mpv.net命令可在mpv命令不存在或缺乏某种功能时使用。
 **append**  
 追加文件到播放列表中。
 
-打开一个资源管理器的对话框，以便选择要打开的文件。资源管理器的对话框
-支持多选以一次性加载多个文件。按住CTRL键可以将这些文件追加到播放列表中。
+打开一个资源管理器的对话框，以便选择要打开的文件。资源管理器的对话框支持多选以一次性加载多个文件。按住CTRL键可以将这些文件追加到播放列表中。
 
 ### open-optical-media
-显示一个资源管理器的对话框来打开一个DVD或BD文件夹。ISO镜像不需要被挂载，
-但可以直接用 open-files 命令打开。
+显示一个资源管理器的对话框来打开一个DVD或BD文件夹。ISO镜像不需要被挂载，但可以直接用 open-files 命令打开。
 
 ### open-clipboard
 从剪贴板打开单个的URL或文件路径，或以文件剪贴板中的格式打开多个文件。
@@ -259,15 +252,20 @@ mpv.net命令可在mpv命令不存在或缺乏某种功能时使用。
 ### playlist-last
 跳转到播放列表的最后一个条目，如果加载的文件已经是最后一个条目，则无动作。
 
+### playlist-random
+跳转到播放列表的任一条目。
+
 ### quick-bookmark
-第一次触发时，书签被保存，第二次触发时，它被恢复并移除。当加载新文件时，
-书签也会被移除。
+第一次触发时，书签被保存，第二次触发时，它被恢复并移除。当加载新文件时，书签也会被移除。
 
 ### reg-file-assoc \<audio|video|image\>
 注册文件关联。
 
 ### scale-window \<factor\>
 减小或增大窗口的尺寸。
+
+### select-profile
+显示命令面板以选择一个profile。
 
 ### shell-execute \<file|URL\>
 Shell执行单个文件或URL。
@@ -280,6 +278,9 @@ Shell执行单个文件或URL。
 
 ### show-audio-tracks
 在命令面板中显示可用的音轨，并允许加载选中的音轨。
+
+### show-chapters
+在命令面板中显示章节。
 
 ### show-command-palette
 显示命令面板。
@@ -298,9 +299,6 @@ Shell执行单个文件或URL。
 
 ### show-history
 显示已有的历史文件。
-
-### show-info
-在屏幕上显示mediainfo，第二次触发可显示更详细的媒体信息。
 
 ### show-input-editor
 显示器快捷键编辑器。
@@ -362,15 +360,19 @@ mpv.net的专属选项
 
 这些专属选项被修改后被保存在 mpvnet.conf 文件中。
 
+#### --autofit-audio \<integer\>
+音频文件的初始窗口高度，以百分比为单位。默认：70
+
+#### --autofit-image \<integer\>
+图片文件的初始窗口高度，以百分比为单位。默认：80
+
 #### --queue \<files\>
 
-添加文件到播放列表，需要设置 [--process-instance=single](#--process-instancevalue) 。
-也可以在资源管理器中使用 [Open with++](#open-with) 添加文件。
+添加文件到播放列表，需要设置 [--process-instance=single](#--process-instancevalue) 。也可以在资源管理器中使用 [Open with++](#open-with) 添加文件。
 
 #### --command=\<input command\>
 
-通过命令行向正在运行的mpv.net实例发送输入命令，例如使用 AutoHotkey 创建
-全局热键，必须设置 [process-instance=single](#--process-instancevalue) 。
+通过命令行向正在运行的mpv.net实例发送输入命令，例如使用 AutoHotkey 创建全局热键，必须设置 [process-instance=single](#--process-instancevalue) 。
 
 ### Audio
 
@@ -407,21 +409,24 @@ mpv.net的专属选项
 始终记住大小。
 
 
-#### --start-threshold=\<milliseconds\>
-
-在显示窗口之前等待libmpv返回视频分辨率的阈值（毫秒），
-否则将使用由 --autofit 和 --start-size 定义的初始大小。默认：1500
-
-
 #### --minimum-aspect-ratio=\<float\>
 
-最小宽高比，如果窗口宽高比小于定义的值，那么将窗口宽高比设置为16/9。
-这避免了音乐封面的方形窗口。默认：1.2
+最小宽高比，如果窗口宽高比小于定义的值，那么将窗口的宽高比将被强制设为该值。
+
+
+#### --minimum-aspect-ratio-audio=\<float\>
+
+同上但仅用于音频文件。
 
 
 #### --remember-window-position=\<yes|no\>
 
 在退出时保存窗口的位置。默认：no
+
+
+#### --start-threshold=\<milliseconds\>
+
+在显示窗口之前等待libmpv返回视频分辨率的阈值（毫秒），否则将使用由 --autofit 和 --start-size 定义的初始大小。默认：1500
 
 
 ### Playback
@@ -442,8 +447,9 @@ mpv.net的专属选项
 
 定义是否允许多个 mpv.net 进程。
 
-提示：当打开文件或 url 时，只要按下CTRL键，就不会清除当前的播放列表，
-而只将文件或 url 追加到列表中。这不仅适用于进程启动，也适用于所有打开文件和 url 的功能。
+当打开文件或 url 时，只要按下CTRL键，就不会清除当前的播放列表，而只将文件或 url 追加到列表中。这不仅适用于进程启动，也适用于所有打开文件和 url 的功能。
+
+也可以通过按住SHIFT键来启动多个进程。
 
 **multi**  
 每次从 shell 启动 mpv.net 时创建一个新进程。
@@ -530,17 +536,13 @@ mpv.net的专属选项
 
 ### Play with mpv
 
-[Play with mpv](https://chrome.google.com/webstore/detail/play-with-mpv/hahklcmnfgffdlchjigehabfbiigleji)
-是一个支持调用mpv播放YouTube等网站视频的谷歌浏览器的扩展。
+[Play with mpv](https://chrome.google.com/webstore/detail/play-with-mpv/hahklcmnfgffdlchjigehabfbiigleji) 是一个支持调用mpv播放YouTube等网站视频的谷歌浏览器的扩展。
 
-由于Chrome扩展无法启动一个应用程序，需要另一个与扩展程序通信的应用程序，该程序可以从
-[此处](http://www.mediafire.com/file/lezj8lwqt5zf75v/play-with-mpvnet-server.7z/file)下载。
-只有当该程序运行时扩展才能正常工作，为了让应用程序始终运行，应将其放在系统自启动目录中：
+由于Chrome扩展无法启动一个应用程序，需要另一个与扩展程序通信的应用程序，该程序可以从[此处](http://www.mediafire.com/file/lezj8lwqt5zf75v/play-with-mpvnet-server.7z/file)下载。只有当该程序运行时扩展才能正常工作，为了让应用程序始终运行，应将其放在系统自启动目录中：
 
 `C:\Users\%username%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup`
 
-这将使该程序随系统共同启动，并在后台运行。当mpv.net的文件关联注册被执行后，
-该程序应该会找到mpv.net的位置，或者将mpv.net文件夹添加到环境变量PATH。
+这将使该程序随系统共同启动，并在后台运行。当mpv.net的文件关联注册被执行后，该程序应该会找到mpv.net的位置，或者将mpv.net文件夹添加到环境变量PATH。
 
 
 ### Open With
@@ -550,35 +552,7 @@ mpv.net的专属选项
 
 ### Open with++
 
-[Open with++](#open-with) 可用来扩展资源管理器的上下文菜单
-[Play with mpv.net](https://github.com/stax76/OpenWithPlusPlus#play-with-mpvnet) 和 
-[Add to mpv.net playlist](https://github.com/stax76/OpenWithPlusPlus#add-to-mpvnet-playlist).
-可用来获取 'Play with mpv.net' 和 'Add to mpv.net playlist' 的菜单子项
-
-
-### Universal Remote 安卓应用
-
-Universal Remote 是一个收费的安卓远程控制APP。
-
-https://www.unifiedremote.com
-
-https://play.google.com/store/apps/details?id=com.Relmtech.Remote
-
-https://play.google.com/store/apps/details?id=com.Relmtech.RemotePaid
-
-https://www.unifiedremote.com/tutorials/how-to-create-a-custom-keyboard-shortcuts-remote
-
-https://www.unifiedremote.com/tutorials/how-to-install-a-custom-remote
-
-[我的配置](./Universal%20Remote)
-
-Universal Remote 的 File Browser 功能十分有用。
-
-
-### One For All Contour URC1210 and FLIRC USB
-
-然而我的主要远程控制解决方案适用于所有人， 
-Philips code 0556 和 FLIRC USB (gen2) 一同被使用。
+[Open with++](#open-with) 可用来扩展资源管理器的上下文菜单。[Play with mpv.net](https://github.com/stax76/OpenWithPlusPlus#play-with-mpvnet) 和 [Add to mpv.net playlist](https://github.com/stax76/OpenWithPlusPlus#add-to-mpvnet-playlist) 可用来获取 'Play with mpv.net' 和 'Add to mpv.net playlist' 的菜单子项
 
 
 ### External Application Button
@@ -595,67 +569,34 @@ args: `-- pwsh -NoLogo -Command "yt-dlp --ignore-errors --download-archive 'C:\E
 
 #### Lua
 
-文件类型： `lua`
+可以在 [mpv wiki](https://github.com/mpv-player/mpv/wiki/User-Scripts) 中找到一个庞大的用户Lua脚本的集合。
 
-文件位置： `<config folder>\scripts`
-
-Lua脚本的host由libmpv内建。
-
-错误和调试消息输出在终端上。
-
-Lua脚本在第一个媒体文件打开之前加载。
-
-[mpv Lua 文档](https://mpv.io/manual/master/#lua-scripting)
-
-[mpv 用户脚本 wiki](https://github.com/mpv-player/mpv/wiki/User-Scripts)
-
-[mpv 用户脚本 GitHub](https://github.com/topics/mpv-script)
-
-[mpv 用户脚本 Google](https://www.google.com/search?q=mpv+script)
+Lua脚本在 [mpv.net wiki](https://github.com/stax76/mpv.net/wiki/Extending-mpv-and-mpv.net-via-Lua-scripting) 上有进一步记录。
 
 
 #### JavaScript
 
-文件类型： `js`
-
-文件位置： `<config folder>\scripts`
-
-JavaScriptLua脚本的host由libmpv内建。
-
-错误和调试消息输出在终端上。
-
-JavaScript脚本在第一个媒体文件打开之前加载。
-
 [mpv JavaScript 文档](https://mpv.io/manual/master/#javascript)
-
-[mpv用户脚本](https://github.com/mpv-player/mpv/wiki/User-Scripts)
 
 
 #### PowerShell
 
-文件类型： `ps1`
-
 文件位置： `<config folder>\scripts-ps`
 
-PS脚本的host类似于扩展，在打开媒体文件前尚未初始化。
-
-mpv.net没有定义脚本接口，而是公开了它的完整内部，没有兼容性保证。
+PS脚本在打开媒体文件前尚未初始化。
 
 [示例脚本](../../../tree/master/src/Scripts)
 
 
 #### C#
 
-文件类型： `cs`
-
 文件位置： `<config folder>\scripts-cs`
 
-mpv.net没有定义脚本接口，而是公开了它的完整内部，没有兼容性保证。
+没有兼容性保证。
 
-脚本代码可以在C#[扩展](../../../tree/master/src/Extensions)中编写，这样
-就可以获得完整的代码和调试器支持。一旦代码被调试和开发完成，就可以将其
-从扩展转移到轻量级的独立脚本。脚本host使用的是旧的C#版本，像字符串插值
-这样的现代功能是不存在的。
+脚本代码可以在C#[扩展](../../../tree/master/src/Extensions)中编写，这样就可以获得完整的代码和调试器支持。一旦代码被调试和开发完成，就可以将其从扩展转移到轻量级的独立脚本。脚本host使用的是旧的C#版本，像字符串插值这样的现代功能是不存在的。
+
+有同步事件和异步事件，更偏好异步事件，不要阻断同步事件和观察到的属性，因为这样会阻断主事件循环。
 
 C#脚本的host类似于[扩展](../../../tree/master/src/Extensions)，在打开媒体文件前尚未初始化。
 
@@ -671,7 +612,7 @@ C#脚本的host类似于[扩展](../../../tree/master/src/Extensions)，在打�
 <config folder>\extensions\ExampleExtension\ExampleExtension.dll
 ```
 
-mpv.net没有定义脚本接口，而是公开了它的完整内部，没有兼容性保证。
+有同步事件和异步事件，更偏好异步事件，不要阻断同步事件和观察到的属性，因为这样会阻断主事件循环。
 
 
 ### 创建扩展演示
@@ -679,14 +620,9 @@ mpv.net没有定义脚本接口，而是公开了它的完整内部，没有兼�
 - 下载安装 [Visual Studio Community](https://visualstudio.microsoft.com) 。
 - 创建新的项目类型 **Class Library .NET Framework** 并确保项目名称以 **Extension** 作结尾。
 - 增加一个 reference 到 **System.ComponentModel.Composition**.
-- 增加一个 reference 到 mpvnet.exe ，在 Solution Explorer 中选择 mpvnet 的 reference ，
-  打开 Properties 窗口并设置 **Copy Local** 为 false 来阻止在项目编译时 mpvnet.exe 被复制到输出目录。
-- 现在打开 project properties 并在 Build 标签页设置 output path ，
-  扩展类似于位于配置文件夹中的脚本，例如：
-  `<config folder>\extensions\ExampleExtension\ExampleExtension.dll`
-- 同样在 project properties 的 Debug 标签页中选择选项 **Start external program** 
-  并且定义到 mpvnet.exe 的路径。
-  在 Debug 标签页中你还可以定义 command line arguments ，例如开始调试时要播放的视频文件。
+- 增加一个 reference 到 mpvnet.exe ，在 Solution Explorer 中选择 mpvnet 的 reference ，打开 Properties 窗口并设置 **Copy Local** 为 false 来阻止在项目编译时 mpvnet.exe 被复制到输出目录。
+- 现在打开 project properties 并在 Build 标签页设置 output path ，扩展类似于位于配置文件夹中的脚本，例如： `<config folder>\extensions\ExampleExtension\ExampleExtension.dll`
+- 同样在 project properties 的 Debug 标签页中选择选项 **Start external program** 并且定义到 mpvnet.exe 的路径。在 Debug 标签页中你还可以定义 command line arguments ，例如开始调试时要播放的视频文件。
 
 
 ### 代码样本
@@ -735,11 +671,9 @@ Python和VapourSynth必须在环境变量PATH中。
 隐藏功能
 ---------------
 
-使用mpv.net在资源管理器中选择多个文件并按下回车键打开。
-资源管理器将此限制为最多15个并且顺序将是随机的。
+使用mpv.net在资源管理器中选择多个文件并按下回车键打开。资源管理器将此限制为最多15个并且顺序将是随机的。
 
-当打开文件或url时，只要按下CTRL键，就不会清除播放列表，而是将文件或url附加到播放列表中。
-这适用于mpv.net的所有打开文件或url的功能。
+当打开文件或url时，只要按下CTRL键，就不会清除播放列表，而是将文件或url附加到播放列表中。这适用于mpv.net的所有打开文件或url的功能。
 
 在打开单个文件时按下SHIFT键将禁止该文件夹的其它文件添加到播放列表中。
 
@@ -770,6 +704,7 @@ https://mpv.io/manual/master/#window
 - [keepaspect-window](https://mpv.io/manual/master/#options-keepaspect-window)
 - [ontop](https://mpv.io/manual/master/#options-ontop)
 - [screen](https://mpv.io/manual/master/#options-screen)
+- [snap-window](https://mpv.io/manual/master/#options-snap-window)
 - [title](https://mpv.io/manual/master/#options-title)
 - [window-maximized](https://mpv.io/manual/master/#options-window-maximized)
 - [window-minimized](https://mpv.io/manual/master/#options-window-minimized)
@@ -779,8 +714,11 @@ https://mpv.io/manual/master/#window
 **部分支持的属性：**
 
 - [autofit](https://mpv.io/manual/master/#options-autofit)
+  仅支持0-100范围内的整数
 - [autofit-smaller](https://mpv.io/manual/master/#options-autofit-smaller)
+  同上
 - [autofit-larger](https://mpv.io/manual/master/#options-autofit-larger)
+  同上
 
 
 mpv.net的专属窗口功能在 [屏幕设置](#screen) 部分。
@@ -802,9 +740,7 @@ mpv.net支持基于属性的mpv命令行选项，这意味着它支持mpv几乎�
 
 ### 其它限制
 
-mpv的属性 [idle](https://mpv.io/manual/master/#options-idle) 在mpv.net中
-也会相应的发挥作用，但是LUA脚本获取到的值始终是 `yes` ，因为mpv.net必须
-设置它才能正常工作，这是一个难以攻克的来自libmpv的限制。
+mpv的属性 [idle](https://mpv.io/manual/master/#options-idle) 在mpv.net中也会相应的发挥作用，但是LUA脚本获取到的值始终是 `yes` ，因为mpv.net必须设置它才能正常工作，这是一个难以攻克的来自libmpv的限制。
 
 
 ### mpv.net的专属选项
@@ -819,8 +755,7 @@ mpv.net的专属选项保存在 mpvnet.conf 文件中，与mpv一样可由命令
 
 mpv.net使用 C#7 编写并且需要 .NET Framework 4.8 来运行。
 
-扩展的实现基于 
-[Managed Extensibility Framework](https://docs.microsoft.com/en-us/dotnet/framework/mef/).
+扩展的实现基于 [Managed Extensibility Framework](https://docs.microsoft.com/en-us/dotnet/framework/mef/)
 
 主窗口基于WinForms，与WPF相比对libmpv集成的更友好，所有其他窗口都是基于WPF的。
 
@@ -850,8 +785,7 @@ input.conf 定义mpv的快捷键，同时mpv.net使用注释定义上下文菜�
 
 第三种方法是拖放文件到主窗口上。
 
-每当打开文件或URL时按下控制键时，播放列表不会被清除，但文件或URL会追加到播放列表中。
-这适用于所有打开文件或URL的mpv.net的功能。
+每当打开文件或URL时按下控制键时，播放列表不会被清除，但文件或URL会追加到播放列表中。这适用于所有打开文件或URL的mpv.net的功能。
 
 在打开单个文件时按shift键将临时禁止加载文件夹中的其它文件。
 
@@ -870,14 +804,12 @@ input.conf 定义mpv的快捷键，同时mpv.net使用注释定义上下文菜�
 
 ### Open > Load external audio files
 
-允许加载外部音轨文件。也可以根据文件名自动检测，该选项可在下面的设置中找到 
-'Settings > Show Config Editor > Audio > audio-file-auto' 。
+允许加载外部音轨文件。也可以根据文件名自动检测，该选项可在下面的设置中找到 'Settings > Show Config Editor > Audio > audio-file-auto'
 
 
 ### Open > Load external subtitle files
 
-允许加载外部字幕文件。也可以根据文件名自动检测，该选项可在下面的设置中找到 
-'Settings > Show Config Editor > Subtitles > sub-auto' 。
+允许加载外部字幕文件。也可以根据文件名自动检测，该选项可在下面的设置中找到 'Settings > Show Config Editor > Subtitles > sub-auto'
 
 
 ### Play/Pause
@@ -975,8 +907,7 @@ input.conf 定义mpv的快捷键，同时mpv.net使用注释定义上下文菜�
 
 `no-osd seek sec`
 
-sec是跳转的相对秒数，使用no osd前缀是因为mpv.net包含一个脚本，
-该脚本显示执行寻道操作时的位置，该脚本使用更简单的时间格式。
+sec是跳转的相对秒数，使用no osd前缀是因为mpv.net包含一个脚本，该脚本显示执行寻道操作时的位置，该脚本使用更简单的时间格式。
 
 [no-osd command prefix](https://mpv.io/manual/master/#command-interface-no-osd)
 
@@ -1220,7 +1151,7 @@ sec是跳转的相对秒数，使用no osd前缀是因为mpv.net包含一个脚�
 
 使用以下命令改变到下一个可用的字幕轨：
 
-`cycle sub`
+`script-message-to mpvnet cycle-subtitles`
 
 [cycle command](https://mpv.io/manual/master/#command-interface-cycle-%3Cname%3E-[%3Cvalue%3E])
 
@@ -1499,8 +1430,7 @@ input.conf 文件内涵mpv的键鼠绑定
 
 ### Tools > Show History
 
-显示包含历史记录的文本文件。如果文件不存在，则会询问是否在设置文件夹中
-创建该文件。一旦文件存在，则写入历史记录（包括时间和文件名）
+显示包含历史记录的文本文件。如果文件不存在，则会询问是否在设置文件夹中创建该文件。一旦文件存在，则写入历史记录（包括时间和文件名）
 
 屏蔽部分路径的参数：
 
