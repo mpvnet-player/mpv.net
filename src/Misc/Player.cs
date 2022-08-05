@@ -20,8 +20,8 @@ namespace mpvnet
 {
     public class CorePlayer
     {
-        public static string[] VideoTypes { get; set; } = "264 265 asf avc avi avs dav flv h264 h265 hevc m2t m2ts m2v m4v mkv mov mp4 mpeg mpg mpv mts ts vob vpy webm wmv y4m".Split(' ');
-        public static string[] AudioTypes { get; set; } = "aac ac3 dts dtshd dtshr dtsma eac3 flac m4a mka mp2 mp3 mpa mpc ogg opus thd w64 wav".Split(' ');
+        public static string[] VideoTypes { get; set; } = "mkv mp4 avi mov flv mpg webm wmv ts vob 264 265 asf avc avs dav h264 h265 hevc m2t m2ts m2v m4v mpeg mpv mts vpy y4m".Split(' ');
+        public static string[] AudioTypes { get; set; } = "mp3 flac m4a mka mp2 ogg opus aac ac3 dts dtshd dtshr dtsma eac3 mpa mpc thd w64 wav".Split(' ');
         public static string[] ImageTypes { get; set; } = { "jpg", "bmp", "png", "gif", "webp" };
         public static string[] SubtitleTypes { get; } = { "srt", "ass", "idx", "sub", "sup", "ttxt", "txt", "ssa", "smi", "mks" };
 
@@ -1210,6 +1210,12 @@ namespace mpvnet
                 if (file.Contains("|"))
                     file = file.Substring(0, file.IndexOf("|"));
 
+                if ((file.Contains(":/") && !file.Contains("://")) || (file.Contains(":\\") && file.Contains("/")))
+                    file = file.Replace("/", "\\");
+
+                if (!file.Contains(":") && !file.StartsWith("\\\\") && File.Exists(file))
+                    file = System.IO.Path.GetFullPath(file);
+
                 string ext = file.Ext();
 
                 switch (ext)
@@ -1222,21 +1228,13 @@ namespace mpvnet
                     LoadISO(file);
                 else if(SubtitleTypes.Contains(ext))
                     CommandV("sub-add", file);
-                else if (ext == "" && !file.Contains("://") && Directory.Exists(file))
+                else if (!IsMediaExtension(ext) && !file.Contains("://") && Directory.Exists(file) &&
+                    File.Exists(System.IO.Path.Combine(file, "BDMV\\index.bdmv")))
                 {
-                    if (File.Exists(System.IO.Path.Combine(file, "BDMV\\index.bdmv")))
-                    {
-                        Command("stop");
-                        Thread.Sleep(500);
-                        SetPropertyString("bluray-device", file);
-                        CommandV("loadfile", @"bd://");
-                    }
-                    else
-                    {
-                        files = GetMediaFiles(Directory.GetFiles(file, "*.*", SearchOption.AllDirectories)).ToArray();
-                        LoadFiles(files, loadFolder, append);
-                        return;
-                    }
+                    Command("stop");
+                    Thread.Sleep(500);
+                    SetPropertyString("bluray-device", file);
+                    CommandV("loadfile", @"bd://");
                 }
                 else
                 {
@@ -1340,11 +1338,11 @@ namespace mpvnet
             }
         }
 
-        IEnumerable<string> GetMediaFiles(IEnumerable<string> files)
+        IEnumerable<string> GetMediaFiles(IEnumerable<string> files) => files.Where(i => IsMediaExtension(i.Ext()));
+
+        bool IsMediaExtension(string ext)
         {
-            return files.Where(i => VideoTypes.Contains(i.Ext()) || 
-                                    AudioTypes.Contains(i.Ext()) ||
-                                    ImageTypes.Contains(i.Ext()));
+            return VideoTypes.Contains(ext) || AudioTypes.Contains(ext) || ImageTypes.Contains(ext);
         }
 
         bool WasAviSynthLoaded;

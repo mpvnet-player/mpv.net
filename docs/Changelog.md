@@ -1,4 +1,10 @@
 
+# 6.0.3.2 (2022-0?-??)
+
+- Support multiple folders input (regression fix).
+- Relative file input paths are internally converted to absolute paths.
+
+
 # 6.0.3.1 (2022-07-30)
 
 - Creating a playlist from a folder uses absolute normalized paths, non-media files are ignored.
