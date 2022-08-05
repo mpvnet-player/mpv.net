@@ -1,7 +1,6 @@
 ﻿
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
@@ -747,8 +746,7 @@ namespace mpvnet
 
             string path = Core.GetPropertyString("path");
 
-            if ((path.Contains(":/") && !path.Contains("://")) || (path.Contains(":\\") && path.Contains("/")))
-                path = path.Replace("/", "\\");
+            path = Core.ConvertFilePath(path);
 
             if (path.Contains("://"))
             {

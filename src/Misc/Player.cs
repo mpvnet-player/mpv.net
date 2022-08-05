@@ -1210,11 +1210,7 @@ namespace mpvnet
                 if (file.Contains("|"))
                     file = file.Substring(0, file.IndexOf("|"));
 
-                if ((file.Contains(":/") && !file.Contains("://")) || (file.Contains(":\\") && file.Contains("/")))
-                    file = file.Replace("/", "\\");
-
-                if (!file.Contains(":") && !file.StartsWith("\\\\") && File.Exists(file))
-                    file = System.IO.Path.GetFullPath(file);
+                file = ConvertFilePath(file);
 
                 string ext = file.Ext();
 
@@ -1247,6 +1243,17 @@ namespace mpvnet
 
             if (string.IsNullOrEmpty(GetPropertyString("path")))
                 SetPropertyInt("playlist-pos", 0);
+        }
+
+        public string ConvertFilePath(string path)
+        {
+            if ((path.Contains(":/") && !path.Contains("://")) || (path.Contains(":\\") && path.Contains("/")))
+                path = path.Replace("/", "\\");
+
+            if (!path.Contains(":") && !path.StartsWith("\\\\") && File.Exists(path))
+                path = System.IO.Path.GetFullPath(path);
+
+            return path;
         }
 
         public void LoadISO(string path)

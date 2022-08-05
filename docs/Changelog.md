@@ -2,7 +2,7 @@
 # 6.0.3.2 (2022-0?-??)
 
 - Support multiple folders input (regression fix).
-- Relative file input paths are internally converted to absolute paths.
+- Relative file input paths are converted to absolute paths.
 
 
 # 6.0.3.1 (2022-07-30)
