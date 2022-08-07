@@ -14,7 +14,7 @@ namespace mpvnet
     {
         public static List<ConfSection> Parse(string content)
         {
-            string[] lines = content.Split("\r\n".ToCharArray());
+            string[] lines = content.Split(new[] { "\r\n" }, System.StringSplitOptions.None);
             var sections = new List<ConfSection>();
             ConfSection currentGroup = null;
 
@@ -22,12 +22,9 @@ namespace mpvnet
             {
                 string line = i.Trim();
 
-                if (string.IsNullOrEmpty(line))
-                    continue;
-
-                if (line.StartsWith("[") && line.EndsWith("]"))
+                if (line == "")
                 {
-                    currentGroup = new ConfSection() { Name = line.TrimStart('[').TrimEnd(']') };
+                    currentGroup = new ConfSection();
                     sections.Add(currentGroup);
                 }
                 else if (line.Contains("="))
@@ -45,7 +42,6 @@ namespace mpvnet
 
     public class ConfSection
     {
-        public string Name { get; set; }
         public List<StringPair> Items { get; set; } = new List<StringPair>();
 
         public bool HasName(string name)

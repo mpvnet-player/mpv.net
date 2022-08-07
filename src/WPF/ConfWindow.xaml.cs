@@ -17,7 +17,7 @@ namespace mpvnet
 {
     public partial class ConfWindow : Window
     {
-        List<SettingBase> SettingsDefinitions = Conf.LoadConf(Properties.Resources.editor_conf);
+        List<SettingBase> SettingsDefinitions = Conf.LoadConf(Properties.Resources.editor_conf.TrimEnd());
         List<ConfItem> ConfItems = new List<ConfItem>();
         public ObservableCollection<string> FilterStrings { get; } = new ObservableCollection<string>();
         string InitialContent;
