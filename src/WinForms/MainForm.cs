@@ -779,7 +779,7 @@ namespace mpvnet
 
             string text = Core.Expand(title);
 
-            if (text == "(unavailable)")
+            if (text == "(unavailable)" || Core.PlaylistPos == -1)
                 text = "mpv.net";
 
             Text = text;

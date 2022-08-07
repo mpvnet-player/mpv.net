@@ -3,6 +3,7 @@
 
 - Support multiple folders input (regression fix).
 - Relative file input paths are converted to absolute paths.
+- New history-filter option added to define paths to be excluded from the history log feature.
 
 
 # 6.0.3.1 (2022-07-30)

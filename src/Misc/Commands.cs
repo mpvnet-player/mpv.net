@@ -157,8 +157,8 @@ namespace mpvnet
                 ProcessHelp.ShellExecute(Core.ConfigFolder + "history.txt");
             else
             {
-                if (Msg.ShowQuestion("Create history.txt file in config folder?" + BR2 +
-                    "mpv.net will write the date, time and filename of opened files to it.") == MessageBoxResult.OK)
+                if (Msg.ShowQuestion("Create a 'history.txt' file in the config folder?" + BR2 +
+                    "mpv.net will write the date, time, play length and path of watched files to it.") == MessageBoxResult.OK)
 
                     File.WriteAllText(Core.ConfigFolder + "history.txt", "");
             }

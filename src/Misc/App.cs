@@ -14,6 +14,8 @@ namespace mpvnet
     {
         public static List<string> TempFiles { get; } = new List<string>();
 
+        public static string[] HistoryFilter { get; set; }
+
         public static string ConfPath { get => Core.ConfigFolder + "mpvnet.conf"; }
         public static string ProcessInstance { get; set; } = "single";
         public static string DarkMode { get; set; } = "always";
@@ -244,16 +246,17 @@ namespace mpvnet
                 case "audio-file-extensions": CorePlayer.AudioTypes = value.Split(" ,;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries); return true;
                 case "auto-load-folder": AutoLoadFolder = value == "yes"; return true;
                 case "auto-play": AutoPlay = value == "yes"; return true;
-                case "autofit-image": AutofitImage = value.Trim('%').ToInt() / 100f; return true;
                 case "autofit-audio": AutofitAudio = value.Trim('%').ToInt() / 100f; return true;
+                case "autofit-image": AutofitImage = value.Trim('%').ToInt() / 100f; return true;
                 case "dark-mode": DarkMode = value; return true;
                 case "dark-theme": DarkTheme = value.Trim('\'', '"'); return true;
                 case "debug-mode": DebugMode = value == "yes"; return true;
+                case "history-filter": HistoryFilter = value.Split(';'); return true;
                 case "image-file-extensions": CorePlayer.ImageTypes = value.Split(" ,;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries); return true;
                 case "light-theme": LightTheme = value.Trim('\'', '"'); return true;
                 case "media-info": MediaInfo = value == "yes"; return true;
-                case "minimum-aspect-ratio": MinimumAspectRatio = value.ToFloat(); return true;
                 case "minimum-aspect-ratio-audio": MinimumAspectRatioAudio = value.ToFloat(); return true;
+                case "minimum-aspect-ratio": MinimumAspectRatio = value.ToFloat(); return true;
                 case "process-instance": ProcessInstance = value; return true;
                 case "queue": Queue = value == "yes"; return true;
                 case "recent-count": RecentCount = value.ToInt(); return true;
@@ -264,6 +267,7 @@ namespace mpvnet
                 case "start-size": StartSize = value; return true;
                 case "start-threshold": StartThreshold = value.ToInt(); return true;
                 case "video-file-extensions": CorePlayer.VideoTypes = value.Split(" ,;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries); return true;
+
                 default:
                     if (writeError)
                         Terminal.WriteError($"unknown mpvnet.conf property: {name}");

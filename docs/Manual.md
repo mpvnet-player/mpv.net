@@ -505,6 +505,10 @@ Amount of recent files to be remembered. Default: 15
 
 Usage of the media info library instead of mpv to access media information. Default: yes (mpv.net specific option)
 
+#### --history-filter
+
+Semicolon separated list of paths to be excluded from the history log feature.
+
 #### --video-file-extensions=\<string\>
 
 Video file extensions used to create file associations and used by the auto-load-folder feature.

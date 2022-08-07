@@ -72,6 +72,7 @@ namespace mpvnet
 
         public AutoResetEvent ShutdownAutoResetEvent { get; } = new AutoResetEvent(false);
         public AutoResetEvent VideoSizeAutoResetEvent { get; } = new AutoResetEvent(false);
+        public DateTime HistoryTime;
         public IntPtr Handle { get; set; }
         public IntPtr NamedHandle { get; set; }
         public List<MediaTrack> MediaTracks { get; set; } = new List<MediaTrack>();
@@ -176,7 +177,15 @@ namespace mpvnet
             SetPropertyString("idle", "yes");
 
             ObservePropertyDouble("window-scale", value => WindowScaleMpv(value));
-            ObservePropertyString("path", value => Path = value);
+          
+            ObservePropertyString("path", value => {
+                if (HistoryTime == DateTime.MinValue)
+                {
+                    HistoryTime = DateTime.Now;
+                    HistoryPath = value;
+                }
+                Path = value;
+            });
 
             ObservePropertyBool("pause", value => {
                 Paused = value;
@@ -499,7 +508,7 @@ namespace mpvnet
                         case mpv_event_id.MPV_EVENT_SHUTDOWN:
                             IsQuitNeeded = false;
                             Shutdown?.Invoke();
-                            WriteHistory(null);
+                            WriteHistory();
                             ShutdownAutoResetEvent.Set();
                             return;
                         case mpv_event_id.MPV_EVENT_LOG_MESSAGE:
@@ -580,13 +589,7 @@ namespace mpvnet
                                 }
 
                                 App.RunTask(new Action(() => UpdateTracks()));
-
-                                App.RunTask(new Action(() => {
-                                    if (path.Contains("://"))
-                                        path = GetPropertyString("media-title");
-
-                                    WriteHistory(path);
-                                }));
+                                App.RunTask(new Action(() => WriteHistory()));
 
                                 InvokeEvent(FileLoaded, FileLoadedAsync);
                             }
@@ -940,29 +943,6 @@ namespace mpvnet
                 HandleError(err, "error getting property: " + name);
 
             return "";
-        }
-
-        public string GetScriptOption(string name, string defaultValue = "")
-        {
-            string value = GetPropertyString("script-opts");
-
-            if (string.IsNullOrEmpty(value))
-                return defaultValue;
-
-            string[] values = value.Split(',');
-
-            foreach (string item in values)
-            {
-                if (item.Contains("="))
-                {
-                    string optionName = item.Substring(0, item.IndexOf("="));
-
-                    if (optionName == name)
-                        return item.Substring(item.IndexOf("=") + 1);
-                }
-            }
-
-            return defaultValue;
         }
 
         public void ObservePropertyInt(string name, Action<int> action)
@@ -1369,38 +1349,36 @@ namespace mpvnet
             }
         }
 
-        string LastHistoryPath;
-        DateTime LastHistoryStartDateTime;
+        string HistoryPath;
 
-        void WriteHistory(string path)
+        void WriteHistory()
         {
-            if (!File.Exists(ConfigFolder + "history.txt"))
-                return;
+            double totalMinutes = (DateTime.Now - HistoryTime).TotalMinutes;
 
-            double totalMinutes = (DateTime.Now - LastHistoryStartDateTime).TotalMinutes;
+            if (!string.IsNullOrEmpty(HistoryPath) && totalMinutes > 1 &&
+                !HistoryDiscard() && File.Exists(ConfigFolder + "history.txt"))
+            {
+                string path = HistoryPath;
 
-            if (LastHistoryPath != null && totalMinutes > 1 && !HistoryDiscard())
-                File.AppendAllText(ConfigFolder + "history.txt", DateTime.Now.ToString().Substring(0, 16) +
-                    " " + Convert.ToInt32(totalMinutes).ToString().PadLeft(3) + " " + LastHistoryPath + "\r\n");
+                if (path.Contains("://"))
+                    path = GetPropertyString("media-title");
 
-            LastHistoryPath = path;
-            LastHistoryStartDateTime = DateTime.Now;
+                string txt = DateTime.Now.ToString().Substring(0, 16) + " " +
+                    Convert.ToInt32(totalMinutes).ToString().PadLeft(3) + " " + path + "\r\n";
+
+                File.AppendAllText(ConfigFolder + "history.txt", txt);
+            }
+
+            HistoryPath = Path;
+            HistoryTime = DateTime.Now;
         }
 
-        string HistoryDiscardOption;
-
-        bool HistoryDiscard()
+        public bool HistoryDiscard()
         {
-            if (HistoryDiscardOption == null)
-                HistoryDiscardOption = GetScriptOption("history-discard");
-
-            if (string.IsNullOrEmpty(HistoryDiscardOption))
-                return false;
-
-            foreach (string i in HistoryDiscardOption.Split(';'))
-                if (LastHistoryPath.Contains(i))
-                    return true;
-
+            if (App.HistoryFilter != null)
+                foreach (string filter in App.HistoryFilter)
+                    if (HistoryPath.Contains(filter.Trim()))
+                        return true;
             return false;
         }
 

@@ -27,6 +27,13 @@ option = yes
 option = no
 
 [setting]
+name = history-filter
+file = mpvnet
+filter = General
+width = 500
+help = Semicolon separated list of paths to be excluded from the history log feature.
+
+[setting]
 name = video-file-extensions
 file = mpvnet
 filter = General
