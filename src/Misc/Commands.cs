@@ -435,7 +435,7 @@ namespace mpvnet
             if (editor)
                 ShowTextWithEditor("media-info", text);
             else if (osd)
-                ShowText(text.Replace("\r", ""), 5000, 17);
+                ShowText(text.Replace("\r", ""), 5000, 16);
             else
             {
                 MsgBoxEx.MessageBoxEx.MsgFontFamily = new FontFamily("Consolas");

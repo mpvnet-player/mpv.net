@@ -1658,7 +1658,6 @@ namespace mpvnet
                     Add(track, mi.GetVideo(i, "BitRate/String"));
                     Add(track, fps + " FPS");
                     Add(track, (videoCount > 1 && mi.GetVideo(i, "Default") == "Yes") ? "Default" : "");
-                    Add(track, mi.GetVideo(i, "Title"));
                     track.Text = "V: " + track.Text.Trim(' ', ',');
                     track.Type = "v";
                     track.ID = i + 1;
@@ -1709,12 +1708,18 @@ namespace mpvnet
                         if (title.ContainsEx("Stereo"))
                             title = title.Replace("Stereo", "");
 
-                        if (title.StartsWith(format + " "))
+                        if (title.StartsWithEx(format + " "))
                             title = title.Replace(format + " ", "");
 
                         foreach (string i2 in new [] { "2.0", "5.1", "6.1", "7.1" })
                             if (title.ContainsEx(i2))
-                                title = title.Replace(i2, "");
+                                title = title.Replace(i2, "").Trim();
+
+                        if (title.ContainsEx("@ "))
+                            title = title.Replace("@ ", "");
+
+                        if (title.ContainsEx(" @"))
+                            title = title.Replace(" @", "");
 
                         if (title.ContainsEx("()"))
                             title = title.Replace("()", "");
