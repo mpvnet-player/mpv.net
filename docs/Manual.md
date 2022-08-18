@@ -241,6 +241,9 @@ Shows a file browser dialog to open external audio files.
 ### load-sub
 Shows a file browser dialog to open external subtitle files.
 
+### move-window [left|top|right|bottom|center]
+Moves the Window to the screen edge (Alt+Arrow) or center (Alt+BS).
+
 ### open-conf-folder
 Opens the config folder with Windows File Explorer.
 

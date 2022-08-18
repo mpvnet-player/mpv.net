@@ -63,6 +63,7 @@ namespace mpvnet
         public event Action<int> PlaylistPosChangedAsync;
         public event Action<Size> VideoSizeChanged;
         public event Action<Size> VideoSizeChangedAsync;
+        public event Action<string> MoveWindow;
 
         public Dictionary<string, List<Action>>               PropChangeActions { get; set; } = new Dictionary<string, List<Action>>();
         public Dictionary<string, List<Action<int>>>       IntPropChangeActions { get; set; } = new Dictionary<string, List<Action<int>>>();
@@ -1465,6 +1466,8 @@ namespace mpvnet
         }
 
         public void RaiseScaleWindow(float value) => ScaleWindow(value);
+
+        public void RaiseMoveWindow(string value) => MoveWindow(value);
         
         public void RaiseWindowScaleNET(float value) => WindowScaleNET(value);
         

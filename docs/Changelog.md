@@ -4,7 +4,20 @@
 - Support multiple folders input (regression fix).
 - Relative file input paths are converted to absolute paths.
 - New history-filter option added to define paths to be excluded from the history log feature.
+- New command to move the Window to the screen edge (Alt+Arrow) or center (Alt+BS).
+- libmpv shinchiro 2022-08-11
 
+input.conf changes:
+
+New:
+
+```
+Alt+Left  script-message-to mpvnet move-window left   #menu: View > Move > Left
+Alt+Right script-message-to mpvnet move-window right  #menu: View > Move > Right
+Alt+Up    script-message-to mpvnet move-window top    #menu: View > Move > Top
+Alt+Down  script-message-to mpvnet move-window bottom #menu: View > Move > Bottom
+Alt+BS    script-message-to mpvnet move-window center #menu: View > Move > Center
+```
 
 # 6.0.3.1 (2022-07-30)
 

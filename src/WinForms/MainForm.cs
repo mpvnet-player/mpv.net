@@ -46,6 +46,7 @@ namespace mpvnet
                 Instance = this;
 
                 Core.FileLoaded += Core_FileLoaded;
+                Core.MoveWindow += Core_MoveWindow;
                 Core.Pause += Core_Pause;
                 Core.PlaylistPosChanged += Core_PlaylistPosChanged;
                 Core.ScaleWindow += Core_ScaleWindow;
@@ -117,7 +118,35 @@ namespace mpvnet
             }
         }
 
-        private void Core_PlaylistPosChanged(int pos)
+        void Core_MoveWindow(string direction)
+        {
+            BeginInvoke(new Action(() => {
+                Screen screen = Screen.FromControl(this);
+                Rectangle workingArea = GetWorkingArea(Handle, screen.WorkingArea);
+
+                switch (direction)
+                {
+                    case "left":
+                        Left = workingArea.Left;
+                        break;
+                    case "top":
+                        Top = 0;
+                        break;
+                    case "right":
+                        Left = workingArea.Width - Width + workingArea.Left;
+                        break;
+                    case "bottom":
+                        Top = workingArea.Height - Height;
+                        break;
+                    case "center":
+                        Left = (screen.Bounds.Width - Width) / 2;
+                        Top = (screen.Bounds.Height - Height) / 2;
+                        break;
+                }
+            }));
+        }
+
+        void Core_PlaylistPosChanged(int pos)
         {
             if (pos == -1)
                 SetTitle();

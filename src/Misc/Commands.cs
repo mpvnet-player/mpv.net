@@ -28,6 +28,7 @@ namespace mpvnet
                 case "cycle-subtitles": CycleSubtitles(); break;
                 case "load-audio": LoadAudio(); break;
                 case "load-sub": LoadSubtitle(); break;
+                case "move-window": MoveWindow(args[0]); break;
                 case "open-clipboard": OpenFromClipboard(); break;
                 case "open-conf-folder": ProcessHelp.ShellExecute(Core.ConfigFolder); break;
                 case "open-files": OpenFiles(args); break;
@@ -759,5 +760,7 @@ namespace mpvnet
                 App.QuickBookmark = 0;
             }
         }
+
+        public static void MoveWindow(string direction) => Core.RaiseMoveWindow(direction);
     }
 }

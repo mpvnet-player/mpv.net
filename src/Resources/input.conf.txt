@@ -117,6 +117,12 @@ Alt+1   script-message-to mpvnet window-scale 1.0     #menu: View > Zoom > 100 %
 Alt+2   script-message-to mpvnet window-scale 2.0     #menu: View > Zoom > 200 %
 Alt+3   script-message-to mpvnet window-scale 3.0     #menu: View > Zoom > 300 %
 
+Alt+Left  script-message-to mpvnet move-window left   #menu: View > Move > Left
+Alt+Right script-message-to mpvnet move-window right  #menu: View > Move > Right
+Alt+Up    script-message-to mpvnet move-window top    #menu: View > Move > Top
+Alt+Down  script-message-to mpvnet move-window bottom #menu: View > Move > Bottom
+Alt+BS    script-message-to mpvnet move-window center #menu: View > Move > Center
+
 F8      script-message-to mpvnet show-playlist        #menu: View > Show Playlist
 Ctrl+p  script-message-to mpvnet select-profile       #menu: View > Show Profile Selection
 Ctrl+P  script-message-to mpvnet show-profiles        #menu: View > Show Profiles
