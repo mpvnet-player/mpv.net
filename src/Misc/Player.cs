@@ -1801,6 +1801,9 @@ namespace mpvnet
                         if (title.ContainsEx("Full"))
                             title = title.Replace("Full", "").Trim();
 
+                        if (title.ContainsEx("Subtitles"))
+                            title = title.Replace("Subtitles", "").Trim();
+
                         if (title.ContainsEx("forced"))
                             title = title.Replace("forced", "Forced").Trim();
 
