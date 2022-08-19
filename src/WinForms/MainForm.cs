@@ -254,7 +254,7 @@ namespace mpvnet
             Point pos = PointToClient(MousePosition);
             float top = 0;
 
-            if (FormBorderStyle == FormBorderStyle.None)
+            if (!Core.Border)
                 top = ClientSize.Height * 0.1f;
 
             return pos.Y > ClientSize.Height * 0.78 || pos.Y < top;
