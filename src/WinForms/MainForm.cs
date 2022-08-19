@@ -1059,8 +1059,9 @@ namespace mpvnet
                 LastCursorPosition = MousePosition;
                 LastCursorChanged = Environment.TickCount;
             }
-            else if (Environment.TickCount - LastCursorChanged > 1500 &&
-                !IsMouseInOSC() && ClientRectangle.Contains(PointToClient(MousePosition)) &&
+            else if (((Environment.TickCount - LastCursorChanged > 1500 &&
+                !IsMouseInOSC()) || Environment.TickCount - LastCursorChanged > 5000) &&
+                ClientRectangle.Contains(PointToClient(MousePosition)) &&
                 ActiveForm == this && !ContextMenu.IsVisible && !IsCommandPaletteVissible())
 
                 CursorHelp.Hide();

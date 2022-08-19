@@ -6,6 +6,7 @@
 - New history-filter option added to define paths to be excluded from the history log feature.
 - New command to move the Window to the screen edge (Alt+Arrow) or center (Alt+BS).
 - Smaller OSD media info font size and more duplicated and obvious info removed from titles.
+- Improved mouse cursor hide behavior.
 - libmpv shinchiro 2022-08-11
 
 input.conf changes:
