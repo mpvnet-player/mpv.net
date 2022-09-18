@@ -225,6 +225,9 @@ mpv.net命令可在mpv命令不存在或缺乏某种功能时使用。
 ### load-sub
 显示一个资源管理器的对话框来加载外部字幕文件。
 
+### move-window [left|top|right|bottom|center]
+将窗口移动到屏幕边缘 (Alt+方向键) 或中心 (Alt+Backspace)。
+
 ### open-conf-folder
 用Windows资源管理器打开配置文件夹。
 
@@ -470,6 +473,9 @@ mpv.net的专属选项
 
 使用MediaInfo而不是mpv来访问媒体信息。默认：yes
 
+#### --history-filter
+
+要从历史日志功能中排除的路径的分号分隔列表。
 
 #### --video-file-extensions=\<string\>
 
