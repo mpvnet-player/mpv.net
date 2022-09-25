@@ -2,7 +2,7 @@
 mpv.net手册
 ==============
 
-适配版本 [v6.0.3.1](https://github.com/stax76/mpv.net/releases/tag/v6.0.3.1) + 未发布源提交_[20220818](https://github.com/stax76/mpv.net/commit/1f6025a10f28d489397cf497103697eb09f0baca)
+适配版本 [Master_commit_220819](https://github.com/stax76/mpv.net/commit/22960af78b7e1b7255954d845b3d378330aa449b)
 
 **[ENGLISH](Manual.md)** | **简体中文**
 
