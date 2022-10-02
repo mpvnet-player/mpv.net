@@ -15,6 +15,9 @@ public class libmpv
     public static extern mpv_error mpv_initialize(IntPtr mpvHandle);
 
     [DllImport("mpv-2.dll", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void mpv_destroy(IntPtr mpvHandle);
+
+    [DllImport("mpv-2.dll", CallingConvention = CallingConvention.Cdecl)]
     public static extern mpv_error mpv_command(IntPtr mpvHandle, IntPtr strings);
 
     [DllImport("mpv-2.dll", CallingConvention = CallingConvention.Cdecl)]

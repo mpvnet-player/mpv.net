@@ -222,6 +222,12 @@ namespace mpvnet
             InvokeAsync(InitializedAsync);
         }
 
+        public void Destroy()
+        {
+            mpv_destroy(Handle);
+            mpv_destroy(NamedHandle);
+        }
+
         void ApplyShowMenuFix()
         {
             if (App.Settings.ShowMenuFixApplied)
@@ -1732,6 +1738,9 @@ namespace mpvnet
 
                         if (title.TrimEx() == format)
                             title = null;
+
+                        if (!string.IsNullOrEmpty(title))
+                            title = title.Trim(" _-".ToCharArray());
                     }
 
                     track = new MediaTrack();
@@ -1815,6 +1824,9 @@ namespace mpvnet
 
                         if (title.ContainsEx("[]"))
                             title = title.Replace("[]", "");
+
+                        if (!string.IsNullOrEmpty(title))
+                            title = title.Trim(" _-".ToCharArray());
                     }
 
                     track = new MediaTrack();

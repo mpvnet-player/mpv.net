@@ -1235,6 +1235,8 @@ namespace mpvnet
 
             if (!Core.ShutdownAutoResetEvent.WaitOne(10000))
                 Msg.ShowError("Shutdown thread failed to complete within 10 seconds.");
+
+            Core.Destroy();
         }
 
         protected override void OnMouseDown(MouseEventArgs e)
