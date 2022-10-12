@@ -2,7 +2,7 @@
 mpv.net手册
 ==============
 
-适配版本 [Master_commit_220819](https://github.com/stax76/mpv.net/commit/22960af78b7e1b7255954d845b3d378330aa449b)
+适配版本 [Master_commit_220819](https://github.com/mpvnet-player/mpv.net/commit/22960af78b7e1b7255954d845b3d378330aa449b)
 
 **[ENGLISH](Manual.md)** | **简体中文**
 
@@ -63,7 +63,7 @@ mpv.net需要.NET Framework 4.8运行库和高于win7版本的系统以及一张
 互联网流媒体需要：
 
 - 下载[yt-dlp](https://github.com/yt-dlp/yt-dlp)并将其添加到[用户环境变量PATH](https://www.google.com/search?q=user+environment+variable+PATH)；
-- 在使用代理服务器的情况下，需要[手动配置](https://github.com/stax76/mpv.net/issues/401)。
+- 在使用代理服务器的情况下，需要[手动配置](https://github.com/mpvnet-player/mpv.net/issues/401)。
 
 #### 文件关联
 
@@ -91,7 +91,7 @@ https://www.reddit.com/r/mpv
 
 mpv.net的错误报告、功能请求和高级问题：
 
-https://github.com/stax76/mpv.net/issues
+https://github.com/mpvnet-player/mpv.net/issues
 
 高级的mpv问题：
 
@@ -127,7 +127,7 @@ input 和 config editor 可以在上下文菜单的该条目中找到 'Settings'
 输入的键位列表可由该参数输出 --input-keylist 或从上下文菜单的该条目获取 `View > Advanced > Show Keys`
 
 mpv.net的默认input.conf文件：
-https://github.com/stax76/mpv.net/blob/master/src/Resources/input.conf.txt
+https://github.com/mpvnet-player/mpv.net/blob/master/src/Resources/input.conf.txt
 
 mpv的默认input.conf文件：
 https://github.com/mpv-player/mpv/blob/master/etc/input.conf
@@ -577,7 +577,7 @@ args: `-- pwsh -NoLogo -Command "yt-dlp --ignore-errors --download-archive 'C:\E
 
 可以在 [mpv wiki](https://github.com/mpv-player/mpv/wiki/User-Scripts) 中找到一个庞大的用户Lua脚本的集合。
 
-Lua脚本在 [mpv.net wiki](https://github.com/stax76/mpv.net/wiki/Extending-mpv-and-mpv.net-via-Lua-scripting) 上有进一步记录。
+Lua脚本在 [mpv.net wiki](https://github.com/mpvnet-player/mpv.net/wiki/Extending-mpv-and-mpv.net-via-Lua-scripting) 上有进一步记录。
 
 
 #### JavaScript
@@ -778,7 +778,7 @@ mpv.net的上下文菜单由设置目录中的文件 input.conf 定义。
 
 如果 input.conf 文件不存在，mpv.net由以下文件生成默认：
 
-<https://github.com/stax76/mpv.net/tree/master/src/Resources/input.conf.txt>
+<https://github.com/mpvnet-player/mpv.net/tree/master/src/Resources/input.conf.txt>
 
 input.conf 定义mpv的快捷键，同时mpv.net使用注释定义上下文菜单。
 
@@ -1490,7 +1490,7 @@ script-opt = history-discard=path1;path2
 
 ### Help > Show mpv.net manual
 
-显示 [mpv.net手册](https://github.com/stax76/mpv.net/blob/master/Manual.md).
+显示 [mpv.net手册](https://github.com/mpvnet-player/mpv.net/blob/master/Manual.md).
 
 
 ### Help > About mpv.net

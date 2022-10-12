@@ -1,5 +1,5 @@
 
-# https://github.com/stax76/mpv.net/blob/master/docs/Manual.md#input-and-context-menu
+# https://github.com/mpvnet-player/mpv.net/blob/master/docs/Manual.md#input-and-context-menu
 
 o           script-message-to mpvnet open-files         #menu: Open > Open Files...
 V           script-message-to mpvnet open-clipboard     #menu: Open > Open URL or file from clipboard
@@ -167,10 +167,10 @@ Q       quit-watch-later                              #menu: Tools > Exit Watch 
 e       run powershell -command "explorer.exe '/select,' ( \"${path}\" -replace '/', '\\' )" #menu: Tools > Show current file in File Explorer
 
 _ script-message-to mpvnet shell-execute https://mpv.io                    #menu: Help > Website mpv
-_ script-message-to mpvnet shell-execute https://github.com/stax76/mpv.net #menu: Help > Website mpv.net
+_ script-message-to mpvnet shell-execute https://github.com/mpvnet-player/mpv.net #menu: Help > Website mpv.net
 _ ignore                                                                   #menu: Help > -
 _ script-message-to mpvnet shell-execute https://mpv.io/manual/stable/     #menu: Help > Manual mpv
-_ script-message-to mpvnet shell-execute https://github.com/stax76/mpv.net/blob/master/docs/Manual.md #menu: Help > Manual mpv.net
+_ script-message-to mpvnet shell-execute https://github.com/mpvnet-player/mpv.net/blob/master/docs/Manual.md #menu: Help > Manual mpv.net
 _ ignore                                                                   #menu: Help > -
 _ script-message-to mpvnet show-about                                      #menu: Help > About mpv.net
 

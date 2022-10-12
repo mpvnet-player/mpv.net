@@ -65,7 +65,7 @@ Internet streaming requires:
 
 - Downloading [yt-dlp](https://github.com/yt-dlp/yt-dlp) and adding its folder
   to the [user environment variable PATH](https://www.google.com/search?q=user+environment+variable+PATH).
-- In case of proxy server usage, [manual configuration](https://github.com/stax76/mpv.net/issues/401).
+- In case of proxy server usage, [manual configuration](https://github.com/mpvnet-player/mpv.net/issues/401).
 
 #### File Associations
 
@@ -98,7 +98,7 @@ https://www.reddit.com/r/mpv
 
 mpv.net bug reports, feature requests and advanced questions:
 
-https://github.com/stax76/mpv.net/issues
+https://github.com/mpvnet-player/mpv.net/issues
 
 Advanced mpv questions:
 
@@ -141,7 +141,7 @@ The input key list can be printed with --input-keylist or
 shown from the context menu under: View > Advanced > Show Keys
 
 mpv.net input.conf defaults:  
-https://github.com/stax76/mpv.net/blob/master/src/Resources/input.conf.txt
+https://github.com/mpvnet-player/mpv.net/blob/master/src/Resources/input.conf.txt
 
 mpv input.conf defaults:
 https://github.com/mpv-player/mpv/blob/master/etc/input.conf
@@ -605,7 +605,7 @@ Scripting
 
 A very large collection of Lua user scripts can be found in the mpv wiki [here](https://github.com/mpv-player/mpv/wiki/User-Scripts).
 
-Lua scripting is documented in the mpv.net wiki [here](https://github.com/stax76/mpv.net/wiki/Extending-mpv-and-mpv.net-via-Lua-scripting).
+Lua scripting is documented in the mpv.net wiki [here](https://github.com/mpvnet-player/mpv.net/wiki/Extending-mpv-and-mpv.net-via-Lua-scripting).
 
 #### JavaScript
 
@@ -839,7 +839,7 @@ located in the config directory.
 
 If the input.conf file does not exists mpv.net generates it with the following defaults:
 
-<https://github.com/stax76/mpv.net/tree/master/src/Resources/input.conf.txt>
+<https://github.com/mpvnet-player/mpv.net/tree/master/src/Resources/input.conf.txt>
 
 input.conf defines mpv's key and mouse bindings and mpv.net uses
 comments to define the context menu.
@@ -1568,7 +1568,7 @@ Shows the [mpv.net web site](https://mpv-net.github.io/mpv.net-web-site/).
 
 ### Help > Show mpv.net manual
 
-Shows the [mpv.net manual](https://github.com/stax76/mpv.net/blob/master/Manual.md).
+Shows the [mpv.net manual](https://github.com/mpvnet-player/mpv.net/blob/master/Manual.md).
 
 
 ### Help > About mpv.net
