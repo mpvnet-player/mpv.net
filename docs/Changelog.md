@@ -1,5 +1,5 @@
 
-# 6.0.3.2 (2022-0?-??)
+# v6.0.3.2 Beta (2022-10-14)
 
 - Support multiple folders input (regression fix).
 - Relative file input paths are converted to absolute paths.
@@ -8,7 +8,8 @@
 - Smaller OSD media info font size and more duplicated and obvious info removed from titles.
 - Improved mouse cursor auto hide behavior.
 - Fix severe bug causing termination before scripts having a chance reacting to shutdown event.
-- libmpv shinchiro 2022-10-02, fixes a severe bug causing hangs:
+- mediainfo v22.09.
+- libmpv shinchiro 2022-10-14, fixes a severe bug causing hangs:
   https://github.com/mpv-player/mpv/pull/10569
 
 input.conf changes:
