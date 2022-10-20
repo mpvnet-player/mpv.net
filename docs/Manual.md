@@ -318,7 +318,7 @@ Shows chapters in the command palette.
 Shows the command palette.
 
 ### show-commands
-Shows available mpv imput commands.
+Shows available mpv input commands.
 
 ### show-conf-editor
 Shows the conf editor.
@@ -341,7 +341,7 @@ Shows available keys (as shown with `--input-keylist`) in the command palette.
 
 ### show-media-info [\<flags\>]
 **msgbox**  
-Shows media info in a messsge box.
+Shows media info in a messsage box.
 
 **editor**  
 Shows media info in the text editor.
