@@ -71,6 +71,7 @@ Ctrl+7      add saturation -1      #menu: Video > Decrease Saturation
 Ctrl+8      add saturation  1      #menu: Video > Increase Saturation
 _           ignore                 #menu: Video > -
 s           async screenshot       #menu: Video > Take Screenshot
+S           async screenshot video #menu: Video > Take Screenshot without subtitles
 d           cycle deinterlace      #menu: Video > Toggle Deinterlace
 a           cycle-values video-aspect 16:9 4:3 2.35:1 -1 #menu: Video > Cycle Aspect Ratio
 Ctrl+r      cycle-values video-rotate 90 180 270 0       #menu: Video > Rotate Video
