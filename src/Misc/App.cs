@@ -141,7 +141,7 @@ namespace mpvnet
 
         public static string Version => "Copyright (C) 2000-2022 mpv.net/mpv/mplayer\n" +
             $"mpv.net {Application.ProductVersion}" + GetLastWriteTime(Application.ExecutablePath) + "\n" +
-            $"{Core.GetPropertyString("mpv-version")}" + GetLastWriteTime(Folder.Startup + "mpv-2.dll") + "\n" +
+            $"{Core.GetPropertyString("mpv-version")}" + GetLastWriteTime(Folder.Startup + "libmpv-2.dll") + "\n" +
             $"ffmpeg {Core.GetPropertyString("ffmpeg-version")}\n" +
             $"MediaInfo {FileVersionInfo.GetVersionInfo(Path.Combine(Application.StartupPath, "MediaInfo.dll")).FileVersion}" +
             GetLastWriteTime(Path.Combine(Application.StartupPath , "MediaInfo.dll")) + "\nGPL v2 License";
