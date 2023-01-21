@@ -546,13 +546,16 @@ namespace mpvnet
             {
                 int index = i;
                 string file = Core.GetPropertyString($"playlist/{i}/filename");
+                string title = Core.GetPropertyString($"playlist/{i}/title");
 
                 CommandPaletteItem item = new CommandPaletteItem()
                 {
-                    Text = file.FileName(),
+                    Text = title,
                     Action = () => Core.SetPropertyInt("playlist-pos", index)
                 };
 
+                if (string.IsNullOrEmpty(item.Text))
+                    item.Text = file.FileName();
                 if (string.IsNullOrEmpty(item.Text))
                     item.Text = file;
 
