@@ -92,6 +92,8 @@ R           add sub-pos +1         #menu: Subtitle > Move Down
 _           ignore                 #menu: Subtitle > -
 F           add sub-scale -0.1     #menu: Subtitle > Decrease Subtitle Font Size
 G           add sub-scale  0.1     #menu: Subtitle > Increase Subtitle Font Size
+_           ignore                 #menu: Subtitle > -
+u           cycle-values sub-ass-override force no #menu: Subtitle > Toggle overriding SSA/ASS subtitle styles with the normal styles
 
 _           ignore                 #menu: Track
 
