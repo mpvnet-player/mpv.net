@@ -81,7 +81,7 @@ _           ignore                 #menu: Audio > -
 Ctrl+d      add audio-delay  0.1   #menu: Audio > Delay +0.1
 Ctrl+D      add audio-delay -0.1   #menu: Audio > Delay -0.1
 
-KP8         script-message-to mpvnet cycle-subtitles #menu: Subtitle > Cycle/Next #menu: Subtitle > Cycle/Next
+KP8         script-message-to mpvnet cycle-subtitles #menu: Subtitle > Cycle/Next
 v           cycle sub-visibility   #menu: Subtitle > Toggle Visibility
 _           ignore                 #menu: Subtitle > -
 z           add sub-delay -0.1     #menu: Subtitle > Delay -0.1
@@ -93,7 +93,7 @@ _           ignore                 #menu: Subtitle > -
 F           add sub-scale -0.1     #menu: Subtitle > Decrease Subtitle Font Size
 G           add sub-scale  0.1     #menu: Subtitle > Increase Subtitle Font Size
 _           ignore                 #menu: Subtitle > -
-u           cycle-values sub-ass-override force no #menu: Subtitle > Toggle overriding SSA/ASS subtitle styles with the normal styles
+u           cycle-values sub-ass-override force no #menu: Subtitle > Advanced > Toggle overriding SSA/ASS subtitle styles with the normal styles
 
 _           ignore                 #menu: Track
 
