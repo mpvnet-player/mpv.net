@@ -1,4 +1,10 @@
 
+# v6.0.4.0 Stable (2023-08-17)
+
+- libmpv-2.dll support
+- MediaInfo v23.07
+- libmpv shinchiro 2023-08-16
+
 # v6.0.3.2 Beta (2022-10-14)
 
 - Support multiple folders input (regression fix).

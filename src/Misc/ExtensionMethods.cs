@@ -120,14 +120,13 @@ public static class PathStringExtension
         return instance;
     }
 
-    // Ensure trailing directory separator char
     public static string AddSep(this string instance)
     {
         if (string.IsNullOrEmpty(instance))
             return "";
 
         if (!instance.EndsWith(Path.DirectorySeparatorChar.ToString()))
-            instance = instance + Path.DirectorySeparatorChar;
+            instance += Path.DirectorySeparatorChar;
 
         return instance;
     }
