@@ -1,9 +1,32 @@
 
-# v6.0.4.0 Stable (2023-08-17)
+# v7.0.0.0 Beta (2023-??-??)
 
-- libmpv-2.dll support
-- MediaInfo v23.07
-- libmpv shinchiro 2023-08-16
+- [.NET 6 is a new requirement](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
+  (Windows 7 is still supported)
+- The command palette was removed because of a compatibility problem with
+  the .NET 6 platform. There are user scripts as replacement:
+  [command_palette](https://github.com/stax76/mpv-scripts#command_palette) or
+  [search_menu](https://github.com/stax76/mpv-scripts#search_menu).
+  Unfortunately the user scripts don't support IME mode which is a problem for asian users.
+- The blue mpv.net logo was removed for better mpv compatibility.
+- Fix message box exceding working area size.
+- C# and PowerShell scripting was removed because of a compatibility problem
+  with the .NET 6 platform. .NET extensions are supported with a new host
+  (not backward compatible). A example extension is available under \src\MpvNet.Extension\ExampleExtension
+- Redesigned bindings and context menu, the default bindings and context menu
+  are now defined internally, no longer is a default input.conf file generated.
+  It means mpv.net no longer loses control over the default bindings and menu.
+  The new design, is ready for localization. Defining the context menu in
+  input.conf is still supported, but discouraged and undocumented.
+- auto-play option removed, mpv supports it with the option reset-on-next-file.
+- Dark mode title bar enabled on Windows 10.0.18985 or higher.
+- The navigation bar on the left side of the config editor was changed
+  from a simple list to a tree view.
+- Support of the MPV_HOME environment variable that allows
+  customizing the conf directory location.
+- Improved support for third party osc scripts like uosc.
+- Support of the mpv property `focused`.
+
 
 # v6.0.3.2 Beta (2022-10-14)
 
@@ -174,11 +197,11 @@ All occurrences of `script-message mpv.net` were changed to `script-message-to m
 - Media Info isn't shown directly, instead the command palette
   shows several choices. The command palette can be bypassed
   using the arguments: msgbox, editor, full, raw.  
-  https://github.com/mpvnet-player/mpv.net/blob/master/docs/Manual.md#show-media-info-flags
+  https://github.com/mpvnet-player/mpv.net/blob/master/docs/manual.md#show-media-info-flags
 - mpv.net specific commands, the command palette, auto-play property
   and various other things are documented in the manual.
 - The action used for the right mouse button can be configured.  
-  https://github.com/mpvnet-player/mpv.net/blob/master/docs/Manual.md#show-menu
+  https://github.com/mpvnet-player/mpv.net/blob/master/docs/manual.md#show-menu
 - Workaround not reproducible logo drawing crash.
 - Info command shows the length.
 - New mpv.net specific option `show-logo` that allows to disable

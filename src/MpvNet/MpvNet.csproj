@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+		<AssemblyName>libmpvnet</AssemblyName>
+		<Product>mpv.net</Product>
+		<Nullable>enable</Nullable>
+		<RootNamespace>MpvNet</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <None Include="..\..\docs\changelog.md" Link="Docs\changelog.md" />
+      <None Include="..\..\docs\manual.md" Link="Docs\manual.md" />
+      <None Include="..\..\README.md" Link="Docs\README.md" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Extension\" />
+      <Folder Include="Input\" />
+      <Folder Include="Docs\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
+    </ItemGroup>
+
+</Project>

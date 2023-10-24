@@ -1,0 +1,183 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-03-18 08:39+0100\n"
+"PO-Revision-Date: 2019-03-18 08:40+0100\n"
+"Last-Translator: Frank Skare <frank.skare.de@gmail.com>\n"
+"Language-Team: \n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.2.1\n"
+"X-Poedit-Basepath: ../../..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: Localizer.Noop\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: MainWindow.xaml:71
+msgid "Binding string format support: {0:n0}"
+msgstr "Binding-string-format-unterstützung {0:n0}"
+
+#: MemoryLeakTestWindow.xaml:15
+msgid ""
+"Close this window to test that the attached behavior releases its event "
+"listeners from the culture tracker."
+msgstr ""
+"Schließen Sie dieses Fenster, um zu testen, ob das angehängte Verhalten "
+"seine Ereignis-Listener vom Culture Tracker freigibt."
+
+#: MainWindow.xaml:38
+msgid "Danish"
+msgstr "Dänisch"
+
+#: C:\Git\ngettext-avalonia\NGettext.Avalonia.Example\MainWindow.xaml.cs:17
+msgid "Deferred localization"
+msgstr "Aaufgeschobene Übersetzung"
+
+#: MainWindow.xaml:56
+msgid "Deferred localization example:"
+msgstr "Beispiel von aufgeschobene Übersetzung:"
+
+#: MainWindow.xaml:65
+msgid "Enclosing single-quotes (') are optional"
+msgstr "Einschließende einfache Anführungszeichen (') sind optional"
+
+#: MainWindow.xaml:66
+msgid "Enclosing single-quotes (apostrophes) are optional."
+msgstr "Einschließende einfache Anführungszeichen (Apostrophe) sind optional."
+
+#: MainWindow.xaml:34
+msgid "English"
+msgstr "Englisch"
+
+#: MainWindow.xaml:69
+msgctxt "Example"
+msgid "GNOME glib syntax context example"
+msgstr "GNOME glib-Syntaxkontextbeispiel"
+
+#: MainWindow.xaml:36
+msgid "German"
+msgstr "Deutsch"
+
+#: MainWindow.xaml:46
+msgid "Localized date time format example:"
+msgstr "Lokales Datumsformatbeispiel:"
+
+#: MainWindow.xaml:51
+msgid "Localized enum combo example:"
+msgstr "Lokalisierte Enum-Combobox-Beispiel:"
+
+#: MainWindow.xaml:41
+msgid "Localized number format example:"
+msgstr "Lokales Zahlenformatbeispiel:"
+
+#: MainWindow.xaml:76
+msgid "Memory leak test progress:"
+msgstr "Speicherlecktestfortschritt:"
+
+#: C:\Git\ngettext-wpf\NGettext.Avalonia.Example\MainWindow.xaml.cs:97
+msgid "NGettext.Avalonia Example"
+msgstr "NGettext.Avalonia-Beispiel"
+
+#: MainWindow.xaml:73
+msgid "Run TrackCurrentCultureBehavior memory leak test"
+msgstr "Den TrackCurrentCultureBehavior-Speicherlecktest ausführen"
+
+#: C:\Git\ngettext-wpf\NGettext.Avalonia.Example\MainWindow.xaml.cs:99
+#: C:\Git\ngettext-wpf\NGettext.Avalonia.Example\MainWindow.xaml.cs:100
+msgid "Singular"
+msgid_plural "Plural"
+msgstr[0] "Singular"
+msgstr[1] "Plural"
+
+#: C:\Git\ngettext-wpf\NGettext.Avalonia.Example\MainWindow.xaml.cs:102
+#: C:\Git\ngettext-wpf\NGettext.Avalonia.Example\MainWindow.xaml.cs:103
+#, csharp-format
+msgid "Singular {0:n3}"
+msgid_plural "Plural {0:n3}"
+msgstr[0] "Singular {0:n3}"
+msgstr[1] "Plural {0:n3}"
+
+#: C:\Git\ngettext-wpf\NGettext.Avalonia.Example\ExampleEnum.cs:16
+msgctxt "EnumMsgId example"
+msgid "Some fourth value"
+msgstr "Ein vierter Wert"
+
+#: C:\Git\ngettext-wpf\NGettext.Avalonia.Example\ExampleEnum.cs:10
+msgid "Some other value"
+msgstr "Ein anderer Wert"
+
+#: C:\Git\ngettext-wpf\NGettext.Avalonia.Example\ExampleEnum.cs:13
+msgid "Some third value"
+msgstr "Ein dritter Wert"
+
+#: C:\Git\ngettext-wpf\NGettext.Avalonia.Example\ExampleEnum.cs:7
+msgid "Some value"
+msgstr "Ein gewisser Wert"
+
+#: MainWindow.xaml:70
+msgid "Text with punctuation: 1, 2, 3"
+msgstr "Tekst mit Zeichensetzung: 1, 2, 3"
+
+#: MainWindow.xaml:67
+msgid "Unenclosed escaped single-quotes (') are supported."
+msgstr "Unclosed maskierte einfache Anführungszeichen (') werden unterstützt."
+
+#: MainWindow.xaml:68
+msgid "Unicode™ in msgIds is supported"
+msgstr "Unicode™ in msgIds wird unterstützt"
+
+#: MainWindow.xaml:61
+msgid "Varying cAsE ExamPle:"
+msgstr "Beispiel von Variation zwiScHen Groß- und KleInBUchstaBen:"
+
+#: MainWindow.xaml:60
+msgid "Varying case example:"
+msgstr "Beispiel von Variation zwischen Groß- und Kleinbuchstaben:"
+
+#, fuzzy
+#~ msgctxt ""
+#~ msgid ""
+#~ msgstr ""
+#~ "Project-Id-Version: \n"
+#~ "Report-Msgid-Bugs-To: \n"
+#~ "POT-Creation-Date: 2019-02-18 13:15+0100\n"
+#~ "PO-Revision-Date: 2018-09-28 11:43+0200\n"
+#~ "Last-Translator: Robert Jørgensgaard Engdahl <rje@accuratech.dk>\n"
+#~ "Language-Team: \n"
+#~ "Language: de_DE\n"
+#~ "MIME-Version: 1.0\n"
+#~ "Content-Type: text/plain; charset=UTF-8\n"
+#~ "Content-Transfer-Encoding: 8bit\n"
+#~ "X-Generator: Poedit 2.1.1\n"
+#~ "X-Poedit-Basepath: ../../..\n"
+#~ "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#~ "X-Poedit-KeywordsList: Localizer.Noop\n"
+#~ "X-Poedit-SearchPath-0: .\n"
+
+#, fuzzy
+#~ msgctxt "test"
+#~ msgid ""
+#~ msgstr ""
+#~ "Project-Id-Version: \n"
+#~ "Report-Msgid-Bugs-To: \n"
+#~ "POT-Creation-Date: 2019-02-18 13:21+0100\n"
+#~ "PO-Revision-Date: 2018-09-28 11:43+0200\n"
+#~ "Last-Translator: Robert Jørgensgaard Engdahl <rje@accuratech.dk>\n"
+#~ "Language-Team: \n"
+#~ "Language: de_DE\n"
+#~ "MIME-Version: 1.0\n"
+#~ "Content-Type: text/plain; charset=UTF-8\n"
+#~ "Content-Transfer-Encoding: 8bit\n"
+#~ "X-Generator: Poedit 2.1.1\n"
+#~ "X-Poedit-Basepath: ../../..\n"
+#~ "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#~ "X-Poedit-KeywordsList: Localizer.Noop\n"
+#~ "X-Poedit-SearchPath-0: .\n"
+
+#, fuzzy
+#~ msgctxt "EnumMsgId example"
+#~ msgid "Some third value"
+#~ msgstr "Ein dritter Wert"

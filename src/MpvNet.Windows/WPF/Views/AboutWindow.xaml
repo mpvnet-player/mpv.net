@@ -1,0 +1,46 @@
+﻿<Window
+    x:Class="MpvNet.Windows.WPF.Views.AboutWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    
+    Title="About mpv.net"
+    FontSize="16"
+    ShowInTaskbar="False"
+    WindowStartupLocation="CenterOwner"
+    ResizeMode="NoResize"
+    SizeToContent="WidthAndHeight"
+    Foreground="{Binding Theme.Foreground}"
+    Background="{Binding Theme.Background}"
+    >
+
+    <Window.InputBindings>
+        <KeyBinding Key="Esc" Command="{Binding CloseCommand}"/>
+    </Window.InputBindings>
+    
+    <Grid>
+        <StackPanel HorizontalAlignment="Center">
+            <TextBox
+                IsReadOnly="True"
+                FontSize="30"
+                TextAlignment="Center"
+                Margin="10,10,10,0"
+                BorderThickness="0"
+                Foreground="{Binding Theme.Foreground}"
+                Background="{Binding Theme.Background}"
+                >mpv.net
+            </TextBox>
+            <TextBox
+                IsReadOnly="True"
+                Text="{Binding About, Mode=OneWay}"
+                TextAlignment="Center"
+                Margin="20,10,20,20"
+                BorderThickness="0"
+                Foreground="{Binding Theme.Foreground}"
+                Background="{Binding Theme.Background}">
+            </TextBox>
+        </StackPanel>
+    </Grid>
+</Window>

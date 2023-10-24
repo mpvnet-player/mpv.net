@@ -2,7 +2,7 @@
 mpv.net manual
 ==============
 
-**ENGLISH** | **[简体中文](Manual_chs.md)**
+**ENGLISH** | **[简体中文](manual_chs.md)**
 
 Table of contents
 -----------------
@@ -13,7 +13,6 @@ Table of contents
 * [Support](#support)
 * [Settings](#settings)
 * [Input and context menu](#input-and-context-menu)
-* [Command Palette](#command-palette)
 * [Command Line Interface](#command-line-interface)
 * [Terminal](#terminal)
 * [mpv.net specific commands](#mpvnet-specific-commands)
@@ -42,8 +41,6 @@ mpv focuses on the usage of the command line and the terminal,
 mpv.net retains the ability to be used from the command line and
 the terminal and adds a modern Windows GUI on top of it.
 
-Like mpv, mpv.net is designed for power users.
-
 
 Download
 --------
@@ -54,12 +51,16 @@ Download
 
 3. `winget install mpv.net`
 
-[Changelog](Changelog.md)
+[Changelog](changelog.md)
+
 
 Installation
 ------------
 
-mpv.net requires the .NET Framework 4.8 and Windows 7 or higher and a modern graphics card.
+1. Windows 7 or higher is required (Windows 10 or higher is recommended).
+2. mpv.net since version 7.0 requires the
+   [.NET Desktop Runtime 6.0](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
+   being installed. mpv.net before version 7.0 requires .NET Framework 4.8.
 
 Internet streaming requires:
 
@@ -121,14 +122,6 @@ mpv.net options are documented [here](#mpvnet-specific-options).
 Input and context menu
 ----------------------
 
-The input (key/mouse) bindings and the context menu definitions are stored in the
-input.conf file, if it's missing mpv.net generates it with default values.
-
-Please be aware that once input.conf exists, mpv.net cannot update it, this means
-the menu becomes outdated when mpv.net is updated with new or changed default menu
-items. The only way to get an up-to-date menu is either resetting the menu by
-deleting input.conf or updating it by manually editing input.conf.
-
 Global keyboard shortcuts are supported via global-input.conf file.
 
 The config folder can be opened from the context menu: `Settings > Open Config Folder`
@@ -137,50 +130,16 @@ A input and config editor can be found in the context menu under 'Settings'.
 
 The input test mode can be started via command line: --input-test
 
-The input key list can be printed with --input-keylist or
-shown from the context menu under: View > Advanced > Show Keys
+The input key list can be printed with --input-keylist
 
-mpv.net input.conf defaults:  
-https://github.com/mpvnet-player/mpv.net/blob/master/src/Resources/input.conf.txt
-
-mpv input.conf defaults:
+mpv input.conf defaults:  
 https://github.com/mpv-player/mpv/blob/master/etc/input.conf
 
-mpv input commands:
+mpv input commands:  
 https://mpv.io/manual/master/#list-of-input-commands
 
-mpv input options:
+mpv input options:  
 https://mpv.io/manual/master/#input
-
-
-Command Palette
----------------
-
-The command palette is designed to quickly find,
-select and execute commands.
-
-It can also be used to easily find shortcut keys.
-
-The following functionality is presented with the Command Palette:
-
-- Show media info in different ways.
-- Show and select audio tracks.
-- Show and select subtitle tracks.
-- Show and select playlist files.
-- Show and select recent files.
-- Show available mpv properties.
-- Show available decoders.
-- Show available demuxers.
-- Show available keys.
-- Show available protocols.
-
-| Key    | Action                      |
-| ------ | --------------------------- |
-| F1     | Shows the command palette.  |
-| Escape | Hides the command palette.  |
-| Enter  | Executes the selected item. |
-| Up     | Moves the selection up.     |
-| Down   | Moves the selection down.   |
 
 
 Command Line Interface
@@ -208,11 +167,6 @@ Supported are all mpv properties, they are documented here:
 https://mpv.io/manual/master/#properties
 
 
-mpv.net has a feature to list all available properties:
-
-_Context Menu > View > Advanced > Show Properties_
-
-
 mpv has a few non property based switches which are generally not supported in mpv.net.
 
 
@@ -231,9 +185,6 @@ mpv.net specific commands
 `script-message-to mpvnet <command> <arguments>`
 
 mpv.net commands are used when mpv commands don't exist or lack a feature.
-
-### cycle-audio
-Switches to the next audio track and shows info about that track.
 
 ### load-audio
 Shows a file browser dialog to open external audio files.
@@ -268,35 +219,11 @@ or multiple files in the file clipboard format.
 Cycles the pause property. In case the playlist is empty,
 the most recent file from the recent files list is loaded.
 
-### playlist-add \<integer\>
-Changes the playlist position by adding the supplied integer value.
-If the position goes out of range, it jumpes to the opposite end.
-
-### playlist-first
-Jumps to the first playlist entry, if the loaded file is
-already the first entry, nothing happens.
-
-### playlist-last
-Jumps to the last playlist entry, if the loaded file is
-already the last entry, nothing happens.
-
-### playlist-random
-Jumps to a random playlist entry.
-
-### quick-bookmark
-
-On the first press a bookmark is saved, on the second
-press it is restored and removed. When a new file is
-loaded the bookmark is removed.
-
 ### reg-file-assoc \<audio|video|image\>
 Registers the file associations.
 
 ### scale-window \<factor\>
 Decreases or increases the Window size.
-
-### select-profile
-Shows the command palette to select a profile.
 
 ### shell-execute \<file|URL\>
 Shell executes a single file or URL.
@@ -306,16 +233,6 @@ Shows the about dialog.
 
 ### show-audio-devices
 Shows available audio devices in a message box.
-
-### show-audio-tracks
-Shows available audio tracks in the command palette
-and allows to load the selected audio track.
-
-### show-chapters
-Shows chapters in the command palette.
-
-### show-command-palette
-Shows the command palette.
 
 ### show-commands
 Shows available mpv input commands.
@@ -329,25 +246,18 @@ Shows available decoders.
 ### show-demuxers
 Shows available demuxers.
 
-### show-history
-
-Shows the history file when existing.
-
 ### show-input-editor
 Shows the input editor.
-
-### show-keys
-Shows available keys (as shown with `--input-keylist`) in the command palette.
 
 ### show-media-info [\<flags\>]
 **msgbox**  
 Shows media info in a messsage box.
 
 **editor**  
-Shows media info in the text editor.
+Shows media info in a text editor.
 
 **osd**
-Displays media info on screen.
+Shows media info on screen.
 
 **full**  
 Shows fully detailed media info.
@@ -358,30 +268,8 @@ Shows media info with raw property names.
 ### show-menu
 Shows the context menu.
 
-### show-playlist
-Shows the playlist in the command palette
-and allows to play the selected entry.
-
 ### show-profiles
 Shows available profiles with a message box.
-
-### show-progress
-Shows a simple OSD progress message with time and date.
-
-### show-properties
-Shows available properties in the command palette and
-allows to display the property value of the selected property.
-
-### show-protocols
-Shows available protocols in the command palette.
-
-### show-recent
-Shows recently played files and URLs in the
-command palette and allows to select and play entries.
-
-### show-subtitle-tracks
-Shows available subtitles in the command palette
-and allows to activate the selected subtitle.
 
 ### show-text \<text\> \<duration\> \<font-size\>
 Shows a OSD message with given text, duration and font size.
@@ -471,12 +359,6 @@ are used as defined by autofit and start-size. Default: 1500
 #### --auto-load-folder=\<yes|no\>
 
 For single files automatically load the entire directory into the playlist.
-Can be suppressed via shift key. Default: yes
-
-#### --auto-play=\<yes|no\>
-
-If the player is paused and another file is loaded,
-playback automatically resumes.
 
 
 ### General
@@ -507,10 +389,6 @@ Amount of recent files to be remembered. Default: 15
 #### --media-info=\<yes|no\>
 
 Usage of the media info library instead of mpv to access media information. Default: yes (mpv.net specific option)
-
-#### --history-filter
-
-Semicolon separated list of paths to be excluded from the history log feature.
 
 #### --video-file-extensions=\<string\>
 
@@ -555,14 +433,6 @@ Color theme used in light mode. Default: light
 
 [Color Themes](#color-theme)
 
-#### --show-logo=\<yes|no\>
-
-Draws the blue mpv.net logo ontop of the native OSC logo. Default: yes
-
-#### --show-santa-logo=\<yes|no\>
-
-Draws the blue mpv.net logo with a santa hat in december,
-the option is called greenandgrumpy in mpv. Default: yes
 
 External Tools
 --------------
@@ -611,51 +481,17 @@ Lua scripting is documented in the mpv.net wiki [here](https://github.com/mpvnet
 
 [mpv JavaScript documentation](https://mpv.io/manual/master/#javascript)
 
-#### PowerShell
-
-Location: `<config folder>\scripts-ps`
-
-The PowerShell scripting host is not initialized before media files are loaded.
-
-[Example Scripts](../../../tree/master/src/Scripts)
-
-
-#### C#
-
-Location: `<config folder>\scripts-cs`
-
-There are no compatibility guaranties.
-
-Script code can be written within a C# [extension](../../../tree/master/src/Extensions),
-that way full code completion and debugger support is available.
-Once the code was developed and debugged, it can be moved
-from the extension to a lightweight standalone script.
-The script host uses an old C# version, modern features
-like string interpolation are not available.
-
-There are synchronous and asynchronous events, prefer asynchronous events
-and don't block synchronous events and observed properties, as it would
-block the main event loop.
-
-The C# scripting host is like [extensions](../../../tree/master/src/Extensions)
-not initialized before media files are loaded.
-
-[Example Scripts](../../../tree/master/src/Scripts)
-
 
 Extensions
 ----------
 
-Extensions are located in a subfolder _extensions_ in the config folder
-and the filename must have the same name as the directory:
+Extensions are located in a subfolder _extensions_ in the config folder,
+the filename must have the same name as the directory:
 
 ```Text
 <config folder>\extensions\ExampleExtension\ExampleExtension.dll
 ```
 
-There are synchronous and asynchronous events, prefer asynchronous events
-and don't block synchronous events and observed properties, as it would
-block the main event loop.
 
 ### Walkthrough creating an extension
 
@@ -725,13 +561,6 @@ Hidden Features
 Selecting multiple files in File Explorer and pressing enter will
 open the files in mpv.net. Explorer restricts this to maximum 15 files
 and the order will be random.
-
-Whenever the control key is pressed when files or URLs are opened,
-the playlist is not cleared but the files or URLs are appended to the playlist.
-This works in all mpv.net features that open files or URLs.
-
-Pressing the shift key while opening a single file will suppress loading
-all files of the folder into the playlist.
 
 In fullscreen mode clicking the top right corner closes the player.
 
@@ -831,20 +660,6 @@ Third party components are:
 - [MediaInfo](https://mediaarea.net/en/MediaInfo)
 
 
-Context Menu
-------------
-
-The context menu of mpv.net is defined in the file input.conf which is
-located in the config directory.
-
-If the input.conf file does not exists mpv.net generates it with the following defaults:
-
-<https://github.com/mpvnet-player/mpv.net/tree/master/src/Resources/input.conf.txt>
-
-input.conf defines mpv's key and mouse bindings and mpv.net uses
-comments to define the context menu.
-
-
 ### Open > Open Files
 
 The Open Files menu entry is one way to open files in mpv.net, it supports multi selection.
@@ -853,12 +668,6 @@ Another way to open files is the command line which is used by
 File Explorer for existing associations.
 
 A third way is to drag and drop files on the main window.
-
-Whenever the control key is pressed when files or URLs are opened,
-the playlist is not cleared but the files or URLs are appended to the
-playlist. This works in all mpv.net features that open files or URLs.
-
-Pressing the shift key while opening a single file will suppress loading all files in the folder.
 
 Blu-ray and DVD ISO image files are supported.
 
@@ -1228,17 +1037,6 @@ Adds a negative audio delay using the following command:
 [audio-delay property](https://mpv.io/manual/master/#options-audio-delay)
 
 
-### Subtitle > Cycle/Next
-
-Shows the next subtitle track using the following command:
-
-`script-message-to mpvnet cycle-subtitles`
-
-[cycle command](https://mpv.io/manual/master/#command-interface-cycle-%3Cname%3E-[%3Cvalue%3E])
-
-[sub/sid property](https://mpv.io/manual/master/#options-sid)
-
-
 ### Subtitle > Toggle Visibility
 
 Cycles the subtitle visibility using the following command:
@@ -1404,11 +1202,6 @@ Resets the speed using the following command:
 [speed property](https://mpv.io/manual/master/#options-speed)
 
 
-### Extensions > Rating > 0stars
-
-A plugin the writes the rating to the filename.
-
-
 ### View > On Top > Enable
 
 Forces the player to stay on top of other windows using the following command:
@@ -1463,24 +1256,6 @@ Toggles OSC Visibility using the following command:
 [script-binding command](https://mpv.io/manual/master/#command-interface-script-binding)
 
 
-### View > Show Playlist
-
-Shows the playlist for 5 seconds using the following command:
-
-`show-text ${playlist} 5000`
-
-[show-text command](https://mpv.io/manual/master/#command-interface-show-text)
-
-
-### View > Show Audio/Video/Subtitle List
-
-Shows the Audio/Video/Subtitle list for 5 seconds using the following command:
-
-`show-text ${track-list} 5000`
-
-[show-text command](https://mpv.io/manual/master/#command-interface-show-text)
-
-
 ### Settings > Show Config Editor
 
 Shows mpv.net's config editor.
@@ -1502,23 +1277,6 @@ mpvnet.conf file containing mpv.net settings
 input.conf containing mpv key and mouse bindings
 
 User scripts and user extensions
-
-
-### Tools > Command Palette
-
-Shows the command palette window which allows to quickly find and execute commands and key shortcuts.
-
-
-### Tools > Show History
-
-Shows a text file that contains the file history. If the file don't exist
-it asks if the file should be created in the settings folder. Once the file
-exist then the history is logged. It logges the playback history containing
-the time and filename.
-
-To ignore certain paths:
-
-script-opt = history-discard=path1;path2
 
 ### Tools > Set/clear A-B loop points
 
@@ -1563,12 +1321,12 @@ Shows the [mpv manual](https://mpv.io/manual/stable/).
 
 ### Help > Show mpv.net web site
 
-Shows the [mpv.net web site](https://mpv-net.github.io/mpv.net-web-site/).
+Shows the [mpv.net web site](https://github.com/mpvnet-player/mpv.net).
 
 
 ### Help > Show mpv.net manual
 
-Shows the [mpv.net manual](https://github.com/mpvnet-player/mpv.net/blob/master/Manual.md).
+Shows the [mpv.net manual](https://github.com/mpvnet-player/mpv.net/blob/master/manual.md).
 
 
 ### Help > About mpv.net

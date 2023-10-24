@@ -1,0 +1,688 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-03-27 09:20+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:29
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:30
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:31
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:32
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:33
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:34
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:35
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:36
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:37
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:38
+msgid "File"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:29
+msgid "Open Files..."
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:30
+msgid "Open URL or file from clipboard"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:31
+msgid "Open DVD/Blu-ray Drive/Folder..."
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:33
+msgid "Load external audio files..."
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:34
+msgid "Load external subtitle files..."
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:36
+msgid "Add files to playlist..."
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:38
+msgid "Recent"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:39
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:40
+msgid "Playback"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:39
+msgid "Play/Pause"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:40
+msgid "Stop"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:41
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:42
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:43
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:44
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:45
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:46
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:47
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:48
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:49
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:50
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:51
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:52
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:53
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:54
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:55
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:56
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:57
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:58
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:59
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:60
+msgid "Navigate"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:41
+msgid "Previous File"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:42
+msgid "Next File"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:44
+msgid "Next Chapter"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:45
+msgid "Previous Chapter"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:47
+msgid "Jump Next Frame"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:48
+msgid "Jump Previous Frame"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:50
+msgid "Jump 5 sec forward"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:51
+msgid "Jump 5 sec backward"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:53
+msgid "Jump 30 sec forward"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:54
+msgid "Jump 30 sec backward"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:56
+msgid "Jump 5 min forward"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:57
+msgid "Jump 5 min backward"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:59
+msgid "Titles"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:60
+msgid "Chapters"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:61
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:62
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:63
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:64
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:65
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:66
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:67
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:68
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:69
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:70
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:71
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:72
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:73
+msgid "Pan & Scan"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:61
+msgid "Decrease Size"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:62
+msgid "Increase Size"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:64
+msgid "Move Left"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:65
+msgid "Move Right"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:67
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:101
+msgid "Move Up"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:68
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:102
+msgid "Move Down"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:70
+msgid "Decrease Height"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:71
+msgid "Increase Height"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:73
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:117
+msgid "Reset"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:74
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:75
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:76
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:77
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:78
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:79
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:80
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:81
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:82
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:83
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:84
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:85
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:86
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:87
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:88
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:89
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:90
+msgid "Video"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:74
+msgid "Decrease Contrast"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:75
+msgid "Increase Contrast"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:77
+msgid "Decrease Brightness"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:78
+msgid "Increase Brightness"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:80
+msgid "Decrease Gamma"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:81
+msgid "Increase Gamma"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:83
+msgid "Decrease Saturation"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:84
+msgid "Increase Saturation"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:86
+msgid "Take Screenshot"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:87
+msgid "Take Screenshot without subtitles"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:88
+msgid "Toggle Deinterlace"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:89
+msgid "Cycle Aspect Ratio"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:90
+msgid "Rotate Video"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:91
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:92
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:93
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:94
+msgid "Audio"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:91
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:95
+msgid "Cycle/Next"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:93
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:99
+msgid "Delay +0.1"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:94
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:98
+msgid "Delay -0.1"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:95
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:96
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:97
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:98
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:99
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:100
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:101
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:102
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:103
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:104
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:105
+msgid "Subtitle"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:96
+msgid "Toggle Visibility"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:104
+msgid "Decrease Subtitle Font Size"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:105
+msgid "Increase Subtitle Font Size"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:106
+msgid "Track"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:107
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:108
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:109
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:110
+msgid "Volume"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:107
+msgid "Up"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:108
+msgid "Down"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:110
+msgid "Mute"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:111
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:112
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:113
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:114
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:115
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:116
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:117
+msgid "Speed"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:111
+msgid "-10%"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:112
+msgid "+10%"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:114
+msgid "Half"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:115
+msgid "Double"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:118
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:119
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:132
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:133
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:134
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:135
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:136
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:137
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:138
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:139
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:140
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:141
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:142
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:143
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:144
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:145
+msgid "View"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:118
+msgid "Command Palette"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:119
+msgid "Toggle Fullscreen"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:120
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:121
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:122
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:123
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:124
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:125
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:126
+msgid "View > Zoom"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:120
+msgid "Enlarge"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:121
+msgid "Shrink"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:123
+msgid "50 %"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:124
+msgid "100 %"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:125
+msgid "200 %"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:126
+msgid "300 %"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:127
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:128
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:129
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:130
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:131
+msgid "View > Move"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:127
+msgid "Left"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:128
+msgid "Right"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:129
+msgid "Top"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:130
+msgid "Bottom"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:131
+msgid "Center"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:132
+msgid "Show Playlist"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:133
+msgid "Show Profile Selection"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:134
+msgid "Show Profiles"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:135
+msgid "Show Audio Tracks"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:136
+msgid "Show Subtitle Tracks"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:137
+msgid "Show Chapters"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:138
+msgid "Toggle Border"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:139
+msgid "Toggle On Top"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:140
+msgid "Toggle Statistics"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:141
+msgid "Toggle OSC Visibility"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:142
+msgid "Show Media Info"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:143
+msgid "Show Media Info Advanced"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:144
+msgid "Show Progress"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:145
+msgid "Show Recent"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:146
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:147
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:148
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:149
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:150
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:151
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:152
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:153
+msgid "View > Advanced"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:146
+msgid "Show Console"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:147
+msgid "Show Audio Devices"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:148
+msgid "Show Properties"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:149
+msgid "Show Commands"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:150
+msgid "Show Demuxers"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:151
+msgid "Show Decoders"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:152
+msgid "Show Protocols"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:153
+msgid "Show Keys"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:154
+msgid "Profile"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:155
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:156
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:157
+msgid "Settings"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:155
+msgid "Show Config Editor"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:156
+msgid "Show Input Editor"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:157
+msgid "Open Config Folder"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:158
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:159
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:160
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:161
+msgid "Settings > Setup"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:158
+msgid "Register video file associations"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:159
+msgid "Register audio file associations"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:160
+msgid "Register image file associations"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:161
+msgid "Unregister file associations"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:162
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:163
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:164
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:165
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:166
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:167
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:168
+msgid "Tools"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:162
+msgid "Set/clear A-B loop points"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:163
+msgid "Toggle infinite file looping"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:164
+msgid "Shuffle Playlist"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:165
+msgid "Toggle Hardware Decoding"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:166
+msgid "Exit"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:167
+msgid "Exit Watch Later"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:168
+msgid "Show current file in File Explorer"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:169
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:170
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:171
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:172
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:173
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:174
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:175
+msgid "Help"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:169
+msgid "Website mpv"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:170
+msgid "Website mpvnet"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:172
+msgid "Manual mpv"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:173
+msgid "Manual mpvnet"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet\UI\InputBinding.cs:175
+msgid "About mpvnet"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet.Windows\Properties\Resources.Designer.cs:79
+msgid "editor_conf"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet.Windows\Properties\Resources.Designer.cs:101
+msgid "input_conf"
+msgstr ""
+
+#: D:\Projects\CS\mpvnet\src\MpvNet.Windows\Properties\Resources.Designer.cs:146
+msgid "theme"
+msgstr ""

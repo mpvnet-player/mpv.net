@@ -1,22 +1,7 @@
 ﻿[*.cs]
 
-# IDE0058: Expression value is never used
-dotnet_diagnostic.IDE0058.severity = none
+# IDE0090: Use 'new(...)'
+csharp_style_implicit_object_creation_when_type_is_apparent = true
 
-# IDE0055: Fix formatting
-dotnet_diagnostic.IDE0055.severity = none
-
-# IDE0022: Use block body for methods
-dotnet_diagnostic.IDE0022.severity = none
-
-# IDE0040: Add accessibility modifiers
-dotnet_diagnostic.IDE0040.severity = none
-
-# IDE0011: Add braces
-dotnet_diagnostic.IDE0011.severity = none
-
-# IDE0010: Add missing cases
-dotnet_diagnostic.IDE0010.severity = none
-
-# IDE0044: Add readonly modifier
-dotnet_diagnostic.IDE0044.severity = silent
+# IDE0090: Use 'new(...)'
+dotnet_diagnostic.IDE0090.severity = silent

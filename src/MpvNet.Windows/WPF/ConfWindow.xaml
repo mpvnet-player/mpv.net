@@ -1,0 +1,162 @@
+﻿<Window
+    x:Name="ConfWindow1"
+    x:Class="MpvNet.Windows.WPF.ConfWindow"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:controls="clr-namespace:MpvNet.Windows.WPF.Controls"
+    xmlns:wpf="clr-namespace:MpvNet.Windows.WPF"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    mc:Ignorable="d"
+    
+    Title="Config Editor"
+    Height="550"
+    Width="800"
+    Foreground="{Binding Theme.Foreground}"
+    Background="{Binding Theme.Background}"
+    ShowInTaskbar="False"
+    WindowStartupLocation="CenterScreen"
+    Loaded="ConfWindow1_Loaded"
+    >
+
+    <Window.Resources>
+        <wpf:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
+    </Window.Resources>
+
+    <Window.InputBindings>
+        <KeyBinding Key="n" Modifiers="Ctrl" Command="{Binding ShowMpvNetSpecificSettingsCommand}"/>
+        <KeyBinding Key="F5" Command="{Binding PreviewMpvConfFileCommand}"/>
+        <KeyBinding Key="F6" Command="{Binding PreviewMpvNetConfFileCommand}"/>
+        <KeyBinding Key="F1" Command="{Binding ShowMpvManualCommand}"/>
+        <KeyBinding Key="F2" Command="{Binding ShowMpvNetManualCommand}"/>
+    </Window.InputBindings>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="170" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <controls:SearchControl
+            x:Name="SearchControl"
+            HintText="Find a setting"
+            Margin="20,20,0,10"
+            Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            />
+        
+        <ScrollViewer
+            Name="MainScrollViewer"
+            VerticalScrollBarVisibility="Auto"
+            Grid.RowSpan="3"
+            Grid.Column="2" 
+            Margin="0,0,0,10"
+            >
+            
+            <StackPanel x:Name="MainStackPanel"></StackPanel>
+        </ScrollViewer>
+
+        <TreeView
+            x:Name="TreeView"
+            ItemsSource="{Binding Nodes}"
+            Margin="20,0,0,0"
+            Grid.Row="1"
+            BorderThickness="0"
+            Foreground="{Binding Theme.Foreground}"
+            Background="{Binding Theme.Background}"
+            SelectedItemChanged="TreeView_SelectedItemChanged"
+            >
+
+            <TreeView.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.Theme.Background}" />
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.Theme.Background}" />
+            </TreeView.Resources>
+            
+            <TreeView.ItemContainerStyle>
+                <Style TargetType="{x:Type TreeViewItem}">
+                    <Setter Property="Cursor" Value="Hand" />
+                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                    <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                    <Setter Property="FontWeight" Value="Normal" />
+                    <Setter Property="FontSize" Value="14" />
+                    <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.Theme.Foreground2}" />
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="FontWeight" Value="Bold" />
+                            <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.Theme.Background2}" />
+                            <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.Theme.Foreground}" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TreeView.ItemContainerStyle>
+
+            <TreeView.ItemTemplate>
+                <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                    <TextBlock Text="{Binding Name}" />
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
+        </TreeView>
+
+        <TextBlock
+            Name="MenuTextBlock"
+            Text="Menu"
+            Cursor="Hand"
+            Foreground="LightGray"
+            TextDecorations="Underline"
+            HorizontalAlignment="Center"
+            Margin="20,5,10,10"
+            Grid.Row="2"
+            >
+
+            <TextBlock.ContextMenu>
+                <ContextMenu Name="MainContextMenu">
+                    <MenuItem
+                        Header="Show mpv.net options"
+                        InputGestureText="Ctrl+n"
+                        Command="{Binding Data.ShowMpvNetSpecificSettingsCommand, Source={StaticResource BindingProxy}}"
+                        />
+                    <Separator />
+                    <MenuItem
+                        Header="Preview mpv.conf"
+                        InputGestureText="F5"
+                        Command="{Binding Data.PreviewMpvConfFileCommand, Source={StaticResource BindingProxy}}"
+                        />
+                    <MenuItem
+                        Header="Preview mpvnet.conf"
+                        InputGestureText="F6"
+                        Command="{Binding Data.PreviewMpvNetConfFileCommand, Source={StaticResource BindingProxy}}"
+                        />
+                    <Separator />
+                    <MenuItem
+                        Header="Show mpv manual"
+                        InputGestureText="F1"
+                        Command="{Binding Data.ShowMpvManualCommand, Source={StaticResource BindingProxy}}"
+                        />
+                    <MenuItem
+                        Header="Show mpv.net manual"
+                        InputGestureText="F2"
+                        Command="{Binding Data.ShowMpvNetManualCommand, Source={StaticResource BindingProxy}}"
+                        />
+                </ContextMenu>
+            </TextBlock.ContextMenu>
+            
+            <b:Interaction.Triggers>
+                <b:EventTrigger EventName="MouseLeftButtonDown">
+                    <b:ChangePropertyAction TargetObject="{Binding ContextMenu, ElementName=MenuTextBlock}"
+                                            PropertyName="PlacementTarget"
+                                            Value="{Binding ElementName=MenuTextBlock, Mode=OneWay}"/>
+                    <b:ChangePropertyAction TargetObject="{Binding ContextMenu, ElementName=MenuTextBlock}"
+                                            PropertyName="IsOpen"
+                                            Value="True"/>
+                </b:EventTrigger>
+            </b:Interaction.Triggers>
+        </TextBlock>
+        
+    </Grid>
+</Window>

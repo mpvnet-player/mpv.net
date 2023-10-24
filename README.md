@@ -8,9 +8,8 @@
 
 mpv.net is a modern desktop media player for Windows based on the popular [mpv](https://mpv.io) player.
 
-mpv.net is designed to be mpv compatible, almost all mpv features are available
-because they are all contained in libmpv, this means the official
-[mpv manual](https://mpv.io/manual/master/) applies to mpv.net.
+mpv.net is designed to be mpv compatible, almost all mpv features are available,
+this means the official [mpv manual](https://mpv.io/manual/master/) applies to mpv.net.
 
 mpv focuses on the usage of the command line and the terminal,
 mpv.net retains the ability to be used from the command line and
@@ -43,11 +42,6 @@ Play controls with a modern flat design.
 Leverages the FFmpeg hwaccel APIs to support DXVA2 video decoding acceleration.
 
 
-#### Active development
-
-mpv.net is under active development.
-
-
 #### Based on libmpv
 
 mpv.net is based on libmpv which offers a straightforward C API that
@@ -69,8 +63,7 @@ Table of contents
 Features that mpv and mpv.net have in common
 --------------------------------------------
 
-- Lua and JavaScript Scripting
-- Hundreds available user scripts make mpv the most feature rich desktop video player
+- Lua and JavaScript Scripting ([awesome-mpv lists available user scripts](https://github.com/stax76/awesome-mpv))
 - Simple config files that are easy to read and edit
 - JSON IPC to control the player with a external programs
 - On Screen Controler (OSC, play control buttons) with modern flat design
@@ -99,26 +92,25 @@ Features exclusiv to mpv.net
 - Searchable input (shorcut keys) editor
 - C# and PowerShell Scripting
 - Global keyboard shortcuts
-- Command palette to quickly and easily find commands and keys
 - Extension API for .NET languages (C#, VB.NET and F#)
 - Portable, MS Store or WinGet download and installation
 - File history feature to log time and filename
 - Files can be enqueued from File Explorer
 
 
-## [Support](docs/Manual.md#support)
+## [Support](docs/manual.md#support)
 
-[Support section of the manual.](docs/Manual.md#support)
-
-
-## [Download](docs/Manual.md#download)
-
-[Download section of the manual.](docs/Manual.md#download)
+[Support section of the manual.](docs/manual.md#support)
 
 
-## [Manual](docs/Manual.md)
+## [Download](docs/manual.md#download)
 
-[The mpv.net documentation.](docs/Manual.md)
+[Download section of the manual.](docs/manual.md#download)
+
+
+## [Manual](docs/manual.md)
+
+[The mpv.net documentation.](docs/manual.md)
 
 
 Screenshots
@@ -155,23 +147,3 @@ OSD console and status printed on the terminal.
 Searchable key and mouse binding editor.
 
 ![Input Editor](docs/img/InputEditor.webp)
-
-
-#### Command Palette
-
-Command Palette to easily find commands and shortcut keys.
-
-![Command Palette](docs/img/CommandPalette.webp)
-
-
-#### Playlist
-
-The command palette based playlist showing my favorite artist of the stax record label.
-
-![Playlist](docs/img/Playlist.png)
-
-
-List of my apps
----------------
-
-https://stax76.github.io/frankskare
