@@ -92,6 +92,7 @@
   <ItemGroup>
     <Compile Include="Misc\App.cs" />
     <Compile Include="Misc\Common.cs" />
+    <Compile Include="Misc\FileAssociation.cs" />
     <Compile Include="Misc\FolderBrowser.cs" />
     <Compile Include="Misc\JSONParser.cs" />
     <Compile Include="WinForms\SnapManager.cs" />
