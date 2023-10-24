@@ -145,7 +145,7 @@ public static class InputHelp
                 new (_("Help"), _("Website mpv.net"), "script-message-to mpvnet shell-execute https://github.com/mpvnet-player/mpv.net"),
                 new (_("Help"), "-"),
                 new (_("Help"), _("Manual mpv"), "script-message-to mpvnet shell-execute https://mpv.io/manual/stable"),
-                new (_("Help"), _("Manual mpv.net"), "script-message-to mpvnet shell-execute https://github.com/mpvnet-player/mpvnet/blob/master/docs/manual.md"),
+                new (_("Help"), _("Manual mpv.net"), "script-message-to mpvnet shell-execute https://github.com/mpvnet-player/mpv.net/blob/main/docs/manual.md"),
                 new (_("Help"), "-"),
                 new (_("Help"), _("About mpv.net"), "script-message-to mpvnet show-about"),
                 new ("", _("Exit"), "quit", "Esc"),

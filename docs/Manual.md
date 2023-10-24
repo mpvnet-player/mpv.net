@@ -493,41 +493,12 @@ the filename must have the same name as the directory:
 ```
 
 
-### Walkthrough creating an extension
-
-- Download and install [Visual Studio Community](https://visualstudio.microsoft.com).
-- Create a new project of type **Class Library .NET Framework**
-  and ensure the project name ends with **Extension**.
-- Add a reference to **System.ComponentModel.Composition**.
-- Add a reference to mpvnet.exe, select the mpvnet reference
-  in the Solution Explorer, open the Properties window and set
-  **Copy Local** to false to prevent mpvnet.exe being copied
-  to the output directory when the project is built.
-- Now open the project properties and set the output path in the Build tab,
-  extensions are like scripts located in your config folder, example:
-  `<config folder>\extensions\ExampleExtension\ExampleExtension.dll`
-- Also in the project properties choose the option **Start external program**
-  in the Debug tab and define the path to mpvnet.exe. In the Debug tab you may also
-  define command line arguments like a video file to be played when you start debugging.
-
-
-### Sample Code
-
-#### RatingExtension
-
-This extension writes a rating to the filename of rated videos when mpv.net shuts down.
-
-The input.conf defaults contain key bindings for this extension to set ratings.
-
-[Source Code](../../../tree/master/src/Extensions)
-
-
 Color Theme
 -----------
 
 mpv.net supports custom color themes, the definition of the built-in themes can be found at:
 
-[theme.txt](../../../tree/master/src/Resources/theme.txt)
+[theme.txt](../../../tree/main/src/Resources/theme.txt)
 
 
 Custom themes can be saved at:
@@ -1326,7 +1297,7 @@ Shows the [mpv.net web site](https://github.com/mpvnet-player/mpv.net).
 
 ### Help > Show mpv.net manual
 
-Shows the [mpv.net manual](https://github.com/mpvnet-player/mpv.net/blob/master/manual.md).
+Shows the [mpv.net manual](https://github.com/mpvnet-player/mpv.net/blob/main/manual.md).
 
 
 ### Help > About mpv.net

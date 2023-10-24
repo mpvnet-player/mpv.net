@@ -197,11 +197,11 @@ All occurrences of `script-message mpv.net` were changed to `script-message-to m
 - Media Info isn't shown directly, instead the command palette
   shows several choices. The command palette can be bypassed
   using the arguments: msgbox, editor, full, raw.  
-  https://github.com/mpvnet-player/mpv.net/blob/master/docs/manual.md#show-media-info-flags
+  https://github.com/mpvnet-player/mpv.net/blob/main/docs/manual.md#show-media-info-flags
 - mpv.net specific commands, the command palette, auto-play property
   and various other things are documented in the manual.
 - The action used for the right mouse button can be configured.  
-  https://github.com/mpvnet-player/mpv.net/blob/master/docs/manual.md#show-menu
+  https://github.com/mpvnet-player/mpv.net/blob/main/docs/manual.md#show-menu
 - Workaround not reproducible logo drawing crash.
 - Info command shows the length.
 - New mpv.net specific option `show-logo` that allows to disable
@@ -605,25 +605,25 @@ stable release, no changes since the last beta
        by using `Register-ObjectEvent`, the scripting wiki page was updated
        https://github.com/mpvnet-player/mpv.net/wiki/Scripting#powershell
 - new: Context Menu > View > Show Profiles
-       https://github.com/mpvnet-player/mpv.net/blob/master/mpv.net/Resources/input.conf.txt#L147
+       https://github.com/mpvnet-player/mpv.net/blob/main/mpv.net/Resources/input.conf.txt#L147
 - new: Context Menu > View > Show Properties
-       https://github.com/mpvnet-player/mpv.net/blob/master/mpv.net/Resources/input.conf.txt#L148
+       https://github.com/mpvnet-player/mpv.net/blob/main/mpv.net/Resources/input.conf.txt#L148
 - new: Context Menu > View > Show Commands
-       https://github.com/mpvnet-player/mpv.net/blob/master/mpv.net/Resources/input.conf.txt#L149
+       https://github.com/mpvnet-player/mpv.net/blob/main/mpv.net/Resources/input.conf.txt#L149
 - new: config editor tab is now remembered
 - new: osd-duration setting added to config editor and default mpv.conf
 - new: external console replaced with internal console, in case mpv.conf is missing it's
        generated with correct Hight DPI font size scale settings.
        `script-opts=console-scale=<dpiscale>`
-       https://github.com/mpvnet-player/mpv.net/blob/master/mpv.net/Resources/input.conf.txt#L150
+       https://github.com/mpvnet-player/mpv.net/blob/main/mpv.net/Resources/input.conf.txt#L150
        https://mpv.io/manual/master/#console
 - new: blue color in dark theme is now less intense
-       https://github.com/mpvnet-player/mpv.net/blob/master/Manual.md#color-theme
+       https://github.com/mpvnet-player/mpv.net/blob/main/Manual.md#color-theme
 - new: menu item 'View > Show Progress' (p key) to show progress bar
-       https://github.com/mpvnet-player/mpv.net/blob/master/mpv.net/Resources/input.conf.txt#L146
+       https://github.com/mpvnet-player/mpv.net/blob/main/mpv.net/Resources/input.conf.txt#L146
 - new: `script-message mpv.net playlist-first`, unlike mpv does not
        restart if the first file is already active
-       https://github.com/mpvnet-player/mpv.net/blob/master/mpv.net/Resources/input.conf.txt#L44
+       https://github.com/mpvnet-player/mpv.net/blob/main/mpv.net/Resources/input.conf.txt#L44
 - new: if mpv.net is started from the terminal and an error happens then the error
        is printed to the terminal instead of shown with a message box
 - fix: update routine did only work when mpv.net was located in 'Program Files'
@@ -640,7 +640,7 @@ stable release, no changes since the last beta
 - new: update check, it must be enabled first in the conf editor under General
 - new: update feature, requires PowerShell 5 and curl,
        an up to date Windows 10 system has both included.
-       Main menu (input.conf) must be reset or updated manually ([defaults](https://github.com/mpvnet-player/mpv.net/blob/master/mpv.net/Resources/input.conf.txt))
+       Main menu (input.conf) must be reset or updated manually ([defaults](https://github.com/mpvnet-player/mpv.net/blob/main/mpv.net/Resources/input.conf.txt))
 
 - update: libmpv shinchiro 2019-11-10 
 
@@ -649,17 +649,17 @@ stable release, no changes since the last beta
 - fix: the file association routine uses no longer 'Play with mpv.net' for the
        default open verb caption because it doesn't support multi selection,
        it shows now only Open, the manual explains how to get multi selection
-       in File Explorer, read about it [here](https://github.com/mpvnet-player/mpv.net/blob/master/Manual.md#open-with)
+       in File Explorer, read about it [here](https://github.com/mpvnet-player/mpv.net/blob/main/Manual.md#open-with)
 - fix: x86 builds had an older version included because
        of a misconfiguration in the solution file
 
 ### 5.4.3.0
 
-- new: the color themes can now be customized ([manual](https://github.com/mpvnet-player/mpv.net/blob/master/Manual.md#color-theme))
-- new: three new sections were added to the [manual](https://github.com/mpvnet-player/mpv.net/blob/master/Manual.md):
-       1. [Color Theme](https://github.com/mpvnet-player/mpv.net/blob/master/Manual.md#color-theme)
-       2. [Hidden and secret features](https://github.com/mpvnet-player/mpv.net/blob/master/Manual.md#hidden-and-secret-features)
-       3. [External Tools](https://github.com/mpvnet-player/mpv.net/blob/master/Manual.md#external-tools)
+- new: the color themes can now be customized ([manual](https://github.com/mpvnet-player/mpv.net/blob/main/Manual.md#color-theme))
+- new: three new sections were added to the [manual](https://github.com/mpvnet-player/mpv.net/blob/main/Manual.md):
+       1. [Color Theme](https://github.com/mpvnet-player/mpv.net/blob/main/Manual.md#color-theme)
+       2. [Hidden and secret features](https://github.com/mpvnet-player/mpv.net/blob/main/Manual.md#hidden-and-secret-features)
+       3. [External Tools](https://github.com/mpvnet-player/mpv.net/blob/main/Manual.md#external-tools)
 
 - fix: window restore from maximized and from minimized was broken
 - fix: it's possible to multi select files in File Explorer and press
@@ -679,7 +679,7 @@ stable release, no changes since the last beta
   context menu item in explorer with multi selection support use my
   [Open with++](https://github.com/stax76/OpenWithPlusPlus#add-to-mpvnet-playlist) shell extension, as far as I know multi selection
   can not be done using the Registry but only via shell extension
-- window-size mpv property support added ([default bindings](https://github.com/mpvnet-player/mpv.net/blob/master/mpv.net/Resources/input.conf.txt#L137))
+- window-size mpv property support added ([default bindings](https://github.com/mpvnet-player/mpv.net/blob/main/mpv.net/Resources/input.conf.txt#L137))
 - the config editor keeps profiles and comments in mpv.conf intact!
 - the options in the config editor are better organized
 
@@ -787,7 +787,7 @@ stable release, no changes since the last beta
 
 ### 5.0
 
-- [changed icon design](https://github.com/mpvnet-player/mpv.net/blob/master/img/mpvnet.png)
+- [changed icon design](https://github.com/mpvnet-player/mpv.net/blob/main/img/mpvnet.png)
 - libmpv was updated to shinchiro 2019-07-14
 - new or improved config editor settings: screenshot-directory,
   screenshot-format, screenshot-tag-colorspace, screenshot-high-bit-depth,
@@ -876,7 +876,7 @@ stable release, no changes since the last beta
   pressed, the files are opened as selected, the order is random though
   because Explorer starts multiple mpv.net processes concurrently
 - libmpv was updated to shinchiro 2019-06-30
-- the [mpv.conf defaults](https://github.com/mpvnet-player/mpv.net/blob/master/mpv.net/Resources/mpv.conf.txt) were changed to show a larger OSC
+- the [mpv.conf defaults](https://github.com/mpvnet-player/mpv.net/blob/main/mpv.net/Resources/mpv.conf.txt) were changed to show a larger OSC
 - in case a file is opened that has a aspect ratio smaller then 1.2 then
   the window size will use a aspect ratio of 1.8
 - new JavaScript script osc-visibility.js included in the distribution
@@ -894,7 +894,7 @@ stable release, no changes since the last beta
 - invalid command-line arguments were ignored, now an error message is shown
 - a description on how to start mpv.net from Google Chrome was added to the
   manual, it's useful to play videos from sites like YouTube, find the
-  description [here](https://github.com/mpvnet-player/mpv.net/blob/master/Manual.md#chrome-extension)
+  description [here](https://github.com/mpvnet-player/mpv.net/blob/main/Manual.md#chrome-extension)
 - new config setting remember-height added to remember the window height,
   otherwise the video's native resolution is used
 - support for protocols other then http added
@@ -915,7 +915,7 @@ stable release, no changes since the last beta
 - the default key binding of the Everything media search was changed to F3
 - support for the mpv property 'border' was added to the config editor
   to show/hide the window decoration (titlebar, border). A toggle menu item and
-  key binding (b) was added as well ([Default Binding](https://github.com/mpvnet-player/mpv.net/blob/master/mpv.net/Resources/input.conf.txt#L135))
+  key binding (b) was added as well ([Default Binding](https://github.com/mpvnet-player/mpv.net/blob/main/mpv.net/Resources/input.conf.txt#L135))
 
 ### 4.3.1
 
@@ -930,7 +930,7 @@ stable release, no changes since the last beta
 - the help and layout in the config editor was improved
 - clipboard monitoring for URLs can be disabled in the settings
 - the context menu has a new feature: Open > Add files to playlist,
-  it appends files to the playlist [(Default binding)](https://github.com/mpvnet-player/mpv.net/blob/master/mpv.net/Resources/input.conf.txt#L33)
+  it appends files to the playlist [(Default binding)](https://github.com/mpvnet-player/mpv.net/blob/main/mpv.net/Resources/input.conf.txt#L33)
 - a setting was added to force using a single mpv.net process instance
 
 ### 4.1
@@ -944,8 +944,7 @@ stable release, no changes since the last beta
 ### 4.0
 
 - on the start screen the mpv.NET icon is shown instead of the mpv icon,
-  feedback and contributions regarding the icon are welcome! The paint.net
-  pdn and png source is located [here](https://github.com/mpvnet-player/mpv.net/tree/master/img)
+  feedback and contributions regarding the icon are welcome!
 - everytime only one file is opened the complete folder is loaded in the playlist
 - the info command (i key) shows the audio format
 - new options osd-font-size, sub-font, sub-font-size
@@ -972,7 +971,7 @@ stable release, no changes since the last beta
 - there was a bug that caused underscores beeing removed from input like MBTN_LEFT_DBL
 - the search clear button in the input editor had a render issue in dark mode
 - new search feature added to search and play media files, requires
-  [Everything](https://www.voidtools.com) to be installed. [Default Binding](https://github.com/mpvnet-player/mpv.net/blob/master/mpv.net/Resources/input.conf.txt#L29)
+  [Everything](https://www.voidtools.com) to be installed. [Default Binding](https://github.com/mpvnet-player/mpv.net/blob/main/mpv.net/Resources/input.conf.txt#L29)
 
 ### 3.5
 
@@ -985,6 +984,6 @@ stable release, no changes since the last beta
 
 ### 3.4
 
-- new feature added to manage file associations from within the app. It can be found in the menu at: Tools > Manage... [Default Binding](https://github.com/mpvnet-player/mpv.net/blob/master/mpv.net/Resources/input.conf.txt#L149)
+- new feature added to manage file associations from within the app. It can be found in the menu at: Tools > Manage... [Default Binding](https://github.com/mpvnet-player/mpv.net/blob/main/mpv.net/Resources/input.conf.txt#L149)
 - new zip download option added
 - new x86 download option added
