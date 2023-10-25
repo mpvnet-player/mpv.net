@@ -48,13 +48,13 @@ public class GuiCommand
         ["show-command-palette"] = args => ShowCommandPalette(),
 
 
-        // backward compatibility
-        ["show-info"] = args => ShowMediaInfo(new[] { "osd" }), // backward compatibility
-        ["playlist-random"] = args => PlaylistRandom(), // backward compatibility
-        ["quick-bookmark"] = args => QuickBookmark(), // backward compatibility
-        ["show-commands"] = args => ShowCommands(), // backward compatibility
-        ["show-history"] = args => ShowHistory(), // backward compatibility
-        ["show-playlist"] = args => ShowPlaylist(), // backward compatibility
+        // deprecated
+        ["show-info"] = args => ShowMediaInfo(new[] { "osd" }), // deprecated
+        ["playlist-random"] = args => PlaylistRandom(), // deprecated
+        ["quick-bookmark"] = args => QuickBookmark(), // deprecated
+        ["show-commands"] = args => ShowCommands(), // deprecated
+        ["show-history"] = args => ShowHistory(), // deprecated
+        ["show-playlist"] = args => ShowPlaylist(), // deprecated
     };
 
     public void ShowDialog(Type winType)
@@ -276,27 +276,27 @@ public class GuiCommand
         });
     }
 
-    // backward compatibility
+    // deprecated
     public void PlaylistRandom() =>
         Msg.ShowInfo("This feature was moved to a user script,\nwhich can be found here:\n\n" +
             "https://github.com/stax76/mpv-scripts/blob/main/misc.lua");
 
-    // backward compatibility
+    // deprecated
     public void QuickBookmark() =>
         Msg.ShowInfo("This feature was moved to a user script,\nwhich can be found here:\n\n" +
             "https://github.com/stax76/mpv-scripts/blob/main/misc.lua");
 
-    // backward compatibility
+    // deprecated
     public void ShowCommands() =>
         Msg.ShowInfo("This feature was moved to a user script,\nwhich can be found here:\n\n" +
             "https://github.com/stax76/mpv-scripts#command_palette");
 
-    // backward compatibility
+    // deprecated
     public void ShowHistory() =>
         Msg.ShowInfo("This feature was moved to a user script,\nwhich can be found here:\n\n" +
             "https://github.com/stax76/mpv-scripts/blob/main/history.lua");
 
-    // backward compatibility
+    // deprecated
     public void ShowPlaylist() =>
         Msg.ShowInfo("This feature was moved to a user script,\nwhich can be found here:\n\n" +
             "https://github.com/stax76/mpv-scripts#command_palette");

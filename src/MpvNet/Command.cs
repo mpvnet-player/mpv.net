@@ -19,13 +19,13 @@ public class Command
         ["show-text"] = args => ShowText(args[0], Convert.ToInt32(args[1]), Convert.ToInt32(args[2])),
 
 
-        // backward compatibility
-        ["playlist-add"] = args => PlaylistAdd(Convert.ToInt32(args[0])), // backward compatibility
-        ["show-progress"] = args => ShowProgress(), // backward compatibility
-        ["cycle-audio"] = args => CycleAudio(), // backward compatibility
-        ["cycle-subtitles"] = args => CycleSubtitles(), // backward compatibility
-        ["playlist-first"] = args => PlaylistFirst(), // backward compatibility
-        ["playlist-last"] = args => PlaylistLast(), // backward compatibility        
+        // deprecated
+        ["playlist-add"] = args => PlaylistAdd(Convert.ToInt32(args[0])), // deprecated
+        ["show-progress"] = args => ShowProgress(), // deprecated
+        ["cycle-audio"] = args => CycleAudio(), // deprecated
+        ["cycle-subtitles"] = args => CycleSubtitles(), // deprecated
+        ["playlist-first"] = args => PlaylistFirst(), // deprecated
+        ["playlist-last"] = args => PlaylistLast(), // deprecated        
     };
 
     public string FormatTime(double value) => ((int)value).ToString("00");
@@ -64,7 +64,7 @@ public class Command
             "}${osd-ass-cc/1}" + text + "\" " + duration);
     }
     
-    // backward compatibility
+    // deprecated
     public static void PlaylistAdd(int value)
     {
         int pos = Player.PlaylistPos;
@@ -84,7 +84,7 @@ public class Command
         Player.SetPropertyInt("playlist-pos", pos);
     }
 
-    // backward compatibility
+    // deprecated
     public void ShowProgress()
     {
         TimeSpan position = TimeSpan.FromSeconds(Player.GetPropertyDouble("time-pos"));
@@ -99,7 +99,7 @@ public class Command
         Player.CommandV("show-text", text, "5000");
     }
 
-    // backward compatibility
+    // deprecated
     public static void CycleAudio()
     {
         Player.UpdateExternalTracks();
@@ -128,7 +128,7 @@ public class Command
         }
     }
 
-    // backward compatibility
+    // deprecated
     public static void CycleSubtitles()
     {
         Player.UpdateExternalTracks();
@@ -160,14 +160,14 @@ public class Command
         }
     }
 
-    // backward compatibility
+    // deprecated
     public static void PlaylistFirst()
     {
         if (Player.PlaylistPos != 0)
             Player.SetPropertyInt("playlist-pos", 0);
     }
 
-    // backward compatibility
+    // deprecated
     public static void PlaylistLast()
     {
         int count = Player.GetPropertyInt("playlist-count");

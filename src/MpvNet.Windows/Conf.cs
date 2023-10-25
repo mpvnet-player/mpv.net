@@ -82,7 +82,7 @@ public class ConfParser
 {
     public static List<ConfSection> Parse(string content)
     {
-        string[] lines = content.Split(BR.ToCharArray(), StringSplitOptions.None);
+        string[] lines = content.Split(new[] { "\r\n" }, StringSplitOptions.None);
         var sections = new List<ConfSection>();
         ConfSection? currentGroup = null;
 

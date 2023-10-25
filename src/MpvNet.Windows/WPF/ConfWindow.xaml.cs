@@ -459,7 +459,7 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
             node.IsSelected = false;
 
         foreach (var it in node.Children)
-            SelectNodeFromSearchText(it);
+            UnselectNode(it);
     }
 
     void ExpandNode(NodeViewModel node)
@@ -467,7 +467,7 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
         node.IsExpanded = true;
 
         foreach (var it in node.Children)
-            SelectNodeFromSearchText(it);
+            ExpandNode(it);
     }
 
     [RelayCommand] void ShowMpvNetSpecificSettings() => SearchControl.Text = "mpv.net";
