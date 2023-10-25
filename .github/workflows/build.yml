@@ -1,0 +1,67 @@
+name: mpvnet build
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - ci
+    paths-ignore:
+      - '*.md'
+      - 'LICENSE'
+      - '.gitignore'
+      - '.gitattributes'
+      - 'docs/**'
+      - '.github/**'
+      - 'src/Extensions/**'
+  pull_request:
+    branches: [main]
+    paths-ignore:
+      - '*.md'
+      - 'LICENSE'
+      - '.gitignore'
+      - '.gitattributes'
+      - 'docs/**'
+      - '.github/**'
+      - 'src/Extensions/**'
+
+jobs:
+  windows:
+    name: Windows build
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.1
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: mingw64
+          update: true
+          install: >-
+            base-devel
+            wget
+            p7zip
+      - name: Build
+        shell: cmd
+        run: |
+          cd src
+          nuget restore
+          msbuild -restore
+          msbuild MpvNet.sln /m /p:Configuration=Release
+      - name: Download libmpv # In principle, only update this binary file when significant feature changes occur in mpv/mpv.net
+        shell: msys2 {0}
+        run: |
+          wget -nv -O libmpv.7z https://downloads.sourceforge.net/mpv-player-windows/mpv-dev-x86_64-v3-20231022-git-6e428c2.7z
+          7z x -y libmpv.7z -olibmpv
+          cp -f libmpv/libmpv-2.dll src/MpvNet.Windows/bin/Release/ || true
+      - name: Download MediaInfo
+        shell: msys2 {0}
+        run: |
+          wget -nv -O MediaInfo.7z https://mediaarea.net/download/binary/libmediainfo0/23.10/MediaInfo_DLL_23.10_Windows_x64_WithoutInstaller.7z
+          7z x -y MediaInfo.7z -oMediaInfo
+          cp -f MediaInfo/MediaInfo.dll src/MpvNet.Windows/bin/Release/ || true
+      - name: Upload
+        uses: actions/upload-artifact@v3
+        with:
+          name: "mpv.net-win64"
+          path: src/MpvNet.Windows/bin/Release/
