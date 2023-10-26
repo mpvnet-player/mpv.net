@@ -1252,7 +1252,8 @@ public partial class MainForm : Form
 
         if (IsCursorPosDifferent(_mouseDownLocation) &&
             WindowState == FormWindowState.Normal &&
-            e.Button == MouseButtons.Left && !IsMouseInOsc())
+            e.Button == MouseButtons.Left && !IsMouseInOsc() &&
+            Player.GetPropertyBool("window-dragging"))
         {
             var HTCAPTION = new IntPtr(2);
             var WM_NCLBUTTONDOWN = 0xA1;
