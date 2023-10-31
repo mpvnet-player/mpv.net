@@ -26,6 +26,9 @@ public partial class LearnWindow : Window
     int VK_LCONTROL = 0xA2;
     int VK_RCONTROL = 0xA3;
 
+    bool BlockMBTN_LEFT;
+    bool BlockMBTN_RIGHT;
+
     public LearnWindow()
     {
         InitializeComponent();
@@ -47,7 +50,7 @@ public partial class LearnWindow : Window
     [DllImport("user32.dll")]
     static extern bool GetKeyboardState(byte[] lpKeyState);
 
-    string ToUnicode(uint vk)
+    string ToUnicode(uint vk, ref bool firstEmpty)
     {
         byte[] keys = new byte[256];
 
@@ -61,11 +64,14 @@ public partial class LearnWindow : Window
 
         string ret = ToUnicode(vk, scanCode, keys);
 
+        firstEmpty = ret == "";
+
         if (ret.Length == 1 && ret[0] < 32)
             return "";
 
-        if (ret == "" && (keys[VK_MENU] & 0x80) != 0)
+        if (firstEmpty)
         {
+            keys[VK_LCONTROL] = keys[VK_RCONTROL] = keys[VK_CONTROL] = 0;
             keys[VK_LMENU] = keys[VK_RMENU] = keys[VK_MENU] = 0;
             ret = ToUnicode(vk, scanCode, keys);
         }
@@ -93,6 +99,7 @@ public partial class LearnWindow : Window
 
     void OnKeyDown(uint vk)
     {
+        bool firstEmpty = false;
         Keys key = (Keys)vk;
 
         if (key == Keys.ControlKey || key == Keys.ShiftKey ||
@@ -100,7 +107,7 @@ public partial class LearnWindow : Window
 
             return;
 
-        string text = ToUnicode(vk);
+        string text = ToUnicode(vk, ref firstEmpty);
 
         if ((int)key > 111 && (int)key < 136)
             text = "F" + ((int)key - 111);
@@ -162,16 +169,18 @@ public partial class LearnWindow : Window
         if (isLetter && isShift)
             text = text.ToUpper();
 
-        string keyString = ToUnicode(vk);
+        string keyString = ToUnicode(vk, ref firstEmpty);
 
         if (isAlt && !isCtrl)
-            text = "ALT+" + text;
+            text = "Alt+" + text;
 
         if (isShift && keyString == "")
-            text = "SHIFT+" + text;
+            text = "Shift+" + text;
 
-        if (isCtrl && !(keyString != "" && isCtrl && isAlt))
-            text = "CTRL+" + text;
+        if (isCtrl && isAlt && firstEmpty)
+            text = "Ctrl+Alt+" + text;
+        else if (isCtrl && !(keyString != "" && isCtrl && isAlt))
+            text = "Ctrl+" + text;
 
         if (!string.IsNullOrEmpty(text))
             SetKey(text);
@@ -238,6 +247,12 @@ public partial class LearnWindow : Window
                 else
                     SetKey("MBTN_LEFT");
                 break;
+            case MouseButton.Right:
+                if (BlockMBTN_RIGHT)
+                    BlockMBTN_RIGHT = false;
+                else
+                    SetKey("MBTN_RIGHT");
+                break;
             case MouseButton.Middle:
                 SetKey("MBTN_MID");
                 break;
@@ -250,14 +265,18 @@ public partial class LearnWindow : Window
         }
     }
 
-    bool BlockMBTN_LEFT;
-
     void Window_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
         if (e.ChangedButton == MouseButton.Left)
         {
             SetKey("MBTN_LEFT_DBL");
             BlockMBTN_LEFT = true;
+        }
+
+        if (e.ChangedButton == MouseButton.Right)
+        {
+            SetKey("MBTN_RIGHT_DBL");
+            BlockMBTN_RIGHT = true;
         }
     }
 

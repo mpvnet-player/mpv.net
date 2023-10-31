@@ -26,6 +26,7 @@
   customizing the conf directory location.
 - Improved support for third party osc scripts like uosc.
 - Support of the mpv property `focused`.
+- Fix Ctrl+Alt and right mouse button usage in input learn window.
 
 
 # v6.0.3.2 Beta (2022-10-14)

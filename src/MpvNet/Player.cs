@@ -91,8 +91,10 @@ public class MainPlayer : MpvClient
 
         SetPropertyLong("wid", formHandle.ToInt64());
         SetPropertyInt("osd-duration", 2000);
+
         SetPropertyBool("input-default-bindings", true);
         SetPropertyBool("input-builtin-bindings", false);
+
         SetPropertyString("watch-later-options", "mute");
         SetPropertyString("screenshot-directory", "~~desktop/");
         SetPropertyString("osd-playing-msg", "${media-title}");
