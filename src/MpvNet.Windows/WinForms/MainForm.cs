@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Threading;
+using System.Windows.Forms.Integration;
 
 using MpvNet.Windows.WPF;
 using MpvNet.Windows.UI;
@@ -17,7 +18,7 @@ using WpfControls = System.Windows.Controls;
 using CommunityToolkit.Mvvm.Messaging;
 
 using static MpvNet.Windows.Native.WinApi;
-using System.Windows.Forms.Integration;
+using MpvNet.Windows.Help;
 
 namespace MpvNet.Windows.WinForms;
 
@@ -25,7 +26,7 @@ public partial class MainForm : Form
 {
     public SnapManager SnapManager = new SnapManager();
     public IntPtr MpvWindowHandle { get; set; }
-    public ElementHost CommandPaletteHost { get; set; }
+    public ElementHost? CommandPaletteHost { get; set; }
     public Dictionary<string, WpfControls.MenuItem> MenuItemDuplicate = new Dictionary<string, WpfControls.MenuItem>();
     public bool WasShown { get; set; }
     public static MainForm? Instance { get; set; }
@@ -39,6 +40,7 @@ public partial class MainForm : Form
     int _lastCycleFullscreen;
     int _taskbarButtonCreatedMessage;
 
+    bool _contextMenuIsReady;
     bool _wasMaximized;
 
     public MainForm()
@@ -758,6 +760,8 @@ public partial class MainForm : Form
                 menuItem.InputGestureText = tempBinding.Input;
             }
         }
+
+        _contextMenuIsReady = true;
     }
     
     void Player_FileLoaded()
@@ -901,11 +905,26 @@ public partial class MainForm : Form
             case 0x0290: // WM_IME_KEYDOWN
             case 0x0291: // WM_IME_KEYUP
             case 0x02a3: // WM_MOUSELEAVE
-                if (MpvWindowHandle == IntPtr.Zero)
-                    MpvWindowHandle = FindWindowEx(Handle, IntPtr.Zero, "mpv", null);
+                {
+                    bool ignore = false;
 
-                if (MpvWindowHandle != IntPtr.Zero)
-                    m.Result = SendMessage(MpvWindowHandle, m.Msg, m.WParam, m.LParam);
+                    if (m.Msg == 0x0100) // WM_KEYDOWN
+                    {
+                        Keys keyCode = (Keys)(int)m.WParam & Keys.KeyCode;
+
+                        if (keyCode == Keys.Escape && _contextMenuIsReady && ContextMenu!.IsOpen)
+                        {
+                            ignore = true;
+                            ContextMenu!.IsOpen = false;
+                        }
+                    }
+
+                    if (MpvWindowHandle == IntPtr.Zero)
+                        MpvWindowHandle = FindWindowEx(Handle, IntPtr.Zero, "mpv", null);
+
+                    if (MpvWindowHandle != IntPtr.Zero && !ignore)
+                        m.Result = SendMessage(MpvWindowHandle, m.Msg, m.WParam, m.LParam);
+                }
                 break;
             case 0x51: // WM_INPUTLANGCHANGE
                 ActivateKeyboardLayout(m.LParam, 0x00000100u /*KLF_SETFORPROCESS*/);
@@ -1187,7 +1206,7 @@ public partial class MainForm : Form
         InitAndBuildContextMenu();
         Cursor.Position = new Point(Cursor.Position.X + 1, Cursor.Position.Y);
         GlobalHotkey.RegisterGlobalHotkeys(Handle);
-        TaskHelp.Run(Misc.CopyMpvnetCom);
+        TaskHelp.Run(WinMpvHelp.CopyMpvNetCom);
         WasShown = true;
         StrongReferenceMessenger.Default.Send(new MainWindowIsLoadedMessage());
         //Player.Command("script-message-to mpvnet show-conf-editor");
@@ -1333,72 +1352,72 @@ public partial class MainForm : Form
     [DllImport("DwmApi")]
     static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, int[] attrValue, int attrSize);
 
-    protected override void OnLayout(LayoutEventArgs args)
-    {
-        base.OnLayout(args);
-        AdjustCommandPaletteLeftAndWidth();
-    }
+    //protected override void OnLayout(LayoutEventArgs args)
+    //{
+    //    base.OnLayout(args);
+    //    AdjustCommandPaletteLeftAndWidth();
+    //}
 
-    class ElementHostEx : ElementHost
-    {
-        protected override void OnHandleCreated(EventArgs e)
-        {
-            base.OnHandleCreated(e);
-            const int LWA_ColorKey = 1;
+    //class ElementHostEx : ElementHost
+    //{
+    //    protected override void OnHandleCreated(EventArgs e)
+    //    {
+    //        base.OnHandleCreated(e);
+    //        const int LWA_ColorKey = 1;
 
-            if (Environment.OSVersion.Version > new Version(10, 0))
-                SetLayeredWindowAttributes(Handle, 0x111111, 255, LWA_ColorKey);
-        }
+    //        if (Environment.OSVersion.Version > new Version(10, 0))
+    //            SetLayeredWindowAttributes(Handle, 0x111111, 255, LWA_ColorKey);
+    //    }
 
-        protected override CreateParams CreateParams
-        {
-            get
-            {
-                CreateParams cp = base.CreateParams;
+    //    protected override CreateParams CreateParams
+    //    {
+    //        get
+    //        {
+    //            CreateParams cp = base.CreateParams;
 
-                if (Environment.OSVersion.Version > new Version(10, 0))
-                    cp.ExStyle |= 0x00080000; // WS_EX_LAYERED
+    //            if (Environment.OSVersion.Version > new Version(10, 0))
+    //                cp.ExStyle |= 0x00080000; // WS_EX_LAYERED
 
-                cp.ExStyle |= 0x00000008; // WS_EX_TOPMOST
+    //            cp.ExStyle |= 0x00000008; // WS_EX_TOPMOST
 
-                cp.Style |= 0x04000000; //WS_CLIPSIBLINGS
-                cp.Style |= 0x02000000; //WS_CLIPCHILDREN
+    //            cp.Style |= 0x04000000; //WS_CLIPSIBLINGS
+    //            cp.Style |= 0x02000000; //WS_CLIPCHILDREN
 
-                return cp;
-            }
-        }
+    //            return cp;
+    //        }
+    //    }
 
-        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
-        {
-            try
-            {
-                return base.ProcessCmdKey(ref msg, keyData);
-            }
-            catch (Exception)
-            {
-                return true;
-            }
-        }
+    //    protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+    //    {
+    //        try
+    //        {
+    //            return base.ProcessCmdKey(ref msg, keyData);
+    //        }
+    //        catch (Exception)
+    //        {
+    //            return true;
+    //        }
+    //    }
 
-        [DllImport("user32.dll")]
-        public static extern bool SetLayeredWindowAttributes(IntPtr hWnd, int crKey, byte alpha, int dwFlags);
-    }
+    //    [DllImport("user32.dll")]
+    //    public static extern bool SetLayeredWindowAttributes(IntPtr hWnd, int crKey, byte alpha, int dwFlags);
+    //}
 
-    public void ShowCommandPalette()
-    {
-        if (CommandPaletteHost == null)
-        {
-            CommandPaletteHost = new ElementHostEx();
-            CommandPaletteHost.Dock = DockStyle.Fill;
-            CommandPaletteHost.BackColor = Color.FromArgb(0x111111);
+    //public void ShowCommandPalette()
+    //{
+    //    if (CommandPaletteHost == null)
+    //    {
+    //        CommandPaletteHost = new ElementHostEx();
+    //        CommandPaletteHost.Dock = DockStyle.Fill;
+    //        CommandPaletteHost.BackColor = Color.FromArgb(0x111111);
 
-            AdjustCommandPaletteLeftAndWidth();
-            CommandPaletteHost.Child = CommandPalette.Instance;
-            CommandPalette.Instance.AdjustHeight();
-            Controls.Add(CommandPaletteHost);
-            CommandPaletteHost.BringToFront();
-        }
-    }
+    //        AdjustCommandPaletteLeftAndWidth();
+    //        CommandPaletteHost.Child = CommandPalette.Instance;
+    //        CommandPalette.Instance.AdjustHeight();
+    //        Controls.Add(CommandPaletteHost);
+    //        CommandPaletteHost.BringToFront();
+    //    }
+    //}
 
     public void HideCommandPalette()
     {
@@ -1419,16 +1438,16 @@ public partial class MainForm : Form
         }
     }
 
-    void AdjustCommandPaletteLeftAndWidth()
-    {
-        if (CommandPaletteHost == null)
-            return;
+    //void AdjustCommandPaletteLeftAndWidth()
+    //{
+    //    if (CommandPaletteHost == null)
+    //        return;
 
-        CommandPaletteHost.Width = FontHeight * 26;
+    //    CommandPaletteHost.Width = FontHeight * 26;
 
-        if (CommandPaletteHost.Width > ClientSize.Width)
-            CommandPaletteHost.Width = ClientSize.Width;
+    //    if (CommandPaletteHost.Width > ClientSize.Width)
+    //        CommandPaletteHost.Width = ClientSize.Width;
 
-        CommandPaletteHost.Left = (ClientSize.Width - CommandPaletteHost.Size.Width) / 2;
-    }
+    //    CommandPaletteHost.Left = (ClientSize.Width - CommandPaletteHost.Size.Width) / 2;
+    //}
 }

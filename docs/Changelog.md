@@ -22,7 +22,7 @@
 - Dark mode title bar enabled on Windows 10.0.18985 or higher.
 - The navigation bar on the left side of the config editor was changed
   from a simple list to a tree view.
-- Support of the MPV_HOME environment variable that allows
+- Support of the MPVNET_HOME environment variable that allows
   customizing the conf directory location.
 - Improved support for third party osc scripts like uosc.
 - Support of the mpv property `focused`.

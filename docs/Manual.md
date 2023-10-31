@@ -24,7 +24,7 @@ Table of contents
 * [Advanced Features](#advanced-features)
 * [Hidden Features](#hidden-features)
 * [Differences compared to mpv](#differences-compared-to-mpv)
-* [Technical Overview](#technical-overview)
+* [Environment Variables](#environment-variables)
 * [Context Menu Commands](#context-menu)
 
 
@@ -614,22 +614,20 @@ mpv.net specific options are saved in the file mpvnet.conf and are just
 as mpv properties available on the command line.
 
 
-Technical Overview
-------------------
+Environment Variables
+---------------------
 
-mpv.net is written in C# 7 and runs on the .NET Framework 4.8.
+### MPVNET_HOME
 
-The Extension implementation is based on the
-[Managed Extensibility Framework](https://docs.microsoft.com/en-us/dotnet/framework/mef/).
+Directory where mpv.net looks for user settings.
 
-The main window is WinForms based because WinForms allows better libmpv integration
-compared to WPF, all other windows are WPF based.
+### MPVNET_VERSION
 
-Third party components are:
+Returns the version of mpv.net.
 
-- [libmpv provides the core functionality](https://mpv.io/)
-- [MediaInfo](https://mediaarea.net/en/MediaInfo)
 
+Context Menu Commands
+---------------------
 
 ### Open > Open Files
 

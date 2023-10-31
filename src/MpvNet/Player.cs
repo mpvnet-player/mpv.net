@@ -208,10 +208,10 @@ public class MainPlayer : MpvClient
         get {
             if (_configFolder == null)
             {
-                string? mpv_home = Environment.GetEnvironmentVariable("MPV_HOME");
+                string? mpvnet_home = Environment.GetEnvironmentVariable("MPVNET_HOME");
 
-                if (Directory.Exists(mpv_home))
-                    return _configFolder = mpv_home.AddSep();
+                if (Directory.Exists(mpvnet_home))
+                    return _configFolder = mpvnet_home.AddSep();
 
                 _configFolder = Folder.Startup + "portable_config";
 

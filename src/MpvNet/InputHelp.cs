@@ -69,7 +69,7 @@ public static class InputHelp
                 new (_("Video"), _("Take Screenshot"), "async screenshot", "s"),
                 new (_("Video"), _("Take Screenshot without subtitles"), "async screenshot video", "S"),
                 new (_("Video"), _("Toggle Deinterlace"), "cycle deinterlace", "d"),
-                new (_("Video"), _("Cycle Aspect Ratio"), "cycle-values video-aspect 16:9 4:3 2.35:1 -1", "a"),
+                new (_("Video"), _("Cycle Aspect Ratio"), "cycle-values video-aspect-override 16:9 4:3 2.35:1 -1", "a"),
                 new (_("Video"), _("Rotate Video"), "cycle-values video-rotate 90 180 270 0", "Ctrl+r"),
                 new (_("Audio"), _("Cycle/Next"), "cycle audio", "KP7"),
                 new (_("Audio"), "-"),

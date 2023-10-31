@@ -25,7 +25,8 @@ public class Command
         ["cycle-audio"] = args => CycleAudio(), // deprecated
         ["cycle-subtitles"] = args => CycleSubtitles(), // deprecated
         ["playlist-first"] = args => PlaylistFirst(), // deprecated
-        ["playlist-last"] = args => PlaylistLast(), // deprecated        
+        ["playlist-last"] = args => PlaylistLast(), // deprecated
+        ["playlist-random"] = args => PlaylistRandom(), // deprecated
     };
 
     public string FormatTime(double value) => ((int)value).ToString("00");
@@ -174,5 +175,12 @@ public class Command
 
         if (Player.PlaylistPos < count - 1)
             Player.SetPropertyInt("playlist-pos", count - 1);
+    }
+
+    // deprecated
+    public static void PlaylistRandom()
+    {
+        int count = Player.GetPropertyInt("playlist-count");
+        Player.SetPropertyInt("playlist-pos", new Random().Next(count));
     }
 }

@@ -11,7 +11,6 @@ using MpvNet.Windows.WinForms;
 using MpvNet.Windows.WPF.Views;
 using MpvNet.Windows.WPF;
 using MpvNet.Windows.WPF.MsgBox;
-using MpvNet.Windows.UI;
 
 namespace MpvNet;
 
@@ -45,16 +44,16 @@ public class GuiCommand
         ["move-window"] = args => MoveWindow?.Invoke(args[0]),
         ["window-scale"] = args => WindowScaleNet?.Invoke(float.Parse(args[0], CultureInfo.InvariantCulture)),
         ["show-menu"] = args => ShowMenu?.Invoke(),
-        ["show-command-palette"] = args => ShowCommandPalette(),
 
 
         // deprecated
         ["show-info"] = args => ShowMediaInfo(new[] { "osd" }), // deprecated
-        ["playlist-random"] = args => PlaylistRandom(), // deprecated
         ["quick-bookmark"] = args => QuickBookmark(), // deprecated
         ["show-commands"] = args => ShowCommands(), // deprecated
         ["show-history"] = args => ShowHistory(), // deprecated
         ["show-playlist"] = args => ShowPlaylist(), // deprecated
+
+        //["show-command-palette"] = args => ShowCommandPalette(),
     };
 
     public void ShowDialog(Type winType)
@@ -267,19 +266,14 @@ public class GuiCommand
         ProcessHelp.ShellExecute(file);
     }
 
-    public void ShowCommandPalette()
-    {
-        MainForm.Instance?.BeginInvoke(() => {
-            CommandPalette.Instance.SetItems(CommandPalette.GetItems());
-            MainForm.Instance.ShowCommandPalette();
-            CommandPalette.Instance.SelectFirst();
-        });
-    }
-
-    // deprecated
-    public void PlaylistRandom() =>
-        Msg.ShowInfo("This feature was moved to a user script,\nwhich can be found here:\n\n" +
-            "https://github.com/stax76/mpv-scripts/blob/main/misc.lua");
+    //public void ShowCommandPalette()
+    //{
+    //    MainForm.Instance?.BeginInvoke(() => {
+    //        CommandPalette.Instance.SetItems(CommandPalette.GetItems());
+    //        MainForm.Instance.ShowCommandPalette();
+    //        CommandPalette.Instance.SelectFirst();
+    //    });
+    //}
 
     // deprecated
     public void QuickBookmark() =>

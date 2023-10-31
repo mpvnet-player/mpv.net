@@ -6,6 +6,7 @@
 		<Product>mpv.net</Product>
 		<Nullable>enable</Nullable>
 		<RootNamespace>MpvNet</RootNamespace>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     </PropertyGroup>
 
     <ItemGroup>
