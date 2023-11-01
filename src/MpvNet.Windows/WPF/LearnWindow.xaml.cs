@@ -66,15 +66,15 @@ public partial class LearnWindow : Window
 
         firstEmpty = ret == "";
 
-        if (ret.Length == 1 && ret[0] < 32)
-            return "";
-
         if (firstEmpty)
         {
             keys[VK_LCONTROL] = keys[VK_RCONTROL] = keys[VK_CONTROL] = 0;
             keys[VK_LMENU] = keys[VK_RMENU] = keys[VK_MENU] = 0;
             ret = ToUnicode(vk, scanCode, keys);
         }
+
+        if (ret.Length == 1 && ret[0] < 32)
+            return "";
 
         return ret;
     }
@@ -117,7 +117,7 @@ public partial class LearnWindow : Window
 
         switch (text)
         {
-            case "#":  text = "SHARP"; break;
+            case "#":  text = "Sharp"; break;
             case "´´": text = "´"; break;
             case "``": text = "`"; break;
             case "^^": text = "^"; break;
@@ -174,7 +174,7 @@ public partial class LearnWindow : Window
         if (isAlt && !isCtrl)
             text = "Alt+" + text;
 
-        if (isShift && keyString == "")
+        if (isShift && (keyString == "" || keyString == " "))
             text = "Shift+" + text;
 
         if (isCtrl && isAlt && firstEmpty)
@@ -232,9 +232,9 @@ public partial class LearnWindow : Window
     void Window_MouseWheel(object sender, MouseWheelEventArgs e)
     {
         if (e.Delta > 0)
-            SetKey("WHEEL_UP");
+            SetKey(GetModifierText() + "WHEEL_UP");
         else
-            SetKey("WHEEL_DOWN");
+            SetKey(GetModifierText() + "WHEEL_DOWN");
     }
 
     void Window_MouseUp(object sender, MouseButtonEventArgs e)
@@ -245,22 +245,22 @@ public partial class LearnWindow : Window
                 if (BlockMBTN_LEFT)
                     BlockMBTN_LEFT = false;
                 else
-                    SetKey("MBTN_LEFT");
+                    SetKey(GetModifierText() + "MBTN_LEFT");
                 break;
             case MouseButton.Right:
                 if (BlockMBTN_RIGHT)
                     BlockMBTN_RIGHT = false;
                 else
-                    SetKey("MBTN_RIGHT");
+                    SetKey(GetModifierText() + "MBTN_RIGHT");
                 break;
             case MouseButton.Middle:
-                SetKey("MBTN_MID");
+                SetKey(GetModifierText() + "MBTN_MID");
                 break;
             case MouseButton.XButton1:
-                SetKey("MBTN_BACK");
+                SetKey(GetModifierText() + "MBTN_BACK");
                 break;
             case MouseButton.XButton2:
-                SetKey("MBTN_FORWARD");
+                SetKey(GetModifierText() + "MBTN_FORWARD");
                 break;
         }
     }
@@ -269,13 +269,13 @@ public partial class LearnWindow : Window
     {
         if (e.ChangedButton == MouseButton.Left)
         {
-            SetKey("MBTN_LEFT_DBL");
+            SetKey(GetModifierText() + "MBTN_LEFT_DBL");
             BlockMBTN_LEFT = true;
         }
 
         if (e.ChangedButton == MouseButton.Right)
         {
-            SetKey("MBTN_RIGHT_DBL");
+            SetKey(GetModifierText() + "MBTN_RIGHT_DBL");
             BlockMBTN_RIGHT = true;
         }
     }
@@ -287,5 +287,21 @@ public partial class LearnWindow : Window
             OnKeyDown((uint)Keys.Tab);
             e.Handled = true;
         }
+    }
+
+    string GetModifierText()
+    {
+        string ret = "";
+
+        if (Keyboard.Modifiers.HasFlag(ModifierKeys.Alt))
+            ret = "Alt+" + ret;
+
+        if (Keyboard.Modifiers.HasFlag(ModifierKeys.Control))
+            ret = "Ctrl+" + ret;
+
+        if (Keyboard.Modifiers.HasFlag(ModifierKeys.Shift))
+            ret = "Shift+" + ret;
+
+        return ret;
     }
 }
