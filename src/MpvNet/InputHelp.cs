@@ -195,20 +195,35 @@ public static class InputHelp
         
         foreach (Binding binding in bindings)
         {
-            string cmd = binding.Command.Trim();
+            if (binding.IsEmpty())
+            {
+                sb.AppendLine();
+                continue;
+            }
+
+            if (binding.Comment != "" &&
+                binding.Command == "" &&
+                binding.Input == "" &&
+                binding.Path == "")
+            {
+                sb.AppendLine("#" + binding.Comment.Trim());
+                continue;
+            }
+
+            string command = binding.Command.Trim();
             string input = binding.Input.Trim();
-            string comment = binding.IsMenu ? "menu: " + binding.Path : binding.Comment.Trim();
+            string comment = binding.IsMenu ? "menu: " + binding.Path : binding.Path.Trim();
             input = input == "" ? "_" : input;
             string line = input.PadRight(10) + "  ";
-            line += cmd == "" ? "ignore" : cmd;
-          
+            line += command == "" ? "ignore" : command;
+
             if (comment != "")
-                line = line.PadRight(40) + "  # " + comment;
+                line = line.PadRight(40) + "  #" + comment;
 
             sb.AppendLine(line);
         }
 
-        return sb.ToString();
+        return sb.ToString().TrimEnd() + BR;
     }
 
     public static List<Binding> Parse(string content)
@@ -218,14 +233,25 @@ public static class InputHelp
         if (string.IsNullOrEmpty(content))
             return bindings;
 
-        foreach (string it in content.Split('\r', '\n'))
+        foreach (string it in content.Split('\n'))
         {
             string line = it.Trim();
 
-            if (line.StartsWith("#") || !line.Contains(' '))
-                continue;
-
             Binding binding = new Binding();
+
+            if (line == "")
+            {
+                bindings.Add(binding);
+                continue;
+            }
+
+            if (line.StartsWith("#"))
+            {
+                binding.Comment = line[1..].Trim();
+                bindings.Add(binding);
+                continue;
+            }
+
             binding.Input = line[..line.IndexOf(" ")];
 
             if (binding.Input == "_")
@@ -260,7 +286,7 @@ public static class InputHelp
             }
             else if (line.Contains('#'))
             {
-                binding.Comment = line[(line.IndexOf("#") + 1)..].Trim();
+                binding.Path = line[(line.IndexOf("#") + 1)..].Trim();
                 line = line[..line.IndexOf("#")];
             }
 
@@ -325,6 +351,7 @@ public static class InputHelp
         return defaults;
     }
 
+    // only used by dead command palette
     public static List<Binding> GetBindingsFromContent(string content)
     {
         var bindings = new List<Binding>();

@@ -102,8 +102,11 @@ public partial class LearnWindow : Window
         bool firstEmpty = false;
         Keys key = (Keys)vk;
 
-        if (key == Keys.ControlKey || key == Keys.ShiftKey ||
-            key == Keys.Menu || key == Keys.None)
+        if (key == Keys.ControlKey ||
+            key == Keys.ShiftKey ||
+            key == Keys.Menu ||
+            key == Keys.None ||
+            key == Keys.Tab)
 
             return;
 
@@ -189,7 +192,6 @@ public partial class LearnWindow : Window
     void SetKey(string? key)
     {
         NewKey = key!;
-        MenuTextBlock.Text = InputItem?.Path;
         KeyTextBlock.Text = key;
     }
 
@@ -228,6 +230,8 @@ public partial class LearnWindow : Window
         InputItem!.Input = "";
         Close();
     }
+
+    void CancelButton_Click(object sender, RoutedEventArgs e) => Close();
 
     void Window_MouseWheel(object sender, MouseWheelEventArgs e)
     {
@@ -277,15 +281,6 @@ public partial class LearnWindow : Window
         {
             SetKey(GetModifierText() + "MBTN_RIGHT_DBL");
             BlockMBTN_RIGHT = true;
-        }
-    }
-
-    void Window_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
-    {
-        if (e.Key == Key.Tab)
-        {
-            OnKeyDown((uint)Keys.Tab);
-            e.Handled = true;
         }
     }
 

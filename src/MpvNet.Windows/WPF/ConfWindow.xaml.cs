@@ -82,7 +82,7 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
 
     public static TreeNode? AddNode(IList<TreeNode> nodes, string path)
     {
-        string[] parts = path.Split(new[] { "/" }, StringSplitOptions.RemoveEmptyEntries);
+        string[] parts = path.Split('/', StringSplitOptions.RemoveEmptyEntries);
 
         for (int x = 0; x < parts.Length; x++)
         {
@@ -416,7 +416,7 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
         if (e.Key == Key.Escape)
             Close();
 
-        if (e.Key == Key.F3 || e.Key == Key.F6 || (e.Key == Key.F && Keyboard.IsKeyDown(Key.LeftCtrl)))
+        if (e.Key == Key.F3 || e.Key == Key.F6 || (e.Key == Key.F && Keyboard.Modifiers == ModifierKeys.Control))
         {
             Keyboard.Focus(SearchControl.SearchTextBox);
             SearchControl.SearchTextBox.SelectAll();

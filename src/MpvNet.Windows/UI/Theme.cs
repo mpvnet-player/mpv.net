@@ -23,6 +23,13 @@ public class Theme
     public Brush? MenuBackground { get; set; }
     public Brush? MenuHighlight { get; set; }
 
+    public Color BackgroundColor { get; set; }
+    public Color ForegroundColor { get; set; }
+    public Color Foreground2Color { get; set; }
+    public Color HeadingColor { get; set; }
+    public Color MenuBackgroundColor { get; set; }
+    public Color MenuHighlightColor { get; set; }
+
     public Brush GetBrush(string key)
     {
         return new SolidColorBrush((Color)ColorConverter.ConvertFromString(Dictionary[key]));
@@ -84,6 +91,13 @@ public class Theme
         Current.Heading = Current.GetBrush("heading");
         Current.MenuBackground = Current.GetBrush("menu-background");
         Current.MenuHighlight = Current.GetBrush("menu-highlight");
+
+        Current.BackgroundColor = Current.GetColor("background");
+        Current.ForegroundColor = Current.GetColor("foreground");
+        Current.Foreground2Color = Current.GetColor("foreground2");
+        Current.HeadingColor = Current.GetColor("heading");
+        Current.MenuBackgroundColor = Current.GetColor("menu-background");
+        Current.MenuHighlightColor = Current.GetColor("menu-highlight");
     }
 
     static List<Theme> Load(string? content)
@@ -91,12 +105,12 @@ public class Theme
         List<Theme> list = new List<Theme>();
         Theme? theme = null;
 
-        foreach (string currentLine in (content ?? "").Split(new[] { '\r', '\n' }))
+        foreach (string currentLine in (content ?? "").Split('\r', '\n'))
         {
             string line = currentLine.Trim();
 
             if (line.StartsWith("[") && line.EndsWith("]"))
-                list.Add(theme = new Theme() { Name = line.Substring(1, line.Length - 2).Trim() });
+                list.Add(theme = new Theme() { Name = line[1..^1].Trim() });
 
             if (line.Contains('=') && theme != null)
             {

@@ -46,15 +46,16 @@
                     />                
             </Border>
 
-            <ListView Name="MainListView"
-                      Grid.Row="1"
-                      Foreground="{Binding Theme.Foreground}"
-                      Background="{Binding Theme.Background}"
-                      BorderThickness="0"
-                      MaxHeight="202"
-                      SizeChanged="MainListView_SizeChanged"
-                      MouseUp="MainListView_MouseUp"
-                      >
+            <ListView
+                Name="MainListView"
+                Grid.Row="1"
+                Foreground="{Binding Theme.Foreground}"
+                Background="{Binding Theme.Background}"
+                BorderThickness="0"
+                MaxHeight="202"
+                SizeChanged="MainListView_SizeChanged"
+                MouseUp="MainListView_MouseUp"
+                >
 
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListBoxItem">

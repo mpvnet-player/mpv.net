@@ -37,9 +37,9 @@ public partial class SearchControl : UserControl
 
     void UpdateControls()
     {
-        HintTextBlock.Text = Text == "" ? HintText : "";
+        HintTextBlock.Text = string.IsNullOrEmpty(Text) ? HintText : "";
 
-        if (Text == "" || HideClearButton)
+        if (string.IsNullOrEmpty(Text) || HideClearButton)
             SearchClearButton.Visibility = Visibility.Hidden;
         else
             SearchClearButton.Visibility = Visibility.Visible;
@@ -67,6 +67,15 @@ public partial class SearchControl : UserControl
         {
             SearchTextBox?.SelectAll();
             _gotFocus = false;
+        }
+    }
+
+    void SearchTextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.Key == Key.Escape && !string.IsNullOrEmpty(Text))
+        {
+            Text = "";
+            e.Handled = true;
         }
     }
 }

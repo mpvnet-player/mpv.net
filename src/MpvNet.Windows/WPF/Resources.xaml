@@ -13,15 +13,17 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Border x:Name="border"
-                            CornerRadius="3"
-                            BorderBrush="{DynamicResource PrimaryTextBrush}"
-                            BorderThickness="1"
-                            Background="{DynamicResource BorderBrush}">
+                    <Border
+                        x:Name="border"
+                        CornerRadius="3"
+                        BorderBrush="{DynamicResource PrimaryTextBrush}"
+                        BorderThickness="1"
+                        Background="{DynamicResource BorderBrush}">
 
-                        <ContentPresenter HorizontalAlignment="Center"
-                                          VerticalAlignment="Center"
-                                          TextElement.FontWeight="Normal">
+                        <ContentPresenter
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            TextElement.FontWeight="Normal">
                         </ContentPresenter>
                     </Border>
                     <ControlTemplate.Triggers>

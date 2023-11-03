@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+
 using MpvNet.Windows.UI;
 
 namespace MpvNet.Windows.WPF;
@@ -14,6 +15,7 @@ public partial class InputWindow : Window
     string StartupContent;
     public List<Binding> Bindings { get; }
     public Theme? Theme => Theme.Current;
+    Binding? _focusedBinding;
 
     public InputWindow()
     {
@@ -32,23 +34,6 @@ public partial class InputWindow : Window
         CollectionView = collectionViewSource.View;
         CollectionView.Filter = new Predicate<object>(item => Filter((Binding)item));
         DataGrid.ItemsSource = CollectionView;
-    }
-
-    void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
-    {
-        CollectionView.Refresh();
-
-        if (SearchControl.SearchTextBox.Text == "?")
-        {
-            SearchControl.SearchTextBox.Text = "";
-
-            Msg.ShowInfo("Filtering" + BR2 +
-                "Reduce the filter scope with:" + BR2 +
-                "i input" + BR2 +
-                "m menu" + BR2 +
-                "c command" + BR2 +
-                "If only one character is entered input search is performed.");
-        }
     }
 
     bool Filter(Binding item)
@@ -86,18 +71,43 @@ public partial class InputWindow : Window
         return false;
     }
 
-    void ButtonClick(object sender, RoutedEventArgs e)
+    void ShowLearnWindow(Binding? binding)
     {
-        Binding? item = ((Button)e.Source).DataContext as Binding;
-
-        if (item == null)
-            return;
-
         LearnWindow window = new LearnWindow();
         window.Owner = this;
-        window.InputItem = item;
+        window.InputItem = binding;
         window.ShowDialog();
-        Keyboard.Focus(SearchControl.SearchTextBox);
+    }
+
+    protected override void OnKeyDown(KeyEventArgs e)
+    {
+        base.OnKeyDown(e);
+
+        if (e.Key == Key.Escape)
+            Close();
+
+        if (e.Key == Key.F3 || e.Key == Key.F6 || (e.Key == Key.F && Keyboard.Modifiers == ModifierKeys.Control))
+        {
+            Keyboard.Focus(SearchControl.SearchTextBox);
+            SearchControl.SearchTextBox.SelectAll();
+        }
+    }
+
+    void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        CollectionView.Refresh();
+
+        if (SearchControl.SearchTextBox.Text == "?")
+        {
+            SearchControl.SearchTextBox.Text = "";
+
+            Msg.ShowInfo("Filtering" + BR2 +
+                "Reduce the filter scope with:" + BR2 +
+                "i input" + BR2 +
+                "m menu" + BR2 +
+                "c command" + BR2 +
+                "If only one character is entered input search is performed.");
+        }
     }
 
     void Window_Loaded(object sender, RoutedEventArgs e) => Keyboard.Focus(SearchControl.SearchTextBox);
@@ -120,26 +130,37 @@ public partial class InputWindow : Window
         Msg.ShowInfo("Changes will be available on next startup.");
     }
 
-    void DataGrid_PreviewCanExecute(object sender, CanExecuteRoutedEventArgs e)
+    void DataGrid_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)
     {
-        DataGrid grid = (DataGrid)sender;
-
-        if (e.Command == DataGrid.DeleteCommand)
-            if (Msg.ShowQuestion($"Confirm to delete: {(grid.SelectedItem as Binding)!.Input} ({(grid.SelectedItem as Binding)!.Path})") != MessageBoxResult.OK)
-                e.Handled = true;
+        if (e.Column.DisplayIndex == 1)
+            e.Cancel = true;
     }
 
-    protected override void OnKeyDown(KeyEventArgs e)
+    void DataGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
     {
-        base.OnKeyDown(e);
+        if (e.AddedCells.Count > 0)
+            _focusedBinding = e.AddedCells[0].Item as Binding;
+    }
 
-        if (e.Key == Key.Escape)
-            Close();
+    void DataGridCell_PreviewKeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.Key == Key.Enter)
+            e.Handled = true;
 
-        if (e.Key == Key.F3 || e.Key == Key.F6 || (e.Key == Key.F && Keyboard.IsKeyDown(Key.LeftCtrl)))
+        switch (e.Key)
         {
-            Keyboard.Focus(SearchControl.SearchTextBox);
-            SearchControl.SearchTextBox.SelectAll();
+            case Key.Left:
+            case Key.Up:
+            case Key.Right:
+            case Key.Down:
+            case Key.Tab:
+                break;
+            default:
+                ShowLearnWindow(_focusedBinding);
+                break;
         }
     }
+
+    void DataGridCell_MouseLeftButtonUp(object sender, MouseButtonEventArgs e) =>
+        ShowLearnWindow(_focusedBinding);
 }

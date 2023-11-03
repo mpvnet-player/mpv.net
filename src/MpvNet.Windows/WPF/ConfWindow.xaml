@@ -46,7 +46,7 @@
 
         <controls:SearchControl
             x:Name="SearchControl"
-            HintText="Find a setting"
+            HintText="Find a setting (Ctrl+F)"
             Margin="20,20,0,10"
             Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             />

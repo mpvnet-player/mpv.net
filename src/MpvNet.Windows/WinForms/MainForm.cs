@@ -735,6 +735,9 @@ public partial class MainForm : Form
 
         foreach (Binding binding in App.InputConf.GetMenuBindings())
         {
+            if (!binding.IsMenu)
+                continue;
+
             Binding tempBinding = binding;
             
             var menuItem = MenuHelp.Add(ContextMenu?.Items, tempBinding.Path);             
@@ -1209,8 +1212,6 @@ public partial class MainForm : Form
         TaskHelp.Run(WinMpvHelp.CopyMpvNetCom);
         WasShown = true;
         StrongReferenceMessenger.Default.Send(new MainWindowIsLoadedMessage());
-        //Player.Command("script-message-to mpvnet show-conf-editor");
-        //testwin.ShowDialog();
     }
 
     void ContextMenu_Closed(object sender, System.Windows.RoutedEventArgs e) => MenuAutoResetEvent.Set();

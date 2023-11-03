@@ -52,8 +52,7 @@ public class GuiCommand
         ["show-commands"] = args => ShowCommands(), // deprecated
         ["show-history"] = args => ShowHistory(), // deprecated
         ["show-playlist"] = args => ShowPlaylist(), // deprecated
-
-        //["show-command-palette"] = args => ShowCommandPalette(),
+        ["show-command-palette"] = args => ShowCommandPalette(), // deprecated
     };
 
     public void ShowDialog(Type winType)
@@ -292,6 +291,11 @@ public class GuiCommand
 
     // deprecated
     public void ShowPlaylist() =>
+        Msg.ShowInfo("This feature was moved to a user script,\nwhich can be found here:\n\n" +
+            "https://github.com/stax76/mpv-scripts#command_palette");
+
+    // deprecated
+    public void ShowCommandPalette() =>
         Msg.ShowInfo("This feature was moved to a user script,\nwhich can be found here:\n\n" +
             "https://github.com/stax76/mpv-scripts#command_palette");
 }

@@ -15,7 +15,6 @@
         <TextBlock
             Name="HintTextBlock"
             Padding="6,1"
-            Text="Find a setting"
             VerticalAlignment="Center"
             Foreground="{Binding Theme.Foreground2}"
             Background="{Binding Theme.Background}"
@@ -31,6 +30,7 @@
             CaretBrush="{Binding Theme.Foreground}"
             GotFocus="SearchTextBox_GotFocus"
             PreviewMouseUp="SearchTextBox_PreviewMouseUp"
+            PreviewKeyDown="SearchTextBox_PreviewKeyDown"
             Text="{Binding RelativeSource={RelativeSource FindAncestor,
                    AncestorType={x:Type controls:SearchControl}},
                    Path=Text, UpdateSourceTrigger=PropertyChanged}"

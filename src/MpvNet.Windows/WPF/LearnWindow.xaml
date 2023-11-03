@@ -7,9 +7,9 @@
     mc:Ignorable="d"
     
     Title="Learn Input"
-    Height="150"
-    Width="350"
-    FontSize="16"
+    Height="200"
+    Width="400"
+    FontSize="15"
     WindowStartupLocation="CenterOwner"
     ResizeMode="NoResize"
     Loaded="Window_Loaded"
@@ -17,7 +17,7 @@
     Background="{Binding Theme.Background}"
     MouseWheel="Window_MouseWheel"
     MouseUp="Window_MouseUp"
-    MouseDoubleClick="Window_MouseDoubleClick" PreviewKeyDown="Window_PreviewKeyDown"
+    MouseDoubleClick="Window_MouseDoubleClick"
     >
     
     <Grid>
@@ -30,25 +30,27 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
         <TextBlock
-            x:Name="MenuTextBlock"
             Margin="0,10,0,0"
-            Grid.ColumnSpan="2"
+            Grid.ColumnSpan="3"
             VerticalAlignment="Center"
             HorizontalAlignment="Center"
-            />
+            >Waiting for key/mouse input.</TextBlock>
 
         <TextBlock
             x:Name="KeyTextBlock"
+            FontSize="30"
             Grid.Row="1"
-            Grid.ColumnSpan="2"
+            Grid.ColumnSpan="3"
             VerticalAlignment="Top"
             HorizontalAlignment="Center"
             />
-        
-        <Button x:Name="ConfirmButton" Grid.Row="2" Margin="10,0,10,10" Click="ConfirmButton_Click">Confirm</Button>
-        <Button x:Name="ClearButton" Grid.Row="2" Margin="0,0,10,10" Click="ClearButton_Click" Grid.Column="1">Clear</Button>
+
+        <Button Name="ConfirmButton" Grid.Row="2" Margin="10,0,5,10" Click="ConfirmButton_Click">Confirm</Button>
+        <Button Name="ClearButton" Grid.Row="2" Margin="5,0,5,10" Click="ClearButton_Click" Grid.Column="1">Clear</Button>
+        <Button Name="CancelButton" Grid.Row="2" Margin="5,0,10,10" Click="CancelButton_Click" Grid.Column="2">Cancel</Button>
     </Grid>
 </Window>

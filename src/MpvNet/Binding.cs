@@ -11,9 +11,11 @@ public class Binding : ObservableObject
 
     public bool IsMenu { get; set; }
 
+    string _input = "";
+
     public Binding()
     {
-        Path = ""; Command = ""; Comment = "";
+        Path = Command = Comment = Input = "";
     }
 
     public Binding(string folder = "",
@@ -23,9 +25,15 @@ public class Binding : ObservableObject
                    string comment = "")
     {
         if (folder != "" && name != "")
+        {
             Path = folder + " > " + name;
+            IsMenu = true;
+        }
         else if (name != "")
+        {
             Path = name;
+            IsMenu = true;
+        }
         else
             Path = "";
 
@@ -34,11 +42,11 @@ public class Binding : ObservableObject
         Comment = comment == "" ? Path : comment;
     }
 
-    string _input = "";
-
     public string Input
     {
         get => _input;
         set => SetProperty(ref _input, value);
     }
+
+    public bool IsEmpty() => Path == "" && Command == "" && Comment == "" && Input == "";
 }
