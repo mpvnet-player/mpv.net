@@ -92,7 +92,7 @@
             <DataGrid.Columns>
                 <DataGridTextColumn
                     Header="Name"
-                    Binding="{Binding Path}"
+                    Binding="{Binding Comment}"
                     MaxWidth="322"
                     />
                 

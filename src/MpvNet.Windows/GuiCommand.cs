@@ -44,6 +44,7 @@ public class GuiCommand
         ["move-window"] = args => MoveWindow?.Invoke(args[0]),
         ["window-scale"] = args => WindowScaleNet?.Invoke(float.Parse(args[0], CultureInfo.InvariantCulture)),
         ["show-menu"] = args => ShowMenu?.Invoke(),
+        ["show-bindings"] = args => ShowBindings(),
 
 
         // deprecated
@@ -263,6 +264,14 @@ public class GuiCommand
         App.TempFiles.Add(file);
         File.WriteAllText(file, BR + text.Trim() + BR);
         ProcessHelp.ShellExecute(file);
+    }
+
+    public void ShowBindings()
+    {
+        string info = "# mpv.net might modify the input.conf content before it is passed to mpv." + BR +
+                      "# Below are the bindings as they were passed to mpv." + BR2;
+
+        ShowTextWithEditor("Bindings", info + Player.UsedInputConfContent);
     }
 
     //public void ShowCommandPalette()

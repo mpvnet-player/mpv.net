@@ -1,7 +1,6 @@
 ﻿
 using System.Drawing;
 using System.Globalization;
-using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
 using System.Text;
@@ -23,6 +22,7 @@ public class MainPlayer : MpvClient
     public string GPUAPI { get; set; } = "auto";
     public string Path { get; set; } = "";
     public string VO { get; set; } = "gpu";
+    public string UsedInputConfContent { get; set; } = "";
 
     public string VID { get; set; } = "";
     public string AID { get; set; } = "";
@@ -101,8 +101,8 @@ public class MainPlayer : MpvClient
         SetPropertyString("osc", "yes");
         SetPropertyString("force-window", "yes");
         SetPropertyString("config-dir", ConfigFolder);
-        SetPropertyString("config", "yes");
-        SetPropertyString("input-conf", @"memory://" + App.InputConf.GetContent());
+        SetPropertyString("config", "yes"); 
+        SetPropertyString("input-conf", @"memory://" + (UsedInputConfContent = App.InputConf.GetContent()));
 
         ProcessCommandLine(true);
 

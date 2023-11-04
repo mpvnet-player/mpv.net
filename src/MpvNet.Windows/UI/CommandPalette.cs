@@ -13,7 +13,7 @@ public class CommandPalette
             .Where(i => i.Command != "")
             .Select(i => new CommandPaletteItem()
             {
-                Text = i.Path,
+                Text = i.Comment,
                 SecondaryText = i.Input,
                 Action = () => Core.Command(i.Command),
                 Binding = i

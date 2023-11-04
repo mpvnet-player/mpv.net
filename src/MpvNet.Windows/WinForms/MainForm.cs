@@ -30,11 +30,12 @@ public partial class MainForm : Form
     public Dictionary<string, WpfControls.MenuItem> MenuItemDuplicate = new Dictionary<string, WpfControls.MenuItem>();
     public bool WasShown { get; set; }
     public static MainForm? Instance { get; set; }
-    WpfControls.ContextMenu? ContextMenu { get; set; }
+    WpfControls.ContextMenu ContextMenu { get; } = new WpfControls.ContextMenu();
     AutoResetEvent MenuAutoResetEvent { get; } = new AutoResetEvent(false);
     Point _lastCursorPosition;
     Taskbar? _taskbar;
     Point _mouseDownLocation;
+    List<Binding>? _confBindings;
 
     int _lastCursorChanged;
     int _lastCycleFullscreen;
@@ -253,7 +254,7 @@ public partial class MainForm : Form
 
             ShowCursor();
             UpdateMenu();
-            ContextMenu!.IsOpen = true;
+            ContextMenu.IsOpen = true;
         });
     }
 
@@ -271,7 +272,10 @@ public partial class MainForm : Form
         if (!Player.Border)
             top = ClientSize.Height * 0.1f;
 
-        return pos.Y > ClientSize.Height * 0.78 || pos.X > ClientSize.Width * 0.9 || pos.Y < top;
+        return pos.X < ClientSize.Width * 0.1 ||
+               pos.X > ClientSize.Width * 0.9 ||
+               pos.Y < top ||
+               pos.Y > ClientSize.Height * 0.78;
     }
 
     bool IsCommandPaletteVissible() => CommandPaletteHost != null && CommandPaletteHost.Visible;
@@ -295,10 +299,10 @@ public partial class MainForm : Form
 
                 foreach (MediaTrack track in vidTracks)
                 {
-                    var mi = new WpfControls.MenuItem() { Header = track.Text.Replace("_", "__") };
-                    mi.Click += (sender, args) => Player.CommandV("set", "vid", track.ID.ToString());
-                    mi.IsChecked = Player.VID == track.ID.ToString();
-                    trackMenuItem.Items.Add(mi);
+                    var menuItem = new WpfControls.MenuItem() { Header = track.Text.Replace("_", "__") };
+                    menuItem.Click += (sender, args) => Player.CommandV("set", "vid", track.ID.ToString());
+                    menuItem.IsChecked = Player.VID == track.ID.ToString();
+                    trackMenuItem.Items.Add(menuItem);
                 }
 
                 if (vidTracks.Any())
@@ -306,10 +310,10 @@ public partial class MainForm : Form
 
                 foreach (MediaTrack track in audTracks)
                 {
-                    var mi = new WpfControls.MenuItem() { Header = track.Text.Replace("_", "__") };
-                    mi.Click += (sender, args) => Player.CommandV("set", "aid", track.ID.ToString());
-                    mi.IsChecked = Player.AID == track.ID.ToString();
-                    trackMenuItem.Items.Add(mi);
+                    var menuItem = new WpfControls.MenuItem() { Header = track.Text.Replace("_", "__") };
+                    menuItem.Click += (sender, args) => Player.CommandV("set", "aid", track.ID.ToString());
+                    menuItem.IsChecked = Player.AID == track.ID.ToString();
+                    trackMenuItem.Items.Add(menuItem);
                 }
 
                 if (subTracks.Any())
@@ -317,18 +321,18 @@ public partial class MainForm : Form
 
                 foreach (MediaTrack track in subTracks)
                 {
-                    var mi = new WpfControls.MenuItem() { Header = track.Text.Replace("_", "__") };
-                    mi.Click += (sender, args) => Player.CommandV("set", "sid", track.ID.ToString());
-                    mi.IsChecked = Player.SID == track.ID.ToString();
-                    trackMenuItem.Items.Add(mi);
+                    var menuItem = new WpfControls.MenuItem() { Header = track.Text.Replace("_", "__") };
+                    menuItem.Click += (sender, args) => Player.CommandV("set", "sid", track.ID.ToString());
+                    menuItem.IsChecked = Player.SID == track.ID.ToString();
+                    trackMenuItem.Items.Add(menuItem);
                 }
 
                 if (subTracks.Any())
                 {
-                    var mi = new WpfControls.MenuItem() { Header = "S: No subtitles" };
-                    mi.Click += (sender, args) => Player.CommandV("set", "sid", "no");
-                    mi.IsChecked = Player.SID == "no";
-                    trackMenuItem.Items.Add(mi);
+                    var menuItem = new WpfControls.MenuItem() { Header = "S: No subtitles" };
+                    menuItem.Click += (sender, args) => Player.CommandV("set", "sid", "no");
+                    menuItem.IsChecked = Player.SID == "no";
+                    trackMenuItem.Items.Add(menuItem);
                 }
 
                 if (ediTracks.Any())
@@ -336,10 +340,10 @@ public partial class MainForm : Form
 
                 foreach (MediaTrack track in ediTracks)
                 {
-                    var mi = new WpfControls.MenuItem() { Header = track.Text.Replace("_", "__") };
-                    mi.Click += (sender, args) => Player.CommandV("set", "edition", track.ID.ToString());
-                    mi.IsChecked = Player.Edition == track.ID;
-                    trackMenuItem.Items.Add(mi);
+                    var menuItem = new WpfControls.MenuItem() { Header = track.Text.Replace("_", "__") };
+                    menuItem.Click += (sender, args) => Player.CommandV("set", "edition", track.ID.ToString());
+                    menuItem.IsChecked = Player.Edition == track.ID;
+                    trackMenuItem.Items.Add(menuItem);
                 }
             }
         }
@@ -352,14 +356,16 @@ public partial class MainForm : Form
 
             foreach (Chapter chapter in Player.GetChapters())
             {
-                var mi = new WpfControls.MenuItem
+                var menuItem = new WpfControls.MenuItem
                 {
                     Header = chapter.Title,
                     InputGestureText = chapter.TimeDisplay
                 };
                 
-                mi.Click += (sender, args) => Player.CommandV("seek", chapter.Time.ToString(CultureInfo.InvariantCulture), "absolute");
-                chaptersMenuItem.Items.Add(mi);
+                menuItem.Click += (sender, args) =>
+                    Player.CommandV("seek", chapter.Time.ToString(CultureInfo.InvariantCulture), "absolute");
+
+                chaptersMenuItem.Items.Add(menuItem);
             }
         }
 
@@ -372,10 +378,10 @@ public partial class MainForm : Form
             foreach (string path in App.Settings.RecentFiles)
             {
                 var file = AppClass.GetTitleAndPath(path);
-                var mi = MenuHelp.Add(recentMenuItem.Items, file.Title.ShortPath(100));
+                var menuItem = MenuHelp.Add(recentMenuItem.Items, file.Title.ShortPath(100));
 
-                if (mi != null)
-                    mi.Click += (sender, args) =>
+                if (menuItem != null)
+                    menuItem.Click += (sender, args) =>
                         Player.LoadFiles(new[] { file.Path }, true, false);
             }
 
@@ -406,12 +412,12 @@ public partial class MainForm : Form
                 {
                     if (item.Length != TimeSpan.Zero)
                     {
-                        var mi = MenuHelp.Add(titlesMenuItem.Items, $"Title {item.Index + 1}");
+                        var menuItem = MenuHelp.Add(titlesMenuItem.Items, $"Title {item.Index + 1}");
 
-                        if (mi != null)
+                        if (menuItem != null)
                         {
-                            mi.InputGestureText = item.Length.ToString();
-                            mi.Click += (sender, args) => Player.SetBluRayTitle(item.Index);
+                            menuItem.InputGestureText = item.Length.ToString();
+                            menuItem.Click += (sender, args) => Player.SetBluRayTitle(item.Index);
                         }
                     }
                 }
@@ -420,19 +426,17 @@ public partial class MainForm : Form
 
         var profilesMenuItem = FindMenuItem("Profile");
 
-        if (profilesMenuItem != null)
+        if (profilesMenuItem != null && !profilesMenuItem.HasItems)
         {
-            profilesMenuItem.Items.Clear();
-
             foreach (string profile in Player.ProfileNames)
             {
                 if (!profile.StartsWith("extension."))
                 {
-                    var mi = MenuHelp.Add(profilesMenuItem.Items, profile);
+                    var menuItem = MenuHelp.Add(profilesMenuItem.Items, profile);
 
-                    if (mi != null)
+                    if (menuItem != null)
                     {
-                        mi.Click += (sender, args) =>
+                        menuItem.Click += (sender, args) =>
                         {
                             Player.CommandV("show-text", profile);
                             Player.CommandV("apply-profile", profile);
@@ -441,9 +445,38 @@ public partial class MainForm : Form
                 }
             }
         }
+
+        var customMenuItem = FindMenuItem("Custom");
+
+        if (customMenuItem != null)
+        {
+            if (!customMenuItem.HasItems)
+            {
+                var customBindings = _confBindings!.Where(it => it.IsCustomMenu);
+
+                if (customBindings.Any())
+                {
+                    foreach (Binding binding in customBindings)
+                    {
+                        var menuItem = MenuHelp.Add(customMenuItem.Items, binding.Comment);
+
+                        if (menuItem != null)
+                        {
+                            menuItem.Click += (sender, args) => Player.Command(binding.Command);
+                            menuItem.InputGestureText = binding.Input;
+                        }
+                    }
+                }
+                else
+                {
+                    if (ContextMenu.Items.Contains(customMenuItem))
+                        ContextMenu.Items.Remove(customMenuItem);
+                }
+            }
+        }
     }
 
-    public WpfControls.MenuItem? FindMenuItem(string text) => FindMenuItem(text, ContextMenu?.Items);
+    public WpfControls.MenuItem? FindMenuItem(string text) => FindMenuItem(text, ContextMenu.Items);
 
     WpfControls.MenuItem? FindMenuItem(string text, WpfControls.ItemCollection? items)
     {
@@ -729,22 +762,24 @@ public partial class MainForm : Form
 
     public void InitAndBuildContextMenu()
     {
-        ContextMenu = new WpfControls.ContextMenu();
         ContextMenu.Closed += ContextMenu_Closed;
         ContextMenu.UseLayoutRounding = true;
 
-        foreach (Binding binding in App.InputConf.GetMenuBindings())
+        var (menuBindings, confBindings) = App.InputConf.GetBindings();
+        _confBindings = confBindings;
+
+        foreach (Binding binding in menuBindings)
         {
             if (!binding.IsMenu)
                 continue;
 
             Binding tempBinding = binding;
             
-            var menuItem = MenuHelp.Add(ContextMenu?.Items, tempBinding.Path);             
+            var menuItem = MenuHelp.Add(ContextMenu.Items, tempBinding.Comment);             
 
             if (menuItem != null)
             {
-                MenuItemDuplicate[tempBinding.Path] = menuItem;
+                MenuItemDuplicate[tempBinding.Comment] = menuItem;
                 menuItem.Click += (sender, args) => {
                     try {
                         TaskHelp.Run(() => {
@@ -915,10 +950,10 @@ public partial class MainForm : Form
                     {
                         Keys keyCode = (Keys)(int)m.WParam & Keys.KeyCode;
 
-                        if (keyCode == Keys.Escape && _contextMenuIsReady && ContextMenu!.IsOpen)
+                        if (keyCode == Keys.Escape && _contextMenuIsReady && ContextMenu.IsOpen)
                         {
                             ignore = true;
-                            ContextMenu!.IsOpen = false;
+                            ContextMenu.IsOpen = false;
                         }
                     }
 
@@ -1097,7 +1132,7 @@ public partial class MainForm : Form
         else if ((Environment.TickCount - _lastCursorChanged > 1500 ||
             Environment.TickCount - _lastCursorChanged > 5000) &&
             ClientRectangle.Contains(PointToClient(MousePosition)) &&
-            ActiveForm == this && !ContextMenu!.IsVisible && !IsMouseInOsc() &&
+            ActiveForm == this && !ContextMenu.IsVisible && !IsMouseInOsc() &&
             !IsCommandPaletteVissible())
 
             HideCursor();

@@ -1,4 +1,5 @@
 ﻿
+using MpvNet.ExtensionMethod;
 using MpvNet.Help;
 
 namespace MpvNet;
@@ -20,12 +21,12 @@ public class InputConf
         
     public bool HasMenu => _hasMenu ??= Content.Contains("#menu:");
 
-    public List<Binding> GetMenuBindings()
+    public (List<Binding> menuBindings, List<Binding>? confBindings) GetBindings()
     {
         var confbindings = InputHelp.Parse(Content);
 
         if (HasMenu)
-            return confbindings;
+            return (confbindings, confbindings);
 
         var defaultBindings = InputHelp.GetDefaults();
 
@@ -42,7 +43,7 @@ public class InputConf
                 if (defaultBinding.Command == confBinding.Command)
                     defaultBinding.Input = confBinding.Input;
 
-        return defaultBindings;
+        return (defaultBindings, confbindings);
     }
 
     public string GetContent()
@@ -70,5 +71,16 @@ public class InputConf
             defaults.AddRange(conf);
             return InputHelp.ConvertToString(defaults);
         }
+    }
+
+    public void CreateBackup()
+    {
+        if (!File.Exists(Path))
+            return;
+
+        string targetPath = System.IO.Path.GetTempPath().AddSep() +
+            "mpv.net input.conf backup " + Guid.NewGuid() + ".conf";
+
+        File.Copy(Path, targetPath);
     }
 }

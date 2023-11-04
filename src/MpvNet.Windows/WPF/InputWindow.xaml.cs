@@ -59,11 +59,11 @@ public partial class InputWindow : Window
                 return item.Input.ToLower().Contains(searchText);
         }
         else if (searchText.StartsWith("m ") || searchText.StartsWith("m:"))
-            return item.Path.ToLower().Contains(searchText.Substring(2).Trim());
+            return item.Comment.ToLower().Contains(searchText.Substring(2).Trim());
         else if (searchText.StartsWith("c ") || searchText.StartsWith("c:"))
             return item.Command.ToLower().Contains(searchText.Substring(2).Trim());
         else if (item.Command.ToLower().Contains(searchText) ||
-                 item.Path.ToLower().Contains(searchText) ||
+                 item.Comment.ToLower().Contains(searchText) ||
                  item.Input.ToLower().Contains(searchText))
         {
             return true;
@@ -120,13 +120,18 @@ public partial class InputWindow : Window
             return;
 
         if (App.InputConf.HasMenu)
+        {
+            App.InputConf.CreateBackup();
             File.WriteAllText(App.InputConf.Path, App.InputConf.Content = newContent);
+        }
         else
         {
             newContent = InputHelp.ConvertToString(InputHelp.GetReducedBindings(Bindings));
+            newContent = newContent.Replace("#menu: ", "# ");
+            App.InputConf.CreateBackup();
             File.WriteAllText(App.InputConf.Path, App.InputConf.Content = newContent);
         }
-    
+
         Msg.ShowInfo("Changes will be available on next startup.");
     }
 

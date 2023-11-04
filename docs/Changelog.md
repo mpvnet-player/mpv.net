@@ -13,11 +13,7 @@
 - C# and PowerShell scripting was removed because of a compatibility problem
   with the .NET 6 platform. .NET extensions are supported with a new host
   (not backward compatible). A example extension is available under \src\MpvNet.Extension\ExampleExtension
-- Redesigned bindings and context menu, the default bindings and context menu
-  are now defined internally, no longer is a default input.conf file generated.
-  It means mpv.net no longer loses control over the default bindings and menu.
-  The new design, is ready for localization. Defining the context menu in
-  input.conf is still supported, but discouraged and undocumented.
+- Redesigned bindings and context menu.
 - auto-play option removed, mpv supports it with the option reset-on-next-file.
 - Dark mode title bar enabled on Windows 10.0.18985 or higher.
 - The navigation bar on the left side of the config editor was changed
@@ -27,6 +23,7 @@
 - Improved support for third party osc scripts like uosc.
 - Support of the mpv property `focused`.
 - Various improvements and fixes in the input bindings editor.
+- libmpv zhongfly 2023-11-03
 
 
 # v6.0.3.2 Beta (2022-10-14)

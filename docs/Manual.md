@@ -141,6 +141,25 @@ https://mpv.io/manual/master/#list-of-input-commands
 mpv input options:  
 https://mpv.io/manual/master/#input
 
+Before version v7 all bindings and the context menu definition
+was contained in the input.conf file, which mpv.net created
+in case it didn't exist. This had the disadvantage that mpv.net
+lost control over all default bindings and the context menu
+defaults. This was unfortunate, v7 introduces a new design
+fixing it.
+
+In v7 no input.conf file is created, the default bindings and
+context menu is defined internally. input.conf only contains
+what is different from the internally defined defaults,
+so it's the same how mpv is used.
+
+For backward compatibility the old input.conf format with the
+menu definition using `#menu: ` is still supported. The new
+design also allows for a menu customization, in a sub section
+called `Custom`. In input.conf it can be defined like so:
+
+`Ctrl+a  show-text Test  #custom-menu: Test > Test`
+
 
 Command Line Interface
 ----------------------
@@ -549,6 +568,18 @@ features are supported that have an own implementation in mpv.net.
 
 A window free mode is currently not supported, the main window is always
 visible, even when mpv.net is started from the terminal and music is played.
+
+For mpv.net it's currently not possible to find out where OSC menus are located,
+but there are 3 features that require this information, therefore mpv.net
+makes the assumption that near the window borders might be OSC menus. As a result
+the following three features, work only when invokes from the center of the window:
+
+1. Window dragging (moving the window with the mouse).
+2. Showing the context menu.
+3. Auto hiding the mouse cursor.
+
+When the mouse is near a window border, these 3 features are not available.
+The dead zone sizes are 10% left, top, right and 22% bottom.
 
 The documentation of mpv's window features can be found here:
 

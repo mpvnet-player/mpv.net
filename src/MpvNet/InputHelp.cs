@@ -126,6 +126,7 @@ public static class InputHelp
                 new (_("View > Advanced"), _("Show Commands"), "script-message-to mpvnet show-commands", "C"),
                 new (_("View > Advanced"), _("Show Demuxers"), "script-message-to mpvnet show-demuxers"),
                 new (_("View > Advanced"), _("Show Decoders"), "script-message-to mpvnet show-decoders"),
+                new (_("View > Advanced"), _("Show Bindings"), "script-message-to mpvnet show-bindings"),
                 new ("", _("Profile")),
                 new (_("Settings"), _("Show Config Editor"), "script-message-to mpvnet show-conf-editor", "Ctrl+,"),
                 new (_("Settings"), _("Show Input Editor"), "script-message-to mpvnet show-input-editor", "Ctrl+i"),
@@ -141,6 +142,7 @@ public static class InputHelp
                 new (_("Tools"), _("Exit"), "quit", "Esc"),
                 new (_("Tools"), _("Exit Watch Later"), "quit-watch-later", "Q"),
                 new (_("Tools"), _("Show current file in File Explorer"), @"run powershell -command ""explorer.exe '/select,' ( \""${path}\"" -replace '/', '\\' )""", "e"),
+                new ("", _("Custom")),
                 new (_("Help"), _("Website mpv"), "script-message-to mpvnet shell-execute https://mpv.io"),
                 new (_("Help"), _("Website mpv.net"), "script-message-to mpvnet shell-execute https://github.com/mpvnet-player/mpv.net"),
                 new (_("Help"), "-"),
@@ -204,7 +206,7 @@ public static class InputHelp
             if (binding.Comment != "" &&
                 binding.Command == "" &&
                 binding.Input == "" &&
-                binding.Path == "")
+                !binding.IsMenu)
             {
                 sb.AppendLine("#" + binding.Comment.Trim());
                 continue;
@@ -212,13 +214,28 @@ public static class InputHelp
 
             string command = binding.Command.Trim();
             string input = binding.Input.Trim();
-            string comment = binding.IsMenu ? "menu: " + binding.Path : binding.Path.Trim();
             input = input == "" ? "_" : input;
             string line = input.PadRight(10) + "  ";
             line += command == "" ? "ignore" : command;
 
+            string comment;
+
+            if (binding.IsMenu)
+                comment = "menu: " + binding.Comment.Trim();
+            else if (binding.IsCustomMenu)
+                comment = "custom-menu: " + binding.Comment.Trim();
+            else
+                comment = binding.Comment.Trim();
+
             if (comment != "")
-                line = line.PadRight(40) + "  #" + comment;
+            {
+                if (comment.StartsWith("menu: ") || comment.StartsWith("custom-menu: "))
+                    comment = "  #" + comment;
+                else
+                    comment = "  # " + comment;
+
+                line = line.PadRight(40) + comment;
+            }
 
             sb.AppendLine(line);
         }
@@ -276,17 +293,25 @@ public static class InputHelp
 
             if (line.Contains("#menu:"))
             {
-                binding.Path = line[(line.IndexOf("#menu:") + 6)..].Trim();
-                binding.Comment = binding.Path;
+                binding.Comment = line[(line.IndexOf("#menu:") + 6)..].Trim();
                 binding.IsMenu = true;
                 line = line[..line.IndexOf("#menu:")];
-
-                if (binding.Path.Contains(';'))
-                    binding.Path = binding.Path[(binding.Path.IndexOf(";") + 1)..].Trim();
+            }
+            //else if (line.Contains("#!"))
+            //{
+            //    binding.Comment = line[(line.IndexOf("#!") + 2)..].Trim();
+            //    binding.IsMenu = true;
+            //    line = line[..line.IndexOf("#!")];
+            //}
+            else if (line.Contains("#custom-menu:"))
+            {
+                binding.Comment = line[(line.IndexOf("#custom-menu:") + 13)..].Trim();
+                binding.IsCustomMenu = true;
+                line = line[..line.IndexOf("#custom-menu:")];
             }
             else if (line.Contains('#'))
             {
-                binding.Path = line[(line.IndexOf("#") + 1)..].Trim();
+                binding.Comment = line[(line.IndexOf("#") + 1)..].Trim();
                 line = line[..line.IndexOf("#")];
             }
 
@@ -378,11 +403,11 @@ public static class InputHelp
 
                 if (value.Contains("#menu:"))
                 {
-                    binding.Path = value[(value.IndexOf("#menu:") + 6)..].Trim();
+                    binding.Comment = value[(value.IndexOf("#menu:") + 6)..].Trim();
                     value = value[..value.IndexOf("#menu:")];
 
-                    if (binding.Path.Contains(';'))
-                        binding.Path = binding.Path[(binding.Path.IndexOf(";") + 1)..].Trim();
+                    if (binding.Comment.Contains(';'))
+                        binding.Comment = binding.Comment[(binding.Comment.IndexOf(";") + 1)..].Trim();
                 }
 
                 binding.Command = value.Trim();
