@@ -221,7 +221,12 @@ public static class InputHelp
             string comment;
 
             if (binding.IsMenu)
-                comment = "menu: " + binding.Comment.Trim();
+            {
+                if (binding.IsShortMenuSyntax)
+                    comment = "! " + binding.Comment.Trim();
+                else
+                    comment = "menu: " + binding.Comment.Trim();
+            }
             else if (binding.IsCustomMenu)
                 comment = "custom-menu: " + binding.Comment.Trim();
             else
@@ -229,7 +234,10 @@ public static class InputHelp
 
             if (comment != "")
             {
-                if (comment.StartsWith("menu: ") || comment.StartsWith("custom-menu: "))
+                if (comment.StartsWith("menu: ") ||
+                    comment.StartsWith("custom-menu: ") ||
+                    comment.StartsWith("! "))
+
                     comment = "  #" + comment;
                 else
                     comment = "  # " + comment;
@@ -297,12 +305,13 @@ public static class InputHelp
                 binding.IsMenu = true;
                 line = line[..line.IndexOf("#menu:")];
             }
-            //else if (line.Contains("#!"))
-            //{
-            //    binding.Comment = line[(line.IndexOf("#!") + 2)..].Trim();
-            //    binding.IsMenu = true;
-            //    line = line[..line.IndexOf("#!")];
-            //}
+            else if (line.Contains("#!"))
+            {
+                binding.Comment = line[(line.IndexOf("#!") + 2)..].Trim();
+                binding.IsMenu = true;
+                binding.IsShortMenuSyntax = true;
+                line = line[..line.IndexOf("#!")];
+            }
             else if (line.Contains("#custom-menu:"))
             {
                 binding.Comment = line[(line.IndexOf("#custom-menu:") + 13)..].Trim();

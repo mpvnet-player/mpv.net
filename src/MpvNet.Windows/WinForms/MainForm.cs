@@ -48,7 +48,7 @@ public partial class MainForm : Form
     {
         InitializeComponent();
 
-        if (Environment.OSVersion.Version >= new Version(10, 0, 18985))
+        if (Environment.OSVersion.Version >= new Version(10, 0, 18985) && Theme.DarkMode)
             DwmSetWindowAttribute(Handle, 20, new[] { 1 }, 4);  // DWMWA_USE_IMMERSIVE_DARK_MODE = 20
 
         try

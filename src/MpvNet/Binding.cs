@@ -10,6 +10,7 @@ public class Binding : ObservableObject
 
     public bool IsCustomMenu { get; set; }
     public bool IsMenu { get; set; }
+    public bool IsShortMenuSyntax { get; set; }
 
     string _input = "";
 
