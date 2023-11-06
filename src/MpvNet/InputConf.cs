@@ -7,7 +7,6 @@ namespace MpvNet;
 public class InputConf
 {
     string? _content;
-    bool? _hasMenu;
 
     public InputConf(string path) { Path = path; }
 
@@ -18,8 +17,8 @@ public class InputConf
         get => _content ??= FileHelp.ReadTextFile(Path);
         set => _content = value;
     }
-        
-    public bool HasMenu => _hasMenu ??= Content.Contains("#menu:");
+
+    public bool HasMenu => Content.Contains("#menu:") || Content.Contains("#! ");
 
     public (List<Binding> menuBindings, List<Binding>? confBindings) GetBindings()
     {
