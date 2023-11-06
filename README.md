@@ -66,7 +66,7 @@ Features that mpv and mpv.net have in common
 - Lua and JavaScript Scripting ([awesome-mpv lists available user scripts](https://github.com/stax76/awesome-mpv))
 - Simple config files that are easy to read and edit
 - JSON IPC to control the player with a external programs
-- On Screen Controler (OSC, play control buttons) with modern flat design
+- On Screen Controller (OSC, play control buttons) with modern flat design
 - Command Line Interface
 - Started from a terminal status, error and debug output is printed on the terminal
 - DXVA2 video decoding acceleration
@@ -82,7 +82,7 @@ Features that mpv and mpv.net have in common
 - Watch later feature to save the video position
 
 
-Features exclusiv to mpv.net
+Features exclusive to mpv.net
 ----------------------------
 
 - Very high degree of mpv compatibility, almost all mpv features are available
