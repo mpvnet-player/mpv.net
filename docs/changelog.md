@@ -23,6 +23,8 @@
 - Improved support for third party osc scripts like uosc.
 - Support of the mpv property `focused`.
 - Various improvements and fixes in the input bindings editor.
+- Automated nightly portable builds (thx to dyphire)
+- Various new or changed default bindings
 - libmpv zhongfly 2023-11-03
 
 

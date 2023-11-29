@@ -168,4 +168,18 @@ public partial class InputWindow : Window
 
     void DataGridCell_MouseLeftButtonUp(object sender, MouseButtonEventArgs e) =>
         ShowLearnWindow(_focusedBinding);
+
+    void Window_StateChanged(object sender, EventArgs e)
+    {
+        if (WindowState == WindowState.Maximized)
+        {
+            CommandColumn.MaxWidth = 800;
+            CommandColumn.Width = 800;
+        }
+        else
+        {
+            CommandColumn.MaxWidth = 322;
+            CommandColumn.Width = 322;
+        }
+    }
 }

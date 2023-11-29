@@ -16,6 +16,7 @@
     Background="{Binding Theme.Background}"
     Loaded="Window_Loaded"
     Closed="Window_Closed"
+    StateChanged="Window_StateChanged"
     >
     
     <Window.Resources>
@@ -136,6 +137,7 @@
 
                 <DataGridTextColumn
                     Header="Command"
+                    x:Name="CommandColumn"
                     Binding="{Binding Command}"
                     MaxWidth="322"
                     />

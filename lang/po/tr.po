@@ -1,0 +1,722 @@
+# Translation of mpv.net to ???
+# Copyright (C) 2023 Frank Skare (stax76) <frank.skare.de@gmail.com>
+# Copyright (C) 2023 ???
+# This file is distributed under the same license as the mpv.net package.
+msgid ""
+msgstr ""
+"Project-Id-Version: mpv.net\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-11-29 06:59+0100\n"
+"PO-Revision-Date: 2023-11-04 16:54+0100\n"
+"Last-Translator: ???\n"
+"Language-Team: ???\n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:97
+msgid "+10%"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:96
+msgid "-10%"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:108
+msgid "100 %"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:109
+msgid "200 %"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:110
+msgid "300 %"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:107
+msgid "50 %"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:152
+msgid "About mpv.net"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:19
+msgid "Add files to playlist..."
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:74
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:75
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:76
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:77
+msgid "Audio"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:163
+msgid "Backward"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:114
+msgid "Bottom"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:115
+msgid "Center"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:43
+msgid "Chapters"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:144
+msgid "Custom"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:72
+msgid "Cycle Aspect Ratio"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:74
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:78
+msgid "Cycle/Next"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:60
+msgid "Decrease Brightness"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:57
+msgid "Decrease Contrast"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:63
+msgid "Decrease Gamma"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:53
+msgid "Decrease Height"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:66
+msgid "Decrease Saturation"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:44
+msgid "Decrease Size"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:87
+msgid "Decrease Subtitle Font Size"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:76
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:82
+msgid "Delay +0.1"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:77
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:81
+msgid "Delay -0.1"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:100
+msgid "Double"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:93
+msgid "Down"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:104
+msgid "Enlarge"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:142
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:153
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:154
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:156
+msgid "Exit"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:143
+msgid "Exit Watch Later"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:12
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:13
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:14
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:15
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:16
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:17
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:18
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:19
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:20
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:21
+msgid "File"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:162
+msgid "Forward"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:103
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:175
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:176
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:177
+msgid "Fullscreen"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:99
+msgid "Half"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:145
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:146
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:147
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:148
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:149
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:150
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:151
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:152
+msgid "Help"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:174
+msgid "Ignore left mouse butten"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:61
+msgid "Increase Brightness"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:58
+msgid "Increase Contrast"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:64
+msgid "Increase Gamma"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:54
+msgid "Increase Height"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:67
+msgid "Increase Saturation"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:45
+msgid "Increase Size"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:88
+msgid "Increase Subtitle Font Size"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:37
+msgid "Jump 30 sec backward"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:36
+msgid "Jump 30 sec forward"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:40
+msgid "Jump 5 min backward"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:39
+msgid "Jump 5 min forward"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:34
+msgid "Jump 5 sec backward"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:33
+msgid "Jump 5 sec forward"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:30
+msgid "Jump To Next Frame"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:31
+msgid "Jump To Previous Frame"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:111
+msgid "Left"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:16
+msgid "Load external audio files..."
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:17
+msgid "Load external subtitle files..."
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:148
+msgid "Manual mpv"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:149
+msgid "Manual mpv.net"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:183
+msgid "Mark position for revert-seek"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:51
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:85
+msgid "Move Down"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:47
+msgid "Move Left"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:48
+msgid "Move Right"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:50
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:84
+msgid "Move Up"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:95
+msgid "Mute"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:24
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:25
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:26
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:27
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:28
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:29
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:30
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:31
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:32
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:33
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:34
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:35
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:36
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:37
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:38
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:39
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:40
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:41
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:42
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:43
+msgid "Navigate"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:27
+msgid "Next Chapter"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:25
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:169
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:171
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:173
+msgid "Next File"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:133
+msgid "Open Config Folder"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:14
+msgid "Open DVD/Blu-ray Drive/Folder..."
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:12
+msgid "Open Files..."
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:13
+msgid "Open URL or file from clipboard"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:44
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:45
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:46
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:47
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:48
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:49
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:50
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:51
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:52
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:53
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:54
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:55
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:56
+msgid "Pan & Scan"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:22
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:157
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:158
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:159
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:160
+msgid "Play/Pause"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:22
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:23
+msgid "Playback"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:28
+msgid "Previous Chapter"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:24
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:168
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:170
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:172
+msgid "Previous File"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:130
+msgid "Profile"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:21
+msgid "Recent"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:135
+msgid "Register audio file associations"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:136
+msgid "Register image file associations"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:134
+msgid "Register video file associations"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:56
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:102
+msgid "Reset"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:112
+msgid "Right"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:73
+msgid "Rotate Video"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:179
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:181
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:187
+msgid "Seek Backward"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:178
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:180
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:186
+msgid "Seek Forward"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:185
+msgid "Seek to next subtitle"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:184
+msgid "Seek to previous subtitle"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:138
+msgid "Set/clear A-B loop points"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:131
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:132
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:133
+msgid "Settings"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:134
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:135
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:136
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:137
+msgid "Settings > Setup"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:125
+msgid "Show Audio Devices"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:129
+msgid "Show Bindings"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:126
+msgid "Show Commands"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:131
+msgid "Show Config Editor"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:124
+msgid "Show Console"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:128
+msgid "Show Decoders"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:127
+msgid "Show Demuxers"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:132
+msgid "Show Input Editor"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:122
+msgid "Show Media Info Message Box"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:121
+msgid "Show Media Info On-Screen"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:155
+msgid "Show Menu"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:116
+msgid "Show Profiles"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:123
+msgid "Show Progress"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:105
+msgid "Shrink"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:140
+msgid "Shuffle Playlist"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:96
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:97
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:98
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:99
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:100
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:101
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:102
+msgid "Speed"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:23
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:161
+msgid "Stop"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:78
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:79
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:80
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:81
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:82
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:83
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:84
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:85
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:86
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:87
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:88
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:89
+msgid "Subtitle"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:90
+msgid "Subtitle > Advanced"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:69
+msgid "Take Screenshot"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:70
+msgid "Take Screenshot without subtitles"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:42
+msgid "Titles"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:117
+msgid "Toggle Border"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:71
+msgid "Toggle Deinterlace"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:141
+msgid "Toggle Hardware Decoding"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:120
+msgid "Toggle OSC Visibility"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:118
+msgid "Toggle On Top"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:119
+msgid "Toggle Statistics"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:79
+msgid "Toggle Visibility"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:139
+msgid "Toggle infinite file looping"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:90
+msgid "Toggle overriding SSA/ASS styles with normal styles"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:138
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:139
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:140
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:141
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:142
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:143
+msgid "Tools"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:113
+msgid "Top"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:91
+msgid "Track"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:182
+msgid "Undo previous (or marked) seek"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:137
+msgid "Unregister file associations"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:92
+msgid "Up"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:57
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:58
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:59
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:60
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:61
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:62
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:63
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:64
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:65
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:66
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:67
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:68
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:69
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:70
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:71
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:72
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:73
+msgid "Video"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:103
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:116
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:117
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:118
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:119
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:120
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:121
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:122
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:123
+msgid "View"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:124
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:125
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:126
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:127
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:128
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:129
+msgid "View > Advanced"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:111
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:112
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:113
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:114
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:115
+msgid "View > Move"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:104
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:105
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:106
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:107
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:108
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:109
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:110
+msgid "View > Zoom"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:92
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:93
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:94
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:95
+msgid "Volume"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:165
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:167
+msgid "Volume Down"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:164
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:166
+msgid "Volume Up"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:145
+msgid "Website mpv"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:146
+msgid "Website mpv.net"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:151
+msgid "awesome-mpv"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\Properties\Resources.Designer.cs:79
+msgid "editor_conf"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\Properties\Resources.Designer.cs:114
+msgid "theme"
+msgstr ""
