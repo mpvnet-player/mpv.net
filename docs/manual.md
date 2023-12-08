@@ -31,15 +31,12 @@ Table of contents
 About
 -----
 
-mpv.net is a modern desktop media player for Windows based on the popular mpv player.
+mpv.net is a media player for Windows that has a modern GUI.
 
-mpv.net is designed to be mpv compatible, almost all mpv features are available
-because they are all contained in libmpv, this means the official
-[mpv manual](https://mpv.io/manual/master/) applies to mpv.net.
-
-mpv focuses on the usage of the command line and the terminal,
-mpv.net retains the ability to be used from the command line and
-the terminal and adds a modern Windows GUI on top of it.
+The player is based on the popular [mpv](https://mpv.io) media player.
+mpv.net is designed to be mpv compatible, almost all mpv features are available,
+this means the official [mpv manual](https://mpv.io/manual/master/) applies to mpv.net,
+differences are documented in this manual under [Differences compared to mpv](#differences-compared-to-mpv).
 
 
 Download
@@ -565,8 +562,12 @@ In fullscreen mode clicking the top right corner closes the player.
 Differences compared to mpv
 ---------------------------
 
-mpv.net is designed to work exactly like mpv, there are a few limitations:
+mpv.net is designed to work exactly like mpv, there are a few
+differences and limitations:
 
+The settings folder is named `mpv.net` instead of `mpv`:
+
+`C:\Users\username\AppData\Roaming\mpv.net`
 
 ### Window Limitations
 

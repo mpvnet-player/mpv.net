@@ -9,7 +9,7 @@ public class WpfTranslator : ITranslator
 {
     static Language[] Languages { get; } = new Language[] {
         new("english", "en", "en"),
-        new("chinese-china", "zh-Hans", "zh"),  // Chinese (Simplified)
+        new("chinese-china", "zh-CN", "zh"),  // Chinese (Simplified)
         new("german", "de", "de"),
     };
 
@@ -44,7 +44,7 @@ public class WpfTranslator : ITranslator
             if (lang.MpvNetName == name)
                 return new CultureInfo(lang.CultureInfoName);
 
-        throw new Exception($"Unknown language {name}.");
+        return new CultureInfo("en");
     }
 
     class Language

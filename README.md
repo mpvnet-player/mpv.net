@@ -6,14 +6,12 @@
 🎞 mpv.net
 ==========
 
-mpv.net is a media player for Windows based on the [mpv](https://mpv.io) player.
+mpv.net is a media player for Windows that has a modern GUI.
 
+The player is based on the popular [mpv](https://mpv.io) media player.
 mpv.net is designed to be mpv compatible, almost all mpv features are available,
-this means the official [mpv manual](https://mpv.io/manual/master/) applies to mpv.net.
-
-mpv focuses on the usage of the command line and the terminal,
-mpv.net retains the ability to be used from the command line and
-the terminal and adds a modern Windows GUI on top of it.
+this means the official [mpv manual](https://mpv.io/manual/master/) applies to mpv.net,
+differences are documented in the [mpv.net manual](docs/manual.md#differences-compared-to-mpv).
 
 #### Graphical User Interface
 

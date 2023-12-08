@@ -1,4 +1,4 @@
-﻿using System;
+﻿
 using System.Globalization;
 using System.Windows.Data;
 
@@ -10,7 +10,7 @@ namespace NGettext.Wpf.Common
 
         public GettextStringFormatConverter(string msgId)
         {
-            this.MsgId = msgId;
+            MsgId = msgId;
         }
 
         public static ILocalizer Localizer { get; set; }

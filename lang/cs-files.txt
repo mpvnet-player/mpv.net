@@ -102,7 +102,6 @@ D:\Projects\CS\mpv.net\src\NGettext.Wpf\GettextExtension.cs
 D:\Projects\CS\mpv.net\src\NGettext.Wpf\GettextFormatConverterExtension.cs
 D:\Projects\CS\mpv.net\src\NGettext.Wpf\IWeakCultureObserver.cs
 D:\Projects\CS\mpv.net\src\NGettext.Wpf\Localizer.cs
-D:\Projects\CS\mpv.net\src\NGettext.Wpf\NGettextWpfDependencyResolver.cs
 D:\Projects\CS\mpv.net\src\NGettext.Wpf\TrackCurrentCultureBehavior.cs
 D:\Projects\CS\mpv.net\src\NGettext.Wpf\Translation.cs
 D:\Projects\CS\mpv.net\src\NGettext.Wpf\Common\GettextStringFormatConverter.cs
