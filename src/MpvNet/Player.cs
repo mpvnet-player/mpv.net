@@ -254,22 +254,25 @@ public class MainPlayer : MpvClient
                 _Conf = new Dictionary<string, string>();
 
                 if (File.Exists(ConfPath))
-                    foreach (var i in File.ReadAllLines(ConfPath))
-                        if (i.Contains('=') && !i.TrimStart().StartsWith("#"))
-                        {
-                            string key = i[..i.IndexOf("=")].Trim();
-                            string value = i[(i.IndexOf("=") + 1)..].Trim();
+                {
+                    foreach (string? it in File.ReadAllLines(ConfPath))
+                    {
+                        string line = it.TrimStart(' ', '-').TrimEnd();
 
-                            if (key.StartsWith("-"))
-                                key = key.TrimStart('-');
+                        if (!line.Contains('=') || line.StartsWith("#"))
+                            continue;
 
-                            if (value.Contains('#') && !value.StartsWith("#") &&
-                                !value.StartsWith("'#") && !value.StartsWith("\"#"))
+                        string key = line[..line.IndexOf("=")].Trim();
+                        string value = line[(line.IndexOf("=") + 1)..].Trim();
 
-                                value = value[..value.IndexOf("#")].Trim();
+                        if (value.Contains('#') && !value.StartsWith("#") &&
+                            !value.StartsWith("'#") && !value.StartsWith("\"#"))
 
-                            _Conf[key] = value;
-                        }
+                            value = value[..value.IndexOf("#")].Trim();
+
+                        _Conf[key] = value;
+                    }
+                }
 
                 foreach (var i in _Conf)
                     ProcessProperty(i.Key, i.Value);

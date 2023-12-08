@@ -165,11 +165,16 @@ public class GuiCommand
             proc.WaitForExit();
 
             if (proc.ExitCode == 0)
-                Msg.ShowInfo("File associations were successfully " +
-                    (perceivedType == "unreg" ? "removed" : "created") +
-                    ".\n\nFile Explorer icons will refresh after process restart.");
+            {
+                string msgRestart = _("File Explorer icons will refresh after process restart.");
+
+                if (perceivedType == "unreg")
+                    Msg.ShowInfo(_("File associations were successfully removed.") + BR2 + msgRestart);
+                else
+                    Msg.ShowInfo(_("File associations were successfully created.") + BR2 + msgRestart);
+            }
             else
-                Msg.ShowError("Error creating file associations.");
+                Msg.ShowError(_("Error creating file associations."));
         }
         catch { }
     }

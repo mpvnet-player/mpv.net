@@ -58,7 +58,7 @@ public partial class InputWindow : Window
             else
                 return item.Input.ToLower().Contains(searchText);
         }
-        else if (searchText.StartsWith("m ") || searchText.StartsWith("m:"))
+        else if (searchText.StartsWith("n ") || searchText.StartsWith("n:"))
             return item.Comment.ToLower().Contains(searchText.Substring(2).Trim());
         else if (searchText.StartsWith("c ") || searchText.StartsWith("c:"))
             return item.Command.ToLower().Contains(searchText.Substring(2).Trim());
@@ -93,22 +93,7 @@ public partial class InputWindow : Window
         }
     }
 
-    void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
-    {
-        CollectionView.Refresh();
-
-        if (SearchControl.SearchTextBox.Text == "?")
-        {
-            SearchControl.SearchTextBox.Text = "";
-
-            Msg.ShowInfo("Filtering" + BR2 +
-                "Reduce the filter scope with:" + BR2 +
-                "i input" + BR2 +
-                "m menu" + BR2 +
-                "c command" + BR2 +
-                "If only one character is entered input search is performed.");
-        }
-    }
+    void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e) => CollectionView.Refresh();
 
     void Window_Loaded(object sender, RoutedEventArgs e) => Keyboard.Focus(SearchControl.SearchTextBox);
 
@@ -132,7 +117,7 @@ public partial class InputWindow : Window
             File.WriteAllText(App.InputConf.Path, App.InputConf.Content = newContent);
         }
 
-        Msg.ShowInfo("Changes will be available on next startup.");
+        Msg.ShowInfo(_("Changes will be available on next startup."));
     }
 
     void DataGrid_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)

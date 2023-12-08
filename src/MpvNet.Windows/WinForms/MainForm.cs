@@ -286,7 +286,7 @@ public partial class MainForm : Form
 
         lock (Player.MediaTracksLock)
         {
-            var trackMenuItem = FindMenuItem("Track");
+            var trackMenuItem = FindMenuItem(_("Track"));
 
             if (trackMenuItem != null)
             {
@@ -348,7 +348,7 @@ public partial class MainForm : Form
             }
         }
 
-        var chaptersMenuItem = FindMenuItem("Chapters");
+        var chaptersMenuItem = FindMenuItem(_("Chapter"));
 
         if (chaptersMenuItem != null)
         {
@@ -369,7 +369,7 @@ public partial class MainForm : Form
             }
         }
 
-        var recentMenuItem = FindMenuItem("Recent");
+        var recentMenuItem = FindMenuItem(_("Recent Files"));
 
         if (recentMenuItem != null)
         {
@@ -391,7 +391,7 @@ public partial class MainForm : Form
             recentMenuItem.Items.Add(clearMenuItem);
         }
 
-        var titlesMenuItem = FindMenuItem("Titles");
+        var titlesMenuItem = FindMenuItem(_("Title"));
 
         if (titlesMenuItem != null)
         {
@@ -424,7 +424,7 @@ public partial class MainForm : Form
             }
         }
 
-        var profilesMenuItem = FindMenuItem("Profile");
+        var profilesMenuItem = FindMenuItem(_("Profile"));
 
         if (profilesMenuItem != null && !profilesMenuItem.HasItems)
         {
@@ -446,7 +446,7 @@ public partial class MainForm : Form
             }
         }
 
-        var customMenuItem = FindMenuItem("Custom");
+        var customMenuItem = FindMenuItem(_("Custom"));
 
         if (customMenuItem != null)
         {
@@ -770,16 +770,24 @@ public partial class MainForm : Form
 
         foreach (Binding binding in menuBindings)
         {
+            Binding tempBinding = binding;
+
+            if (MenuItemDuplicate.ContainsKey(tempBinding.Command) && tempBinding.Input != "")
+            {
+                var mi = MenuItemDuplicate[tempBinding.Command];
+                mi.InputGestureText = mi.InputGestureText + ", " + tempBinding.Input;
+            }
+
             if (!binding.IsMenu)
                 continue;
-
-            Binding tempBinding = binding;
-            
-            var menuItem = MenuHelp.Add(ContextMenu.Items, tempBinding.Comment);             
+                        
+            var menuItem = MenuHelp.Add(ContextMenu.Items, tempBinding.Comment);
 
             if (menuItem != null)
             {
-                MenuItemDuplicate[tempBinding.Comment] = menuItem;
+                if (tempBinding.Input != "")
+                    MenuItemDuplicate[tempBinding.Command] = menuItem;
+
                 menuItem.Click += (sender, args) => {
                     try {
                         TaskHelp.Run(() => {
@@ -1286,7 +1294,7 @@ public partial class MainForm : Form
             Player.CommandV("quit");
 
         if (!Player.ShutdownAutoResetEvent.WaitOne(10000))
-            Msg.ShowError("Shutdown thread failed to complete within 10 seconds.");
+            Msg.ShowError(_("Shutdown thread failed to complete within 10 seconds."));
 
         Player.Destroy();
     }

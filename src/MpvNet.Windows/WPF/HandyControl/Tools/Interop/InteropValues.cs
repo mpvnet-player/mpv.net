@@ -762,7 +762,7 @@ namespace HandyControl.Tools.Interop
                 this.DataStream = dataStream ?? throw new ArgumentNullException(nameof(dataStream));
             }
 
-            private void ActualizeVirtualPosition()
+            void ActualizeVirtualPosition()
             {
                 if (_virtualPosition == -1) return;
 

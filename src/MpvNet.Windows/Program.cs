@@ -1,4 +1,5 @@
 ﻿
+using System.Globalization;
 using System.Windows.Forms;
 using System.Threading;
 
@@ -6,6 +7,7 @@ using MpvNet.Windows.Native;
 using MpvNet.Help;
 using MpvNet.Windows.UI;
 using MpvNet.Windows.Help;
+using MpvNet.Windows.WPF;
 
 namespace MpvNet.Windows;
 
@@ -17,6 +19,7 @@ static class Program
         try
         {
             RegistryHelp.ProductName = AppInfo.Product;
+            Translator.Current = new WpfTranslator();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

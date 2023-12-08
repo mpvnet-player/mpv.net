@@ -23,10 +23,11 @@
 - Improved support for third party osc scripts like uosc.
 - Support of the mpv property `focused`.
 - Various improvements and fixes in the input bindings editor.
-- Automated nightly portable builds (thx to dyphire)
-- Various new or changed default bindings
-- libmpv zhongfly 2023-11-03
-
+- Automated nightly portable builds (thx to dyphire).
+- Various new or changed default bindings.
+- Context menu and message boxes are available in the languages German,
+  it can be enabled with the new option `language`.
+- libmpv zhongfly 2023-11-03.
 
 # v6.0.3.2 Beta (2022-10-14)
 

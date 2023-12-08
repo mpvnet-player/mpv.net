@@ -518,6 +518,16 @@ file = mpv
 directory = Input
 help = Number of key presses to generate per second on autorepeat.
 
+name = language
+file = mpvnet
+default = system
+directory = UI
+help = User interface display language.\nmpv.net must be restarted after a change.
+option = system
+option = english
+option = chinese-china
+option = german
+
 name = dark-mode
 file = mpvnet
 default = always

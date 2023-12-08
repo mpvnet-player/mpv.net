@@ -430,6 +430,11 @@ Enable this only when a developer asks for it. Default: no
 
 ### UI
 
+#### --language=\<value\>
+
+User interface display language.
+mpv.net must be restarted after a change.
+
 #### --dark-mode=\<value\>
 
 Enables a dark theme.
@@ -1011,7 +1016,7 @@ Cycles the aspect ratio using the following command:
 [video-aspect property](https://mpv.io/manual/master/#command-interface-video-aspect)
 
 
-### Audio > Cycle/Next
+### Audio > Next
 
 This uses a mpv.net command that shows better info then the mpv preset
 and also has the advantage of not showing no audio.
@@ -1120,7 +1125,7 @@ Increases the subtitle font size using the following command:
 
 Increases the volume using the following command:
 
-`add volume 10`
+`add volume 2`
 
 [add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
 
@@ -1131,7 +1136,7 @@ Increases the volume using the following command:
 
 Decreases the volume using the following command:
 
-`add volume -10`
+`add volume -2`
 
 [add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
 

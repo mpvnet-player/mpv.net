@@ -1,9 +1,10 @@
 ﻿
 using CommunityToolkit.Mvvm.Messaging;
-
+using Microsoft.VisualBasic;
 using MpvNet.ExtensionMethod;
 using MpvNet.Help;
 using MpvNet.MVVM;
+using System.Runtime.CompilerServices;
 
 namespace MpvNet;
 
@@ -17,6 +18,7 @@ public class AppClass
     public string DarkTheme { get; set; } = "dark";
     public string LightTheme { get; set; } = "light";
     public string StartSize { get; set; } = "height-session";
+    public string Language { get; set; } = "system";
 
     public bool AutoLoadFolder { get; set; } = true;
     public bool DebugMode { get; set; }
@@ -139,6 +141,7 @@ public class AppClass
             case "dark-theme": DarkTheme = value.Trim('\'', '"'); return true;
             case "debug-mode": DebugMode = value == "yes"; return true;
             case "image-file-extensions": FileTypes.Image = value.Split(" ,;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries); return true;
+            case "language": Language = value; return true;
             case "light-theme": LightTheme = value.Trim('\'', '"'); return true;
             case "media-info": MediaInfo = value == "yes"; return true;
             case "minimum-aspect-ratio-audio": MinimumAspectRatioAudio = value.ToFloat(); return true;

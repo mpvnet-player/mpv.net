@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MpvNet.Windows", "MpvNet.Windows\MpvNet.Windows.csproj", "{ADC341B5-863A-4DFB-9352-475518FABE91}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0B7958FD-2138-482A-A21B-481AE7A0F851} = {0B7958FD-2138-482A-A21B-481AE7A0F851}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MpvNet", "MpvNet\MpvNet.csproj", "{0B524801-DA28-433F-808D-3F74EF81EB53}"
 EndProject
@@ -11,6 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NGettext.Wpf", "NGettext.Wpf\NGettext.Wpf.csproj", "{0B7958FD-2138-482A-A21B-481AE7A0F851}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,6 +31,10 @@ Global
 		{0B524801-DA28-433F-808D-3F74EF81EB53}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B524801-DA28-433F-808D-3F74EF81EB53}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B524801-DA28-433F-808D-3F74EF81EB53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B7958FD-2138-482A-A21B-481AE7A0F851}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B7958FD-2138-482A-A21B-481AE7A0F851}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B7958FD-2138-482A-A21B-481AE7A0F851}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B7958FD-2138-482A-A21B-481AE7A0F851}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
