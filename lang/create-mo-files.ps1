@@ -20,8 +20,9 @@ function CreateFolder
 foreach ($it in $PoFiles)
 {
     $folder = "$ExeFolder/Locale/$($it.BaseName)/LC_MESSAGES"
-    CreateFolder $folder
-    $moPath = Resolve-Path $folder/mpvnet.mo -ErrorAction Ignore
+    New-Item -ItemType Directory -Path $folder
+    $moPath = "$folder/mpvnet.mo"
+    New-Item -ItemType File -Path $moPath
     msgfmt --output-file=$moPath $it.FullName
 
     if ($LASTEXITCODE -ne 0)
