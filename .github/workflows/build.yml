@@ -67,7 +67,7 @@ jobs:
           cp -f mpvnet.com src/MpvNet.Windows/bin/Debug/ || true
       - name: Create .mo files
         shell: pwsh
-        run: Install-Package Gettext.Tools; .\lang\create-mo-files.ps1
+        run: Install-Package Gettext.Tools -Force; .\lang\create-mo-files.ps1
       - name: Upload
         uses: actions/upload-artifact@v3
         with:
