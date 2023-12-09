@@ -65,6 +65,9 @@ jobs:
         run: |
           wget -nv -O mpvnet.com https://github.com/mpvnet-player/file-host/releases/download/tag/mpvnet.com.txt
           cp -f mpvnet.com src/MpvNet.Windows/bin/Debug/ || true
+      - name: Create .mo files
+        shell: pwsh
+        run: Install-Package Gettext.Tools; .\lang\create-mo-files.ps1
       - name: Upload
         uses: actions/upload-artifact@v3
         with:
