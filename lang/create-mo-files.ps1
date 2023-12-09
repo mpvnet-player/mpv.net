@@ -21,7 +21,7 @@ foreach ($it in $PoFiles)
 {
     $folder = "$ExeFolder/Locale/$($it.BaseName)/LC_MESSAGES"
     CreateFolder $folder
-    $moPath = Resolve-Path $folder/mpvnet.mo
+    $moPath = Resolve-Path $folder/mpvnet.mo -ErrorAction Ignore
     msgfmt --output-file=$moPath $it.FullName
 
     if ($LASTEXITCODE -ne 0)
