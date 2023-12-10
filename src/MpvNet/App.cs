@@ -1,16 +1,16 @@
 ﻿
 using CommunityToolkit.Mvvm.Messaging;
-using Microsoft.VisualBasic;
+
 using MpvNet.ExtensionMethod;
 using MpvNet.Help;
 using MpvNet.MVVM;
-using System.Runtime.CompilerServices;
 
 namespace MpvNet;
 
 public class AppClass
 {
-    public List<string> TempFiles { get; } = new List<string>();
+    public List<string> TempFiles { get; } = new ();
+    public Dictionary<string, string> CommandLineArguments { get; } = new ();
 
     public string ConfPath { get => Player.ConfigFolder + "mpvnet.conf"; }
     public string ProcessInstance { get; set; } = "single";
@@ -19,6 +19,7 @@ public class AppClass
     public string LightTheme { get; set; } = "light";
     public string StartSize { get; set; } = "height-session";
     public string Language { get; set; } = "system";
+    public string CommandLine { get; set; } = Environment.CommandLine;
 
     public bool AutoLoadFolder { get; set; } = true;
     public bool DebugMode { get; set; }

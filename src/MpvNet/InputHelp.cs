@@ -20,10 +20,16 @@ public static class InputHelp
                 new (_("File"), _("Recent Files")),
                 new (_("File"), "-"),
                 new (_("File"), _("Exit"), "quit", "Esc"),
+
                 new (_("Playback"), _("Play/Pause"), "script-message-to mpvnet play-pause", "Space"),
                 new (_("Playback"), _("Stop"), "stop", "Ctrl+s"),
+
                 new (_("Navigate"), _("Previous File"), "playlist-prev", "F11"),
                 new (_("Navigate"), _("Next File"), "playlist-next", "F12"),
+                new (_("Navigate"), "-"),
+                new (_("Navigate"), _("First File"), "script-message-to mpvnet playlist-first", "Home"),
+                new (_("Navigate"), _("Last File"), "script-message-to mpvnet playlist-last", "End"),
+
                 new (_("Navigate"), "-"),
                 new (_("Navigate"), _("Next Chapter"), "add chapter 1", "PGUP"),
                 new (_("Navigate"), _("Previous Chapter"), "add chapter -1", "PGDWN"),
@@ -42,6 +48,7 @@ public static class InputHelp
                 new (_("Navigate"), "-"),
                 new (_("Navigate"), _("Title")),
                 new (_("Navigate"), _("Chapter")),
+
                 new (_("Pan & Scan"), _("Decrease Size"), "add video-zoom -0.1", "Ctrl+-"),
                 new (_("Pan & Scan"), _("Increase Size"), "add video-zoom 0.1", "Ctrl++"),
                 new (_("Pan & Scan"), "-"),
@@ -55,6 +62,7 @@ public static class InputHelp
                 new (_("Pan & Scan"), _("Increase Height"), "add panscan 0.1", "W"),
                 new (_("Pan & Scan"), "-"),
                 new (_("Pan & Scan"), _("Reset"), "set video-zoom 0; set video-pan-x 0; set video-pan-y 0", "Ctrl+BS"),
+
                 new (_("Video"), _("Decrease Contrast"), "add contrast -1", "Ctrl+1"),
                 new (_("Video"), _("Increase Contrast"), "add contrast 1", "Ctrl+2"),
                 new (_("Video"), "-"),
@@ -72,11 +80,13 @@ public static class InputHelp
                 new (_("Video"), _("Toggle Deinterlace"), "cycle deinterlace", "d"),
                 new (_("Video"), _("Change Aspect Ratio"), "cycle-values video-aspect-override 16:9 4:3 2.35:1 -1", "a"),
                 new (_("Video"), _("Rotate Video"), "cycle-values video-rotate 90 180 270 0", "Ctrl+r"),
-                new (_("Audio"), _("Next Track"), "cycle audio", "KP7"),
+
+                new (_("Audio"), _("Next Track"), "script-message-to mpvnet cycle-audio", "KP7"),
                 new (_("Audio"), "-"),
                 new (_("Audio"), _("Delay +0.1"), "add audio-delay 0.1", "Ctrl+d"),
                 new (_("Audio"), _("Delay -0.1"), "add audio-delay -0.1", "Ctrl+D"),
-                new (_("Subtitle"), _("Next Track"), "cycle sub", "KP8"),
+
+                new (_("Subtitle"), _("Next Track"), "script-message-to mpvnet cycle-subtitles", "KP8"),
                 new (_("Subtitle"), _("Toggle Visibility"), "cycle sub-visibility", "v"),
                 new (_("Subtitle"), "-"),
                 new (_("Subtitle"), _("Delay -0.1"), "add sub-delay -0.1", "z"),
@@ -89,11 +99,14 @@ public static class InputHelp
                 new (_("Subtitle"), _("Increase Font Size"), "add sub-scale 0.1", "G"),
                 new (_("Subtitle"), "-"),
                 new (_("Subtitle") + " > " + _("More"), _("Toggle overriding SSA/ASS styles with normal styles"), "cycle-values sub-ass-override force no", "u"),
+
                 new ("", _("Track")),
+
                 new (_("Volume"), _("Up"), "add volume 2", "+"),
                 new (_("Volume"), _("Down"), "add volume -2", "-"),
                 new (_("Volume"), "-"),
                 new (_("Volume"), _("Mute"), "cycle mute", "m"),
+
                 new (_("Speed"), _("-10%"), "multiply speed 1/1.1", "["),
                 new (_("Speed"), _("+10%"), "multiply speed 1.1", "]"),
                 new (_("Speed"), "-"),
@@ -101,6 +114,8 @@ public static class InputHelp
                 new (_("Speed"), _("Double"), "multiply speed 2.0", "}"),
                 new (_("Speed"), "-"),
                 new (_("Speed"), _("Reset"), "set speed 1", "BS"),
+
+                new (_("View"), _("Show Playlist"), "script-message-to mpvnet show-playlist", "F8"),
                 new (_("View"), _("Show Profiles"), "script-message-to mpvnet show-profiles", "Ctrl+P"),
                 new (_("View"), _("Toggle Statistics"), "script-binding stats/display-stats-toggle", "t"),
                 new (_("View"), _("Toggle OSC Visibility"), "script-binding osc/visibility", "Del"),
@@ -109,10 +124,11 @@ public static class InputHelp
                 new (_("View"), _("Show Progress"), "show-progress", "p"),
                 new (_("View") + " > " + _("More"), _("Show Console"), "script-binding console/enable", "`"),
                 new (_("View") + " > " + _("More"), _("Show Audio Devices"), "script-message-to mpvnet show-audio-devices"),
-                new (_("View") + " > " + _("More"), _("Show Commands"), "script-message-to mpvnet show-commands", "C"),
+                new (_("View") + " > " + _("More"), _("Show Commands"), "script-message-to mpvnet show-commands", "F2"),
                 new (_("View") + " > " + _("More"), _("Show Demuxers"), "script-message-to mpvnet show-demuxers"),
                 new (_("View") + " > " + _("More"), _("Show Decoders"), "script-message-to mpvnet show-decoders"),
                 new (_("View") + " > " + _("More"), _("Show Bindings"), "script-message-to mpvnet show-bindings"),
+
                 new (_("Window"), _("Fullscreen"), "cycle fullscreen", "Enter"),
                 new (_("Window") + " > " + _("Zoom"), _("Enlarge"), "script-message-to mpvnet scale-window 1.2", "Alt++"),
                 new (_("Window") + " > " + _("Zoom"), _("Shrink"), "script-message-to mpvnet scale-window 0.8", "Alt+-"),
@@ -128,7 +144,9 @@ public static class InputHelp
                 new (_("Window") + " > " + _("Move"), _("Center"), "script-message-to mpvnet move-window center", "Alt+BS"),
                 new (_("Window"), _("Toggle Border"), "cycle border", "b"),
                 new (_("Window"), _("Toggle On Top"), "cycle ontop", "Ctrl+t"),
+
                 new ("", _("Profile")),
+                
                 new (_("Settings"), _("Show Config Editor"), "script-message-to mpvnet show-conf-editor", "Ctrl+,"),
                 new (_("Settings"), _("Show Input Editor"), "script-message-to mpvnet show-input-editor", "Ctrl+i"),
                 new (_("Settings"), _("Open Config Folder"), "script-message-to mpvnet open-conf-folder", "Ctrl+f"),
@@ -136,20 +154,24 @@ public static class InputHelp
                 new (_("Settings") + " > " + _("Setup"), _("Register audio file associations"), "script-message-to mpvnet reg-file-assoc audio"),
                 new (_("Settings") + " > " + _("Setup"), _("Register image file associations"), "script-message-to mpvnet reg-file-assoc image"),
                 new (_("Settings") + " > " + _("Setup"), _("Unregister file associations"), "script-message-to mpvnet reg-file-assoc unreg"),
+          
                 new (_("Tools"), _("Set/clear A-B loop points"), "ab-loop", "l"),
                 new (_("Tools"), _("Toggle infinite file looping"), "cycle-values loop-file inf no", "L"),
                 new (_("Tools"), _("Shuffle Playlist"), "playlist-shuffle"),
                 new (_("Tools"), _("Toggle Hardware Decoding"), "cycle-values hwdec auto no", "Ctrl+h"),
                 new (_("Tools"), _("Exit Watch Later"), "quit-watch-later", "Q"),
+         
                 new ("", _("Custom")),
+
                 new (_("Help"), _("Website mpv"), "script-message-to mpvnet shell-execute https://mpv.io", "Ctrl+Home"),
-                new (_("Help"), _("Website mpv.net"), "script-message-to mpvnet shell-execute https://github.com/mpvnet-player/mpv.net", "Home"),
+                new (_("Help"), _("Website mpv.net"), "script-message-to mpvnet shell-execute https://github.com/mpvnet-player/mpv.net"),
                 new (_("Help"), "-"),
                 new (_("Help"), _("Manual mpv"), "script-message-to mpvnet shell-execute https://mpv.io/manual/stable", "Ctrl+F1"),
                 new (_("Help"), _("Manual mpv.net"), "script-message-to mpvnet shell-execute https://github.com/mpvnet-player/mpv.net/blob/main/docs/manual.md", "Ctrl+F2"),
                 new (_("Help"), "-"),
                 new (_("Help"), _("awesome-mpv"), "script-message-to mpvnet shell-execute https://github.com/stax76/awesome-mpv", "Ctrl+a"),
                 new (_("Help"), _("About mpv.net"), "script-message-to mpvnet show-about"),
+
                 new ("", "", "quit", "q", _("Exit")),
                 new ("", "", "script-message-to mpvnet show-menu", "MBTN_Right", _("Show Menu")),
                 new ("", "", "quit", "Power", _("Exit")),
@@ -183,6 +205,8 @@ public static class InputHelp
                 new ("", "", "no-osd sub-seek  1", "Ctrl+Shift+Right", _("Seek to next subtitle")),
                 new ("", "", "no-osd seek  5", "Ctrl+Wheel_Up", _("Seek Forward")),
                 new ("", "", "no-osd seek -5", "Ctrl+Wheel_Down", _("Seek Backward")),
+                new ("", "", "quit 4", "Esc", _("Quit encoding")),
+                new ("", "", "quit 4", "q", _("Quit encoding")),
                 //new (_("Command Palette"), _("Commands"), "script-message-to mpvnet show-command-palette", "F1"),
             };
 

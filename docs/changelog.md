@@ -7,7 +7,7 @@
   the .NET 6 platform. There are user scripts as replacement:
   [command_palette](https://github.com/stax76/mpv-scripts#command_palette) or
   [search_menu](https://github.com/stax76/mpv-scripts#search_menu).
-  Unfortunately the user scripts don't support IME mode which is a problem for asian users.
+  Unfortunately the user scripts don't support IME mode which is a problem for Asian users.
 - The blue mpv.net logo was removed for better mpv compatibility.
 - Fix message box exceding working area size.
 - C# and PowerShell scripting was removed because of a compatibility problem
@@ -25,8 +25,14 @@
 - Various improvements and fixes in the input bindings editor.
 - Automated nightly portable builds (thx to dyphire).
 - Various new or changed default bindings.
-- Context menu and message boxes are available in the languages German,
-  it can be enabled with the new option `language`.
+- Context menu and message boxes are available in the languages Chinese and German.  
+  Interested joining our translation team?: https://app.transifex.com/stax76/teams/
+- Support for encoding mode and thumbfast.
+- For script authors the following info is available in user-data:  
+  user-data/frontend/name=mpv.net  
+  user-data/frontend/version=7.0.0.0  
+  user-data/frontend/process-path=the process path
+- MediaInfo 23.11
 - libmpv zhongfly 2023-11-03.
 
 # v6.0.3.2 Beta (2022-10-14)

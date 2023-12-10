@@ -9,10 +9,8 @@ namespace MpvNet.Windows.WPF;
 
 public class HyperlinkEx : Hyperlink
 {
-    void HyperLinkEx_RequestNavigate(object sender, RequestNavigateEventArgs e)
-    {
+    void HyperLinkEx_RequestNavigate(object sender, RequestNavigateEventArgs e) =>
         ProcessHelp.ShellExecute(e.Uri.AbsoluteUri);
-    }
 
     public void SetURL(string? url)
     {

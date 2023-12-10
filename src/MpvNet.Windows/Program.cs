@@ -1,5 +1,4 @@
 ﻿
-using System.Globalization;
 using System.Windows.Forms;
 using System.Threading;
 
@@ -8,6 +7,7 @@ using MpvNet.Help;
 using MpvNet.Windows.UI;
 using MpvNet.Windows.Help;
 using MpvNet.Windows.WPF;
+using System.Diagnostics;
 
 namespace MpvNet.Windows;
 
@@ -42,8 +42,12 @@ static class Program
             Theme.Init();
             Mutex mutex = new Mutex(true, StringHelp.GetMD5Hash(App.ConfPath), out bool isFirst);
 
-            if (Control.ModifierKeys.HasFlag(Keys.Shift))
+            if (Control.ModifierKeys.HasFlag(Keys.Shift) ||
+                App.CommandLine.Contains("--process-instance=multi") ||
+                App.CommandLine.Contains("--o="))
+            {
                 App.ProcessInstance = "multi";
+            }
 
             if ((App.ProcessInstance == "single" || App.ProcessInstance == "queue") && !isFirst)
             {
@@ -93,7 +97,17 @@ static class Program
                 return;
             }
 
-            Application.Run(new WinForms.MainForm());
+            if (App.CommandLine.Contains("--o="))
+            {
+                App.AutoLoadFolder = false;
+                Player.Init(IntPtr.Zero);
+                Player.ProcessCommandLine(false);
+                Player.SetPropertyString("idle", "no");
+                Player.EventLoop();
+                Player.Destroy();
+            }
+            else
+                Application.Run(new WinForms.MainForm());
 
             if (App.IsTerminalAttached)
                 WinApi.FreeConsole();

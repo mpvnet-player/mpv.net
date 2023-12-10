@@ -6,16 +6,18 @@ namespace MpvNet;
 
 public class InputConf
 {
-    string? _content;
+    string? _path;
 
     public InputConf(string path) { Path = path; }
 
-    public string Path { get; }
+    public string Content { get; set; } = "";
 
-    public string Content
-    {
-        get => _content ??= FileHelp.ReadTextFile(Path);
-        set => _content = value;
+    public string Path {
+        get => _path ?? "";
+        set {
+            _path = value;
+            Content = File.Exists(_path) ? FileHelp.ReadTextFile(_path) : "";
+        }
     }
 
     public bool HasMenu => Content.Contains("#menu:") || Content.Contains("#! ");

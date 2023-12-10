@@ -1,12 +1,12 @@
 ﻿
+using System.Text;
 using System.Text.RegularExpressions;
+using System.Globalization;
 using System.Windows.Forms;
 using System.Windows.Interop;
 using System.Windows;
-using System.Globalization;
 
 using MpvNet.ExtensionMethod;
-using MpvNet.Help;
 using MpvNet.Windows.WinForms;
 using MpvNet.Windows.WPF.Views;
 using MpvNet.Windows.WPF;
@@ -20,7 +20,6 @@ public class GuiCommand
 
     public event Action<float>? ScaleWindow;
     public event Action<string>? MoveWindow;
-    public event Action<double>? WindowScaleMpv;
     public event Action<float>? WindowScaleNet;
     public event Action? ShowMenu;
 
@@ -45,14 +44,13 @@ public class GuiCommand
         ["window-scale"] = args => WindowScaleNet?.Invoke(float.Parse(args[0], CultureInfo.InvariantCulture)),
         ["show-menu"] = args => ShowMenu?.Invoke(),
         ["show-bindings"] = args => ShowBindings(),
+        ["show-playlist"] = args => ShowPlaylist(),
 
 
         // deprecated
         ["show-info"] = args => ShowMediaInfo(new[] { "osd" }), // deprecated
         ["quick-bookmark"] = args => QuickBookmark(), // deprecated
-        ["show-commands"] = args => ShowCommands(), // deprecated
         ["show-history"] = args => ShowHistory(), // deprecated
-        ["show-playlist"] = args => ShowPlaylist(), // deprecated
         ["show-command-palette"] = args => ShowCommandPalette(), // deprecated
     };
 
@@ -250,7 +248,7 @@ public class GuiCommand
         text = text.TrimEx();
 
         if (editor)
-            ShowTextWithEditor("media-info", text);
+            Command.ShowTextWithEditor("media-info", text);
         else if (osd)
             Command.ShowText(text.Replace("\r", ""), 5000, 16);
         else
@@ -263,30 +261,35 @@ public class GuiCommand
 
     public static string FormatTime(double value) => ((int)value).ToString("00");
 
-    public void ShowTextWithEditor(string name, string text)
+    public void ShowBindings() => Command.ShowTextWithEditor("Bindings", Player.UsedInputConfContent);
+
+    public void ShowPlaylist()
     {
-        string file = Path.Combine(Path.GetTempPath(), name + ".txt");
-        App.TempFiles.Add(file);
-        File.WriteAllText(file, BR + text.Trim() + BR);
-        ProcessHelp.ShellExecute(file);
+        var count = Player.GetPropertyInt("playlist-count");
+
+        if (count < 1)
+            return;
+
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < count; i++)
+        {
+            string name = Player.GetPropertyString($"playlist/{i}/title");
+
+            if (string.IsNullOrEmpty(name))
+                name = Player.GetPropertyString($"playlist/{i}/filename").FileName();
+
+            sb.AppendLine(name);
+        }
+
+        string header = BR + "For a playlist menu the following user scripts exist:" + BR2 +
+            "https://github.com/stax76/mpv-scripts#command_palette" + BR +
+            "https://github.com/stax76/mpv-scripts#search_menu" + BR +
+            "https://github.com/tomasklaen/uosc" + BR +
+            "https://github.com/jonniek/mpv-playlistmanager" + BR2;
+
+        Msg.ShowInfo(header + sb.ToString().TrimEnd());
     }
-
-    public void ShowBindings()
-    {
-        string info = "# mpv.net might modify the input.conf content before it is passed to mpv." + BR +
-                      "# Below are the bindings as they were passed to mpv." + BR2;
-
-        ShowTextWithEditor("Bindings", info + Player.UsedInputConfContent);
-    }
-
-    //public void ShowCommandPalette()
-    //{
-    //    MainForm.Instance?.BeginInvoke(() => {
-    //        CommandPalette.Instance.SetItems(CommandPalette.GetItems());
-    //        MainForm.Instance.ShowCommandPalette();
-    //        CommandPalette.Instance.SelectFirst();
-    //    });
-    //}
 
     // deprecated
     public void QuickBookmark() =>
@@ -294,22 +297,26 @@ public class GuiCommand
             "https://github.com/stax76/mpv-scripts/blob/main/misc.lua");
 
     // deprecated
-    public void ShowCommands() =>
-        Msg.ShowInfo("This feature was moved to a user script,\nwhich can be found here:\n\n" +
-            "https://github.com/stax76/mpv-scripts#command_palette");
-
-    // deprecated
     public void ShowHistory() =>
         Msg.ShowInfo("This feature was moved to a user script,\nwhich can be found here:\n\n" +
             "https://github.com/stax76/mpv-scripts/blob/main/history.lua");
 
     // deprecated
-    public void ShowPlaylist() =>
-        Msg.ShowInfo("This feature was moved to a user script,\nwhich can be found here:\n\n" +
-            "https://github.com/stax76/mpv-scripts#command_palette");
-
-    // deprecated
     public void ShowCommandPalette() =>
-        Msg.ShowInfo("This feature was moved to a user script,\nwhich can be found here:\n\n" +
-            "https://github.com/stax76/mpv-scripts#command_palette");
+        Msg.ShowInfo(
+            "This feature was removed but is still available in the form of user scripts:" + BR2 +
+            "https://github.com/stax76/mpv-scripts#command_palette" + BR +
+            "https://github.com/stax76/mpv-scripts#search_menu" + BR +
+            "https://github.com/tomasklaen/uosc");
 }
+
+
+
+//public void ShowCommandPalette()
+//{
+//    MainForm.Instance?.BeginInvoke(() => {
+//        CommandPalette.Instance.SetItems(CommandPalette.GetItems());
+//        MainForm.Instance.ShowCommandPalette();
+//        CommandPalette.Instance.SelectFirst();
+//    });
+//}

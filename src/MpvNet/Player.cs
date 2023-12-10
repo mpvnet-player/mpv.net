@@ -78,7 +78,8 @@ public class MainPlayer : MpvClient
 
         mpv_request_log_messages(MainHandle, "no");
 
-        TaskHelp.Run(MainEventLoop);
+        if (formHandle != IntPtr.Zero)
+            TaskHelp.Run(MainEventLoop);
 
         if (MainHandle == IntPtr.Zero)
             throw new Exception("error mpv_create");
@@ -89,7 +90,9 @@ public class MainPlayer : MpvClient
             SetPropertyString("input-terminal", "yes");
         }
 
-        SetPropertyLong("wid", formHandle.ToInt64());
+        if (formHandle != IntPtr.Zero)
+            SetPropertyLong("wid", formHandle.ToInt64());
+
         SetPropertyInt("osd-duration", 2000);
 
         SetPropertyBool("input-default-bindings", true);
@@ -99,19 +102,38 @@ public class MainPlayer : MpvClient
         SetPropertyString("screenshot-directory", "~~desktop/");
         SetPropertyString("osd-playing-msg", "${media-title}");
         SetPropertyString("osc", "yes");
-        SetPropertyString("force-window", "yes");
+        SetPropertyString("force-window", "yes");        
         SetPropertyString("config-dir", ConfigFolder);
-        SetPropertyString("config", "yes"); 
-        SetPropertyString("input-conf", @"memory://" + (UsedInputConfContent = App.InputConf.GetContent()));
+        SetPropertyString("config", "yes");
+
+        UsedInputConfContent = App.InputConf.GetContent();
+
+        if (!string.IsNullOrEmpty(UsedInputConfContent))
+            SetPropertyString("input-conf", @"memory://" + UsedInputConfContent);
 
         ProcessCommandLine(true);
 
-        Environment.SetEnvironmentVariable("MPVNET_VERSION", AppInfo.Version.ToString());
+        if (App.CommandLineArguments.ContainsKey("config-dir"))
+        {
+            string configDir = App.CommandLineArguments["config-dir"];
+            string fullPath = System.IO.Path.GetFullPath(configDir);
+            App.InputConf.Path = fullPath.AddSep() + "input.conf";
+            string content = App.InputConf.GetContent();
+
+            if (!string.IsNullOrEmpty(content))
+                SetPropertyString("input-conf", @"memory://" + content);
+        }
+
+        Environment.SetEnvironmentVariable("MPVNET_VERSION", AppInfo.Version.ToString());  // deprecated
 
         mpv_error err = mpv_initialize(MainHandle);
 
         if (err < 0)
             throw new Exception("mpv_initialize error" + BR2 + GetError(err) + BR);
+
+        SetPropertyString("user-data/frontend/name", "mpv.net");
+        SetPropertyString("user-data/frontend/version", AppInfo.Version.ToString());
+        SetPropertyString("user-data/frontend/process-path", Environment.ProcessPath!);
 
         string idle = GetPropertyString("idle");
         App.Exit = idle == "no" || idle == "once";
@@ -123,7 +145,8 @@ public class MainPlayer : MpvClient
 
         mpv_request_log_messages(Handle, "info");
 
-        TaskHelp.Run(EventLoop);
+        if (formHandle != IntPtr.Zero)
+            TaskHelp.Run(EventLoop);
 
         // otherwise shutdown is raised before media files are loaded,
         // this means Lua scripts that use idle might not work correctly
@@ -389,13 +412,6 @@ public class MainPlayer : MpvClient
         bool shuffle = false;
         var args = Environment.GetCommandLineArgs().Skip(1);
 
-        //string[] preInitProperties = { "input-terminal", "terminal", "input-file", "config",
-        //    "config-dir", "input-conf", "load-scripts", "scripts", "player-operation-mode",
-        //    "idle", "log-file", "msg-color", "dump-stats", "msg-level", "really-quiet" };
-
-        //string[] preInitProperties = Array.Empty<string>();
-        string[] postInitProperties = Array.Empty<string>();
-
         foreach (string i in args)
         {
             string arg = i;
@@ -453,6 +469,9 @@ public class MainPlayer : MpvClient
                 string left = arg[2..arg.IndexOf("=")];
                 string right = arg[(left.Length + 3)..];
 
+                if (string.IsNullOrEmpty(left))
+                    continue;
+
                 switch (left)
                 {
                     case "script":        left = "scripts";        break;
@@ -464,20 +483,12 @@ public class MainPlayer : MpvClient
                 if (left == "shuffle" && right == "yes")
                     shuffle = true;
 
-                if (preInit && !postInitProperties.Contains(left))
-                {
-                    ProcessProperty(left, right);
+                App.CommandLineArguments[left] = right;
 
-                    if (!App.ProcessProperty(left, right))
-                        SetPropertyString(left, right);
-                }
-                else if (!preInit && postInitProperties.Contains(left))
-                {
-                    ProcessProperty(left, right);
+                ProcessProperty(left, right);
 
-                    if (!App.ProcessProperty(left, right))
-                        SetPropertyString(left, right);
-                }
+                if (!App.ProcessProperty(left, right))
+                    SetPropertyString(left, right);
             }
         }
 
