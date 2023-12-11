@@ -101,7 +101,7 @@ static class Program
             {
                 App.AutoLoadFolder = false;
                 Player.Init(IntPtr.Zero);
-                Player.ProcessCommandLine(false);
+                Player.ProcessCommandLineFiles();
                 Player.SetPropertyString("idle", "no");
                 Player.EventLoop();
                 Player.Destroy();

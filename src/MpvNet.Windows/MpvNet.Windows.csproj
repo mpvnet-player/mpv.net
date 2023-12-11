@@ -5,13 +5,14 @@
         <TargetFramework>net6.0-windows</TargetFramework>
         <RootNamespace>MpvNet.Windows</RootNamespace>
 		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<PublishSingleFile>true</PublishSingleFile>
         <AssemblyName>mpvnet</AssemblyName>
         <UseWPF>true</UseWPF>
         <UseWindowsForms>true</UseWindowsForms>
         <ApplicationIcon>mpv-icon.ico</ApplicationIcon>
         <Product>mpv.net</Product>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
-        <FileVersion>7.0.0.0</FileVersion>
+        <AssemblyVersion>7.0.0.1</AssemblyVersion>
+        <FileVersion>7.0.0.1</FileVersion>
 		<Nullable>enable</Nullable>
     </PropertyGroup>
 

@@ -1,14 +1,14 @@
 
-# v7.0.0.0 Beta (2023-??-??)
+# v7.0.0.1 Beta (2023-12-11)
 
 - [.NET 6 is a new requirement](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
   (Windows 7 is still supported)
 - The command palette was removed because of a compatibility problem with
-  the .NET 6 platform. There are user scripts as replacement:
-  [command_palette](https://github.com/stax76/mpv-scripts#command_palette) or
-  [search_menu](https://github.com/stax76/mpv-scripts#search_menu).
-  Unfortunately the user scripts don't support IME mode which is a problem for Asian users.
-- The blue mpv.net logo was removed for better mpv compatibility.
+  the .NET 6 platform. There are user scripts with similar functionality:  
+  - [command_palette](https://github.com/stax76/mpv-scripts#command_palette)
+  - [search_menu](https://github.com/stax76/mpv-scripts#search_menu)
+  - [uosc](https://github.com/tomasklaen/uosc)
+- The blue mpv.net logo was removed for better OSC compatibility.
 - Fix message box exceding working area size.
 - C# and PowerShell scripting was removed because of a compatibility problem
   with the .NET 6 platform. .NET extensions are supported with a new host
@@ -28,9 +28,9 @@
 - Context menu and message boxes are available in the languages Chinese and German.  
   Interested joining our translation team?: https://app.transifex.com/stax76/teams/
 - Support for encoding mode and thumbfast.
-- For script authors the following info is available in user-data:  
+- For script authors, the following info is available in user-data:  
   user-data/frontend/name=mpv.net  
-  user-data/frontend/version=7.0.0.0  
+  user-data/frontend/version=version name  
   user-data/frontend/process-path=the process path
 - MediaInfo 23.11
 - libmpv zhongfly 2023-11-03.

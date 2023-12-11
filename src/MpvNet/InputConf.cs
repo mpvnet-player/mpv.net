@@ -73,15 +73,4 @@ public class InputConf
             return InputHelp.ConvertToString(defaults);
         }
     }
-
-    public void CreateBackup()
-    {
-        if (!File.Exists(Path))
-            return;
-
-        string targetPath = System.IO.Path.GetTempPath().AddSep() +
-            "mpv.net input.conf backup " + Guid.NewGuid() + ".conf";
-
-        File.Copy(Path, targetPath);
-    }
 }

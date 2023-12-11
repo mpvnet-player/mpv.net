@@ -105,15 +105,11 @@ public partial class InputWindow : Window
             return;
 
         if (App.InputConf.HasMenu)
-        {
-            App.InputConf.CreateBackup();
             File.WriteAllText(App.InputConf.Path, App.InputConf.Content = newContent);
-        }
         else
         {
             newContent = InputHelp.ConvertToString(InputHelp.GetReducedBindings(Bindings));
             newContent = newContent.Replace("#menu: ", "# ");
-            App.InputConf.CreateBackup();
             File.WriteAllText(App.InputConf.Path, App.InputConf.Content = newContent);
         }
 

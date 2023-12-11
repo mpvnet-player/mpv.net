@@ -111,7 +111,7 @@ public class MainPlayer : MpvClient
         if (!string.IsNullOrEmpty(UsedInputConfContent))
             SetPropertyString("input-conf", @"memory://" + UsedInputConfContent);
 
-        ProcessCommandLine(true);
+        ProcessCommandLineArgs();
 
         if (App.CommandLineArguments.ContainsKey("config-dir"))
         {
@@ -407,114 +407,102 @@ public class MainPlayer : MpvClient
 
     public void SetBluRayTitle(int id) => LoadFiles(new[] { @"bd://" + id }, false, false);
 
-    public void ProcessCommandLine(bool preInit)
+    public void ProcessCommandLineArgs()
     {
-        bool shuffle = false;
-        var args = Environment.GetCommandLineArgs().Skip(1);
-
-        foreach (string i in args)
+         foreach (string i in Environment.GetCommandLineArgs().Skip(1))
         {
             string arg = i;
 
-            if (arg.StartsWith("-") && arg.Length > 1)
+            if (!arg.StartsWith("--"))
+                continue;
+
+            if (arg == "--profile=help")
             {
-                if (!preInit)
-                {
-                    if (arg == "--profile=help")
-                    {
-                        Console.WriteLine(GetProfiles());
-                        continue;
-                    }
-                    else if (arg == "--vd=help" || arg == "--ad=help")
-                    {
-                        Console.WriteLine(GetDecoders());
-                        continue;
-                    }
-                    else if (arg == "--audio-device=help")
-                    {
-                        Console.WriteLine(GetPropertyOsdString("audio-device-list"));
-                        continue;
-                    }
-                    else if (arg == "--version")
-                    {
-                        Console.WriteLine(AppClass.About);
-                        continue;
-                    }
-                    else if (arg == "--input-keylist")
-                    {
-                        Console.WriteLine(GetPropertyString("input-key-list").Replace(",", BR));
-                        continue;
-                    }
-                    else if (arg.StartsWith("--command="))
-                    {
-                        Command(arg[10..]);
-                        continue;
-                    }
-                }
-
-                if (!arg.StartsWith("--"))
-                    arg = "-" + arg;
-
-                if (!arg.Contains('='))
-                {
-                    if (arg.Contains("--no-"))
-                    {
-                        arg = arg.Replace("--no-", "--");
-                        arg += "=no";
-                    }
-                    else
-                        arg += "=yes";
-                }
-
-                string left = arg[2..arg.IndexOf("=")];
-                string right = arg[(left.Length + 3)..];
-
-                if (string.IsNullOrEmpty(left))
-                    continue;
-
-                switch (left)
-                {
-                    case "script":        left = "scripts";        break;
-                    case "audio-file":    left = "audio-files";    break;
-                    case "sub-file":      left = "sub-files";      break;
-                    case "external-file": left = "external-files"; break;
-                }
-
-                if (left == "shuffle" && right == "yes")
-                    shuffle = true;
-
-                App.CommandLineArguments[left] = right;
-
-                ProcessProperty(left, right);
-
-                if (!App.ProcessProperty(left, right))
-                    SetPropertyString(left, right);
+                Console.WriteLine(GetProfiles());
+                continue;
             }
+            else if (arg == "--vd=help" || arg == "--ad=help")
+            {
+                Console.WriteLine(GetDecoders());
+                continue;
+            }
+            else if (arg == "--audio-device=help")
+            {
+                Console.WriteLine(GetPropertyOsdString("audio-device-list"));
+                continue;
+            }
+            else if (arg == "--version")
+            {
+                Console.WriteLine(AppClass.About);
+                continue;
+            }
+            else if (arg == "--input-keylist")
+            {
+                Console.WriteLine(GetPropertyString("input-key-list").Replace(",", BR));
+                continue;
+            }
+            else if (arg.StartsWith("--command="))
+            {
+                Command(arg[10..]);
+                continue;
+            }
+
+            if (!arg.Contains('='))
+            {
+                if (arg.Contains("--no-"))
+                {
+                    arg = arg.Replace("--no-", "--");
+                    arg += "=no";
+                }
+                else
+                    arg += "=yes";
+            }
+
+            string left = arg[2..arg.IndexOf("=")];
+            string right = arg[(left.Length + 3)..];
+
+            if (string.IsNullOrEmpty(left))
+                continue;
+
+            switch (left)
+            {
+                case "script": left = "scripts"; break;
+                case "audio-file": left = "audio-files"; break;
+                case "sub-file": left = "sub-files"; break;
+                case "external-file": left = "external-files"; break;
+            }
+
+            App.CommandLineArguments[left] = right;
+
+            ProcessProperty(left, right);
+
+            if (!App.ProcessProperty(left, right))
+                SetPropertyString(left, right);
+        }
+    }
+
+    public void ProcessCommandLineFiles()
+    {
+        List<string> files = new List<string>();
+
+        foreach (string arg in Environment.GetCommandLineArgs().Skip(1))
+            if (!arg.StartsWith("--") && (arg == "-" || arg.Contains("://") ||
+                arg.Contains(":\\") || arg.StartsWith("\\\\") || File.Exists(arg)))
+
+                files.Add(arg);
+
+        LoadFiles(files.ToArray(), !App.Queue, false || App.Queue);
+
+        if (App.CommandLine.Contains("--shuffle"))
+        {
+            Command("playlist-shuffle");
+            SetPropertyInt("playlist-pos", 0);
         }
 
-        if (!preInit)
+        if (files.Count == 0 || files[0].Contains("://"))
         {
-            List<string> files = new List<string>();
-
-            foreach (string arg in args)
-                if (!arg.StartsWith("--") && (arg == "-" || arg.Contains("://") ||
-                    arg.Contains(":\\") || arg.StartsWith("\\\\") || File.Exists(arg)))
-
-                    files.Add(arg);
-
-            LoadFiles(files.ToArray(), !App.Queue, false || App.Queue);
-
-            if (shuffle)
-            {
-                Command("playlist-shuffle");
-                SetPropertyInt("playlist-pos", 0);
-            }
-
-            if (files.Count == 0 || files[0].Contains("://"))
-            {
-                VideoSizeChanged?.Invoke(VideoSize);
-                VideoSizeAutoResetEvent.Set();
-            }
+            VideoSizeChanged?.Invoke(VideoSize);
+            VideoSizeAutoResetEvent.Set();
         }
     }
 

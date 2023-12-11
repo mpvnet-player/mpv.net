@@ -163,7 +163,7 @@ public partial class MainForm : Form
 
         Player.ObservePropertyDouble("window-scale", PropChangeWindowScale);
 
-        Player.ProcessCommandLine(false);
+        Player.ProcessCommandLineFiles();
     }
 
     void PropChangeWindowScale(double scale)
