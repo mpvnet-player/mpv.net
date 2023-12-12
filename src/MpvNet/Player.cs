@@ -98,7 +98,6 @@ public class MainPlayer : MpvClient
         SetPropertyBool("input-default-bindings", true);
         SetPropertyBool("input-builtin-bindings", false);
 
-        SetPropertyString("watch-later-options", "mute");
         SetPropertyString("screenshot-directory", "~~desktop/");
         SetPropertyString("osd-playing-msg", "${media-title}");
         SetPropertyString("osc", "yes");

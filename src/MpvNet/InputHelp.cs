@@ -454,4 +454,46 @@ public static class InputHelp
         }
         return bindings;
     }
+
+    public static Dictionary<string, Binding> GetActiveBindings(List<Binding> bindings)
+    {
+        Dictionary<string, Binding> ret = new();
+
+        foreach (Binding binding in bindings)
+        {
+            if (binding.Input == "" || binding.Command == "")
+                continue;
+
+            ret[binding.Input] = binding;
+        }
+
+        return ret;
+    }
+
+    public static string GetBindingsForCommand(Dictionary<string, Binding> activeBindings, string command)
+    {
+        List<string> keys = new();
+        bool hasLongKeys = false;
+
+        foreach (var it in activeBindings)
+        {
+            if (it.Value.Command != command)
+                continue;
+
+            Binding binding = it.Value;
+
+            if (binding.Input.Length > 8)
+                hasLongKeys = true;
+            else
+                if (!keys.Contains(binding.Input))
+                    keys.Add(binding.Input);
+        }
+
+        string ret = string.Join(", ", keys);
+
+        if (hasLongKeys && keys.Count > 0)
+            ret += ", ...";
+
+        return ret;
+    }
 }

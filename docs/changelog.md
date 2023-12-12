@@ -1,4 +1,12 @@
 
+# v7.0.0.2 Beta (2023-12-??)
+
+- Fix dynamic menu items missing in context menu.
+- Fix certain binding setups shown poorly or incorrect in the main menu.
+- Fix conf editor not remembering the search text.
+- Fix quit-watch-later not working.
+- New zhongfly libmpv build.
+
 # v7.0.0.1 Beta (2023-12-11)
 
 - [.NET 6 is a new requirement](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)

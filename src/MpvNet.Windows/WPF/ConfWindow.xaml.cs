@@ -38,9 +38,9 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
         InitialContent = GetCompareString();
 
         if (string.IsNullOrEmpty(App.Settings.ConfigEditorSearch))
-            SearchControl.Text = "General:";
+            SearchText = "General:";
         else
-            SearchControl.Text = App.Settings.ConfigEditorSearch;
+            SearchText = App.Settings.ConfigEditorSearch;
 
         foreach (var node in Nodes)
             SelectNodeFromSearchText(node);
@@ -155,7 +155,7 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
     protected override void OnClosed(EventArgs e)
     {
         base.OnClosed(e);
-        App.Settings.ConfigEditorSearch = SearchControl.Text;
+        App.Settings.ConfigEditorSearch = SearchText;
 
         if (InitialContent == GetCompareString())
             return;
@@ -319,9 +319,6 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
             }
         }
 
-        if (!sb.ToString().Contains("# Editor"))
-            sb.AppendLine("# Editor");
-
         foreach (Setting setting in Settings)
         {
             if (filename != setting.File || namesWritten.Contains(setting.Name!))
@@ -443,7 +440,7 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
 
     void SelectNodeFromSearchText(NodeViewModel node)
     {
-        if (node.Path + ":" == SearchControl.Text)
+        if (node.Path + ":" == SearchText)
         {
             node.IsSelected = true;
             return;
@@ -470,7 +467,7 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
             ExpandNode(it);
     }
 
-    [RelayCommand] void ShowMpvNetSpecificSettings() => SearchControl.Text = "mpv.net";
+    [RelayCommand] void ShowMpvNetSpecificSettings() => SearchText = "mpv.net";
 
     [RelayCommand] void PreviewMpvConfFile() => Msg.ShowInfo(GetContent("mpv"));
     

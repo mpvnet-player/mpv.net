@@ -23,13 +23,13 @@
     <TargetPlatformMinVersion>10.0.14393.0</TargetPlatformMinVersion>
     <DefaultLanguage>en-US</DefaultLanguage>
     <AppxPackageSigningEnabled>false</AppxPackageSigningEnabled>
-    <EntryPointProjectUniqueName>..\mpv.net.csproj</EntryPointProjectUniqueName>
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <AppxBundlePlatforms>x64</AppxBundlePlatforms>
     <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
+    <EntryPointProjectUniqueName>..\MpvNet.Windows\MpvNet.Windows.csproj</EntryPointProjectUniqueName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <AppxBundle>Always</AppxBundle>
@@ -43,20 +43,16 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\bin\MediaInfo.dll">
-      <Link>mpv.net\MediaInfo.dll</Link>
+    <Content Include="..\MpvNet.Windows\bin\Debug\libmpv-2.dll">
+      <Link>libmpv-2.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\bin\Microsoft.Management.Infrastructure.dll">
-      <Link>mpv.net\Microsoft.Management.Infrastructure.dll</Link>
+    <Content Include="..\MpvNet.Windows\bin\Debug\MediaInfo.dll">
+      <Link>MediaInfo.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\bin\libmpv-2.dll">
-      <Link>mpv.net\libmpv-2.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\bin\mpvnet.com">
-      <Link>mpv.net\mpvnet.com</Link>
+    <Content Include="..\MpvNet.Windows\bin\Debug\mpvnet.com">
+      <Link>mpvnet.com</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\SplashScreen.scale-200.png" />
@@ -66,13 +62,12 @@
     <Content Include="Images\Square44x44Logo.targetsize-24_altform-unplated.png" />
     <Content Include="Images\StoreLogo.png" />
     <Content Include="Images\Wide310x150Logo.scale-200.png" />
-    <None Include="Package.StoreAssociation.xml" />
   </ItemGroup>
   <Import Project="$(WapProjPath)\Microsoft.DesktopBridge.targets" />
   <ItemGroup>
-    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.19041.8" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.2428" PrivateAssets="all" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\mpv.net.csproj" />
+    <ProjectReference Include="..\MpvNet.Windows\MpvNet.Windows.csproj" />
   </ItemGroup>
 </Project>

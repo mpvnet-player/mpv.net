@@ -11,10 +11,18 @@
         <UseWindowsForms>true</UseWindowsForms>
         <ApplicationIcon>mpv-icon.ico</ApplicationIcon>
         <Product>mpv.net</Product>
-        <AssemblyVersion>7.0.0.1</AssemblyVersion>
         <FileVersion>7.0.0.1</FileVersion>
+        <AssemblyVersion>7.0.0.1</AssemblyVersion>
+		<InformationalVersion>7.0.0.1</InformationalVersion>
 		<Nullable>enable</Nullable>
     </PropertyGroup>
+
+    <ItemGroup>
+      <Compile Remove="Misc\**" />
+      <EmbeddedResource Remove="Misc\**" />
+      <None Remove="Misc\**" />
+      <Page Remove="Misc\**" />
+    </ItemGroup>
 
     <ItemGroup>
       <Content Include="mpv-icon.ico" />
@@ -36,10 +44,6 @@
     <ItemGroup>
       <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
       <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.77" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Misc\" />
     </ItemGroup>
 
 </Project>

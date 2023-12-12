@@ -27,7 +27,6 @@ public partial class MainForm : Form
     public SnapManager SnapManager = new SnapManager();
     public IntPtr MpvWindowHandle { get; set; }
     public ElementHost? CommandPaletteHost { get; set; }
-    public Dictionary<string, WpfControls.MenuItem> MenuItemDuplicate = new Dictionary<string, WpfControls.MenuItem>();
     public bool WasShown { get; set; }
     public static MainForm? Instance { get; set; }
     WpfControls.ContextMenu ContextMenu { get; } = new WpfControls.ContextMenu();
@@ -286,7 +285,7 @@ public partial class MainForm : Form
 
         lock (Player.MediaTracksLock)
         {
-            var trackMenuItem = FindMenuItem(_("Track"));
+            var trackMenuItem = FindMenuItem(_("Track"), "Track");
 
             if (trackMenuItem != null)
             {
@@ -348,7 +347,7 @@ public partial class MainForm : Form
             }
         }
 
-        var chaptersMenuItem = FindMenuItem(_("Chapter"));
+        var chaptersMenuItem = FindMenuItem(_("Chapter"), "Chapters");
 
         if (chaptersMenuItem != null)
         {
@@ -369,7 +368,7 @@ public partial class MainForm : Form
             }
         }
 
-        var recentMenuItem = FindMenuItem(_("Recent Files"));
+        var recentMenuItem = FindMenuItem(_("Recent Files"), "Recent");
 
         if (recentMenuItem != null)
         {
@@ -391,7 +390,7 @@ public partial class MainForm : Form
             recentMenuItem.Items.Add(clearMenuItem);
         }
 
-        var titlesMenuItem = FindMenuItem(_("Title"));
+        var titlesMenuItem = FindMenuItem(_("Title"), "Titles");
 
         if (titlesMenuItem != null)
         {
@@ -424,7 +423,7 @@ public partial class MainForm : Form
             }
         }
 
-        var profilesMenuItem = FindMenuItem(_("Profile"));
+        var profilesMenuItem = FindMenuItem(_("Profile"), "Profile");
 
         if (profilesMenuItem != null && !profilesMenuItem.HasItems)
         {
@@ -446,7 +445,7 @@ public partial class MainForm : Form
             }
         }
 
-        var customMenuItem = FindMenuItem(_("Custom"));
+        var customMenuItem = FindMenuItem(_("Custom"), "Custom");
 
         if (customMenuItem != null)
         {
@@ -476,7 +475,14 @@ public partial class MainForm : Form
         }
     }
 
-    public WpfControls.MenuItem? FindMenuItem(string text) => FindMenuItem(text, ContextMenu.Items);
+    public WpfControls.MenuItem? FindMenuItem(string text, string text2 = "") {
+        var ret = FindMenuItem(text, ContextMenu.Items);
+
+        if (ret == null && text2 != "")
+            return FindMenuItem(text2, ContextMenu.Items);
+
+        return ret;
+    }
 
     WpfControls.MenuItem? FindMenuItem(string text, WpfControls.ItemCollection? items)
     {
@@ -767,16 +773,11 @@ public partial class MainForm : Form
 
         var (menuBindings, confBindings) = App.InputConf.GetBindings();
         _confBindings = confBindings;
+        var activeBindings = InputHelp.GetActiveBindings(menuBindings);
 
         foreach (Binding binding in menuBindings)
         {
             Binding tempBinding = binding;
-
-            if (MenuItemDuplicate.ContainsKey(tempBinding.Command) && tempBinding.Input != "")
-            {
-                var mi = MenuItemDuplicate[tempBinding.Command];
-                mi.InputGestureText = mi.InputGestureText + ", " + tempBinding.Input;
-            }
 
             if (!binding.IsMenu)
                 continue;
@@ -785,9 +786,6 @@ public partial class MainForm : Form
 
             if (menuItem != null)
             {
-                if (tempBinding.Input != "")
-                    MenuItemDuplicate[tempBinding.Command] = menuItem;
-
                 menuItem.Click += (sender, args) => {
                     try {
                         TaskHelp.Run(() => {
@@ -803,7 +801,7 @@ public partial class MainForm : Form
                     }
                 };
 
-                menuItem.InputGestureText = tempBinding.Input;
+                menuItem.InputGestureText = InputHelp.GetBindingsForCommand(activeBindings, tempBinding.Command);
             }
         }
 
