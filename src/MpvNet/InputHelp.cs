@@ -473,7 +473,7 @@ public static class InputHelp
     public static string GetBindingsForCommand(Dictionary<string, Binding> activeBindings, string command)
     {
         List<string> keys = new();
-        bool hasLongKeys = false;
+        int charCount = 0;
 
         foreach (var it in activeBindings)
         {
@@ -482,18 +482,13 @@ public static class InputHelp
 
             Binding binding = it.Value;
 
-            if (binding.Input.Length > 8)
-                hasLongKeys = true;
-            else
-                if (!keys.Contains(binding.Input))
-                    keys.Add(binding.Input);
+            if (!keys.Contains(binding.Input) && (charCount + binding.Input.Length) < 20)
+            {
+                keys.Add(binding.Input);
+                charCount += binding.Input.Length;
+            }
         }
 
-        string ret = string.Join(", ", keys);
-
-        if (hasLongKeys && keys.Count > 0)
-            ret += ", ...";
-
-        return ret;
+        return string.Join(", ", keys);
     }
 }
