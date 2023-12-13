@@ -1,4 +1,8 @@
 
+# v7.0.0.3 Beta (2023-??-??)
+
+- New menu item added at Settings/Setup to add mpv.net to the path environment variable.
+
 # v7.0.0.2 Beta (2023-12-13)
 
 - Besides a portable download there is now again a setup installer.

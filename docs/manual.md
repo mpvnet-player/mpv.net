@@ -204,6 +204,9 @@ mpv.net specific commands
 
 mpv.net commands are used when mpv commands don't exist or lack a feature.
 
+### add-to-path
+Adds mpv.net to the Path environment variable.
+
 ### load-audio
 Shows a file browser dialog to open external audio files.
 

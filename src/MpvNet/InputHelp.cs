@@ -154,6 +154,7 @@ public static class InputHelp
                 new (_("Settings") + " > " + _("Setup"), _("Register audio file associations"), "script-message-to mpvnet reg-file-assoc audio"),
                 new (_("Settings") + " > " + _("Setup"), _("Register image file associations"), "script-message-to mpvnet reg-file-assoc image"),
                 new (_("Settings") + " > " + _("Setup"), _("Unregister file associations"), "script-message-to mpvnet reg-file-assoc unreg"),
+                new (_("Settings") + " > " + _("Setup"), _("Add mpv.net to Path environment variable"), "script-message-to mpvnet add-to-path"),
           
                 new (_("Tools"), _("Set/clear A-B loop points"), "ab-loop", "l"),
                 new (_("Tools"), _("Toggle infinite file looping"), "cycle-values loop-file inf no", "L"),

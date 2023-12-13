@@ -45,6 +45,7 @@ public class GuiCommand
         ["show-menu"] = args => ShowMenu?.Invoke(),
         ["show-bindings"] = args => ShowBindings(),
         ["show-playlist"] = args => ShowPlaylist(),
+        ["add-to-path"] = args => AddToPath(),
 
 
         // deprecated
@@ -262,6 +263,23 @@ public class GuiCommand
     public static string FormatTime(double value) => ((int)value).ToString("00");
 
     public void ShowBindings() => Command.ShowTextWithEditor("Bindings", Player.UsedInputConfContent);
+
+    public void AddToPath()
+    {
+        string path = Environment.GetEnvironmentVariable("Path", EnvironmentVariableTarget.User)!;
+
+        if (path.ToLower().Contains(Folder.Startup.TrimEnd(Path.DirectorySeparatorChar).ToLower()))
+        {
+            Msg.ShowWarning("mpv.net is already in Path.");
+            return;
+        }
+
+        Environment.SetEnvironmentVariable("Path",
+            Folder.Startup.TrimEnd(Path.DirectorySeparatorChar) + ";" + path,
+            EnvironmentVariableTarget.User);
+
+        Msg.ShowInfo("mpv.net successfully was added to Path.");
+    }
 
     public void ShowPlaylist()
     {
