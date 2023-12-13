@@ -44,7 +44,7 @@ Download
 
 1. [Stable via Microsoft Store](https://www.microsoft.com/store/productId/9N64SQZTB3LM)
 
-2. [Stable and beta portable via GitHub download](../../../releases)
+2. [Stable and beta portable and setup via GitHub download](../../../releases)
 
 3. Stable via command line from Microsoft Store: `winget install mpv.net`
 

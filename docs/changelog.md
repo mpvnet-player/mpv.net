@@ -1,8 +1,9 @@
 
-# v7.0.0.2 Beta (2023-12-??)
+# v7.0.0.2 Beta (2023-12-13)
 
+- Besides a portable download there is now again a setup installer.
 - Fix dynamic menu items missing in context menu.
-- Fix certain binding setups shown poorly or incorrect in the main menu.
+- Fix certain binding setups shown poorly or incorrectly in the main menu.
 - Fix conf editor not remembering the search text.
 - Fix quit-watch-later not working.
 - New option `menu-syntax`. Default: `#menu:`
