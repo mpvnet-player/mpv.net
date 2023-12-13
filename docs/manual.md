@@ -390,6 +390,10 @@ For single files automatically load the entire directory into the playlist.
 
 ### General
 
+#### --menu-syntax=\<yes|no\>
+
+Used menu syntax, typically `#menu:` or `#!`. Default: `#menu:`
+
 #### --process-instance=\<value\>
 
 Defines if more then one mpv.net process is allowed.

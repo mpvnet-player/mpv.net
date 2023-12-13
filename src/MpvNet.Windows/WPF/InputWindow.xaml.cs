@@ -109,7 +109,7 @@ public partial class InputWindow : Window
         else
         {
             newContent = InputHelp.ConvertToString(InputHelp.GetReducedBindings(Bindings));
-            newContent = newContent.Replace("#menu: ", "# ");
+            newContent = newContent.Replace(App.MenuSyntax + " ", "# ");
             File.WriteAllText(App.InputConf.Path, App.InputConf.Content = newContent);
         }
 

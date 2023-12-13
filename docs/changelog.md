@@ -5,6 +5,7 @@
 - Fix certain binding setups shown poorly or incorrect in the main menu.
 - Fix conf editor not remembering the search text.
 - Fix quit-watch-later not working.
+- New option `menu-syntax`. Default: `#menu:`
 - New zhongfly libmpv build.
 
 # v7.0.0.1 Beta (2023-12-11)

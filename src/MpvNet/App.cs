@@ -20,6 +20,7 @@ public class AppClass
     public string StartSize { get; set; } = "height-session";
     public string Language { get; set; } = "system";
     public string CommandLine { get; set; } = Environment.CommandLine;
+    public string MenuSyntax { get; set; } = "#menu:";
 
     public bool AutoLoadFolder { get; set; } = true;
     public bool DebugMode { get; set; }
@@ -145,6 +146,7 @@ public class AppClass
             case "language": Language = value; return true;
             case "light-theme": LightTheme = value.Trim('\'', '"'); return true;
             case "media-info": MediaInfo = value == "yes"; return true;
+            case "menu-syntax": MenuSyntax = value; return true;
             case "minimum-aspect-ratio-audio": MinimumAspectRatioAudio = value.ToFloat(); return true;
             case "minimum-aspect-ratio": MinimumAspectRatio = value.ToFloat(); return true;
             case "process-instance": ProcessInstance = value; return true;

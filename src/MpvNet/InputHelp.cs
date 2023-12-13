@@ -321,18 +321,11 @@ public static class InputHelp
 
             line = line[(line.IndexOf(" ") + 1)..];
 
-            if (line.Contains("#menu:"))
+            if (line.Contains(App.MenuSyntax))
             {
-                binding.Comment = line[(line.IndexOf("#menu:") + 6)..].Trim();
+                binding.Comment = line[(line.IndexOf(App.MenuSyntax) + App.MenuSyntax.Length)..].Trim();
                 binding.IsMenu = true;
-                line = line[..line.IndexOf("#menu:")];
-            }
-            else if (line.Contains("#!"))
-            {
-                binding.Comment = line[(line.IndexOf("#!") + 2)..].Trim();
-                binding.IsMenu = true;
-                binding.IsShortMenuSyntax = true;
-                line = line[..line.IndexOf("#!")];
+                line = line[..line.IndexOf(App.MenuSyntax)];
             }
             else if (line.Contains("#custom-menu:"))
             {
@@ -432,10 +425,10 @@ public static class InputHelp
 
                 value = value[(value.IndexOf(" ") + 1)..];
 
-                if (value.Contains("#menu:"))
+                if (value.Contains(App.MenuSyntax))
                 {
-                    binding.Comment = value[(value.IndexOf("#menu:") + 6)..].Trim();
-                    value = value[..value.IndexOf("#menu:")];
+                    binding.Comment = value[(value.IndexOf(App.MenuSyntax) + App.MenuSyntax.Length)..].Trim();
+                    value = value[..value.IndexOf(App.MenuSyntax)];
 
                     if (binding.Comment.Contains(';'))
                         binding.Comment = binding.Comment[(binding.Comment.IndexOf(";") + 1)..].Trim();
@@ -482,7 +475,7 @@ public static class InputHelp
 
             Binding binding = it.Value;
 
-            if (!keys.Contains(binding.Input) && (charCount + binding.Input.Length) < 20)
+            if (!keys.Contains(binding.Input) && (charCount + binding.Input.Length) < 20 && keys.Count < 2)
             {
                 keys.Add(binding.Input);
                 charCount += binding.Input.Length;

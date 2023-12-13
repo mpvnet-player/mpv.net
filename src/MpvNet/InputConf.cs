@@ -20,7 +20,7 @@ public class InputConf
         }
     }
 
-    public bool HasMenu => Content.Contains("#menu:") || Content.Contains("#! ");
+    public bool HasMenu => Content.Contains(App.MenuSyntax + " ");
 
     public (List<Binding> menuBindings, List<Binding>? confBindings) GetBindings()
     {
