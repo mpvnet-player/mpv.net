@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -131,7 +132,7 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
             {
                 if (setting.Name == confItem.Name && confItem.Section == "" && !confItem.IsSectionItem)
                 {
-                    setting.Value = confItem.Value.Trim('\'', '"');
+                    setting.Value = confItem.Value;
                     setting.StartValue = setting.Value;
                     setting.ConfItem = confItem;
                     confItem.SettingBase = setting;
@@ -221,14 +222,10 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
             string line = currentLine.Trim();
 
             if (line == "")
-            {
                 comment += "\r\n";
-            }
             else if (line.StartsWith("#"))
-            {
                 comment += line.Trim() + "\r\n";
-            }
-            else if (line.StartsWith("[") && line.Contains("]"))
+            else if (line.StartsWith("[") && line.Contains(']'))
             {
                 if (!isSectionItem && comment != "" && comment != "\r\n")
                     ConfItems.Add(new ConfItem() {
@@ -238,8 +235,11 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
                 comment = "";
                 isSectionItem = true;
             }
-            else if (line.Contains("="))
+            else if (line.Contains('=') || Regex.Match(line, "^[\\w-]+$").Success)
             {
+                if (!line.Contains('='))
+                    line += "=yes";
+
                 ConfItem item = new ConfItem();
                 item.File = Path.GetFileNameWithoutExtension(file);
                 item.IsSectionItem = isSectionItem;
@@ -248,15 +248,21 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
                 item.Section = section;
                 section = "";
 
-                if (line.Contains("#") && !line.Contains("'") && !line.Contains("\""))
+                if (line.Contains('#') && !line.Contains("'") && !line.Contains("\""))
                 {
                     item.LineComment = line.Substring(line.IndexOf("#")).Trim();
                     line = line.Substring(0, line.IndexOf("#")).Trim();
                 }
 
                 int pos = line.IndexOf("=");
-                string left = line.Substring(0, pos).Trim().ToLower();
+                string left = line.Substring(0, pos).Trim().ToLower().TrimStart('-');
                 string right = line.Substring(pos + 1).Trim();
+                
+                if (right.StartsWith('\'') && right.EndsWith('\''))
+                    right = right.Trim('\'');
+
+                if (right.StartsWith('"') && right.EndsWith('"'))
+                    right = right.Trim('"');
 
                 if (left == "fs")
                     left = "fullscreen";
@@ -269,6 +275,23 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
                 ConfItems.Add(item);
             }
         }
+    }
+
+    string EscapeValue(string value)
+    {
+        if (value.Contains('\''))
+            return '"' + value + '"';
+
+        if (value.Contains('"'))
+            return '\'' + value + '\'';
+
+        if (value.Contains('"') || value.Contains('#') || value.StartsWith("%") ||
+            value.StartsWith(" ") || value.EndsWith(" "))
+        {
+            return '\'' + value + '\'';
+        }
+
+        return value;
     }
 
     string GetContent(string filename)
@@ -288,7 +311,7 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
             {
                 if (item.Name != "")
                 {
-                    sb.Append(item.Name + " = " + item.Value);
+                    sb.Append(item.Name + " = " + EscapeValue(item.Value));
 
                     if (item.LineComment != "")
                         sb.Append(" " + item.LineComment);
@@ -299,17 +322,7 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
             }
             else if ((item.SettingBase.Value ?? "") != item.SettingBase.Default)
             {
-                string? value;
-
-                if (item.SettingBase.Type == "string" ||
-                    item.SettingBase.Type == "folder" ||
-                    item.SettingBase.Type == "color")
-
-                    value = "'" + item.SettingBase.Value + "'";
-                else
-                    value = item.SettingBase.Value;
-
-                sb.Append(item.Name + " = " + value);
+                sb.Append(item.Name + " = " + EscapeValue(item.SettingBase.Value!));
 
                 if (item.LineComment != "")
                     sb.Append(" " + item.LineComment);
@@ -325,19 +338,7 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
                 continue;
 
             if ((setting.Value ?? "") != setting.Default)
-            {
-                string? value;
-
-                if (setting.Type == "string" ||
-                    setting.Type == "folder" ||
-                    setting.Type == "color")
-
-                    value = "'" + setting.Value + "'";
-                else
-                    value = setting.Value;
-
-                sb.AppendLine(setting.Name + " = " + value);
-            }
+                sb.AppendLine(setting.Name + " = " + EscapeValue(setting.Value!));
         }
 
         foreach (ConfItem item in ConfItems)
@@ -356,7 +357,7 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
             if (item.Comment != "")
                 sb.Append(item.Comment);
 
-            sb.Append(item.Name + " = " + item.Value);
+            sb.Append(item.Name + " = " + EscapeValue(item.Value));
 
             if (item.LineComment != "")
                 sb.Append(" " + item.LineComment);

@@ -1,7 +1,11 @@
 
 # v7.0.0.3 Beta (2023-??-??)
 
+- mpv.net can no longer be downloaded from the Microsoft store due
+  to a general very poor experience with the package creation and submission.
+  This means winget download support is unavailable until a new winget solution is implemented.
 - New menu item added at Settings/Setup to add mpv.net to the path environment variable.
+- Improved conf file reader/writer.
 
 # v7.0.0.2 Beta (2023-12-13)
 

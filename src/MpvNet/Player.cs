@@ -268,37 +268,46 @@ public class MainPlayer : MpvClient
     Dictionary<string, string>? _Conf;
 
     public Dictionary<string, string> Conf {
-        get {
-            if (_Conf == null)
+        get
+        {
+            if (_Conf != null)
+                return _Conf;
+
+            App.ApplyInputDefaultBindingsFix();
+
+            _Conf = new Dictionary<string, string>();
+
+            if (File.Exists(ConfPath))
             {
-                App.ApplyInputDefaultBindingsFix();
-
-                _Conf = new Dictionary<string, string>();
-
-                if (File.Exists(ConfPath))
+                foreach (string? it in File.ReadAllLines(ConfPath))
                 {
-                    foreach (string? it in File.ReadAllLines(ConfPath))
+                    string line = it.TrimStart(' ', '-').TrimEnd();
+
+                    if (line.StartsWith("#"))
+                        continue;
+
+                    if (!line.Contains('='))
                     {
-                        string line = it.TrimStart(' ', '-').TrimEnd();
-
-                        if (!line.Contains('=') || line.StartsWith("#"))
+                        if (Regex.Match(line, "^[\\w-]+$").Success)
+                            line += "=yes";
+                        else
                             continue;
-
-                        string key = line[..line.IndexOf("=")].Trim();
-                        string value = line[(line.IndexOf("=") + 1)..].Trim();
-
-                        if (value.Contains('#') && !value.StartsWith("#") &&
-                            !value.StartsWith("'#") && !value.StartsWith("\"#"))
-
-                            value = value[..value.IndexOf("#")].Trim();
-
-                        _Conf[key] = value;
                     }
-                }
 
-                foreach (var i in _Conf)
-                    ProcessProperty(i.Key, i.Value);
+                    string key = line[..line.IndexOf("=")].Trim();
+                    string value = line[(line.IndexOf("=") + 1)..].Trim();
+
+                    if (value.Contains('#') && !value.StartsWith("#") &&
+                        !value.StartsWith("'#") && !value.StartsWith("\"#"))
+
+                        value = value[..value.IndexOf("#")].Trim();
+
+                    _Conf[key] = value;
+                }
             }
+
+            foreach (var i in _Conf)
+                ProcessProperty(i.Key, i.Value);
 
             return _Conf;
         }
