@@ -42,13 +42,11 @@ differences are documented in this manual under [Differences compared to mpv](#d
 Download
 --------
 
-1. [Stable via Microsoft Store](https://www.microsoft.com/store/productId/9N64SQZTB3LM)
+1. [Stable and beta portable and setup via GitHub download](../../../releases)
 
-2. [Stable and beta portable and setup via GitHub download](../../../releases)
+2. Stable via command line from winget: `winget install mpv.net`
 
-3. Stable via command line from Microsoft Store: `winget install mpv.net`
-
-4. [Automated nightly portable builds](https://github.com/mpvnet-player/mpv.net/actions)
+3. [Automated nightly portable builds](https://github.com/mpvnet-player/mpv.net/actions)
 
 [Changelog](changelog.md)
 

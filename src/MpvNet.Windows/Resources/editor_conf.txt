@@ -425,6 +425,12 @@ file = mpvnet
 directory = Screen
 help = Threshold in milliseconds to wait for libmpv returning the video resolution before the window is shown, otherwise default dimensions are used as defined by autofit and start-size. Default: 1500 (mpv.net option)
 
+name = title
+file = mpv
+directory = Window
+width = 400
+help = Set the window title. This is used for the video window, and if possible, also sets the audio stream title. Properties are expanded. Warning! There is a danger of this causing significant CPU usage, depending on the properties used.
+
 name = taskbar-progress
 file = mpv
 default = yes
@@ -508,6 +514,12 @@ help = For single files automatically load the entire directory into the playlis
 option = yes
 option = no
 
+name = reset-on-next-file
+file = mpv
+directory = Program Behavior
+help = Normally, mpv will try to keep all settings when playing the next file on the playlist, even if they were changed by the user during playback. This can be changed with this option. It accepts a list of options, and mpv will reset the value of these options on playback start to the initial value.
+width = 400
+
 name = input-ar-delay
 file = mpv
 directory = Input
@@ -517,6 +529,12 @@ name = input-ar-rate
 file = mpv
 directory = Input
 help = Number of key presses to generate per second on autorepeat.
+
+name = input-ipc-server
+file = mpv
+directory = Input
+help = Enable the IPC support and create the listening socket at the given path.
+url = https://mpv.io/manual/master/#options-input-ipc-server
 
 name = language
 file = mpvnet
@@ -610,6 +628,11 @@ name = screenshot-png-filter
 file = mpv
 directory = Video/Screenshot
 help = <0-5> Set the filter applied prior to PNG compression. 0 is none, 1 is 'sub', 2 is 'up', 3 is 'average', 4 is 'Paeth', and 5 is 'mixed'. This affects the level of compression that can be achieved. For most images, 'mixed' achieves the best compression ratio, hence it is the default.
+
+name = background
+file = mpv
+directory = Render Options
+help = Color used to draw parts of the mpv window not covered by video. See the --sub-color option for how colors are defined.
 
 name = cache
 file = mpv

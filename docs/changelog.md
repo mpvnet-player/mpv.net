@@ -6,6 +6,8 @@
   This means winget download support is unavailable until a new winget solution is implemented.
 - New menu item added at Settings/Setup to add mpv.net to the path environment variable.
 - Improved conf file reader/writer.
+- Conf editor support added for the mpv options:
+  `reset-on-next-file`, `input-ipc-server`, `background`, `title`
 
 # v7.0.0.2 Beta (2023-12-13)
 
