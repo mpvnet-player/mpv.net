@@ -2,9 +2,8 @@
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using MpvNet.Windows.Help;
 using MpvNet.Windows.Native;
-
-using static MpvNet.Windows.Native.WinApi;
 
 namespace MpvNet.Windows.WinForms;
 
@@ -35,7 +34,7 @@ public class SnapManager
     void FindSnap(ref Rectangle effectiveBounds)
     {
         Screen currentScreen = Screen.FromPoint(effectiveBounds.Location);
-        Rectangle workingArea = GetWorkingArea(Handle, currentScreen.WorkingArea);
+        Rectangle workingArea = WinApiHelp.GetWorkingArea(Handle, currentScreen.WorkingArea);
 
         if (InSnapRange(effectiveBounds.Left, workingArea.Left + AnchorDistance))
             effectiveBounds.X = workingArea.Left + AnchorDistance;

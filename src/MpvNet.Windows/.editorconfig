@@ -26,3 +26,6 @@ dotnet_diagnostic.CA1822.severity = none
 
 # IDE0057: Use range operator
 csharp_style_prefer_range_operator = false
+
+# CA1401: P/Invokes should not be visible
+dotnet_diagnostic.CA1401.severity = none

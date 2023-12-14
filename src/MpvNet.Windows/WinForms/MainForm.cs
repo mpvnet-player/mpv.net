@@ -210,7 +210,7 @@ public partial class MainForm : Form
     {
         BeginInvoke(() => {
             Screen screen = Screen.FromControl(this);
-            Rectangle workingArea = GetWorkingArea(Handle, screen.WorkingArea);
+            Rectangle workingArea = WinApiHelp.GetWorkingArea(Handle, screen.WorkingArea);
 
             switch (direction)
             {
@@ -521,7 +521,7 @@ public partial class MainForm : Form
         }
 
         Screen screen = Screen.FromControl(this);
-        Rectangle workingArea = GetWorkingArea(Handle, screen.WorkingArea);
+        Rectangle workingArea = WinApiHelp.GetWorkingArea(Handle, screen.WorkingArea);
         int autoFitHeight = Convert.ToInt32(workingArea.Height * Player.Autofit);
 
         if (App.AutofitAudio > 1)
@@ -610,7 +610,7 @@ public partial class MainForm : Form
 
     void SetSize(int width, int height, Screen screen, bool checkAutofit = true)
     {
-        Rectangle workingArea = GetWorkingArea(Handle, screen.WorkingArea);
+        Rectangle workingArea = WinApiHelp.GetWorkingArea(Handle, screen.WorkingArea);
 
         int maxHeight = workingArea.Height - (Height - ClientSize.Height) - 2;
         int maxWidth = workingArea.Width - (Width - ClientSize.Width);
@@ -653,7 +653,7 @@ public partial class MainForm : Form
 
         Point middlePos = new Point(Left + Width / 2, Top + Height / 2);
         var rect = new Rect(new Rectangle(screen.Bounds.X, screen.Bounds.Y, width, height));
-        AddWindowBorders(Handle, ref rect, GetDpi(Handle));
+        WinApiHelp.AddWindowBorders(Handle, ref rect, GetDpi(Handle));
 
         int left = middlePos.X - rect.Width / 2;
         int top = middlePos.Y - rect.Height / 2;
@@ -668,10 +668,10 @@ public partial class MainForm : Form
 
         Screen[] screens = Screen.AllScreens;
 
-        int minLeft   = screens.Select(val => GetWorkingArea(Handle, val.WorkingArea).X).Min();
-        int maxRight  = screens.Select(val => GetWorkingArea(Handle, val.WorkingArea).Right).Max();
-        int minTop    = screens.Select(val => GetWorkingArea(Handle, val.WorkingArea).Y).Min();
-        int maxBottom = screens.Select(val => GetWorkingArea(Handle, val.WorkingArea).Bottom).Max();
+        int minLeft   = screens.Select(val => WinApiHelp.GetWorkingArea(Handle, val.WorkingArea).X).Min();
+        int maxRight  = screens.Select(val => WinApiHelp.GetWorkingArea(Handle, val.WorkingArea).Right).Max();
+        int minTop    = screens.Select(val => WinApiHelp.GetWorkingArea(Handle, val.WorkingArea).Y).Min();
+        int maxBottom = screens.Select(val => WinApiHelp.GetWorkingArea(Handle, val.WorkingArea).Bottom).Max();
 
         if (left < minLeft)
             left = minLeft;
@@ -734,7 +734,7 @@ public partial class MainForm : Form
 
     public int GetHorizontalLocation(Screen screen)
     {
-        Rectangle workingArea = GetWorkingArea(Handle, screen.WorkingArea);
+        Rectangle workingArea = WinApiHelp.GetWorkingArea(Handle, screen.WorkingArea);
         Rectangle rect = new Rectangle(Left - workingArea.X, Top - workingArea.Y, Width, Height);
 
         if (workingArea.Width / (float)Width < 1.1)
@@ -751,7 +751,7 @@ public partial class MainForm : Form
 
     public int GetVerticalLocation(Screen screen)
     {
-        Rectangle workingArea = GetWorkingArea(Handle, screen.WorkingArea);
+        Rectangle workingArea = WinApiHelp.GetWorkingArea(Handle, screen.WorkingArea);
         Rectangle rect = new Rectangle(Left - workingArea.X, Top - workingArea.Y, Width, Height);
 
         if (workingArea.Height / (float)Height < 1.1)
@@ -1018,7 +1018,7 @@ public partial class MainForm : Form
                 {
                     Rect rc = Marshal.PtrToStructure<Rect>(m.LParam);
                     Rect r = rc;
-                    SubtractWindowBorders(Handle, ref r, GetDpi(Handle));
+                    WinApiHelp.SubtractWindowBorders(Handle, ref r, GetDpi(Handle));
 
                     int c_w = r.Right - r.Left, c_h = r.Bottom - r.Top;
                     Size videoSize = Player.VideoSize;
@@ -1032,7 +1032,7 @@ public partial class MainForm : Form
 
                     int[] d_corners = { d_w, d_h, -d_w, -d_h };
                     int[] corners = { rc.Left, rc.Top, rc.Right, rc.Bottom };
-                    int corner = GetResizeBorder(m.WParam.ToInt32());
+                    int corner = WinApiHelp.GetResizeBorder(m.WParam.ToInt32());
 
                     if (corner >= 0)
                         corners[corner] -= d_corners[corner];
@@ -1384,7 +1384,7 @@ public partial class MainForm : Form
 
     public static int GetDpi(IntPtr hwnd)
     {
-        if (Environment.OSVersion.Version >= WindowsTen1607 && hwnd != IntPtr.Zero)
+        if (Environment.OSVersion.Version >= WinApiHelp.WindowsTen1607 && hwnd != IntPtr.Zero)
             return GetDpiForWindow(hwnd);
         else
             using (Graphics gx = Graphics.FromHwnd(hwnd))

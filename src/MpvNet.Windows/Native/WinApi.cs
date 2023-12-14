@@ -1,13 +1,12 @@
 ﻿
 using System.Drawing;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace MpvNet.Windows.Native;
 
 public static class WinApi
 {
-    public static Version WindowsTen1607 { get; } = new Version(10, 0, 14393); // Windows 10 1607
-
     [DllImport("kernel32.dll")]
     public static extern bool AttachConsole(int dwProcessId);
 
@@ -60,18 +59,10 @@ public static class WinApi
         IntPtr hWnd, IntPtr hWndInsertAfter, int x, int y, int cx, int cy, uint uFlags);
 
     [DllImport("user32.dll", EntryPoint = "GetWindowLong")]
-    static extern IntPtr GetWindowLong32(IntPtr hWnd, int nIndex);
+    public static extern IntPtr GetWindowLong32(IntPtr hWnd, int nIndex);
 
     [DllImport("user32.dll")]
-    static extern IntPtr GetWindowLongPtr(IntPtr hWnd, int nIndex);
-
-    public static IntPtr GetWindowLong(IntPtr hWnd, int nIndex)
-    {
-        if (IntPtr.Size == 8)
-            return GetWindowLongPtr(hWnd, nIndex);
-        else
-            return GetWindowLong32(hWnd, nIndex);
-    }
+    public static extern IntPtr GetWindowLongPtr(IntPtr hWnd, int nIndex);
 
     [DllImport("user32.dll", EntryPoint = "SetWindowLong")]
     public static extern IntPtr SetWindowLong32(IntPtr hWnd, int nIndex, uint dwNewLong);
@@ -79,49 +70,16 @@ public static class WinApi
     [DllImport("user32.dll")]
     public static extern IntPtr SetWindowLongPtr(IntPtr hWnd, int nIndex, uint dwNewLong);
 
-    public static IntPtr SetWindowLong(IntPtr hWnd, int nIndex, uint dwNewLong)
-    {
-        if (IntPtr.Size == 8)
-            return SetWindowLongPtr(hWnd, nIndex, dwNewLong);
-        else
-            return SetWindowLong32(hWnd, nIndex, dwNewLong);
-    }
-
     [DllImport("gdi32.dll")]
     public static extern int GetDeviceCaps(IntPtr hdc, int nIndex);
+
+    [DllImport("shlwapi", CharSet = CharSet.Auto)]
+    public static extern uint AssocQueryString(
+        uint flags, uint str, string? pszAssoc, string? pszExtra, [Out] StringBuilder? pszOut, ref uint pcchOut);
 
     [DllImport("dwmapi.dll")]
     public static extern int DwmGetWindowAttribute(
         IntPtr hwnd, uint dwAttribute, out Rect pvAttribute, uint cbAttribute);
-
-    public static bool GetDwmWindowRect(IntPtr handle, out Rect rect)
-    {
-        const uint DWMWA_EXTENDED_FRAME_BOUNDS = 9;
-
-        return 0 == DwmGetWindowAttribute(handle, DWMWA_EXTENDED_FRAME_BOUNDS,
-            out rect, (uint)Marshal.SizeOf<Rect>());
-    }
-
-    public static Rectangle GetWorkingArea(IntPtr handle, Rectangle workingArea)
-    {
-        if (handle != IntPtr.Zero && GetDwmWindowRect(handle, out Rect dwmRect) &&
-            GetWindowRect(handle, out Rect rect))
-        {
-            int left = workingArea.Left;
-            int top = workingArea.Top;
-            int right = workingArea.Right;
-            int bottom = workingArea.Bottom;
-
-            left += rect.Left - dwmRect.Left;
-            top -= rect.Top - dwmRect.Top;
-            right -= dwmRect.Right - rect.Right;
-            bottom -= dwmRect.Bottom - rect.Bottom;
-
-            return new Rectangle(left, top, right - left, bottom - top);
-        }
-
-        return workingArea;
-    }
 
     [StructLayout(LayoutKind.Sequential)]
     public struct Rect
@@ -170,42 +128,5 @@ public static class WinApi
         public int cbData;
         [MarshalAs(UnmanagedType.LPTStr)]
         public string lpData;
-    }
-
-    public static int GetResizeBorder(int v)
-    {
-        switch (v)
-        {
-            case 1 /* WMSZ_LEFT        */ : return 3;
-            case 3 /* WMSZ_TOP         */ : return 2;
-            case 2 /* WMSZ_RIGHT       */ : return 3;
-            case 6 /* WMSZ_BOTTOM      */ : return 2;
-            case 4 /* WMSZ_TOPLEFT     */ : return 1;
-            case 5 /* WMSZ_TOPRIGHT    */ : return 1;
-            case 7 /* WMSZ_BOTTOMLEFT  */ : return 3;
-            case 8 /* WMSZ_BOTTOMRIGHT */ : return 3;
-            default: return -1;
-        }
-    }
-
-    public static void SubtractWindowBorders(IntPtr hwnd, ref Rect rc, int dpi)
-    {
-        Rect r = new Rect(0, 0, 0, 0);
-        AddWindowBorders(hwnd, ref r, dpi);
-        rc.Left -= r.Left;
-        rc.Top -= r.Top;
-        rc.Right -= r.Right;
-        rc.Bottom -= r.Bottom;
-    }
-
-    public static void AddWindowBorders(IntPtr hwnd, ref Rect rc, int dpi)
-    {
-        uint windowStyle = (uint)GetWindowLong(hwnd, -16); // GWL_STYLE
-        uint windowStyleEx = (uint)GetWindowLong(hwnd, -20); // GWL_EXSTYLE
-
-        if (Environment.OSVersion.Version >= WindowsTen1607)
-            AdjustWindowRectExForDpi(ref rc, windowStyle, false, windowStyleEx, (uint)dpi);
-        else
-            AdjustWindowRect(ref rc, windowStyle, false);
     }
 }

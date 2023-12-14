@@ -149,6 +149,10 @@ public static class InputHelp
                 
                 new (_("Settings"), _("Show Config Editor"), "script-message-to mpvnet show-conf-editor", "Ctrl+,"),
                 new (_("Settings"), _("Show Input Editor"), "script-message-to mpvnet show-input-editor", "Ctrl+i"),
+                new (_("Settings"), "-"),
+                new (_("Settings"), _("Edit mpv.conf"), "script-message-to mpvnet edit-conf-file mpv.conf", "c"),
+                new (_("Settings"), _("Edit input.conf"), "script-message-to mpvnet edit-conf-file input.conf", "k"),
+                new (_("Settings"), "-"),
                 new (_("Settings"), _("Open Config Folder"), "script-message-to mpvnet open-conf-folder", "Ctrl+f"),
                 new (_("Settings") + " > " + _("Setup"), _("Register video file associations"), "script-message-to mpvnet reg-file-assoc video"),
                 new (_("Settings") + " > " + _("Setup"), _("Register audio file associations"), "script-message-to mpvnet reg-file-assoc audio"),

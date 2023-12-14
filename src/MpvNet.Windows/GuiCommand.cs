@@ -11,6 +11,9 @@ using MpvNet.Windows.WinForms;
 using MpvNet.Windows.WPF.Views;
 using MpvNet.Windows.WPF;
 using MpvNet.Windows.WPF.MsgBox;
+using MpvNet.Help;
+using System.Text.Json;
+using MpvNet.Windows.Help;
 
 namespace MpvNet;
 
@@ -46,6 +49,8 @@ public class GuiCommand
         ["show-bindings"] = args => ShowBindings(),
         ["show-playlist"] = args => ShowPlaylist(),
         ["add-to-path"] = args => AddToPath(),
+        ["edit-conf-file"] = EditCongFile,
+        ["show-commands"] = args => ShowCommands(),
 
 
         // deprecated
@@ -97,6 +102,53 @@ public class GuiCommand
 
         if (dialog.ShowDialog() == DialogResult.OK)
             Player.LoadDiskFolder(dialog.SelectedPath);
+    }
+
+    public void EditCongFile(IList<string> args)
+    {
+        string file = Player.ConfigFolder + args[0];
+
+        if (File.Exists(file))
+            ProcessHelp.ShellExecute(WinApiHelp.GetAppPathForExtension("txt"), "\"" + file + "\"");
+    }
+
+    public static void ShowTextWithEditor(string name, string text)
+    {
+        string file = Path.Combine(Path.GetTempPath(), name + ".txt");
+        App.TempFiles.Add(file);
+        File.WriteAllText(file, BR + text.Trim() + BR);
+        ProcessHelp.ShellExecute(WinApiHelp.GetAppPathForExtension("txt"), "\"" + file + "\"");
+    }
+
+    public static void ShowCommands()
+    {
+        string json = Core.GetPropertyString("command-list");
+        var enumerator = JsonDocument.Parse(json).RootElement.EnumerateArray();
+        var commands = enumerator.OrderBy(it => it.GetProperty("name").GetString());
+        StringBuilder sb = new StringBuilder();
+
+        foreach (var cmd in commands)
+        {
+            sb.AppendLine();
+            sb.AppendLine(cmd.GetProperty("name").GetString());
+
+            foreach (var args in cmd.GetProperty("args").EnumerateArray())
+            {
+                string value = args.GetProperty("name").GetString() + " <" +
+                    args.GetProperty("type").GetString()!.ToLower() + ">";
+
+                if (args.GetProperty("optional").GetBoolean())
+                    value = "[" + value + "]";
+
+                sb.AppendLine("    " + value);
+            }
+        }
+
+        string header = BR +
+            "https://mpv.io/manual/master/#list-of-input-commands" + BR2 +
+            "https://github.com/stax76/mpv-scripts#command_palette" + BR;
+
+        ShowTextWithEditor("Input Commands", header + sb.ToString());
     }
 
     public void OpenFromClipboard(IList<string> args)
@@ -249,7 +301,7 @@ public class GuiCommand
         text = text.TrimEx();
 
         if (editor)
-            Command.ShowTextWithEditor("media-info", text);
+            ShowTextWithEditor("media-info", text);
         else if (osd)
             Command.ShowText(text.Replace("\r", ""), 5000, 16);
         else
@@ -262,7 +314,7 @@ public class GuiCommand
 
     public static string FormatTime(double value) => ((int)value).ToString("00");
 
-    public void ShowBindings() => Command.ShowTextWithEditor("Bindings", Player.UsedInputConfContent);
+    public void ShowBindings() => ShowTextWithEditor("Bindings", Player.UsedInputConfContent);
 
     public void AddToPath()
     {

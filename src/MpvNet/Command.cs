@@ -18,7 +18,6 @@ public class Command
         ["play-pause"] = PlayPause,
         ["shell-execute"] = args => ProcessHelp.ShellExecute(args[0]),
         ["show-text"] = args => ShowText(args[0], Convert.ToInt32(args[1]), Convert.ToInt32(args[2])),
-        ["show-commands"] = args => ShowCommands(),
         ["cycle-audio"] = args => CycleAudio(),
         ["cycle-subtitles"] = args => CycleSubtitles(),
         ["playlist-first"] = args => PlaylistFirst(),
@@ -52,37 +51,6 @@ public class Command
         }
     }
 
-    public static void ShowCommands()
-    {
-        string json = Core.GetPropertyString("command-list");
-        var enumerator = JsonDocument.Parse(json).RootElement.EnumerateArray();
-        var commands = enumerator.OrderBy(it => it.GetProperty("name").GetString());
-        StringBuilder sb = new StringBuilder();
-
-        foreach (var cmd in commands)
-        {
-            sb.AppendLine();
-            sb.AppendLine(cmd.GetProperty("name").GetString());
-
-            foreach (var args in cmd.GetProperty("args").EnumerateArray())
-            {
-                string value = args.GetProperty("name").GetString() + " <" +
-                    args.GetProperty("type").GetString()!.ToLower() + ">";
-
-                if (args.GetProperty("optional").GetBoolean())
-                    value = "[" + value + "]";
-
-                sb.AppendLine("    " + value);
-            }
-        }
-
-        string header = BR +
-            "https://mpv.io/manual/master/#list-of-input-commands" + BR2 +
-            "https://github.com/stax76/mpv-scripts#command_palette" + BR;
-
-        ShowTextWithEditor("Input Commands", header + sb.ToString());
-    }
-
     public static void ShowText(string text, int duration = 0, int fontSize = 0)
     {
         if (string.IsNullOrEmpty(text))
@@ -96,14 +64,6 @@ public class Command
 
         Player.Command("show-text \"${osd-ass-cc/0}{\\\\fs" + fontSize +
             "}${osd-ass-cc/1}" + text + "\" " + duration);
-    }
-
-    public static void ShowTextWithEditor(string name, string text)
-    {
-        string file = Path.Combine(Path.GetTempPath(), name + ".txt");
-        App.TempFiles.Add(file);
-        File.WriteAllText(file, BR + text.Trim() + BR);
-        ProcessHelp.ShellExecute(file);
     }
 
     public static void CycleAudio()

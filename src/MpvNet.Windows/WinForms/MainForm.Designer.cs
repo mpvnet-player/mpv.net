@@ -29,36 +29,35 @@ partial class MainForm
     /// </summary>
     void InitializeComponent()
     {
-        this.components = new System.ComponentModel.Container();
+        components = new System.ComponentModel.Container();
         System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-        this.CursorTimer = new System.Windows.Forms.Timer(this.components);
-        this.ProgressTimer = new System.Windows.Forms.Timer(this.components);
-        this.SuspendLayout();
+        CursorTimer = new System.Windows.Forms.Timer(components);
+        ProgressTimer = new System.Windows.Forms.Timer(components);
+        SuspendLayout();
         // 
         // CursorTimer
         // 
-        this.CursorTimer.Enabled = true;
-        this.CursorTimer.Interval = 1000;
-        this.CursorTimer.Tick += new System.EventHandler(this.CursorTimer_Tick);
+        CursorTimer.Enabled = true;
+        CursorTimer.Interval = 1000;
+        CursorTimer.Tick += CursorTimer_Tick;
         // 
         // ProgressTimer
         // 
-        this.ProgressTimer.Tick += new System.EventHandler(this.ProgressTimer_Tick);
+        ProgressTimer.Tick += ProgressTimer_Tick;
         // 
         // MainForm
         // 
-        this.AllowDrop = true;
-        this.AutoScaleDimensions = new System.Drawing.SizeF(288F, 288F);
-        this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-        this.BackColor = System.Drawing.Color.Black;
-        this.ClientSize = new System.Drawing.Size(857, 444);
-        this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-        this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-        this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-        this.Name = "MainForm";
-        this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-        this.ResumeLayout(false);
-
+        AllowDrop = true;
+        AutoScaleDimensions = new System.Drawing.SizeF(288F, 288F);
+        AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+        BackColor = System.Drawing.Color.Black;
+        ClientSize = new System.Drawing.Size(1243, 720);
+        Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+        Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
+        Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+        Name = "MainForm";
+        StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+        ResumeLayout(false);
     }
 
     #endregion
