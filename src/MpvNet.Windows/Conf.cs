@@ -90,6 +90,9 @@ public class ConfParser
         {
             string line = it.Trim();
 
+            if (line.StartsWith('#'))
+                continue;
+
             if (line == "")
             {
                 currentGroup = new ConfSection();

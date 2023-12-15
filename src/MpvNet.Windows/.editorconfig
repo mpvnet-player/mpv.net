@@ -29,3 +29,6 @@ csharp_style_prefer_range_operator = false
 
 # CA1401: P/Invokes should not be visible
 dotnet_diagnostic.CA1401.severity = none
+
+# IDE0017: Simplify object initialization
+dotnet_style_object_initializer = false

@@ -39,7 +39,7 @@ public partial class SearchControl : UserControl
     {
         HintTextBlock.Text = string.IsNullOrEmpty(Text) ? HintText : "";
 
-        if (string.IsNullOrEmpty(Text) || HideClearButton)
+        if (string.IsNullOrEmpty(Text) || HideClearButton || Text.Length > 21)
             SearchClearButton.Visibility = Visibility.Hidden;
         else
             SearchClearButton.Visibility = Visibility.Visible;

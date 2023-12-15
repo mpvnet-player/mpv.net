@@ -35,6 +35,7 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
         DataContext = this;
         LoadConf(Player.ConfPath);
         LoadConf(App.ConfPath);
+        LoadLibplaceboConf();
         LoadSettings();
         InitialContent = GetCompareString();
 
@@ -83,6 +84,9 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
 
     public static TreeNode? AddNode(IList<TreeNode> nodes, string path)
     {
+        if (string.IsNullOrEmpty(path))
+            return null;
+
         string[] parts = path.Split('/', StringSplitOptions.RemoveEmptyEntries);
 
         for (int x = 0; x < parts.Length; x++)
@@ -128,14 +132,14 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
             if (!FilterStrings.Contains(setting.Directory!))
                 FilterStrings.Add(setting.Directory!);
 
-            foreach (ConfItem confItem in ConfItems)
+            foreach (ConfItem item in ConfItems)
             {
-                if (setting.Name == confItem.Name && confItem.Section == "" && !confItem.IsSectionItem)
+                if (setting.Name == item.Name && item.Section == "" && !item.IsSectionItem)
                 {
-                    setting.Value = confItem.Value;
+                    setting.Value = item.Value;
                     setting.StartValue = setting.Value;
-                    setting.ConfItem = confItem;
-                    confItem.SettingBase = setting;
+                    setting.ConfItem = item;
+                    item.SettingBase = setting;
                 }
             }
 
@@ -160,6 +164,15 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
 
         if (InitialContent == GetCompareString())
             return;
+
+        foreach (Setting setting in Settings)
+        {
+            if (setting.Name == "libplacebo-opts")
+            {
+                setting.Value = GetKeyValueContent("libplacebo");
+                break;
+            }
+        }
 
         File.WriteAllText(Player.ConfPath, GetContent("mpv"));
         File.WriteAllText(App.ConfPath, GetContent("mpvnet"));
@@ -202,10 +215,7 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
         DispatcherPriority.Background);
     }
 
-    string GetCompareString()
-    {
-        return string.Join("", Settings.Select(item => item.Name + item.Value).ToArray());
-    }
+    string GetCompareString() => string.Join("", Settings.Select(item => item.Name + item.Value).ToArray());
 
     void LoadConf(string file)
     {
@@ -229,7 +239,7 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
             {
                 if (!isSectionItem && comment != "" && comment != "\r\n")
                     ConfItems.Add(new ConfItem() {
-                        Comment = comment, File = Path.GetFileNameWithoutExtension(file)});
+                        Comment = comment, File = System.IO.Path.GetFileNameWithoutExtension(file)});
 
                 section = line.Substring(0, line.IndexOf("]") + 1);
                 comment = "";
@@ -240,8 +250,8 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
                 if (!line.Contains('='))
                     line += "=yes";
 
-                ConfItem item = new ConfItem();
-                item.File = Path.GetFileNameWithoutExtension(file);
+                ConfItem item = new();
+                item.File = System.IO.Path.GetFileNameWithoutExtension(file);
                 item.IsSectionItem = isSectionItem;
                 item.Comment = comment;
                 comment = "";
@@ -274,6 +284,50 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
                 item.Value = right;
                 ConfItems.Add(item);
             }
+        }
+    }
+
+    string GetKeyValueContent(string filename)
+    {
+        List<string> pairs = new();
+
+        foreach (Setting setting in Settings)
+        {
+            if (filename != setting.File)
+                continue;
+
+            if ((setting.Value ?? "") != setting.Default)
+                pairs.Add(setting.Name + "=" + EscapeValue(setting.Value!));
+        }
+
+        return string.Join(',', pairs);
+    }
+
+    void LoadLibplaceboConf()
+    {
+        foreach (ConfItem item in ConfItems.ToArray())
+            if (item.Name == "libplacebo-opts")
+                LoadKeyValueList(item.Value, "libplacebo");
+    }
+
+    void LoadKeyValueList(string options, string file)
+    {
+        string[] optionStrings = options.Split(",", StringSplitOptions.RemoveEmptyEntries);
+
+        foreach (string pair in optionStrings)
+        {
+            if (!pair.Contains('='))
+                continue;
+
+            int pos = pair.IndexOf("=");
+            string left = pair.Substring(0, pos).Trim().ToLower();
+            string right = pair.Substring(pos + 1).Trim();
+
+            ConfItem item = new();
+            item.Name = left;
+            item.Value = right;
+            item.File = file;
+            ConfItems.Add(item);
         }
     }
 

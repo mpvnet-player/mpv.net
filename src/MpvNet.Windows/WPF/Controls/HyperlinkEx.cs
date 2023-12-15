@@ -4,7 +4,6 @@ using System.Windows.Navigation;
 
 using MpvNet.Help;
 
-// TODO: change namespace to MpvNet.Windows.WPF.Controls
 namespace MpvNet.Windows.WPF;
 
 public class HyperlinkEx : Hyperlink
@@ -20,6 +19,6 @@ public class HyperlinkEx : Hyperlink
         NavigateUri = new Uri(url);
         RequestNavigate += HyperLinkEx_RequestNavigate;
         Inlines.Clear();
-        Inlines.Add(url);
+        Inlines.Add("Manual");
     }
 }
