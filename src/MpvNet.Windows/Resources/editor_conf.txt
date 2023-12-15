@@ -39,6 +39,12 @@ directory = General
 width = 500
 help = Image file extensions used to create file associations and used by the auto-load-folder feature. (mpv.net option)
 
+name = menu-syntax
+file = mpvnet
+directory = General
+default = #menu:
+help = Used menu syntax for defining the context menu in input.conf.\nmpv.net by default uses '#menu:', uosc uses '#!' by default.
+
 name = debug-mode
 file = mpvnet
 default = no
@@ -112,45 +118,6 @@ option = display-vdrop
 option = display-adrop
 option = display-desync
 option = desync
-
-name = scale
-file = mpv
-default = bilinear
-directory = Video
-help = The GPU renderer filter function to use when upscaling video. There are some more filters, but most are not as useful. For a complete list, pass help as value, e.g.: mpv --scale=help
-option = bilinear          Bilinear hardware texture filtering (fastest, very low quality).
-option = spline36          Mid quality and speed. This is the default when using gpu-hq.
-option = lanczos           Lanczos scaling. Provides mid quality and speed. Generally worse than spline36, but it results in a slightly sharper image which is good for some content types. The number of taps can be controlled with  scale-radius, but is best left unchanged. (This filter is an alias for sinc-windowed sinc)
-option = ewa_lanczos       Elliptic weighted average Lanczos scaling. Also known as Jinc. Relatively slow, but very good quality. The radius can be controlled with scale-radius. Increasing the radius makes the filter sharper but adds more ringing. (This filter is an alias for jinc-windowed jinc)
-option = ewa_lanczossharp  A slightly sharpened version of ewa_lanczos, preconfigured to use an ideal radius and parameter. If your hardware can run it, this is probably what you should use by default.
-option = mitchell          Mitchell-Netravali. The B and C parameters can be set with  scale-param1 and scale-param2. This filter is very good at downscaling (see dscale).
-option = oversample        A version of nearest neighbour that (naively) oversamples pixels, so that pixels overlapping edges get linearly interpolated instead of rounded. This essentially removes the small imperfections and judder artifacts caused by nearest-neighbour interpolation, in exchange for adding some blur. This filter is good at temporal interpolation, and also known as "smoothmotion" (see tscale).
-
-name = cscale
-file = mpv
-default = bilinear
-directory = Video
-help = As scale, but for interpolating chroma information. If the image is not subsampled, this option is ignored entirely.
-option = bilinear          Bilinear hardware texture filtering (fastest, very low quality).
-option = spline36          Mid quality and speed. This is the default when using gpu-hq.
-option = lanczos           Lanczos scaling. Provides mid quality and speed. Generally worse than spline36, but it results in a slightly sharper image which is good for some content types. The number of taps can be controlled with  scale-radius, but is best left unchanged. (This filter is an alias for sinc-windowed sinc)
-option = ewa_lanczos       Elliptic weighted average Lanczos scaling. Also known as Jinc. Relatively slow, but very good quality. The radius can be controlled with scale-radius. Increasing the radius makes the filter sharper but adds more ringing. (This filter is an alias for jinc-windowed jinc)
-option = ewa_lanczossharp  A slightly sharpened version of ewa_lanczos, preconfigured to use an ideal radius and parameter. If your hardware can run it, this is probably what you should use by default.
-option = mitchell          Mitchell-Netravali. The B and C parameters can be set with scale-param1 and scale-param2. This filter is very good at downscaling (see dscale).
-option = oversample        A version of nearest neighbour that (naively) oversamples pixels, so that pixels overlapping edges get linearly interpolated instead of rounded. This essentially removes the small imperfections and judder artifacts caused by nearest-neighbour interpolation, in exchange for adding some blur. This filter is good at temporal interpolation, and also known as "smoothmotion" (see tscale).
-
-name = dscale
-file = mpv
-default = 
-directory = Video
-help = Like scale, but apply these filters on downscaling instead. \nIf no option is selected, it will keep the same with the upscaler.
-option = bilinear          Bilinear hardware texture filtering (fastest, very low quality).
-option = spline36          Mid quality and speed. This is the default when using gpu-hq.
-option = lanczos           Lanczos scaling. Provides mid quality and speed. Generally worse than spline36, but it results in a slightly sharper image which is good for some content types. The number of taps can be controlled with  scale-radius, but is best left unchanged. (This filter is an alias for sinc-windowed sinc)
-option = ewa_lanczos       Elliptic weighted average Lanczos scaling. Also known as Jinc. Relatively slow, but very good quality. The radius can be controlled with scale-radius. Increasing the radius makes the filter sharper but adds more ringing. (This filter is an alias for jinc-windowed jinc)
-option = ewa_lanczossharp  A slightly sharpened version of ewa_lanczos, preconfigured to use an ideal radius and parameter. If your hardware can run it, this is probably what you should use by default.
-option = mitchell          Mitchell-Netravali. The B and C parameters can be set with scale-param1 and scale-param2. This filter is very good at downscaling (see dscale).
-option = oversample        A version of nearest neighbour that (naively) oversamples pixels, so that pixels overlapping edges get linearly interpolated instead of rounded. This essentially removes the small imperfections and judder artifacts caused by nearest-neighbour interpolation, in exchange for adding some blur. This filter is good at temporal interpolation, and also known as "smoothmotion" (see tscale).
 
 name = dither-depth
 file = mpv
@@ -628,6 +595,45 @@ name = screenshot-png-filter
 file = mpv
 directory = Video/Screenshot
 help = <0-5> Set the filter applied prior to PNG compression. 0 is none, 1 is 'sub', 2 is 'up', 3 is 'average', 4 is 'Paeth', and 5 is 'mixed'. This affects the level of compression that can be achieved. For most images, 'mixed' achieves the best compression ratio, hence it is the default.
+
+name = scale
+file = mpv
+default = bilinear
+directory = Render Options
+help = The GPU renderer filter function to use when upscaling video. There are some more filters, but most are not as useful. For a complete list, pass help as value, e.g.: mpv --scale=help
+option = bilinear          Bilinear hardware texture filtering (fastest, very low quality).
+option = spline36          Mid quality and speed. This is the default when using gpu-hq.
+option = lanczos           Lanczos scaling. Provides mid quality and speed. Generally worse than spline36, but it results in a slightly sharper image which is good for some content types. The number of taps can be controlled with  scale-radius, but is best left unchanged. (This filter is an alias for sinc-windowed sinc)
+option = ewa_lanczos       Elliptic weighted average Lanczos scaling. Also known as Jinc. Relatively slow, but very good quality. The radius can be controlled with scale-radius. Increasing the radius makes the filter sharper but adds more ringing. (This filter is an alias for jinc-windowed jinc)
+option = ewa_lanczossharp  A slightly sharpened version of ewa_lanczos, preconfigured to use an ideal radius and parameter. If your hardware can run it, this is probably what you should use by default.
+option = mitchell          Mitchell-Netravali. The B and C parameters can be set with  scale-param1 and scale-param2. This filter is very good at downscaling (see dscale).
+option = oversample        A version of nearest neighbour that (naively) oversamples pixels, so that pixels overlapping edges get linearly interpolated instead of rounded. This essentially removes the small imperfections and judder artifacts caused by nearest-neighbour interpolation, in exchange for adding some blur. This filter is good at temporal interpolation, and also known as "smoothmotion" (see tscale).
+
+name = cscale
+file = mpv
+default = bilinear
+directory = Render Options
+help = As scale, but for interpolating chroma information. If the image is not subsampled, this option is ignored entirely.
+option = bilinear          Bilinear hardware texture filtering (fastest, very low quality).
+option = spline36          Mid quality and speed. This is the default when using gpu-hq.
+option = lanczos           Lanczos scaling. Provides mid quality and speed. Generally worse than spline36, but it results in a slightly sharper image which is good for some content types. The number of taps can be controlled with  scale-radius, but is best left unchanged. (This filter is an alias for sinc-windowed sinc)
+option = ewa_lanczos       Elliptic weighted average Lanczos scaling. Also known as Jinc. Relatively slow, but very good quality. The radius can be controlled with scale-radius. Increasing the radius makes the filter sharper but adds more ringing. (This filter is an alias for jinc-windowed jinc)
+option = ewa_lanczossharp  A slightly sharpened version of ewa_lanczos, preconfigured to use an ideal radius and parameter. If your hardware can run it, this is probably what you should use by default.
+option = mitchell          Mitchell-Netravali. The B and C parameters can be set with scale-param1 and scale-param2. This filter is very good at downscaling (see dscale).
+option = oversample        A version of nearest neighbour that (naively) oversamples pixels, so that pixels overlapping edges get linearly interpolated instead of rounded. This essentially removes the small imperfections and judder artifacts caused by nearest-neighbour interpolation, in exchange for adding some blur. This filter is good at temporal interpolation, and also known as "smoothmotion" (see tscale).
+
+name = dscale
+file = mpv
+default = 
+directory = Render Options
+help = Like scale, but apply these filters on downscaling instead. \nIf no option is selected, it will keep the same with the upscaler.
+option = bilinear          Bilinear hardware texture filtering (fastest, very low quality).
+option = spline36          Mid quality and speed. This is the default when using gpu-hq.
+option = lanczos           Lanczos scaling. Provides mid quality and speed. Generally worse than spline36, but it results in a slightly sharper image which is good for some content types. The number of taps can be controlled with  scale-radius, but is best left unchanged. (This filter is an alias for sinc-windowed sinc)
+option = ewa_lanczos       Elliptic weighted average Lanczos scaling. Also known as Jinc. Relatively slow, but very good quality. The radius can be controlled with scale-radius. Increasing the radius makes the filter sharper but adds more ringing. (This filter is an alias for jinc-windowed jinc)
+option = ewa_lanczossharp  A slightly sharpened version of ewa_lanczos, preconfigured to use an ideal radius and parameter. If your hardware can run it, this is probably what you should use by default.
+option = mitchell          Mitchell-Netravali. The B and C parameters can be set with scale-param1 and scale-param2. This filter is very good at downscaling (see dscale).
+option = oversample        A version of nearest neighbour that (naively) oversamples pixels, so that pixels overlapping edges get linearly interpolated instead of rounded. This essentially removes the small imperfections and judder artifacts caused by nearest-neighbour interpolation, in exchange for adding some blur. This filter is good at temporal interpolation, and also known as "smoothmotion" (see tscale).
 
 name = background
 file = mpv

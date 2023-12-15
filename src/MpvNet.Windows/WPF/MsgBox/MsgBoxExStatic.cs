@@ -96,13 +96,13 @@ public partial class MessageBoxEx : Window, INotifyPropertyChanged
 
     public static void SetOwner(Window window)
     {
-        IntPtr ownerHandle = GetOwnerHandle();
+        IntPtr parentHandle = GetParentHandle();
 
-        if (ownerHandle != IntPtr.Zero)
-            new WindowInteropHelper(window).Owner = ownerHandle;
+        if (parentHandle != IntPtr.Zero)
+            new WindowInteropHelper(window).Owner = parentHandle;
     }
 
-    public static IntPtr GetOwnerHandle()
+    public static IntPtr GetParentHandle()
     {
         IntPtr foregroundWindow = GetForegroundWindow();
         GetWindowThreadProcessId(foregroundWindow, out var procID);

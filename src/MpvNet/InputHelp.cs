@@ -179,11 +179,10 @@ public static class InputHelp
 
                 new ("", "", "quit", "q", _("Exit")),
                 new ("", "", "script-message-to mpvnet show-menu", "MBTN_Right", _("Show Menu")),
-                new ("", "", "quit", "Power", _("Exit")),
-                new ("", "", "cycle pause", "Play", _("Play/Pause")),
-                new ("", "", "cycle pause", "Pause", _("Play/Pause")),
-                new ("", "", "cycle pause", "PlayPause", _("Play/Pause")),
-                new ("", "", "cycle pause", "MBTN_Mid", _("Play/Pause")),
+                new ("", "", "script-message-to mpvnet play-pause", "Play", _("Play/Pause")),
+                new ("", "", "script-message-to mpvnet play-pause", "Pause", _("Play/Pause")),
+                new ("", "", "script-message-to mpvnet play-pause", "PlayPause", _("Play/Pause")),
+                new ("", "", "script-message-to mpvnet play-pause", "MBTN_Mid", _("Play/Pause")),
                 new ("", "", "stop", "Stop", _("Stop")),
                 new ("", "", "seek  60", "Forward", _("Forward")),
                 new ("", "", "seek -60", "Rewind", _("Backward")),
@@ -212,6 +211,8 @@ public static class InputHelp
                 new ("", "", "no-osd seek -5", "Ctrl+Wheel_Down", _("Seek Backward")),
                 new ("", "", "quit 4", "Esc", _("Quit encoding")),
                 new ("", "", "quit 4", "q", _("Quit encoding")),
+                new ("", "", "quit", "Power", _("Exit")),
+
                 //new (_("Command Palette"), _("Commands"), "script-message-to mpvnet show-command-palette", "F1"),
             };
 

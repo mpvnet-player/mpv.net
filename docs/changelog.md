@@ -10,6 +10,8 @@
 - Improved conf file reader/writer.
 - Conf editor support added for the mpv options:
   `reset-on-next-file`, `input-ipc-server`, `background`, `title`
+- When mpv.net is started for the first time from a new startup location, it asks if mpv.net should be added to the Path environment variable.
+
 # v7.0.0.2 Beta (2023-12-13)
 
 - Besides a portable download there is now again a setup installer.

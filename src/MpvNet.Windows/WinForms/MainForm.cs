@@ -1250,9 +1250,14 @@ public partial class MainForm : Form
         InitAndBuildContextMenu();
         Cursor.Position = new Point(Cursor.Position.X + 1, Cursor.Position.Y);
         GlobalHotkey.RegisterGlobalHotkeys(Handle);
-        TaskHelp.Run(WinMpvHelp.CopyMpvNetCom);
         WasShown = true;
         StrongReferenceMessenger.Default.Send(new MainWindowIsLoadedMessage());
+
+        TaskHelp.Run(() => {
+            System.Windows.Application.Current.Dispatcher.BeginInvoke(() => {
+                WinMpvHelp.AddToPath();
+            }, DispatcherPriority.Background);
+        });
     }
 
     void ContextMenu_Closed(object sender, System.Windows.RoutedEventArgs e) => MenuAutoResetEvent.Set();
