@@ -40,7 +40,7 @@ public class OptionSettingOption
 
     public string? Text
     {
-        get => string.IsNullOrEmpty(_text) ? Name : _text;
+        get => _text ?? Name;
         set => _text = value;
     }
 
