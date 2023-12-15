@@ -1,5 +1,5 @@
 
-# v7.0.0.3 Beta (2023-??-??)
+# v7.0.0.3 Beta (2023-12-15)
 
 - New conf editor option `Video/libplacebo/preset`.
 - New conf editor option `Video/libplacebo/Scaling/upscaler`.
