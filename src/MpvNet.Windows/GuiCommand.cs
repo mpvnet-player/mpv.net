@@ -65,8 +65,6 @@ public class GuiCommand
         Window? win = Activator.CreateInstance(winType) as Window;
         new WindowInteropHelper(win).Owner = MainForm.Instance!.Handle;
         win?.ShowDialog();
-        //TODO: Player.Command("quit");
-        Player.Command("quit");
     }
 
     public void LoadSubtitle(IList<string> args)

@@ -27,16 +27,25 @@
                 Name="ComboBoxControl"
                 Width="200"
                 HorizontalAlignment="Left"
-                MaxDropDownHeight="500"
-                Foreground="{Binding Theme.Heading}"
+                MaxDropDownHeight="2000"
+                Foreground="{Binding Theme.Foreground}"
                 Background="{Binding Theme.Background}"
-                BorderBrush="{Binding Theme.Foreground}"
-                Style="{DynamicResource ComboBoxStyle}"
+ 
                 SelectionChanged="ComboBoxControl_SelectionChanged"
                 >
                 <ComboBox.ItemTemplateSelector>
                     <local:ComboBoxTemplateSelector/>
                 </ComboBox.ItemTemplateSelector>
+
+                <ComboBox.ItemContainerStyle>
+                    <Style TargetType="ComboBoxItem">
+                        <Style.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="3"/>
+                            </Style>
+                        </Style.Resources>
+                    </Style>
+                </ComboBox.ItemContainerStyle>
             </ComboBox>
 
             <TextBox
@@ -49,8 +58,14 @@
                 Background="{Binding Theme.Background}"
                 />
             
-            <TextBlock x:Name="LinkTextBlock" Margin="0,10">
-                <local:HyperlinkEx x:Name="Link"></local:HyperlinkEx>
+            <TextBlock
+                x:Name="LinkTextBlock"
+                Margin="2,0"
+                >
+                <local:HyperlinkEx
+                    x:Name="Link"
+                    Foreground="{Binding Theme.Heading}"
+                    />
             </TextBlock>
         </StackPanel>
     </Grid>

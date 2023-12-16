@@ -1,5 +1,12 @@
 
-# v7.0.0.3 Beta (2023-??-??)
+# v7.0.0.4 Beta (2023-??-??)
+
+- The conf editor uses a newly developed combo box control instead of radio buttons
+  whenever an option has more than 3 items.
+- New zhongfly libmpv build.
+
+
+# v7.0.0.3 Beta (2023-12-15)
 
 - New conf editor option `Video/libplacebo/preset`.
 - New conf editor option `Video/libplacebo/Scaling/upscaler`.

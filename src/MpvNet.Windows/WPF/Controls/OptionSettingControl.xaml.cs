@@ -21,6 +21,10 @@ public partial class OptionSettingControl : UserControl, ISettingControl
             HelpTextBox.Visibility = Visibility.Collapsed;
 
         HelpTextBox.Text = optionSetting.Help;
+
+        if (string.IsNullOrEmpty(optionSetting.Help))
+            LinkTextBlock.Margin = new Thickness(2, 6, 0, 0);
+
         ItemsControl.ItemsSource = optionSetting.Options;
 
         if (string.IsNullOrEmpty(optionSetting.URL))

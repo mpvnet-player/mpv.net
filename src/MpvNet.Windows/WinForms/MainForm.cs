@@ -1258,9 +1258,6 @@ public partial class MainForm : Form
                 WinMpvHelp.AddToPath();
             }, DispatcherPriority.Background);
         });
-
-        //TODO: Player.Command("script-message-to mpvnet show-conf-editor");
-        Player.Command("script-message-to mpvnet show-conf-editor");
     }
 
     void ContextMenu_Closed(object sender, System.Windows.RoutedEventArgs e) => MenuAutoResetEvent.Set();

@@ -65,9 +65,15 @@
                 Foreground="{Binding Theme.Foreground}"
                 Background="{Binding Theme.Background}"
                 />
-            
-            <TextBlock x:Name="LinkTextBlock" Margin="0,10">
-                <local:HyperlinkEx x:Name="Link"></local:HyperlinkEx>
+
+            <TextBlock
+                x:Name="LinkTextBlock"
+                Margin="2,0,0,0"
+                >
+                <local:HyperlinkEx
+                    x:Name="Link"
+                    Foreground="{Binding Theme.Heading}"
+                    />
             </TextBlock>
         </StackPanel>
     </Grid>

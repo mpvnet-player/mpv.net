@@ -6,6 +6,32 @@
     xmlns:local="clr-namespace:MpvNet.Windows.WPF"
     >
 
+    <DataTemplate x:Key="ComboBoxCollapsedDataTemplate" >
+        <TextBlock Text="{Binding Text}"/>
+    </DataTemplate>
+
+    <DataTemplate x:Key="ComboBoxExpandedDataTemplate" >
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
+            <Border>
+                <TextBlock
+                    Text="{Binding Text}"
+                    Width="{Binding OptionWidth}"
+                    VerticalAlignment="Center"
+                    TextWrapping="Wrap"
+                    />
+            </Border>
+            <Border>
+                <TextBlock
+                    Text="{Binding Help}"
+                    MaxWidth="400"
+                    Padding="0,3"
+                    VerticalAlignment="Center"
+                    TextWrapping="Wrap"
+                    />
+            </Border>
+        </StackPanel>
+    </DataTemplate>
+    
     <Style x:Key="ComboBoxToggleButton" TargetType="ToggleButton">
         <Setter Property="Template">
             <Setter.Value>
@@ -31,7 +57,7 @@
                             VerticalAlignment="Center"
                             Data="M 1,1.5 L 4.5,5 L 8,1.5"
                             SnapsToDevicePixels="false"
-                            Stroke="#666"
+                            Stroke="{TemplateBinding Foreground}"
                             StrokeThickness="1.5"
                             />
                     </Grid>
@@ -44,10 +70,9 @@
         <Border x:Name="PART_ContentHost" Focusable="True" />
     </ControlTemplate>
 
-    <Style x:Key="ComboBoxStyle" TargetType="{x:Type ComboBox}">
+    <Style TargetType="{x:Type ComboBox}">
         <Setter Property="Foreground" Value="#333" />
-        <Setter Property="BorderBrush" Value="Gray" />
-        <Setter Property="Background" Value="White" />
+        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryTextBrush}" />
         <Setter Property="SnapsToDevicePixels" Value="true"/>
         <Setter Property="OverridesDefaultStyle" Value="true"/>
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
@@ -115,9 +140,9 @@
                                 <Border
                                     CornerRadius="3"
                                     x:Name="DropDownBorder"
-                                    Background="White"
+                                    Background="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ComboBox}}, Path=Background}"
+                                    BorderBrush="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ComboBox}}, Path=Foreground}"
                                     BorderThickness="1"
-                                    BorderBrush="#F6F6F6"
                                     />
 
                                 <ScrollViewer Margin="4,6,4,6" SnapsToDevicePixels="True">
@@ -146,43 +171,18 @@
             </Setter.Value>
         </Setter>
         <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="false">
+                <Setter Property="Opacity" Value="0.56"/>
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="true">
+                <Setter Property="BorderBrush" Value="#FF7EB4EA"/>
+            </Trigger>
+            <Trigger Property="IsFocused" Value="true">
+                <Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.Theme.Heading}"/>
+            </Trigger>
         </Style.Triggers>
     </Style>
-
-    <Style x:Key="ComboBoxItemStyle" TargetType="{x:Type ComboBoxItem}">
-        <Setter Property="SnapsToDevicePixels" Value="true" />
-        <Setter Property="HorizontalAlignment" Value="Stretch" />
-        <Setter Property="VerticalAlignment" Value="Stretch" />
-        <Setter Property="FontSize" Value="13" />
-        <Setter Property="OverridesDefaultStyle" Value="true"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="ComboBoxItem">
-                    <Border
-                            Name="Border"
-                            Padding="5"
-                            Margin="2"
-                            BorderThickness="2,0,0,0"
-                            CornerRadius="0"
-                            Background="Transparent"
-                            BorderBrush="Transparent"
-                            >
-
-                        <TextBlock TextAlignment="Left">
-                                <ContentPresenter />
-                        </TextBlock>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsHighlighted" Value="true">
-                            <Setter TargetName="Border" Property="BorderBrush" Value="#B3CB37"/>
-                            <Setter TargetName="Border" Property="Background" Value="#F8FAEB"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-    
+   
     <Style TargetType="local:HyperlinkEx">
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
@@ -1222,24 +1222,5 @@
     <Style BasedOn="{StaticResource MenuItemBaseStyle}" TargetType="MenuItem"/>
 
     <Style BasedOn="{StaticResource MenuBaseStyle}" TargetType="Menu"/>
-
-    <DataTemplate x:Key="ComboBoxCollapsedDataTemplate" >
-        <TextBlock
-            Text="{Binding Text}"
-
-            />
-    </DataTemplate>
-
-    <DataTemplate x:Key="ComboBoxExpandedDataTemplate" >
-        <StackPanel Orientation="Horizontal">
-            <TextBlock
-                Text="{Binding Text}"
-                Width="100"
-                />
-            <TextBlock
-                Text="{Binding Help}"
-                Padding="5,0,0,0"
-                />
-        </StackPanel>
-    </DataTemplate>
+    
 </ResourceDictionary>
