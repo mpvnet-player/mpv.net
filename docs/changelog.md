@@ -1,10 +1,11 @@
 
 # v7.0.0.4 Beta (2023-??-??)
 
+- Updated manual.
 - mpv.net is available via command line package manager winget.
 - New libplacebo config editor options added.
-- The conf editor uses a newly developed combo box control instead of radio buttons
-  whenever an option has more than 3 items.
+- The conf editor uses a newly developed combo box control (dropdown menu)
+  instead of radio buttons whenever an option has more than 3 items.
 - New zhongfly libmpv build.
 
 

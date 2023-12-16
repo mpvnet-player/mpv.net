@@ -320,6 +320,48 @@ file = libplacebo
 directory = Video/libplacebo/Scaling
 help = <0.0..1.0> Antiringing strength to use for all filters. A value of 0.0 disables antiringing, and a value of 1.0 enables full-strength antiringing. Defaults to 0.0.
 
+name = deband
+file = libplacebo
+directory = Video/libplacebo/Debanding
+help = Enables debanding.
+default = no
+option = yes
+option = no
+
+name = deband_iterations
+file = libplacebo
+directory = Video/libplacebo/Debanding
+help = <0..16> The number of debanding steps to perform per sample. Each step reduces a bit more banding, but takes time to compute. Note that the strength of each step falls off very quickly, so high numbers (>4) are practically useless. Defaults to 1.
+
+name = deband_threshold
+file = libplacebo
+directory = Video/libplacebo/Debanding
+help = <0.0..1000.0> The debanding filter's cut-off threshold. Higher numbers increase the debanding strength dramatically, but progressively diminish image details. Defaults to 3.0.
+
+name = deband_radius
+file = libplacebo
+directory = Video/libplacebo/Debanding
+help = <0.0..1000.0> The debanding filter's initial radius. The radius increases linearly for each iteration. A higher radius will find more gradients, but a lower radius will smooth more aggressively. Defaults to 16.0.
+
+name = deband_grain
+file = libplacebo
+directory = Video/libplacebo/Debanding
+help = <0.0..1000.0> Add some extra noise to the image. This significantly helps cover up remaining quantization artifacts. Higher numbers add more noise. Defaults to 4.0, which is very mild.
+
+name = deband_grain_neutral_r
+file = libplacebo
+directory = Video/libplacebo/Debanding
+help = 'Neutral' grain value for each channel being debanded. Grain application will be modulated to avoid disturbing colors close to this value. Set this to a value corresponding to black in the relevant colorspace.
+
+name = deband_grain_neutral_g
+file = libplacebo
+directory = Video/libplacebo/Debanding
+help = 'Neutral' grain value for each channel being debanded. Grain application will be modulated to avoid disturbing colors close to this value. Set this to a value corresponding to black in the relevant colorspace.
+
+name = deband_grain_neutral_b
+file = libplacebo
+directory = Video/libplacebo/Debanding
+help = 'Neutral' grain value for each channel being debanded. Grain application will be modulated to avoid disturbing colors close to this value. Set this to a value corresponding to black in the relevant colorspace.
 
 name = screenshot-directory
 file = mpv

@@ -43,9 +43,7 @@ Download
 --------
 
 1. [Stable and beta portable and setup via GitHub download](../../../releases)
-
-2. Stable via command line from winget: `winget install mpv.net`
-
+2. Stable via command line with winget: `winget install mpv.net`
 3. [Automated nightly portable builds](https://github.com/mpvnet-player/mpv.net/actions)
 
 [Changelog](changelog.md)
@@ -54,10 +52,8 @@ Download
 Installation
 ------------
 
-1. Windows 7 or higher is required (Windows 10 or higher is recommended).
-2. mpv.net since version 7.0 requires the
-   [.NET Desktop Runtime 6.0](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
-   being installed. mpv.net before version 7.0 requires .NET Framework 4.8.
+1. Windows 10 or higher.
+2. [.NET Desktop Runtime 6.0](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
 
 Internet streaming requires:
 
@@ -69,8 +65,8 @@ Internet streaming requires:
 
 File Associations can be registered using the context menu under 'Settings > Setup'.
 
-After the file associations were registered, it might be necessary to change the
-default app in the Windows settings (Win+I, ms-settings:defaultapps).
+After the file associations were registered, it might still be necessary to change the
+default app in the Windows settings.
 
 Another way to register file associations is using Windows File Explorer,
 select a media file and select 'Open with > Choose another app' in the context menu.
@@ -82,6 +78,11 @@ to get menu items for [Play with mpv.net](https://github.com/stax76/OpenWithPlus
 When multiple files are selected in File Explorer and enter is pressed then
 the files are opened in mpv.net in random order, this works with maximum 15 files.
 
+#### Path environment variable
+
+In order to use mpv.net in a terminal for advanced use cases,
+mpv.net must be added to the Path environment variable,
+this can be achieved with the context menu (Settings/Setup).
 
 Support
 -------
@@ -108,8 +109,9 @@ Settings
 
 mpv.net searches the config folder at:
 
-1. startup\portable_config
-2. %APPDATA%\mpv.net (`C:\Users\%USERNAME%\AppData\Roaming\mpv.net`)
+1. Folder defined via MPVNET_HOME environment variable.
+2. startup\portable_config (startup means the directory containing mpvnet.exe)
+3. `%APPDATA%\mpv.net` (`C:\Users\Username\AppData\Roaming\mpv.net`)
 
 mpv options are stored in the file mpv.conf,
 mpv.net options are stored in the file mpvnet.conf,
@@ -119,7 +121,7 @@ mpv.net options are documented [here](#mpvnet-specific-options).
 Input and context menu
 ----------------------
 
-Global keyboard shortcuts are supported via global-input.conf file.
+Global keyboard shortcuts are supported via `global-input.conf` file.
 
 The config folder can be opened from the context menu: `Settings > Open Config Folder`
 
@@ -139,23 +141,30 @@ mpv input options:
 https://mpv.io/manual/master/#input
 
 Before version v7 all bindings and the context menu definition
-was contained in the input.conf file, which mpv.net created
+were defined in the input.conf file, which mpv.net created
 in case it didn't exist. This had the disadvantage that mpv.net
-lost control over all default bindings and the context menu
-defaults. This was unfortunate, v7 introduces a new design
-fixing it.
+lost control over all default bindings and context menu
+defaults. This was unfortunate, v7 introduces a new bindings
+and context menu design fixing it.
 
 In v7 no input.conf file is created, the default bindings and
 context menu is defined internally. input.conf only contains
 what is different from the internally defined defaults,
-so it's the same how mpv is used.
+so it works the same it work with mpv.
 
-For backward compatibility the old input.conf format with the
-menu definition using `#menu: ` is still supported. The new
-design also allows for a menu customization, in a sub section
-called `Custom`. In input.conf it can be defined like so:
+For backward compatibility the old input.conf context menu
+format with the menu definition using `#menu: ` is still
+supported. The new design also allows for a menu customization,
+in a sub section called `Custom`. In input.conf it can be
+defined like so:
 
 `Ctrl+a  show-text Test  #custom-menu: Test > Test`
+
+Users that have their bindings and context menu customized
+before v7 can easily migrate to the new design by deleting
+bindings they don't use and remember the shortcut and remove
+`#menu:` everywhere, it's important to remove `#menu:`
+everywhere in order to enable the new mode/design.
 
 
 Command Line Interface
@@ -192,8 +201,6 @@ Terminal
 When mpv.net is started from a terminal it will output status,
 error and debug messages to the terminal and accept input keys from the terminal.
 
-A common task for the terminal is debugging scripts.
-
 
 mpv.net specific commands
 -------------------------
@@ -204,6 +211,9 @@ mpv.net commands are used when mpv commands don't exist or lack a feature.
 
 ### add-to-path
 Adds mpv.net to the Path environment variable.
+
+### edit-conf-file [mpv.conf|input.conf]
+Opens mpv.conf or input.conf in a text editor.
 
 ### load-audio
 Shows a file browser dialog to open external audio files.
@@ -513,7 +523,8 @@ Scripting
 
 #### Lua
 
-A very large collection of Lua user scripts can be found in the mpv wiki [here](https://github.com/mpv-player/mpv/wiki/User-Scripts).
+A very large collection of user scripts can be found in the GitHub repository
+[awesome-mpv](https://github.com/stax76/awesome-mpv). 
 
 Lua scripting is documented in the mpv.net wiki [here](https://github.com/mpvnet-player/mpv.net/wiki/Extending-mpv-and-mpv.net-via-Lua-scripting).
 
@@ -522,10 +533,10 @@ Lua scripting is documented in the mpv.net wiki [here](https://github.com/mpvnet
 [mpv JavaScript documentation](https://mpv.io/manual/master/#javascript)
 
 
-Extensions
-----------
+.NET Extensions
+---------------
 
-Extensions are located in a subfolder _extensions_ in the config folder,
+.NET Extensions are located in a subfolder _extensions_ in the config folder,
 the filename must have the same name as the directory:
 
 ```Text
@@ -676,10 +687,6 @@ Environment Variables
 ### MPVNET_HOME
 
 Directory where mpv.net looks for user settings.
-
-### MPVNET_VERSION
-
-Returns the version of mpv.net.
 
 
 Context Menu Commands
