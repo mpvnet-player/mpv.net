@@ -45,7 +45,7 @@
 - Fix message box exceding working area size.
 - C# and PowerShell scripting was removed because of a compatibility problem
   with the .NET 6 platform. .NET extensions are supported with a new host
-  (not backward compatible). A example extension is available under \src\MpvNet.Extension\ExampleExtension
+  (not backward compatible). An example extension is available under \src\MpvNet.Extension\ExampleExtension
 - Redesigned bindings and context menu.
 - auto-play option removed, mpv supports it with the option reset-on-next-file.
 - Dark mode title bar enabled on Windows 10.0.18985 or higher.
