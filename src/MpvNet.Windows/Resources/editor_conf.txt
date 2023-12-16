@@ -259,6 +259,68 @@ option = ewa_lanczos  EWA Lanczos ("Jinc") reconstruction (slow).
 option = ewa_lanczossharp  Sharpened version of ewa_lanczos (slow).
 option = ewa_lanczos4sharpest  Very sharp version of ewa_lanczos, with anti-ringing (very slow).
 
+name = downscaler
+file = libplacebo
+directory = Video/libplacebo/Scaling
+default = hermite
+help = Sets the filter used for downscaling. Defaults to hermite. The most relevant options, roughly ordered from fastest to slowest.
+option = none         Use the same filter as specified for upscaler
+option = box          Box averaging (very fast)
+option = hermite      Hermite-weighted averaging (fast)
+option = bilinear     Bilinear (triangle) averaging (fast)
+option = bicubic      Bicubic interpolation (fast)
+option = gaussian     Gaussian smoothing (fast)
+option = catmull_rom  Catmull-Rom cubic spline
+option = mitchell     Mitchell-Netravalia cubic spline
+option = lanczos      Lanczos reconstruction
+
+name = plane_upscaler
+file = libplacebo
+directory = Video/libplacebo/Scaling
+default = none
+help = Override the filter used for upscaling planes, e.g. chroma/alpha. If set to none, use the same setting as upscaler, respectively.
+option = none         Use the same filter as specified for upscaler
+option = box          Box averaging (very fast)
+option = hermite      Hermite-weighted averaging (fast)
+option = bilinear     Bilinear (triangle) averaging (fast)
+option = bicubic      Bicubic interpolation (fast)
+option = gaussian     Gaussian smoothing (fast)
+option = catmull_rom  Catmull-Rom cubic spline
+option = mitchell     Mitchell-Netravalia cubic spline
+option = lanczos      Lanczos reconstruction
+
+name = plane_downscaler
+file = libplacebo
+directory = Video/libplacebo/Scaling
+default = none
+help = Override the filter used for downscaling planes, e.g. chroma/alpha. If set to none, use the same setting as downscaler, respectively.
+option = none         Use the same filter as specified for upscaler
+option = box          Box averaging (very fast)
+option = hermite      Hermite-weighted averaging (fast)
+option = bilinear     Bilinear (triangle) averaging (fast)
+option = bicubic      Bicubic interpolation (fast)
+option = gaussian     Gaussian smoothing (fast)
+option = catmull_rom  Catmull-Rom cubic spline
+option = mitchell     Mitchell-Netravalia cubic spline
+option = lanczos      Lanczos reconstruction
+
+name = frame_mixer
+file = libplacebo
+directory = Video/libplacebo/Scaling
+default = oversample
+help = Sets the filter used for frame mixing (temporal interpolation). Roughly ordered from fastest to slowest.
+option = none        Disable frame mixing, show nearest frame to target PTS
+option = oversample  Oversampling, only mix "edge" frames while preserving FPS
+option = hermite     Hermite-weighted frame mixing
+option = linear      Linear frame mixing
+option = cubic       Cubic B-spline frame mixing
+
+name = antiringing_strength
+file = libplacebo
+directory = Video/libplacebo/Scaling
+help = <0.0..1.0> Antiringing strength to use for all filters. A value of 0.0 disables antiringing, and a value of 1.0 enables full-strength antiringing. Defaults to 0.0.
+
+
 name = screenshot-directory
 file = mpv
 width = 500
