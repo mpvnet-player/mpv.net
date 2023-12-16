@@ -3,7 +3,7 @@ name = process-instance
 file = mpvnet
 default = single
 directory = General
-help = Defines if more then one mpv.net process is allowed. (mpv.net option)\n\nMulti can alternatively be enabled by pressing the SHIFT key.
+help = Defines if more then one mpv.net process is allowed.\nMulti can alternatively be enabled by pressing the SHIFT key. (mpv.net option)
 option = multi   Create a new process everytime the shell starts mpv.net
 option = single  Force a single process everytime the shell starts mpv.net
 option = queue   Force a single process and add files to playlist
@@ -73,14 +73,14 @@ option = auto          enable best hw decoder
 option = yes           exactly the same as auto
 option = auto-copy     enable best hw decoder with copy-back
 option = auto-safe     enable any whitelisted hw decoder
-option = dxva2         requires vo=gpu with gpu-context=d3d11, gpu-context=angle or gpu-context=dxinterop (Windows only)
-option = dxva2-copy    copies video back to system RAM (Windows only)
-option = d3d11va       requires vo=gpu with gpu-context=d3d11 or gpu-context=angle (Windows 8+ only)
-option = d3d11va-copy  copies video back to system RAM (Windows 8+ only)
+option = dxva2         requires vo=gpu with gpu-context=d3d11, gpu-context=angle or gpu-context=dxinterop
+option = dxva2-copy    copies video back to system RAM
+option = d3d11va       requires vo=gpu with gpu-context=d3d11 or gpu-context=angle
+option = d3d11va-copy  copies video back to system RAM
 option = cuda          requires vo=gpu (Any platform CUDA is available)
-option = cuda-copy     copies video back to system RAM (Any platform CUDA is available)
+option = cuda-copy     copies video back to system RAM
 option = nvdec         requires vo=gpu (Any platform CUDA is available)
-option = nvdec-copy    copies video back to system RAM (Any platform CUDA is available)
+option = nvdec-copy    copies video back to system RAM
 
 name = gpu-api
 file = mpv
@@ -122,48 +122,51 @@ name = d3d11va-zero-copy
 file = mpv
 default = no
 directory = Video
-help = By default, when using hardware decoding with --gpu-api=d3d11, the video image will be copied (GPU-to-GPU) from the decoder surface to a shader resource. Set this option to avoid that copy by sampling directly from the decoder image. This may increase performance and reduce power usage, but can cause the image to be sampled incorrectly on the bottom and right edges due to padding, and may invoke driver bugs, since Direct3D 11 technically does not allow sampling from a decoder surface (though most drivers support it.)
+url = https://mpv.io/manual/master/#options-d3d11va-zero-copy
 option = yes
 option = no
 
 name = scale
 file = mpv
-default = bilinear
+default = lanczos
 directory = Video/Render Options
 help = The GPU renderer filter function to use when upscaling video. There are some more filters, but most are not as useful. For a complete list, pass help as value, e.g.: mpv --scale=help
-option = bilinear          Bilinear hardware texture filtering (fastest, very low quality).
-option = spline36          Mid quality and speed. This is the default when using gpu-hq.
-option = lanczos           Lanczos scaling. Provides mid quality and speed. Generally worse than spline36, but it results in a slightly sharper image which is good for some content types. The number of taps can be controlled with  scale-radius, but is best left unchanged. (This filter is an alias for sinc-windowed sinc)
-option = ewa_lanczos       Elliptic weighted average Lanczos scaling. Also known as Jinc. Relatively slow, but very good quality. The radius can be controlled with scale-radius. Increasing the radius makes the filter sharper but adds more ringing. (This filter is an alias for jinc-windowed jinc)
-option = ewa_lanczossharp  A slightly sharpened version of ewa_lanczos, preconfigured to use an ideal radius and parameter. If your hardware can run it, this is probably what you should use by default.
-option = mitchell          Mitchell-Netravali. The B and C parameters can be set with  scale-param1 and scale-param2. This filter is very good at downscaling (see dscale).
-option = oversample        A version of nearest neighbour that (naively) oversamples pixels, so that pixels overlapping edges get linearly interpolated instead of rounded. This essentially removes the small imperfections and judder artifacts caused by nearest-neighbour interpolation, in exchange for adding some blur. This filter is good at temporal interpolation, and also known as "smoothmotion" (see tscale).
+url = https://mpv.io/manual/master/#options-scale
+option = bilinear
+option = spline36
+option = lanczos
+option = ewa_lanczos
+option = ewa_lanczossharp
+option = mitchell
+option = oversample
 
 name = cscale
 file = mpv
 default = bilinear
 directory = Video/Render Options
 help = As scale, but for interpolating chroma information. If the image is not subsampled, this option is ignored entirely.
-option = bilinear          Bilinear hardware texture filtering (fastest, very low quality).
-option = spline36          Mid quality and speed. This is the default when using gpu-hq.
-option = lanczos           Lanczos scaling. Provides mid quality and speed. Generally worse than spline36, but it results in a slightly sharper image which is good for some content types. The number of taps can be controlled with  scale-radius, but is best left unchanged. (This filter is an alias for sinc-windowed sinc)
-option = ewa_lanczos       Elliptic weighted average Lanczos scaling. Also known as Jinc. Relatively slow, but very good quality. The radius can be controlled with scale-radius. Increasing the radius makes the filter sharper but adds more ringing. (This filter is an alias for jinc-windowed jinc)
-option = ewa_lanczossharp  A slightly sharpened version of ewa_lanczos, preconfigured to use an ideal radius and parameter. If your hardware can run it, this is probably what you should use by default.
-option = mitchell          Mitchell-Netravali. The B and C parameters can be set with scale-param1 and scale-param2. This filter is very good at downscaling (see dscale).
-option = oversample        A version of nearest neighbour that (naively) oversamples pixels, so that pixels overlapping edges get linearly interpolated instead of rounded. This essentially removes the small imperfections and judder artifacts caused by nearest-neighbour interpolation, in exchange for adding some blur. This filter is good at temporal interpolation, and also known as "smoothmotion" (see tscale).
+url = https://mpv.io/manual/master/#options-cscale
+option = bilinear
+option = spline36
+option = lanczos
+option = ewa_lanczos
+option = ewa_lanczossharp
+option = mitchell
+option = oversample
 
 name = dscale
 file = mpv
-default = 
+default = lanczos
 directory = Video/Render Options
 help = Like scale, but apply these filters on downscaling instead. \nIf no option is selected, it will keep the same with the upscaler.
-option = bilinear          Bilinear hardware texture filtering (fastest, very low quality).
-option = spline36          Mid quality and speed. This is the default when using gpu-hq.
-option = lanczos           Lanczos scaling. Provides mid quality and speed. Generally worse than spline36, but it results in a slightly sharper image which is good for some content types. The number of taps can be controlled with  scale-radius, but is best left unchanged. (This filter is an alias for sinc-windowed sinc)
-option = ewa_lanczos       Elliptic weighted average Lanczos scaling. Also known as Jinc. Relatively slow, but very good quality. The radius can be controlled with scale-radius. Increasing the radius makes the filter sharper but adds more ringing. (This filter is an alias for jinc-windowed jinc)
-option = ewa_lanczossharp  A slightly sharpened version of ewa_lanczos, preconfigured to use an ideal radius and parameter. If your hardware can run it, this is probably what you should use by default.
-option = mitchell          Mitchell-Netravali. The B and C parameters can be set with scale-param1 and scale-param2. This filter is very good at downscaling (see dscale).
-option = oversample        A version of nearest neighbour that (naively) oversamples pixels, so that pixels overlapping edges get linearly interpolated instead of rounded. This essentially removes the small imperfections and judder artifacts caused by nearest-neighbour interpolation, in exchange for adding some blur. This filter is good at temporal interpolation, and also known as "smoothmotion" (see tscale).
+url = https://mpv.io/manual/master/#options-dscale
+option = bilinear
+option = spline36
+option = lanczos
+option = ewa_lanczos
+option = ewa_lanczossharp
+option = mitchell
+option = oversample
 
 name = dither-depth
 file = mpv
@@ -203,7 +206,7 @@ name = hdr-compute-peak
 file = mpv
 default = auto
 directory = Video/Render Options
-help = Compute the HDR peak and frame average brightness per-frame instead of relying on tagged metadata. These values are averaged over local regions as well as over several frames to prevent the value from jittering around too much. This option basically gives you dynamic, per-scene tone mapping. Requires compute shaders, which is a fairly recent OpenGL feature, and will probably also perform horribly on some drivers, so enable at your own risk. The special value auto (default) will enable HDR peak computation automatically if compute shaders and SSBOs are supported.
+url = https://mpv.io/manual/master/#options-hdr-compute-peak
 option = auto
 option = yes
 option = no
@@ -212,7 +215,7 @@ name = allow-delayed-peak-detect
 file = mpv
 default = yes
 directory = Video/Render Options
-help = When using --hdr-compute-peak, allow delaying the detected peak by a frame when beneficial for performance. In particular, this is required to avoid an unnecessary FBO indirection when no advanced rendering is required otherwise. Has no effect if there already is an indirect pass, such as when advanced scaling is enabled. (Only affects --vo=gpu-next, note that --vo=gpu always delays the peak.)
+url = https://mpv.io/manual/master/#options-allow-delayed-peak-detect
 option = yes
 option = no
 
@@ -242,6 +245,7 @@ directory = Video/libplacebo/Scaling
 default = default
 help = Sets the filter used for upscaling. Defaults to lanczos.
 url = https://libplacebo.org/options/#upscalerfilter
+option-name-width = 135
 option = default  Default.
 option = none  No filter, only use basic GPU texture sampling.
 option = nearest  Nearest-neighbour (box) sampling (very fast).
@@ -260,7 +264,7 @@ file = mpv
 width = 500
 type = folder
 directory = Video/Screenshot
-help = Store screenshots in this directory. This path is joined with the filename generated by screenshot-template. If the template filename is already absolute, the directory is ignored.\n\nIf the directory does not exist, it is created on the first screenshot. If it is not a directory, an error is generated when trying to write a screenshot.
+help = Store screenshots in this directory. This path is joined with the filename generated by screenshot-template. If the template filename is already absolute, the directory is ignored.
 
 name = screenshot-format
 file = mpv
@@ -333,7 +337,7 @@ name = alang
 file = mpv
 directory = Audio
 type = string
-help = Specify a priority list of audio languages to use. Different container formats employ different language codes. DVDs use ISO 639-1 two-letter language codes, Matroska, MPEG-TS and NUT use ISO 639-2 three-letter language codes, while OGM uses a free-form identifier. See also aid.\n\nExamples\n\nmpv dvd://1 alang=hu,en chooses the Hungarian language track on a DVD and falls back on English if Hungarian is not available.\n\nmpv alang=jpn example.mkv plays a Matroska file with Japanese audio.
+help = Specify a priority list of audio languages to use. Different container formats employ different language codes. DVDs use ISO 639-1 two-letter language codes, Matroska, MPEG-TS and NUT use ISO 639-2 three-letter language codes, while OGM uses a free-form identifier. See also aid.
 
 name = audio-file-auto
 file = mpv

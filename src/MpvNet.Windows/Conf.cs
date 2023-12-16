@@ -53,6 +53,7 @@ public class Conf
             if (section.HasName("help")) baseSetting.Help = section.GetValue("help");
             if (section.HasName("url")) baseSetting.URL = section.GetValue("url");
             if (section.HasName("width")) baseSetting.Width = Convert.ToInt32(section.GetValue("width"));
+            if (section.HasName("option-name-width")) baseSetting.OptionNameWidth = Convert.ToInt32(section.GetValue("option-name-width"));
             if (section.HasName("type")) baseSetting.Type = section.GetValue("type");
 
             if (baseSetting.Help.ContainsEx("\\n"))

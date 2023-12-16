@@ -149,7 +149,10 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
                     MainStackPanel.Children.Add(new StringSettingControl(s) { Visibility = Visibility.Collapsed });
                     break;
                 case OptionSetting s:
-                    MainStackPanel.Children.Add(new OptionSettingControl(s) { Visibility = Visibility.Collapsed });
+                    if (s.Options.Count > 3)
+                        MainStackPanel.Children.Add(new ComboBoxSettingControl(s) { Visibility = Visibility.Collapsed });
+                    else
+                        MainStackPanel.Children.Add(new OptionSettingControl(s) { Visibility = Visibility.Collapsed });
                     break;
             }
         }

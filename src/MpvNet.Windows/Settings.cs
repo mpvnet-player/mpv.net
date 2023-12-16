@@ -16,6 +16,7 @@ public abstract class Setting
     public string? Value { get; set; }
 
     public int Width { get; set; }
+    public int OptionNameWidth { get; set; } = 100;
 
     public ConfItem? ConfItem { get; set; }
 }
@@ -35,12 +36,13 @@ public class OptionSettingOption
 
     public string? Name { get; set; }
     public string? Help { get; set; }
+    public int OptionWidth { get => OptionSetting!.OptionNameWidth; }
 
     public OptionSetting? OptionSetting { get; set; }
 
     public string? Text
     {
-        get => string.IsNullOrEmpty(_text) ? Name : _text;
+        get => _text ?? Name;
         set => _text = value;
     }
 

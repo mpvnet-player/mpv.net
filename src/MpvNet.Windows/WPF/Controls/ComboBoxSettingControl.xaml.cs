@@ -6,11 +6,11 @@ using MpvNet.Windows.UI;
 
 namespace MpvNet.Windows.WPF;
 
-public partial class OptionSettingControl : UserControl, ISettingControl
+public partial class ComboBoxSettingControl : UserControl, ISettingControl
 {
     OptionSetting OptionSetting;
 
-    public OptionSettingControl(OptionSetting optionSetting)
+    public ComboBoxSettingControl(OptionSetting optionSetting)
     {
         OptionSetting = optionSetting;
         InitializeComponent();
@@ -21,11 +21,11 @@ public partial class OptionSettingControl : UserControl, ISettingControl
             HelpTextBox.Visibility = Visibility.Collapsed;
 
         HelpTextBox.Text = optionSetting.Help;
+        ComboBoxControl.ItemsSource = optionSetting.Options;
 
-        if (string.IsNullOrEmpty(optionSetting.Help))
-            LinkTextBlock.Margin = new Thickness(2, 6, 0, 0);
-
-        ItemsControl.ItemsSource = optionSetting.Options;
+        foreach (var item in optionSetting.Options)
+            if (item.Name == optionSetting.Value)
+                ComboBoxControl.SelectedItem = item;
 
         if (string.IsNullOrEmpty(optionSetting.URL))
             LinkTextBlock.Visibility = Visibility.Collapsed;
@@ -60,5 +60,10 @@ public partial class OptionSettingControl : UserControl, ISettingControl
         }
 
         return false;
+    }
+
+    void ComboBoxControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        OptionSetting.Value = (ComboBoxControl.SelectedItem as OptionSettingOption)?.Name;
     }
 }
