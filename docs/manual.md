@@ -636,14 +636,32 @@ https://mpv.io/manual/master/#window
 - [window-scale](https://mpv.io/manual/master/#options-window-scale)
 
 
-**Partly implemented are:**
+**Partly implemented or modified:**
 
-- [autofit-larger](https://mpv.io/manual/master/#options-autofit-larger)  
-  Supported is a single integer value in the range 0-100.
-- [autofit-smaller](https://mpv.io/manual/master/#options-autofit-smaller)  
-  Supported is a single integer value in the range 0-100.
-- [autofit](https://mpv.io/manual/master/#options-autofit)  
-  Supported is a single integer value in the range 0-100.
+#### --autofit=\<int\>
+
+\<int\> Initial window height in percent. Default: 60
+
+#### --autofit-smaller=\<int\>
+
+\<int\> Minimum window height in percent. Default: 10
+
+#### --autofit-larger=\<int\>
+
+\<int\> Maximum window height in percent. Default: 80
+
+#### --geometry\<x:y\>
+
+Initial window location in percent. Default: 50:50 (centered)
+
+x=0 docks the window to the left side.  
+x=100 docks the window to the right side.  
+
+y=0 docks the window to the top side.  
+y=100 docks the window to the bottom side.
+
+
+**mpv.net specific window features:**
 
 mpv.net specific window features are documented in the [screen section](#screen).
 

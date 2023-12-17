@@ -6,6 +6,7 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Threading;
 using System.Windows.Forms.Integration;
+using System.Text.RegularExpressions;
 
 using MpvNet.Windows.WPF;
 using MpvNet.Windows.UI;
@@ -506,7 +507,7 @@ public partial class MainForm : Form
         return null;
     }
 
-    void SetFormPosAndSize(bool force = false, bool checkAutofit = true)
+    void SetFormPosAndSize(bool force = false, bool checkAutofit = true, bool load = false)
     {
         if (!force)
         {
@@ -601,14 +602,14 @@ public partial class MainForm : Form
                 height = windowSize.Height;
                 width = windowSize.Width;
             }
-
+            
             Player.WasInitialSizeSet = true;
         }
 
-        SetSize(width, height, screen, checkAutofit);
+        SetSize(width, height, screen, checkAutofit, load);
     }
 
-    void SetSize(int width, int height, Screen screen, bool checkAutofit = true)
+    void SetSize(int width, int height, Screen screen, bool checkAutofit = true, bool load = false)
     {
         Rectangle workingArea = WinApiHelp.GetWorkingArea(Handle, screen.WorkingArea);
 
@@ -655,16 +656,19 @@ public partial class MainForm : Form
         var rect = new Rect(new Rectangle(screen.Bounds.X, screen.Bounds.Y, width, height));
         WinApiHelp.AddWindowBorders(Handle, ref rect, GetDpi(Handle));
 
-        int left = middlePos.X - rect.Width / 2;
-        int top = middlePos.Y - rect.Height / 2;
+        width = rect.Width;
+        height = rect.Height;
+
+        int left = middlePos.X - width / 2;
+        int top = middlePos.Y - height / 2;
 
         Rectangle currentRect = new Rectangle(Left, Top, Width, Height);
 
         if (GetHorizontalLocation(screen) == -1) left = Left;
-        if (GetHorizontalLocation(screen) ==  1) left = currentRect.Right - rect.Width;
+        if (GetHorizontalLocation(screen) ==  1) left = currentRect.Right - width;
 
         if (GetVerticalLocation(screen) == -1) top = Top;
-        if (GetVerticalLocation(screen) ==  1) top = currentRect.Bottom - rect.Height;
+        if (GetVerticalLocation(screen) ==  1) top = currentRect.Bottom - height;
 
         Screen[] screens = Screen.AllScreens;
 
@@ -673,20 +677,54 @@ public partial class MainForm : Form
         int minTop    = screens.Select(val => WinApiHelp.GetWorkingArea(Handle, val.WorkingArea).Y).Min();
         int maxBottom = screens.Select(val => WinApiHelp.GetWorkingArea(Handle, val.WorkingArea).Bottom).Max();
 
+        if (load && App.CommandLine.Contains(" --geometry="))
+        {
+            string geometryString = Environment.GetCommandLineArgs()
+                .Where(i => i.StartsWith("--geometry=")).First().Substring(11);
+
+            var geometry = ParseGeometry(geometryString, WinApiHelp.GetWorkingArea(
+                Handle, Screen.FromHandle(Handle).WorkingArea), width, height);
+
+            if (geometry.x != int.MaxValue)
+                left = geometry.x;
+
+            if (geometry.y != int.MaxValue)
+                top = geometry.y;
+        }
+
         if (left < minLeft)
             left = minLeft;
 
-        if (left + rect.Width > maxRight)
-            left = maxRight - rect.Width;
+        if (left + width > maxRight)
+            left = maxRight - width;
 
         if (top < minTop)
             top = minTop;
 
-        if (top + rect.Height > maxBottom)
-            top = maxBottom - rect.Height;
+        if (top + height > maxBottom)
+            top = maxBottom - height;
 
         uint SWP_NOACTIVATE = 0x0010;
-        SetWindowPos(Handle, IntPtr.Zero, left, top, rect.Width, rect.Height, SWP_NOACTIVATE);
+        SetWindowPos(Handle, IntPtr.Zero, left, top, width, height, SWP_NOACTIVATE);
+    }
+
+    (int x, int y) ParseGeometry(string input, Rectangle workingArea, int width, int height)
+    {
+        int x = int.MaxValue;
+        int y = int.MaxValue;
+
+        Match match = Regex.Match(input, @"^(\d+)%?:(\d+)%?$");
+
+        if (match.Success)
+        {
+            x = int.Parse(match.Groups[1].Value);
+            y = int.Parse(match.Groups[2].Value);
+            
+            x = workingArea.Left + Convert.ToInt32((workingArea.Width - width) / 100.0 * x);
+            y = workingArea.Top + Convert.ToInt32((workingArea.Height - height) / 100.0 * y);
+        }
+
+        return (x, y);
     }
 
     public void CycleFullscreen(bool enabled)
@@ -1220,10 +1258,12 @@ public partial class MainForm : Form
     protected override void OnLoad(EventArgs e)
     {
         base.OnLoad(e);
+
         if (Player.GPUAPI != "vulkan")
             Player.VideoSizeAutoResetEvent.WaitOne(App.StartThreshold);
+
         _lastCycleFullscreen = Environment.TickCount;
-        SetFormPosAndSize();
+        SetFormPosAndSize(false, true, true);
     }
 
     protected override void OnLostFocus(EventArgs e)

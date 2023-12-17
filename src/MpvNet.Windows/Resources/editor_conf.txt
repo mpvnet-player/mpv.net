@@ -348,20 +348,23 @@ file = libplacebo
 directory = Video/libplacebo/Debanding
 help = <0.0..1000.0> Add some extra noise to the image. This significantly helps cover up remaining quantization artifacts. Higher numbers add more noise. Defaults to 4.0, which is very mild.
 
-name = deband_grain_neutral_r
+name = sigmoid
 file = libplacebo
-directory = Video/libplacebo/Debanding
-help = 'Neutral' grain value for each channel being debanded. Grain application will be modulated to avoid disturbing colors close to this value. Set this to a value corresponding to black in the relevant colorspace.
+directory = Video/libplacebo/Sigmoidization
+help = Enables sigmoidization.
+default = yes
+option = yes
+option = no
 
-name = deband_grain_neutral_g
+name = sigmoid_center
 file = libplacebo
-directory = Video/libplacebo/Debanding
-help = 'Neutral' grain value for each channel being debanded. Grain application will be modulated to avoid disturbing colors close to this value. Set this to a value corresponding to black in the relevant colorspace.
+directory = Video/libplacebo/Sigmoidization
+help = <0.0..1.0> The center (bias) of the sigmoid curve. Defaults to 0.75.
 
-name = deband_grain_neutral_b
+name = sigmoid_slope
 file = libplacebo
-directory = Video/libplacebo/Debanding
-help = 'Neutral' grain value for each channel being debanded. Grain application will be modulated to avoid disturbing colors close to this value. Set this to a value corresponding to black in the relevant colorspace.
+directory = Video/libplacebo/Sigmoidization
+help = <1.0..20.0> The slope (steepness) of the sigmoid curve. Defaults to 6.5.
 
 name = screenshot-directory
 file = mpv
@@ -558,6 +561,16 @@ file = mpv
 directory = Screen
 help = <int> Initial window height in percent. Default: 60
 
+name = autofit-smaller
+file = mpv
+directory = Screen
+help = <int> Minimum window height in percent. Default: 10
+
+name = autofit-larger
+file = mpv
+directory = Screen
+help = <int> Maximum window height in percent. Default: 80
+
 name = autofit-image
 file = mpvnet
 directory = Screen
@@ -568,15 +581,10 @@ file = mpvnet
 directory = Screen
 help = <int> Initial window height in percent for audio files. Default: 70
 
-name = autofit-smaller
-file = mpv
+name = geometry
+file = mpvnet
 directory = Screen
-help = <int> Minimum window height in percent. Default: 10
-
-name = autofit-larger
-file = mpv
-directory = Screen
-help = <int> Maximum window height in percent. Default: 80
+help = <x:y> Initial window location in percent. Default: 50:50 (centered)\n\nx=0 docks the window to the left side.\nx=100 docks the window to the right side.\ny=0 docks the window to the top side.\ny=100 docks the window to the bottom side.
 
 name = start-size
 file = mpvnet

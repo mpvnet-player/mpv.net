@@ -1,7 +1,9 @@
 
 # v7.0.0.4 Beta (2023-??-??)
 
-- Updated manual.
+- Limited support for the mpv option `geometry`, it supports location in percent,
+  for size use `autofit`. Please read the instructions in the mpv.net manual or in the conf editor.
+- Updated and improved manual.
 - mpv.net is available via command line package manager winget.
 - New libplacebo config editor options added.
 - The conf editor uses a newly developed combo box control (dropdown menu)
