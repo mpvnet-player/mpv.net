@@ -11,12 +11,14 @@ AppVersion={#MyAppVersion}
 AppPublisher=Frank Skare (stax76)
 ArchitecturesInstallIn64BitMode=x64
 Compression=lzma2
-DefaultDirName={commonpf}\{#MyAppName}
+DefaultDirName={autopf}\{#MyAppName}
 OutputBaseFilename=mpv.net-v{#MyAppVersion}-setup
 OutputDir=E:\Desktop
 DefaultGroupName={#MyAppName}
 SetupIconFile=..\..\MpvNet.Windows\mpv-icon.ico
 UninstallDisplayIcon={app}\{#MyAppExeName}
+PrivilegesRequired=admin
+PrivilegesRequiredOverridesAllowed=dialog
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"

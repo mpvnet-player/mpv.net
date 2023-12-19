@@ -1287,7 +1287,7 @@ public partial class MainForm : Form
 
         TaskHelp.Run(() => {
             System.Windows.Application.Current.Dispatcher.BeginInvoke(() => {
-                WinMpvHelp.AddToPath();
+                WinMpvHelp.Setup();
             }, DispatcherPriority.Background);
         });
     }

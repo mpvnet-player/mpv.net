@@ -1,6 +1,9 @@
 
-# v7.0.0.4 Beta (2023-??-??)
+# v7.0.0.4 Beta (2023-12-19)
 
+- When mpv.net is started for the first time from a new startup location,
+  it asks if file associations should be registered.
+- Setup supports installing per user in non admin mode.
 - Command line parser supports list options with `-add` suffix.
 - Fix window sometimes shown with wrong size.
 - Limited support for the mpv option `geometry`, it supports location in percent,
@@ -31,7 +34,8 @@
 - Conf editor support added for the mpv options:
   `reset-on-next-file`, `input-ipc-server`, `background`, `title`
 - Conf editor crash fixed.
-- When mpv.net is started for the first time from a new startup location, it asks if mpv.net should be added to the Path environment variable.
+- When mpv.net is started for the first time from a new startup location,
+  it asks if mpv.net should be added to the Path environment variable.
 
 # v7.0.0.2 Beta (2023-12-13)
 

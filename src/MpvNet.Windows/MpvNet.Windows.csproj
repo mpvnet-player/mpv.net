@@ -11,9 +11,9 @@
         <UseWindowsForms>true</UseWindowsForms>
         <ApplicationIcon>mpv-icon.ico</ApplicationIcon>
         <Product>mpv.net</Product>
-        <FileVersion>7.0.0.3</FileVersion>
-        <AssemblyVersion>7.0.0.3</AssemblyVersion>
-		<InformationalVersion>7.0.0.3</InformationalVersion>
+        <FileVersion>7.0.0.4</FileVersion>
+        <AssemblyVersion>7.0.0.4</AssemblyVersion>
+		<InformationalVersion>7.0.0.4</InformationalVersion>
 		<Nullable>enable</Nullable>
     </PropertyGroup>
 
