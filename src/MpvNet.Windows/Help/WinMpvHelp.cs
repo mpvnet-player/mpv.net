@@ -35,7 +35,7 @@ public class WinMpvHelp
             }
             else
                 Msg.ShowInfo("If you want to add mpv.net to the Path environment variable later," + BR +
-                    "you can do so with the context menu (Settings/Setup)");
+                    "you can do so with the context menu (Settings/Setup).");
         }
 
         var result2 = Msg.ShowQuestion("Would you like to register video file associations?", MessageBoxButton.YesNo);
@@ -51,7 +51,7 @@ public class WinMpvHelp
         }
         else
             Msg.ShowInfo("If you want to register file associations later," + BR +
-                "you can do so with the context menu (Settings/Setup)");
+                "you can do so with the context menu (Settings/Setup).");
 
         RegistryHelp.SetString("Setup", Folder.Startup);
     }
