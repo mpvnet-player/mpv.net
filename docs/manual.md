@@ -25,6 +25,7 @@ Table of contents
 * [Hidden Features](#hidden-features)
 * [Differences compared to mpv](#differences-compared-to-mpv)
 * [Environment Variables](#environment-variables)
+* [user-data](#user-data)
 * [Context Menu Commands](#context-menu)
 
 
@@ -268,12 +269,6 @@ Shows available [mpv input commands](https://mpv.io/manual/master/#list-of-input
 
 ### show-conf-editor
 Shows the conf editor.
-
-### show-decoders
-Shows available decoders.
-
-### show-demuxers
-Shows available demuxers.
 
 ### show-input-editor
 Shows the input editor.
@@ -706,6 +701,18 @@ Environment Variables
 
 Directory where mpv.net looks for user settings.
 
+
+user-data
+---------
+
+Script authors can access the following
+[user-data](https://mpv.io/manual/master/#command-interface-user-data) properties:
+
+```
+user-data/frontend/name
+user-data/frontend/version
+user-data/frontend/process-path
+```
 
 Context Menu Commands
 ---------------------

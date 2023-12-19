@@ -28,8 +28,8 @@
         <KeyBinding Key="n" Modifiers="Ctrl" Command="{Binding ShowMpvNetSpecificSettingsCommand}"/>
         <KeyBinding Key="F5" Command="{Binding PreviewMpvConfFileCommand}"/>
         <KeyBinding Key="F6" Command="{Binding PreviewMpvNetConfFileCommand}"/>
-        <KeyBinding Key="F1" Command="{Binding ShowMpvManualCommand}"/>
-        <KeyBinding Key="F2" Command="{Binding ShowMpvNetManualCommand}"/>
+        <KeyBinding Key="F1" Modifiers="Ctrl" Command="{Binding ShowMpvManualCommand}"/>
+        <KeyBinding Key="F2" Modifiers="Ctrl" Command="{Binding ShowMpvNetManualCommand}"/>
     </Window.InputBindings>
     
     <Grid>
@@ -40,7 +40,7 @@
         </Grid.RowDefinitions>
         
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="170" />
+            <ColumnDefinition Width="180" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
@@ -135,12 +135,12 @@
                     <Separator />
                     <MenuItem
                         Header="Show mpv manual"
-                        InputGestureText="F1"
+                        InputGestureText="Ctrl+F1"
                         Command="{Binding Data.ShowMpvManualCommand, Source={StaticResource BindingProxy}}"
                         />
                     <MenuItem
                         Header="Show mpv.net manual"
-                        InputGestureText="F2"
+                        InputGestureText="Ctrl+F2"
                         Command="{Binding Data.ShowMpvNetManualCommand, Source={StaticResource BindingProxy}}"
                         />
                 </ContextMenu>

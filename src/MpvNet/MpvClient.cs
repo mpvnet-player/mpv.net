@@ -64,7 +64,7 @@ public class MpvClient
                             OnEndFile(data);
                         }
                         break;
-                    case mpv_event_id.MPV_EVENT_FILE_LOADED:
+                    case mpv_event_id.MPV_EVENT_FILE_LOADED:  // triggered after MPV_EVENT_START_FILE
                         OnFileLoaded();
                         break;
                     case mpv_event_id.MPV_EVENT_PROPERTY_CHANGE:
@@ -82,7 +82,7 @@ public class MpvClient
                     case mpv_event_id.MPV_EVENT_COMMAND_REPLY:
                         OnCommandReply();
                         break;
-                    case mpv_event_id.MPV_EVENT_START_FILE:
+                    case mpv_event_id.MPV_EVENT_START_FILE:  // triggered before MPV_EVENT_FILE_LOADED
                         OnStartFile();
                         break;
                     case mpv_event_id.MPV_EVENT_AUDIO_RECONFIG:

@@ -44,6 +44,21 @@ file = mpvnet
 directory = General
 help = Used menu syntax for defining the context menu in input.conf.\nmpv.net by default uses '#menu:', uosc uses '#!' by default.
 
+name = video-sync
+file = mpv
+default = audio
+directory = General
+help = How the player synchronizes audio and video.\n\nFor more information visit:
+url = https://mpv.io/manual/master/#options-video-sync
+option = audio
+option = display-resample
+option = display-resample-vdrop
+option = display-resample-desync
+option = display-vdrop
+option = display-adrop
+option = display-desync
+option = desync
+
 name = debug-mode
 file = mpvnet
 default = no
@@ -85,8 +100,8 @@ option = nvdec-copy    copies video back to system RAM
 name = gpu-api
 file = mpv
 default = auto
-directory = Video
-help = Controls which type of graphics APIs will be accepted. Auto uses d3d11, it should only be changed in case of problems, Vulkan is not recommended.
+directory = Video/Render Options
+help = Controls which type of graphics APIs will be accepted. On Windows this defaults to d3d11 and should not be changed without a good reason.
 option = auto    Use any available API
 option = d3d11   Allow only gpu-context=d3d11
 option = opengl  Allow only OpenGL (requires OpenGL 2.1+ or GLES 2.0+)
@@ -95,7 +110,7 @@ option = vulkan  Allow only Vulkan
 name = gpu-context
 file = mpv
 default = auto
-directory = Video
+directory = Video/Render Options
 option = auto       auto-select
 option = d3d11      Win32, with native Direct3D 11 rendering.
 option = angle      Direct3D11 through the OpenGL ES translation layer ANGLE. This supports almost everything the win backend does (if the ANGLE build is new enough).
@@ -103,33 +118,10 @@ option = win        Win32/WGL
 option = dxinterop  (experimental) Win32, using WGL for rendering and Direct3D 9Ex for presentation. Works on Nvidia and AMD. Newer Intel chips with the latest drivers may also work.
 option = winvk      VK_KHR_win32_surface
 
-name = video-sync
-file = mpv
-default = audio
-directory = Video
-help = How the player synchronizes audio and video.\n\nFor more information visit:
-url = https://mpv.io/manual/master/#options-video-sync
-option = audio
-option = display-resample
-option = display-resample-vdrop
-option = display-resample-desync
-option = display-vdrop
-option = display-adrop
-option = display-desync
-option = desync
-
-name = d3d11va-zero-copy
-file = mpv
-default = no
-directory = Video
-url = https://mpv.io/manual/master/#options-d3d11va-zero-copy
-option = yes
-option = no
-
 name = scale
 file = mpv
 default = lanczos
-directory = Video/Render Options
+directory = Video/Render Options/Scaling
 help = The GPU renderer filter function to use when upscaling video. There are some more filters, but most are not as useful. For a complete list, pass help as value, e.g.: mpv --scale=help
 url = https://mpv.io/manual/master/#options-scale
 option = bilinear
@@ -143,7 +135,7 @@ option = oversample
 name = cscale
 file = mpv
 default = bilinear
-directory = Video/Render Options
+directory = Video/Render Options/Scaling
 help = As scale, but for interpolating chroma information. If the image is not subsampled, this option is ignored entirely.
 url = https://mpv.io/manual/master/#options-cscale
 option = bilinear
@@ -157,7 +149,7 @@ option = oversample
 name = dscale
 file = mpv
 default = lanczos
-directory = Video/Render Options
+directory = Video/Render Options/Scaling
 help = Like scale, but apply these filters on downscaling instead. \nIf no option is selected, it will keep the same with the upscaler.
 url = https://mpv.io/manual/master/#options-dscale
 option = bilinear
@@ -168,6 +160,22 @@ option = ewa_lanczossharp
 option = mitchell
 option = oversample
 
+name = correct-downscaling
+file = mpv
+default = no
+directory = Video/Render Options/Scaling
+help = When using convolution based filters, extend the filter size when downscaling. Increases quality, but reduces performance while downscaling.\n\nThis will perform slightly sub-optimally for anamorphic video (but still better than without it) since it will extend the size to match only the milder of the scale factors between the axes.
+option = yes
+option = no
+
+name = sigmoid-upscaling
+file = mpv
+default = no
+directory = Video/Render Options/Scaling
+help = When upscaling, use a sigmoidal color transform to avoid emphasizing ringing artifacts. This also implies linear-scaling.
+option = yes
+option = no
+
 name = dither-depth
 file = mpv
 default = no
@@ -177,22 +185,6 @@ option = no    Disable any dithering done by mpv.
 option = auto  Automatic selection. If output bit depth cannot be detected, 8 bits per component are assumed.
 option = 8     Dither to 8 bit output.
 option = 10    Dither to 10 bit output.
-
-name = correct-downscaling
-file = mpv
-default = no
-directory = Video/Render Options
-help = When using convolution based filters, extend the filter size when downscaling. Increases quality, but reduces performance while downscaling.\n\nThis will perform slightly sub-optimally for anamorphic video (but still better than without it) since it will extend the size to match only the milder of the scale factors between the axes.
-option = yes
-option = no
-
-name = sigmoid-upscaling
-file = mpv
-default = no
-directory = Video/Render Options
-help = When upscaling, use a sigmoidal color transform to avoid emphasizing ringing artifacts. This also implies linear-scaling.
-option = yes
-option = no
 
 name = deband
 file = mpv
@@ -219,6 +211,14 @@ url = https://mpv.io/manual/master/#options-allow-delayed-peak-detect
 option = yes
 option = no
 
+name = d3d11va-zero-copy
+file = mpv
+default = no
+directory = Video/Render Options
+url = https://mpv.io/manual/master/#options-d3d11va-zero-copy
+option = yes
+option = no
+
 name = background
 file = mpv
 directory = Video/Render Options
@@ -242,11 +242,10 @@ option = high_quality  Reset all everything to high quality presets (where avail
 name = upscaler
 file = libplacebo
 directory = Video/libplacebo/Scaling
-default = default
-help = Sets the filter used for upscaling. Defaults to lanczos.
+default = lanczos
+help = Sets the filter used for upscaling.
 url = https://libplacebo.org/options/#upscalerfilter
 option-name-width = 135
-option = default  Default.
 option = none  No filter, only use basic GPU texture sampling.
 option = nearest  Nearest-neighbour (box) sampling (very fast).
 option = bilinear  Bilinear sampling (very fast).
@@ -263,7 +262,7 @@ name = downscaler
 file = libplacebo
 directory = Video/libplacebo/Scaling
 default = hermite
-help = Sets the filter used for downscaling. Defaults to hermite. The most relevant options, roughly ordered from fastest to slowest.
+help = Sets the filter used for downscaling. The most relevant options, roughly ordered from fastest to slowest.
 option = none         Use the same filter as specified for upscaler
 option = box          Box averaging (very fast)
 option = hermite      Hermite-weighted averaging (fast)
@@ -323,7 +322,7 @@ help = <0.0..1.0> Antiringing strength to use for all filters. A value of 0.0 di
 name = deband
 file = libplacebo
 directory = Video/libplacebo/Debanding
-help = Enables debanding.
+help = Enables debanding using libplacebo.
 default = no
 option = yes
 option = no
@@ -509,10 +508,16 @@ type = color
 directory = Subtitle
 help = See sub-color. Color used for sub text background. You can use sub-shadow-offset to change its size relative to the text.
 
+name = title
+file = mpv
+directory = Window
+width = 400
+help = Set the window title. This is used for the video window, and if possible, also sets the audio stream title. Properties are expanded. Warning! There is a danger of this causing significant CPU usage, depending on the properties used.
+
 name = fullscreen
 file = mpv
 default = no
-directory = Screen
+directory = Window
 help = Start the player in fullscreen mode.
 option = yes
 option = no
@@ -520,76 +525,84 @@ option = no
 name = border
 file = mpv
 default = yes
-directory = Screen
+directory = Window
 help = Show window with decoration (titlebar, border).
 option = yes
 option = no
 
 name = screen
 file = mpv
-directory = Screen
+directory = Window
 help = <0-32> In multi-monitor configurations (i.e. a single desktop that spans across multiple displays), this option tells mpv which screen to display the video on.
+
+name = taskbar-progress
+file = mpv
+default = yes
+directory = Window
+help = Show progress in taskbar.
+option = yes
+option = no
 
 name = osd-playing-msg
 file = mpv
 width = 300
-directory = Screen
+directory = Window
 type = string
 help = Show a message on OSD when playback starts. The string is expanded for properties, e.g. osd-playing-msg='file: ${filename}' will show the message file: followed by a space and the currently played filename. For more information visit:
 url = https://mpv.io/manual/master/#property-expansion
 
 name = osd-font-size
 file = mpv
-directory = Screen
+directory = Window
 help = Specify the OSD font size. See sub-font-size for details. Default: 55
 
 name = osd-duration
 file = mpv
-directory = Screen
+directory = Window
 help = Set the duration of the OSD messages in ms. Default: 1000
 
 name = osd-scale-by-window
 file = mpv
 default = yes
-directory = Screen
+directory = Window
 help = Whether to scale the OSD with the window size. If this is disabled, osd-font-size and other OSD options that use scaled pixels are always in actual pixels. The effect is that changing the window size won't change the OSD font size.
 option = yes
 option = no
 
 name = autofit
 file = mpv
-directory = Screen
+directory = Window
 help = <int> Initial window height in percent. Default: 60
 
 name = autofit-smaller
 file = mpv
-directory = Screen
+directory = Window
 help = <int> Minimum window height in percent. Default: 10
 
 name = autofit-larger
 file = mpv
-directory = Screen
+directory = Window
 help = <int> Maximum window height in percent. Default: 80
 
 name = autofit-image
 file = mpvnet
-directory = Screen
+directory = Window
 help = <int> Initial window height in percent for image files. Default: 80
 
 name = autofit-audio
 file = mpvnet
-directory = Screen
+directory = Window
 help = <int> Initial window height in percent for audio files. Default: 70
 
 name = geometry
 file = mpvnet
-directory = Screen
+directory = Window
 help = <x:y> Initial window location in percent. Default: 50:50 (centered)\n\nx=0 docks the window to the left side.\nx=100 docks the window to the right side.\ny=0 docks the window to the top side.\ny=100 docks the window to the bottom side.
 
 name = start-size
 file = mpvnet
 default = height-session
-directory = Screen
+directory = Window
 help = Setting to remember the window size. (mpv.net option)
 option = width-session   Window width is remembered in the current session
 option = width-always    Window width is always remembered
@@ -602,25 +615,25 @@ option = always          Window size is always remembered
 name = keepaspect-window
 file = mpv
 default = yes
-directory = Screen
+directory = Window
 help = keepaspect-window will lock the window size to the video aspect. Default: yes
 option = yes
 option = no
 
 name = minimum-aspect-ratio
 file = mpvnet
-directory = Screen
+directory = Window
 help = <float> Minimum aspect ratio of the window. Useful to force a wider window and therefore a larger OSC. (mpv.net option)
 
 name = minimum-aspect-ratio-audio
 file = mpvnet
-directory = Screen
+directory = Window
 help = Same as minimum-aspect-ratio but used for audio files.
 
 name = remember-window-position
 file = mpvnet
 default = no
-directory = Screen
+directory = Window
 help = Save the window position on exit. (mpv.net option)
 option = yes
 option = no
@@ -628,7 +641,7 @@ option = no
 name = snap-window
 file = mpv
 default = no
-directory = Screen
+directory = Window
 help = Snap the player window to screen edges.
 option = yes
 option = no
@@ -636,27 +649,8 @@ option = no
 name = window-maximized
 file = mpv
 default = no
-directory = Screen
-help = Start with a maximized window.
-option = yes
-option = no
-
-name = start-threshold
-file = mpvnet
-directory = Screen
-help = Threshold in milliseconds to wait for libmpv returning the video resolution before the window is shown, otherwise default dimensions are used as defined by autofit and start-size. Default: 1500 (mpv.net option)
-
-name = title
-file = mpv
 directory = Window
-width = 400
-help = Set the window title. This is used for the video window, and if possible, also sets the audio stream title. Properties are expanded. Warning! There is a danger of this causing significant CPU usage, depending on the properties used.
-
-name = taskbar-progress
-file = mpv
-default = yes
-directory = Playback
-help = Show progress in taskbar.
+help = Start with a maximized window.
 option = yes
 option = no
 

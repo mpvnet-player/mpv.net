@@ -50,7 +50,6 @@ public class MainPlayer : MpvClient
     public float AutofitLarger { get; set; } = 0.8f;
 
     public AutoResetEvent ShutdownAutoResetEvent { get; } = new AutoResetEvent(false);
-    public AutoResetEvent VideoSizeAutoResetEvent { get; } = new AutoResetEvent(false);
     public nint MainHandle { get; set; }
     public List<MediaTrack> MediaTracks { get; set; } = new List<MediaTrack>();
     public List<TimeSpan> BluRayTitles { get; } = new List<TimeSpan>();
@@ -64,7 +63,7 @@ public class MainPlayer : MpvClient
     public event Action<int>? PlaylistPosChanged;
     public event Action<Size>? VideoSizeChanged;
 
-    public void Init(IntPtr formHandle)
+    public void Init(IntPtr formHandle, bool processCommandLineArguments = true)
     {
         App.ApplyShowMenuFix();
 
@@ -104,17 +103,18 @@ public class MainPlayer : MpvClient
         SetPropertyString("force-window", "yes");        
         SetPropertyString("config-dir", ConfigFolder);
         SetPropertyString("config", "yes");
-
+        
         UsedInputConfContent = App.InputConf.GetContent();
 
         if (!string.IsNullOrEmpty(UsedInputConfContent))
             SetPropertyString("input-conf", @"memory://" + UsedInputConfContent);
 
-        ProcessCommandLineArgs();
+        if (processCommandLineArguments)
+            ProcessCommandLineArgs();
 
-        if (App.CommandLineArguments.ContainsKey("config-dir"))
+        if (CommandLine.Contains("config-dir"))
         {
-            string configDir = App.CommandLineArguments["config-dir"];
+            string configDir = CommandLine.GetValue("config-dir");
             string fullPath = System.IO.Path.GetFullPath(configDir);
             App.InputConf.Path = fullPath.AddSep() + "input.conf";
             string content = App.InputConf.GetContent();
@@ -151,16 +151,20 @@ public class MainPlayer : MpvClient
         // this means Lua scripts that use idle might not work correctly
         SetPropertyString("idle", "yes");
 
-        ObservePropertyString("path", value => Path = value);
-
         ObservePropertyBool("pause", value => {
             Paused = value;
             Pause?.Invoke();
         });
 
-        ObservePropertyInt("video-rotate", value => {
-            VideoRotate = value;
-            UpdateVideoSize("dwidth", "dheight");
+        VideoRotate = GetPropertyInt("video-rotate");
+
+        ObservePropertyInt("video-rotate", value =>
+        {
+            if (VideoRotate != value)
+            {
+                VideoRotate = value;
+                UpdateVideoSize("dwidth", "dheight");
+            }
         });
 
         ObservePropertyInt("playlist-pos", value => {
@@ -171,9 +175,6 @@ public class MainPlayer : MpvClient
                 if (GetPropertyString("keep-open") == "no" && App.Exit)
                     CommandV("quit");
         });
-
-        if (!GetPropertyBool("osd-scale-by-window"))
-            App.StartThreshold = 0;
 
         Initialized?.Invoke();
     }
@@ -315,19 +316,18 @@ public class MainPlayer : MpvClient
 
     void UpdateVideoSize(string w, string h)
     {
-        Size size = new Size(GetPropertyInt(w), GetPropertyInt(h));
-
-        if (size.Width == 0 || size.Height == 0)
+        if (string.IsNullOrEmpty(Path))
             return;
+
+        Size size = new Size(GetPropertyInt(w), GetPropertyInt(h));
 
         if (VideoRotate == 90 || VideoRotate == 270)
             size = new Size(size.Height, size.Width);
 
-        if (VideoSize != size)
+        if (size != VideoSize && size != Size.Empty)
         {
             VideoSize = size;
             VideoSizeChanged?.Invoke(size);
-            VideoSizeAutoResetEvent.Set();
         }
     }
 
@@ -357,24 +357,27 @@ public class MainPlayer : MpvClient
         base.OnLogMessage(data);
     }
 
-    protected override void OnVideoReconfig()
-    {
-        UpdateVideoSize("dwidth", "dheight");
-        base.OnVideoReconfig();
-    }
-
     protected override void OnEndFile(mpv_event_end_file data)
     {
         base.OnEndFile(data);
         FileEnded = true;
     }
 
+    protected override void OnVideoReconfig()
+    {
+        UpdateVideoSize("dwidth", "dheight");
+        base.OnVideoReconfig();
+    }
+
+    // executed before OnFileLoaded
     protected override void OnStartFile()
     {
+        Path = GetPropertyString("path");
         base.OnStartFile();
         TaskHelp.Run(LoadFolder);
     }
 
+    // executed after OnStartFile
     protected override void OnFileLoaded()
     {
         Duration = TimeSpan.FromSeconds(GetPropertyDouble("duration"));
@@ -382,13 +385,8 @@ public class MainPlayer : MpvClient
         if (App.StartSize == "video")
             WasInitialSizeSet = false;
 
-        string path = GetPropertyString("path");
-
-        if (!FileTypes.Video.Contains(path.Ext()) || FileTypes.Audio.Contains(path.Ext()))
-        {
+        if (!FileTypes.Video.Contains(Path.Ext()) || FileTypes.Audio.Contains(Path.Ext()))
             UpdateVideoSize("width", "height");
-            VideoSizeAutoResetEvent.Set();
-        }
 
         TaskHelp.Run(UpdateTracks);
 
@@ -417,75 +415,28 @@ public class MainPlayer : MpvClient
 
     public void ProcessCommandLineArgs()
     {
-         foreach (string i in Environment.GetCommandLineArgs().Skip(1))
+        foreach (var pair in CommandLine.Arguments)
         {
-            string arg = i;
-
-            if (!arg.StartsWith("--"))
+            if (pair.Name.EndsWith("-add"))
                 continue;
 
-            if (arg == "--profile=help")
-            {
-                Console.WriteLine(GetProfiles());
-                continue;
-            }
-            else if (arg == "--vd=help" || arg == "--ad=help")
-            {
-                Console.WriteLine(GetDecoders());
-                continue;
-            }
-            else if (arg == "--audio-device=help")
-            {
-                Console.WriteLine(GetPropertyOsdString("audio-device-list"));
-                continue;
-            }
-            else if (arg == "--version")
-            {
-                Console.WriteLine(AppClass.About);
-                continue;
-            }
-            else if (arg == "--input-keylist")
-            {
-                Console.WriteLine(GetPropertyString("input-key-list").Replace(",", BR));
-                continue;
-            }
-            else if (arg.StartsWith("--command="))
-            {
-                Command(arg[10..]);
-                continue;
-            }
+            ProcessProperty(pair.Name, pair.Value);
 
-            if (!arg.Contains('='))
+            if (!App.ProcessProperty(pair.Name, pair.Value))
+                SetPropertyString(pair.Name, pair.Value);
+        }
+    }
+
+    public void ProcessCommandLineArgsPost()
+    {
+        foreach (var pair in CommandLine.Arguments)
+        {
+            if (pair.Name.EndsWith("-add"))
             {
-                if (arg.Contains("--no-"))
-                {
-                    arg = arg.Replace("--no-", "--");
-                    arg += "=no";
-                }
-                else
-                    arg += "=yes";
+                string name = pair.Name[..^4];
+                string separator = name.Contains("-file") || name.Contains("-path") ? ";" : ",";
+                SetPropertyString(name, GetPropertyString(name) + separator + pair.Value);
             }
-
-            string left = arg[2..arg.IndexOf("=")];
-            string right = arg[(left.Length + 3)..];
-
-            if (string.IsNullOrEmpty(left))
-                continue;
-
-            switch (left)
-            {
-                case "script": left = "scripts"; break;
-                case "audio-file": left = "audio-files"; break;
-                case "sub-file": left = "sub-files"; break;
-                case "external-file": left = "external-files"; break;
-            }
-
-            App.CommandLineArguments[left] = right;
-
-            ProcessProperty(left, right);
-
-            if (!App.ProcessProperty(left, right))
-                SetPropertyString(left, right);
         }
     }
 
@@ -505,12 +456,6 @@ public class MainPlayer : MpvClient
         {
             Command("playlist-shuffle");
             SetPropertyInt("playlist-pos", 0);
-        }
-
-        if (files.Count == 0 || files[0].Contains("://"))
-        {
-            VideoSizeChanged?.Invoke(VideoSize);
-            VideoSizeAutoResetEvent.Set();
         }
     }
 

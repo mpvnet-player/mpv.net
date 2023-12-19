@@ -10,7 +10,6 @@ namespace MpvNet;
 public class AppClass
 {
     public List<string> TempFiles { get; } = new ();
-    public Dictionary<string, string> CommandLineArguments { get; } = new ();
 
     public string ConfPath { get => Player.ConfigFolder + "mpvnet.conf"; }
     public string ProcessInstance { get; set; } = "single";
@@ -31,7 +30,6 @@ public class AppClass
     public bool RememberVolume { get; set; } = true;
     public bool RememberWindowPosition { get; set; }
 
-    public int StartThreshold { get; set; } = 1500;
     public int RecentCount { get; set; } = 15;
 
     public float AutofitAudio { get; set; } = 0.7f;
@@ -155,7 +153,6 @@ public class AppClass
             case "remember-volume": RememberVolume = value == "yes"; return true;
             case "remember-window-position": RememberWindowPosition = value == "yes"; return true;
             case "start-size": StartSize = value; return true;
-            case "start-threshold": StartThreshold = value.ToInt(1500); return true;
             case "video-file-extensions": FileTypes.Video = value.Split(" ,;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries); return true;
 
             default:

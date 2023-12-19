@@ -68,8 +68,7 @@ public partial class MainForm : Form
             GuiCommand.Current.WindowScaleNet += GuiCommand_WindowScaleNet;
             GuiCommand.Current.ShowMenu += GuiCommand_ShowMenu;
 
-            if (Player.GPUAPI != "vulkan")
-                Init();
+            Init();
 
             _taskbarButtonCreatedMessage = RegisterWindowMessage("TaskbarButtonCreated");
 
@@ -163,6 +162,7 @@ public partial class MainForm : Form
 
         Player.ObservePropertyDouble("window-scale", PropChangeWindowScale);
 
+        Player.ProcessCommandLineArgsPost();
         Player.ProcessCommandLineFiles();
     }
 
@@ -677,10 +677,9 @@ public partial class MainForm : Form
         int minTop    = screens.Select(val => WinApiHelp.GetWorkingArea(Handle, val.WorkingArea).Y).Min();
         int maxBottom = screens.Select(val => WinApiHelp.GetWorkingArea(Handle, val.WorkingArea).Bottom).Max();
 
-        if (load && App.CommandLine.Contains(" --geometry="))
+        if (load && CommandLine.Contains("geometry"))
         {
-            string geometryString = Environment.GetCommandLineArgs()
-                .Where(i => i.StartsWith("--geometry=")).First().Substring(11);
+            string geometryString = CommandLine.GetValue("geometry");
 
             var geometry = ParseGeometry(geometryString, WinApiHelp.GetWorkingArea(
                 Handle, Screen.FromHandle(Handle).WorkingArea), width, height);
@@ -1258,10 +1257,6 @@ public partial class MainForm : Form
     protected override void OnLoad(EventArgs e)
     {
         base.OnLoad(e);
-
-        if (Player.GPUAPI != "vulkan")
-            Player.VideoSizeAutoResetEvent.WaitOne(App.StartThreshold);
-
         _lastCycleFullscreen = Environment.TickCount;
         SetFormPosAndSize(false, true, true);
     }
@@ -1275,9 +1270,6 @@ public partial class MainForm : Form
     protected override void OnShown(EventArgs e)
     {
         base.OnShown(e);
-
-        if (Player.GPUAPI == "vulkan")
-            Init();
 
         if (WindowState == FormWindowState.Maximized)
             Player.SetPropertyBool("window-maximized", true);

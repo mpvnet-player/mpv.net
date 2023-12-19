@@ -1,4 +1,5 @@
-﻿namespace MpvNet.Windows;
+﻿
+namespace MpvNet;
 
 public class StringPair
 {

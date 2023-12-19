@@ -7,7 +7,6 @@ using MpvNet.Help;
 using MpvNet.Windows.UI;
 using MpvNet.Windows.Help;
 using MpvNet.Windows.WPF;
-using System.Diagnostics;
 
 namespace MpvNet.Windows;
 
@@ -97,10 +96,13 @@ static class Program
                 return;
             }
 
-            if (App.CommandLine.Contains("--o="))
+            if (ProcessCommandLineArguments())
+                Environment.GetCommandLineArgs();
+            else if (App.CommandLine.Contains("--o="))
             {
                 App.AutoLoadFolder = false;
                 Player.Init(IntPtr.Zero);
+                Player.ProcessCommandLineArgsPost();
                 Player.ProcessCommandLineFiles();
                 Player.SetPropertyString("idle", "no");
                 Player.EventLoop();
@@ -118,5 +120,49 @@ static class Program
         {
             Terminal.WriteError(ex);
         }
+    }
+
+    static bool ProcessCommandLineArguments()
+    {
+        foreach (string arg in Environment.GetCommandLineArgs().Skip(1))
+        {
+            if (arg == "--profile=help")
+            {
+                Player.Init(IntPtr.Zero, false);
+                Console.WriteLine(Player.GetProfiles());
+                Player.Destroy();
+                return true;
+            }
+            else if (arg == "--vd=help" || arg == "--ad=help")
+            {
+                Player.Init(IntPtr.Zero, false);
+                Console.WriteLine(Player.GetDecoders());
+                Player.Destroy();
+                return true;
+            }
+            else if (arg == "--audio-device=help")
+            {
+                Player.Init(IntPtr.Zero, false);
+                Console.WriteLine(Player.GetPropertyOsdString("audio-device-list"));
+                Player.Destroy();
+                return true;
+            }
+            else if (arg == "--input-keylist")
+            {
+                Player.Init(IntPtr.Zero, false);
+                Console.WriteLine(Player.GetPropertyString("input-key-list").Replace(",", BR));
+                Player.Destroy();
+                return true;
+            }
+            else if (arg == "--version")
+            {
+                Player.Init(IntPtr.Zero, false);
+                Console.WriteLine(AppClass.About);
+                Player.Destroy();
+                return true;
+            }
+        }
+
+        return false;
     }
 }

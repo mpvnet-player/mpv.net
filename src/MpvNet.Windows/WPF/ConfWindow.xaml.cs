@@ -48,7 +48,7 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
             SelectNodeFromSearchText(node);
 
         foreach (var node in Nodes)
-            ExpandNode(node);
+            node.IsExpanded = true;
     }
 
     public Theme? Theme => Theme.Current;
@@ -134,7 +134,9 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
 
             foreach (ConfItem item in ConfItems)
             {
-                if (setting.Name == item.Name && item.Section == "" && !item.IsSectionItem)
+                if (setting.Name == item.Name &&
+                    setting.File == item.File &&
+                    item.Section == "" && !item.IsSectionItem)
                 {
                     setting.Value = item.Value;
                     setting.StartValue = setting.Value;
@@ -242,7 +244,7 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
             {
                 if (!isSectionItem && comment != "" && comment != "\r\n")
                     ConfItems.Add(new ConfItem() {
-                        Comment = comment, File = System.IO.Path.GetFileNameWithoutExtension(file)});
+                        Comment = comment, File = Path.GetFileNameWithoutExtension(file)});
 
                 section = line.Substring(0, line.IndexOf("]") + 1);
                 comment = "";
@@ -254,7 +256,7 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
                     line += "=yes";
 
                 ConfItem item = new();
-                item.File = System.IO.Path.GetFileNameWithoutExtension(file);
+                item.File = Path.GetFileNameWithoutExtension(file);
                 item.IsSectionItem = isSectionItem;
                 item.Comment = comment;
                 comment = "";
@@ -501,6 +503,7 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
         if (node.Path + ":" == SearchText)
         {
             node.IsSelected = true;
+            node.IsExpanded = true;
             return;
         }
 
@@ -515,14 +518,6 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
 
         foreach (var it in node.Children)
             UnselectNode(it);
-    }
-
-    void ExpandNode(NodeViewModel node)
-    {
-        node.IsExpanded = true;
-
-        foreach (var it in node.Children)
-            ExpandNode(it);
     }
 
     [RelayCommand] void ShowMpvNetSpecificSettings() => SearchText = "mpv.net";

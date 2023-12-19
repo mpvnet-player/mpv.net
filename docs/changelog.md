@@ -1,13 +1,19 @@
 
 # v7.0.0.4 Beta (2023-??-??)
 
+- Command line parser supports list options with `-add` suffix.
+- Fix window sometimes shown with wrong size.
 - Limited support for the mpv option `geometry`, it supports location in percent,
-  for size use `autofit`. Please read the instructions in the mpv.net manual or in the conf editor.
-- Updated and improved manual.
+  for size use `autofit`. Read the instructions in the mpv.net manual or in the conf editor.
+- Improved manual.
+- Improved bindings.
+- Conf editor reorganized according to options categories used in mpv manual.
 - mpv.net is available via command line package manager winget.
 - New libplacebo config editor options added.
 - The conf editor uses a newly developed combo box control (dropdown menu)
-  instead of radio buttons whenever an option has more than 3 items.
+  instead of radio buttons whenever an option has more than 3 items,
+  this improves the look and feel, usability and performance.
+  The navigation tree view was improved.
 - New zhongfly libmpv build.
 
 
