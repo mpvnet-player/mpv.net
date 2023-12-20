@@ -754,7 +754,7 @@ url = https://mpv.io/manual/master/#options-input-ipc-server
 name = language
 file = mpvnet
 default = system
-directory = UI
+directory = Appearance
 help = User interface display language.\nmpv.net must be restarted after a change.\nInterested joining our translation team?:
 url = https://app.transifex.com/stax76/teams/
 option = system
@@ -765,7 +765,7 @@ option = german
 name = dark-mode
 file = mpvnet
 default = always
-directory = UI
+directory = Appearance
 help = Changes between a light and dark theme.\nmpv.net must be restarted after a change.\nmpv.net specific option.
 option = always
 option = system  Available on Windows 10 or higher
@@ -773,13 +773,13 @@ option = never
 
 name = dark-theme
 file = mpvnet
-directory = UI
+directory = Appearance
 url = https://github.com/mpvnet-player/mpv.net/blob/main/docs/manual.md#color-theme
 help = Color theme used in dark mode.\nmpv.net must be restarted after a change.\nmpv.net specific option. Default: dark
 
 name = light-theme
 file = mpvnet
-directory = UI
+directory = Appearance
 url = https://github.com/mpvnet-player/mpv.net/blob/main/docs/manual.md#color-theme
 help = Color theme used in light mode.\nmpv.net must be restarted after a change.\nmpv.net specific option. Default: light
 

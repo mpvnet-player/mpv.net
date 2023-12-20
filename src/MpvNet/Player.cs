@@ -435,7 +435,7 @@ public class MainPlayer : MpvClient
             {
                 string name = pair.Name[..^4];
                 string separator = name.Contains("-file") || name.Contains("-path") ? ";" : ",";
-                SetPropertyString(name, (GetPropertyString(name) + separator + pair.Value).TrimStart(','));
+                SetPropertyString(name, (GetPropertyString(name) + separator + pair.Value).TrimStart(',', ';'));
             }
         }
     }

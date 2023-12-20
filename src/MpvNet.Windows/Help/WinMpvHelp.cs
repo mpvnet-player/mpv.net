@@ -8,14 +8,10 @@ public class WinMpvHelp
 {
     public static void Setup()
     {
-        string dir = RegistryHelp.GetString("PathEnvVarCheck");  // backward compatibility
+        if (RegistryHelp.GetString("PathEnvVarCheck") == Folder.Startup ||
+            RegistryHelp.GetString("Setup") == Folder.Startup ||
+            App.Settings.StartupFolder == Folder.Startup)
 
-        if (dir == Folder.Startup)
-            return;
-
-        dir = RegistryHelp.GetString("Setup");
-
-        if (dir == Folder.Startup)
             return;
 
         string path = Environment.GetEnvironmentVariable("Path", EnvironmentVariableTarget.User)!;
@@ -53,6 +49,6 @@ public class WinMpvHelp
             Msg.ShowInfo("If you want to register file associations later," + BR +
                 "you can do so with the context menu (Settings/Setup).");
 
-        RegistryHelp.SetString("Setup", Folder.Startup);
+        App.Settings.StartupFolder = Folder.Startup;
     }
 }

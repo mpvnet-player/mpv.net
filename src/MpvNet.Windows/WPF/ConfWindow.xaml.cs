@@ -22,11 +22,11 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
 {
     List<Setting> Settings = Conf.LoadConf(Properties.Resources.editor_conf.TrimEnd());
     List<ConfItem> ConfItems = new List<ConfItem>();
-    public ObservableCollection<string> FilterStrings { get; } = new();
     string InitialContent;
     string ThemeConf = GetThemeConf();
     string? _searchText;
     List<NodeViewModel>? _nodes;
+    bool _shown;
     public event PropertyChangedEventHandler? PropertyChanged;
 
     public ConfWindow()
@@ -50,6 +50,8 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
         foreach (var node in Nodes)
             node.IsExpanded = true;
     }
+
+    public ObservableCollection<string> FilterStrings { get; } = new();
 
     public Theme? Theme => Theme.Current;
 
@@ -161,64 +163,6 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
     }
 
     static string GetThemeConf() => Theme.DarkMode + App.DarkTheme + App.LightTheme;
-
-    protected override void OnClosed(EventArgs e)
-    {
-        base.OnClosed(e);
-        App.Settings.ConfigEditorSearch = SearchText;
-
-        if (InitialContent == GetCompareString())
-            return;
-
-        foreach (Setting setting in Settings)
-        {
-            if (setting.Name == "libplacebo-opts")
-            {
-                setting.Value = GetKeyValueContent("libplacebo");
-                break;
-            }
-        }
-
-        File.WriteAllText(Player.ConfPath, GetContent("mpv"));
-        File.WriteAllText(App.ConfPath, GetContent("mpvnet"));
-
-        foreach (Setting it in Settings)
-        {
-            if (it.Value != it.StartValue)
-            {
-                if (it.File == "mpv")
-                {
-                    Player.ProcessProperty(it.Name, it.Value);
-                    Player.SetPropertyString(it.Name!, it.Value!);
-                }
-                else if (it.File == "mpvnet")
-                    App.ProcessProperty(it.Name ?? "", it.Value ?? "", true);
-            }
-        }
-
-        Theme.Init();
-        Theme.UpdateWpfColors();
-
-        if (ThemeConf != GetThemeConf())
-            MessageBox.Show("Changed theme settings require mpv.net being restarted.", "Info");
-    }
-
-    bool _shown;
-
-    protected override void OnContentRendered(EventArgs e)
-    {
-        base.OnContentRendered(e);
-
-        if (_shown)
-            return;
-
-        _shown = true;
-
-        Application.Current.Dispatcher.BeginInvoke(() => {
-            SearchControl.SearchTextBox.SelectAll();
-        },
-        DispatcherPriority.Background);
-    }
 
     string GetCompareString() => string.Join("", Settings.Select(item => item.Name + item.Value).ToArray());
 
@@ -466,6 +410,47 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
             i.Update();
     }
 
+    protected override void OnClosed(EventArgs e)
+    {
+        base.OnClosed(e);
+        App.Settings.ConfigEditorSearch = SearchText;
+
+        if (InitialContent == GetCompareString())
+            return;
+
+        foreach (Setting setting in Settings)
+        {
+            if (setting.Name == "libplacebo-opts")
+            {
+                setting.Value = GetKeyValueContent("libplacebo");
+                break;
+            }
+        }
+
+        File.WriteAllText(Player.ConfPath, GetContent("mpv"));
+        File.WriteAllText(App.ConfPath, GetContent("mpvnet"));
+
+        foreach (Setting it in Settings)
+        {
+            if (it.Value != it.StartValue)
+            {
+                if (it.File == "mpv")
+                {
+                    Player.ProcessProperty(it.Name, it.Value);
+                    Player.SetPropertyString(it.Name!, it.Value!);
+                }
+                else if (it.File == "mpvnet")
+                    App.ProcessProperty(it.Name ?? "", it.Value ?? "", true);
+            }
+        }
+
+        Theme.Init();
+        Theme.UpdateWpfColors();
+
+        if (ThemeConf != GetThemeConf())
+            MessageBox.Show("Changed theme settings require mpv.net being restarted.", "Info");
+    }
+
     protected override void OnKeyDown(KeyEventArgs e)
     {
         base.OnKeyDown(e);
@@ -480,9 +465,22 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
         }
     }
 
-    protected void OnPropertyChanged([CallerMemberName] string? name = null)
-    {
+    protected void OnPropertyChanged([CallerMemberName] string? name = null) =>
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+
+    protected override void OnContentRendered(EventArgs e)
+    {
+        base.OnContentRendered(e);
+
+        if (_shown)
+            return;
+
+        _shown = true;
+
+        Application.Current.Dispatcher.BeginInvoke(() => {
+            SearchControl.SearchTextBox.SelectAll();
+        },
+        DispatcherPriority.Background);
     }
 
     void TreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)

@@ -3,6 +3,7 @@
 
 - Command line parser fix using list options with `-add` suffix.
 
+
 # v7.0.0.4 Beta (2023-12-19)
 
 - When mpv.net is started for the first time from a new startup location,

@@ -18,6 +18,7 @@ public class AppSettings
     public Size WindowSize;
     public string ConfigEditorSearch = "Video:";
     public string Mute = "no";
+    public string StartupFolder = "";
 }
 
 class SettingsManager

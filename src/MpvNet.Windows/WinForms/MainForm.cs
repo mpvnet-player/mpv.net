@@ -48,8 +48,7 @@ public partial class MainForm : Form
     {
         InitializeComponent();
 
-        if (Environment.OSVersion.Version >= new Version(10, 0, 18985) && Theme.DarkMode)
-            DwmSetWindowAttribute(Handle, 20, new[] { 1 }, 4);  // DWMWA_USE_IMMERSIVE_DARK_MODE = 20
+        UpdateDarkMode();
 
         try
         {
@@ -123,6 +122,12 @@ public partial class MainForm : Form
         {
             Msg.ShowException(ex);
         }
+    }
+
+    void UpdateDarkMode()
+    {
+        if (Environment.OSVersion.Version >= new Version(10, 0, 18985))
+            DwmSetWindowAttribute(Handle, 20, new[] { Theme.DarkMode ? 1 : 0 }, 4);  // DWMWA_USE_IMMERSIVE_DARK_MODE = 20
     }
 
     void Player_ClientMessage(string[] args)
@@ -1006,6 +1011,9 @@ public partial class MainForm : Form
                     if (MpvWindowHandle != IntPtr.Zero && !ignore)
                         m.Result = SendMessage(MpvWindowHandle, m.Msg, m.WParam, m.LParam);
                 }
+                break;
+            case 0x001A: // WM_SETTINGCHANGE
+                UpdateDarkMode();
                 break;
             case 0x51: // WM_INPUTLANGCHANGE
                 ActivateKeyboardLayout(m.LParam, 0x00000100u /*KLF_SETFORPROCESS*/);
