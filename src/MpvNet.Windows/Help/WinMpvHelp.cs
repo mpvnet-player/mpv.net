@@ -10,7 +10,8 @@ public class WinMpvHelp
     {
         if (RegistryHelp.GetString("PathEnvVarCheck") == Folder.Startup ||
             RegistryHelp.GetString("Setup") == Folder.Startup ||
-            App.Settings.StartupFolder == Folder.Startup)
+            App.Settings.StartupFolder == Folder.Startup ||
+            Folder.Startup.Contains("portable_config"))
 
             return;
 

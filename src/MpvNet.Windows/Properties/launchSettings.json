@@ -1,7 +1,8 @@
 {
   "profiles": {
     "MpvNet.Windows": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "commandLineArgs": "\"E:\\Video\\Samples\\LG New York HDR UHD 4K Demo.mkv\""
     }
   }
 }

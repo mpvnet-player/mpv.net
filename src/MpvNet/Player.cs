@@ -36,6 +36,7 @@ public class MainPlayer : MpvClient
     public bool Paused { get; set; }
     public bool SnapWindow { get; set; }
     public bool TaskbarProgress { get; set; } = true;
+    public bool TitleBar { get; set; } = true;
     public bool WasInitialSizeSet;
     public bool WindowMaximized { get; set; }
     public bool WindowMinimized { get; set; }
@@ -221,6 +222,7 @@ public class MainPlayer : MpvClient
             case "vo": VO = value!; break;
             case "window-maximized": WindowMaximized = value == "yes"; break;
             case "window-minimized": WindowMinimized = value == "yes"; break;
+            case "title-bar": TitleBar = value == "yes"; break;
         }
 
         if (AutofitLarger > 1)

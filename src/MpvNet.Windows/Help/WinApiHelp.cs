@@ -7,7 +7,7 @@ using static MpvNet.Windows.Native.WinApi;
 
 namespace MpvNet.Windows.Help;
 
-public class WinApiHelp
+public static class WinApiHelp
 {
     public static Version WindowsTen1607 { get; } = new Version(10, 0, 14393); // Windows 10 1607
 
@@ -27,17 +27,7 @@ public class WinApiHelp
         }
     }
 
-    public static void SubtractWindowBorders(IntPtr hwnd, ref Rect rc, int dpi)
-    {
-        Rect r = new Rect(0, 0, 0, 0);
-        AddWindowBorders(hwnd, ref r, dpi);
-        rc.Left -= r.Left;
-        rc.Top -= r.Top;
-        rc.Right -= r.Right;
-        rc.Bottom -= r.Bottom;
-    }
-
-    public static void AddWindowBorders(IntPtr hwnd, ref Rect rc, int dpi)
+    public static void AdjustWindowRect(IntPtr hwnd, ref Rect rc, int dpi)
     {
         uint windowStyle = (uint)GetWindowLong(hwnd, -16); // GWL_STYLE
         uint windowStyleEx = (uint)GetWindowLong(hwnd, -20); // GWL_EXSTYLE
@@ -45,7 +35,37 @@ public class WinApiHelp
         if (Environment.OSVersion.Version >= WindowsTen1607)
             AdjustWindowRectExForDpi(ref rc, windowStyle, false, windowStyleEx, (uint)dpi);
         else
-            AdjustWindowRect(ref rc, windowStyle, false);
+            Native.WinApi.AdjustWindowRect(ref rc, windowStyle, false);
+    }
+
+    public static void AddWindowBorders(IntPtr hwnd, ref Rect rc, int dpi, bool changeTop)
+    {
+        Rect win = rc;
+        AdjustWindowRect(hwnd, ref rc, dpi);
+
+        if (changeTop)
+        {
+            int top = rc.Top;
+            top -= rc.Top - win.Top;
+            rc = new Rect(rc.Left, top, rc.Right, rc.Bottom);
+        }
+    }
+
+    public static void SubtractWindowBorders(IntPtr hwnd, ref Rect rc, int dpi, bool changeTop)
+    {
+        Rect r = new Rect();
+        AddWindowBorders(hwnd, ref r, dpi, changeTop);
+        rc.Left -= r.Left;
+        rc.Top -= r.Top;
+        rc.Right -= r.Right;
+        rc.Bottom -= r.Bottom;
+    }
+
+    public static int GetTitleBarHeight(IntPtr hwnd, int dpi)
+    {
+        Rect r = new Rect();
+        AdjustWindowRect(hwnd, ref r, dpi);
+        return -r.Top;
     }
 
     public static Rectangle GetWorkingArea(IntPtr handle, Rectangle workingArea)

@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Text;
+using static HandyControl.Tools.Interop.InteropValues;
 
 namespace MpvNet.Windows.Native;
 
@@ -119,6 +120,20 @@ public static class WinApi
         {
             return "{Left=" + Left + ",Top=" + Top + ",Right=" + Right + ",Bottom=" + Bottom + "}";
         }
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct NCCALCSIZE_PARAMS
+    {
+        public NCCALCSIZE_PARAMS(Rect[] r, WINDOWPOS wp)
+        {
+            rgrc = r;
+            lppos = wp;
+        }
+
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 3)]
+        public Rect[] rgrc;
+        public WINDOWPOS lppos;
     }
 
     [StructLayout(LayoutKind.Sequential)]

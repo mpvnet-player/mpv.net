@@ -1,8 +1,10 @@
 
 # v7.0.0.5 Beta (2023-??-??)
 
+- Experimental support of the mpv option `title-bar`.
+  While development there were 2 memory access violations while shutdown.
 - Command line parser fix using list options with `-add` suffix.
-
+- Fix video being rendered with black line at the bottom.
 
 # v7.0.0.4 Beta (2023-12-19)
 

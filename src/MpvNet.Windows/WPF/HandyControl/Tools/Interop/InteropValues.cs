@@ -5,7 +5,7 @@ using System.Windows;
 
 namespace HandyControl.Tools.Interop
 {
-    internal class InteropValues
+    public class InteropValues
     {
         internal static class ExternDll
         {
@@ -290,7 +290,7 @@ namespace HandyControl.Tools.Interop
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        internal class WINDOWPOS
+        public class WINDOWPOS
         {
             public IntPtr hwnd;
             public IntPtr hwndInsertAfter;

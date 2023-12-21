@@ -655,6 +655,9 @@ x=100 docks the window to the right side.
 y=0 docks the window to the top side.  
 y=100 docks the window to the bottom side.
 
+#### --title-bar=\<yes|no\>
+
+Shows the window title bar. Default: yes
 
 **mpv.net specific window features:**
 

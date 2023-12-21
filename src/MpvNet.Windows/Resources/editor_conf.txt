@@ -530,6 +530,14 @@ help = Show window with decoration (titlebar, border).
 option = yes
 option = no
 
+name = title-bar
+file = mpv
+default = yes
+directory = Window
+help = Shows the window title bar.
+option = yes
+option = no
+
 name = screen
 file = mpv
 directory = Window

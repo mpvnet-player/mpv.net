@@ -14,12 +14,15 @@ using MpvNet.Help;
 using MpvNet.ExtensionMethod;
 using MpvNet.MVVM;
 using MpvNet.Windows.WPF.MsgBox;
+using MpvNet.Windows.Help;
 
 using WpfControls = System.Windows.Controls;
 using CommunityToolkit.Mvvm.Messaging;
 
 using static MpvNet.Windows.Native.WinApi;
-using MpvNet.Windows.Help;
+using static MpvNet.Windows.Help.WinApiHelp;
+using System.Numerics;
+using System.Windows.Media.Media3D;
 
 namespace MpvNet.Windows.WinForms;
 
@@ -40,6 +43,7 @@ public partial class MainForm : Form
     int _lastCursorChanged;
     int _lastCycleFullscreen;
     int _taskbarButtonCreatedMessage;
+    int _nactivateHeight;
 
     bool _contextMenuIsReady;
     bool _wasMaximized;
@@ -156,6 +160,7 @@ public partial class MainForm : Form
         Player.ObservePropertyBool("fullscreen", PropChangeFullscreen);
         Player.ObservePropertyBool("keepaspect-window", value => Player.KeepaspectWindow = value);
         Player.ObservePropertyBool("ontop", PropChangeOnTop);
+        Player.ObservePropertyBool("title-bar", PropChangeTitleBar);
         
         Player.ObservePropertyString("sid", PropChangeSid);
         Player.ObservePropertyString("aid", PropChangeAid);
@@ -179,13 +184,13 @@ public partial class MainForm : Form
         BeginInvoke(() => {
             SetSize(
                 (int)(Player.VideoSize.Width * scale),
-                (int)Math.Ceiling(Player.VideoSize.Height * scale),
+                (int)Math.Floor(Player.VideoSize.Height * scale),
                 Screen.FromControl(this), false);
         });
     }
 
     void Player_Shutdown() => BeginInvoke(Close);
-    
+
     void Player_VideoSizeChanged(Size value) => BeginInvoke(() =>
     {
         if (!KeepSize())
@@ -205,7 +210,7 @@ public partial class MainForm : Form
             else
             {
                 w = (int)(ClientSize.Width * scale);
-                h = (int)Math.Ceiling(w * Player.VideoSize.Height / (double)Player.VideoSize.Width);
+                h = (int)Math.Floor(w * Player.VideoSize.Height / (double)Player.VideoSize.Width);
             }
 
             SetSize(w, h, Screen.FromControl(this), false);
@@ -216,7 +221,7 @@ public partial class MainForm : Form
     {
         BeginInvoke(() => {
             Screen screen = Screen.FromControl(this);
-            Rectangle workingArea = WinApiHelp.GetWorkingArea(Handle, screen.WorkingArea);
+            Rectangle workingArea = GetWorkingArea(Handle, screen.WorkingArea);
 
             switch (direction)
             {
@@ -245,7 +250,7 @@ public partial class MainForm : Form
         BeginInvoke(() => {
             SetSize(
                 (int)(Player.VideoSize.Width * scale),
-                (int)Math.Ceiling(Player.VideoSize.Height * scale),
+                (int)Math.Floor(Player.VideoSize.Height * scale),
                 Screen.FromControl(this), false);
             Player.Command($"show-text \"window-scale {scale.ToString(CultureInfo.InvariantCulture)}\"");
         });
@@ -527,7 +532,7 @@ public partial class MainForm : Form
         }
 
         Screen screen = Screen.FromControl(this);
-        Rectangle workingArea = WinApiHelp.GetWorkingArea(Handle, screen.WorkingArea);
+        Rectangle workingArea = GetWorkingArea(Handle, screen.WorkingArea);
         int autoFitHeight = Convert.ToInt32(workingArea.Height * Player.Autofit);
 
         if (App.AutofitAudio > 1)
@@ -570,12 +575,12 @@ public partial class MainForm : Form
             else if (App.StartSize == "height-always" || App.StartSize == "height-session")
             {
                 height = ClientSize.Height;
-                width = height * videoSize.Width / videoSize.Height;
+                width = (int)Math.Ceiling(height * videoSize.Width / (double)videoSize.Height);
             }
             else if (App.StartSize == "width-always" || App.StartSize == "width-session")
             {
                 width = ClientSize.Width;
-                height = (int)Math.Ceiling(width * videoSize.Height / (double)videoSize.Width);
+                height = (int)Math.Floor(width * videoSize.Height / (double)videoSize.Width);
             }
         }
         else
@@ -585,22 +590,22 @@ public partial class MainForm : Form
             if (App.StartSize == "height-always" && windowSize.Height != 0)
             {
                 height = windowSize.Height;
-                width = height * videoSize.Width / videoSize.Height;
+                width = (int)Math.Ceiling(height * videoSize.Width / (double)videoSize.Height);
             }
             else if (App.StartSize == "height-session" || App.StartSize == "session")
             {
                 height = autoFitHeight;
-                width = height * videoSize.Width / videoSize.Height;
+                width = (int)Math.Ceiling(height * videoSize.Width / (double)videoSize.Height);
             }
             else if(App.StartSize == "width-always" && windowSize.Height != 0)
             {
                 width = windowSize.Width;
-                height = (int)Math.Ceiling(width * videoSize.Height / (double)videoSize.Width);
+                height = (int)Math.Floor(width * videoSize.Height / (double)videoSize.Width);
             }
             else if (App.StartSize == "width-session")
             {
                 width = autoFitHeight / 9 * 16;
-                height = (int)Math.Ceiling(width * videoSize.Height / (double)videoSize.Width);
+                height = (int)Math.Floor(width * videoSize.Height / (double)videoSize.Width);
             }
             else if (App.StartSize == "always" && windowSize.Height != 0)
             {
@@ -616,7 +621,7 @@ public partial class MainForm : Form
 
     void SetSize(int width, int height, Screen screen, bool checkAutofit = true, bool load = false)
     {
-        Rectangle workingArea = WinApiHelp.GetWorkingArea(Handle, screen.WorkingArea);
+        Rectangle workingArea = GetWorkingArea(Handle, screen.WorkingArea);
 
         int maxHeight = workingArea.Height - (Height - ClientSize.Height) - 2;
         int maxWidth = workingArea.Width - (Width - ClientSize.Width);
@@ -628,38 +633,39 @@ public partial class MainForm : Form
         {
             if (height < maxHeight * Player.AutofitSmaller)
             {
-                height = Convert.ToInt32(maxHeight * Player.AutofitSmaller);
-                width = Convert.ToInt32(height * startWidth / (double)startHeight);
+                height = (int)(maxHeight * Player.AutofitSmaller);
+                width = (int)Math.Ceiling(height * startWidth / (double)startHeight);
             }
 
             if (height > maxHeight * Player.AutofitLarger)
             {
-                height = Convert.ToInt32(maxHeight * Player.AutofitLarger);
-                width = Convert.ToInt32(height * startWidth / (double)startHeight);
+                height = (int)(maxHeight * Player.AutofitLarger);
+                width = (int)Math.Ceiling(height * startWidth / (double)startHeight);
             }
         }
 
         if (width > maxWidth)
         {
             width = maxWidth;
-            height = (int)Math.Ceiling(width * startHeight / (double)startWidth);
+            height = (int)Math.Floor(width * startHeight / (double)startWidth);
         }
 
         if (height > maxHeight)
         {
             height = maxHeight;
-            width = Convert.ToInt32(height * startWidth / (double)startHeight);
+            width = (int)Math.Ceiling(height * startWidth / (double)startHeight);
         }
 
         if (height < maxHeight * 0.1)
         {
-            height = Convert.ToInt32(maxHeight * 0.1);
-            width = Convert.ToInt32(height * startWidth / (double)startHeight);
+            height = (int)(maxHeight * 0.1);
+            width = (int)Math.Ceiling(height * startWidth / (double)startHeight);
         }
 
         Point middlePos = new Point(Left + Width / 2, Top + Height / 2);
         var rect = new Rect(new Rectangle(screen.Bounds.X, screen.Bounds.Y, width, height));
-        WinApiHelp.AddWindowBorders(Handle, ref rect, GetDpi(Handle));
+ 
+        AddWindowBorders(Handle, ref rect, GetDpi(Handle), !Player.TitleBar);
 
         width = rect.Width;
         height = rect.Height;
@@ -677,16 +683,16 @@ public partial class MainForm : Form
 
         Screen[] screens = Screen.AllScreens;
 
-        int minLeft   = screens.Select(val => WinApiHelp.GetWorkingArea(Handle, val.WorkingArea).X).Min();
-        int maxRight  = screens.Select(val => WinApiHelp.GetWorkingArea(Handle, val.WorkingArea).Right).Max();
-        int minTop    = screens.Select(val => WinApiHelp.GetWorkingArea(Handle, val.WorkingArea).Y).Min();
-        int maxBottom = screens.Select(val => WinApiHelp.GetWorkingArea(Handle, val.WorkingArea).Bottom).Max();
+        int minLeft   = screens.Select(val => GetWorkingArea(Handle, val.WorkingArea).X).Min();
+        int maxRight  = screens.Select(val => GetWorkingArea(Handle, val.WorkingArea).Right).Max();
+        int minTop    = screens.Select(val => GetWorkingArea(Handle, val.WorkingArea).Y).Min();
+        int maxBottom = screens.Select(val => GetWorkingArea(Handle, val.WorkingArea).Bottom).Max();
 
         if (load && CommandLine.Contains("geometry"))
         {
             string geometryString = CommandLine.GetValue("geometry");
 
-            var geometry = ParseGeometry(geometryString, WinApiHelp.GetWorkingArea(
+            var geometry = ParseGeometry(geometryString, GetWorkingArea(
                 Handle, Screen.FromHandle(Handle).WorkingArea), width, height);
 
             if (geometry.x != int.MaxValue)
@@ -776,7 +782,7 @@ public partial class MainForm : Form
 
     public int GetHorizontalLocation(Screen screen)
     {
-        Rectangle workingArea = WinApiHelp.GetWorkingArea(Handle, screen.WorkingArea);
+        Rectangle workingArea = GetWorkingArea(Handle, screen.WorkingArea);
         Rectangle rect = new Rectangle(Left - workingArea.X, Top - workingArea.Y, Width, Height);
 
         if (workingArea.Width / (float)Width < 1.1)
@@ -793,7 +799,7 @@ public partial class MainForm : Form
 
     public int GetVerticalLocation(Screen screen)
     {
-        Rectangle workingArea = WinApiHelp.GetWorkingArea(Handle, screen.WorkingArea);
+        Rectangle workingArea = GetWorkingArea(Handle, screen.WorkingArea);
         Rectangle rect = new Rectangle(Left - workingArea.X, Top - workingArea.Y, Width, Height);
 
         if (workingArea.Height / (float)Height < 1.1)
@@ -959,6 +965,8 @@ public partial class MainForm : Form
 
     protected override void WndProc(ref Message m)
     {
+        //Debug.WriteLine(m);
+
         switch (m.Msg)
         {
             case 0x0007: // WM_SETFOCUS
@@ -1018,6 +1026,9 @@ public partial class MainForm : Form
             case 0x51: // WM_INPUTLANGCHANGE
                 ActivateKeyboardLayout(m.LParam, 0x00000100u /*KLF_SETFORPROCESS*/);
                 break;
+            //case 0x0086: // WM_NCACTIVATE
+            //    _nactivateHeight = Height;
+            //    break;
             case 0x319: // WM_APPCOMMAND
                 {
                     string? value = MpvHelp.WM_APPCOMMAND_to_mpv_key((int)(m.LParam.ToInt64() >> 16 & ~0xf000));
@@ -1058,12 +1069,47 @@ public partial class MainForm : Form
                     SetWindowPos(Handle, IntPtr.Zero, rect.Left, rect.Top, rect.Width, rect.Height, 0);
                 }
                 break;
+            case 0x0083: // WM_NCCALCSIZE
+                if (m.WParam != IntPtr.Zero && m.LParam != IntPtr.Zero &&  Player.Border &&
+                    !Player.TitleBar && !IsFullscreen && WindowState != FormWindowState.Minimized)
+                {
+                    var nccalcsize_params = Marshal.PtrToStructure<NCCALCSIZE_PARAMS>(m.LParam);
+                    Rect[] rects = nccalcsize_params.rgrc;
+                    rects[0].Top = rects[0].Top - GetTitleBarHeight(Handle, GetDpi(Handle));
+                    Marshal.StructureToPtr(nccalcsize_params, m.LParam, false);
+                }
+
+                _skipWM_NCCALCSIZE = false;
+                break;
+            case 0x005: // WM_SIZE
+                {
+                    int hiWord = (short)(m.LParam.ToInt32() >> 16);    // HiWord
+                    Debug.WriteLine(hiWord);
+                }
+                if (m.WParam == (nint)1) // SIZE_RESTORED=0, SIZE_MINIMIZED=1
+                {
+                    _skipWM_NCCALCSIZE = true;
+                    //if (Player.VideoSize != Size.Empty)
+                    //{
+                    //    //int w = ClientSize.Width;
+                    //    //int h = (int)Math.Floor(w * Player.VideoSize.Height / (double)Player.VideoSize.Width);
+                    //    //var rect = new Rect(new Rectangle(0, 0, w, h));
+                    //    //AddWindowBorders(Handle, ref rect, GetDpi(Handle), !Player.TitleBar);
+                    //    //Height = rect.Height;
+                    //    ////ClientSize = new Size(w, h);
+                    //}
+                }
+
+                if (Player.SnapWindow)
+                    SnapManager.OnSizeAndEnterSizeMove(this);
+                break;
             case 0x214: // WM_SIZING
+                Debug.WriteLine("WM_SIZING");
                 if (Player.KeepaspectWindow)
                 {
                     Rect rc = Marshal.PtrToStructure<Rect>(m.LParam);
                     Rect r = rc;
-                    WinApiHelp.SubtractWindowBorders(Handle, ref r, GetDpi(Handle));
+                    SubtractWindowBorders(Handle, ref r, GetDpi(Handle), !Player.TitleBar);
 
                     int c_w = r.Right - r.Left, c_h = r.Bottom - r.Top;
                     Size videoSize = Player.VideoSize;
@@ -1071,13 +1117,13 @@ public partial class MainForm : Form
                     if (videoSize == Size.Empty)
                         videoSize = new Size(16, 9);
 
-                    float aspect = videoSize.Width / (float)videoSize.Height;
-                    int d_w = (int)(c_h * aspect - c_w);
-                    int d_h = (int)(c_w / aspect - c_h);
+                    double aspect = videoSize.Width / (double)videoSize.Height;
+                    int d_w = (int)Math.Ceiling(c_h * aspect - c_w);
+                    int d_h = (int)Math.Floor(c_w / aspect - c_h);
 
                     int[] d_corners = { d_w, d_h, -d_w, -d_h };
                     int[] corners = { rc.Left, rc.Top, rc.Right, rc.Bottom };
-                    int corner = WinApiHelp.GetResizeBorder(m.WParam.ToInt32());
+                    int corner = GetResizeBorder(m.WParam.ToInt32());
 
                     if (corner >= 0)
                         corners[corner] -= d_corners[corner];
@@ -1086,33 +1132,10 @@ public partial class MainForm : Form
                     m.Result = new IntPtr(1);
                 }
                 return;
-            case 0x4A: // WM_COPYDATA
-                {
-                    var copyData = (CopyDataStruct)m.GetLParam(typeof(CopyDataStruct))!;
-                    string[] args = copyData.lpData.Split('\n');
-                    string mode = args[0];
-                    args = args.Skip(1).ToArray();
-
-                    switch (mode)
-                    {
-                        case "single":
-                            Player.LoadFiles(args, true, false);
-                            break;
-                        case "queue":
-                            foreach (string file in args)
-                                Player.CommandV("loadfile", file, "append");
-                            break;
-                        case "command":
-                            Player.Command(args[0]);
-                            break;
-                    }
-
-                    Activate();
-                }
-                return;
             case 0x84: // WM_NCHITTEST
                 // resize borderless window
-                if (!Player.Border && !Player.Fullscreen) {
+                if ((!Player.Border || !Player.TitleBar) && !Player.Fullscreen)
+                {
                     const int HTCLIENT = 1;
                     const int HTLEFT = 10;
                     const int HTRIGHT = 11;
@@ -1151,14 +1174,61 @@ public partial class MainForm : Form
                     return;
                 }
                 break;
+            case 0x4A: // WM_COPYDATA
+                {
+                    var copyData = (CopyDataStruct)m.GetLParam(typeof(CopyDataStruct))!;
+                    string[] args = copyData.lpData.Split('\n');
+                    string mode = args[0];
+                    args = args.Skip(1).ToArray();
+
+                    switch (mode)
+                    {
+                        case "single":
+                            Player.LoadFiles(args, true, false);
+                            break;
+                        case "queue":
+                            foreach (string file in args)
+                                Player.CommandV("loadfile", file, "append");
+                            break;
+                        case "command":
+                            Player.Command(args[0]);
+                            break;
+                    }
+
+                    Activate();
+                }
+                return;
             case 0x231: // WM_ENTERSIZEMOVE
-            case 0x005: // WM_SIZE
                 if (Player.SnapWindow)
                     SnapManager.OnSizeAndEnterSizeMove(this);
                 break;
             case 0x216: // WM_MOVING
                 if (Player.SnapWindow)
                     SnapManager.OnMoving(ref m);
+                break;
+            case 0x0006: // WM_ACTIVATE
+                {
+                    int loWord = (short)(m.WParam.ToInt32() & 0xFFFF);
+                    bool deactivate = loWord == 0;
+
+                    if (deactivate)
+                    {
+                        //Debug.WriteLine("deactivate: " + Height);
+                        _nactivateHeight = Height;
+                    }
+                    else
+                    {
+
+
+                        //Debug.WriteLine("activate: " + Height);
+
+                        if (_nactivateHeight != 0)
+                        {
+                            Height = _nactivateHeight;
+                            _nactivateHeight = 0;
+                        }
+                    }
+                }
                 break;
         }
 
@@ -1172,6 +1242,8 @@ public partial class MainForm : Form
         if (!IsDisposed)
             base.WndProc(ref m);
     }
+
+    bool _skipWM_NCCALCSIZE;
 
     void CursorTimer_Tick(object sender, EventArgs e)
     {
@@ -1253,6 +1325,18 @@ public partial class MainForm : Form
                 if (!Player.Border && FormBorderStyle == FormBorderStyle.Sizable)
                     FormBorderStyle = FormBorderStyle.None;
             }
+        });
+    }
+
+    void PropChangeTitleBar(bool enabled)
+    {
+        if (enabled == Player.TitleBar)
+            return;
+
+        Player.TitleBar = enabled;
+
+        BeginInvoke(() => {
+            SetSize(ClientSize.Width, ClientSize.Height, Screen.FromControl(this), false);
         });
     }
 
@@ -1429,7 +1513,7 @@ public partial class MainForm : Form
 
     public static int GetDpi(IntPtr hwnd)
     {
-        if (Environment.OSVersion.Version >= WinApiHelp.WindowsTen1607 && hwnd != IntPtr.Zero)
+        if (Environment.OSVersion.Version >= WindowsTen1607 && hwnd != IntPtr.Zero)
             return GetDpiForWindow(hwnd);
         else
             using (Graphics gx = Graphics.FromHwnd(hwnd))
