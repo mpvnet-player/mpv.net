@@ -51,7 +51,7 @@ public class SnapManager
         if (Handle == IntPtr.Zero)
             return;
 
-        WinApi.Rect boundsLtrb = Marshal.PtrToStructure<WinApi.Rect>(m.LParam);
+        WinApi.RECT boundsLtrb = Marshal.PtrToStructure<WinApi.RECT>(m.LParam);
         Rectangle bounds = boundsLtrb.ToRectangle();
         // This is where the window _would_ be located if snapping
         // had not occurred. This prevents the cursor from sliding
@@ -62,7 +62,7 @@ public class SnapManager
             bounds.Width,
             bounds.Height);
         FindSnap(ref effectiveBounds);
-        WinApi.Rect newLtrb = WinApi.Rect.FromRectangle(effectiveBounds);
+        WinApi.RECT newLtrb = WinApi.RECT.FromRectangle(effectiveBounds);
         Marshal.StructureToPtr(newLtrb, m.LParam, false);
         m.Result = new IntPtr(1);
     }

@@ -21,7 +21,7 @@ public static class WinApi
     public static extern uint ActivateKeyboardLayout(IntPtr hkl, uint flags);
 
     [DllImport("user32.dll")]
-    public static extern bool GetWindowRect(IntPtr hwnd, out Rect lpRect);
+    public static extern bool GetWindowRect(IntPtr hwnd, out RECT lpRect);
 
     [DllImport("user32.dll", CharSet = CharSet.Unicode)]
     public static extern IntPtr FindWindowEx(
@@ -49,27 +49,18 @@ public static class WinApi
     public static extern int GetDpiForWindow(IntPtr hwnd);
 
     [DllImport("user32.dll")]
-    public static extern bool AdjustWindowRect(ref Rect lpRect, uint dwStyle, bool bMenu);
+    public static extern bool AdjustWindowRect(ref RECT lpRect, uint dwStyle, bool bMenu);
 
     [DllImport("user32.dll")]
     public static extern bool AdjustWindowRectExForDpi(
-        ref Rect lpRect, uint dwStyle, bool bMenu, uint dwExStyle, uint dpi);
+        ref RECT lpRect, uint dwStyle, bool bMenu, uint dwExStyle, uint dpi);
 
     [DllImport("user32.dll")]
     public static extern bool SetWindowPos(
         IntPtr hWnd, IntPtr hWndInsertAfter, int x, int y, int cx, int cy, uint uFlags);
 
-    [DllImport("user32.dll", EntryPoint = "GetWindowLong")]
-    public static extern IntPtr GetWindowLong32(IntPtr hWnd, int nIndex);
-
     [DllImport("user32.dll")]
     public static extern IntPtr GetWindowLongPtr(IntPtr hWnd, int nIndex);
-
-    [DllImport("user32.dll", EntryPoint = "SetWindowLong")]
-    public static extern IntPtr SetWindowLong32(IntPtr hWnd, int nIndex, uint dwNewLong);
-
-    [DllImport("user32.dll")]
-    public static extern IntPtr SetWindowLongPtr(IntPtr hWnd, int nIndex, uint dwNewLong);
 
     [DllImport("gdi32.dll")]
     public static extern int GetDeviceCaps(IntPtr hdc, int nIndex);
@@ -80,17 +71,17 @@ public static class WinApi
 
     [DllImport("dwmapi.dll")]
     public static extern int DwmGetWindowAttribute(
-        IntPtr hwnd, uint dwAttribute, out Rect pvAttribute, uint cbAttribute);
+        IntPtr hwnd, uint dwAttribute, out RECT pvAttribute, uint cbAttribute);
 
     [StructLayout(LayoutKind.Sequential)]
-    public struct Rect
+    public struct RECT
     {
         public int Left;
         public int Top;
         public int Right;
         public int Bottom;
 
-        public Rect(Rectangle r)
+        public RECT(Rectangle r)
         {
             Left = r.Left;
             Top = r.Top;
@@ -98,7 +89,7 @@ public static class WinApi
             Bottom = r.Bottom;
         }
 
-        public Rect(int left, int top, int right, int bottom)
+        public RECT(int left, int top, int right, int bottom)
         {
             Left = left;
             Top = top;
@@ -111,9 +102,9 @@ public static class WinApi
         public int Width => Right - Left;
         public int Height => Bottom - Top;
 
-        public static Rect FromRectangle(Rectangle rect)
+        public static RECT FromRectangle(Rectangle rect)
         {
-            return new Rect(rect.X, rect.Y, rect.X + rect.Width, rect.Y + rect.Height);
+            return new RECT(rect.X, rect.Y, rect.X + rect.Width, rect.Y + rect.Height);
         }
 
         public override string ToString()
@@ -125,14 +116,14 @@ public static class WinApi
     [StructLayout(LayoutKind.Sequential)]
     public struct NCCALCSIZE_PARAMS
     {
-        public NCCALCSIZE_PARAMS(Rect[] r, WINDOWPOS wp)
+        public NCCALCSIZE_PARAMS(RECT[] r, WINDOWPOS wp)
         {
             rgrc = r;
             lppos = wp;
         }
 
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 3)]
-        public Rect[] rgrc;
+        public RECT[] rgrc;
         public WINDOWPOS lppos;
     }
 

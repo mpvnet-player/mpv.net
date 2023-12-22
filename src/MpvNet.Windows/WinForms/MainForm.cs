@@ -21,8 +21,6 @@ using CommunityToolkit.Mvvm.Messaging;
 
 using static MpvNet.Windows.Native.WinApi;
 using static MpvNet.Windows.Help.WinApiHelp;
-using System.Numerics;
-using System.Windows.Media.Media3D;
 
 namespace MpvNet.Windows.WinForms;
 
@@ -43,10 +41,10 @@ public partial class MainForm : Form
     int _lastCursorChanged;
     int _lastCycleFullscreen;
     int _taskbarButtonCreatedMessage;
-    int _nactivateHeight;
 
     bool _contextMenuIsReady;
     bool _wasMaximized;
+    bool _maxSizeSet;
 
     public MainForm()
     {
@@ -663,7 +661,7 @@ public partial class MainForm : Form
         }
 
         Point middlePos = new Point(Left + Width / 2, Top + Height / 2);
-        var rect = new Rect(new Rectangle(screen.Bounds.X, screen.Bounds.Y, width, height));
+        var rect = new RECT(new Rectangle(screen.Bounds.X, screen.Bounds.Y, width, height));
  
         AddWindowBorders(Handle, ref rect, GetDpi(Handle), !Player.TitleBar);
 
@@ -965,8 +963,6 @@ public partial class MainForm : Form
 
     protected override void WndProc(ref Message m)
     {
-        //Debug.WriteLine(m);
-
         switch (m.Msg)
         {
             case 0x0007: // WM_SETFOCUS
@@ -1026,9 +1022,6 @@ public partial class MainForm : Form
             case 0x51: // WM_INPUTLANGCHANGE
                 ActivateKeyboardLayout(m.LParam, 0x00000100u /*KLF_SETFORPROCESS*/);
                 break;
-            //case 0x0086: // WM_NCACTIVATE
-            //    _nactivateHeight = Height;
-            //    break;
             case 0x319: // WM_APPCOMMAND
                 {
                     string? value = MpvHelp.WM_APPCOMMAND_to_mpv_key((int)(m.LParam.ToInt64() >> 16 & ~0xf000));
@@ -1065,50 +1058,44 @@ public partial class MainForm : Form
                     if (!WasShown)
                         break;
 
-                    Rect rect = Marshal.PtrToStructure<Rect>(m.LParam);
+                    RECT rect = Marshal.PtrToStructure<RECT>(m.LParam);
                     SetWindowPos(Handle, IntPtr.Zero, rect.Left, rect.Top, rect.Width, rect.Height, 0);
                 }
                 break;
+            case 0x0112: // WM_SYSCOMMAND
+                {
+                    // with title-bar=no when the window is restored from minimizing the height is too high  
+                    if (!Player.TitleBar)
+                    {
+                        int SC_MINIMIZE = 0xF020;
+
+                        if (m.WParam == (nint)SC_MINIMIZE)
+                        {
+                            MaximumSize = Size;
+                            _maxSizeSet = true;
+                        }
+                    }
+                }
+                break;
             case 0x0083: // WM_NCCALCSIZE
-                if (m.WParam != IntPtr.Zero && m.LParam != IntPtr.Zero &&  Player.Border &&
-                    !Player.TitleBar && !IsFullscreen && WindowState != FormWindowState.Minimized)
+                if ((int)m.WParam == 1 && !Player.TitleBar && !IsFullscreen)
                 {
                     var nccalcsize_params = Marshal.PtrToStructure<NCCALCSIZE_PARAMS>(m.LParam);
-                    Rect[] rects = nccalcsize_params.rgrc;
+                    RECT[] rects = nccalcsize_params.rgrc;
                     rects[0].Top = rects[0].Top - GetTitleBarHeight(Handle, GetDpi(Handle));
                     Marshal.StructureToPtr(nccalcsize_params, m.LParam, false);
                 }
-
-                _skipWM_NCCALCSIZE = false;
                 break;
+            case 0x231: // WM_ENTERSIZEMOVE
             case 0x005: // WM_SIZE
-                {
-                    int hiWord = (short)(m.LParam.ToInt32() >> 16);    // HiWord
-                    Debug.WriteLine(hiWord);
-                }
-                if (m.WParam == (nint)1) // SIZE_RESTORED=0, SIZE_MINIMIZED=1
-                {
-                    _skipWM_NCCALCSIZE = true;
-                    //if (Player.VideoSize != Size.Empty)
-                    //{
-                    //    //int w = ClientSize.Width;
-                    //    //int h = (int)Math.Floor(w * Player.VideoSize.Height / (double)Player.VideoSize.Width);
-                    //    //var rect = new Rect(new Rectangle(0, 0, w, h));
-                    //    //AddWindowBorders(Handle, ref rect, GetDpi(Handle), !Player.TitleBar);
-                    //    //Height = rect.Height;
-                    //    ////ClientSize = new Size(w, h);
-                    //}
-                }
-
                 if (Player.SnapWindow)
                     SnapManager.OnSizeAndEnterSizeMove(this);
                 break;
             case 0x214: // WM_SIZING
-                Debug.WriteLine("WM_SIZING");
                 if (Player.KeepaspectWindow)
                 {
-                    Rect rc = Marshal.PtrToStructure<Rect>(m.LParam);
-                    Rect r = rc;
+                    RECT rc = Marshal.PtrToStructure<RECT>(m.LParam);
+                    RECT r = rc;
                     SubtractWindowBorders(Handle, ref r, GetDpi(Handle), !Player.TitleBar);
 
                     int c_w = r.Right - r.Left, c_h = r.Bottom - r.Top;
@@ -1128,7 +1115,7 @@ public partial class MainForm : Form
                     if (corner >= 0)
                         corners[corner] -= d_corners[corner];
 
-                    Marshal.StructureToPtr(new Rect(corners[0], corners[1], corners[2], corners[3]), m.LParam, false);
+                    Marshal.StructureToPtr(new RECT(corners[0], corners[1], corners[2], corners[3]), m.LParam, false);
                     m.Result = new IntPtr(1);
                 }
                 return;
@@ -1198,37 +1185,9 @@ public partial class MainForm : Form
                     Activate();
                 }
                 return;
-            case 0x231: // WM_ENTERSIZEMOVE
-                if (Player.SnapWindow)
-                    SnapManager.OnSizeAndEnterSizeMove(this);
-                break;
             case 0x216: // WM_MOVING
                 if (Player.SnapWindow)
                     SnapManager.OnMoving(ref m);
-                break;
-            case 0x0006: // WM_ACTIVATE
-                {
-                    int loWord = (short)(m.WParam.ToInt32() & 0xFFFF);
-                    bool deactivate = loWord == 0;
-
-                    if (deactivate)
-                    {
-                        //Debug.WriteLine("deactivate: " + Height);
-                        _nactivateHeight = Height;
-                    }
-                    else
-                    {
-
-
-                        //Debug.WriteLine("activate: " + Height);
-
-                        if (_nactivateHeight != 0)
-                        {
-                            Height = _nactivateHeight;
-                            _nactivateHeight = 0;
-                        }
-                    }
-                }
                 break;
         }
 
@@ -1243,7 +1202,24 @@ public partial class MainForm : Form
             base.WndProc(ref m);
     }
 
-    bool _skipWM_NCCALCSIZE;
+    protected override void OnActivated(EventArgs e)
+    {
+        base.OnActivated(e);
+
+        if (_maxSizeSet)
+        {
+            TaskHelp.Run(() => {
+                Thread.Sleep(200);
+                BeginInvoke(() => {
+                    if (!IsDisposed && !Disposing)
+                    {
+                        MaximumSize = new Size(int.MaxValue, int.MaxValue);
+                        _maxSizeSet = false;
+                    }
+                });
+            });
+        }
+    }
 
     void CursorTimer_Tick(object sender, EventArgs e)
     {
@@ -1337,6 +1313,8 @@ public partial class MainForm : Form
 
         BeginInvoke(() => {
             SetSize(ClientSize.Width, ClientSize.Height, Screen.FromControl(this), false);
+            Height += 1;
+            Height -= 1;
         });
     }
 

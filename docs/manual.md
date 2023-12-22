@@ -625,6 +625,7 @@ https://mpv.io/manual/master/#window
 - [ontop](https://mpv.io/manual/master/#options-ontop)
 - [screen](https://mpv.io/manual/master/#options-screen)
 - [snap-window](https://mpv.io/manual/master/#options-snap-window)
+- [title-bar](https://mpv.io/manual/master/#options-title-bar)
 - [title](https://mpv.io/manual/master/#options-title)
 - [window-maximized](https://mpv.io/manual/master/#options-window-maximized)
 - [window-minimized](https://mpv.io/manual/master/#options-window-minimized)
