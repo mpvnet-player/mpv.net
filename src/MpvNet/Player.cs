@@ -452,7 +452,7 @@ public class MainPlayer : MpvClient
 
                 files.Add(arg);
 
-        LoadFiles(files.ToArray(), !App.Queue, false || App.Queue);
+        LoadFiles(files.ToArray(), !App.Queue, App.Queue);
 
         if (App.CommandLine.Contains("--shuffle"))
         {

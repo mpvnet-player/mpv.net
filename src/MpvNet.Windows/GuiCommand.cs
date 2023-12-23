@@ -153,10 +153,12 @@ public class GuiCommand
 
     public void OpenFromClipboard(IList<string> args)
     {
+        bool append = Control.ModifierKeys == Keys.Shift;
+
         if (System.Windows.Forms.Clipboard.ContainsFileDropList())
         {
             string[] files = System.Windows.Forms.Clipboard.GetFileDropList().Cast<string>().ToArray();
-            Player.LoadFiles(files, false, false);
+            Player.LoadFiles(files, false, append);
         }
         else
         {
@@ -173,7 +175,7 @@ public class GuiCommand
                 return;
             }
 
-            Player.LoadFiles(files.ToArray(), false, false);
+            Player.LoadFiles(files.ToArray(), false, append);
         }
     }
 

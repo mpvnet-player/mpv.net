@@ -1352,14 +1352,8 @@ public partial class MainForm : Form
         InitAndBuildContextMenu();
         Cursor.Position = new Point(Cursor.Position.X + 1, Cursor.Position.Y);
         GlobalHotkey.RegisterGlobalHotkeys(Handle);
-        WasShown = true;
         StrongReferenceMessenger.Default.Send(new MainWindowIsLoadedMessage());
-
-        TaskHelp.Run(() => {
-            System.Windows.Application.Current.Dispatcher.BeginInvoke(() => {
-                WinMpvHelp.Setup();
-            }, DispatcherPriority.Background);
-        });
+        WasShown = true;
     }
 
     void ContextMenu_Closed(object sender, System.Windows.RoutedEventArgs e) => MenuAutoResetEvent.Set();
@@ -1448,10 +1442,12 @@ public partial class MainForm : Form
     {
         base.OnDragDrop(e);
 
+        bool append = ModifierKeys == Keys.Shift;
+
         if (e.Data!.GetDataPresent(DataFormats.FileDrop))
-            Player.LoadFiles(e.Data.GetData(DataFormats.FileDrop) as string[], true, false);
+            Player.LoadFiles(e.Data.GetData(DataFormats.FileDrop) as string[], true, append);
         else if (e.Data.GetDataPresent(DataFormats.Text))
-            Player.LoadFiles(new[] { e.Data.GetData(DataFormats.Text)!.ToString()! }, true, false);
+            Player.LoadFiles(new[] { e.Data.GetData(DataFormats.Text)!.ToString()! }, true, append);
     }
 
     protected override void OnKeyDown(KeyEventArgs e)

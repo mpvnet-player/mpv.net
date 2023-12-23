@@ -20,13 +20,16 @@ namespace MpvNet.Windows.WPF;
 
 public partial class ConfWindow : Window, INotifyPropertyChanged
 {
-    List<Setting> Settings = Conf.LoadConf(Properties.Resources.editor_conf.TrimEnd());
-    List<ConfItem> ConfItems = new List<ConfItem>();
-    string InitialContent;
-    string ThemeConf = GetThemeConf();
+    List<Setting> _settings = Conf.LoadConf(Properties.Resources.editor_conf.TrimEnd());
+    List<ConfItem> _confItems = new List<ConfItem>();
+    string _initialContent;
+    string _themeConf = GetThemeConf();
     string? _searchText;
     List<NodeViewModel>? _nodes;
     bool _shown;
+    int _useSpace;
+    int _useNoSpace;
+
     public event PropertyChangedEventHandler? PropertyChanged;
 
     public ConfWindow()
@@ -37,7 +40,7 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
         LoadConf(App.ConfPath);
         LoadLibplaceboConf();
         LoadSettings();
-        InitialContent = GetCompareString();
+        _initialContent = GetCompareString();
 
         if (string.IsNullOrEmpty(App.Settings.ConfigEditorSearch))
             SearchText = "General:";
@@ -74,7 +77,7 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
             {
                 var rootNode = new TreeNode();
 
-                foreach (Setting setting in Settings)
+                foreach (Setting setting in _settings)
                     AddNode(rootNode.Children, setting.Directory!);
 
                 _nodes = new NodeViewModel(rootNode).Children;
@@ -127,14 +130,14 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
 
     void LoadSettings()
     {
-        foreach (Setting setting in Settings)
+        foreach (Setting setting in _settings)
         {
             setting.StartValue = setting.Value;
 
             if (!FilterStrings.Contains(setting.Directory!))
                 FilterStrings.Add(setting.Directory!);
 
-            foreach (ConfItem item in ConfItems)
+            foreach (ConfItem item in _confItems)
             {
                 if (setting.Name == item.Name &&
                     setting.File == item.File &&
@@ -164,7 +167,7 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
 
     static string GetThemeConf() => Theme.DarkMode + App.DarkTheme + App.LightTheme;
 
-    string GetCompareString() => string.Join("", Settings.Select(item => item.Name + item.Value).ToArray());
+    string GetCompareString() => string.Join("", _settings.Select(item => item.Name + item.Value).ToArray());
 
     void LoadConf(string file)
     {
@@ -176,9 +179,12 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
 
         bool isSectionItem = false;
 
-        foreach (string currentLine in File.ReadAllLines(file))
+        foreach (string it in File.ReadAllLines(file))
         {
-            string line = currentLine.Trim();
+            string line = it.Trim();
+
+            if (line.StartsWith("-"))
+                line = line.TrimStart('-');
 
             if (line == "")
                 comment += "\r\n";
@@ -187,7 +193,7 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
             else if (line.StartsWith("[") && line.Contains(']'))
             {
                 if (!isSectionItem && comment != "" && comment != "\r\n")
-                    ConfItems.Add(new ConfItem() {
+                    _confItems.Add(new ConfItem() {
                         Comment = comment, File = Path.GetFileNameWithoutExtension(file)});
 
                 section = line.Substring(0, line.IndexOf("]") + 1);
@@ -197,7 +203,20 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
             else if (line.Contains('=') || Regex.Match(line, "^[\\w-]+$").Success)
             {
                 if (!line.Contains('='))
-                    line += "=yes";
+                {
+                    if (line.StartsWith("no-"))
+                    {
+                        line = line.Substring(3);
+                        line += "=no";
+                    }
+                    else
+                        line += "=yes";
+                }
+
+                if (line.Contains(" =") || line.Contains("= "))
+                    _useSpace += 1;
+                else
+                    _useNoSpace += 1;
 
                 ConfItem item = new();
                 item.File = Path.GetFileNameWithoutExtension(file);
@@ -207,7 +226,7 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
                 item.Section = section;
                 section = "";
 
-                if (line.Contains('#') && !line.Contains("'") && !line.Contains("\""))
+                if (line.Contains('#') && !line.Contains('\'') && !line.Contains('"'))
                 {
                     item.LineComment = line.Substring(line.IndexOf("#")).Trim();
                     line = line.Substring(0, line.IndexOf("#")).Trim();
@@ -231,7 +250,7 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
 
                 item.Name = left;
                 item.Value = right;
-                ConfItems.Add(item);
+                _confItems.Add(item);
             }
         }
     }
@@ -240,7 +259,7 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
     {
         List<string> pairs = new();
 
-        foreach (Setting setting in Settings)
+        foreach (Setting setting in _settings)
         {
             if (filename != setting.File)
                 continue;
@@ -254,7 +273,7 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
 
     void LoadLibplaceboConf()
     {
-        foreach (ConfItem item in ConfItems.ToArray())
+        foreach (ConfItem item in _confItems.ToArray())
             if (item.Name == "libplacebo-opts")
                 LoadKeyValueList(item.Value, "libplacebo");
     }
@@ -276,7 +295,7 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
             item.Name = left;
             item.Value = right;
             item.File = file;
-            ConfItems.Add(item);
+            _confItems.Add(item);
         }
     }
 
@@ -301,8 +320,9 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
     {
         StringBuilder sb = new StringBuilder();
         List<string> namesWritten = new List<string>();
+        string equalString = _useSpace > _useNoSpace ? " = " : "=";
 
-        foreach (ConfItem item in ConfItems)
+        foreach (ConfItem item in _confItems)
         {
             if (filename != item.File || item.Section != "" || item.IsSectionItem)
                 continue;
@@ -314,7 +334,7 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
             {
                 if (item.Name != "")
                 {
-                    sb.Append(item.Name + " = " + EscapeValue(item.Value));
+                    sb.Append(item.Name + equalString + EscapeValue(item.Value));
 
                     if (item.LineComment != "")
                         sb.Append(" " + item.LineComment);
@@ -325,7 +345,7 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
             }
             else if ((item.SettingBase.Value ?? "") != item.SettingBase.Default)
             {
-                sb.Append(item.Name + " = " + EscapeValue(item.SettingBase.Value!));
+                sb.Append(item.Name + equalString + EscapeValue(item.SettingBase.Value!));
 
                 if (item.LineComment != "")
                     sb.Append(" " + item.LineComment);
@@ -335,16 +355,16 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
             }
         }
 
-        foreach (Setting setting in Settings)
+        foreach (Setting setting in _settings)
         {
             if (filename != setting.File || namesWritten.Contains(setting.Name!))
                 continue;
 
             if ((setting.Value ?? "") != setting.Default)
-                sb.AppendLine(setting.Name + " = " + EscapeValue(setting.Value!));
+                sb.AppendLine(setting.Name + equalString + EscapeValue(setting.Value!));
         }
 
-        foreach (ConfItem item in ConfItems)
+        foreach (ConfItem item in _confItems)
         {
             if (filename != item.File || (item.Section == "" && !item.IsSectionItem))
                 continue;
@@ -360,7 +380,7 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
             if (item.Comment != "")
                 sb.Append(item.Comment);
 
-            sb.Append(item.Name + " = " + EscapeValue(item.Value));
+            sb.Append(item.Name + equalString + EscapeValue(item.Value));
 
             if (item.LineComment != "")
                 sb.Append(" " + item.LineComment);
@@ -415,10 +435,10 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
         base.OnClosed(e);
         App.Settings.ConfigEditorSearch = SearchText;
 
-        if (InitialContent == GetCompareString())
+        if (_initialContent == GetCompareString())
             return;
 
-        foreach (Setting setting in Settings)
+        foreach (Setting setting in _settings)
         {
             if (setting.Name == "libplacebo-opts")
             {
@@ -430,7 +450,7 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
         File.WriteAllText(Player.ConfPath, GetContent("mpv"));
         File.WriteAllText(App.ConfPath, GetContent("mpvnet"));
 
-        foreach (Setting it in Settings)
+        foreach (Setting it in _settings)
         {
             if (it.Value != it.StartValue)
             {
@@ -447,7 +467,7 @@ public partial class ConfWindow : Window, INotifyPropertyChanged
         Theme.Init();
         Theme.UpdateWpfColors();
 
-        if (ThemeConf != GetThemeConf())
+        if (_themeConf != GetThemeConf())
             MessageBox.Show("Changed theme settings require mpv.net being restarted.", "Info");
     }
 
