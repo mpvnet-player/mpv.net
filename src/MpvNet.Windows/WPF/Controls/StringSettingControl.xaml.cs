@@ -33,6 +33,9 @@ public partial class StringSettingControl : UserControl, ISettingControl
 
         if (string.IsNullOrEmpty(stringSetting.URL))
             LinkTextBlock.Visibility = Visibility.Collapsed;
+
+        if (string.IsNullOrEmpty(stringSetting.Help))
+            HelpTextBox.Visibility = Visibility.Collapsed;
     }
 
     public Theme? Theme => Theme.Current;

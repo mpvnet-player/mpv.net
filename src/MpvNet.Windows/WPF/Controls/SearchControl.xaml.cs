@@ -39,10 +39,16 @@ public partial class SearchControl : UserControl
     {
         HintTextBlock.Text = string.IsNullOrEmpty(Text) ? HintText : "";
 
-        if (string.IsNullOrEmpty(Text) || HideClearButton || Text.Length > 21)
+        if (string.IsNullOrEmpty(Text) || HideClearButton || Text.Length > 30)
+        {
+            SearchTextBox.Padding = new Thickness(2);
             SearchClearButton.Visibility = Visibility.Hidden;
+        }
         else
+        {
+            SearchTextBox.Padding = new Thickness(2, 2, 20, 2);
             SearchClearButton.Visibility = Visibility.Visible;
+        }
     }
 
     public string Text

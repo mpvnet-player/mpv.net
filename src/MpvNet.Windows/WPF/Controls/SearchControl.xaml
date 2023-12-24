@@ -24,7 +24,7 @@
             Name="SearchTextBox"
             Height="25"
             BorderThickness="2"
-            Padding="2"
+            Padding="2,2,20,2"
             Background="Transparent"
             Foreground="{Binding Theme.Foreground}"
             CaretBrush="{Binding Theme.Foreground}"

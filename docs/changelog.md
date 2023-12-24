@@ -1,14 +1,16 @@
 
 # v7.0.0.5 Beta (2023-??-??)
 
+- More libplacebo options added.
 - Support of the mpv option `title-bar`.
-- Command line parser fix using list options with `-add` suffix.
 - Fix video being rendered with black line at the bottom.
 - The conf file reader/writer detects if the user prefers space before and after the equal sign.
 - The portable download includes like the installer debug symbols.
 - Setup questions on startup removed.
 - Pressing shift while drag and drop (and clipboard import) appends
   instead of replaces files in the playlist. mpv supports this as well.
+- All list operation suffixes are available on the command line.
+- Improved layout in conf editor.
 
 # v7.0.0.4 Beta (2023-12-19)
 

@@ -92,13 +92,13 @@ Before making a support request, please try the newest [beta version](../../../r
 
 Support can be requested here:
 
-Beginner questions:
-
-https://www.reddit.com/r/mpv
-
 mpv.net bug reports, feature requests and advanced questions:
 
 https://github.com/mpvnet-player/mpv.net/issues
+
+Beginner mpv questions:
+
+https://www.reddit.com/r/mpv
 
 Advanced mpv questions:
 
@@ -735,8 +735,8 @@ Blu-ray and DVD ISO image files are supported.
 
 ### Open > Open URL or file path from clipboard
 
-Opens files and URLs from the clipboard. How to open URLs directly
-from the browser from sites like YouTube is described in the
+Opens files and URLs from the clipboard. Shift key appends to the playlist.
+How to open URLs directly from the browser from sites like YouTube is described in the
 [External Tools section](#external-tools).
 
 

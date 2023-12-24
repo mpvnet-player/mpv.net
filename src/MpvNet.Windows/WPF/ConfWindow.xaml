@@ -40,7 +40,7 @@
         </Grid.RowDefinitions>
         
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="180" />
+            <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
@@ -48,6 +48,7 @@
             x:Name="SearchControl"
             HintText="Find a setting (Ctrl+F)"
             Margin="20,20,0,10"
+            MaxWidth="190"
             Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             />
         

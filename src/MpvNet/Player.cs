@@ -131,10 +131,6 @@ public class MainPlayer : MpvClient
         if (err < 0)
             throw new Exception("mpv_initialize error" + BR2 + GetError(err) + BR);
 
-        SetPropertyString("user-data/frontend/name", "mpv.net");
-        SetPropertyString("user-data/frontend/version", AppInfo.Version.ToString());
-        SetPropertyString("user-data/frontend/process-path", Environment.ProcessPath!);
-
         string idle = GetPropertyString("idle");
         App.Exit = idle == "no" || idle == "once";
 
@@ -151,6 +147,10 @@ public class MainPlayer : MpvClient
         // otherwise shutdown is raised before media files are loaded,
         // this means Lua scripts that use idle might not work correctly
         SetPropertyString("idle", "yes");
+
+        SetPropertyString("user-data/frontend/name", "mpv.net");
+        SetPropertyString("user-data/frontend/version", AppInfo.Version.ToString());
+        SetPropertyString("user-data/frontend/process-path", Environment.ProcessPath!);
 
         ObservePropertyBool("pause", value => {
             Paused = value;
@@ -419,7 +419,14 @@ public class MainPlayer : MpvClient
     {
         foreach (var pair in CommandLine.Arguments)
         {
-            if (pair.Name.EndsWith("-add"))
+            if (pair.Name.EndsWith("-add") ||
+                pair.Name.EndsWith("-set") ||
+                pair.Name.EndsWith("-pre") ||
+                pair.Name.EndsWith("-clr") ||
+                pair.Name.EndsWith("-append") ||
+                pair.Name.EndsWith("-remove") ||
+                pair.Name.EndsWith("-toggle"))
+
                 continue;
 
             ProcessProperty(pair.Name, pair.Value);
@@ -434,11 +441,19 @@ public class MainPlayer : MpvClient
         foreach (var pair in CommandLine.Arguments)
         {
             if (pair.Name.EndsWith("-add"))
-            {
-                string name = pair.Name[..^4];
-                string separator = name.Contains("-file") || name.Contains("-path") ? ";" : ",";
-                SetPropertyString(name, (GetPropertyString(name) + separator + pair.Value).TrimStart(',', ';'));
-            }
+                CommandV("change-list", pair.Name[..^4], "add", pair.Value);
+            else if (pair.Name.EndsWith("-set"))
+                CommandV("change-list", pair.Name[..^4], "set", pair.Value);
+            else if (pair.Name.EndsWith("-append"))
+                CommandV("change-list", pair.Name[..^7], "append", pair.Value);
+            else if (pair.Name.EndsWith("-pre"))
+                CommandV("change-list", pair.Name[..^4], "pre", pair.Value);
+            else if (pair.Name.EndsWith("-clr"))
+                CommandV("change-list", pair.Name[..^4], "clr", "");
+            else if (pair.Name.EndsWith("-remove"))
+                CommandV("change-list", pair.Name[..^7], "remove", pair.Value);
+            else if (pair.Name.EndsWith("-toggle"))
+                CommandV("change-list", pair.Name[..^7], "toggle", pair.Value);
         }
     }
 

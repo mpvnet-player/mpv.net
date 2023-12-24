@@ -284,6 +284,9 @@ public static class InputHelp
         if (string.IsNullOrEmpty(content))
             return bindings;
 
+        if (content.Contains('\t'))
+            content = content.Replace('\t', ' ');
+
         foreach (string it in content.Split('\n'))
         {
             string line = it.Trim();

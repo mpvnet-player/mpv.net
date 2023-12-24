@@ -17,7 +17,7 @@ name = media-info
 file = mpvnet
 default = yes
 directory = General
-help = Usage of the media info library instead of mpv to access media information. (mpv.net option)
+help = Usage of the media info library instead of mpv to retrieve media information. (mpv.net option)
 option = yes
 option = no
 
@@ -327,6 +327,14 @@ default = no
 option = yes
 option = no
 
+name = deband_preset
+file = libplacebo
+directory = Video/libplacebo/Debanding
+help = Overrides the value of all options in this section by their default values from the given preset.
+default = none
+option = none
+option = default
+
 name = deband_iterations
 file = libplacebo
 directory = Video/libplacebo/Debanding
@@ -355,6 +363,14 @@ default = yes
 option = yes
 option = no
 
+name = sigmoid_preset
+file = libplacebo
+directory = Video/libplacebo/Sigmoidization
+help = Overrides the value of all options in this section by their default values from the given preset.
+default = none
+option = none
+option = default
+
 name = sigmoid_center
 file = libplacebo
 directory = Video/libplacebo/Sigmoidization
@@ -364,6 +380,355 @@ name = sigmoid_slope
 file = libplacebo
 directory = Video/libplacebo/Sigmoidization
 help = <1.0..20.0> The slope (steepness) of the sigmoid curve. Defaults to 6.5.
+
+name = color_adjustment
+file = libplacebo
+directory = Video/libplacebo/Color Adjustment
+help = Enables color adjustment.
+default = yes
+option = yes
+option = no
+
+name = color_adjustment_preset
+file = libplacebo
+directory = Video/libplacebo/Color Adjustment
+help = Overrides the value of all options in this section by their default values from the given preset.
+default = none
+option = none
+option = neutral
+
+name = brightness
+file = libplacebo
+directory = Video/libplacebo/Color Adjustment
+help = <-1.0..1.0> Brightness boost. Adds a constant bias onto the source luminance signal. 0.0 = neutral, 1.0 = solid white, -1.0 = solid black. Defaults to 0.0.
+
+name = contrast
+file = libplacebo
+directory = Video/libplacebo/Color Adjustment
+help = <0.0..100.0> Contrast gain. Multiplies the source luminance signal by a constant factor. 1.0 = neutral, 0.0 = solid black. Defaults to 1.0.
+
+name = saturation
+file = libplacebo
+directory = Video/libplacebo/Color Adjustment
+help = <0.0..100.0> Saturation gain. Multiplies the source chromaticity signal by a constant factor. 1.0 = neutral, 0.0 = grayscale. Defaults to 1.0.
+
+name = hue
+file = libplacebo
+directory = Video/libplacebo/Color Adjustment
+help = <angle> Hue shift. Corresponds to a rotation of the UV subvector around the neutral axis. Specified in radians. Defaults to 0.0 (neutral).
+
+name = gamma
+file = libplacebo
+directory = Video/libplacebo/Color Adjustment
+help = <0.0..100.0> Gamma lift. Subjectively brightnes or darkens the scene while preserving overall contrast. 1.0 = neutral, 0.0 = solid black. Defaults to 1.0.
+
+name = temperature
+file = libplacebo
+directory = Video/libplacebo/Color Adjustment
+help = <-1.143..5.286> Color temperature shift. Relative to 6500 K, a value of 0.0 gives you 6500 K (no change), a value of -1.0 gives you 3000 K, and a value of 1.0 gives you 10000 K. Defaults to 0.0.
+
+name = peak_detect
+file = libplacebo
+directory = Video/libplacebo/HDR Peak Detection
+help = Enables HDR peak detection.
+default = yes
+option = yes
+option = no
+
+name = peak_detection_preset
+file = libplacebo
+directory = Video/libplacebo/HDR Peak Detection
+help = Overrides the value of all options in this section by their default values from the given preset. high_quality also enables frame histogram measurement.
+default = none
+option = none
+option = default
+option = high_quality
+
+name = peak_smoothing_period
+file = libplacebo
+directory = Video/libplacebo/HDR Peak Detection
+help = <0.0..1000.0> Smoothing coefficient for the detected values.
+url = https://libplacebo.org/options/#peak_smoothing_period0010000
+
+name = scene_threshold_low
+file = libplacebo
+directory = Video/libplacebo/HDR Peak Detection
+url = https://libplacebo.org/options/#scene_threshold_low001000-scene_threshold_high001000
+
+name = scene_threshold_high
+file = libplacebo
+directory = Video/libplacebo/HDR Peak Detection
+url = https://libplacebo.org/options/#scene_threshold_low001000-scene_threshold_high001000
+
+name = peak_percentile
+file = libplacebo
+directory = Video/libplacebo/HDR Peak Detection
+help = <0.0..100.0> Which percentile of the input image brightness histogram to consider as the true peak of the scene.
+url = https://libplacebo.org/options/#peak_percentile001000
+
+name = black_cutoff
+file = libplacebo
+directory = Video/libplacebo/HDR Peak Detection
+help = <0.0..100.0> Black cutoff strength.
+url = https://libplacebo.org/options/#black_cutoff001000
+
+name = allow_delayed_peak
+file = libplacebo
+directory = Video/libplacebo/HDR Peak Detection
+help = Allows the peak detection result to be delayed by up to a single frame, which can sometimes improve throughput, at the cost of introducing the possibility of 1-frame flickers on transitions.
+default = no
+option = yes
+option = no
+
+name = color_map
+file = libplacebo
+directory = Video/libplacebo/Color Mapping
+help = Enables the use of these color mapping settings. Disabling this option does not disable color mapping, it just means "use the default options for everything".
+default = yes
+option = yes
+option = no
+
+name = color_map_preset
+file = libplacebo
+directory = Video/libplacebo/Color Mapping
+help = Overrides the value of all options in this section by their default values from the given preset. high_quality also enables HDR contrast recovery.
+default = none
+option = none
+option = default
+option = high_quality
+
+name = gamut_mapping
+file = libplacebo
+directory = Video/libplacebo/Color Mapping
+help = Gamut mapping function to use to handle out-of-gamut colors, including colors which are out-of-gamut as a consequence of tone mapping.
+default = perceptual
+option = clip
+option = perceptual
+option = softclip
+option = relative
+option = saturation
+option = absolute
+option = desaturate
+option = darken
+option = highlight
+option = linear
+
+name = perceptual_deadzone
+file = libplacebo
+directory = Video/libplacebo/Color Mapping
+help = <0.0..1.0> (Relative) chromaticity protection zone for perceptual mapping. Defaults to 0.30.
+
+name = perceptual_strength
+file = libplacebo
+directory = Video/libplacebo/Color Mapping
+help = <0.0..1.0> Strength of the perceptual saturation mapping component. Defaults to 0.80.
+
+name = colorimetric_gamma
+file = libplacebo
+directory = Video/libplacebo/Color Mapping
+help = <0.0..10.0> I vs C curve gamma to use for colorimetric clipping (relative, absolute and darken). Defaults to 1.80.
+
+name = softclip_knee
+file = libplacebo
+directory = Video/libplacebo/Color Mapping
+help = <0.0..1.0> Knee point to use for soft-clipping methods (perceptual, softclip). Defaults to 0.70.
+
+name = softclip_desat
+file = libplacebo
+directory = Video/libplacebo/Color Mapping
+help = <0.0..1.0> Desaturation strength for softclip. Defaults to 0.35.
+
+name = lut3d_size_I
+file = libplacebo
+directory = Video/libplacebo/Color Mapping
+help = <0..1024> Gamut mapping 3DLUT size. Setting a dimension to 0 picks the default value. Defaults to 48.
+
+name = lut3d_size_C
+file = libplacebo
+directory = Video/libplacebo/Color Mapping
+help = <0..1024> Gamut mapping 3DLUT size. Setting a dimension to 0 picks the default value. Defaults to 32.
+
+name = lut3d_size_h
+file = libplacebo
+directory = Video/libplacebo/Color Mapping
+help = <0..1024> Gamut mapping 3DLUT size. Setting a dimension to 0 picks the default value. Defaults to 256.
+
+name = lut3d_tricubic
+file = libplacebo
+directory = Video/libplacebo/Color Mapping
+help = Use higher quality, but slower, tricubic interpolation for gamut mapping 3DLUTs. May substantially improve the 3DLUT gamut mapping accuracy, in particular at smaller 3DLUT sizes. Shouldn't have much effect at the default size.
+default = no
+option = yes
+option = no
+
+name = gamut_expansion
+file = libplacebo
+directory = Video/libplacebo/Color Mapping
+help = If enabled, allows the gamut mapping function to expand the gamut, in cases where the target gamut exceeds that of the source. If disabled, the source gamut will never be enlarged, even when using a gamut mapping function capable of bidirectional mapping.
+default = no
+option = yes
+option = no
+
+name = tone_mapping
+file = libplacebo
+directory = Video/libplacebo/Color Mapping
+help = Tone mapping function to use for adapting between difference luminance ranges, including black point adaptation.
+default = spline
+option = clip
+option = spline
+option = st2094-40
+option = st2094-10
+option = bt2390
+option = bt2446a
+option = reinhard
+option = mobius
+option = hable
+option = gamma
+option = linear
+option = linearlight
+
+name = knee_adaptation
+file = libplacebo
+directory = Video/libplacebo/Color Mapping
+url = https://libplacebo.org/options/#tone-mapping-constants
+
+name = knee_minimum
+file = libplacebo
+directory = Video/libplacebo/Color Mapping
+help = <0.0..0.5> Configures the knee point minimum as a percentage of the PQ luminance range. Provides a hard limit on the knee point chosen by knee_adaptation. Defaults to 0.1.
+
+name = knee_maximum
+file = libplacebo
+directory = Video/libplacebo/Color Mapping
+help = <0.5..1.0> Configures the knee point maximum as a percentage of the PQ luminance range. Provides a hard limit on the knee point chosen by knee_adaptation. Defaults to 0.8.
+
+name = knee_default
+file = libplacebo
+directory = Video/libplacebo/Color Mapping
+help = <0.0..1.0> Default knee point to use in the absence of source scene average metadata. Normally, this is ignored in favor of picking the knee point as the (relative) source scene average brightness level. Defaults to 0.4.
+
+name = knee_offset
+file = libplacebo
+directory = Video/libplacebo/Color Mapping
+help = <0.5..2.0> Knee point offset (for bt2390 only). Note that a value of 0.5 is the spec-defined default behavior, which differs from the libplacebo default of 1.0.
+
+name = slope_tuning
+file = libplacebo
+directory = Video/libplacebo/Color Mapping
+url = https://libplacebo.org/options/#tone-mapping-constants
+
+name = slope_offset
+file = libplacebo
+directory = Video/libplacebo/Color Mapping
+url = https://libplacebo.org/options/#tone-mapping-constants
+
+name = spline_contrast
+file = libplacebo
+directory = Video/libplacebo/Color Mapping
+url = https://libplacebo.org/options/#tone-mapping-constants
+
+name = reinhard_contrast
+file = libplacebo
+directory = Video/libplacebo/Color Mapping
+help = <0.0..1.0> For the reinhard function, this specifies the local contrast coefficient at the display peak. Essentially, a value of 0.5 implies that the reference white will be about half as bright as when clipping. Defaults to 0.5.
+
+name = linear_knee
+file = libplacebo
+directory = Video/libplacebo/Color Mapping
+help = <0.0..1.0> For legacy functions (mobius, gamma) which operate on linear light, this directly sets the corresponding knee point. Defaults to 0.3.
+
+name = exposure
+file = libplacebo
+directory = Video/libplacebo/Color Mapping
+help = <0.0..10.0> For linear methods (linear, linearlight), this controls the linear exposure/gain applied to the image. Defaults to 1.0.
+
+name = inverse_tone_mapping
+file = libplacebo
+directory = Video/libplacebo/Color Mapping
+help = If enabled, and supported by the given tone mapping function, will perform inverse tone mapping to expand the dynamic range of a signal. libplacebo is not liable for any HDR-induced eye damage.
+default = no
+option = yes
+option = no
+
+name = tone_map_metadata
+file = libplacebo
+directory = Video/libplacebo/Color Mapping
+help = Data source to use when tone-mapping. Setting this to a specific value allows overriding the default metadata preference logic.
+default = any
+option = any
+option = none
+option = hdr10
+option = hdr10plus
+option = cie_y
+
+name = tone_lut_size
+file = libplacebo
+directory = Video/libplacebo/Color Mapping
+help = <0..4096> Tone mapping LUT size. Setting 0 picks the default size. Defaults to 256.
+
+name = contrast_recovery
+file = libplacebo
+directory = Video/libplacebo/Color Mapping
+url = https://libplacebo.org/options/#contrast_recovery0020
+
+name = contrast_smoothness
+file = libplacebo
+directory = Video/libplacebo/Color Mapping
+help = <1.0..32.0> HDR contrast recovery lowpass kernel size. Increasing or decreasing this will affect the visual appearance substantially. Defaults to 3.5.
+
+name = force_tone_mapping_lut
+file = libplacebo
+directory = Video/libplacebo/Color Mapping
+help = Force the use of a full tone-mapping LUT even for functions that have faster pure GLSL replacements (e.g. clip, linear, saturation). This is a debug option.
+default = no
+option = yes
+option = no
+
+name = visualize_lut
+file = libplacebo
+directory = Video/libplacebo/Color Mapping
+url = https://libplacebo.org/options/#debug-options
+default = no
+option = yes
+option = no
+
+name = visualize_lut_x0
+file = libplacebo
+directory = Video/libplacebo/Color Mapping
+help = Controls where to draw the LUt visualization, relative to the rendered video. Defaults to 0.0.
+
+name = visualize_lut_y0
+file = libplacebo
+directory = Video/libplacebo/Color Mapping
+help = Controls where to draw the LUt visualization, relative to the rendered video. Defaults to 0.0.
+
+name = visualize_lut_x1
+file = libplacebo
+directory = Video/libplacebo/Color Mapping
+help = Controls where to draw the LUt visualization, relative to the rendered video. Defaults to 1.0.
+
+name = visualize_lut_y1
+file = libplacebo
+directory = Video/libplacebo/Color Mapping
+help = Controls where to draw the LUt visualization, relative to the rendered video. Defaults to 1.0.
+
+name = visualize_hue
+file = libplacebo
+directory = Video/libplacebo/Color Mapping
+help = Controls the rotation of the gamut 3DLUT visualization. Rotates the gamut through hue space (around the I axis), in radians. Defaults to 0.0.
+
+name = visualize_theta
+file = libplacebo
+directory = Video/libplacebo/Color Mapping
+help = Controls the rotation of the gamut 3DLUT visualization. The theta parameter vertically rotates the cross section (around the C axis), in radians. Defaults to 0.0.
+
+name = show_clipping
+file = libplacebo
+directory = Video/libplacebo/Color Mapping
+help = Graphically highlight hard-clipped pixels during tone-mapping (i.e. pixels that exceed the claimed source luminance range).
+default = no
+option = yes
+option = no
 
 name = screenshot-directory
 file = mpv
@@ -763,8 +1128,7 @@ name = language
 file = mpvnet
 default = system
 directory = Appearance
-help = User interface display language.\nmpv.net must be restarted after a change.\nInterested joining our translation team?:
-url = https://app.transifex.com/stax76/teams/
+help = User interface display language.\nmpv.net must be restarted after a change.
 option = system
 option = english
 option = chinese-china

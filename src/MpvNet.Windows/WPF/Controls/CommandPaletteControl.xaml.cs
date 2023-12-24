@@ -92,7 +92,6 @@ public partial class CommandPaletteControl : UserControl
 
         if (item.Binding != null)
         {
-            // TODO: CommandItem.Alias
             //if (item.CommandItem.Alias.ContainsEx(filter))
             //    return true;
 
