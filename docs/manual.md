@@ -241,9 +241,12 @@ Shows a folder browser dialog to open a DVD or BD folder.
 ISO images don't have to be mounted, but instead can be
 opened directly with the open-files command.
 
-### open-clipboard
+### open-clipboard [\<flags\>]
 Opens a single URL or filepath from the clipboard,
 or multiple files in the file clipboard format.
+
+**append**  
+Appends files/URLs to the playlist.
 
 ### play-pause
 Cycles the pause property. In case the playlist is empty,

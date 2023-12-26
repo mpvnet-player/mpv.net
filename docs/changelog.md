@@ -7,8 +7,9 @@
 - The conf file reader/writer detects if the user prefers space before and after the equal sign.
 - The portable download includes like the installer debug symbols.
 - Setup questions on startup removed.
-- Pressing shift while drag and drop (and clipboard import) appends
-  instead of replaces files in the playlist. mpv supports this as well.
+- Pressing shift while drag and drop appends instead of replaces
+  files in the playlist. mpv supports this as well.
+- New menu item and binding: `File > Add files to playlist from clipboard` `Ctrl+Shift+v`.
 - All list operation suffixes are available on the command line.
 - Improved layout in conf editor.
 

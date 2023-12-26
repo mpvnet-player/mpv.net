@@ -17,8 +17,9 @@ public static class InputHelp
                 new (_("File"), _("Add external subtitle files..."), "script-message-to mpvnet load-sub", "Alt+s"),
                 new (_("File"), "-"),
                 new (_("File"), _("Add files to playlist..."), "script-message-to mpvnet open-files append"),
-                new (_("File"), _("Recent Files")),
+                new (_("File"), _("Add files to playlist from clipboard"), "script-message-to mpvnet open-clipboard append", "Ctrl+Shift+v"),
                 new (_("File"), "-"),
+                new (_("File"), _("Recent Files")),
                 new (_("File"), _("Exit"), "quit", "Esc"),
 
                 new (_("Playback"), _("Play/Pause"), "script-message-to mpvnet play-pause", "Space"),

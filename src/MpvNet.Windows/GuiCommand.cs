@@ -153,12 +153,15 @@ public class GuiCommand
 
     public void OpenFromClipboard(IList<string> args)
     {
-        bool append = Control.ModifierKeys == Keys.Shift;
+        bool append = args.Count == 1 && args[0] == "append";
 
         if (System.Windows.Forms.Clipboard.ContainsFileDropList())
         {
             string[] files = System.Windows.Forms.Clipboard.GetFileDropList().Cast<string>().ToArray();
             Player.LoadFiles(files, false, append);
+
+            if (append)
+                Player.CommandV("show-text", _("Files/URLs were added to the playlist"));
         }
         else
         {
@@ -171,11 +174,14 @@ public class GuiCommand
 
             if (files.Count == 0)
             {
-                Terminal.WriteError("The clipboard does not contain a valid URL or file.");
+                Terminal.WriteError(_("The clipboard does not contain a valid URL or file."));
                 return;
             }
 
             Player.LoadFiles(files.ToArray(), false, append);
+
+            if (append)
+                Player.CommandV("show-text", _("Files/URLs were added to the playlist"));
         }
     }
 
