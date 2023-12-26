@@ -606,7 +606,7 @@ visible, even when mpv.net is started from the terminal and music is played.
 For mpv.net it's currently not possible to find out where OSC menus are located,
 but there are 3 features that require this information, therefore mpv.net
 makes the assumption that near the window borders might be OSC menus. As a result
-the following three features, work only when invokes from the center of the window:
+the following three features, work only when invoked from the center of the window:
 
 1. Window dragging (moving the window with the mouse).
 2. Showing the context menu.

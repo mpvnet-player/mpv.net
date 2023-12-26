@@ -1,6 +1,8 @@
 
 # v7.0.0.5 Beta (2023-??-??)
 
+- Fix mpv.net option `language` not working from command line.
+- Chinese and German translation updated.
 - More libplacebo options added.
 - Support of the mpv option `title-bar`.
 - Fix video being rendered with black line at the bottom.
@@ -12,6 +14,8 @@
 - New menu item and binding: `File > Add files to playlist from clipboard` `Ctrl+Shift+v`.
 - All list operation suffixes are available on the command line.
 - Improved layout in conf editor.
+- New zhongfly libmpv build.
+
 
 # v7.0.0.4 Beta (2023-12-19)
 

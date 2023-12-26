@@ -7,6 +7,8 @@ namespace MpvNet.Windows.WPF;
 
 public class WpfTranslator : ITranslator
 {
+    string _localizerLangauge = "";
+
     static Language[] Languages { get; } = new Language[] {
         new("english", "en", "en"),
         new("chinese-china", "zh-CN", "zh"),  // Chinese (Simplified)
@@ -21,8 +23,11 @@ public class WpfTranslator : ITranslator
 
     void InitNGettextWpf()
     {
-        if (Translation.Localizer == null)
+        if (Translation.Localizer == null || _localizerLangauge != App.Language)
+        {
             CompositionRoot.Compose("mpvnet", GetCulture(App.Language), Folder.Startup + "Locale");
+            _localizerLangauge = App.Language;
+        }
     }
 
     string GetSystemLanguage()

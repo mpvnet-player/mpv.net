@@ -1,4 +1,6 @@
 
+$ErrorActionPreference = 'Stop'
+
 # Write list of .cs files into cs-files.txt file
 Get-ChildItem $PSScriptRoot/.. -Recurse -File -Filter '*.cs' |
     Where-Object { $_ -notmatch '[/\\]obj[/\\]' } |
@@ -7,6 +9,7 @@ Get-ChildItem $PSScriptRoot/.. -Recurse -File -Filter '*.cs' |
 
 # Create .pot file
 xgettext --force-po --from-code=UTF-8 '--language=c#' -o $PSScriptRoot/source.pot --files-from=$PSScriptRoot/cs-files.txt --keyword=_
+if ($LastExitCode) { throw $LastExitCode }
 
 # Backup .po files
 $BackupTargetFolder = $env:TEMP + '/mpv.net po backup ' + (Get-Date -Format 'yyyy-MM-dd HH_mm_ss')
@@ -16,3 +19,5 @@ Copy-Item $PSScriptRoot/po $BackupTargetFolder -Force -Recurse
 # Update .po files
 (Get-ChildItem $PSScriptRoot/PO -Filter '*.po').FullName |
     ForEach-Object { msgmerge --sort-output --backup=none --update $_ $PSScriptRoot/source.pot }
+
+if ($LastExitCode) { throw $LastExitCode }

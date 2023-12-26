@@ -3,6 +3,7 @@ D:\Projects\CS\mpv.net\src\MpvNet\AppInfo.cs
 D:\Projects\CS\mpv.net\src\MpvNet\Binding.cs
 D:\Projects\CS\mpv.net\src\MpvNet\Chapter.cs
 D:\Projects\CS\mpv.net\src\MpvNet\Command.cs
+D:\Projects\CS\mpv.net\src\MpvNet\CommandLine.cs
 D:\Projects\CS\mpv.net\src\MpvNet\ExtensionLoader.cs
 D:\Projects\CS\mpv.net\src\MpvNet\FileTypes.cs
 D:\Projects\CS\mpv.net\src\MpvNet\Folder.cs
@@ -14,6 +15,7 @@ D:\Projects\CS\mpv.net\src\MpvNet\MediaTrack.cs
 D:\Projects\CS\mpv.net\src\MpvNet\MpvClient.cs
 D:\Projects\CS\mpv.net\src\MpvNet\Player.cs
 D:\Projects\CS\mpv.net\src\MpvNet\Settings.cs
+D:\Projects\CS\mpv.net\src\MpvNet\StringPair.cs
 D:\Projects\CS\mpv.net\src\MpvNet\Terminal.cs
 D:\Projects\CS\mpv.net\src\MpvNet\Translator.cs
 D:\Projects\CS\mpv.net\src\MpvNet\ExtensionMethod\ObjectExtension.cs
@@ -35,9 +37,8 @@ D:\Projects\CS\mpv.net\src\MpvNet.Windows\GlobalUsings.cs
 D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs
 D:\Projects\CS\mpv.net\src\MpvNet.Windows\Program.cs
 D:\Projects\CS\mpv.net\src\MpvNet.Windows\Settings.cs
-D:\Projects\CS\mpv.net\src\MpvNet.Windows\StringPair.cs
 D:\Projects\CS\mpv.net\src\MpvNet.Windows\Help\RegistryHelp.cs
-D:\Projects\CS\mpv.net\src\MpvNet.Windows\Help\WinMpvHelp.cs
+D:\Projects\CS\mpv.net\src\MpvNet.Windows\Help\WinApiHelp.cs
 D:\Projects\CS\mpv.net\src\MpvNet.Windows\Native\StockIcon.cs
 D:\Projects\CS\mpv.net\src\MpvNet.Windows\Native\Taskbar.cs
 D:\Projects\CS\mpv.net\src\MpvNet.Windows\Native\WinApi.cs
@@ -51,6 +52,7 @@ D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs
 D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.Designer.cs
 D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\SnapManager.cs
 D:\Projects\CS\mpv.net\src\MpvNet.Windows\WPF\BindingProxy.cs
+D:\Projects\CS\mpv.net\src\MpvNet.Windows\WPF\ComboBoxTemplateSelector.cs
 D:\Projects\CS\mpv.net\src\MpvNet.Windows\WPF\ConfWindow.xaml.cs
 D:\Projects\CS\mpv.net\src\MpvNet.Windows\WPF\InputWindow.xaml.cs
 D:\Projects\CS\mpv.net\src\MpvNet.Windows\WPF\ISettingControl.cs
@@ -59,6 +61,7 @@ D:\Projects\CS\mpv.net\src\MpvNet.Windows\WPF\MenuHelp.cs
 D:\Projects\CS\mpv.net\src\MpvNet.Windows\WPF\Msg.cs
 D:\Projects\CS\mpv.net\src\MpvNet.Windows\WPF\WpfApplication.cs
 D:\Projects\CS\mpv.net\src\MpvNet.Windows\WPF\WpfTranslator.cs
+D:\Projects\CS\mpv.net\src\MpvNet.Windows\WPF\Controls\ComboBoxSettingControl.xaml.cs
 D:\Projects\CS\mpv.net\src\MpvNet.Windows\WPF\Controls\CommandPaletteControl.xaml.cs
 D:\Projects\CS\mpv.net\src\MpvNet.Windows\WPF\Controls\HyperlinkEx.cs
 D:\Projects\CS\mpv.net\src\MpvNet.Windows\WPF\Controls\OptionSettingControl.xaml.cs

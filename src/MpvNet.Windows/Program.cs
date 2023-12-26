@@ -41,7 +41,7 @@ static class Program
             Theme.Init();
             Mutex mutex = new Mutex(true, StringHelp.GetMD5Hash(App.ConfPath), out bool isFirst);
 
-            if (Control.ModifierKeys.HasFlag(Keys.Shift) ||
+            if (Control.ModifierKeys == Keys.Shift ||
                 App.CommandLine.Contains("--process-instance=multi") ||
                 App.CommandLine.Contains("--o="))
             {

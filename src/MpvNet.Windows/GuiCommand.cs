@@ -330,7 +330,7 @@ public class GuiCommand
 
         if (path.ToLower().Contains(Folder.Startup.TrimEnd(Path.DirectorySeparatorChar).ToLower()))
         {
-            Msg.ShowWarning("mpv.net is already in Path.");
+            Msg.ShowWarning(_("mpv.net is already in Path."));
             return;
         }
 
@@ -338,7 +338,7 @@ public class GuiCommand
             Folder.Startup.TrimEnd(Path.DirectorySeparatorChar) + ";" + path,
             EnvironmentVariableTarget.User);
 
-        Msg.ShowInfo("mpv.net successfully was added to Path.");
+        Msg.ShowInfo(_("mpv.net was successfully added to Path."));
     }
 
     public void ShowPlaylist()

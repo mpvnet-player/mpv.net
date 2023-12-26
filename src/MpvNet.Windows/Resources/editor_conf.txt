@@ -824,8 +824,9 @@ name = audio-device
 file = mpv
 directory = Audio
 type = string
+width = 400
 url = https://mpv.io/manual/master/#options-audio-device
-help = <name> Use the given audio device. This consists of the audio output name, e.g. alsa, followed by /, followed by the audio output specific device name. The default value for this option is auto, which tries every audio output in preference order with the default device.
+help = <name> Use the given audio device. This consists of the audio output name, e.g. alsa, followed by /, followed by the audio output specific device name. The default value for this option is auto, which tries every audio output in preference order with the default device. To list audio devices in mpv.net use the context menu:\nView > More > Show Audio Devices.
 
 name = slang
 file = mpv
