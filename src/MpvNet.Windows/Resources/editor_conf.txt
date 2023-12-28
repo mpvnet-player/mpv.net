@@ -747,7 +747,7 @@ option = png
 
 name = screenshot-tag-colorspace
 file = mpv
-default = no
+default = yes
 directory = Video/Screenshot
 help = Tag screenshots with the appropriate colorspace. Note that not all formats are supported.
 option = yes
