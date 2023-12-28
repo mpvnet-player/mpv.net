@@ -1,11 +1,11 @@
 
-# v7.0.0.5 Beta (2023-??-??)
+# v7.0.0.5 Beta (2023-12-28)
 
 - Fix mpv.net option `language` not working from command line.
 - Chinese and German translation updated.
 - More libplacebo options added.
 - Support of the mpv option `title-bar`.
-- Fix video being rendered with black line at the bottom.
+- Video being less often rendered with black line at the bottom.
 - The conf file reader/writer detects if the user prefers space before and after the equal sign.
 - The portable download includes like the installer debug symbols.
 - Setup questions on startup removed.
