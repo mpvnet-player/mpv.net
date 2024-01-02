@@ -270,6 +270,21 @@ Shows available audio devices in a message box.
 ### show-commands
 Shows available [mpv input commands](https://mpv.io/manual/master/#list-of-input-commands).
 
+### show-properties
+Shows available [properties](https://mpv.io/manual/master/#properties).
+
+### show-keys
+Shows available [input keys](https://mpv.io/manual/master/#options-input-keylist).
+
+### show-protocols
+Shows available [protocols](https://mpv.io/manual/master/#options-list-protocols).
+
+### show-decoders
+Shows available decoders.
+
+### show-demuxers
+Shows available demuxers.
+
 ### show-conf-editor
 Shows the conf editor.
 

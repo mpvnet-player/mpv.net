@@ -127,6 +127,11 @@ public static class InputHelp
                 new (_("View") + " > " + _("More"), _("Show Audio Devices"), "script-message-to mpvnet show-audio-devices"),
                 new (_("View") + " > " + _("More"), _("Show Commands"), "script-message-to mpvnet show-commands", "F2"),
                 new (_("View") + " > " + _("More"), _("Show Bindings"), "script-message-to mpvnet show-bindings"),
+                new (_("View") + " > " + _("More"), _("Show Properties"), "script-message-to mpvnet show-properties", "F3"),
+                new (_("View") + " > " + _("More"), _("Show Keys"), "script-message-to mpvnet show-keys", "Alt+k"),
+                new (_("View") + " > " + _("More"), _("Show Protocols"), "script-message-to mpvnet show-protocols", "Alt+p"),
+                new (_("View") + " > " + _("More"), _("Show Decoders"), "script-message-to mpvnet show-decoders", "Alt+d"),
+                new (_("View") + " > " + _("More"), _("Show Demuxers"), "script-message-to mpvnet show-demuxers"),
 
                 new (_("Window"), _("Fullscreen"), "cycle fullscreen", "Enter"),
                 new (_("Window") + " > " + _("Zoom"), _("Enlarge"), "script-message-to mpvnet scale-window 1.2", "Alt++"),
@@ -483,7 +488,7 @@ public static class InputHelp
 
             Binding binding = it.Value;
 
-            if (!keys.Contains(binding.Input) && (charCount + binding.Input.Length) < 20 && keys.Count < 2)
+            if (!keys.Contains(binding.Input) && (charCount + binding.Input.Length) < 15 && keys.Count < 2)
             {
                 keys.Add(binding.Input);
                 charCount += binding.Input.Length;

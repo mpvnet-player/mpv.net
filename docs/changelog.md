@@ -1,4 +1,9 @@
 
+# v7.0.0.6 Beta (2023-01-02)
+
+- Improved backward compatibility with input.conf files created by old versions.
+
+
 # v7.0.0.5 Beta (2023-12-28)
 
 - Fix mpv.net option `language` not working from command line.

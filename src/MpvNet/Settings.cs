@@ -11,6 +11,7 @@ public class AppSettings
 {
     public bool InputDefaultBindingsFixApplied;
     public bool ShowMenuFixApplied;
+    public int MenuUpdateVersion;
     public int Volume = 70;
     public List<string> RecentFiles = new List<string>();
     public Point WindowLocation;

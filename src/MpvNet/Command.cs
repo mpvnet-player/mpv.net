@@ -1,7 +1,5 @@
 ﻿
 using System.Globalization;
-using System.Text;
-using System.Text.Json;
 using MpvNet.Help;
 
 namespace MpvNet;
@@ -26,13 +24,13 @@ public class Command
 
         // deprecated
         ["playlist-add"] = args => PlaylistAdd(Convert.ToInt32(args[0])), // deprecated
-        ["show-progress"] = args => ShowProgress(), // deprecated
+        ["show-progress"] = args => Player.Command("show-progress"), // deprecated
         ["playlist-random"] = args => PlaylistRandom(), // deprecated
     };
 
-    public string FormatTime(double value) => ((int)value).ToString("00");
+    string FormatTime(double value) => ((int)value).ToString("00");
 
-    public static void PlayPause(IList<string> args)
+    void PlayPause(IList<string> args)
     {
         int count = Player.GetPropertyInt("playlist-count");
 
@@ -66,7 +64,7 @@ public class Command
             "}${osd-ass-cc/1}" + text + "\" " + duration);
     }
 
-    public static void CycleAudio()
+    void CycleAudio()
     {
         Player.UpdateExternalTracks();
 
@@ -94,7 +92,7 @@ public class Command
         }
     }
 
-    public static void CycleSubtitles()
+    void CycleSubtitles()
     {
         Player.UpdateExternalTracks();
 
@@ -126,7 +124,7 @@ public class Command
     }
 
     // deprecated
-    public static void PlaylistAdd(int value)
+    void PlaylistAdd(int value)
     {
         int pos = Player.PlaylistPos;
         int count = Player.GetPropertyInt("playlist-count");
@@ -145,13 +143,13 @@ public class Command
         Player.SetPropertyInt("playlist-pos", pos);
     }
 
-    public static void PlaylistFirst()
+    void PlaylistFirst()
     {
         if (Player.PlaylistPos != 0)
             Player.SetPropertyInt("playlist-pos", 0);
     }
 
-    public static void PlaylistLast()
+    void PlaylistLast()
     {
         int count = Player.GetPropertyInt("playlist-count");
 
@@ -160,14 +158,14 @@ public class Command
     }
 
     // deprecated
-    public static void PlaylistRandom()
+    void PlaylistRandom()
     {
         int count = Player.GetPropertyInt("playlist-count");
         Player.SetPropertyInt("playlist-pos", new Random().Next(count));
     }
 
     // deprecated
-    public void ShowProgress()
+    void ShowProgress()
     {
         TimeSpan position = TimeSpan.FromSeconds(Player.GetPropertyDouble("time-pos"));
         TimeSpan duration = TimeSpan.FromSeconds(Player.GetPropertyDouble("duration"));

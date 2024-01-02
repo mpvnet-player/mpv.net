@@ -1,5 +1,4 @@
 ﻿
-using MpvNet.ExtensionMethod;
 using MpvNet.Help;
 
 namespace MpvNet;
@@ -15,8 +14,11 @@ public class InputConf
     public string Path {
         get => _path ?? "";
         set {
-            _path = value;
-            Content = File.Exists(_path) ? FileHelp.ReadTextFile(_path) : "";
+            if (_path != value)
+            {
+                _path = value;
+                Content = File.Exists(_path) ? FileHelp.ReadTextFile(_path) : "";
+            }
         }
     }
 
@@ -50,7 +52,29 @@ public class InputConf
     public string GetContent()
     {
         if (HasMenu)
+        {
+            try
+            {
+                if (App.Settings.MenuUpdateVersion != 1)
+                {
+                    string updatedContent = UpdateContent(Content);
+
+                    if (updatedContent != Content)
+                    {
+                        File.Copy(Path, Path + ".backup", true);
+                        File.WriteAllText(Path, Content = updatedContent);
+                    }
+
+                    App.Settings.MenuUpdateVersion = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                Terminal.WriteError("Failed to update menu." + BR + ex.Message);
+            }
+
             return Content;
+        }
         else
         {
             var defaults = InputHelp.GetDefaults();
@@ -73,4 +97,9 @@ public class InputConf
             return InputHelp.ConvertToString(defaults);
         }
     }
+
+    static string UpdateContent(string content) => content
+        .Replace("script-message mpv.net", "script-message-to mpvnet")
+        .Replace("/docs/Manual.md", "/docs/manual.md")
+        .Replace("https://github.com/stax76/mpv.net", "https://github.com/mpvnet-player/mpv.net");
 }

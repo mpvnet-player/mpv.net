@@ -25,4 +25,4 @@ Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
 
 [Files]
 Source: "{#MyAppSourceDir}\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppSourceDir}\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs;
+Source: "{#MyAppSourceDir}\*"; DestDir: "{app}"; Excludes: "win-x64"; Flags: ignoreversion recursesubdirs createallsubdirs;
