@@ -1,9 +1,9 @@
 
 name = process-instance
 file = mpvnet
-default = single
 directory = General
 help = Defines if more then one mpv.net process is allowed.\nMulti can alternatively be enabled by pressing the SHIFT key. (mpv.net option)
+default = single
 option = multi   Create a new process everytime the shell starts mpv.net
 option = single  Force a single process everytime the shell starts mpv.net
 option = queue   Force a single process and add files to playlist
@@ -15,9 +15,9 @@ help = <int> Amount of recent files to be remembered. Default: 15 (mpv.net optio
 
 name = media-info
 file = mpvnet
-default = yes
 directory = General
 help = Usage of the media info library instead of mpv to retrieve media information. (mpv.net option)
+default = yes
 option = yes
 option = no
 
@@ -46,10 +46,10 @@ help = Used menu syntax for defining the context menu in input.conf.\nmpv.net by
 
 name = video-sync
 file = mpv
-default = audio
 directory = General
 help = How the player synchronizes audio and video.\n\nFor more information visit:
 url = https://mpv.io/manual/master/#options-video-sync
+default = audio
 option = audio
 option = display-resample
 option = display-resample-vdrop
@@ -61,28 +61,28 @@ option = desync
 
 name = debug-mode
 file = mpvnet
-default = no
 directory = General
 help = Enable this only when a developer asks for it. (mpv.net option)
+default = no
 option = yes
 option = no
 
 name = vo
 file = mpv
-default = gpu
 directory = Video
 help = Video output drivers to be used.\n\nFor more information visit:
 url = https://mpv.io/manual/master/#video-output-drivers-vo
+default = gpu
 option = gpu       General purpose, customizable, GPU-accelerated video output driver. It supports extended scaling methods, dithering, color management, custom shaders, HDR, and more.
 option = gpu-next  Experimental video renderer based on libplacebo. This supports almost the same set of features as --vo=gpu.
 option = direct3d  Video output driver that uses the Direct3D interface.
 
 name = hwdec
 file = mpv
-default = no
 directory = Video
 url = https://mpv.io/manual/master/#options-hwdec
 help = Specify the hardware video decoding API that should be used if possible. Whether hardware decoding is actually done depends on the video codec. If hardware decoding is not possible, mpv will fall back on software decoding. Hardware decoding is disabled by default to maintain reliability. However, modern hardware should support hardware video decoding, reducing CPU usage and power consumption.\n\nFor more information visit:
+default = no
 option = no            always use software decoding
 option = auto          enable best hw decoder
 option = yes           exactly the same as auto
@@ -99,9 +99,9 @@ option = nvdec-copy    copies video back to system RAM
 
 name = gpu-api
 file = mpv
-default = auto
 directory = Video/Render Options
 help = Controls which type of graphics APIs will be accepted. On Windows this defaults to d3d11 and should not be changed without a good reason.
+default = auto
 option = auto    Use any available API
 option = d3d11   Allow only gpu-context=d3d11
 option = opengl  Allow only OpenGL (requires OpenGL 2.1+ or GLES 2.0+)
@@ -109,8 +109,8 @@ option = vulkan  Allow only Vulkan
 
 name = gpu-context
 file = mpv
-default = auto
 directory = Video/Render Options
+default = auto
 option = auto       auto-select
 option = d3d11      Win32, with native Direct3D 11 rendering.
 option = angle      Direct3D11 through the OpenGL ES translation layer ANGLE. This supports almost everything the win backend does (if the ANGLE build is new enough).
@@ -120,10 +120,10 @@ option = winvk      VK_KHR_win32_surface
 
 name = scale
 file = mpv
-default = lanczos
 directory = Video/Render Options/Scaling
 help = The GPU renderer filter function to use when upscaling video. There are some more filters, but most are not as useful. For a complete list, pass help as value, e.g.: mpv --scale=help
 url = https://mpv.io/manual/master/#options-scale
+default = lanczos
 option = bilinear
 option = spline36
 option = lanczos
@@ -134,10 +134,10 @@ option = oversample
 
 name = cscale
 file = mpv
-default = bilinear
 directory = Video/Render Options/Scaling
 help = As scale, but for interpolating chroma information. If the image is not subsampled, this option is ignored entirely.
 url = https://mpv.io/manual/master/#options-cscale
+default = bilinear
 option = bilinear
 option = spline36
 option = lanczos
@@ -148,10 +148,10 @@ option = oversample
 
 name = dscale
 file = mpv
-default = lanczos
 directory = Video/Render Options/Scaling
 help = Like scale, but apply these filters on downscaling instead. \nIf no option is selected, it will keep the same with the upscaler.
 url = https://mpv.io/manual/master/#options-dscale
+default = lanczos
 option = bilinear
 option = spline36
 option = lanczos
@@ -162,25 +162,25 @@ option = oversample
 
 name = correct-downscaling
 file = mpv
-default = no
 directory = Video/Render Options/Scaling
 help = When using convolution based filters, extend the filter size when downscaling. Increases quality, but reduces performance while downscaling.\n\nThis will perform slightly sub-optimally for anamorphic video (but still better than without it) since it will extend the size to match only the milder of the scale factors between the axes.
+default = no
 option = yes
 option = no
 
 name = sigmoid-upscaling
 file = mpv
-default = no
 directory = Video/Render Options/Scaling
 help = When upscaling, use a sigmoidal color transform to avoid emphasizing ringing artifacts. This also implies linear-scaling.
+default = no
 option = yes
 option = no
 
 name = dither-depth
 file = mpv
-default = no
 directory = Video/Render Options
 help = Set dither target depth to N. Note that the depth of the connected video display device cannot be detected. Often, LCD panels will do dithering on their own, which conflicts with this option and leads to ugly output.
+default = no
 option = no    Disable any dithering done by mpv.
 option = auto  Automatic selection. If output bit depth cannot be detected, 8 bits per component are assumed.
 option = 8     Dither to 8 bit output.
@@ -188,34 +188,34 @@ option = 10    Dither to 10 bit output.
 
 name = deband
 file = mpv
-default = no
 directory = Video/Render Options
 help = Enable the debanding algorithm. This greatly reduces the amount of visible banding, blocking and other quantization artifacts, at the expense of very slightly blurring some of the finest details. In practice, it's virtually always an improvement - the only reason to disable it would be for performance.
+default = no
 option = yes
 option = no
 
 name = hdr-compute-peak
 file = mpv
-default = auto
 directory = Video/Render Options
 url = https://mpv.io/manual/master/#options-hdr-compute-peak
+default = auto
 option = auto
 option = yes
 option = no
 
 name = allow-delayed-peak-detect
 file = mpv
-default = yes
 directory = Video/Render Options
 url = https://mpv.io/manual/master/#options-allow-delayed-peak-detect
+default = yes
 option = yes
 option = no
 
 name = d3d11va-zero-copy
 file = mpv
-default = no
 directory = Video/Render Options
 url = https://mpv.io/manual/master/#options-d3d11va-zero-copy
+default = no
 option = yes
 option = no
 
@@ -232,9 +232,9 @@ help = Passes extra raw option to the libplacebo rendering backend (used by --vo
 name = preset
 file = libplacebo
 directory = Video/libplacebo
-default = default
 help = Override all libplacebo options by the values from the given preset.
 url = https://libplacebo.org/options/#presetdefaultfasthigh_quality
+default = default
 option = default  Default settings, tuned to provide a balance of performance and quality.
 option = fast  Disable all advanced rendering, equivalent to passing no to every option.
 option = high_quality  Reset all everything to high quality presets (where available).
@@ -242,10 +242,10 @@ option = high_quality  Reset all everything to high quality presets (where avail
 name = upscaler
 file = libplacebo
 directory = Video/libplacebo/Scaling
-default = lanczos
 help = Sets the filter used for upscaling.
 url = https://libplacebo.org/options/#upscalerfilter
 option-name-width = 135
+default = lanczos
 option = none  No filter, only use basic GPU texture sampling.
 option = nearest  Nearest-neighbour (box) sampling (very fast).
 option = bilinear  Bilinear sampling (very fast).
@@ -261,8 +261,8 @@ option = ewa_lanczos4sharpest  Very sharp version of ewa_lanczos, with anti-ring
 name = downscaler
 file = libplacebo
 directory = Video/libplacebo/Scaling
-default = hermite
 help = Sets the filter used for downscaling. The most relevant options, roughly ordered from fastest to slowest.
+default = hermite
 option = none         Use the same filter as specified for upscaler
 option = box          Box averaging (very fast)
 option = hermite      Hermite-weighted averaging (fast)
@@ -276,8 +276,8 @@ option = lanczos      Lanczos reconstruction
 name = plane_upscaler
 file = libplacebo
 directory = Video/libplacebo/Scaling
-default = none
 help = Override the filter used for upscaling planes, e.g. chroma/alpha. If set to none, use the same setting as upscaler, respectively.
+default = none
 option = none         Use the same filter as specified for upscaler
 option = box          Box averaging (very fast)
 option = hermite      Hermite-weighted averaging (fast)
@@ -291,8 +291,8 @@ option = lanczos      Lanczos reconstruction
 name = plane_downscaler
 file = libplacebo
 directory = Video/libplacebo/Scaling
-default = none
 help = Override the filter used for downscaling planes, e.g. chroma/alpha. If set to none, use the same setting as downscaler, respectively.
+default = none
 option = none         Use the same filter as specified for upscaler
 option = box          Box averaging (very fast)
 option = hermite      Hermite-weighted averaging (fast)
@@ -306,8 +306,8 @@ option = lanczos      Lanczos reconstruction
 name = frame_mixer
 file = libplacebo
 directory = Video/libplacebo/Scaling
-default = oversample
 help = Sets the filter used for frame mixing (temporal interpolation). Roughly ordered from fastest to slowest.
+default = oversample
 option = none        Disable frame mixing, show nearest frame to target PTS
 option = oversample  Oversampling, only mix "edge" frames while preserving FPS
 option = hermite     Hermite-weighted frame mixing
@@ -739,40 +739,39 @@ help = Store screenshots in this directory. This path is joined with the filenam
 
 name = screenshot-format
 file = mpv
-default = jpg
 directory = Video/Screenshot
 help = Set the image file type used for saving screenshots.
+default = jpg
 option = jpg
 option = png
 
 name = screenshot-tag-colorspace
 file = mpv
-default = yes
 directory = Video/Screenshot
 help = Tag screenshots with the appropriate colorspace. Note that not all formats are supported.
+default = yes
 option = yes
 option = no
 
 name = screenshot-high-bit-depth
 file = mpv
-default = yes
 directory = Video/Screenshot
 help = If possible, write screenshots with a bit depth similar to the source video. This is interesting in particular for PNG, as this sometimes triggers writing 16 bit PNGs with huge file sizes. This will also include an unused alpha channel in the resulting files if 16 bit is used.
+default = yes
 option = yes
 option = no
 
 name = screenshot-jpeg-source-chroma
 file = mpv
-default = yes
 directory = Video/Screenshot
 help = Write JPEG files with the same chroma subsampling as the video. If disabled, the libjpeg default is used.
+default = yes
 option = yes
 option = no
 
 name = screenshot-template
 file = mpv
 directory = Video/Screenshot
-type = string
 help = Specify the filename template used to save screenshots. The template specifies the filename without file extension, and can contain format specifiers, which will be substituted when taking a screenshot. By default, the template is mpv-shot%n, which results in filenames like  mpv-shot0012.png for example.\n\nFind the full documentation here:
 url = https://mpv.io/manual/master/#options-screenshot-template
 
@@ -798,23 +797,22 @@ help = Set the startup volume. 0 means silence, 100 means no volume reduction or
 
 name = remember-volume
 file = mpvnet
-default = yes
 directory = Audio
 help = Save volume and mute on exit and restore it on start. (mpv.net option)
+default = yes
 option = yes
 option = no
 
 name = alang
 file = mpv
 directory = Audio
-type = string
 help = Specify a priority list of audio languages to use. Different container formats employ different language codes. DVDs use ISO 639-1 two-letter language codes, Matroska, MPEG-TS and NUT use ISO 639-2 three-letter language codes, while OGM uses a free-form identifier. See also aid.
 
 name = audio-file-auto
 file = mpv
-default = no
 directory = Audio
 help = Load additional audio files matching the video filename. The parameter specifies how external audio files are matched.
+default = no
 option = no     Don't automatically load external audio files.
 option = exact  Load the media filename with audio file extension.
 option = fuzzy  Load all audio files containing media filename.
@@ -823,22 +821,28 @@ option = all    Load all audio files in the current and audio-file-paths directo
 name = audio-device
 file = mpv
 directory = Audio
-type = string
 width = 400
 url = https://mpv.io/manual/master/#options-audio-device
-help = <name> Use the given audio device. This consists of the audio output name, e.g. alsa, followed by /, followed by the audio output specific device name. The default value for this option is auto, which tries every audio output in preference order with the default device. To list audio devices in mpv.net use the context menu:\nView > More > Show Audio Devices.
+help = <name> Use the given audio device. This consists of the audio output name, e.g. alsa, followed by /, followed by the audio output specific device name. The default value for this option is auto, which tries every audio output in preference order with the default device.\n\nTo list available audio devices in mpv.net, use the context menu:\n\nView > More > Show Audio Devices.\n\nTo change the audio device in mpv.net, also use the context menu:\n\nAudio > Audio Device
+
+name = remember-audio-device
+file = mpvnet
+directory = Audio
+help = Save and restore the audio device chosen in the context menu. Default: yes
+default = yes
+option = yes
+option = no
 
 name = slang
 file = mpv
 directory = Subtitle
-type = string
 help = Specify a priority list of subtitle languages to use. Different container formats employ different language codes. DVDs use ISO 639-1 two letter language codes, Matroska uses ISO 639-2 three letter language codes while OGM uses a free-form identifier. See also sid.
 
 name = sub-auto
 file = mpv
-default = exact
 directory = Subtitle
 help = Load additional subtitle files matching the video filename. The parameter specifies how external subtitle files are matched. exact is enabled by default.
+default = exact
 option = no     Don't automatically load external subtitle files.
 option = exact  Load the media filename with subtitle file extension.
 option = fuzzy  Load all subs containing media filename.
@@ -847,7 +851,6 @@ option = all    Load all subs in the current and sub-file-paths directories.
 name = sub-font
 file = mpv
 directory = Subtitle
-type = string
 help = Specify font to use for subtitles that do not themselves specify a particular font. The default is  sans-serif.
 
 name = sub-font-size
@@ -882,25 +885,25 @@ help = Set the window title. This is used for the video window, and if possible,
 
 name = fullscreen
 file = mpv
-default = no
 directory = Window
 help = Start the player in fullscreen mode.
+default = no
 option = yes
 option = no
 
 name = border
 file = mpv
-default = yes
 directory = Window
 help = Show window with decoration (titlebar, border).
+default = yes
 option = yes
 option = no
 
 name = title-bar
 file = mpv
-default = yes
 directory = Window
 help = Set this to no in order to hide the window title bar.
+default = yes
 option = yes
 option = no
 
@@ -911,9 +914,9 @@ help = <0-32> In multi-monitor configurations (i.e. a single desktop that spans 
 
 name = taskbar-progress
 file = mpv
-default = yes
 directory = Window
 help = Show progress in taskbar.
+default = yes
 option = yes
 option = no
 
@@ -921,7 +924,6 @@ name = osd-playing-msg
 file = mpv
 width = 300
 directory = Window
-type = string
 help = Show a message on OSD when playback starts. The string is expanded for properties, e.g. osd-playing-msg='file: ${filename}' will show the message file: followed by a space and the currently played filename. For more information visit:
 url = https://mpv.io/manual/master/#property-expansion
 
@@ -937,9 +939,9 @@ help = Set the duration of the OSD messages in ms. Default: 1000
 
 name = osd-scale-by-window
 file = mpv
-default = yes
 directory = Window
 help = Whether to scale the OSD with the window size. If this is disabled, osd-font-size and other OSD options that use scaled pixels are always in actual pixels. The effect is that changing the window size won't change the OSD font size.
+default = yes
 option = yes
 option = no
 
@@ -975,9 +977,9 @@ help = <x:y> Initial window location in percent. Default: 50:50 (centered)\n\nx=
 
 name = start-size
 file = mpvnet
-default = height-session
 directory = Window
 help = Setting to remember the window size. (mpv.net option)
+default = height-session
 option = width-session   Window width is remembered in the current session
 option = width-always    Window width is always remembered
 option = height-session  Window height is remembered in the current session
@@ -988,9 +990,9 @@ option = always          Window size is always remembered
 
 name = keepaspect-window
 file = mpv
-default = yes
 directory = Window
 help = keepaspect-window will lock the window size to the video aspect. Default: yes
+default = yes
 option = yes
 option = no
 
@@ -1006,49 +1008,49 @@ help = Same as minimum-aspect-ratio but used for audio files.
 
 name = remember-window-position
 file = mpvnet
-default = no
 directory = Window
 help = Save the window position on exit. (mpv.net option)
+default = no
 option = yes
 option = no
 
 name = snap-window
 file = mpv
-default = no
 directory = Window
 help = Snap the player window to screen edges.
+default = no
 option = yes
 option = no
 
 name = window-maximized
 file = mpv
-default = no
 directory = Window
 help = Start with a maximized window.
+default = no
 option = yes
 option = no
 
 name = keep-open
 file = mpv
-default = no
 directory = Playback
+default = no
 option = yes     If the current file ends, go to the next file, keep the last file open.
 option = no      If the current file ends, go to the next file. If idle is set to no, the player exits after the last file.
 option = always  Playback will never automatically advance to the next file.
 
 name = keep-open-pause
 file = mpv
-default = yes
 directory = Playback
 help = If set to no, instead of pausing when keep-open is active, just stop at end of file and continue playing forward when you seek backwards until end where it stops again.
+default = yes
 option = yes
 option = no
 
 name = idle
 file = mpv
-default = yes
 directory = Playback
 help = If set to no and keep-open is also set to no, the player exits after the last file ends.
+default = yes
 option = yes
 option = no
 option = once
@@ -1060,9 +1062,9 @@ help = <N|inf|no> Loop a single file N times. inf means forever, no means normal
 
 name = save-position-on-quit
 file = mpv
-default = no
 directory = Playback
 help = Always save the current playback position on quit. When this file is played again later, the player will seek to the old playback position on start. This does not happen if playback of a file is stopped in any other way than quitting. For example, going to the next file in the playlist will not save the position, and start playback at beginning the next time the file is played.\n\nThis behavior is disabled by default, but is always available when quitting the player with Shift+Q.
+default = no
 option = yes
 option = no
 
@@ -1074,9 +1076,9 @@ url = https://mpv.io/manual/master/#options-watch-later-options
 
 name = hr-seek
 file = mpv
-default = absolute
 directory = Playback
 help = Select when to use precise seeks that are not limited to keyframes. Such seeks require decoding video from the previous keyframe up to the target position and so can take some time depending on decoding performance. For some video formats, precise seeks are disabled. This option selects the default choice to use for seeks; it is possible to explicitly override that default in the definition of key bindings and in input commands.
+default = absolute
 option = yes       Use precise seeks whenever possible.
 option = no         Never use precise seeks.
 option = absolute  Use precise seeks if the seek is to an absolute position in the file, such as a chapter seek, but not for relative seeks like the default behavior of arrow keys.
@@ -1084,9 +1086,9 @@ option = always    Same as yes (for compatibility).
 
 name = track-auto-selection
 file = mpv
-default = yes
 directory = Playback
 help = Enable the default track auto-selection. Enabling this will make the player select streams according to aid, alang, and others. If it is disabled, no tracks are selected. In addition, the player will not exit if no tracks are selected, and wait instead (this wait mode is similar to pausing, but the pause option is not set).\n\nThis is useful with lavfi-complex: you can start playback in this mode, and then set select tracks at runtime by setting the filter graph. Note that if lavfi-complex is set before playback is started, the referenced tracks are always selected.
+default = yes
 option = yes
 option = no
 
@@ -1097,9 +1099,9 @@ help = <N|inf|force|no> Loops playback N times. A value of 1 plays it one time (
 
 name = auto-load-folder
 file = mpvnet
-default = yes
 directory = Playback
 help = For single files automatically load the entire directory into the playlist. (mpv.net option)
+default = yes
 option = yes
 option = no
 
@@ -1127,9 +1129,9 @@ url = https://mpv.io/manual/master/#options-input-ipc-server
 
 name = language
 file = mpvnet
-default = system
 directory = Appearance
 help = User interface display language.\nmpv.net must be restarted after a change.
+default = system
 option = system
 option = english
 option = chinese-china
@@ -1137,9 +1139,9 @@ option = german
 
 name = dark-mode
 file = mpvnet
-default = always
 directory = Appearance
 help = Changes between a light and dark theme.\nmpv.net must be restarted after a change.\nmpv.net specific option.
+default = always
 option = always
 option = system  Available on Windows 10 or higher
 option = never
@@ -1158,10 +1160,10 @@ help = Color theme used in light mode.\nmpv.net must be restarted after a change
 
 name = cache
 file = mpv
-default = auto
 directory = Cache
 help = Decide whether to use network cache settings.
 url = https://mpv.io/manual/master/#options-cache
+default = auto
 option = yes
 option = no
 option = auto

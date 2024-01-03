@@ -36,7 +36,7 @@ public class OptionSettingOption
 
     public string? Name { get; set; }
     public string? Help { get; set; }
-    public int OptionWidth { get => OptionSetting!.OptionNameWidth; }
+    public int Width { get => OptionSetting!.OptionNameWidth; }
 
     public OptionSetting? OptionSetting { get; set; }
 

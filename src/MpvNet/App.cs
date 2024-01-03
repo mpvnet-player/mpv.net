@@ -27,6 +27,7 @@ public class AppClass
     public bool IsTerminalAttached { get; } = Environment.GetEnvironmentVariable("_started_from_console") == "yes";
     public bool MediaInfo { get; set; } = true;
     public bool Queue { get; set; }
+    public bool RememberAudioDevice { get; set; } = true;
     public bool RememberVolume { get; set; } = true;
     public bool RememberWindowPosition { get; set; }
 
@@ -98,6 +99,9 @@ public class AppClass
             Player.SetPropertyInt("volume", Settings.Volume);
             Player.SetPropertyString("mute", Settings.Mute);
         }
+
+        if (RememberAudioDevice && Settings.AudioDevice != "")
+            Player.SetPropertyString("audio-device", Settings.AudioDevice);
     }
 
     void Player_Shutdown()
@@ -150,6 +154,7 @@ public class AppClass
             case "process-instance": ProcessInstance = value; return true;
             case "queue": Queue = value == "yes"; return true;
             case "recent-count": RecentCount = value.ToInt(15); return true;
+            case "remember-audio-device": RememberAudioDevice = value == "yes"; return true;
             case "remember-volume": RememberVolume = value == "yes"; return true;
             case "remember-window-position": RememberWindowPosition = value == "yes"; return true;
             case "start-size": StartSize = value; return true;

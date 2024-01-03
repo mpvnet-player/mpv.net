@@ -59,6 +59,8 @@ public class MainPlayer : MpvClient
     public TimeSpan Duration;
     public List<MpvClient> Clients { get; } = new List<MpvClient>();
 
+    List<StringPair>? _audioDevices;
+
     public event Action? Initialized;
     public event Action? Pause;
     public event Action<int>? PlaylistPosChanged;
@@ -687,6 +689,26 @@ public class MainPlayer : MpvClient
                 MediaTracks = GetMediaInfoTracks(path);
             else
                 MediaTracks = GetTracks();
+        }
+    }
+
+    public List<StringPair> AudioDevices {
+        get {
+            if (_audioDevices != null)
+                return _audioDevices;
+
+            _audioDevices = new();
+            string json = GetPropertyString("audio-device-list");
+            var enumerator = JsonDocument.Parse(json).RootElement.EnumerateArray();
+
+            foreach (var element in enumerator)
+            {
+                string name = element.GetProperty("name").GetString()!;
+                string description = element.GetProperty("description").GetString()!;
+                _audioDevices.Add(new StringPair(name, description));
+            }
+
+            return _audioDevices;
         }
     }
 

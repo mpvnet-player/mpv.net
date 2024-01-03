@@ -17,6 +17,7 @@ public class AppSettings
     public Point WindowLocation;
     public Point WindowPosition;
     public Size WindowSize;
+    public string AudioDevice = "";
     public string ConfigEditorSearch = "Video:";
     public string Mute = "no";
     public string StartupFolder = "";

@@ -15,7 +15,7 @@
             <Border>
                 <TextBlock
                     Text="{Binding Text}"
-                    Width="{Binding OptionWidth}"
+                    Width="{Binding Width}"
                     VerticalAlignment="Center"
                     TextWrapping="Wrap"
                     />

@@ -82,6 +82,7 @@ public static class InputHelp
                 new (_("Video"), _("Change Aspect Ratio"), "cycle-values video-aspect-override 16:9 4:3 2.35:1 -1", "a"),
                 new (_("Video"), _("Rotate Video"), "cycle-values video-rotate 90 180 270 0", "Ctrl+r"),
 
+                new (_("Audio"), _("Audio Device")),
                 new (_("Audio"), _("Next Track"), "script-message-to mpvnet cycle-audio", "KP7"),
                 new (_("Audio"), "-"),
                 new (_("Audio"), _("Delay +0.1"), "add audio-delay 0.1", "Ctrl+d"),
@@ -213,8 +214,6 @@ public static class InputHelp
                 new ("", "", "no-osd sub-seek  1", "Ctrl+Shift+Right", _("Seek to next subtitle")),
                 new ("", "", "no-osd seek  5", "Ctrl+Wheel_Up", _("Seek Forward")),
                 new ("", "", "no-osd seek -5", "Ctrl+Wheel_Down", _("Seek Backward")),
-                new ("", "", "quit 4", "Esc", _("Quit encoding")),
-                new ("", "", "quit 4", "q", _("Quit encoding")),
                 new ("", "", "quit", "Power", _("Exit")),
 
                 //new (_("Command Palette"), _("Commands"), "script-message-to mpvnet show-command-palette", "F1"),
@@ -488,7 +487,7 @@ public static class InputHelp
 
             Binding binding = it.Value;
 
-            if (!keys.Contains(binding.Input) && (charCount + binding.Input.Length) < 15 && keys.Count < 2)
+            if (!keys.Contains(binding.Input) && (charCount + binding.Input.Length) < 15)
             {
                 keys.Add(binding.Input);
                 charCount += binding.Input.Length;

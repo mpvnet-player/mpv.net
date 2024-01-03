@@ -354,6 +354,10 @@ to create global keyboard shortcuts with AutoHotkey. Requires [process-instance=
 
 ### Audio
 
+#### --remember-audio-device=\<yes|no\>
+
+Save and restore the audio device chosen in the context menu. Default: yes
+
 #### --remember-volume=\<yes|no\>
 
 Save volume and mute on exit and restore it on start. Default: yes

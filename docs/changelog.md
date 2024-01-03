@@ -1,4 +1,10 @@
 
+# v7.0.0.7 Beta (2023-??-??)
+
+- Context menu supports audio device selection (Audio > Audio Device)
+- New option `remember-audio-device` to save and restore the audio device chosen in the context menu.
+
+
 # v7.0.0.6 Beta (2023-01-02)
 
 - Improved backward compatibility with input.conf files created by old versions.

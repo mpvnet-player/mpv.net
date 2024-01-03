@@ -14,7 +14,6 @@ using MpvNet.Help;
 using MpvNet.ExtensionMethod;
 using MpvNet.MVVM;
 using MpvNet.Windows.WPF.MsgBox;
-using MpvNet.Windows.Help;
 
 using WpfControls = System.Windows.Controls;
 using CommunityToolkit.Mvvm.Messaging;
@@ -386,11 +385,8 @@ public partial class MainForm : Form
             foreach (string path in App.Settings.RecentFiles)
             {
                 var file = AppClass.GetTitleAndPath(path);
-                var menuItem = MenuHelp.Add(recentMenuItem.Items, file.Title.ShortPath(100));
-
-                if (menuItem != null)
-                    menuItem.Click += (sender, args) =>
-                        Player.LoadFiles(new[] { file.Path }, true, false);
+                var menuItem = MenuHelp.Add(recentMenuItem.Items, file.Title.ShortPath(100))!;
+                menuItem.Click += (sender, args) => Player.LoadFiles(new[] { file.Path }, true, false);
             }
 
             recentMenuItem.Items.Add(new WpfControls.Separator());
@@ -420,13 +416,9 @@ public partial class MainForm : Form
                 {
                     if (item.Length != TimeSpan.Zero)
                     {
-                        var menuItem = MenuHelp.Add(titlesMenuItem.Items, $"Title {item.Index + 1}");
-
-                        if (menuItem != null)
-                        {
-                            menuItem.InputGestureText = item.Length.ToString();
-                            menuItem.Click += (sender, args) => Player.SetBluRayTitle(item.Index);
-                        }
+                        var menuItem = MenuHelp.Add(titlesMenuItem.Items, $"Title {item.Index + 1}")!;
+                        menuItem.InputGestureText = item.Length.ToString();
+                        menuItem.Click += (sender, args) => Player.SetBluRayTitle(item.Index);
                     }
                 }
             }
@@ -440,46 +432,56 @@ public partial class MainForm : Form
             {
                 if (!profile.StartsWith("extension."))
                 {
-                    var menuItem = MenuHelp.Add(profilesMenuItem.Items, profile);
+                    var menuItem = MenuHelp.Add(profilesMenuItem.Items, profile)!;
 
-                    if (menuItem != null)
+                    menuItem.Click += (sender, args) =>
                     {
-                        menuItem.Click += (sender, args) =>
-                        {
-                            Player.CommandV("show-text", profile);
-                            Player.CommandV("apply-profile", profile);
-                        };
-                    }
+                        Player.CommandV("show-text", profile);
+                        Player.CommandV("apply-profile", profile);
+                    };
                 }
+            }
+        }
+
+        var audioDevicesMenuItem = FindMenuItem(_("Audio Device"), "Audio Device");
+
+        if (audioDevicesMenuItem != null)
+        {
+            audioDevicesMenuItem.Items.Clear();
+
+            foreach (var pair in Player.AudioDevices)
+            {
+                var menuItem = MenuHelp.Add(audioDevicesMenuItem.Items, pair.Value)!;
+                menuItem.IsChecked = pair.Name == Player.GetPropertyString("audio-device");
+
+                menuItem.Click += (sender, args) =>
+                {
+                    Player.SetPropertyString("audio-device", pair.Name);
+                    Player.CommandV("show-text", pair.Value);
+                    App.Settings.AudioDevice = pair.Name;
+                };
             }
         }
 
         var customMenuItem = FindMenuItem(_("Custom"), "Custom");
 
-        if (customMenuItem != null)
+        if (customMenuItem != null && !customMenuItem.HasItems)
         {
-            if (!customMenuItem.HasItems)
+            var customBindings = _confBindings!.Where(it => it.IsCustomMenu);
+
+            if (customBindings.Any())
             {
-                var customBindings = _confBindings!.Where(it => it.IsCustomMenu);
-
-                if (customBindings.Any())
+                foreach (Binding binding in customBindings)
                 {
-                    foreach (Binding binding in customBindings)
-                    {
-                        var menuItem = MenuHelp.Add(customMenuItem.Items, binding.Comment);
-
-                        if (menuItem != null)
-                        {
-                            menuItem.Click += (sender, args) => Player.Command(binding.Command);
-                            menuItem.InputGestureText = binding.Input;
-                        }
-                    }
+                    var menuItem = MenuHelp.Add(customMenuItem.Items, binding.Comment)!;
+                    menuItem.Click += (sender, args) => Player.Command(binding.Command);
+                    menuItem.InputGestureText = binding.Input;
                 }
-                else
-                {
-                    if (ContextMenu.Items.Contains(customMenuItem))
-                        ContextMenu.Items.Remove(customMenuItem);
-                }
+            }
+            else
+            {
+                if (ContextMenu.Items.Contains(customMenuItem))
+                    ContextMenu.Items.Remove(customMenuItem);
             }
         }
     }
@@ -827,7 +829,7 @@ public partial class MainForm : Form
 
             if (!binding.IsMenu)
                 continue;
-                        
+
             var menuItem = MenuHelp.Add(ContextMenu.Items, tempBinding.Comment);
 
             if (menuItem != null)
