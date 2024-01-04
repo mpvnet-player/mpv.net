@@ -14,6 +14,7 @@ using MpvNet.Windows.WPF;
 using MpvNet.Windows.WPF.MsgBox;
 using MpvNet.Windows.Help;
 using MpvNet.Help;
+using System;
 
 namespace MpvNet;
 
@@ -30,32 +31,33 @@ public class GuiCommand
 
     public Dictionary<string, Action<IList<string>>> Commands => _commands ??= new()
     {
-        ["show-about"] = args => ShowDialog(typeof(AboutWindow)),
-        ["show-conf-editor"] = args => ShowDialog(typeof(ConfWindow)),
-        ["show-input-editor"] = args => ShowDialog(typeof(InputWindow)),
-        ["show-audio-devices"] = args => Msg.ShowInfo(Player.GetPropertyOsdString("audio-device-list")),
-        ["show-profiles"] = args => Msg.ShowInfo(Player.GetProfiles()),
-        ["load-sub"] = LoadSubtitle,
-        ["open-files"] = OpenFiles,
-        ["open-optical-media"] = Open_DVD_Or_BD_Folder,
-        ["load-audio"] = LoadAudio,
-        ["open-clipboard"] = OpenFromClipboard,
-        ["reg-file-assoc"] = RegisterFileAssociations,
-        ["scale-window"] = args => ScaleWindow?.Invoke(float.Parse(args[0], CultureInfo.InvariantCulture)),
-        ["show-media-info"] = ShowMediaInfo,
-        ["move-window"] = args => MoveWindow?.Invoke(args[0]),
-        ["window-scale"] = args => WindowScaleNet?.Invoke(float.Parse(args[0], CultureInfo.InvariantCulture)),
-        ["show-menu"] = args => ShowMenu?.Invoke(),
-        ["show-bindings"] = args => ShowBindings(),
         ["add-to-path"] = args => AddToPath(),
         ["edit-conf-file"] = EditCongFile,
+        ["load-audio"] = LoadAudio,
+        ["load-sub"] = LoadSubtitle,
+        ["move-window"] = args => MoveWindow?.Invoke(args[0]),
+        ["open-clipboard"] = OpenFromClipboard,
+        ["open-files"] = OpenFiles,
+        ["open-optical-media"] = Open_DVD_Or_BD_Folder,
+        ["reg-file-assoc"] = RegisterFileAssociations,
+        ["remove-from-path"] = args => RemoveFromPath(),
+        ["scale-window"] = args => ScaleWindow?.Invoke(float.Parse(args[0], CultureInfo.InvariantCulture)),
+        ["show-about"] = args => ShowDialog(typeof(AboutWindow)),
+        ["show-audio-devices"] = args => Msg.ShowInfo(Player.GetPropertyOsdString("audio-device-list")),
+        ["show-bindings"] = args => ShowBindings(),
         ["show-commands"] = args => ShowCommands(),
-        ["show-properties"] = args => ShowProperties(),
-        ["show-keys"] = args => ShowKeys(),
-        ["show-protocols"] = args => ShowProtocols(),
+        ["show-conf-editor"] = args => ShowDialog(typeof(ConfWindow)),
         ["show-decoders"] = args => ShowDecoders(),
         ["show-demuxers"] = args => ShowDemuxers(),
         ["show-info"] = args => ShowMediaInfo(new[] { "osd" }),
+        ["show-input-editor"] = args => ShowDialog(typeof(InputWindow)),
+        ["show-keys"] = args => ShowKeys(),
+        ["show-media-info"] = ShowMediaInfo,
+        ["show-menu"] = args => ShowMenu?.Invoke(),
+        ["show-profiles"] = args => Msg.ShowInfo(Player.GetProfiles()),
+        ["show-properties"] = args => ShowProperties(),
+        ["show-protocols"] = args => ShowProtocols(),
+        ["window-scale"] = args => WindowScaleNet?.Invoke(float.Parse(args[0], CultureInfo.InvariantCulture)),
 
 
         // deprecated
@@ -353,7 +355,7 @@ public class GuiCommand
 
         if (path.ToLower().Contains(Folder.Startup.TrimEnd(Path.DirectorySeparatorChar).ToLower()))
         {
-            Msg.ShowWarning(_("mpv.net is already in Path."));
+            Msg.ShowWarning(_("mpv.net is already in the Path environment variable."));
             return;
         }
 
@@ -361,7 +363,25 @@ public class GuiCommand
             Folder.Startup.TrimEnd(Path.DirectorySeparatorChar) + ";" + path,
             EnvironmentVariableTarget.User);
 
-        Msg.ShowInfo(_("mpv.net was successfully added to Path."));
+        Msg.ShowInfo(_("mpv.net was successfully added to the Path environment variable."));
+    }
+
+    void RemoveFromPath()
+    {
+        string path = Environment.GetEnvironmentVariable("Path", EnvironmentVariableTarget.User)!;
+
+        if (!path.Contains(Folder.Startup.TrimEnd(Path.DirectorySeparatorChar)))
+        {
+            Msg.ShowWarning(_("mpv.net was not found in the Path environment variable."));
+            return;
+        }
+
+        path = path.Replace(Folder.Startup.TrimEnd(Path.DirectorySeparatorChar), "");
+        path = path.Replace(";;", ";").Trim(';');
+
+        Environment.SetEnvironmentVariable("Path", path, EnvironmentVariableTarget.User);
+
+        Msg.ShowInfo(_("mpv.net was successfully removed from the Path environment variable."));
     }
 
     // deprecated

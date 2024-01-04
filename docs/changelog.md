@@ -1,8 +1,12 @@
 
 # v7.0.0.7 Beta (2023-??-??)
 
+- GitHub Auto/Action/Workflow builds use a newer libmpv build.
+- German translation updated. Thanks to our translation team!
+- New PowerShell script etc/update-mpv-and-libmpv.ps1 to update mpv and libmpv.
 - Context menu supports audio device selection (Audio > Audio Device)
 - New option `remember-audio-device` to save and restore the audio device chosen in the context menu.
+- New zhongfly libmpv build.
 
 
 # v7.0.0.6 Beta (2023-01-02)

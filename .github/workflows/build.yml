@@ -54,7 +54,7 @@ jobs:
       - name: Download libmpv # In principle, only update this binary file when significant feature changes occur in mpv/mpv.net
         shell: msys2 {0}
         run: |
-          wget -nv -O libmpv.7z https://downloads.sourceforge.net/mpv-player-windows/mpv-dev-x86_64-20231203-git-f551a9d.7z
+          wget -nv -O libmpv.7z https://github.com/zhongfly/mpv-winbuild/releases/download/2024-01-02-ab5b250/mpv-dev-x86_64-20240102-git-ab5b250.7z
           7z x -y libmpv.7z -olibmpv
           cp -f libmpv/libmpv-2.dll src/MpvNet.Windows/bin/Debug/ || true
       - name: Download MediaInfo

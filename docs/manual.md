@@ -213,6 +213,9 @@ mpv.net commands are used when mpv commands don't exist or lack a feature.
 ### add-to-path
 Adds mpv.net to the Path environment variable.
 
+### remove-from-path
+Removes mpv.net from the Path environment variable.
+
 ### edit-conf-file [mpv.conf|input.conf]
 Opens mpv.conf or input.conf in a text editor.
 
