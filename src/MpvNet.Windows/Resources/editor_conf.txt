@@ -971,9 +971,9 @@ directory = Window
 help = <int> Initial window height in percent for audio files. Default: 70
 
 name = geometry
-file = mpvnet
+file = mpv
 directory = Window
-help = <x:y> Initial window location in percent. Default: 50:50 (centered)\n\nx=0 docks the window to the left side.\nx=100 docks the window to the right side.\ny=0 docks the window to the top side.\ny=100 docks the window to the bottom side.
+help = <x:y> Initial window location in percent. Default: 50:50 (centered)\n\nRequires Windows 11, on Windows 10 it works slightly incorrect due to invisible borders.\n\nx=0 docks the window to the left side.\nx=100 docks the window to the right side.\n\ny=0 docks the window to the top side.\ny=100 docks the window to the bottom side.
 
 name = start-size
 file = mpvnet

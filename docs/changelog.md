@@ -1,6 +1,7 @@
 
 # v7.0.0.7 Beta (2023-??-??)
 
+- Fix geometry not working when used from mpv.conf and the conf editor.
 - GitHub Auto/Action/Workflow builds use a newer libmpv build.
 - German and Chinese translation updated. Thanks to our translation team!
 - New PowerShell script Tools/update-mpv-and-libmpv.ps1 to update mpv and libmpv.

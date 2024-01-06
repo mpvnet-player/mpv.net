@@ -675,6 +675,8 @@ https://mpv.io/manual/master/#window
 
 Initial window location in percent. Default: 50:50 (centered)
 
+Requires Windows 11, on Windows 10 it works slightly incorrect due to invisible borders.
+
 x=0 docks the window to the left side.  
 x=100 docks the window to the right side.  
 

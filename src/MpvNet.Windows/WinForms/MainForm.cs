@@ -688,18 +688,20 @@ public partial class MainForm : Form
         int minTop    = screens.Select(val => GetWorkingArea(Handle, val.WorkingArea).Y).Min();
         int maxBottom = screens.Select(val => GetWorkingArea(Handle, val.WorkingArea).Bottom).Max();
 
-        if (load && CommandLine.Contains("geometry"))
+        if (load)
         {
-            string geometryString = CommandLine.GetValue("geometry");
+            string geometryString = Player.GetPropertyString("geometry");
 
-            var geometry = ParseGeometry(geometryString, GetWorkingArea(
-                Handle, Screen.FromHandle(Handle).WorkingArea), width, height);
+            if (!string.IsNullOrEmpty(geometryString))
+            {
+                var pos = ParseGeometry(geometryString, width, height);
 
-            if (geometry.x != int.MaxValue)
-                left = geometry.x;
+                if (pos.X != int.MaxValue)
+                    left = pos.X;
 
-            if (geometry.y != int.MaxValue)
-                top = geometry.y;
+                if (pos.Y != int.MaxValue)
+                    top = pos.Y;
+            }
         }
 
         if (left < minLeft)
@@ -718,15 +720,17 @@ public partial class MainForm : Form
         SetWindowPos(Handle, IntPtr.Zero, left, top, width, height, SWP_NOACTIVATE);
     }
 
-    (int x, int y) ParseGeometry(string input, Rectangle workingArea, int width, int height)
+    Point ParseGeometry(string input, int width, int height)
     {
         int x = int.MaxValue;
         int y = int.MaxValue;
 
-        Match match = Regex.Match(input, @"^(\d+)%?:(\d+)%?$");
+        Match match = Regex.Match(input, @"^\+(\d+)%?\+(\d+)%?$");
 
         if (match.Success)
         {
+            Rectangle workingArea = GetWorkingArea(Handle, Screen.FromHandle(Handle).WorkingArea);
+
             x = int.Parse(match.Groups[1].Value);
             y = int.Parse(match.Groups[2].Value);
             
@@ -734,7 +738,7 @@ public partial class MainForm : Form
             y = workingArea.Top + Convert.ToInt32((workingArea.Height - height) / 100.0 * y);
         }
 
-        return (x, y);
+        return new Point(x, y);
     }
 
     public void CycleFullscreen(bool enabled)
