@@ -390,9 +390,6 @@ public class MainPlayer : MpvClient
         if (App.StartSize == "video")
             WasInitialSizeSet = false;
 
-        if (!FileTypes.Video.Contains(Path.Ext()) || FileTypes.Audio.Contains(Path.Ext()))
-            UpdateVideoSize("width", "height");
-
         TaskHelp.Run(UpdateTracks);
 
         base.OnFileLoaded();
@@ -600,7 +597,7 @@ public class MainPlayer : MpvClient
                 dir = System.IO.Path.GetDirectoryName(path)!;
 
             List<string> files = FileTypes.GetMediaFiles(Directory.GetFiles(dir)).ToList();
-          
+
             if (OperatingSystem.IsWindows())
                 files.Sort(new StringLogicalComparer());
 

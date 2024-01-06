@@ -5,7 +5,7 @@
 # 
 # Translators:
 # dyphire, 2023
-# nkh0472 <nkh0472@hotmail.com>, 2023
+# nkh0472 <nkh0472@hotmail.com>, 2024
 # 
 #, fuzzy
 msgid ""
@@ -14,7 +14,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-04 02:51+0100\n"
 "PO-Revision-Date: 2023-12-08 00:34+0000\n"
-"Last-Translator: nkh0472 <nkh0472@hotmail.com>, 2023\n"
+"Last-Translator: nkh0472 <nkh0472@hotmail.com>, 2024\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/stax76/teams/179964/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -330,7 +330,7 @@ msgstr "音频"
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:85
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:446
 msgid "Audio Device"
-msgstr ""
+msgstr "音频设备"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:86
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:91
@@ -509,23 +509,23 @@ msgstr "显示键位绑定"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:131
 msgid "Show Properties"
-msgstr ""
+msgstr "显示属性"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:132
 msgid "Show Keys"
-msgstr ""
+msgstr "显示按键"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:133
 msgid "Show Protocols"
-msgstr ""
+msgstr "显示协议"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:134
 msgid "Show Decoders"
-msgstr ""
+msgstr "显示解码器"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:135
 msgid "Show Demuxers"
-msgstr ""
+msgstr "显示解复用器"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:137
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:138
@@ -687,7 +687,7 @@ msgstr "将 mpv.net 添加到环境变量"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:168
 msgid "Remove mpv.net from Path environment variable"
-msgstr ""
+msgstr "将 mpv.net 从环境变量中移除"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:170
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:171
@@ -838,19 +838,19 @@ msgstr "创建文件关联时出错"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:358
 msgid "mpv.net is already in the Path environment variable."
-msgstr ""
+msgstr "mpv.net 已存在于环境变量。"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:366
 msgid "mpv.net was successfully added to the Path environment variable."
-msgstr ""
+msgstr "成功添加 mpv.net 至环境变量。"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:375
 msgid "mpv.net was not found in the Path environment variable."
-msgstr ""
+msgstr "环境变量中不存在 mpv.net。"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:384
 msgid "mpv.net was successfully removed from the Path environment variable."
-msgstr ""
+msgstr "成功从环境变量中移除 mpv.net 。"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:389
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:396
@@ -858,11 +858,11 @@ msgstr ""
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:411
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:416
 msgid "This feature was removed, but there are user scripts:"
-msgstr ""
+msgstr "该功能已被移除，但有用户脚本："
 
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:420
 msgid "This feature was removed."
-msgstr ""
+msgstr "该功能已被移除。"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\Properties\Resources.Designer.cs:79
 msgid "editor_conf"

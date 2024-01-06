@@ -3,7 +3,7 @@
 
 This script updates mpv and libmpv using github.com/zhongfly/mpv-winbuild
 
-Two positoninal command line arguments need to be passed into the script:
+Two positional command line arguments need to be passed into the script:
 
 1. The directory containing libmpv to be updated.
 2. The directory containing mpv to be updated.
