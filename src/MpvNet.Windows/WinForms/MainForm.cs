@@ -1424,11 +1424,7 @@ public partial class MainForm : Form
     protected override void OnMouseDown(MouseEventArgs e)
     {
         base.OnMouseDown(e);
-
         _mouseDownLocation = PointToScreen(e.Location);
-
-        if (Width - e.Location.X < 10 && e.Location.Y < 10)
-            Player.CommandV("quit");
     }
 
     protected override void OnMouseMove(MouseEventArgs e)
