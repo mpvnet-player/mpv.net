@@ -3,7 +3,7 @@
 
 - Fix geometry not working when used from mpv.conf and the conf editor.
 - GitHub Auto/Action/Workflow builds use a newer libmpv build.
-- German and Chinese translation updated. Thanks to our translation team!
+- German and Chinese translation updated. Japanese translation added. Thanks to our translation team!
 - New PowerShell script Tools/update-mpv-and-libmpv.ps1 to update mpv and libmpv.
 - Context menu supports audio device selection (Audio > Audio Device)
 - New option `remember-audio-device` to save and restore the audio device chosen in the context menu.

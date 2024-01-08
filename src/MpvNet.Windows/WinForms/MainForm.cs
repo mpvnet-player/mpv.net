@@ -392,7 +392,7 @@ public partial class MainForm : Form
             }
 
             recentMenuItem.Items.Add(new WpfControls.Separator());
-            var clearMenuItem = new WpfControls.MenuItem() { Header = "Clear List" };
+            var clearMenuItem = new WpfControls.MenuItem() { Header = _("Clear List") };
             clearMenuItem.Click += (sender, args) => App.Settings.RecentFiles.Clear();
             recentMenuItem.Items.Add(clearMenuItem);
         }
