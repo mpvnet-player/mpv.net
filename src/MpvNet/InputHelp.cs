@@ -118,7 +118,6 @@ public static class InputHelp
                 new (_("Speed"), _("Reset"), "set speed 1", "BS"),
 
                 new (_("View"), _("Show Playlist"), "script-message-to mpvnet show-playlist", "F8"),
-                new (_("View"), _("Show Profiles"), "script-message-to mpvnet show-profiles", "Ctrl+P"),
                 new (_("View"), _("Toggle Statistics"), "script-binding stats/display-stats-toggle", "t"),
                 new (_("View"), _("Toggle OSC Visibility"), "script-binding osc/visibility", "Del"),
                 new (_("View"), _("Show Media Info On-Screen"),   "script-message-to mpvnet show-media-info osd", "i"),

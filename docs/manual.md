@@ -151,7 +151,7 @@ and context menu design fixing it.
 In v7 no input.conf file is created, the default bindings and
 context menu is defined internally. input.conf only contains
 what is different from the internally defined defaults,
-so it works the same it work with mpv.
+so it works the same as it works in mpv.
 
 For backward compatibility the old input.conf context menu
 format with the menu definition using `#menu: ` is still

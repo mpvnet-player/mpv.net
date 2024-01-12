@@ -450,6 +450,11 @@ public partial class MainForm : Form
                     }
                 }
             }
+
+            profilesMenuItem.Items.Add(new WpfControls.Separator());
+            var showProfilesMenuItem = new WpfControls.MenuItem() { Header = _("Show Profiles") };
+            showProfilesMenuItem.Click += (sender, args) => Player.Command("script-message-to mpvnet show-profiles");
+            profilesMenuItem.Items.Add(showProfilesMenuItem);
         }
 
         var audioDevicesMenuItem = FindMenuItem(_("Audio Device"), "Audio Device");

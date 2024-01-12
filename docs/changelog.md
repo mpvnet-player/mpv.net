@@ -1,6 +1,7 @@
 
-# v7.0.0.7 Beta (2023-??-??)
+# v7.1.0.0 Beta (2023-01-12)
 
+- The menu item that shows profiles was moved into the menu item that lists profiles.
 - Fix geometry not working when used from mpv.conf and the conf editor.
 - GitHub Auto/Action/Workflow builds use a newer libmpv build.
 - German and Chinese translation updated. Japanese translation added. Thanks to our translation team!
