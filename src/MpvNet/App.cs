@@ -77,7 +77,7 @@ public class AppClass
         Player.Initialized += Player_Initialized;
     }
 
-    public static string About => "Copyright (C) 2000-2023 mpv.net/mpv/mplayer\n" +
+    public static string About => "Copyright (C) 2000-2024 mpv.net/mpv/mplayer\n" +
         $"{AppInfo.Product} {AppInfo.Version}" + GetLastWriteTime(Environment.ProcessPath!) + "\n" +
         $"{Player.GetPropertyString("mpv-version")}" + GetLastWriteTime(Folder.Startup + "libmpv-2.dll") + "\n" +
         $"ffmpeg {Player.GetPropertyString("ffmpeg-version")}\n" + "GPL v2 License";

@@ -8,7 +8,7 @@ Get-ChildItem $PSScriptRoot/.. -Recurse -File -Filter '*.cs' |
     Out-File $PSScriptRoot/cs-files.txt
 
 # Create .pot file
-xgettext --force-po --from-code=UTF-8 '--language=c#' -o $PSScriptRoot/source.pot --files-from=$PSScriptRoot/cs-files.txt --keyword=_
+xgettext -k_ -k_n:1,2 -k_p:1c,2 -k_pn:1c,2,3 --force-po --from-code=UTF-8 '--language=c#' -o $PSScriptRoot/source.pot --files-from=$PSScriptRoot/cs-files.txt --keyword=_
 if ($LastExitCode) { throw $LastExitCode }
 
 # Backup .po files

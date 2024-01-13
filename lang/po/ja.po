@@ -2,51 +2,52 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 # Translators:
 # ever_green, 2024
-# 
+#
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-04 02:51+0100\n"
+"POT-Creation-Date: 2024-01-13 13:46+0100\n"
 "PO-Revision-Date: 2023-12-08 00:34+0000\n"
 "Last-Translator: ever_green, 2024\n"
 "Language-Team: Japanese (https://app.transifex.com/stax76/teams/179964/ja/)\n"
+"Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: ja\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:12
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:13
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:14
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:15
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:16
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:17
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:18
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:19
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:20
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:21
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:22
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:23
-msgid "File"
-msgstr "ファイル"
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:113
+msgid "+10%"
+msgstr "+10%"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:12
-msgid "Open Files..."
-msgstr "ファイルを開く..."
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:112
+msgid "-10%"
+msgstr "-10%"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:13
-msgid "Open URL or file from clipboard"
-msgstr "クリップボードから URL またはファイルを開く"
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:141
+msgid "100 %"
+msgstr "100 %"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:14
-msgid "Open DVD/Blu-ray Drive/Folder..."
-msgstr "DVD/Blu-ray ドライブ/フォルダを開く..."
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:142
+msgid "200 %"
+msgstr "200 %"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:143
+msgid "300 %"
+msgstr "300 %"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:140
+msgid "50 %"
+msgstr "50 %"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:184
+msgid "About mpv.net"
+msgstr "mpv.net のバージョン情報"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:16
 msgid "Add external audio files..."
@@ -64,34 +65,325 @@ msgstr "プレイリストにファイルを追加..."
 msgid "Add files/URLs to playlist from clipboard"
 msgstr "クリップボードからプレイリストにファイル/URL を追加"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:22
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:379
-msgid "Recent Files"
-msgstr "最近のファイル"
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:166
+msgid "Add mpv.net to Path environment variable"
+msgstr "mpv.net を Path 環境変数に追加"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:85
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:86
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:87
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:88
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:89
+msgid "Audio"
+msgstr "オーディオ"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:85
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:460
+msgid "Audio Device"
+msgstr "オーディオデバイス"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:194
+msgid "Backward"
+msgstr "戻る"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:148
+#, fuzzy
+msgctxt "Move"
+msgid "Center"
+msgstr "中央"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:82
+msgid "Change Aspect Ratio"
+msgstr "アスペクト比を変更"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WPF\InputWindow.xaml.cs:116
+msgid "Changes will be available on next startup."
+msgstr "変更は次回の起動時に利用可能になります。"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:51
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:358
+msgid "Chapter"
+msgstr "チャプター"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:395
+msgid "Clear List"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:175
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:484
+msgid "Custom"
+msgstr "カスタム"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:70
+msgid "Decrease Brightness"
+msgstr "明るさを下げる"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:67
+msgid "Decrease Contrast"
+msgstr "コントラストを下げる"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:100
+msgid "Decrease Font Size"
+msgstr "フォントサイズを小さくする"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:73
+msgid "Decrease Gamma"
+msgstr "ガンマ値を下げる"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:62
+msgid "Decrease Height"
+msgstr "高さを縮小"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:76
+msgid "Decrease Saturation"
+msgstr "彩度を下げる"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:53
+msgid "Decrease Size"
+msgstr "サイズを縮小"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:88
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:95
+msgid "Delay +0.1"
+msgstr "遅延 +0.1"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:89
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:94
+msgid "Delay -0.1"
+msgstr "遅延 -0.1"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:116
+msgid "Double"
+msgstr "2 倍"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:147
+#, fuzzy
+msgctxt "Move"
+msgid "Down"
+msgstr "下げる"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:108
+#, fuzzy
+msgctxt "Volume"
+msgid "Down"
+msgstr "下げる"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:158
+msgid "Edit input.conf"
+msgstr "input.conf の編集"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:157
+msgid "Edit mpv.conf"
+msgstr "mpv.conf の編集"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:137
+msgid "Enlarge"
+msgstr "拡大"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:261
+msgid "Error creating file associations."
+msgstr "ファイルの関連付けの作成中にエラーが発生しました。"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:23
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:187
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:219
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:186
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:218
 msgid "Exit"
 msgstr "終了"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:25
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:26
-msgid "Playback"
-msgstr "再生"
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:173
+msgid "Exit Watch Later"
+msgstr "後で見るから終了"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:25
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:189
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:190
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:191
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:192
-msgid "Play/Pause"
-msgstr "再生/一時停止"
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:12
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:13
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:14
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:15
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:16
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:17
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:18
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:19
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:20
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:21
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:22
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:23
+msgid "File"
+msgstr "ファイル"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:26
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:253
+msgid "File Explorer icons will refresh after process restart."
+msgstr ""
+"ファイルエクスプローラーのアイコンは、プロセスの再起動後に更新されます。"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:258
+msgid "File associations were successfully created."
+msgstr "ファイルの関連付けが正常に作成されました。"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:256
+msgid "File associations were successfully removed."
+msgstr "ファイルの関連付けは正常に削除されました。"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:189
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:209
+msgid "Files/URLs were added to the playlist"
+msgstr "ファイル/URL がプレイリストに追加されました"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:31
+msgid "First File"
+msgstr "最初のファイル"
+
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:193
-msgid "Stop"
-msgstr "停止"
+msgid "Forward"
+msgstr "進む"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:136
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:206
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:207
+msgid "Fullscreen"
+msgstr "フルスクリーン"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:115
+msgid "Half"
+msgstr "1/2"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:177
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:178
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:179
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:180
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:181
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:182
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:183
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:184
+msgid "Help"
+msgstr "ヘルプ"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:205
+msgid "Ignore left mouse butten"
+msgstr "マウスの左ボタンを無視"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:71
+msgid "Increase Brightness"
+msgstr "明るさを上げる"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:68
+msgid "Increase Contrast"
+msgstr "コントラストを上げる"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:101
+msgid "Increase Font Size"
+msgstr "フォントサイズを大きくする"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:74
+msgid "Increase Gamma"
+msgstr "ガンマ値を上げる"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:63
+msgid "Increase Height"
+msgstr "高さを拡大"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:77
+msgid "Increase Saturation"
+msgstr "彩度を上げる"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:54
+msgid "Increase Size"
+msgstr "サイズを拡大"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:45
+msgid "Jump 30 sec backward"
+msgstr "30 秒後方にジャンプ"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:44
+msgid "Jump 30 sec forward"
+msgstr "30 秒前方にジャンプ"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:48
+msgid "Jump 5 min backward"
+msgstr "5 分後方にジャンプ"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:47
+msgid "Jump 5 min forward"
+msgstr "5 分前方にジャンプ"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:42
+msgid "Jump 5 sec backward"
+msgstr "5 秒後方にジャンプ"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:41
+msgid "Jump 5 sec forward"
+msgstr "5 秒前方にジャンプ"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:38
+msgid "Jump To Next Frame"
+msgstr "次のフレームにジャンプ"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:39
+msgid "Jump To Previous Frame"
+msgstr "前のフレームにジャンプ"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:32
+msgid "Last File"
+msgstr "最後のファイル"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:144
+#, fuzzy
+msgctxt "Move"
+msgid "Left"
+msgstr "左"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:180
+msgid "Manual mpv"
+msgstr "mpv マニュアル"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:181
+msgid "Manual mpv.net"
+msgstr "mpv.net マニュアル"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:213
+msgid "Mark position for revert-seek"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:103
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:126
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:127
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:128
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:129
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:130
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:131
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:132
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:133
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:134
+msgid "More"
+msgstr "詳細"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:144
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:145
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:146
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:147
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:148
+msgid "Move"
+msgstr "移動"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:60
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:98
+msgid "Move Down"
+msgstr "下に移動"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:56
+msgid "Move Left"
+msgstr "左に移動"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:57
+msgid "Move Right"
+msgstr "右に移動"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:59
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:97
+msgid "Move Up"
+msgstr "上に移動"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:110
+msgid "Mute"
+msgstr "ミュート"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:28
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:29
@@ -119,77 +411,37 @@ msgstr "停止"
 msgid "Navigate"
 msgstr "操作"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:28
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:200
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:202
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:204
-msgid "Previous File"
-msgstr "前のファイル"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:29
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:201
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:203
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:205
-msgid "Next File"
-msgstr "次のファイル"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:31
-msgid "First File"
-msgstr "最初のファイル"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:32
-msgid "Last File"
-msgstr "最後のファイル"
-
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:35
 msgid "Next Chapter"
 msgstr "次のチャプター"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:36
-msgid "Previous Chapter"
-msgstr "前のチャプター"
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:29
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:200
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:202
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:204
+msgid "Next File"
+msgstr "次のファイル"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:38
-msgid "Jump To Next Frame"
-msgstr "次のフレームにジャンプ"
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:86
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:91
+msgid "Next Track"
+msgstr "次のトラック"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:39
-msgid "Jump To Previous Frame"
-msgstr "前のフレームにジャンプ"
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:160
+msgid "Open Config Folder"
+msgstr "構成フォルダを開く"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:41
-msgid "Jump 5 sec forward"
-msgstr "5 秒前方にジャンプ"
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:14
+msgid "Open DVD/Blu-ray Drive/Folder..."
+msgstr "DVD/Blu-ray ドライブ/フォルダを開く..."
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:42
-msgid "Jump 5 sec backward"
-msgstr "5 秒後方にジャンプ"
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:12
+msgid "Open Files..."
+msgstr "ファイルを開く..."
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:44
-msgid "Jump 30 sec forward"
-msgstr "30 秒前方にジャンプ"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:45
-msgid "Jump 30 sec backward"
-msgstr "30 秒後方にジャンプ"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:47
-msgid "Jump 5 min forward"
-msgstr "5 分前方にジャンプ"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:48
-msgid "Jump 5 min backward"
-msgstr "5 分後方にジャンプ"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:50
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:398
-msgid "Title"
-msgstr "タイトル"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:51
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:358
-msgid "Chapter"
-msgstr "チャプター"
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:13
+msgid "Open URL or file from clipboard"
+msgstr "クリップボードから URL またはファイルを開く"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:53
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:54
@@ -207,44 +459,330 @@ msgstr "チャプター"
 msgid "Pan & Scan"
 msgstr "パン＆スキャン"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:53
-msgid "Decrease Size"
-msgstr "サイズを縮小"
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:25
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:188
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:189
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:190
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:191
+msgid "Play/Pause"
+msgstr "再生/一時停止"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:54
-msgid "Increase Size"
-msgstr "サイズを拡大"
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:25
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:26
+msgid "Playback"
+msgstr "再生"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:56
-msgid "Move Left"
-msgstr "左に移動"
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:36
+msgid "Previous Chapter"
+msgstr "前のチャプター"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:57
-msgid "Move Right"
-msgstr "右に移動"
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:28
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:199
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:201
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:203
+msgid "Previous File"
+msgstr "前のファイル"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:59
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:97
-msgid "Move Up"
-msgstr "上に移動"
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:152
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:433
+msgid "Profile"
+msgstr "プロファイル"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:60
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:98
-msgid "Move Down"
-msgstr "下に移動"
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:22
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:379
+msgid "Recent Files"
+msgstr "最近のファイル"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:62
-msgid "Decrease Height"
-msgstr "高さを縮小"
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:162
+msgid "Register audio file associations"
+msgstr "オーディオファイルの関連付けを登録"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:63
-msgid "Increase Height"
-msgstr "高さを拡大"
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:163
+msgid "Register image file associations"
+msgstr "画像ファイルの関連付けを登録"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:161
+msgid "Register video file associations"
+msgstr "ビデオファイルの関連付けを登録"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:167
+msgid "Remove mpv.net from Path environment variable"
+msgstr "mpv.net を Path 環境変数から削除"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:65
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:118
 msgid "Reset"
 msgstr "リセット"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:145
+#, fuzzy
+msgctxt "Move"
+msgid "Right"
+msgstr "右"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:83
+msgid "Rotate Video"
+msgstr "ビデオを回転"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:209
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:211
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:217
+msgid "Seek Backward"
+msgstr "後方にシーク"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:208
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:210
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:216
+msgid "Seek Forward"
+msgstr "前方にシーク"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:215
+msgid "Seek to next subtitle"
+msgstr "次の字幕にシーク"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:214
+msgid "Seek to previous subtitle"
+msgstr "前の字幕にシーク"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:169
+msgid "Set/clear A-B loop points"
+msgstr "A-B 区間ループの設定/解除"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:154
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:155
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:156
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:157
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:158
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:159
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:160
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:161
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:162
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:163
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:164
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:165
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:166
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:167
+msgid "Settings"
+msgstr "設定"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:161
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:162
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:163
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:164
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:165
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:166
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:167
+msgid "Setup"
+msgstr "セットアップ"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:127
+msgid "Show Audio Devices"
+msgstr "オーディオデバイスを表示"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:129
+msgid "Show Bindings"
+msgstr "バインディングを表示"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:128
+msgid "Show Commands"
+msgstr "コマンドを表示"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:154
+msgid "Show Config Editor"
+msgstr "構成エディターを表示"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:126
+msgid "Show Console"
+msgstr "コンソールを表示"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:133
+msgid "Show Decoders"
+msgstr "デコーダを表示"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:134
+msgid "Show Demuxers"
+msgstr "デマルチプレクサを表示"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:155
+msgid "Show Input Editor"
+msgstr "入力エディターを表示"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:131
+msgid "Show Keys"
+msgstr "キーを表示"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:124
+msgid "Show Media Info Message Box"
+msgstr "メディア情報メッセージボックスを表示"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:123
+msgid "Show Media Info On-Screen"
+msgstr "画面上にメディア情報を表示"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:187
+msgid "Show Menu"
+msgstr "メニューを表示"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:120
+msgid "Show Playlist"
+msgstr "プレイリストを表示"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:455
+msgid "Show Profiles"
+msgstr "プロファイルを表示"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:125
+msgid "Show Progress"
+msgstr "進行状況を表示"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:130
+msgid "Show Properties"
+msgstr "プロパティを表示"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:132
+msgid "Show Protocols"
+msgstr "プロトコルを表示"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:138
+msgid "Shrink"
+msgstr "縮小"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:171
+msgid "Shuffle Playlist"
+msgstr "プレイリストをシャッフル"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:1424
+msgid "Shutdown thread failed to complete within 10 seconds."
+msgstr "シャットダウン スレッドが 10 秒以内に完了しませんでした。"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:112
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:113
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:114
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:115
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:116
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:117
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:118
+msgid "Speed"
+msgstr "再生速度"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:26
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:192
+msgid "Stop"
+msgstr "停止"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:91
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:92
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:93
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:94
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:95
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:96
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:97
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:98
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:99
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:100
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:101
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:102
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:103
+msgid "Subtitle"
+msgstr "字幕"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:79
+msgid "Take Screenshot"
+msgstr "スクリーンショットを撮る"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:80
+msgid "Take Screenshot without subtitles"
+msgstr "字幕なしでスクリーンショットを撮る"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:202
+msgid "The clipboard does not contain a valid URL or file."
+msgstr "クリップボードに有効な URL またはファイルが含まれていません。"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:389
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:396
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:404
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:411
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:416
+msgid "This feature was removed, but there are user scripts:"
+msgstr "この機能は削除されましたが、ユーザースクリプトがあります:"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:420
+msgid "This feature was removed."
+msgstr "この機能は削除されました。"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:50
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:400
+msgid "Title"
+msgstr "タイトル"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:149
+msgid "Toggle Border"
+msgstr "ボーダーの切り替え"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:81
+msgid "Toggle Deinterlace"
+msgstr "インターレース解除の切り替え"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:172
+msgid "Toggle Hardware Decoding"
+msgstr "ハードウェアデコードの切り替え"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:122
+msgid "Toggle OSC Visibility"
+msgstr "OSC 表示の切り替え"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:150
+msgid "Toggle On Top"
+msgstr "常に手前に表示"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:121
+msgid "Toggle Statistics"
+msgstr "統計情報の切り替え"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:92
+msgid "Toggle Visibility"
+msgstr "表示の切り替え"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:170
+msgid "Toggle infinite file looping"
+msgstr "無限ファイルループの切り替え"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:103
+msgid "Toggle overriding SSA/ASS styles with normal styles"
+msgstr "SSA/ASS スタイルを通常のスタイルで上書きする"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:169
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:170
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:171
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:172
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:173
+msgid "Tools"
+msgstr "ツール"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:105
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:296
+msgid "Track"
+msgstr "トラック"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:212
+msgid "Undo previous (or marked) seek"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:164
+msgid "Unregister file associations"
+msgstr "ファイルの関連付けの登録解除"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:146
+#, fuzzy
+msgctxt "Move"
+msgid "Up"
+msgstr "上げる"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:107
+#, fuzzy
+msgctxt "Volume"
+msgid "Up"
+msgstr "上げる"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:67
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:68
@@ -266,115 +804,13 @@ msgstr "リセット"
 msgid "Video"
 msgstr "ビデオ"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:67
-msgid "Decrease Contrast"
-msgstr "コントラストを下げる"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:68
-msgid "Increase Contrast"
-msgstr "コントラストを上げる"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:70
-msgid "Decrease Brightness"
-msgstr "明るさを下げる"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:71
-msgid "Increase Brightness"
-msgstr "明るさを上げる"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:73
-msgid "Decrease Gamma"
-msgstr "ガンマ値を下げる"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:74
-msgid "Increase Gamma"
-msgstr "ガンマ値を上げる"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:76
-msgid "Decrease Saturation"
-msgstr "彩度を下げる"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:77
-msgid "Increase Saturation"
-msgstr "彩度を上げる"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:79
-msgid "Take Screenshot"
-msgstr "スクリーンショットを撮る"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:80
-msgid "Take Screenshot without subtitles"
-msgstr "字幕なしでスクリーンショットを撮る"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:81
-msgid "Toggle Deinterlace"
-msgstr "インターレース解除の切り替え"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:82
-msgid "Change Aspect Ratio"
-msgstr "アスペクト比を変更"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:83
-msgid "Rotate Video"
-msgstr "ビデオを回転"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:85
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:86
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:87
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:88
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:89
-msgid "Audio"
-msgstr "オーディオ"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:85
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:446
-msgid "Audio Device"
-msgstr "オーディオデバイス"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:86
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:91
-msgid "Next Track"
-msgstr "次のトラック"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:88
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:95
-msgid "Delay +0.1"
-msgstr "遅延 +0.1"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:89
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:94
-msgid "Delay -0.1"
-msgstr "遅延 -0.1"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:91
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:92
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:93
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:94
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:95
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:96
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:97
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:98
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:99
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:100
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:101
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:102
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:103
-msgid "Subtitle"
-msgstr "字幕"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:92
-msgid "Toggle Visibility"
-msgstr "表示の切り替え"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:100
-msgid "Decrease Font Size"
-msgstr "フォントサイズを小さくする"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:101
-msgid "Increase Font Size"
-msgstr "フォントサイズを大きくする"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:103
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:120
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:121
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:122
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:123
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:124
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:125
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:126
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:127
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:128
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:129
@@ -383,18 +819,8 @@ msgstr "フォントサイズを大きくする"
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:132
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:133
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:134
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:135
-msgid "More"
-msgstr "詳細"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:103
-msgid "Toggle overriding SSA/ASS styles with normal styles"
-msgstr "SSA/ASS スタイルを通常のスタイルで上書きする"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:105
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:296
-msgid "Track"
-msgstr "トラック"
+msgid "View"
+msgstr "表示"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:107
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:108
@@ -403,129 +829,25 @@ msgstr "トラック"
 msgid "Volume"
 msgstr "音量"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:107
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:147
-msgid "Up"
-msgstr "上げる"
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:196
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:198
+msgid "Volume Down"
+msgstr "音量を下げる"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:108
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:148
-msgid "Down"
-msgstr "下げる"
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:195
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:197
+msgid "Volume Up"
+msgstr "音量を上げる"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:110
-msgid "Mute"
-msgstr "ミュート"
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:177
+msgid "Website mpv"
+msgstr "mpv ウェブサイト"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:112
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:113
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:114
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:115
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:116
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:117
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:118
-msgid "Speed"
-msgstr "再生速度"
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:178
+msgid "Website mpv.net"
+msgstr "mpv.net ウェブサイト"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:112
-msgid "-10%"
-msgstr "-10%"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:113
-msgid "+10%"
-msgstr "+10%"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:115
-msgid "Half"
-msgstr "1/2"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:116
-msgid "Double"
-msgstr "2 倍"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:120
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:121
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:122
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:123
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:124
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:125
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:126
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:127
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:128
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:129
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:130
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:131
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:132
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:133
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:134
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:135
-msgid "View"
-msgstr "表示"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:120
-msgid "Show Playlist"
-msgstr "プレイリストを表示"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:121
-msgid "Show Profiles"
-msgstr "プロファイルを表示"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:122
-msgid "Toggle Statistics"
-msgstr "統計情報の切り替え"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:123
-msgid "Toggle OSC Visibility"
-msgstr "OSC 表示の切り替え"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:124
-msgid "Show Media Info On-Screen"
-msgstr "画面上にメディア情報を表示"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:125
-msgid "Show Media Info Message Box"
-msgstr "メディア情報メッセージボックスを表示"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:126
-msgid "Show Progress"
-msgstr "進行状況を表示"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:127
-msgid "Show Console"
-msgstr "コンソールを表示"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:128
-msgid "Show Audio Devices"
-msgstr "オーディオデバイスを表示"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:129
-msgid "Show Commands"
-msgstr "コマンドを表示"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:130
-msgid "Show Bindings"
-msgstr "バインディングを表示"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:131
-msgid "Show Properties"
-msgstr "プロパティを表示"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:132
-msgid "Show Keys"
-msgstr "キーを表示"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:133
-msgid "Show Protocols"
-msgstr "プロトコルを表示"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:134
-msgid "Show Decoders"
-msgstr "デコーダを表示"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:135
-msgid "Show Demuxers"
-msgstr "デマルチプレクサを表示"
-
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:136
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:137
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:138
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:139
@@ -540,341 +862,67 @@ msgstr "デマルチプレクサを表示"
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:148
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:149
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:150
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:151
 msgid "Window"
 msgstr "ウィンドウ"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:137
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:207
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:208
-msgid "Fullscreen"
-msgstr "フルスクリーン"
-
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:138
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:139
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:140
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:141
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:142
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:143
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:144
 msgid "Zoom"
 msgstr "ズーム"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:138
-msgid "Enlarge"
-msgstr "拡大"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:139
-msgid "Shrink"
-msgstr "縮小"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:141
-msgid "50 %"
-msgstr "50 %"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:142
-msgid "100 %"
-msgstr "100 %"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:143
-msgid "200 %"
-msgstr "200 %"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:144
-msgid "300 %"
-msgstr "300 %"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:145
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:146
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:147
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:148
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:149
-msgid "Move"
-msgstr "移動"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:145
-msgid "Left"
-msgstr "左"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:146
-msgid "Right"
-msgstr "右"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:149
-msgid "Center"
-msgstr "中央"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:150
-msgid "Toggle Border"
-msgstr "ボーダーの切り替え"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:151
-msgid "Toggle On Top"
-msgstr "常に手前に表示"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:153
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:427
-msgid "Profile"
-msgstr "プロファイル"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:155
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:156
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:157
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:158
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:159
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:160
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:161
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:162
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:163
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:164
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:165
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:166
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:167
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:168
-msgid "Settings"
-msgstr "設定"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:155
-msgid "Show Config Editor"
-msgstr "構成エディターを表示"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:156
-msgid "Show Input Editor"
-msgstr "入力エディターを表示"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:158
-msgid "Edit mpv.conf"
-msgstr "mpv.conf の編集"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:159
-msgid "Edit input.conf"
-msgstr "input.conf の編集"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:161
-msgid "Open Config Folder"
-msgstr "構成フォルダを開く"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:162
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:163
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:164
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:165
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:166
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:167
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:168
-msgid "Setup"
-msgstr "セットアップ"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:162
-msgid "Register video file associations"
-msgstr "ビデオファイルの関連付けを登録"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:163
-msgid "Register audio file associations"
-msgstr "オーディオファイルの関連付けを登録"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:164
-msgid "Register image file associations"
-msgstr "画像ファイルの関連付けを登録"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:165
-msgid "Unregister file associations"
-msgstr "ファイルの関連付けの登録解除"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:167
-msgid "Add mpv.net to Path environment variable"
-msgstr "mpv.net を Path 環境変数に追加"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:168
-msgid "Remove mpv.net from Path environment variable"
-msgstr "mpv.net を Path 環境変数から削除"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:170
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:171
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:172
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:173
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:174
-msgid "Tools"
-msgstr "ツール"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:170
-msgid "Set/clear A-B loop points"
-msgstr "A-B 区間ループの設定/解除"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:171
-msgid "Toggle infinite file looping"
-msgstr "無限ファイルループの切り替え"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:172
-msgid "Shuffle Playlist"
-msgstr "プレイリストをシャッフル"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:173
-msgid "Toggle Hardware Decoding"
-msgstr "ハードウェアデコードの切り替え"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:174
-msgid "Exit Watch Later"
-msgstr "後で見るから終了"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:176
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:466
-msgid "Custom"
-msgstr "カスタム"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:178
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:179
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:180
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:181
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:182
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:183
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:184
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:185
-msgid "Help"
-msgstr "ヘルプ"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:178
-msgid "Website mpv"
-msgstr "mpv ウェブサイト"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:179
-msgid "Website mpv.net"
-msgstr "mpv.net ウェブサイト"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:181
-msgid "Manual mpv"
-msgstr "mpv マニュアル"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:182
-msgid "Manual mpv.net"
-msgstr "mpv.net マニュアル"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:184
 msgid "awesome-mpv"
 msgstr "awesome-mpv"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:185
-msgid "About mpv.net"
-msgstr "mpv.net のバージョン情報"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:188
-msgid "Show Menu"
-msgstr "メニューを表示"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:194
-msgid "Forward"
-msgstr ""
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:195
-msgid "Backward"
-msgstr ""
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:196
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:198
-msgid "Volume Up"
-msgstr "音量を上げる"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:197
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:199
-msgid "Volume Down"
-msgstr "音量を下げる"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:206
-msgid "Ignore left mouse butten"
-msgstr "マウスの左ボタンを無視"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:209
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:211
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:217
-msgid "Seek Forward"
-msgstr "前方にシーク"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:210
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:212
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:218
-msgid "Seek Backward"
-msgstr "後方にシーク"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:213
-msgid "Undo previous (or marked) seek"
-msgstr ""
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:214
-msgid "Mark position for revert-seek"
-msgstr ""
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:215
-msgid "Seek to previous subtitle"
-msgstr "前の字幕にシーク"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:216
-msgid "Seek to next subtitle"
-msgstr "次の字幕にシーク"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:189
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:209
-msgid "Files/URLs were added to the playlist"
-msgstr "ファイル/URL がプレイリストに追加されました"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:202
-msgid "The clipboard does not contain a valid URL or file."
-msgstr "クリップボードに有効な URL またはファイルが含まれていません。"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:253
-msgid "File Explorer icons will refresh after process restart."
-msgstr "ファイルエクスプローラーのアイコンは、プロセスの再起動後に更新されます。"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:256
-msgid "File associations were successfully removed."
-msgstr "ファイルの関連付けは正常に削除されました。"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:258
-msgid "File associations were successfully created."
-msgstr "ファイルの関連付けが正常に作成されました。"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:261
-msgid "Error creating file associations."
-msgstr "ファイルの関連付けの作成中にエラーが発生しました。"
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\Properties\Resources.Designer.cs:79
+msgid "editor_conf"
+msgstr "editor_conf"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:358
 msgid "mpv.net is already in the Path environment variable."
 msgstr "mpv.net は既に Path 環境変数にあります。"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:366
-msgid "mpv.net was successfully added to the Path environment variable."
-msgstr "mpv.net が Path 環境変数に正常に追加されました。"
-
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:375
 msgid "mpv.net was not found in the Path environment variable."
 msgstr "mpv.net が Path 環境変数に見つかりませんでした。"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:366
+msgid "mpv.net was successfully added to the Path environment variable."
+msgstr "mpv.net が Path 環境変数に正常に追加されました。"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:384
 msgid "mpv.net was successfully removed from the Path environment variable."
 msgstr "mpv.net は Path 環境変数から正常に削除されました。"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:389
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:396
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:404
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:411
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:416
-msgid "This feature was removed, but there are user scripts:"
-msgstr "この機能は削除されましたが、ユーザースクリプトがあります:"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:420
-msgid "This feature was removed."
-msgstr "この機能は削除されました。"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\Properties\Resources.Designer.cs:79
-msgid "editor_conf"
-msgstr ""
-
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\Properties\Resources.Designer.cs:114
 msgid "theme"
 msgstr "テーマ"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:1398
-msgid "Shutdown thread failed to complete within 10 seconds."
-msgstr "シャットダウン スレッドが 10 秒以内に完了しませんでした。"
+#, fuzzy
+#~ msgid "Move|Down"
+#~ msgstr "下に移動"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WPF\InputWindow.xaml.cs:116
-msgid "Changes will be available on next startup."
-msgstr "変更は次回の起動時に利用可能になります。"
+#, fuzzy
+#~ msgid "Move|Left"
+#~ msgstr "左に移動"
+
+#, fuzzy
+#~ msgid "Move|Right"
+#~ msgstr "右に移動"
+
+#, fuzzy
+#~ msgid "Move|Up"
+#~ msgstr "上に移動"
+
+#, fuzzy
+#~ msgid "Volume|Down"
+#~ msgstr "音量を下げる"
+
+#, fuzzy
+#~ msgid "Volume|Up"
+#~ msgstr "音量を上げる"

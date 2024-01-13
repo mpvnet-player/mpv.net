@@ -2,6 +2,7 @@
 using NGettext.Wpf;
 
 using System.Globalization;
+using System.Windows.Interop;
 
 namespace MpvNet.Windows.WPF;
 
@@ -20,6 +21,12 @@ public class WpfTranslator : ITranslator
     {
         InitNGettextWpf();
         return Translation._(msgId);
+    }
+
+    public string GetParticularString(string context, string text)
+    {
+        InitNGettextWpf();
+        return Translation.GetParticularString(context, text);
     }
 
     void InitNGettextWpf()

@@ -104,8 +104,8 @@ public static class InputHelp
 
                 new ("", _("Track")),
 
-                new (_("Volume"), _("Up"), "add volume 2", "+"),
-                new (_("Volume"), _("Down"), "add volume -2", "-"),
+                new (_("Volume"), _p("Volume", "Up"), "add volume 2", "+"),
+                new (_("Volume"), _p("Volume", "Down"), "add volume -2", "-"),
                 new (_("Volume"), "-"),
                 new (_("Volume"), _("Mute"), "cycle mute", "m"),
 
@@ -141,11 +141,11 @@ public static class InputHelp
                 new (_("Window") + " > " + _("Zoom"), _("100 %"), "script-message-to mpvnet window-scale 1.0", "Alt+1"),
                 new (_("Window") + " > " + _("Zoom"), _("200 %"), "script-message-to mpvnet window-scale 2.0", "Alt+2"),
                 new (_("Window") + " > " + _("Zoom"), _("300 %"), "script-message-to mpvnet window-scale 3.0", "Alt+3"),
-                new (_("Window") + " > " + _("Move"), _("Left"), "script-message-to mpvnet move-window left", "Alt+Left"),
-                new (_("Window") + " > " + _("Move"), _("Right"), "script-message-to mpvnet move-window right", "Alt+Right"),
-                new (_("Window") + " > " + _("Move"), _("Up"), "script-message-to mpvnet move-window top", "Alt+Up"),
-                new (_("Window") + " > " + _("Move"), _("Down"), "script-message-to mpvnet move-window bottom", "Alt+Down"),
-                new (_("Window") + " > " + _("Move"), _("Center"), "script-message-to mpvnet move-window center", "Alt+BS"),
+                new (_("Window") + " > " + _("Move"), _p("Move", "Left"), "script-message-to mpvnet move-window left", "Alt+Left"),
+                new (_("Window") + " > " + _("Move"), _p("Move", "Right"), "script-message-to mpvnet move-window right", "Alt+Right"),
+                new (_("Window") + " > " + _("Move"), _p("Move", "Up"), "script-message-to mpvnet move-window top", "Alt+Up"),
+                new (_("Window") + " > " + _("Move"), _p("Move", "Down"), "script-message-to mpvnet move-window bottom", "Alt+Down"),
+                new (_("Window") + " > " + _("Move"), _p("Move", "Center"), "script-message-to mpvnet move-window center", "Alt+BS"),
                 new (_("Window"), _("Toggle Border"), "cycle border", "b"),
                 new (_("Window"), _("Toggle On Top"), "cycle ontop", "Ctrl+t"),
 

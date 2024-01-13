@@ -6,7 +6,7 @@
 🎞 mpv.net
 ==========
 
-mpv.net is a media player for Windows that has a modern GUI.
+mpv.net is a media player for Windows with a modern GUI.
 
 The player is based on the popular [mpv](https://mpv.io) media player.
 mpv.net is designed to be mpv compatible, almost all mpv features are available,
@@ -66,7 +66,7 @@ Features that mpv and mpv.net have in common
 - JSON IPC to control the player with a external programs
 - On Screen Controller (OSC, play control buttons) with modern flat design
 - Command Line Interface
-- Started from a terminal status, error and debug output is printed on the terminal
+- Started from a terminal, status, error and debug output is printed on the terminal
 - DXVA2 video decoding acceleration
 - Video output capable of features loved by videophiles, such as video scaling with popular high quality algorithms, color management, frame timing, interpolation, HDR, and more
 - Browser extensions to start mpv.net from the browser
@@ -85,14 +85,11 @@ Features exclusive to mpv.net
 
 - Very high degree of mpv compatibility, almost all mpv features are available
 - Modern graphical user interface with customizable color themes
-- Customizable context menu defined in the same file as the key bindings
+- Customizable context menu
 - Searchable config editor
 - Searchable input (shorcut keys) editor
-- C# and PowerShell Scripting
 - Global keyboard shortcuts
 - Extension API for .NET languages (C#, VB.NET and F#)
-- Portable, MS Store or WinGet download and installation
-- File history feature to log time and filename
 - Files can be enqueued from File Explorer
 
 
