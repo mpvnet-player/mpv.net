@@ -1,5 +1,5 @@
 
-# v7.1.0.0 Beta (2023-01-12)
+# v7.1.0.0 Beta (2024-01-12)
 
 - The menu item that shows profiles was moved into the menu item that lists profiles.
 - Fix geometry not working when used from mpv.conf and the conf editor.
@@ -11,7 +11,7 @@
 - New zhongfly libmpv build.
 
 
-# v7.0.0.6 Beta (2023-01-02)
+# v7.0.0.6 Beta (2024-01-02)
 
 - Improved backward compatibility with input.conf files created by old versions.
 
