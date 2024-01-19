@@ -1,4 +1,9 @@
 
+# v7.1.0.1 Beta (2024-??-??)
+
+- Chinese translation updated. Thanks to the translation team!
+
+
 # v7.1.0.0 Beta (2024-01-12)
 
 - The menu item that shows profiles was moved into the menu item that lists profiles.
