@@ -118,27 +118,16 @@ Screenshots
 
 #### Context Menu
 
-Context menu using dark mode.
-
-![Context Menu](docs/img/Menu.jpg)
+![Context Menu](docs/img/Menu.webp)
 
 
 #### Config Editor
 
 Searchable config editor as alternative to edit the conf file manually.
 
-![](docs/img/ConfEditor.png)
+![](docs/img/ConfEditor.webp)
 
 
 #### Terminal
 
-OSD console and status printed on the terminal.
-
-![](docs/img/Terminal.png)
-
-
-#### Input Editor
-
-Searchable key and mouse binding editor.
-
-![Input Editor](docs/img/InputEditor.webp)
+![](docs/img/Terminal.webp)
