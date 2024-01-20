@@ -1,7 +1,7 @@
 
 # v7.1.0.1 Beta (2024-??-??)
 
-- Chinese translation updated. Thanks to the translation team!
+- Chinese and Japanese translation updated. Thanks to the translation team!
 
 
 # v7.1.0.0 Beta (2024-01-12)
