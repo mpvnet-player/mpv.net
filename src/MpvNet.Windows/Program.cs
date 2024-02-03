@@ -101,9 +101,9 @@ static class Program
             else if (App.CommandLine.Contains("--o="))
             {
                 App.AutoLoadFolder = false;
-                Player.Init(IntPtr.Zero);
-                Player.ProcessCommandLineArgsPost();
-                Player.ProcessCommandLineFiles();
+                Player.Init(IntPtr.Zero, true);
+                CommandLine.ProcessCommandLineArgsPostInit();
+                CommandLine.ProcessCommandLineFiles();
                 Player.SetPropertyString("idle", "no");
                 Player.EventLoop();
                 Player.Destroy();

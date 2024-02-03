@@ -68,7 +68,30 @@ public partial class MainForm : Form
             GuiCommand.Current.WindowScaleNet += GuiCommand_WindowScaleNet;
             GuiCommand.Current.ShowMenu += GuiCommand_ShowMenu;
 
-            Init();
+            Player.Init(Handle, true);
+
+            // bool methods not working correctly
+            Player.ObserveProperty("window-maximized", PropChangeWindowMaximized);
+            Player.ObserveProperty("window-minimized", PropChangeWindowMinimized);
+
+            Player.ObservePropertyBool("border", PropChangeBorder);
+            Player.ObservePropertyBool("fullscreen", PropChangeFullscreen);
+            Player.ObservePropertyBool("keepaspect-window", value => Player.KeepaspectWindow = value);
+            Player.ObservePropertyBool("ontop", PropChangeOnTop);
+            Player.ObservePropertyBool("title-bar", PropChangeTitleBar);
+
+            Player.ObservePropertyString("sid", PropChangeSid);
+            Player.ObservePropertyString("aid", PropChangeAid);
+            Player.ObservePropertyString("vid", PropChangeVid);
+
+            Player.ObservePropertyString("title", PropChangeTitle);
+
+            Player.ObservePropertyInt("edition", PropChangeEdition);
+
+            Player.ObservePropertyDouble("window-scale", PropChangeWindowScale);
+
+            CommandLine.ProcessCommandLineArgsPostInit();
+            CommandLine.ProcessCommandLineFiles();
 
             _taskbarButtonCreatedMessage = RegisterWindowMessage("TaskbarButtonCreated");
 
@@ -143,34 +166,6 @@ public partial class MainForm : Form
     {
         if (pos == -1)
             SetTitle();
-    }
-
-    void Init()
-    {
-        Player.Init(Handle);
-
-        // bool methods not working correctly
-        Player.ObserveProperty("window-maximized", PropChangeWindowMaximized);
-        Player.ObserveProperty("window-minimized", PropChangeWindowMinimized);
-
-        Player.ObservePropertyBool("border", PropChangeBorder);
-        Player.ObservePropertyBool("fullscreen", PropChangeFullscreen);
-        Player.ObservePropertyBool("keepaspect-window", value => Player.KeepaspectWindow = value);
-        Player.ObservePropertyBool("ontop", PropChangeOnTop);
-        Player.ObservePropertyBool("title-bar", PropChangeTitleBar);
-        
-        Player.ObservePropertyString("sid", PropChangeSid);
-        Player.ObservePropertyString("aid", PropChangeAid);
-        Player.ObservePropertyString("vid", PropChangeVid);
-
-        Player.ObservePropertyString("title", PropChangeTitle);
-
-        Player.ObservePropertyInt("edition", PropChangeEdition);
-
-        Player.ObservePropertyDouble("window-scale", PropChangeWindowScale);
-
-        Player.ProcessCommandLineArgsPost();
-        Player.ProcessCommandLineFiles();
     }
 
     void PropChangeWindowScale(double scale)

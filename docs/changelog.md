@@ -1,10 +1,11 @@
 
-# v7.1.0.1 Beta (2024-??-??)
+# v7.1.1.0 (2024-02-03)
 
 - Chinese and Japanese translation updated. Thanks to the translation team!
+- Fix command line arguments being ingnored in some situations.
 
 
-# v7.1.0.0 Beta (2024-01-12)
+# v7.1.0.0 (2024-01-12)
 
 - The menu item that shows profiles was moved into the menu item that lists profiles.
 - Fix geometry not working when used from mpv.conf and the conf editor.

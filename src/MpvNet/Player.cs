@@ -66,7 +66,7 @@ public class MainPlayer : MpvClient
     public event Action<int>? PlaylistPosChanged;
     public event Action<Size>? VideoSizeChanged;
 
-    public void Init(IntPtr formHandle, bool processCommandLineArguments = true)
+    public void Init(IntPtr formHandle, bool processCommandLine)
     {
         App.ApplyShowMenuFix();
 
@@ -93,7 +93,10 @@ public class MainPlayer : MpvClient
         }
 
         if (formHandle != IntPtr.Zero)
+        {
+            SetPropertyString("force-window", "yes");
             SetPropertyLong("wid", formHandle.ToInt64());
+        }
 
         SetPropertyInt("osd-duration", 2000);
 
@@ -104,7 +107,6 @@ public class MainPlayer : MpvClient
         SetPropertyString("screenshot-directory", "~~desktop/");
         SetPropertyString("osd-playing-msg", "${media-title}");
         SetPropertyString("osc", "yes");
-        SetPropertyString("force-window", "yes");        
         SetPropertyString("config-dir", ConfigFolder);
         SetPropertyString("config", "yes");
         
@@ -113,8 +115,8 @@ public class MainPlayer : MpvClient
         if (!string.IsNullOrEmpty(UsedInputConfContent))
             SetPropertyString("input-conf", @"memory://" + UsedInputConfContent);
 
-        if (processCommandLineArguments)
-            ProcessCommandLineArgs();
+        if (processCommandLine)
+            CommandLine.ProcessCommandLineArgsPreInit();
 
         if (CommandLine.Contains("config-dir"))
         {
@@ -414,67 +416,6 @@ public class MainPlayer : MpvClient
     }
 
     public void SetBluRayTitle(int id) => LoadFiles(new[] { @"bd://" + id }, false, false);
-
-    public void ProcessCommandLineArgs()
-    {
-        foreach (var pair in CommandLine.Arguments)
-        {
-            if (pair.Name.EndsWith("-add") ||
-                pair.Name.EndsWith("-set") ||
-                pair.Name.EndsWith("-pre") ||
-                pair.Name.EndsWith("-clr") ||
-                pair.Name.EndsWith("-append") ||
-                pair.Name.EndsWith("-remove") ||
-                pair.Name.EndsWith("-toggle"))
-
-                continue;
-
-            ProcessProperty(pair.Name, pair.Value);
-
-            if (!App.ProcessProperty(pair.Name, pair.Value))
-                SetPropertyString(pair.Name, pair.Value);
-        }
-    }
-
-    public void ProcessCommandLineArgsPost()
-    {
-        foreach (var pair in CommandLine.Arguments)
-        {
-            if (pair.Name.EndsWith("-add"))
-                CommandV("change-list", pair.Name[..^4], "add", pair.Value);
-            else if (pair.Name.EndsWith("-set"))
-                CommandV("change-list", pair.Name[..^4], "set", pair.Value);
-            else if (pair.Name.EndsWith("-append"))
-                CommandV("change-list", pair.Name[..^7], "append", pair.Value);
-            else if (pair.Name.EndsWith("-pre"))
-                CommandV("change-list", pair.Name[..^4], "pre", pair.Value);
-            else if (pair.Name.EndsWith("-clr"))
-                CommandV("change-list", pair.Name[..^4], "clr", "");
-            else if (pair.Name.EndsWith("-remove"))
-                CommandV("change-list", pair.Name[..^7], "remove", pair.Value);
-            else if (pair.Name.EndsWith("-toggle"))
-                CommandV("change-list", pair.Name[..^7], "toggle", pair.Value);
-        }
-    }
-
-    public void ProcessCommandLineFiles()
-    {
-        List<string> files = new List<string>();
-
-        foreach (string arg in Environment.GetCommandLineArgs().Skip(1))
-            if (!arg.StartsWith("--") && (arg == "-" || arg.Contains("://") ||
-                arg.Contains(":\\") || arg.StartsWith("\\\\") || File.Exists(arg)))
-
-                files.Add(arg);
-
-        LoadFiles(files.ToArray(), !App.Queue, App.Queue);
-
-        if (App.CommandLine.Contains("--shuffle"))
-        {
-            Command("playlist-shuffle");
-            SetPropertyInt("playlist-pos", 0);
-        }
-    }
 
     public DateTime LastLoad;
 
