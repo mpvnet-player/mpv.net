@@ -2,7 +2,7 @@
 # v7.1.1.0 (2024-02-03)
 
 - Chinese and Japanese translation updated. Thanks to the translation team!
-- Fix command line arguments being ingnored in some situations.
+- Fix command line arguments being ignored in some situations.
 
 
 # v7.1.0.0 (2024-01-12)
