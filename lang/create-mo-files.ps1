@@ -25,7 +25,7 @@ foreach ($it in $PoFiles)
 
     if (-not (Test-Path $folder))
     {
-        New-Item -ItemType Directory -Path $folder
+        New-Item -ItemType Directory -Path $folder | Out-Null
     }
 
     $moPath = "$folder/mpvnet.mo"

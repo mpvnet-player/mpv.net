@@ -54,13 +54,13 @@ jobs:
       - name: Download libmpv # In principle, only update this binary file when significant feature changes occur in mpv/mpv.net
         shell: msys2 {0}
         run: |
-          wget -nv -O libmpv.7z https://github.com/zhongfly/mpv-winbuild/releases/download/2024-01-02-ab5b250/mpv-dev-x86_64-20240102-git-ab5b250.7z
+          wget -nv -O libmpv.7z https://github.com/zhongfly/mpv-winbuild/releases/download/2024-04-02-fe1de11/mpv-dev-x86_64-20240402-git-fe1de11.7z
           7z x -y libmpv.7z -olibmpv
           cp -f libmpv/libmpv-2.dll src/MpvNet.Windows/bin/Debug/ || true
       - name: Download MediaInfo
         shell: msys2 {0}
         run: |
-          wget -nv -O MediaInfo.7z https://mediaarea.net/download/binary/libmediainfo0/23.11/MediaInfo_DLL_23.11_Windows_x64_WithoutInstaller.7z
+          wget -nv -O MediaInfo.7z https://mediaarea.net/download/binary/libmediainfo0/24.03/MediaInfo_DLL_24.03_Windows_x64_WithoutInstaller.7z
           7z x -y MediaInfo.7z -oMediaInfo
           cp -f MediaInfo/MediaInfo.dll src/MpvNet.Windows/bin/Debug/ || true
       - name: Download mpvnet.com file

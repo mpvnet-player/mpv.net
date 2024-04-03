@@ -1,4 +1,9 @@
 
+# v7.1.1.1 Beta (????-??-??)
+
+- Korean translation added, Japanese translation fixed. Thanks to the translation team!
+- Auto build update.
+
 # v7.1.1.0 (2024-02-03)
 
 - Chinese and Japanese translation updated. Thanks to the translation team!

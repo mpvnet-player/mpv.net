@@ -15,6 +15,7 @@ public class WpfTranslator : ITranslator
         new("chinese-china", "zh-CN", "zh"),  // Chinese (Simplified)
         new("german", "de", "de"),
         new("japanese", "ja", "ja"),
+        new("korean", "ko", "ko"),
     };
 
     public string Gettext(string msgId)
