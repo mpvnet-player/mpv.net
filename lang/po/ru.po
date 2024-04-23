@@ -4,22 +4,19 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 # Translators:
-# YT H <dev@theYT.net>, 2024
+# jambickz, 2024
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-23 05:45+0200\n"
 "PO-Revision-Date: 2023-12-08 00:34+0000\n"
-"Last-Translator: YT H <dev@theYT.net>, 2024\n"
-"Language-Team: Korean (https://app.transifex.com/stax76/teams/179964/ko/)\n"
-"Language: ko\n"
+"Last-Translator: jambickz, 2024\n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:113
 msgid "+10%"
@@ -47,27 +44,27 @@ msgstr "50 %"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:184
 msgid "About mpv.net"
-msgstr "mpv.net 정보"
+msgstr "О mpv.net"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:16
 msgid "Add external audio files..."
-msgstr "외부 오디오 파일 추가..."
+msgstr "Добавить внешние аудиофайлы..."
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:17
 msgid "Add external subtitle files..."
-msgstr "외부 자막 파일 추가..."
+msgstr "Добавить внешние файлы субтитров..."
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:19
 msgid "Add files to playlist..."
-msgstr "재생 목록에 파일 추가..."
+msgstr "Добавить файлы в плейлист..."
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:20
 msgid "Add files/URLs to playlist from clipboard"
-msgstr "클립보드에서 파일/URL을 재생 목록에 추가"
+msgstr "Добавить файлы/URL в плейлист из буфера обмена"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:166
 msgid "Add mpv.net to Path environment variable"
-msgstr "Path 환경 변수에 mpv.net 추가"
+msgstr "Добавить mpv.net в переменную среды Path"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:85
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:86
@@ -75,121 +72,121 @@ msgstr "Path 환경 변수에 mpv.net 추가"
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:88
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:89
 msgid "Audio"
-msgstr "오디오"
+msgstr "Аудио"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:85
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:455
 msgid "Audio Device"
-msgstr "오디오 장치"
+msgstr "Аудиоустройство"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:194
 msgid "Backward"
-msgstr "뒤로"
+msgstr "Назад"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:148
 msgctxt "Move"
 msgid "Center"
-msgstr "중앙"
+msgstr "Центр"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:82
 msgid "Change Aspect Ratio"
-msgstr "화면 비율 변경"
+msgstr "Изменить соотношение сторон"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WPF\InputWindow.xaml.cs:116
 msgid "Changes will be available on next startup."
-msgstr "변경 사항은 다음 실행 시 적용됩니다."
+msgstr "Изменения будут доступны при следующем запуске."
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:51
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:353
 msgid "Chapter"
-msgstr "챕터"
+msgstr "Глава"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:390
 msgid "Clear List"
-msgstr "목록 비우기"
+msgstr "Очистить список"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:175
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:479
 msgid "Custom"
-msgstr "사용자 지정"
+msgstr "Пользовательский"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:70
 msgid "Decrease Brightness"
-msgstr "밝기 감소"
+msgstr "Уменьшить яркость"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:67
 msgid "Decrease Contrast"
-msgstr "대비 감소"
+msgstr "Уменьшить контраст"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:100
 msgid "Decrease Font Size"
-msgstr "글꼴 크기 축소"
+msgstr "Уменьшить размер шрифта"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:73
 msgid "Decrease Gamma"
-msgstr "감마 감소"
+msgstr "Уменьшить гамму"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:62
 msgid "Decrease Height"
-msgstr "높이 축소"
+msgstr "Уменьшить высоту"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:76
 msgid "Decrease Saturation"
-msgstr "채도 감소"
+msgstr "Уменьшить насыщенность"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:53
 msgid "Decrease Size"
-msgstr "크기 축소"
+msgstr "Уменьшить размер"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:88
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:95
 msgid "Delay +0.1"
-msgstr "지연 0.1초 증가"
+msgstr "Задержка +0.1"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:89
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:94
 msgid "Delay -0.1"
-msgstr "지연 0.1초 감소"
+msgstr "Задержка -0.1"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:116
 msgid "Double"
-msgstr "두배"
+msgstr "Удвоить"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:147
 msgctxt "Move"
 msgid "Down"
-msgstr "아래"
+msgstr "Вниз"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:108
 msgctxt "Volume"
 msgid "Down"
-msgstr "감소"
+msgstr "Уменьшить"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:158
 msgid "Edit input.conf"
-msgstr "input.conf 파일 편집"
+msgstr "Изменить input.conf"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:157
 msgid "Edit mpv.conf"
-msgstr "mpv.conf 파일 편집"
+msgstr "Изменить mpv.conf"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:137
 msgid "Enlarge"
-msgstr "크게"
+msgstr "Увеличить"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:261
 msgid "Error creating file associations."
-msgstr "파일 연결을 만드는 중 오류가 발생했습니다."
+msgstr "Ошибка создания ассоциаций файлов."
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:23
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:186
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:218
 msgid "Exit"
-msgstr "종료"
+msgstr "Выход"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:173
 msgid "Exit Watch Later"
-msgstr "다음에 이어 보기 설정하고 종료"
+msgstr "Выход и позже просмотреть"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:12
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:13
@@ -204,42 +201,42 @@ msgstr "다음에 이어 보기 설정하고 종료"
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:22
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:23
 msgid "File"
-msgstr "파일"
+msgstr "Файл"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:253
 msgid "File Explorer icons will refresh after process restart."
-msgstr "탐색기 아이콘은 프로세스를 다시 시작한 후 업데이트됩니다."
+msgstr "Иконки Проводника будут обновлены после перезапуска процесса."
 
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:258
 msgid "File associations were successfully created."
-msgstr "파일 연결을 생성했습니다."
+msgstr "Ассоциации файлов успешно созданы."
 
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:256
 msgid "File associations were successfully removed."
-msgstr "파일 연결을 제거했습니다."
+msgstr "Ассоциации файлов успешно удалены."
 
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:189
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:209
 msgid "Files/URLs were added to the playlist"
-msgstr "파일/URL을 재생 목록에 추가했습니다"
+msgstr "Файлы/URL добавлены в список воспроизведения"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:31
 msgid "First File"
-msgstr "첫 파일"
+msgstr "Первый файл"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:193
 msgid "Forward"
-msgstr "앞으로"
+msgstr "Вперед"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:136
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:206
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:207
 msgid "Fullscreen"
-msgstr "전체 화면"
+msgstr "Полноэкранный режим"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:115
 msgid "Half"
-msgstr "절반"
+msgstr "Половина"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:177
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:178
@@ -250,92 +247,93 @@ msgstr "절반"
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:183
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:184
 msgid "Help"
-msgstr "도움말"
+msgstr "Помощь"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:205
+#, fuzzy
 msgid "Ignore left mouse butten"
-msgstr "왼쪽 마우스 버튼 무시"
+msgstr "Игнорировать левую кнопку мыши"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:71
 msgid "Increase Brightness"
-msgstr "밝기 증가"
+msgstr "Увеличить яркость"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:68
 msgid "Increase Contrast"
-msgstr "대비 증가"
+msgstr "Увеличить контраст"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:101
 msgid "Increase Font Size"
-msgstr "글꼴 크기 증가"
+msgstr "Увеличить размер шрифта"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:74
 msgid "Increase Gamma"
-msgstr "감마 증가"
+msgstr "Увеличить гамму"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:63
 msgid "Increase Height"
-msgstr "높이 증가"
+msgstr "Увеличить высоту"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:77
 msgid "Increase Saturation"
-msgstr "채도 증가"
+msgstr "Увеличить насыщенность"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:54
 msgid "Increase Size"
-msgstr "크기 확대"
+msgstr "Увеличить размер"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:45
 msgid "Jump 30 sec backward"
-msgstr "30초 전으로 이동"
+msgstr "Перейти назад на 30 секунд"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:44
 msgid "Jump 30 sec forward"
-msgstr "30초 후로 이동"
+msgstr "Перейти вперед на 30 секунд"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:48
 msgid "Jump 5 min backward"
-msgstr "5분 전으로 이동"
+msgstr "Перейти назад на 5 минут"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:47
 msgid "Jump 5 min forward"
-msgstr "5분 후로 이동"
+msgstr "Перейти вперед на 5 минут"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:42
 msgid "Jump 5 sec backward"
-msgstr "5초 전으로 이동"
+msgstr "Перейти назад на 5 секунд"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:41
 msgid "Jump 5 sec forward"
-msgstr "5초 후로 이동"
+msgstr "Перейти вперед на 5 секунд"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:38
 msgid "Jump To Next Frame"
-msgstr "다음 프레임으로 이동"
+msgstr "Перейти к следующему кадру"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:39
 msgid "Jump To Previous Frame"
-msgstr "이전 프레임으로 이동"
+msgstr "Перейти к предыдущему кадру"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:32
 msgid "Last File"
-msgstr "마지막 파일"
+msgstr "Последний файл"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:144
 msgctxt "Move"
 msgid "Left"
-msgstr "왼쪽"
+msgstr "Влево"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:180
 msgid "Manual mpv"
-msgstr "mpv 설명서"
+msgstr "Руководство mpv"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:181
 msgid "Manual mpv.net"
-msgstr "mpv.net 설명서"
+msgstr "Руководство mpv.net"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:213
 msgid "Mark position for revert-seek"
-msgstr "복귀 탐색하기 위한 위치 표시"
+msgstr "Отметить позицию для возврата"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:103
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:126
@@ -348,7 +346,7 @@ msgstr "복귀 탐색하기 위한 위치 표시"
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:133
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:134
 msgid "More"
-msgstr "더 보기"
+msgstr "Дополнительно"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:144
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:145
@@ -356,29 +354,29 @@ msgstr "더 보기"
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:147
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:148
 msgid "Move"
-msgstr "이동"
+msgstr "Перемещение"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:60
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:98
 msgid "Move Down"
-msgstr "아래로 이동"
+msgstr "Сдвинуть вниз"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:56
 msgid "Move Left"
-msgstr "왼쪽으로 이동"
+msgstr "Сдвинуть влево"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:57
 msgid "Move Right"
-msgstr "오른쪽으로 이동"
+msgstr "Сдвинуть вправо"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:59
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:97
 msgid "Move Up"
-msgstr "위로 이동"
+msgstr "Сдвинуть вверх"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:110
 msgid "Mute"
-msgstr "음소거"
+msgstr "Без звука"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:28
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:29
@@ -404,39 +402,40 @@ msgstr "음소거"
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:50
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:51
 msgid "Navigate"
-msgstr "탐색"
+msgstr "Навигация"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:35
 msgid "Next Chapter"
-msgstr "다음 장"
+msgstr "Следующая глава"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:29
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:200
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:202
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:204
 msgid "Next File"
-msgstr "다음 파일"
+msgstr "Следующий файл"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:86
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:91
 msgid "Next Track"
-msgstr "다음 트랙"
+msgstr "Следующий трек"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:160
 msgid "Open Config Folder"
-msgstr "설정 폴더 열기"
+msgstr "Открыть папку конфигурации"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:14
+#, fuzzy
 msgid "Open DVD/Blu-ray Drive/Folder..."
-msgstr "DVD/Blu-ray 드라이브/폴더 열기..."
+msgstr "Открыть привод DVD/Blu-ray/Папку..."
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:12
 msgid "Open Files..."
-msgstr "파일 열기..."
+msgstr "Открыть файлы..."
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:13
 msgid "Open URL or file from clipboard"
-msgstr "클립보드의 URL이나 파일 열기"
+msgstr "Открыть URL или файл из буфера обмена"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:53
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:54
@@ -452,7 +451,7 @@ msgstr "클립보드의 URL이나 파일 열기"
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:64
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:65
 msgid "Pan & Scan"
-msgstr "팬과 스캔"
+msgstr "Панорамирование и масштабирование"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:25
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:188
@@ -460,87 +459,89 @@ msgstr "팬과 스캔"
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:190
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:191
 msgid "Play/Pause"
-msgstr "재생/일시 정지"
+msgstr "Воспроизведение/Пауза"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:25
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:26
 msgid "Playback"
-msgstr "재생"
+msgstr "Воспроизведение"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:36
 msgid "Previous Chapter"
-msgstr "이전 장"
+msgstr "Предыдущая глава"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:28
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:199
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:201
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:203
 msgid "Previous File"
-msgstr "이전 파일"
+msgstr "Предыдущий файл"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:152
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:428
 msgid "Profile"
-msgstr "프로파일"
+msgstr "Профиль"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:22
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:374
 msgid "Recent Files"
-msgstr "최근 파일"
+msgstr "Недавние файлы"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:162
 msgid "Register audio file associations"
-msgstr "오디오 파일 연결 등록"
+msgstr "Зарегистрировать ассоциации аудиофайлов"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:163
 msgid "Register image file associations"
-msgstr "이미지 파일 연결 등록"
+msgstr "Зарегистрировать ассоциации файлов изображений"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:161
+#, fuzzy
 msgid "Register video file associations"
-msgstr "비디오 파일 연결 등록"
+msgstr "Зарегистрировать ассоциации файлов Viuao"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:167
 msgid "Remove mpv.net from Path environment variable"
-msgstr "Path 환경 변수에서 mpv.net 제거"
+msgstr "Удалить mpv.net из переменной среды Path"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:65
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:118
 msgid "Reset"
-msgstr "초기화"
+msgstr "Сбросить"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:145
 msgctxt "Move"
 msgid "Right"
-msgstr "오른쪽"
+msgstr "Вправо"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:83
+#, fuzzy
 msgid "Rotate Video"
-msgstr "비디오 회전"
+msgstr "Повернуть Viuao"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:209
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:211
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:217
 msgid "Seek Backward"
-msgstr "되감기"
+msgstr "Перемотать назад"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:208
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:210
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:216
 msgid "Seek Forward"
-msgstr "빨리감기"
+msgstr "Перемотать вперед"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:215
 msgid "Seek to next subtitle"
-msgstr "다음 자막으로 이동"
+msgstr "Перейти к следующему субтитру"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:214
 msgid "Seek to previous subtitle"
-msgstr "이전 자막으로 이동"
+msgstr "Перейти к предыдущему субтитру"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:169
 msgid "Set/clear A-B loop points"
-msgstr "A-B 반복 지점 설정/해제"
+msgstr "Установить/очистить точки петли A-B"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:154
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:155
@@ -557,7 +558,7 @@ msgstr "A-B 반복 지점 설정/해제"
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:166
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:167
 msgid "Settings"
-msgstr "설정"
+msgstr "Настройки"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:161
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:162
@@ -567,87 +568,87 @@ msgstr "설정"
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:166
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:167
 msgid "Setup"
-msgstr "시스템 설정"
+msgstr "Настройка"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:127
 msgid "Show Audio Devices"
-msgstr "오디오 장치 표시"
+msgstr "Показать аудиоустройства"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:129
 msgid "Show Bindings"
-msgstr "키 설정 표시"
+msgstr "Показать привязки"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:128
 msgid "Show Commands"
-msgstr "명령어 표시"
+msgstr "Показать команды"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:154
 msgid "Show Config Editor"
-msgstr "구성 편집기 표시"
+msgstr "Показать редактор конфигурации"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:126
 msgid "Show Console"
-msgstr "콘솔 표시"
+msgstr "Показать консоль"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:133
 msgid "Show Decoders"
-msgstr "디코더 표시"
+msgstr "Показать декодеры"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:134
 msgid "Show Demuxers"
-msgstr "디멀티플렉서 표시"
+msgstr "Показать демуксеры"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:155
 msgid "Show Input Editor"
-msgstr "입력 편집기 표시"
+msgstr "Показать редактор ввода"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:131
 msgid "Show Keys"
-msgstr "키 표시"
+msgstr "Показать клавиши"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:124
 msgid "Show Media Info Message Box"
-msgstr "미디어 정보 메시지 상자 표시"
+msgstr "Показать информацию о медиа в окне сообщения"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:123
 msgid "Show Media Info On-Screen"
-msgstr "On-Screen 미디어 정보 표시"
+msgstr "Показать информацию о медиа на экране"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:187
 msgid "Show Menu"
-msgstr "메뉴 표시"
+msgstr "Показать меню"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:120
 msgid "Show Playlist"
-msgstr "재생목록 보기"
+msgstr "Показать плейлист"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:450
 msgid "Show Profiles"
-msgstr "프로파일 보기"
+msgstr "Показать профили"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:125
 msgid "Show Progress"
-msgstr "진행률 표시"
+msgstr "Показать прогресс"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:130
 msgid "Show Properties"
-msgstr "속성 표시"
+msgstr "Показать свойства"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:132
 msgid "Show Protocols"
-msgstr "프로토콜 표시"
+msgstr "Показать протоколы"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:138
 msgid "Shrink"
-msgstr "작게"
+msgstr "Уменьшить"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:171
 msgid "Shuffle Playlist"
-msgstr "재생 목록 순서 섞기"
+msgstr "Перемешать плейлист"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:1419
 msgid "Shutdown thread failed to complete within 10 seconds."
-msgstr "종료 스레드가 10초 이내에 완료되지 않았습니다."
+msgstr "Поток завершения не удалось завершить в течение 10 секунд."
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:112
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:113
@@ -657,12 +658,12 @@ msgstr "종료 스레드가 10초 이내에 완료되지 않았습니다."
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:117
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:118
 msgid "Speed"
-msgstr "속도"
+msgstr "Скорость"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:26
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:192
 msgid "Stop"
-msgstr "정지"
+msgstr "Остановить"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:91
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:92
@@ -678,72 +679,75 @@ msgstr "정지"
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:102
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:103
 msgid "Subtitle"
-msgstr "자막"
+msgstr "Субтитры"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:79
 msgid "Take Screenshot"
-msgstr "스크린샷 찍기"
+msgstr "Сделать снимок экрана"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:80
 msgid "Take Screenshot without subtitles"
-msgstr "자막 없이 스크린샷 찍기"
+msgstr "Сделать снимок экрана без субтитров"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:202
 msgid "The clipboard does not contain a valid URL or file."
-msgstr "클립보드에 유효한 URL 또는 파일이 포함되어 있지 않습니다."
+msgstr "Буфер обмена не содержит действительного URL ouar файла."
 
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:389
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:396
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:404
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:411
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:416
+#, fuzzy
 msgid "This feature was removed, but there are user scripts:"
-msgstr "이 기능은 삭제되었지만, 사용자 스크립트를 찾을 수 있습니다:"
+msgstr "Эта функция была удалена."
 
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:420
 msgid "This feature was removed."
-msgstr "이 기능은 삭제되었습니다."
+msgstr "Эта функция была удалена."
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:50
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:395
 msgid "Title"
-msgstr "타이틀"
+msgstr "Заголовок"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:149
 msgid "Toggle Border"
-msgstr "창 테두리 전환"
+msgstr "Переключить рамку"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:81
+#, fuzzy
 msgid "Toggle Deinterlace"
-msgstr "디인터레이스 전환"
+msgstr "Переключить деинтерлейс"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:172
+#, fuzzy
 msgid "Toggle Hardware Decoding"
-msgstr "하드웨어 디코딩 전환"
+msgstr "Переключить аппаратное ускорение кодирования"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:122
 msgid "Toggle OSC Visibility"
-msgstr "OSC 표시 전환"
+msgstr "Переключить видимость OSC"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:150
 msgid "Toggle On Top"
-msgstr "항상 위에 표시 전환"
+msgstr "Переключить поверх всех окон"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:121
 msgid "Toggle Statistics"
-msgstr "통계 전환"
+msgstr "Переключить статистику"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:92
 msgid "Toggle Visibility"
-msgstr "표시 전환"
+msgstr "Переключить видимость"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:170
 msgid "Toggle infinite file looping"
-msgstr "파일 무한 반복 전환"
+msgstr "Переключить бесконечное повторение файла"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:103
 msgid "Toggle overriding SSA/ASS styles with normal styles"
-msgstr "SSA/ASS 스타일을 일반 스타일로 덮어쓰기 전환"
+msgstr "Переключить замещение стилей SSA/ASS обычными стилями"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:169
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:170
@@ -751,30 +755,30 @@ msgstr "SSA/ASS 스타일을 일반 스타일로 덮어쓰기 전환"
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:172
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:173
 msgid "Tools"
-msgstr "도구"
+msgstr "Инструменты"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:105
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:291
 msgid "Track"
-msgstr "트랙"
+msgstr "Трек"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:212
 msgid "Undo previous (or marked) seek"
-msgstr "이전 (또는 표시된) 탐색을 취소"
+msgstr "Отменить предыдущий (или помеченный) поиск"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:164
 msgid "Unregister file associations"
-msgstr "파일 연결 등록 해제"
+msgstr "Отменить регистрацию ассоциаций файлов"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:146
 msgctxt "Move"
 msgid "Up"
-msgstr "위"
+msgstr "Вверх"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:107
 msgctxt "Volume"
 msgid "Up"
-msgstr "증가"
+msgstr "Увеличить"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:67
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:68
@@ -794,7 +798,7 @@ msgstr "증가"
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:82
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:83
 msgid "Video"
-msgstr "비디오"
+msgstr ""
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:120
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:121
@@ -812,32 +816,32 @@ msgstr "비디오"
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:133
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:134
 msgid "View"
-msgstr "보기"
+msgstr "Просмотр"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:107
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:108
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:109
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:110
 msgid "Volume"
-msgstr "볼륨"
+msgstr "Громкость"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:196
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:198
 msgid "Volume Down"
-msgstr "볼륨 감소"
+msgstr "Уменьшить громкость"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:195
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:197
 msgid "Volume Up"
-msgstr "볼륨 증가"
+msgstr "Увеличить громкость"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:177
 msgid "Website mpv"
-msgstr "mpv 웹사이트"
+msgstr "Веб-сайт mpv"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:178
 msgid "Website mpv.net"
-msgstr "mpv.net 웹사이트"
+msgstr "Веб-сайт mpv.net"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:136
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:137
@@ -855,7 +859,7 @@ msgstr "mpv.net 웹사이트"
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:149
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:150
 msgid "Window"
-msgstr "창"
+msgstr "Окно"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:137
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:138
@@ -865,7 +869,7 @@ msgstr "창"
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:142
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:143
 msgid "Zoom"
-msgstr "확대"
+msgstr "Увеличить"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:183
 msgid "awesome-mpv"
@@ -877,20 +881,24 @@ msgstr "editor_conf"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:358
 msgid "mpv.net is already in the Path environment variable."
-msgstr "mpv.net은 이미 Path 환경 변수에 있습니다."
+msgstr "mpv.net уже присутствует в переменной среды 'Path'."
 
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:375
 msgid "mpv.net was not found in the Path environment variable."
-msgstr "mpv.net을 Path 환경 변수에서 찾을 수 없습니다."
+msgstr "mpv.net не найден в переменной среды 'Path'."
 
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:366
+#, fuzzy
 msgid "mpv.net was successfully added to the Path environment variable."
-msgstr "mpv.net을 Path 환경 변수에 추가했습니다."
+msgstr "mpv.net успешно добавлен в переменную среды 'Path'."
 
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:384
 msgid "mpv.net was successfully removed from the Path environment variable."
-msgstr "mpv.net을 Path 환경 변수에서 제거했습니다."
+msgstr "mpv.net успешно удален из переменной среды 'Path'."
 
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\Properties\Resources.Designer.cs:114
 msgid "theme"
-msgstr "theme"
+msgstr "тема"
+
+#~ msgid "Viuao"
+#~ msgstr "Viuao"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-13 13:46+0100\n"
+"POT-Creation-Date: 2024-04-23 05:45+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -61,7 +61,7 @@ msgid "Add files/URLs to playlist from clipboard"
 msgstr ""
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:22
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:379
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:374
 msgid "Recent Files"
 msgstr ""
 
@@ -178,12 +178,12 @@ msgid "Jump 5 min backward"
 msgstr ""
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:50
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:400
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:395
 msgid "Title"
 msgstr ""
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:51
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:358
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:353
 msgid "Chapter"
 msgstr ""
 
@@ -323,7 +323,7 @@ msgid "Audio"
 msgstr ""
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:85
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:460
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:455
 msgid "Audio Device"
 msgstr ""
 
@@ -388,7 +388,7 @@ msgid "Toggle overriding SSA/ASS styles with normal styles"
 msgstr ""
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:105
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:296
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:291
 msgid "Track"
 msgstr ""
 
@@ -617,7 +617,7 @@ msgid "Toggle On Top"
 msgstr ""
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:152
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:433
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:428
 msgid "Profile"
 msgstr ""
 
@@ -721,7 +721,7 @@ msgid "Exit Watch Later"
 msgstr ""
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:175
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:484
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:479
 msgid "Custom"
 msgstr ""
 
@@ -875,15 +875,15 @@ msgstr ""
 msgid "theme"
 msgstr ""
 
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:395
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:390
 msgid "Clear List"
 msgstr ""
 
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:455
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:450
 msgid "Show Profiles"
 msgstr ""
 
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:1424
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:1419
 msgid "Shutdown thread failed to complete within 10 seconds."
 msgstr ""
 

@@ -1138,6 +1138,7 @@ option = chinese-china
 option = german
 option = japanese
 option = korean
+option = russian
 
 name = dark-mode
 file = mpvnet
