@@ -567,19 +567,19 @@ msgstr "Daralt"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:140
 msgid "50 %"
-msgstr "% 50"
+msgstr "50 %"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:141
 msgid "100 %"
-msgstr "% 100"
+msgstr "100 %"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:142
 msgid "200 %"
-msgstr "% 200"
+msgstr "200 %"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:143
 msgid "300 %"
-msgstr "% 300"
+msgstr "300 %"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:144
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:145
