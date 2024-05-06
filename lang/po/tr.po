@@ -336,7 +336,7 @@ msgstr "Ses Aygıtı"
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:86
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:91
 msgid "Next Track"
-msgstr "Sonraki Parça"
+msgstr "Sonraki Ses Parçası"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:88
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:95
@@ -396,7 +396,7 @@ msgstr "SSA/ASS stillerini normal stillerle geçersiz kıl"
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:105
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:296
 msgid "Track"
-msgstr "Parça"
+msgstr "Ses Parçası"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:107
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:108
