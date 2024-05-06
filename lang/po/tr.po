@@ -1,0 +1,899 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+# Translators:
+# DogancanYr, 2024
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-13 13:46+0100\n"
+"PO-Revision-Date: 2024-05-06 HO:MI+ZONE\n"
+"Last-Translator: DogancanYr <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: TR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Language: tr_TR\n"
+"X-Source-Language: en_EN\n"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:12
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:13
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:14
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:15
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:16
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:17
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:18
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:19
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:20
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:21
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:22
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:23
+msgid "File"
+msgstr "Dosya"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:12
+msgid "Open Files..."
+msgstr "Dosyaları Aç..."
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:13
+msgid "Open URL or file from clipboard"
+msgstr "URL'yi veya dosyayı panodan açın"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:14
+msgid "Open DVD/Blu-ray Drive/Folder..."
+msgstr "DVD/Blu-ray Sürücüsü/Klasörü Aç..."
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:16
+msgid "Add external audio files..."
+msgstr "Harici ses dosyaları ekle..."
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:17
+msgid "Add external subtitle files..."
+msgstr "Harici altyazı dosyaları ekle..."
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:19
+msgid "Add files to playlist..."
+msgstr "Dosyaları çalma listesine ekle..."
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:20
+msgid "Add files/URLs to playlist from clipboard"
+msgstr "Panodan oynatma listesine dosya/URL ekle"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:22
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:379
+msgid "Recent Files"
+msgstr "Son Kullanılan Dosyalar"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:23
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:186
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:218
+msgid "Exit"
+msgstr "Çıkış"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:25
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:26
+msgid "Playback"
+msgstr "Kayıttan yürütme"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:25
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:188
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:189
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:190
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:191
+msgid "Play/Pause"
+msgstr "Oynat/Duraklat"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:26
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:192
+msgid "Stop"
+msgstr "Durdur"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:28
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:29
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:30
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:31
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:32
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:34
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:35
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:36
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:37
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:38
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:39
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:40
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:41
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:42
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:43
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:44
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:45
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:46
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:47
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:48
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:49
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:50
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:51
+msgid "Navigate"
+msgstr "Gezin"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:28
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:199
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:201
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:203
+msgid "Previous File"
+msgstr "Önceki Dosya"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:29
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:200
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:202
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:204
+msgid "Next File"
+msgstr "Sonraki Dosya"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:31
+msgid "First File"
+msgstr "İlk Dosya"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:32
+msgid "Last File"
+msgstr "Son Dosya"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:35
+msgid "Next Chapter"
+msgstr "Sonraki Bölüm"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:36
+msgid "Previous Chapter"
+msgstr "Önceki Bölüm"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:38
+msgid "Jump To Next Frame"
+msgstr "Sonraki Kare"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:39
+msgid "Jump To Previous Frame"
+msgstr "Önceki Kare"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:41
+msgid "Jump 5 sec forward"
+msgstr "5 saniye ileri"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:42
+msgid "Jump 5 sec backward"
+msgstr "5 saniye geriye"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:44
+msgid "Jump 30 sec forward"
+msgstr "30 saniye ileri "
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:45
+msgid "Jump 30 sec backward"
+msgstr "30 saniye geri"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:47
+msgid "Jump 5 min forward"
+msgstr "5 dakika ileri"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:48
+msgid "Jump 5 min backward"
+msgstr "5 dakika geri"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:50
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:400
+msgid "Title"
+msgstr "Başlık"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:51
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:358
+msgid "Chapter"
+msgstr "Bölüm"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:53
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:54
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:55
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:56
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:57
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:58
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:59
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:60
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:61
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:62
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:63
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:64
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:65
+msgid "Pan & Scan"
+msgstr "Videoyu Sıkıştır"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:53
+msgid "Decrease Size"
+msgstr "Boyutu Küçült"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:54
+msgid "Increase Size"
+msgstr "Boyutunu Büyüt"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:56
+msgid "Move Left"
+msgstr "Sola Taşı"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:57
+msgid "Move Right"
+msgstr "Sağa Taşı"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:59
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:97
+msgid "Move Up"
+msgstr "Yukarı Taşı"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:60
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:98
+msgid "Move Down"
+msgstr "Aşağı Taşı"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:62
+msgid "Decrease Height"
+msgstr "Yüksekliği Azalt"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:63
+msgid "Increase Height"
+msgstr "Yüksekliği Artır"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:65
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:118
+msgid "Reset"
+msgstr "Sıfırla"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:67
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:68
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:69
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:70
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:71
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:72
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:73
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:74
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:75
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:76
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:77
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:78
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:79
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:80
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:81
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:82
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:83
+msgid "Video"
+msgstr "Video"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:67
+msgid "Decrease Contrast"
+msgstr "Karşıtlığı Azalt"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:68
+msgid "Increase Contrast"
+msgstr "Karşıtlığı Arttır"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:70
+msgid "Decrease Brightness"
+msgstr "Parlaklığı Azalt"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:71
+msgid "Increase Brightness"
+msgstr "Parlaklığını Artır"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:73
+msgid "Decrease Gamma"
+msgstr "Gamayı Azalt"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:74
+msgid "Increase Gamma"
+msgstr "Gamayı Artır"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:76
+msgid "Decrease Saturation"
+msgstr "Doygunluğu Azalt"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:77
+msgid "Increase Saturation"
+msgstr "Doygunluğu Artır"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:79
+msgid "Take Screenshot"
+msgstr "Ekran Görüntüsü Al"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:80
+msgid "Take Screenshot without subtitles"
+msgstr "Ekran görüntüsünü altyazısız al"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:81
+msgid "Toggle Deinterlace"
+msgstr "Taramasızlaştırmayı göster"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:82
+msgid "Change Aspect Ratio"
+msgstr "Çerçeve Oranını Değiştir"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:83
+msgid "Rotate Video"
+msgstr "Videoyu Döndür"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:85
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:86
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:87
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:88
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:89
+msgid "Audio"
+msgstr "Ses"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:85
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:460
+msgid "Audio Device"
+msgstr "Ses Aygıtı"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:86
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:91
+msgid "Next Track"
+msgstr "Sonraki Parça"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:88
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:95
+msgid "Delay +0.1"
+msgstr "Gecikme +0.1"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:89
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:94
+msgid "Delay -0.1"
+msgstr "Gecikme -0.1"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:91
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:92
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:93
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:94
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:95
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:96
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:97
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:98
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:99
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:100
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:101
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:102
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:103
+msgid "Subtitle"
+msgstr "Altyazı"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:92
+msgid "Toggle Visibility"
+msgstr "Görünürlüğü Göster"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:100
+msgid "Decrease Font Size"
+msgstr "Yazı Boyutunu Küçült"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:101
+msgid "Increase Font Size"
+msgstr "Yazı Boyutunu Büyüt"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:103
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:126
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:127
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:128
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:129
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:130
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:131
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:132
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:133
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:134
+msgid "More"
+msgstr "Daha Fazla"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:103
+msgid "Toggle overriding SSA/ASS styles with normal styles"
+msgstr "SSA/ASS stillerini normal stillerle geçersiz kıl"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:105
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:296
+msgid "Track"
+msgstr "Parça"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:107
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:108
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:109
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:110
+msgid "Volume"
+msgstr "Sayı"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:107
+msgctxt "Volume"
+msgid "Up"
+msgstr "Yukarı"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:108
+msgctxt "Volume"
+msgid "Down"
+msgstr "Aşağı"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:110
+msgid "Mute"
+msgstr "Sessize al"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:112
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:113
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:114
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:115
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:116
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:117
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:118
+msgid "Speed"
+msgstr "Hız"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:112
+msgid "-10%"
+msgstr "-10%"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:113
+msgid "+10%"
+msgstr "+10%"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:115
+msgid "Half"
+msgstr "Yarım"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:116
+msgid "Double"
+msgstr "İkile"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:120
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:121
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:122
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:123
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:124
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:125
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:126
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:127
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:128
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:129
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:130
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:131
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:132
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:133
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:134
+msgid "View"
+msgstr "Görünüm"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:120
+msgid "Show Playlist"
+msgstr "Çalma Listesini Göster"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:121
+msgid "Toggle Statistics"
+msgstr "İstatistikleri Göster"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:122
+msgid "Toggle OSC Visibility"
+msgstr "OSC Görünürlüğünü Göster"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:123
+msgid "Show Media Info On-Screen"
+msgstr "Medya Bilgilerini Ekranda Göster"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:124
+msgid "Show Media Info Message Box"
+msgstr "Medya Bilgisi Mesaj Kutusunu Göster"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:125
+msgid "Show Progress"
+msgstr "İlerlemeyi Göster"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:126
+msgid "Show Console"
+msgstr "Konsolu Göster"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:127
+msgid "Show Audio Devices"
+msgstr "Ses Aygıtlarını Göster"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:128
+msgid "Show Commands"
+msgstr "Komutları Göster"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:129
+msgid "Show Bindings"
+msgstr "Bağlamaları Göster"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:130
+msgid "Show Properties"
+msgstr "Özellikleri Göster"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:131
+msgid "Show Keys"
+msgstr "Anahtarları Göster"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:132
+msgid "Show Protocols"
+msgstr "Protokolleri Göster"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:133
+msgid "Show Decoders"
+msgstr "Kod Çözücüleri Göster"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:134
+msgid "Show Demuxers"
+msgstr "Kod Çözücüleri Göster"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:136
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:137
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:138
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:139
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:140
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:141
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:142
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:143
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:144
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:145
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:146
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:147
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:148
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:149
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:150
+msgid "Window"
+msgstr "Pencere"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:136
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:206
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:207
+msgid "Fullscreen"
+msgstr "Tam Ekran"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:137
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:138
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:139
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:140
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:141
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:142
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:143
+msgid "Zoom"
+msgstr "Büyüt"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:137
+msgid "Enlarge"
+msgstr "Genişlet"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:138
+msgid "Shrink"
+msgstr "Daralt"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:140
+msgid "50 %"
+msgstr "% 50"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:141
+msgid "100 %"
+msgstr "% 100"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:142
+msgid "200 %"
+msgstr "% 200"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:143
+msgid "300 %"
+msgstr "% 300"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:144
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:145
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:146
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:147
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:148
+msgid "Move"
+msgstr "Hareket Ettir"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:144
+msgctxt "Move"
+msgid "Left"
+msgstr "Sol"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:145
+msgctxt "Move"
+msgid "Right"
+msgstr "Sağ"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:146
+msgctxt "Move"
+msgid "Up"
+msgstr "Yukarı"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:147
+msgctxt "Move"
+msgid "Down"
+msgstr "Aşağı"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:148
+msgctxt "Move"
+msgid "Center"
+msgstr "Merkez"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:149
+msgid "Toggle Border"
+msgstr "Kenarlığı Göster"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:150
+msgid "Toggle On Top"
+msgstr "Üstte Göster"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:152
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:433
+msgid "Profile"
+msgstr "Profil"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:154
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:155
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:156
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:157
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:158
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:159
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:160
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:161
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:162
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:163
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:164
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:165
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:166
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:167
+msgid "Settings"
+msgstr "Ayarlar"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:154
+msgid "Show Config Editor"
+msgstr "Yapılandırma Düzenleyiciyi Göster"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:155
+msgid "Show Input Editor"
+msgstr "Giriş Düzenleyicisini Göster"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:157
+msgid "Edit mpv.conf"
+msgstr "Mpv.conf dosyasını düzenle"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:158
+msgid "Edit input.conf"
+msgstr "Input.conf dosyasını düzenle"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:160
+msgid "Open Config Folder"
+msgstr "Yapılandırma Klasörünü Aç"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:161
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:162
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:163
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:164
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:165
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:166
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:167
+msgid "Setup"
+msgstr "Kurulum"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:161
+msgid "Register video file associations"
+msgstr "Video dosyaları ile ilişkilendir"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:162
+msgid "Register audio file associations"
+msgstr "Ses dosyaları ile ilişkilendir"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:163
+msgid "Register image file associations"
+msgstr "Görüntü dosyaları ile ilişkilendir"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:164
+msgid "Unregister file associations"
+msgstr "Dosya ilişkilendirmelerinin kaldır"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:166
+msgid "Add mpv.net to Path environment variable"
+msgstr "Mpv.net'i Path ortam değişkenine ekleyin"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:167
+msgid "Remove mpv.net from Path environment variable"
+msgstr "Mpv.net'i Path ortam değişkeninden kaldır"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:169
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:170
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:171
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:172
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:173
+msgid "Tools"
+msgstr "Araçlar"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:169
+msgid "Set/clear A-B loop points"
+msgstr "A - B döngü noktalarını ayarla/temizle"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:170
+msgid "Toggle infinite file looping"
+msgstr "Sonsuz dosya döngüsünü göster"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:171
+msgid "Shuffle Playlist"
+msgstr "Çalma Listesini Karıştır"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:172
+msgid "Toggle Hardware Decoding"
+msgstr "Donanım Kod Çözmeyi Göster"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:173
+msgid "Exit Watch Later"
+msgstr "Daha Sonra İzle'den Çık"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:175
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:484
+msgid "Custom"
+msgstr "Özel"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:177
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:178
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:179
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:180
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:181
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:182
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:183
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:184
+msgid "Help"
+msgstr "Yardım"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:177
+msgid "Website mpv"
+msgstr "İnternet sayfası mpv"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:178
+msgid "Website mpv.net"
+msgstr "İnternet sayfası mpv.net"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:180
+msgid "Manual mpv"
+msgstr "Manuel mpv"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:181
+msgid "Manual mpv.net"
+msgstr "Manuel mpv.net"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:183
+msgid "awesome-mpv"
+msgstr "müthiş-mpv"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:184
+msgid "About mpv.net"
+msgstr "Mpv.net hakkında"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:187
+msgid "Show Menu"
+msgstr "Menüyü göster"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:193
+msgid "Forward"
+msgstr "İleri"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:194
+msgid "Backward"
+msgstr "Geri"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:195
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:197
+msgid "Volume Up"
+msgstr "Sesi Aç"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:196
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:198
+msgid "Volume Down"
+msgstr "Sesi Kıs"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:205
+msgid "Ignore left mouse butten"
+msgstr "Sol fare düğmesini görmezden gel"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:208
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:210
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:216
+msgid "Seek Forward"
+msgstr "İleri Git"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:209
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:211
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:217
+msgid "Seek Backward"
+msgstr "Geri Git"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:212
+msgid "Undo previous (or marked) seek"
+msgstr "Önceki (veya işaretli) aramayı geri al"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:213
+msgid "Mark position for revert-seek"
+msgstr "Geri arama için konumu işaretle"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:214
+msgid "Seek to previous subtitle"
+msgstr "Önceki altyazıya git"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:215
+msgid "Seek to next subtitle"
+msgstr "Sonraki altyazıya git"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:189
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:209
+msgid "Files/URLs were added to the playlist"
+msgstr "Dosyalar/URL'ler oynatma listesine eklendi"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:202
+msgid "The clipboard does not contain a valid URL or file."
+msgstr "Pano geçerli bir URL veya dosya içermiyor."
+
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:253
+msgid "File Explorer icons will refresh after process restart."
+msgstr ""
+"İşlem yeniden başlatıldıktan sonra Dosya Gezgini simgeleri yenilenecektir."
+
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:256
+msgid "File associations were successfully removed."
+msgstr "Dosya ilişkilendirmeleri başarıyla kaldırıldı."
+
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:258
+msgid "File associations were successfully created."
+msgstr "Dosya ilişkilendirmeleri başarıyla oluşturuldu."
+
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:261
+msgid "Error creating file associations."
+msgstr "Dosya ilişkilendirmeleri oluşturulurken hata oluştu."
+
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:358
+msgid "mpv.net is already in the Path environment variable."
+msgstr "mpv.net zaten Path ortam değişkeninde."
+
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:366
+msgid "mpv.net was successfully added to the Path environment variable."
+msgstr "mpv.net Path ortam değişkenine başarıyla eklendi."
+
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:375
+msgid "mpv.net was not found in the Path environment variable."
+msgstr "Path ortam değişkeninde mpv.net bulunamadı."
+
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:384
+msgid "mpv.net was successfully removed from the Path environment variable."
+msgstr "mpv.net Path ortam değişkeninden başarıyla kaldırıldı."
+
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:389
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:396
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:404
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:411
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:416
+msgid "This feature was removed, but there are user scripts:"
+msgstr "Bu özellik kaldırıldı, ancak kullanıcı komut dosyaları var:"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:420
+msgid "This feature was removed."
+msgstr "Bu özellik kaldırıldı."
+
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\Properties\Resources.Designer.cs:79
+msgid "editor_conf"
+msgstr "editor_conf"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\Properties\Resources.Designer.cs:114
+msgid "theme"
+msgstr "tema"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:395
+msgid "Clear List"
+msgstr "Listeyi Temizle"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:455
+msgid "Show Profiles"
+msgstr "Profilleri Göster"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:1424
+msgid "Shutdown thread failed to complete within 10 seconds."
+msgstr "Kapatma dizisi 10 saniye içinde tamamlanamadı."
+
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WPF\InputWindow.xaml.cs:116
+msgid "Changes will be available on next startup."
+msgstr "Değişiklikler bir sonraki başlangıçta kullanılabilir olacaktır."
