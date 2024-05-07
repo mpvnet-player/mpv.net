@@ -509,7 +509,7 @@ msgstr "Özellikleri Göster"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:131
 msgid "Show Keys"
-msgstr "Anahtarları Göster"
+msgstr "Kısayolları Göster"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:132
 msgid "Show Protocols"
