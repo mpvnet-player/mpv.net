@@ -27,7 +27,7 @@ Table of contents
 * [Environment Variables](#environment-variables)
 * [user-data](#user-data)
 * [Context Menu Commands](#context-menu)
-
+* [Contributing](#contributing)
 
 About
 -----
@@ -476,7 +476,7 @@ Enable this only when a developer asks for it. Default: no
 User interface display language.
 mpv.net must be restarted after a change.
 
-Interested joining our translation team?:  
+Work on the translation is done with transifex:  
 https://app.transifex.com/stax76/teams/
 
 #### --dark-mode=\<value\>
@@ -1438,3 +1438,11 @@ Exits mpv.net and remembers the position in the file using the following command
 `quit-watch-later`
 
 [quit-watch-later command](https://mpv.io/manual/master/#command-interface-quit-watch-later)
+
+
+Contributing
+------------
+
+Work on the translation is done with transifex:
+
+https://app.transifex.com/stax76/teams/

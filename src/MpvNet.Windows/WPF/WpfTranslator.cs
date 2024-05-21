@@ -17,6 +17,7 @@ public class WpfTranslator : ITranslator
         new("japanese", "ja", "ja"),
         new("korean", "ko", "ko"),
         new("russian", "ru", "ru"),
+        new("turkish", "tr", "tr"),
     };
 
     public string Gettext(string msgId)
