@@ -50,7 +50,7 @@ jobs:
           msbuild MpvNet.sln /m /p:Configuration=Debug
       - name: Create .mo files for localization
         shell: pwsh
-        run: Install-Package Gettext.Tools -Force; .\lang\create-mo-files.ps1
+        run: Install-Package Gettext.Tools -Force; $env:Path = ((Get-Package Gettext.Tools).Source | Split-Path) + '\tools\bin;' + $env:Path; .\lang\create-mo-files.ps1
       - name: Download libmpv # In principle, only update this binary file when significant feature changes occur in mpv/mpv.net
         shell: msys2 {0}
         run: |

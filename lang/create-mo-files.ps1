@@ -14,12 +14,6 @@ foreach ($it in $PoFiles)
     }
 
     $moPath = "$folder/mpvnet.mo"
-
-    if (-not (Test-Path $moPath))
-    {
-        New-Item -ItemType File -Path $moPath | Out-Null
-    }
-
     msgfmt --output-file=$moPath $it.FullName
     if ($LastExitCode) { throw $LastExitCode }
     $moPath
