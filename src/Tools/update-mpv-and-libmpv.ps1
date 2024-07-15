@@ -1,21 +1,14 @@
 
 <#
 
-This script updates mpv and libmpv using github.com/zhongfly/mpv-winbuild
-
-Two positional command line arguments need to be passed into the script:
-
-1. The directory containing libmpv to be updated.
-2. The directory containing mpv to be updated.
-
-To skip one of both pass 'no' instead of the path.
-
-Requires 7zip being installed at 'C:\Program Files\7-Zip\7z.exe'
+Updates mpv and libmpv used by mpv.net.
+It uses the Path environment variable to find mpv and mpv.net.
+Files are downloaded from github.com/zhongfly/mpv-winbuild.
+Requires 7zip being installed at 'C:\Program Files\7-Zip\7z.exe'.
 
 #>
 
-$zip7Path = 'C:\Program Files\7-Zip\7z.exe'
-$ScriptArgs = $args
+$Zip7Path = 'C:\Program Files\7-Zip\7z.exe'
 
 # Stop when the first error occurs
 $ErrorActionPreference = 'Stop'
@@ -42,13 +35,12 @@ function Download($pattern) {
 function Unpack($archieveFile, $outputRootDir) {
     $outputDir = Join-Path $outputRootDir $archieveFile.BaseName
     if (Test-Path $outputDir) { Remove-Item $outputDir -Recurse }
-    $process = Start-Process (Test $zip7Path) @('x', $archieveFile.FullName, "-o$outputDir") -NoNewWindow -Wait
+    $process = Start-Process (Test $Zip7Path) @('x', $archieveFile.FullName, "-o$outputDir") -NoNewWindow -Wait
     if ($process.ExitCode) { throw $process.ExitCode }
     return Test $outputDir
 }
 
-function UpdateLibmpv {
-    $targetFolder = $ScriptArgs[0]
+function UpdateLibmpv($targetFolder) {
     if ($targetFolder -eq 'no') { return }
     $archiveFile = Get-Item (Download "mpv-dev-x86_64-[0-9]{8}")
     $archiveDir =  Unpack $archiveFile $env:TEMP
@@ -57,17 +49,43 @@ function UpdateLibmpv {
     Remove-Item $archiveDir -Recurse
 }
 
-function UpdateMpv() {
-    $targetFolder = $ScriptArgs[1]
+function UpdateMpv($targetFolder) {
     if ($targetFolder -eq 'no') { return }
     $archiveFile = Get-Item (Download "mpv-x86_64-[0-9]{8}")
     $archiveDir =  Unpack $archiveFile $env:TEMP
-    Copy-Item "$archiveDir\mpv\*" $targetFolder -Force -Recurse
+    Copy-Item "$archiveDir\*" $targetFolder -Force -Recurse
     Remove-Item $archiveFile.FullName
     Remove-Item $archiveDir -Recurse
 }
 
-UpdateLibmpv
-UpdateMpv
+# Update mpv
 
-Write-Host 'Script finished successfully' -ForegroundColor Green
+$MpvLocations = @() + (cmd /c where mpv.exe)
+
+if ($MpvLocations.Length -gt 0) {
+    $mpvDir = Split-Path ($MpvLocations[0])
+    ''; 'mpv found at:'; $mpvDir
+    $result = Read-Host 'Update mpv? [y/n]'
+
+    if ($result -eq 'y') {
+        UpdateMpv $mpvDir
+    }
+} else {
+    'mpv location not found.'
+}
+
+# Update libmpv used by mpv.net
+
+$MpvNetLocations = @() + (cmd /c where mpvnet.exe)
+
+if ($MpvNetLocations.Length -gt 0) {
+    $mpvNetDir = Split-Path ($MpvNetLocations[0])
+    ''; 'mpv.net found at:'; $mpvNetDir
+    $result = Read-Host 'Update libmpv? [y/n]'
+
+    if ($result -eq 'y') {
+        UpdateLibmpv $mpvNetDir
+    }
+} else {
+    'mpv.net location not found.'
+}

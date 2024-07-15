@@ -117,20 +117,31 @@ public static class InputHelp
                 new (_("Speed"), "-"),
                 new (_("Speed"), _("Reset"), "set speed 1", "BS"),
 
-                new (_("View"), _("Show Playlist"), "script-message-to mpvnet show-playlist", "F8"),
                 new (_("View"), _("Toggle Statistics"), "script-binding stats/display-stats-toggle", "t"),
                 new (_("View"), _("Toggle OSC Visibility"), "script-binding osc/visibility", "Del"),
                 new (_("View"), _("Show Media Info On-Screen"),   "script-message-to mpvnet show-media-info osd", "i"),
                 new (_("View"), _("Show Media Info Message Box"), "script-message-to mpvnet show-media-info msgbox", "Ctrl+m"),
                 new (_("View"), _("Show Progress"), "show-progress", "p"),
+
+                new (_("View") + " > " + _("On Screen Menu"), _("Playlist"), "script-binding select/select-playlist", "F8"),
+                new (_("View") + " > " + _("On Screen Menu"), _("Bindings"), "script-binding select/select-binding", "F1"),
+                new (_("View") + " > " + _("On Screen Menu"), _("Properties"), "script-binding select/show-properties", "F3"),
+                new (_("View") + " > " + _("On Screen Menu"), _("Chapters"), "script-binding select/select-chapter", "Alt+c"),
+                new (_("View") + " > " + _("On Screen Menu"), _("Tracks"), "script-binding select/select-track", "Alt+t"),
+                new (_("View") + " > " + _("On Screen Menu"), _("Audio Tracks"), "script-binding select/select-aid"),
+                new (_("View") + " > " + _("On Screen Menu"), _("Subtitle Tracks"), "script-binding select/select-sid"),
+                new (_("View") + " > " + _("On Screen Menu"), _("Secondary Subtitle"), "script-binding select/select-secondary-sid", "Alt+F2"),
+                new (_("View") + " > " + _("On Screen Menu"), _("Video Tracks"), "script-binding select/select-vid", "Alt+v"),
+                new (_("View") + " > " + _("On Screen Menu"), _("Subtitle Lines"), "script-binding select/select-subtitle-line", "Alt+l"),
+                new (_("View") + " > " + _("On Screen Menu"), _("Audio Devices"), "script-binding select/select-audio-device", "Alt+d"),
+
                 new (_("View") + " > " + _("More"), _("Show Console"), "script-binding console/enable", "`"),
                 new (_("View") + " > " + _("More"), _("Show Audio Devices"), "script-message-to mpvnet show-audio-devices"),
                 new (_("View") + " > " + _("More"), _("Show Commands"), "script-message-to mpvnet show-commands", "F2"),
                 new (_("View") + " > " + _("More"), _("Show Bindings"), "script-message-to mpvnet show-bindings"),
-                new (_("View") + " > " + _("More"), _("Show Properties"), "script-message-to mpvnet show-properties", "F3"),
                 new (_("View") + " > " + _("More"), _("Show Keys"), "script-message-to mpvnet show-keys", "Alt+k"),
                 new (_("View") + " > " + _("More"), _("Show Protocols"), "script-message-to mpvnet show-protocols", "Alt+p"),
-                new (_("View") + " > " + _("More"), _("Show Decoders"), "script-message-to mpvnet show-decoders", "Alt+d"),
+                new (_("View") + " > " + _("More"), _("Show Decoders"), "script-message-to mpvnet show-decoders"),
                 new (_("View") + " > " + _("More"), _("Show Demuxers"), "script-message-to mpvnet show-demuxers"),
 
                 new (_("Window"), _("Fullscreen"), "cycle fullscreen", "Enter"),
@@ -216,8 +227,6 @@ public static class InputHelp
                 new ("", "", "no-osd seek  5", "Ctrl+Wheel_Up", _("Seek Forward")),
                 new ("", "", "no-osd seek -5", "Ctrl+Wheel_Down", _("Seek Backward")),
                 new ("", "", "quit", "Power", _("Exit")),
-
-                //new (_("Command Palette"), _("Commands"), "script-message-to mpvnet show-command-palette", "F1"),
             };
 
         return bindings;
@@ -411,54 +420,6 @@ public static class InputHelp
 
         defaults.AddRange(conf);
         return defaults;
-    }
-
-    // only used by dead command palette
-    public static List<Binding> GetBindingsFromContent(string content)
-    {
-        var bindings = new List<Binding>();
-
-        if (!string.IsNullOrEmpty(content))
-        {
-            foreach (string line in content.Split('\r', '\n'))
-            {
-                string value = line.Trim();
-
-                if (value.StartsWith("#"))
-                    continue;
-
-                if (!value.Contains(' '))
-                    continue;
-
-                Binding binding = new Binding();
-                binding.Input = value[..value.IndexOf(" ")];
-
-                if (binding.Input == "_")
-                    binding.Input = "";
-
-                value = value[(value.IndexOf(" ") + 1)..];
-
-                if (value.Contains(App.MenuSyntax))
-                {
-                    binding.Comment = value[(value.IndexOf(App.MenuSyntax) + App.MenuSyntax.Length)..].Trim();
-                    value = value[..value.IndexOf(App.MenuSyntax)];
-
-                    if (binding.Comment.Contains(';'))
-                        binding.Comment = binding.Comment[(binding.Comment.IndexOf(";") + 1)..].Trim();
-                }
-
-                binding.Command = value.Trim();
-
-                if (binding.Command == "")
-                    continue;
-
-                if (binding.Command.ToLower() == "ignore")
-                    binding.Command = "";
-
-                bindings.Add(binding);
-            }
-        }
-        return bindings;
     }
 
     public static Dictionary<string, Binding> GetActiveBindings(List<Binding> bindings)

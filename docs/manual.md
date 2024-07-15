@@ -313,15 +313,6 @@ Shows media info with raw property names.
 ### show-menu
 Shows the context menu.
 
-### show-playlist
-Shows the playlist in a message box. For a playlist menu
-the following user scripts exist:  
-
-- https://github.com/stax76/mpv-scripts#command_palette
-- https://github.com/stax76/mpv-scripts#search_menu
-- https://github.com/tomasklaen/uosc
-- https://github.com/jonniek/mpv-playlistmanager
-
 ### show-profiles
 Shows available profiles with a message box.
 

@@ -27,7 +27,6 @@ public partial class MainForm : Form
 {
     public SnapManager SnapManager = new SnapManager();
     public IntPtr MpvWindowHandle { get; set; }
-    public ElementHost? CommandPaletteHost { get; set; }
     public bool WasShown { get; set; }
     public static MainForm? Instance { get; set; }
     WpfControls.ContextMenu ContextMenu { get; } = new WpfControls.ContextMenu();
@@ -279,8 +278,6 @@ public partial class MainForm : Form
                pos.Y < top ||
                pos.Y > ClientSize.Height * 0.78;
     }
-
-    bool IsCommandPaletteVissible() => CommandPaletteHost != null && CommandPaletteHost.Visible;
 
     void UpdateMenu()
     {
@@ -1254,8 +1251,7 @@ public partial class MainForm : Form
         else if ((Environment.TickCount - _lastCursorChanged > 1500 ||
             Environment.TickCount - _lastCursorChanged > 5000) &&
             ClientRectangle.Contains(PointToClient(MousePosition)) &&
-            ActiveForm == this && !ContextMenu.IsVisible && !IsMouseInOsc() &&
-            !IsCommandPaletteVissible())
+            ActiveForm == this && !ContextMenu.IsVisible && !IsMouseInOsc())
 
             HideCursor();
     }
@@ -1515,103 +1511,4 @@ public partial class MainForm : Form
 
     [DllImport("DwmApi")]
     static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, int[] attrValue, int attrSize);
-
-    //protected override void OnLayout(LayoutEventArgs args)
-    //{
-    //    base.OnLayout(args);
-    //    AdjustCommandPaletteLeftAndWidth();
-    //}
-
-    //class ElementHostEx : ElementHost
-    //{
-    //    protected override void OnHandleCreated(EventArgs e)
-    //    {
-    //        base.OnHandleCreated(e);
-    //        const int LWA_ColorKey = 1;
-
-    //        if (Environment.OSVersion.Version > new Version(10, 0))
-    //            SetLayeredWindowAttributes(Handle, 0x111111, 255, LWA_ColorKey);
-    //    }
-
-    //    protected override CreateParams CreateParams
-    //    {
-    //        get
-    //        {
-    //            CreateParams cp = base.CreateParams;
-
-    //            if (Environment.OSVersion.Version > new Version(10, 0))
-    //                cp.ExStyle |= 0x00080000; // WS_EX_LAYERED
-
-    //            cp.ExStyle |= 0x00000008; // WS_EX_TOPMOST
-
-    //            cp.Style |= 0x04000000; //WS_CLIPSIBLINGS
-    //            cp.Style |= 0x02000000; //WS_CLIPCHILDREN
-
-    //            return cp;
-    //        }
-    //    }
-
-    //    protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
-    //    {
-    //        try
-    //        {
-    //            return base.ProcessCmdKey(ref msg, keyData);
-    //        }
-    //        catch (Exception)
-    //        {
-    //            return true;
-    //        }
-    //    }
-
-    //    [DllImport("user32.dll")]
-    //    public static extern bool SetLayeredWindowAttributes(IntPtr hWnd, int crKey, byte alpha, int dwFlags);
-    //}
-
-    //public void ShowCommandPalette()
-    //{
-    //    if (CommandPaletteHost == null)
-    //    {
-    //        CommandPaletteHost = new ElementHostEx();
-    //        CommandPaletteHost.Dock = DockStyle.Fill;
-    //        CommandPaletteHost.BackColor = Color.FromArgb(0x111111);
-
-    //        AdjustCommandPaletteLeftAndWidth();
-    //        CommandPaletteHost.Child = CommandPalette.Instance;
-    //        CommandPalette.Instance.AdjustHeight();
-    //        Controls.Add(CommandPaletteHost);
-    //        CommandPaletteHost.BringToFront();
-    //    }
-    //}
-
-    public void HideCommandPalette()
-    {
-        if (CommandPaletteHost != null)
-        {
-            CommandPaletteHost.Visible = false;
-
-            CommandPalette.Instance.Items.Clear();
-            CommandPalette.Instance.SearchControl.SearchTextBox.Text = "";
-            CommandPalette.Instance.UpdateLayout();
-
-            ActiveControl = null;
-            Controls.Remove(CommandPaletteHost);
-
-            CommandPaletteHost.Child = null;
-            CommandPaletteHost.Dispose();
-            CommandPaletteHost = null;
-        }
-    }
-
-    //void AdjustCommandPaletteLeftAndWidth()
-    //{
-    //    if (CommandPaletteHost == null)
-    //        return;
-
-    //    CommandPaletteHost.Width = FontHeight * 26;
-
-    //    if (CommandPaletteHost.Width > ClientSize.Width)
-    //        CommandPaletteHost.Width = ClientSize.Width;
-
-    //    CommandPaletteHost.Left = (ClientSize.Width - CommandPaletteHost.Size.Width) / 2;
-    //}
 }

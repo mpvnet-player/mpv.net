@@ -55,19 +55,19 @@ public class GuiCommand
         ["show-media-info"] = ShowMediaInfo,
         ["show-menu"] = args => ShowMenu?.Invoke(),
         ["show-profiles"] = args => Msg.ShowInfo(Player.GetProfiles()),
-        ["show-properties"] = args => ShowProperties(),
+        ["show-properties"] = args => Player.Command("script-binding select/show-properties"),
         ["show-protocols"] = args => ShowProtocols(),
         ["window-scale"] = args => WindowScaleNet?.Invoke(float.Parse(args[0], CultureInfo.InvariantCulture)),
 
 
         // deprecated
         ["show-recent"] = args => ShowRemoved(), // deprecated
-        ["show-playlist"] = args => ShowPlaylist(), // deprecated
         ["quick-bookmark"] = args => QuickBookmark(), // deprecated
         ["show-history"] = args => ShowHistory(), // deprecated
-        ["show-command-palette"] = args => ShowCommandPalette(), // deprecated
-        ["show-audio-tracks"] = args => ShowTracks(), // deprecated
-        ["show-subtitle-tracks"] = args => ShowTracks(), // deprecated
+        ["show-playlist"] = args => Player.Command("script-binding select/select-playlist"), // deprecated
+        ["show-command-palette"] = args => Player.Command("script-binding select/select-binding"), // deprecated
+        ["show-audio-tracks"] = args => Player.Command("script-binding select/select-aid"), // deprecated
+        ["show-subtitle-tracks"] = args => Player.Command("script-binding select/select-sid"), // deprecated
     };
 
     void ShowDialog(Type winType)
@@ -160,9 +160,6 @@ public class GuiCommand
 
         ShowTextWithEditor("Input Commands", header + sb.ToString());
     }
-
-    void ShowProperties() =>
-        ShowTextWithEditor("Properties", Core.GetPropertyString("property-list").Replace(",", BR));
 
     void ShowKeys() =>
         ShowTextWithEditor("Keys", Core.GetPropertyString("input-key-list").Replace(",", BR));
@@ -385,28 +382,6 @@ public class GuiCommand
     }
 
     // deprecated
-    void ShowTracks() =>
-        Msg.ShowInfo(_("This feature was removed, but there are user scripts:") + BR2 +
-            "https://github.com/stax76/mpv-scripts#command_palette" + BR +
-            "https://github.com/stax76/mpv-scripts#search_menu" + BR +
-            "https://github.com/tomasklaen/uosc");
-
-    // deprecated
-    void ShowPlaylist() =>
-        Msg.ShowInfo(_("This feature was removed, but there are user scripts:") + BR2 +
-            "https://github.com/stax76/mpv-scripts#command_palette" + BR +
-            "https://github.com/stax76/mpv-scripts#search_menu" + BR +
-            "https://github.com/tomasklaen/uosc" + BR +
-            "https://github.com/jonniek/mpv-playlistmanager");
-
-    // deprecated
-    void ShowCommandPalette() =>
-        Msg.ShowInfo(_("This feature was removed, but there are user scripts:") + BR2 +
-            "https://github.com/stax76/mpv-scripts#command_palette" + BR +
-            "https://github.com/stax76/mpv-scripts#search_menu" + BR +
-            "https://github.com/tomasklaen/uosc");
-
-    // deprecated
     void QuickBookmark() =>
         Msg.ShowInfo(_("This feature was removed, but there are user scripts:") + BR2 +
             "https://github.com/stax76/mpv-scripts/blob/main/misc.lua");
@@ -419,13 +394,3 @@ public class GuiCommand
     // deprecated
     void ShowRemoved() => Msg.ShowInfo(_("This feature was removed."));
 }
-
-
-//public void ShowCommandPalette()
-//{
-//    MainForm.Instance?.BeginInvoke(() => {
-//        CommandPalette.Instance.SetItems(CommandPalette.GetItems());
-//        MainForm.Instance.ShowCommandPalette();
-//        CommandPalette.Instance.SelectFirst();
-//    });
-//}
