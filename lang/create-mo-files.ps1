@@ -4,21 +4,6 @@ $ErrorActionPreference = 'Stop'
 $PoFiles = Get-ChildItem $PSScriptRoot/po
 $ExeFolder = "$PSScriptRoot/../src/MpvNet.Windows/bin/Debug"
 
-function CreateFolder
-{
-    param($path)
-
-    if (-not (Test-Path $path))
-    {
-        mkdir $path
-    }
-
-    if (-not (Test-Path $path))
-    {
-        throw
-    }
-}
-
 foreach ($it in $PoFiles)
 {
     $folder = "$ExeFolder/Locale/$($it.BaseName)/LC_MESSAGES"
@@ -29,6 +14,12 @@ foreach ($it in $PoFiles)
     }
 
     $moPath = "$folder/mpvnet.mo"
+
+    if (-not (Test-Path $moPath))
+    {
+        New-Item -ItemType File -Path $moPath | Out-Null
+    }
+
     msgfmt --output-file=$moPath $it.FullName
     if ($LastExitCode) { throw $LastExitCode }
     $moPath
