@@ -14,7 +14,6 @@ using MpvNet.Windows.WPF;
 using MpvNet.Windows.WPF.MsgBox;
 using MpvNet.Windows.Help;
 using MpvNet.Help;
-using System;
 
 namespace MpvNet;
 
@@ -118,6 +117,14 @@ public class GuiCommand
     {
         string file = Player.ConfigFolder + args[0];
 
+        if (!File.Exists(file))
+        {
+            string msg = $"{args[0]} does not exist. Would you like to create it?";
+
+            if (Msg.ShowQuestion(msg) == MessageBoxResult.OK)
+                File.WriteAllText(file, "");
+        }
+        
         if (File.Exists(file))
             ProcessHelp.ShellExecute(WinApiHelp.GetAppPathForExtension("txt"), "\"" + file + "\"");
     }

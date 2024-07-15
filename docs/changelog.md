@@ -2,13 +2,13 @@
 # v7.1.1.1 Beta (????-??-??)
 
 - Korean, Russian and Turkish translation added, Japanese translation fixed. Thanks to the translation team!
-- Auto build update.
+- Action/Workflow/Auto build fix and update.
 - Full support for select.lua which is a new simple command palette script embedded into mpv/libmpv.
   In the context menu select.lua features can be found under 'View > On Screen Menu'.
   https://github.com/mpv-player/mpv/blob/master/player/lua/select.lua
 - The helper script 'Tools\update-mpv-and-libmpv.ps1' no longer uses command line arguments,
   it uses now the Path environment variable to find mpv and mpv.net.
-- Actions/Workflow/Auto builds have been fixed.
+
 
 # v7.1.1.0 (2024-02-03)
 
