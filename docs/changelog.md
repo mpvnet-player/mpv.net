@@ -8,6 +8,7 @@
   https://github.com/mpv-player/mpv/blob/master/player/lua/select.lua
 - The helper script 'Tools\update-mpv-and-libmpv.ps1' no longer uses command line arguments,
   it uses now the Path environment variable to find mpv and mpv.net.
+- Actions/Workflow/Auto builds have been fixed.
 
 # v7.1.1.0 (2024-02-03)
 

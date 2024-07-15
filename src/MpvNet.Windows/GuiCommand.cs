@@ -43,7 +43,6 @@ public class GuiCommand
         ["remove-from-path"] = args => RemoveFromPath(),
         ["scale-window"] = args => ScaleWindow?.Invoke(float.Parse(args[0], CultureInfo.InvariantCulture)),
         ["show-about"] = args => ShowDialog(typeof(AboutWindow)),
-        ["show-audio-devices"] = args => Msg.ShowInfo(Player.GetPropertyOsdString("audio-device-list")),
         ["show-bindings"] = args => ShowBindings(),
         ["show-commands"] = args => ShowCommands(),
         ["show-conf-editor"] = args => ShowDialog(typeof(ConfWindow)),
@@ -68,6 +67,7 @@ public class GuiCommand
         ["show-command-palette"] = args => Player.Command("script-binding select/select-binding"), // deprecated
         ["show-audio-tracks"] = args => Player.Command("script-binding select/select-aid"), // deprecated
         ["show-subtitle-tracks"] = args => Player.Command("script-binding select/select-sid"), // deprecated
+        ["show-audio-devices"] = args => Player.Command("script-binding select/select-audio-device"), // deprecated
     };
 
     void ShowDialog(Type winType)

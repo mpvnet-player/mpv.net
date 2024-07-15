@@ -136,7 +136,6 @@ public static class InputHelp
                 new (_("View") + " > " + _("On Screen Menu"), _("Audio Devices"), "script-binding select/select-audio-device", "Alt+d"),
 
                 new (_("View") + " > " + _("More"), _("Show Console"), "script-binding console/enable", "`"),
-                new (_("View") + " > " + _("More"), _("Show Audio Devices"), "script-message-to mpvnet show-audio-devices"),
                 new (_("View") + " > " + _("More"), _("Show Commands"), "script-message-to mpvnet show-commands", "F2"),
                 new (_("View") + " > " + _("More"), _("Show Bindings"), "script-message-to mpvnet show-bindings"),
                 new (_("View") + " > " + _("More"), _("Show Keys"), "script-message-to mpvnet show-keys", "Alt+k"),
