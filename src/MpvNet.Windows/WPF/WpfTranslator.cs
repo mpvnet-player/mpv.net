@@ -2,7 +2,6 @@
 using NGettext.Wpf;
 
 using System.Globalization;
-using System.Windows.Interop;
 
 namespace MpvNet.Windows.WPF;
 

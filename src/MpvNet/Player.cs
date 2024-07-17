@@ -453,7 +453,7 @@ public class MainPlayer : MpvClient
             }
 
             if (ext == "iso")
-                LoadBluRayISO(file);
+                LoadISO(file);
             else if(FileTypes.Subtitle.Contains(ext))
                 CommandV("sub-add", file);
             else if (!FileTypes.IsMedia(ext) && !file.Contains("://") && Directory.Exists(file) &&
@@ -488,12 +488,24 @@ public class MainPlayer : MpvClient
         return path;
     }
 
-    public void LoadBluRayISO(string path)
+    public void LoadISO(string path)
     {
-        Command("stop");
-        Thread.Sleep(500);
-        SetPropertyString("bluray-device", path);
-        LoadFiles(new[] { @"bd://" }, false, false);
+        using var mi = new MediaInfo(path);
+        
+        if (mi.GetGeneral("Format") == "ISO 9660 / DVD Video")
+        {
+            Command("stop");
+            Thread.Sleep(500);
+            SetPropertyString("dvd-device", path);
+            LoadFiles(new[] { @"dvd://" }, false, false);
+        }
+        else
+        {
+            Command("stop");
+            Thread.Sleep(500);
+            SetPropertyString("bluray-device", path);
+            LoadFiles(new[] { @"bd://" }, false, false);
+        }
     }
 
     public void LoadDiskFolder(string path)
