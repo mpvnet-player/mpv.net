@@ -12,7 +12,7 @@ AppPublisher=Frank Skare (stax76)
 ArchitecturesInstallIn64BitMode=x64
 Compression=lzma2
 DefaultDirName={autopf}\{#MyAppName}
-OutputBaseFilename=mpv.net-v{#MyAppVersion}-setup
+OutputBaseFilename=mpv.net-v{#MyAppVersion}-setup-x64
 OutputDir=E:\Desktop
 DefaultGroupName={#MyAppName}
 SetupIconFile=..\..\MpvNet.Windows\mpv-icon.ico
@@ -25,4 +25,4 @@ Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
 
 [Files]
 Source: "{#MyAppSourceDir}\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppSourceDir}\*"; DestDir: "{app}"; Excludes: "win-x64"; Flags: ignoreversion recursesubdirs createallsubdirs;
+Source: "{#MyAppSourceDir}\*"; DestDir: "{app}"; Excludes: "win-x64,win-arm64"; Flags: ignoreversion recursesubdirs createallsubdirs;

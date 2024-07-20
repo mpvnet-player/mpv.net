@@ -78,19 +78,13 @@ public class AppClass
     }
 
     public static string About => "Copyright (C) 2000-2024 mpv.net/mpv/mplayer\n" +
-        $"{AppInfo.Product} {AppInfo.Version}" + GetLastWriteTime(Environment.ProcessPath!) + "\n" +
+        $"{AppInfo.Product} v{AppInfo.Version}" + GetLastWriteTime(Environment.ProcessPath!) + "\n" +
         $"{Player.GetPropertyString("mpv-version")}" + GetLastWriteTime(Folder.Startup + "libmpv-2.dll") + "\n" +
-        $"ffmpeg {Player.GetPropertyString("ffmpeg-version")}\n" + "GPL v2 License";
+        $"ffmpeg {Player.GetPropertyString("ffmpeg-version")}\n" +
+        $"MediaInfo v{FileVersionInfo.GetVersionInfo(Folder.Startup + "MediaInfo.dll").FileVersion}" +
+        $"{GetLastWriteTime(Folder.Startup + "MediaInfo.dll")}" + "\n" + "GPL v2 License";
 
-    static string GetLastWriteTime(string path)
-    {
-        if (IsStoreVersion)
-            return "";
-
-        return $" ({File.GetLastWriteTime(path).ToShortDateString()})";
-    }
-
-    static bool IsStoreVersion => Folder.Startup.Contains("FrankSkare.mpvnet");
+    static string GetLastWriteTime(string path) => $" ({File.GetLastWriteTime(path).ToShortDateString()})";
 
     void Player_Initialized()
     {

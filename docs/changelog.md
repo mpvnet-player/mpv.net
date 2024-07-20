@@ -1,14 +1,17 @@
 
-# v7.1.1.1 Beta (????-??-??)
+# v7.1.1.1 Beta (2024-07-20)
 
 - Korean, Russian and Turkish translation added, Japanese translation fixed. Thanks to the translation team!
 - Action/Workflow/Auto build fix and update.
 - New default bindings and menu items for select.lua which is a new simple mpv built-in command palette script.  
   In the context menu select.lua features can be found under `View > On Screen Menu`.  
   https://github.com/mpv-player/mpv/blob/master/player/lua/select.lua
-- The helper script 'Tools\update-mpv-and-libmpv.ps1' no longer uses command line arguments,
-  it uses now the Path environment variable to find mpv and mpv.net.
-- Fix loading of DVD ISO files.
+- New PowerShell script 'Tools\release-mpv.net.ps1' used to releases mpv.net on GitHub.
+- Fix DVD ISO file support.
+- MediaInfo updated to version v24.6.
+- New ARM64 support.
+- New zhongfly libmpv x64 build.
+- New Andarwinux libmpv ARM64 build.
 
 
 # v7.1.1.0 (2024-02-03)
