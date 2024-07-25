@@ -2,54 +2,52 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 # Translators:
 # dyphire, 2023
 # nkh0472 <nkh0472@hotmail.com>, 2024
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-25 10:17+0200\n"
+"POT-Creation-Date: 2024-07-25 10:31+0200\n"
 "PO-Revision-Date: 2023-12-08 00:34+0000\n"
 "Last-Translator: nkh0472 <nkh0472@hotmail.com>, 2024\n"
-"Language-Team: Chinese (China) (https://app.transifex.com/stax76/"
-"teams/179964/zh_CN/)\n"
-"Language: zh_CN\n"
+"Language-Team: Chinese (China) (https://app.transifex.com/stax76/teams/179964/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: zh_CN\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:113
-msgid "+10%"
-msgstr "+10%"
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:12
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:13
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:14
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:15
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:16
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:17
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:18
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:19
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:20
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:21
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:22
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:23
+msgid "File"
+msgstr "文件"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:112
-msgid "-10%"
-msgstr "-10%"
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:12
+msgid "Open Files..."
+msgstr "打开文件..."
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:151
-msgid "100 %"
-msgstr "100 %"
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:13
+msgid "Open URL or file from clipboard"
+msgstr "从剪贴板打开 URL 或文件"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:152
-msgid "200 %"
-msgstr "200 %"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:153
-msgid "300 %"
-msgstr "300 %"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:150
-msgid "50 %"
-msgstr "50 %"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:194
-msgid "About mpv.net"
-msgstr "关于 mpv.net"
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:14
+msgid "Open DVD/Blu-ray Drive/Folder..."
+msgstr "打开 DVD/蓝光驱动器/文件夹..."
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:16
 msgid "Add external audio files..."
@@ -67,140 +65,10 @@ msgstr "添加文件到播放列表..."
 msgid "Add files/URLs to playlist from clipboard"
 msgstr "将 文件/URL 从剪贴板添加到播放列表"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:176
-msgid "Add mpv.net to Path environment variable"
-msgstr "将 mpv.net 添加到环境变量"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:85
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:86
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:87
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:88
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:89
-msgid "Audio"
-msgstr "音频"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:85
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:451
-msgid "Audio Device"
-msgstr "音频设备"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:136
-#, fuzzy
-msgid "Audio Devices"
-msgstr "音频设备"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:131
-msgid "Audio Tracks"
-msgstr ""
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:204
-msgid "Backward"
-msgstr "后退"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:127
-#, fuzzy
-msgid "Bindings"
-msgstr "显示键位绑定"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:158
-msgctxt "Move"
-msgid "Center"
-msgstr "居中"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:82
-msgid "Change Aspect Ratio"
-msgstr "更改纵横比"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WPF\InputWindow.xaml.cs:116
-msgid "Changes will be available on next startup."
-msgstr "更改将在下次启动时应用"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:51
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:349
-msgid "Chapter"
-msgstr "章节"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:129
-#, fuzzy
-msgid "Chapters"
-msgstr "章节"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:386
-msgid "Clear List"
-msgstr "清空列表"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:185
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:475
-msgid "Custom"
-msgstr "自定义"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:70
-msgid "Decrease Brightness"
-msgstr "降低亮度"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:67
-msgid "Decrease Contrast"
-msgstr "降低对比度"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:100
-msgid "Decrease Font Size"
-msgstr "减小字体大小"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:73
-msgid "Decrease Gamma"
-msgstr "降低伽马"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:62
-msgid "Decrease Height"
-msgstr "降低高度"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:76
-msgid "Decrease Saturation"
-msgstr "降低饱和度"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:53
-msgid "Decrease Size"
-msgstr "缩减大小"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:88
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:95
-msgid "Delay +0.1"
-msgstr "延迟 +0.1"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:89
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:94
-msgid "Delay -0.1"
-msgstr "延迟 -0.1"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:116
-msgid "Double"
-msgstr "翻倍"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:157
-msgctxt "Move"
-msgid "Down"
-msgstr "下移"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:108
-msgctxt "Volume"
-msgid "Down"
-msgstr "减小"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:168
-msgid "Edit input.conf"
-msgstr "编辑 input.conf"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:167
-msgid "Edit mpv.conf"
-msgstr "编辑 mpv.conf"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:147
-msgid "Enlarge"
-msgstr "放大"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:265
-msgid "Error creating file associations."
-msgstr "创建文件关联时出错"
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:22
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:370
+msgid "Recent Files"
+msgstr "近期文件"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:23
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:196
@@ -208,196 +76,23 @@ msgstr "创建文件关联时出错"
 msgid "Exit"
 msgstr "退出"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:183
-msgid "Exit Watch Later"
-msgstr "退出（稍后观看）"
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:25
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:26
+msgid "Playback"
+msgstr "回放"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:12
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:13
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:14
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:15
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:16
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:17
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:18
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:19
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:20
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:21
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:22
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:23
-msgid "File"
-msgstr "文件"
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:25
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:198
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:199
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:200
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:201
+msgid "Play/Pause"
+msgstr "播放/暂停"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:257
-msgid "File Explorer icons will refresh after process restart."
-msgstr "文件资源管理器图标将在进程重新启动后刷新"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:262
-msgid "File associations were successfully created."
-msgstr "文件关联已成功创建"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:260
-msgid "File associations were successfully removed."
-msgstr "文件关联已成功删除"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:193
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:213
-msgid "Files/URLs were added to the playlist"
-msgstr "已添加 文件/URL 到播放列表"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:31
-msgid "First File"
-msgstr "第一个文件"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:203
-msgid "Forward"
-msgstr "前进"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:146
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:216
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:217
-msgid "Fullscreen"
-msgstr "全屏"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:115
-msgid "Half"
-msgstr "减半"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:187
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:188
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:189
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:190
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:191
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:192
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:193
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:194
-msgid "Help"
-msgstr "帮助"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:215
-msgid "Ignore left mouse butten"
-msgstr "忽略左键"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:71
-msgid "Increase Brightness"
-msgstr "增加亮度"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:68
-msgid "Increase Contrast"
-msgstr "增加对比度"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:101
-msgid "Increase Font Size"
-msgstr "增加字体大小"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:74
-msgid "Increase Gamma"
-msgstr "增加伽马"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:63
-msgid "Increase Height"
-msgstr "增加高度"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:77
-msgid "Increase Saturation"
-msgstr "增加饱和度"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:54
-msgid "Increase Size"
-msgstr "增加大小"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:45
-msgid "Jump 30 sec backward"
-msgstr "快退 30 秒"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:44
-msgid "Jump 30 sec forward"
-msgstr "快进 30 秒"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:48
-msgid "Jump 5 min backward"
-msgstr "快退 5 分钟"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:47
-msgid "Jump 5 min forward"
-msgstr "快进 5 分钟"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:42
-msgid "Jump 5 sec backward"
-msgstr "快退 5 秒"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:41
-msgid "Jump 5 sec forward"
-msgstr "快进 5 秒"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:38
-msgid "Jump To Next Frame"
-msgstr "跳至下一帧"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:39
-msgid "Jump To Previous Frame"
-msgstr "跳至上一帧"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:32
-msgid "Last File"
-msgstr "最后一个文件"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:154
-msgctxt "Move"
-msgid "Left"
-msgstr "左移"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:190
-msgid "Manual mpv"
-msgstr "mpv 手册"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:191
-msgid "Manual mpv.net"
-msgstr "mpv.net 手册"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:223
-msgid "Mark position for revert-seek"
-msgstr "标记回退查找的位置"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:103
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:138
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:139
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:140
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:141
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:142
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:143
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:144
-msgid "More"
-msgstr "更多"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:154
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:155
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:156
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:157
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:158
-msgid "Move"
-msgstr "移动"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:60
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:98
-msgid "Move Down"
-msgstr "下移"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:56
-msgid "Move Left"
-msgstr "左移"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:57
-msgid "Move Right"
-msgstr "右移"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:59
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:97
-msgid "Move Up"
-msgstr "上移"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:110
-msgid "Mute"
-msgstr "静音"
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:26
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:202
+msgid "Stop"
+msgstr "停止"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:28
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:29
@@ -425,9 +120,12 @@ msgstr "静音"
 msgid "Navigate"
 msgstr "导航"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:35
-msgid "Next Chapter"
-msgstr "下一个章节"
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:28
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:209
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:211
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:213
+msgid "Previous File"
+msgstr "上一个文件"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:29
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:210
@@ -436,40 +134,63 @@ msgstr "下一个章节"
 msgid "Next File"
 msgstr "下一个文件"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:86
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:91
-msgid "Next Track"
-msgstr "下一个轨道"
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:31
+msgid "First File"
+msgstr "第一个文件"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:126
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:127
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:128
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:129
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:130
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:131
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:132
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:133
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:134
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:135
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:136
-msgid "On Screen Menu"
-msgstr ""
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:32
+msgid "Last File"
+msgstr "最后一个文件"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:170
-msgid "Open Config Folder"
-msgstr "打开配置文件夹"
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:35
+msgid "Next Chapter"
+msgstr "下一个章节"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:14
-msgid "Open DVD/Blu-ray Drive/Folder..."
-msgstr "打开 DVD/蓝光驱动器/文件夹..."
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:36
+msgid "Previous Chapter"
+msgstr "上一个章节"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:12
-msgid "Open Files..."
-msgstr "打开文件..."
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:38
+msgid "Jump To Next Frame"
+msgstr "跳至下一帧"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:13
-msgid "Open URL or file from clipboard"
-msgstr "从剪贴板打开 URL 或文件"
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:39
+msgid "Jump To Previous Frame"
+msgstr "跳至上一帧"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:41
+msgid "Jump 5 sec forward"
+msgstr "快进 5 秒"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:42
+msgid "Jump 5 sec backward"
+msgstr "快退 5 秒"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:44
+msgid "Jump 30 sec forward"
+msgstr "快进 30 秒"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:45
+msgid "Jump 30 sec backward"
+msgstr "快退 30 秒"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:47
+msgid "Jump 5 min forward"
+msgstr "快进 5 分钟"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:48
+msgid "Jump 5 min backward"
+msgstr "快退 5 分钟"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:50
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:391
+msgid "Title"
+msgstr "标题"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:51
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:349
+msgid "Chapter"
+msgstr "章节"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:53
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:54
@@ -487,342 +208,44 @@ msgstr "从剪贴板打开 URL 或文件"
 msgid "Pan & Scan"
 msgstr "平移&扫描"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:25
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:198
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:199
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:200
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:201
-msgid "Play/Pause"
-msgstr "播放/暂停"
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:53
+msgid "Decrease Size"
+msgstr "缩减大小"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:25
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:26
-msgid "Playback"
-msgstr "回放"
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:54
+msgid "Increase Size"
+msgstr "增加大小"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:126
-#, fuzzy
-msgid "Playlist"
-msgstr "显示播放列表"
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:56
+msgid "Move Left"
+msgstr "左移"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:36
-msgid "Previous Chapter"
-msgstr "上一个章节"
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:57
+msgid "Move Right"
+msgstr "右移"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:28
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:209
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:211
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:213
-msgid "Previous File"
-msgstr "上一个文件"
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:59
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:97
+msgid "Move Up"
+msgstr "上移"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:162
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:424
-msgid "Profile"
-msgstr "配置文件"
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:60
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:98
+msgid "Move Down"
+msgstr "下移"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:128
-#, fuzzy
-msgid "Properties"
-msgstr "显示属性"
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:62
+msgid "Decrease Height"
+msgstr "降低高度"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:22
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:370
-msgid "Recent Files"
-msgstr "近期文件"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:172
-msgid "Register audio file associations"
-msgstr "注册音频文件关联"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:173
-msgid "Register image file associations"
-msgstr "注册图像文件关联"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:171
-msgid "Register video file associations"
-msgstr "注册视频文件关联"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:177
-msgid "Remove mpv.net from Path environment variable"
-msgstr "将 mpv.net 从环境变量中移除"
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:63
+msgid "Increase Height"
+msgstr "增加高度"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:65
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:118
 msgid "Reset"
 msgstr "重置"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:155
-msgctxt "Move"
-msgid "Right"
-msgstr "右移"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:83
-msgid "Rotate Video"
-msgstr "旋转视频"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:133
-#, fuzzy
-msgid "Secondary Subtitle"
-msgstr "字幕"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:219
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:221
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:227
-msgid "Seek Backward"
-msgstr "向后跳转"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:218
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:220
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:226
-msgid "Seek Forward"
-msgstr "向前跳转"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:225
-msgid "Seek to next subtitle"
-msgstr "跳至下一条字幕"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:224
-msgid "Seek to previous subtitle"
-msgstr "跳至上一条字幕"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:179
-msgid "Set/clear A-B loop points"
-msgstr "设置/清除 A-B 循环点"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:164
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:165
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:166
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:167
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:168
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:169
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:170
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:171
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:172
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:173
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:174
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:175
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:176
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:177
-msgid "Settings"
-msgstr "设置"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:171
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:172
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:173
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:174
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:175
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:176
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:177
-msgid "Setup"
-msgstr "设置"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:140
-msgid "Show Bindings"
-msgstr "显示键位绑定"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:139
-msgid "Show Commands"
-msgstr "显示命令"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:164
-msgid "Show Config Editor"
-msgstr "显示配置编辑器"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:138
-msgid "Show Console"
-msgstr "显示控制台"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:143
-msgid "Show Decoders"
-msgstr "显示解码器"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:144
-msgid "Show Demuxers"
-msgstr "显示解复用器"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:165
-msgid "Show Input Editor"
-msgstr "显示输入编辑器"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:141
-msgid "Show Keys"
-msgstr "显示按键"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:123
-msgid "Show Media Info Message Box"
-msgstr "显示媒体信息消息框"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:122
-msgid "Show Media Info On-Screen"
-msgstr "在 OSD 上显示媒体信息"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:197
-msgid "Show Menu"
-msgstr "显示菜单"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:446
-msgid "Show Profiles"
-msgstr "显示配置文件"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:124
-msgid "Show Progress"
-msgstr "显示进度"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:142
-msgid "Show Protocols"
-msgstr "显示协议"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:148
-msgid "Shrink"
-msgstr "缩小"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:181
-msgid "Shuffle Playlist"
-msgstr "随机播放列表"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:1414
-msgid "Shutdown thread failed to complete within 10 seconds."
-msgstr "线程关闭未能在 10 秒内完成"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:112
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:113
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:114
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:115
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:116
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:117
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:118
-msgid "Speed"
-msgstr "速度"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:26
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:202
-msgid "Stop"
-msgstr "停止"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:91
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:92
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:93
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:94
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:95
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:96
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:97
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:98
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:99
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:100
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:101
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:102
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:103
-msgid "Subtitle"
-msgstr "字幕"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:135
-#, fuzzy
-msgid "Subtitle Lines"
-msgstr "字幕"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:132
-#, fuzzy
-msgid "Subtitle Tracks"
-msgstr "字幕"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:79
-msgid "Take Screenshot"
-msgstr "截屏"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:80
-msgid "Take Screenshot without subtitles"
-msgstr "截图（无字幕）"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:206
-msgid "The clipboard does not contain a valid URL or file."
-msgstr "剪贴板中未包含有效的 URL 或文件。"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:393
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:398
-msgid "This feature was removed, but there are user scripts:"
-msgstr "该功能已被移除，但有用户脚本："
-
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:402
-msgid "This feature was removed."
-msgstr "该功能已被移除。"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:50
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:391
-msgid "Title"
-msgstr "标题"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:159
-msgid "Toggle Border"
-msgstr "切换 边框"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:81
-msgid "Toggle Deinterlace"
-msgstr "切换 去隔行"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:182
-msgid "Toggle Hardware Decoding"
-msgstr "切换 硬件解码"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:121
-msgid "Toggle OSC Visibility"
-msgstr "切换 OSC 可见性"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:160
-msgid "Toggle On Top"
-msgstr "切换 置顶"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:120
-msgid "Toggle Statistics"
-msgstr "切换 统计信息"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:92
-msgid "Toggle Visibility"
-msgstr "切换 可见性"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:180
-msgid "Toggle infinite file looping"
-msgstr "切换 无限文件循环"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:103
-msgid "Toggle overriding SSA/ASS styles with normal styles"
-msgstr "切换 使用常规样式覆盖 SSA/ASS 样式"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:179
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:180
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:181
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:182
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:183
-msgid "Tools"
-msgstr "工具"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:105
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:287
-msgid "Track"
-msgstr "轨道"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:130
-#, fuzzy
-msgid "Tracks"
-msgstr "轨道"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:222
-msgid "Undo previous (or marked) seek"
-msgstr "撤销之前（或标记的）跳转"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:174
-msgid "Unregister file associations"
-msgstr "注销文件关联"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:156
-msgctxt "Move"
-msgid "Up"
-msgstr "上移"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:107
-msgctxt "Volume"
-msgid "Up"
-msgstr "增大"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:67
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:68
@@ -844,10 +267,180 @@ msgstr "增大"
 msgid "Video"
 msgstr "视频"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:134
-#, fuzzy
-msgid "Video Tracks"
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:67
+msgid "Decrease Contrast"
+msgstr "降低对比度"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:68
+msgid "Increase Contrast"
+msgstr "增加对比度"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:70
+msgid "Decrease Brightness"
+msgstr "降低亮度"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:71
+msgid "Increase Brightness"
+msgstr "增加亮度"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:73
+msgid "Decrease Gamma"
+msgstr "降低伽马"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:74
+msgid "Increase Gamma"
+msgstr "增加伽马"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:76
+msgid "Decrease Saturation"
+msgstr "降低饱和度"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:77
+msgid "Increase Saturation"
+msgstr "增加饱和度"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:79
+msgid "Take Screenshot"
+msgstr "截屏"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:80
+msgid "Take Screenshot without subtitles"
+msgstr "截图（无字幕）"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:81
+msgid "Toggle Deinterlace"
+msgstr "切换 去隔行"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:82
+msgid "Change Aspect Ratio"
+msgstr "更改纵横比"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:83
+msgid "Rotate Video"
+msgstr "旋转视频"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:85
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:86
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:87
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:88
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:89
+msgid "Audio"
+msgstr "音频"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:85
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:451
+msgid "Audio Device"
+msgstr "音频设备"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:86
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:91
+msgid "Next Track"
 msgstr "下一个轨道"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:88
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:95
+msgid "Delay +0.1"
+msgstr "延迟 +0.1"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:89
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:94
+msgid "Delay -0.1"
+msgstr "延迟 -0.1"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:91
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:92
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:93
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:94
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:95
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:96
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:97
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:98
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:99
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:100
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:101
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:102
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:103
+msgid "Subtitle"
+msgstr "字幕"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:92
+msgid "Toggle Visibility"
+msgstr "切换 可见性"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:100
+msgid "Decrease Font Size"
+msgstr "减小字体大小"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:101
+msgid "Increase Font Size"
+msgstr "增加字体大小"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:103
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:138
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:139
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:140
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:141
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:142
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:143
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:144
+msgid "More"
+msgstr "更多"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:103
+msgid "Toggle overriding SSA/ASS styles with normal styles"
+msgstr "切换 使用常规样式覆盖 SSA/ASS 样式"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:105
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:287
+msgid "Track"
+msgstr "轨道"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:107
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:108
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:109
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:110
+msgid "Volume"
+msgstr "音量"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:107
+msgctxt "Volume"
+msgid "Up"
+msgstr "增大"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:108
+msgctxt "Volume"
+msgid "Down"
+msgstr "减小"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:110
+msgid "Mute"
+msgstr "静音"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:112
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:113
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:114
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:115
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:116
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:117
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:118
+msgid "Speed"
+msgstr "速度"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:112
+msgid "-10%"
+msgstr "-10%"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:113
+msgid "+10%"
+msgstr "+10%"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:115
+msgid "Half"
+msgstr "减半"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:116
+msgid "Double"
+msgstr "翻倍"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:120
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:121
@@ -875,30 +468,111 @@ msgstr "下一个轨道"
 msgid "View"
 msgstr "查看"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:107
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:108
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:109
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:110
-msgid "Volume"
-msgstr "音量"
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:120
+msgid "Toggle Statistics"
+msgstr "切换 统计信息"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:206
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:208
-msgid "Volume Down"
-msgstr "降低 音量"
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:121
+msgid "Toggle OSC Visibility"
+msgstr "切换 OSC 可见性"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:205
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:207
-msgid "Volume Up"
-msgstr "增加 音量"
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:122
+msgid "Show Media Info On-Screen"
+msgstr "在 OSD 上显示媒体信息"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:187
-msgid "Website mpv"
-msgstr "mpv 网址"
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:123
+msgid "Show Media Info Message Box"
+msgstr "显示媒体信息消息框"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:188
-msgid "Website mpv.net"
-msgstr "mpv.net 网址"
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:124
+msgid "Show Progress"
+msgstr "显示进度"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:126
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:127
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:128
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:129
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:130
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:131
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:132
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:133
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:134
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:135
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:136
+msgid "On Screen Menu"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:126
+msgid "Playlist"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:127
+msgid "Bindings"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:128
+msgid "Properties"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:129
+msgid "Chapters"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:130
+msgid "Tracks"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:131
+msgid "Audio Tracks"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:132
+msgid "Subtitle Tracks"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:133
+msgid "Secondary Subtitle"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:134
+msgid "Video Tracks"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:135
+msgid "Subtitle Lines"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:136
+msgid "Audio Devices"
+msgstr ""
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:138
+msgid "Show Console"
+msgstr "显示控制台"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:139
+msgid "Show Commands"
+msgstr "显示命令"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:140
+msgid "Show Bindings"
+msgstr "显示键位绑定"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:141
+msgid "Show Keys"
+msgstr "显示按键"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:142
+msgid "Show Protocols"
+msgstr "显示协议"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:143
+msgid "Show Decoders"
+msgstr "显示解码器"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:144
+msgid "Show Demuxers"
+msgstr "显示解复用器"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:146
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:147
@@ -918,6 +592,12 @@ msgstr "mpv.net 网址"
 msgid "Window"
 msgstr "窗口"
 
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:146
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:216
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:217
+msgid "Fullscreen"
+msgstr "全屏"
+
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:147
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:148
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:149
@@ -928,33 +608,339 @@ msgstr "窗口"
 msgid "Zoom"
 msgstr "缩放"
 
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:147
+msgid "Enlarge"
+msgstr "放大"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:148
+msgid "Shrink"
+msgstr "缩小"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:150
+msgid "50 %"
+msgstr "50 %"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:151
+msgid "100 %"
+msgstr "100 %"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:152
+msgid "200 %"
+msgstr "200 %"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:153
+msgid "300 %"
+msgstr "300 %"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:154
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:155
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:156
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:157
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:158
+msgid "Move"
+msgstr "移动"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:154
+msgctxt "Move"
+msgid "Left"
+msgstr "左移"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:155
+msgctxt "Move"
+msgid "Right"
+msgstr "右移"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:156
+msgctxt "Move"
+msgid "Up"
+msgstr "上移"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:157
+msgctxt "Move"
+msgid "Down"
+msgstr "下移"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:158
+msgctxt "Move"
+msgid "Center"
+msgstr "居中"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:159
+msgid "Toggle Border"
+msgstr "切换 边框"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:160
+msgid "Toggle On Top"
+msgstr "切换 置顶"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:162
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:424
+msgid "Profile"
+msgstr "配置文件"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:164
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:165
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:166
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:167
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:168
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:169
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:170
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:171
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:172
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:173
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:174
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:175
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:176
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:177
+msgid "Settings"
+msgstr "设置"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:164
+msgid "Show Config Editor"
+msgstr "显示配置编辑器"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:165
+msgid "Show Input Editor"
+msgstr "显示输入编辑器"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:167
+msgid "Edit mpv.conf"
+msgstr "编辑 mpv.conf"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:168
+msgid "Edit input.conf"
+msgstr "编辑 input.conf"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:170
+msgid "Open Config Folder"
+msgstr "打开配置文件夹"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:171
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:172
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:173
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:174
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:175
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:176
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:177
+msgid "Setup"
+msgstr "设置"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:171
+msgid "Register video file associations"
+msgstr "注册视频文件关联"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:172
+msgid "Register audio file associations"
+msgstr "注册音频文件关联"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:173
+msgid "Register image file associations"
+msgstr "注册图像文件关联"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:174
+msgid "Unregister file associations"
+msgstr "注销文件关联"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:176
+msgid "Add mpv.net to Path environment variable"
+msgstr "将 mpv.net 添加到环境变量"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:177
+msgid "Remove mpv.net from Path environment variable"
+msgstr "将 mpv.net 从环境变量中移除"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:179
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:180
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:181
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:182
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:183
+msgid "Tools"
+msgstr "工具"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:179
+msgid "Set/clear A-B loop points"
+msgstr "设置/清除 A-B 循环点"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:180
+msgid "Toggle infinite file looping"
+msgstr "切换 无限文件循环"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:181
+msgid "Shuffle Playlist"
+msgstr "随机播放列表"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:182
+msgid "Toggle Hardware Decoding"
+msgstr "切换 硬件解码"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:183
+msgid "Exit Watch Later"
+msgstr "退出（稍后观看）"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:185
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:475
+msgid "Custom"
+msgstr "自定义"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:187
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:188
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:189
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:190
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:191
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:192
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:193
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:194
+msgid "Help"
+msgstr "帮助"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:187
+msgid "Website mpv"
+msgstr "mpv 网址"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:188
+msgid "Website mpv.net"
+msgstr "mpv.net 网址"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:190
+msgid "Manual mpv"
+msgstr "mpv 手册"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:191
+msgid "Manual mpv.net"
+msgstr "mpv.net 手册"
+
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:193
 msgid "awesome-mpv"
 msgstr "awesome-mpv"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\Properties\Resources.Designer.cs:79
-msgid "editor_conf"
-msgstr "editor_conf"
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:194
+msgid "About mpv.net"
+msgstr "关于 mpv.net"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:197
+msgid "Show Menu"
+msgstr "显示菜单"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:203
+msgid "Forward"
+msgstr "前进"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:204
+msgid "Backward"
+msgstr "后退"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:205
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:207
+msgid "Volume Up"
+msgstr "增加 音量"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:206
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:208
+msgid "Volume Down"
+msgstr "降低 音量"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:215
+msgid "Ignore left mouse butten"
+msgstr "忽略左键"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:218
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:220
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:226
+msgid "Seek Forward"
+msgstr "向前跳转"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:219
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:221
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:227
+msgid "Seek Backward"
+msgstr "向后跳转"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:222
+msgid "Undo previous (or marked) seek"
+msgstr "撤销之前（或标记的）跳转"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:223
+msgid "Mark position for revert-seek"
+msgstr "标记回退查找的位置"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:224
+msgid "Seek to previous subtitle"
+msgstr "跳至上一条字幕"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:225
+msgid "Seek to next subtitle"
+msgstr "跳至下一条字幕"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:193
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:213
+msgid "Files/URLs were added to the playlist"
+msgstr "已添加 文件/URL 到播放列表"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:206
+msgid "The clipboard does not contain a valid URL or file."
+msgstr "剪贴板中未包含有效的 URL 或文件。"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:257
+msgid "File Explorer icons will refresh after process restart."
+msgstr "文件资源管理器图标将在进程重新启动后刷新"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:260
+msgid "File associations were successfully removed."
+msgstr "文件关联已成功删除"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:262
+msgid "File associations were successfully created."
+msgstr "文件关联已成功创建"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:265
+msgid "Error creating file associations."
+msgstr "创建文件关联时出错"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:362
 msgid "mpv.net is already in the Path environment variable."
 msgstr "mpv.net 已存在于环境变量。"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:379
-msgid "mpv.net was not found in the Path environment variable."
-msgstr "环境变量中不存在 mpv.net。"
-
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:370
 msgid "mpv.net was successfully added to the Path environment variable."
 msgstr "成功添加 mpv.net 至环境变量。"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:379
+msgid "mpv.net was not found in the Path environment variable."
+msgstr "环境变量中不存在 mpv.net。"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:388
 msgid "mpv.net was successfully removed from the Path environment variable."
 msgstr "成功从环境变量中移除 mpv.net 。"
 
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:393
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:398
+msgid "This feature was removed, but there are user scripts:"
+msgstr "该功能已被移除，但有用户脚本："
+
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:402
+msgid "This feature was removed."
+msgstr "该功能已被移除。"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\Properties\Resources.Designer.cs:79
+msgid "editor_conf"
+msgstr "editor_conf"
+
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\Properties\Resources.Designer.cs:114
 msgid "theme"
 msgstr "主题"
 
-#~ msgid "Show Audio Devices"
-#~ msgstr "显示音频设备"
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:386
+msgid "Clear List"
+msgstr "清空列表"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:446
+msgid "Show Profiles"
+msgstr "显示配置文件"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:1414
+msgid "Shutdown thread failed to complete within 10 seconds."
+msgstr "线程关闭未能在 10 秒内完成"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WPF\InputWindow.xaml.cs:116
+msgid "Changes will be available on next startup."
+msgstr "更改将在下次启动时应用"
