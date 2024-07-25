@@ -26,8 +26,8 @@ Table of contents
 * [Differences compared to mpv](#differences-compared-to-mpv)
 * [Environment Variables](#environment-variables)
 * [user-data](#user-data)
-* [Context Menu Commands](#context-menu)
 * [Contributing](#contributing)
+* [Context Menu Commands](#context-menu)
 
 About
 -----
@@ -736,6 +736,17 @@ user-data/frontend/version
 user-data/frontend/process-path
 ```
 
+Contributing
+------------
+
+Work on the translation is done with transifex, translators have to create a transifex account:
+
+https://app.transifex.com/stax76/teams/
+
+For questions visit:
+
+https://github.com/mpvnet-player/mpv.net/issues/576
+
 Context Menu Commands
 ---------------------
 
@@ -1429,15 +1440,3 @@ Exits mpv.net and remembers the position in the file using the following command
 `quit-watch-later`
 
 [quit-watch-later command](https://mpv.io/manual/master/#command-interface-quit-watch-later)
-
-
-Contributing
-------------
-
-Work on the translation is done with transifex, translators have to create a transifex account:
-
-https://app.transifex.com/stax76/teams/
-
-For questions visit:
-
-https://github.com/mpvnet-player/mpv.net/issues/576
