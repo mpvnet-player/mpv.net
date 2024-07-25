@@ -1,4 +1,9 @@
 
+# v7.1.1.2 Beta (????-??-??)
+
+- German and Turkish translation updated. Thanks to the translation team!
+
+
 # v7.1.1.1 Beta (2024-07-20)
 
 - Korean, Russian and Turkish translation added, Japanese translation fixed. Thanks to the translation team!
