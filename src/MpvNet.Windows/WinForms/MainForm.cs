@@ -5,7 +5,6 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Threading;
-using System.Windows.Forms.Integration;
 using System.Text.RegularExpressions;
 
 using MpvNet.Windows.WPF;

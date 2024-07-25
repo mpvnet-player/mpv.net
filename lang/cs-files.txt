@@ -43,8 +43,6 @@ D:\Projects\CS\mpv.net\src\MpvNet.Windows\Native\StockIcon.cs
 D:\Projects\CS\mpv.net\src\MpvNet.Windows\Native\Taskbar.cs
 D:\Projects\CS\mpv.net\src\MpvNet.Windows\Native\WinApi.cs
 D:\Projects\CS\mpv.net\src\MpvNet.Windows\Properties\Resources.Designer.cs
-D:\Projects\CS\mpv.net\src\MpvNet.Windows\UI\CommandPalette.cs
-D:\Projects\CS\mpv.net\src\MpvNet.Windows\UI\CommandPaletteItem.cs
 D:\Projects\CS\mpv.net\src\MpvNet.Windows\UI\GlobalHotkey.cs
 D:\Projects\CS\mpv.net\src\MpvNet.Windows\UI\Theme.cs
 D:\Projects\CS\mpv.net\src\MpvNet.Windows\UI\TreeNode.cs
@@ -62,7 +60,6 @@ D:\Projects\CS\mpv.net\src\MpvNet.Windows\WPF\Msg.cs
 D:\Projects\CS\mpv.net\src\MpvNet.Windows\WPF\WpfApplication.cs
 D:\Projects\CS\mpv.net\src\MpvNet.Windows\WPF\WpfTranslator.cs
 D:\Projects\CS\mpv.net\src\MpvNet.Windows\WPF\Controls\ComboBoxSettingControl.xaml.cs
-D:\Projects\CS\mpv.net\src\MpvNet.Windows\WPF\Controls\CommandPaletteControl.xaml.cs
 D:\Projects\CS\mpv.net\src\MpvNet.Windows\WPF\Controls\HyperlinkEx.cs
 D:\Projects\CS\mpv.net\src\MpvNet.Windows\WPF\Controls\OptionSettingControl.xaml.cs
 D:\Projects\CS\mpv.net\src\MpvNet.Windows\WPF\Controls\SearchControl.xaml.cs
