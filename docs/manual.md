@@ -1434,6 +1434,10 @@ Exits mpv.net and remembers the position in the file using the following command
 Contributing
 ------------
 
-Work on the translation is done with transifex:
+Work on the translation is done with transifex, translators have to create a transifex account:
 
 https://app.transifex.com/stax76/teams/
+
+For questions visit:
+
+https://github.com/mpvnet-player/mpv.net/issues/576
