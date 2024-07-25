@@ -117,7 +117,8 @@ public class CommandLine
 
         foreach (string arg in Environment.GetCommandLineArgs().Skip(1))
             if (!arg.StartsWith("--") && (arg == "-" || arg.Contains("://") ||
-                arg.Contains(":\\") || arg.StartsWith("\\\\") || File.Exists(arg)))
+                arg.Contains(":\\") || arg.StartsWith("\\\\") || arg.StartsWith(".") ||
+                File.Exists(arg)))
 
                 files.Add(arg);
 
