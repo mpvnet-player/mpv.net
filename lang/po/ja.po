@@ -499,51 +499,51 @@ msgstr "進行状況を表示"
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:135
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:136
 msgid "On Screen Menu"
-msgstr ""
+msgstr "オンスクリーンメニュー"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:126
 msgid "Playlist"
-msgstr ""
+msgstr "プレイリスト"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:127
 msgid "Bindings"
-msgstr ""
+msgstr "バインディング"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:128
 msgid "Properties"
-msgstr ""
+msgstr "プロパティ"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:129
 msgid "Chapters"
-msgstr ""
+msgstr "チャプター"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:130
 msgid "Tracks"
-msgstr ""
+msgstr "トラック"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:131
 msgid "Audio Tracks"
-msgstr ""
+msgstr "オーディオトラック"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:132
 msgid "Subtitle Tracks"
-msgstr ""
+msgstr "字幕トラック"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:133
 msgid "Secondary Subtitle"
-msgstr ""
+msgstr "セカンダリ字幕"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:134
 msgid "Video Tracks"
-msgstr ""
+msgstr "ビデオトラック"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:135
 msgid "Subtitle Lines"
-msgstr ""
+msgstr "字幕ライン"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:136
 msgid "Audio Devices"
-msgstr ""
+msgstr "オーディオデバイス"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:138
 msgid "Show Console"

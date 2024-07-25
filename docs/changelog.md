@@ -1,7 +1,7 @@
 
 # v7.1.1.2 Beta (????-??-??)
 
-- German and Turkish translation updated. Thanks to the translation team!
+- German, Turkish and Japanese translation updated. Thanks to the translation team!
 - Support relative folders from command line.
 
 

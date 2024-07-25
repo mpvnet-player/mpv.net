@@ -456,14 +456,6 @@ public class MainPlayer : MpvClient
                 LoadISO(file);
             else if(FileTypes.Subtitle.Contains(ext))
                 CommandV("sub-add", file);
-            else if (!FileTypes.IsMedia(ext) && !file.Contains("://") && Directory.Exists(file) &&
-                File.Exists(System.IO.Path.Combine(file, "BDMV\\index.bdmv")))
-            {
-                Command("stop");
-                Thread.Sleep(500);
-                SetPropertyString("bluray-device", file);
-                CommandV("loadfile", @"bd://");
-            }
             else
             {
                 if (i == 0 && !append)
