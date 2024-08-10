@@ -677,14 +677,17 @@ public partial class MainForm : Form
 
         Point middlePos = new Point(Left + Width / 2, Top + Height / 2);
         var rect = new RECT(new Rectangle(screen.Bounds.X, screen.Bounds.Y, width, height));
- 
+
         AddWindowBorders(Handle, ref rect, GetDpi(Handle), !Player.TitleBar);
 
         width = rect.Width;
         height = rect.Height;
 
-        int left = middlePos.X - width / 2;
-        int top = middlePos.Y - height / 2;
+        int left = Convert.ToInt32(middlePos.X - width / 2.0);
+        int top = Convert.ToInt32(middlePos.Y - height / 2.0);
+
+        if (!Player.TitleBar)
+            top -= Convert.ToInt32(GetTitleBarHeight(Handle, GetDpi(Handle)) / 2.0);
 
         Rectangle currentRect = new Rectangle(Left, Top, Width, Height);
 
@@ -784,7 +787,7 @@ public partial class MainForm : Form
                 else
                 {
                     WindowState = FormWindowState.Normal;
-                    
+
                     if (!Player.WasInitialSizeSet)
                         SetFormPosAndSize();
                 }
@@ -1101,7 +1104,8 @@ public partial class MainForm : Form
                 {
                     var nccalcsize_params = Marshal.PtrToStructure<NCCALCSIZE_PARAMS>(m.LParam);
                     RECT[] rects = nccalcsize_params.rgrc;
-                    rects[0].Top = rects[0].Top - GetTitleBarHeight(Handle, GetDpi(Handle));
+                    int h = GetTitleBarHeight(Handle, GetDpi(Handle));
+                    rects[0].Top = rects[0].Top - h;
                     Marshal.StructureToPtr(nccalcsize_params, m.LParam, false);
                 }
                 break;
