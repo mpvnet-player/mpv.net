@@ -10,7 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-25 10:31+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Last-Translator: Nathanael Gagnepain <mohadib@pm.me>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -213,34 +213,34 @@ msgstr "Augmenter la taille"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:56
 msgid "Move Left"
-msgstr ""
+msgstr "Déplacer vers la Gauche"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:57
 msgid "Move Right"
-msgstr ""
+msgstr "Déplacer vers la Droite"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:59
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:97
 msgid "Move Up"
-msgstr ""
+msgstr "Monter"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:60
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:98
 msgid "Move Down"
-msgstr ""
+msgstr "Descendre"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:62
 msgid "Decrease Height"
-msgstr ""
+msgstr "Réduire la Taille"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:63
 msgid "Increase Height"
-msgstr ""
+msgstr "Augmenter la Taille"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:65
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:118
 msgid "Reset"
-msgstr ""
+msgstr "Réinitialiser"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:67
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:68
@@ -260,59 +260,59 @@ msgstr ""
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:82
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:83
 msgid "Video"
-msgstr ""
+msgstr "Vidéo"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:67
 msgid "Decrease Contrast"
-msgstr ""
+msgstr "Réduire le Contraste"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:68
 msgid "Increase Contrast"
-msgstr ""
+msgstr "Augmenter le Contraste"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:70
 msgid "Decrease Brightness"
-msgstr ""
+msgstr "Réduire la Luminosité"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:71
 msgid "Increase Brightness"
-msgstr ""
+msgstr "Augmenter la Luminosité"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:73
 msgid "Decrease Gamma"
-msgstr ""
+msgstr "Réduire le Gamma"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:74
 msgid "Increase Gamma"
-msgstr ""
+msgstr "Augmenter le Gamma"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:76
 msgid "Decrease Saturation"
-msgstr ""
+msgstr "Réduire la Saturation"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:77
 msgid "Increase Saturation"
-msgstr ""
+msgstr "Augmenter la saturation"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:79
 msgid "Take Screenshot"
-msgstr ""
+msgstr "Faire une capture d'écran"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:80
 msgid "Take Screenshot without subtitles"
-msgstr ""
+msgstr "Faire une capture d'écran sans sous-titres"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:81
 msgid "Toggle Deinterlace"
-msgstr ""
+msgstr "Modifier le désentrelacement"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:82
 msgid "Change Aspect Ratio"
-msgstr ""
+msgstr "Modifier le format d'image"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:83
 msgid "Rotate Video"
-msgstr ""
+msgstr "Faire pivoter la vidéo"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:85
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:86
@@ -320,27 +320,27 @@ msgstr ""
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:88
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:89
 msgid "Audio"
-msgstr ""
+msgstr "Audio"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:85
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:451
 msgid "Audio Device"
-msgstr ""
+msgstr "Périphérique Audio"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:86
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:91
 msgid "Next Track"
-msgstr ""
+msgstr "Piste Suivante"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:88
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:95
 msgid "Delay +0.1"
-msgstr ""
+msgstr "Délai +0,1"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:89
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:94
 msgid "Delay -0.1"
-msgstr ""
+msgstr "Délai -0.1"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:91
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:92
@@ -356,19 +356,19 @@ msgstr ""
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:102
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:103
 msgid "Subtitle"
-msgstr ""
+msgstr "Sous-titre"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:92
 msgid "Toggle Visibility"
-msgstr ""
+msgstr "Modifier la visibilité"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:100
 msgid "Decrease Font Size"
-msgstr ""
+msgstr "Réduire la taille de la police"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:101
 msgid "Increase Font Size"
-msgstr ""
+msgstr "Augmenter la taille de la police"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:103
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:138
@@ -379,37 +379,37 @@ msgstr ""
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:143
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:144
 msgid "More"
-msgstr ""
+msgstr "Plus"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:103
 msgid "Toggle overriding SSA/ASS styles with normal styles"
-msgstr ""
+msgstr "Activer/désactiver le remplacement des styles SSA/ASS par les styles normaux"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:105
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:287
 msgid "Track"
-msgstr ""
+msgstr "Piste"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:107
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:108
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:109
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:110
 msgid "Volume"
-msgstr ""
+msgstr "Volume"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:107
 msgctxt "Volume"
 msgid "Up"
-msgstr ""
+msgstr "Augmenter"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:108
 msgctxt "Volume"
 msgid "Down"
-msgstr ""
+msgstr "Réduire"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:110
 msgid "Mute"
-msgstr ""
+msgstr "Mettre en Sourdine"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:112
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:113
@@ -419,23 +419,23 @@ msgstr ""
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:117
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:118
 msgid "Speed"
-msgstr ""
+msgstr "Vitesse"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:112
 msgid "-10%"
-msgstr ""
+msgstr "-10%"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:113
 msgid "+10%"
-msgstr ""
+msgstr "+10%"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:115
 msgid "Half"
-msgstr ""
+msgstr "Moitié"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:116
 msgid "Double"
-msgstr ""
+msgstr "Double"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:120
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:121
@@ -461,27 +461,27 @@ msgstr ""
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:143
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:144
 msgid "View"
-msgstr ""
+msgstr "Vue"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:120
 msgid "Toggle Statistics"
-msgstr ""
+msgstr "Activer/Désactiver les Statistiques"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:121
 msgid "Toggle OSC Visibility"
-msgstr ""
+msgstr "Activer/désactiver la visibilité de l'OSC"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:122
 msgid "Show Media Info On-Screen"
-msgstr ""
+msgstr "Afficher les informations des médias à l'écran"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:123
 msgid "Show Media Info Message Box"
-msgstr ""
+msgstr "Afficher la boîte de message d'informations sur les médias"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:124
 msgid "Show Progress"
-msgstr ""
+msgstr "Afficher la progression"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:126
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:127
@@ -495,11 +495,11 @@ msgstr ""
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:135
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:136
 msgid "On Screen Menu"
-msgstr ""
+msgstr "Menu à l'écran"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:126
 msgid "Playlist"
-msgstr ""
+msgstr "Liste de lecture"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:127
 msgid "Bindings"
@@ -507,35 +507,35 @@ msgstr ""
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:128
 msgid "Properties"
-msgstr ""
+msgstr "Propriétés"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:129
 msgid "Chapters"
-msgstr ""
+msgstr "Chapitres"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:130
 msgid "Tracks"
-msgstr ""
+msgstr "Pistes"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:131
 msgid "Audio Tracks"
-msgstr ""
+msgstr "Pistes audio"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:132
 msgid "Subtitle Tracks"
-msgstr ""
+msgstr "Pistes de sous-titres"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:133
 msgid "Secondary Subtitle"
-msgstr ""
+msgstr "Sous-titre secondaire"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:134
 msgid "Video Tracks"
-msgstr ""
+msgstr "Pistes vidéo"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:135
 msgid "Subtitle Lines"
-msgstr ""
+msgstr "Lignes de sous-titres"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:136
 msgid "Audio Devices"
@@ -543,11 +543,11 @@ msgstr ""
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:138
 msgid "Show Console"
-msgstr ""
+msgstr "Afficher la console"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:139
 msgid "Show Commands"
-msgstr ""
+msgstr "Afficher les commandes"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:140
 msgid "Show Bindings"
@@ -555,19 +555,19 @@ msgstr ""
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:141
 msgid "Show Keys"
-msgstr ""
+msgstr "Montrer les touches"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:142
 msgid "Show Protocols"
-msgstr ""
+msgstr "Afficher les Protocoles"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:143
 msgid "Show Decoders"
-msgstr ""
+msgstr "Afficher les décodeurs"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:144
 msgid "Show Demuxers"
-msgstr ""
+msgstr "Afficher les démultiplexeurs"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:146
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:147
@@ -585,13 +585,13 @@ msgstr ""
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:159
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:160
 msgid "Window"
-msgstr ""
+msgstr "Fenêtre"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:146
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:216
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:217
 msgid "Fullscreen"
-msgstr ""
+msgstr "Plein écran"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:147
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:148
@@ -605,27 +605,27 @@ msgstr ""
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:147
 msgid "Enlarge"
-msgstr ""
+msgstr "Agrandir"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:148
 msgid "Shrink"
-msgstr ""
+msgstr "Rétrécir"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:150
 msgid "50 %"
-msgstr ""
+msgstr "50 %"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:151
 msgid "100 %"
-msgstr ""
+msgstr "100 %"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:152
 msgid "200 %"
-msgstr ""
+msgstr "200 %"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:153
 msgid "300 %"
-msgstr ""
+msgstr "300 %"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:154
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:155
