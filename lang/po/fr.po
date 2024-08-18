@@ -360,7 +360,7 @@ msgstr "Sous-titre"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:92
 msgid "Toggle Visibility"
-msgstr "Modifier la Visibilité"
+msgstr "Activer/Désactiver l'affichage"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:100
 msgid "Decrease Font Size"
