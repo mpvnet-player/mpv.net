@@ -4,7 +4,8 @@
 - Polish translation fixed. German, Turkish and Japanese translation updated.
   French translation added! Thanks to the translation team!
 - Support of relative folders from command line.
-- A issue with the support of the mpv property `title-bar` has been fixed.
+- A issue with the support of the mpv property `title-bar` has been fixed,
+  at the moment this is most useful for users of the popular uosc user script.
 
 # v7.1.1.1 Beta (2024-07-20)
 
