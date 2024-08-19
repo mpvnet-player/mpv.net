@@ -1139,6 +1139,7 @@ option = french
 option = german
 option = japanese
 option = korean
+option = polish
 option = russian
 option = turkish
 

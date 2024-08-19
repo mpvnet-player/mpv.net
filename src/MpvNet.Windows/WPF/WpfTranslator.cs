@@ -16,6 +16,7 @@ public class WpfTranslator : ITranslator
         new("german", "de", "de"),
         new("japanese", "ja", "ja"),
         new("korean", "ko", "ko"),
+        new("polish", "pl", "pl"),
         new("russian", "ru", "ru"),
         new("turkish", "tr", "tr"),
     };
