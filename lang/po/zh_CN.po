@@ -500,51 +500,51 @@ msgstr "显示进度"
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:135
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:136
 msgid "On Screen Menu"
-msgstr ""
+msgstr "屏幕菜单"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:126
 msgid "Playlist"
-msgstr ""
+msgstr "播放列表"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:127
 msgid "Bindings"
-msgstr ""
+msgstr "键位绑定"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:128
 msgid "Properties"
-msgstr ""
+msgstr "属性"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:129
 msgid "Chapters"
-msgstr ""
+msgstr "章节"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:130
 msgid "Tracks"
-msgstr ""
+msgstr "轨道"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:131
 msgid "Audio Tracks"
-msgstr ""
+msgstr "音频轨道"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:132
 msgid "Subtitle Tracks"
-msgstr ""
+msgstr "字幕轨道"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:133
 msgid "Secondary Subtitle"
-msgstr ""
+msgstr "第二字幕"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:134
 msgid "Video Tracks"
-msgstr ""
+msgstr "视频轨道"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:135
 msgid "Subtitle Lines"
-msgstr ""
+msgstr "字幕行"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:136
 msgid "Audio Devices"
-msgstr ""
+msgstr "音频设备"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:138
 msgid "Show Console"

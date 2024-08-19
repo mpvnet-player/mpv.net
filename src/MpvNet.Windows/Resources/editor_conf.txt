@@ -1135,6 +1135,7 @@ default = system
 option = system
 option = english
 option = chinese-china
+option = french
 option = german
 option = japanese
 option = korean

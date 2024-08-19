@@ -12,6 +12,7 @@ public class WpfTranslator : ITranslator
     static Language[] Languages { get; } = new Language[] {
         new("english", "en", "en"),
         new("chinese-china", "zh-CN", "zh"),  // Chinese (Simplified)
+        new("french", "fr", "fr"),
         new("german", "de", "de"),
         new("japanese", "ja", "ja"),
         new("korean", "ko", "ko"),

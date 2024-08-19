@@ -368,11 +368,11 @@ msgstr "表示の切り替え"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:100
 msgid "Decrease Font Size"
-msgstr "フォントサイズを小さくする"
+msgstr "フォントサイズを縮小"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:101
 msgid "Increase Font Size"
-msgstr "フォントサイズを大きくする"
+msgstr "フォントサイズを拡大"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:103
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:138
