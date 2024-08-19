@@ -1,7 +1,7 @@
 
 # v7.1.1.2 Beta (????-??-??)
 
-- German, Turkish and Japanese translation updated. Thanks to the translation team!
+- German, Turkish and Japanese translation updated. French translation added! Thanks to the translation team!
 - Support of relative folders from command line.
 - A issue with the support of the mpv property `title-bar` has been fixed.
 
