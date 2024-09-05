@@ -7,6 +7,8 @@
 - A issue with the support of the mpv property `title-bar` has been fixed,
   at the moment this is most useful for users of the popular uosc user script,
   the mpv built-in OSC doesn't fully support it yet.
+- Set `media-controls=yes`.
+
 
 # v7.1.1.1 Beta (2024-07-20)
 

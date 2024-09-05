@@ -414,7 +414,8 @@ For single files automatically load the entire directory into the playlist.
 
 #### --menu-syntax=\<value\>
 
-Used menu syntax for defining the context menu in input.conf.\nmpv.net by default uses `#menu:`, uosc uses `#!` by default.
+Used menu syntax for defining the context menu in input.conf.
+mpv.net by default uses `#menu:`, uosc uses `#!` by default.
 
 #### --process-instance=\<value\>
 
