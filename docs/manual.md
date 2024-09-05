@@ -1093,11 +1093,11 @@ Cycles the deinterlace property using the following command:
 
 Cycles the aspect ratio using the following command:
 
-`cycle-values video-aspect 16:9 4:3 2.35:1 -1`
+`cycle-values video-aspect-override 16:9 4:3 2.35:1 0 -1`
 
 [cycle-values command](https://mpv.io/manual/master/#command-interface-cycle-values)
 
-[video-aspect property](https://mpv.io/manual/master/#command-interface-video-aspect)
+[video-aspect property](https://mpv.io/manual/master/#options-video-aspect-override)
 
 
 ### Audio > Next

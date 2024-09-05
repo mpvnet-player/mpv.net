@@ -1046,11 +1046,12 @@ public partial class MainForm : Form
                 break;
             case 0x319: // WM_APPCOMMAND
                 {
-                    string? value = MpvHelp.WM_APPCOMMAND_to_mpv_key((int)(m.LParam.ToInt64() >> 16 & ~0xf000));
+                    string? key = MpvHelp.WM_APPCOMMAND_to_mpv_key((int)(m.LParam.ToInt64() >> 16 & ~0xf000));
+                    bool inputMediaKeys = Player.GetPropertyBool("input-media-keys");
 
-                    if (value != null)
+                    if (key != null && inputMediaKeys)
                     {
-                        Player.Command("keypress " + value);
+                        Player.Command("keypress " + key);
                         m.Result = new IntPtr(1);
                         return;
                     }
