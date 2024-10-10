@@ -1420,7 +1420,7 @@ Shows the [mpv.net web site](https://github.com/mpvnet-player/mpv.net).
 
 ### Help > Show mpv.net manual
 
-Shows the [mpv.net manual](https://github.com/mpvnet-player/mpv.net/blob/main/manual.md).
+Shows the [mpv.net manual](https://github.com/mpvnet-player/mpv.net/blob/main/docs/manual.md).
 
 
 ### Help > About mpv.net
