@@ -1,5 +1,5 @@
 
-# v7.1.1.2 Beta (????-??-??)
+# v7.1.1.2 Beta (2024-10-10)
 
 - Polish translation fixed. German, Turkish and Japanese translation updated.
   French translation added! Thanks to the translation team!
