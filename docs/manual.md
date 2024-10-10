@@ -596,8 +596,6 @@ Selecting multiple files in File Explorer and pressing enter will
 open the files in mpv.net. Explorer restricts this to maximum 15 files
 and the order will be random.
 
-In fullscreen mode clicking the top right corner closes the player.
-
 
 Differences compared to mpv
 ---------------------------
