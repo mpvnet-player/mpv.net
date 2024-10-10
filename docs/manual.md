@@ -637,6 +637,7 @@ https://mpv.io/manual/master/#window
 **mpv.net has currently implemented the following window properties:**
 
 - [border](https://mpv.io/manual/master/#options-border)
+- [cursor-autohide](https://mpv.io/manual/master/#options-cursor-autohide)
 - [fullscreen](https://mpv.io/manual/master/#options-fullscreen)
 - [keepaspect-window](https://mpv.io/manual/master/#options-keepaspect-window)
 - [ontop](https://mpv.io/manual/master/#options-ontop)

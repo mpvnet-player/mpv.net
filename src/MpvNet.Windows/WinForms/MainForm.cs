@@ -38,10 +38,12 @@ public partial class MainForm : Form
     int _lastCursorChanged;
     int _lastCycleFullscreen;
     int _taskbarButtonCreatedMessage;
+    int _cursorAutohide = 1000;
 
     bool _contextMenuIsReady;
     bool _wasMaximized;
     bool _maxSizeSet;
+    bool _isCursorVisible = true;
 
     public MainForm()
     {
@@ -68,9 +70,9 @@ public partial class MainForm : Form
 
             Player.Init(Handle, true);
 
-            // bool methods not working correctly
-            Player.ObserveProperty("window-maximized", PropChangeWindowMaximized);
-            Player.ObserveProperty("window-minimized", PropChangeWindowMinimized);
+            Player.ObserveProperty("window-maximized", PropChangeWindowMaximized); // bool methods not working correctly
+            Player.ObserveProperty("window-minimized", PropChangeWindowMinimized); // bool methods not working correctly
+            Player.ObserveProperty("cursor-autohide", PropChangeCursorAutohide);
 
             Player.ObservePropertyBool("border", PropChangeBorder);
             Player.ObservePropertyBool("fullscreen", PropChangeFullscreen);
@@ -1252,8 +1254,7 @@ public partial class MainForm : Form
             _lastCursorPosition = MousePosition;
             _lastCursorChanged = Environment.TickCount;
         }
-        else if ((Environment.TickCount - _lastCursorChanged > 1500 ||
-            Environment.TickCount - _lastCursorChanged > 5000) &&
+        else if ((Environment.TickCount - _lastCursorChanged > _cursorAutohide) &&
             ClientRectangle.Contains(PointToClient(MousePosition)) &&
             ActiveForm == this && !ContextMenu.IsVisible && !IsMouseInOsc())
 
@@ -1310,6 +1311,18 @@ public partial class MainForm : Form
             else if (!Player.WindowMinimized && WindowState == FormWindowState.Minimized)
                 WindowState = FormWindowState.Normal;
         });
+    }
+
+    void PropChangeCursorAutohide()
+    {
+        string strValue = Player.GetPropertyString("cursor-autohide");
+
+        if (strValue == "no")
+            _cursorAutohide = 0;
+        else if (strValue == "always")
+            _cursorAutohide = -1;
+        else if (int.TryParse(strValue, out var intValue))
+            _cursorAutohide = intValue;
     }
 
     void PropChangeBorder(bool enabled) {
@@ -1478,20 +1491,18 @@ public partial class MainForm : Form
         base.OnKeyDown(e);
     }
 
-    static bool _isCursorVisible = true;
-
-    static void ShowCursor()
+    void ShowCursor()
     {
-        if (!_isCursorVisible)
+        if (!_isCursorVisible && _cursorAutohide != -1)
         {
             Cursor.Show();
             _isCursorVisible = true;
         }
     }
 
-    static void HideCursor()
+    void HideCursor()
     {
-        if (_isCursorVisible)
+        if (_isCursorVisible && _cursorAutohide != 0)
         {
             Cursor.Hide();
             _isCursorVisible = false;

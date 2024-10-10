@@ -38,7 +38,7 @@ partial class MainForm
         // CursorTimer
         // 
         CursorTimer.Enabled = true;
-        CursorTimer.Interval = 1000;
+        CursorTimer.Interval = 500;
         CursorTimer.Tick += CursorTimer_Tick;
         // 
         // ProgressTimer
