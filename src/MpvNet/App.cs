@@ -21,7 +21,7 @@ public class AppClass
     public string CommandLine { get; set; } = Environment.CommandLine;
     public string MenuSyntax { get; set; } = "#menu:";
 
-    public bool AutoLoadFolder { get; set; } = true;
+    public bool AutoLoadFolder { get; set; }
     public bool DebugMode { get; set; }
     public bool Exit { get; set; }
     public bool IsTerminalAttached { get; } = Environment.GetEnvironmentVariable("_started_from_console") == "yes";

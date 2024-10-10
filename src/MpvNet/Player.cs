@@ -104,6 +104,7 @@ public class MainPlayer : MpvClient
         SetPropertyBool("input-builtin-bindings", false);
         SetPropertyBool("input-media-keys", true);
 
+        SetPropertyString("autocreate-playlist", "filter");
         SetPropertyString("media-controls", "yes");
         SetPropertyString("idle", "yes");
         SetPropertyString("screenshot-directory", "~~desktop/");

@@ -4,11 +4,17 @@
 - Polish translation fixed. German, Turkish and Japanese translation updated.
   French translation added! Thanks to the translation team!
 - Support of relative folders from command line.
-- Support for the mpv option `cursor-autohide` has been added.
+- Support for the mpv option `cursor-autohide`.
 - A issue with the support of the mpv property `title-bar` has been fixed,
   at the moment this is most useful for users of the popular uosc user script,
   the mpv built-in OSC doesn't fully support it yet.
-- Set `media-controls=yes` by default.
+- `media-controls=yes` is now enabled by default, this enables play controls
+  in the `KDE Connect` android app.
+- The mpv.net option `auto-load-folder` by default is now disabled and the
+  option is deprecated. The reason for this is mpv has new native support
+  for it using `autocreate-playlist`, which mpv.net uses now instead by default.
+- New zhongfly libmpv x64 build.
+- New Andarwinux libmpv ARM64 build.
 
 
 # v7.1.1.1 Beta (2024-07-20)

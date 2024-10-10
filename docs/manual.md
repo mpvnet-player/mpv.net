@@ -407,7 +407,11 @@ are used as defined by autofit and start-size. Default: 1500
 
 #### --auto-load-folder=\<yes|no\>
 
-For single files automatically load the entire directory into the playlist.
+For single files automatically load the entire directory
+into the playlist. This option by default is disabled.
+The option is deprecated because mpv now has native
+support for it using `autocreate-playlist`,
+which by default mpv.net sets to `autocreate-playlist=filter`.
 
 
 ### General
