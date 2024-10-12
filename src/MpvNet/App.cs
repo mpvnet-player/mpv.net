@@ -131,14 +131,12 @@ public class AppClass
     {
         switch (name)
         {
-            case "audio-file-extensions": FileTypes.Audio = value.Split(" ,;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries); return true;
             case "auto-load-folder": AutoLoadFolder = value == "yes"; return true;
             case "autofit-audio": AutofitAudio = value.Trim('%').ToInt(70) / 100f; return true;
             case "autofit-image": AutofitImage = value.Trim('%').ToInt(80) / 100f; return true;
             case "dark-mode": DarkMode = value; return true;
             case "dark-theme": DarkTheme = value.Trim('\'', '"'); return true;
             case "debug-mode": DebugMode = value == "yes"; return true;
-            case "image-file-extensions": FileTypes.Image = value.Split(" ,;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries); return true;
             case "language": Language = value; return true;
             case "light-theme": LightTheme = value.Trim('\'', '"'); return true;
             case "media-info": MediaInfo = value == "yes"; return true;
@@ -152,7 +150,6 @@ public class AppClass
             case "remember-volume": RememberVolume = value == "yes"; return true;
             case "remember-window-position": RememberWindowPosition = value == "yes"; return true;
             case "start-size": StartSize = value; return true;
-            case "video-file-extensions": FileTypes.Video = value.Split(" ,;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries); return true;
 
             default:
                 if (writeError)

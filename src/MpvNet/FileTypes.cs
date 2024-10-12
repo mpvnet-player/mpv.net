@@ -5,16 +5,49 @@ namespace MpvNet;
 
 public static class FileTypes
 {
-    public static string[] Video { get; set; } = "mkv mp4 avi mov flv mpg webm wmv ts vob 264 265 asf avc avs dav h264 h265 hevc m2t m2ts m2v m4v mpeg mpv mts vpy y4m".Split(' ');
-    public static string[] Audio { get; set; } = "mp3 flac m4a mka mp2 ogg opus aac ac3 dts dtshd dtshr dtsma eac3 mpa mpc thd w64 wav".Split(' ');
-    public static string[] Image { get; set; } = { "jpg", "bmp", "png", "gif", "webp" };
     public static string[] Subtitle { get; } = { "srt", "ass", "idx", "sub", "sup", "ttxt", "txt", "ssa", "smi", "mks" };
 
-    public static bool IsImage(string extension) => Image.Contains(extension);
-    public static bool IsAudio(string extension) => Audio.Contains(extension);
+    public static bool IsVideo(string[] exts, string ext) => exts?.Contains(ext) ?? false;
+    public static bool IsAudio(string[] exts, string ext) => exts?.Contains(ext) ?? false;
+    public static bool IsImage(string[] exts, string ext) => exts?.Contains(ext) ?? false;
 
-    public static bool IsMedia(string extension) =>
-        Video.Contains(extension) || Audio.Contains(extension) || Image.Contains(extension);
+    public static bool IsVideo(string ext) => GetVideoExts().Contains(ext);
+    public static bool IsAudio(string ext) => GetAudioExts().Contains(ext);
+    public static bool IsImage(string ext) => GetImgExts().Contains(ext);
 
-    public static IEnumerable<string> GetMediaFiles(IEnumerable<string> files) => files.Where(i => IsMedia(i.Ext()));
+    public static string[] GetVideoExts()
+    {
+        string exts = Player.GetPropertyString("video-exts");
+
+        if (string.IsNullOrEmpty(exts))
+            return "mkv mp4 avi mov flv mpg webm wmv ts vob 264 265 asf avc avs dav h264 h265 hevc m2t m2ts m2v m4v mpeg mpv mts vpy y4m".Split(' ');
+
+        return exts.Split(" ,;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+    }
+
+    public static string[] GetAudioExts()
+    {
+        string exts = Player.GetPropertyString("audio-exts");
+
+        if (string.IsNullOrEmpty(exts))
+            return "mp3 flac m4a mka mp2 ogg opus aac ac3 dts dtshd dtshr dtsma eac3 mpa mpc thd w64 wav".Split(' ');
+
+        return exts.Split(" ,;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+    }
+
+    public static string[] GetImgExts()
+    {
+        string exts = Player.GetPropertyString("image-exts");
+
+        if (string.IsNullOrEmpty(exts))
+            return new string[]{ "jpg", "bmp", "png", "gif", "webp" };
+
+        return exts.Split(" ,;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+    }
+
+    public static bool IsMedia(string[] exts, string ext) =>
+        IsVideo(exts, ext) || IsAudio(exts, ext) || IsImage(exts, ext);
+
+    public static IEnumerable<string> GetMediaFiles(string[] files) =>
+        files.Where(i => IsMedia(files, i.Ext()));
 }

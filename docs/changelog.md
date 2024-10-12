@@ -1,4 +1,9 @@
 
+# v7.1.1.3 Beta (????-??-??)
+
+- Support for autocreate-playlist, video-exts, audio-exts, image-exts.
+  Windows 7 support should still work, but needs auto-load-folder to be enabled.
+
 # v7.1.1.2 Beta (2024-10-10)
 
 - Polish translation fixed. German, Turkish and Japanese translation updated.

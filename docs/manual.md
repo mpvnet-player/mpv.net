@@ -448,18 +448,6 @@ Amount of recent files to be remembered. Default: 15
 
 Usage of the media info library instead of mpv to access media information. Default: yes (mpv.net specific option)
 
-#### --video-file-extensions=\<string\>
-
-Video file extensions used to create file associations and used by the auto-load-folder feature.
-
-#### --audio-file-extensions=\<string\>
-
-Audio file extensions used to create file associations and used by the auto-load-folder feature.
-
-#### --image-file-extensions=\<string\>
-
-Image file extensions used to create file associations and used by the auto-load-folder feature.
-
 #### --debug-mode=\<yes|no\>
 
 Enable this only when a developer asks for it. Default: no

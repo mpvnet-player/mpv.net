@@ -236,9 +236,9 @@ public class GuiCommand
 
         switch (perceivedType)
         {
-            case "video": extensions = FileTypes.Video; break;
-            case "audio": extensions = FileTypes.Audio; break;
-            case "image": extensions = FileTypes.Image; break;
+            case "video": extensions = FileTypes.GetVideoExts(); break;
+            case "audio": extensions = FileTypes.GetAudioExts(); break;
+            case "image": extensions = FileTypes.GetImgExts(); break;
         }
 
         try
@@ -284,13 +284,13 @@ public class GuiCommand
 
         if (File.Exists(path) && osd)
         {
-            if (FileTypes.Audio.Contains(path.Ext()))
+            if (FileTypes.IsAudio(path.Ext()))
             {
                 text = Player.GetPropertyOsdString("filtered-metadata");
                 Player.CommandV("show-text", text, "5000");
                 return;
             }
-            else if (FileTypes.Image.Contains(path.Ext()))
+            else if (FileTypes.IsImage(path.Ext()))
             {
                 fileSize = new FileInfo(path).Length;
 
