@@ -14,6 +14,7 @@ using MpvNet.Windows.WPF;
 using MpvNet.Windows.WPF.MsgBox;
 using MpvNet.Windows.Help;
 using MpvNet.Help;
+using System.Windows.Documents;
 
 namespace MpvNet;
 
@@ -56,6 +57,8 @@ public class GuiCommand
         ["show-properties"] = args => Player.Command("script-binding select/show-properties"),
         ["show-protocols"] = args => ShowProtocols(),
         ["window-scale"] = args => WindowScaleNet?.Invoke(float.Parse(args[0], CultureInfo.InvariantCulture)),
+        ["install-command-palette"] = args => InstallCommandPalette(),
+        ["show-recent-in-command-palette"] = args => ShowRecentFilesInCommandPalette(),
 
 
         // deprecated
@@ -265,6 +268,56 @@ public class GuiCommand
                 Msg.ShowError(_("Error creating file associations."));
         }
         catch { }
+    }
+
+    void InstallCommandPalette()
+    {
+        if (Msg.ShowQuestion("Install command palette?") != MessageBoxResult.OK)
+            return;
+
+        try
+        {
+            Environment.SetEnvironmentVariable("MPVNET_HOME", Player.ConfigFolder);
+            using Process proc = new Process();
+            proc.StartInfo.FileName = "powershell";
+            proc.StartInfo.Arguments = "-executionpolicy bypass -nologo -noexit -noprofile -command \"irm https://raw.githubusercontent.com/stax76/mpv-scripts/refs/heads/main/powershell/command_palette_installer.ps1 | iex\"";
+            proc.Start();
+        }
+        catch
+        {
+        }
+    }
+
+    void ShowRecentFilesInCommandPalette()
+    {
+        Obj o = new();
+        o.title = "Recent Files";
+        o.selected_index = 0;
+
+        var items = new List<Item>();
+
+        foreach (string file in App.Settings.RecentFiles)
+            items.Add(new Item() { title = Path.GetFileName(file),
+                                   value = new string []{ "loadfile", file },
+                                   hint = file});
+
+        o.items = items.ToArray();
+        string json = JsonSerializer.Serialize(o);
+        Player.CommandV("script-message", "show-command-palette-json", json);
+    }
+
+    public class Obj
+    {
+        public string title { get; set; } = "";
+        public int selected_index { get; set; } = 0;
+        public Item[] items { get; set; } = Array.Empty<Item>();
+    }
+
+    public class Item
+    {
+        public string[] value  { get; set; } = Array.Empty<string>();
+        public string title { get; set; } = "";
+        public string hint { get; set; } = "";
     }
 
     void ShowMediaInfo(IList<string> args)

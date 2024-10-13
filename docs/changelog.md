@@ -3,6 +3,10 @@
 
 - Support for autocreate-playlist, video-exts, audio-exts, image-exts.
   Windows 7 support should still work, but needs auto-load-folder to be enabled.
+- The command palette user script is installable from the context menu under
+  `Settings > Setup > Install Command Palette`. The command palette features
+  are shown in the menu under 'View > Command Palette'.
+
 
 # v7.1.1.2 Beta (2024-10-10)
 
