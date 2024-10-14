@@ -33,6 +33,7 @@ public class GuiCommand
     {
         ["add-to-path"] = args => AddToPath(),
         ["edit-conf-file"] = EditCongFile,
+        ["install-command-palette"] = args => InstallCommandPalette(),
         ["load-audio"] = LoadAudio,
         ["load-sub"] = LoadSubtitle,
         ["move-window"] = args => MoveWindow?.Invoke(args[0]),
@@ -56,9 +57,9 @@ public class GuiCommand
         ["show-profiles"] = args => Msg.ShowInfo(Player.GetProfiles()),
         ["show-properties"] = args => Player.Command("script-binding select/show-properties"),
         ["show-protocols"] = args => ShowProtocols(),
-        ["window-scale"] = args => WindowScaleNet?.Invoke(float.Parse(args[0], CultureInfo.InvariantCulture)),
-        ["install-command-palette"] = args => InstallCommandPalette(),
         ["show-recent-in-command-palette"] = args => ShowRecentFilesInCommandPalette(),
+        ["stream-quality"] = args => StreamQuality(),
+        ["window-scale"] = args => WindowScaleNet?.Invoke(float.Parse(args[0], CultureInfo.InvariantCulture)),
 
 
         // deprecated
@@ -285,6 +286,22 @@ public class GuiCommand
         }
         catch
         {
+        }
+    }
+
+    void StreamQuality()
+    {
+        int version = Player.GetPropertyInt("user-data/command-palette/version");
+
+        if (version >= 1)
+            Player.Command("script-message-to command_palette show-command-palette \"Stream Quality\"");
+        else
+        {
+            var r = Msg.ShowQuestion("The Stream Quality feature requires the command palette to be installed." + BR2 +
+                                     "Would you like to install the command palette now?");
+
+            if (r == MessageBoxResult.OK)
+                Player.Command("script-message-to mpvnet install-command-palette");
         }
     }
 

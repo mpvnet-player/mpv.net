@@ -81,6 +81,7 @@ public static class InputHelp
         Add(b, new (_("Video"), _("Toggle Deinterlace"), "cycle deinterlace", "d"));
         Add(b, new (_("Video"), _("Change Aspect Ratio"), "cycle-values video-aspect-override 16:9 4:3 2.35:1 0 -1", "a"));
         Add(b, new (_("Video"), _("Rotate Video"), "cycle-values video-rotate 90 180 270 0", "Ctrl+r"));
+        Add(b, new (_("Video"), _("Stream Quality"), "script-message-to mpvnet stream-quality", "Alt+q"));
 
         Add(b, new (_("Audio"), _("Audio Device")));
         Add(b, new (_("Audio"), _("Next Track"), "script-message-to mpvnet cycle-audio", "KP7"));

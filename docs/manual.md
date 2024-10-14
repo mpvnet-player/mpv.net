@@ -319,6 +319,9 @@ Shows available profiles with a message box.
 ### show-text \<text\> \<duration\> \<font-size\>
 Shows a OSD message with given text, duration and font size.
 
+### stream-quality
+Shows a menu to select the stream quality.
+
 ### window-scale \<factor\>
 Works similar as the [window-scale](https://mpv.io/manual/master/#command-interface-window-scale) mpv property.
 
