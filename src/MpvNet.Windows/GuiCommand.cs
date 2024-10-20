@@ -14,7 +14,6 @@ using MpvNet.Windows.WPF;
 using MpvNet.Windows.WPF.MsgBox;
 using MpvNet.Windows.Help;
 using MpvNet.Help;
-using System.Windows.Documents;
 
 namespace MpvNet;
 
@@ -293,7 +292,7 @@ public class GuiCommand
     {
         int version = Player.GetPropertyInt("user-data/command-palette/version");
 
-        if (version >= 1)
+        if (version >= 2)
             Player.Command("script-message-to command_palette show-command-palette \"Stream Quality\"");
         else
         {
@@ -323,14 +322,14 @@ public class GuiCommand
         Player.CommandV("script-message", "show-command-palette-json", json);
     }
 
-    public class Obj
+    class Obj
     {
         public string title { get; set; } = "";
         public int selected_index { get; set; } = 0;
         public Item[] items { get; set; } = Array.Empty<Item>();
     }
 
-    public class Item
+    class Item
     {
         public string[] value  { get; set; } = Array.Empty<string>();
         public string title { get; set; } = "";

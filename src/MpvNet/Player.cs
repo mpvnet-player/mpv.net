@@ -254,20 +254,7 @@ public class MainPlayer : MpvClient
                     _configFolder = Folder.AppData + "mpv.net";
 
                 if (!Directory.Exists(_configFolder))
-                {
-                    try {
-                        using Process proc = new Process();
-                        proc.StartInfo.UseShellExecute = false;
-                        proc.StartInfo.CreateNoWindow = true;
-                        proc.StartInfo.FileName = "powershell.exe";
-                        proc.StartInfo.Arguments = $@"-Command New-Item -Path '{_configFolder}' -ItemType Directory";
-                        proc.Start();
-                        proc.WaitForExit();
-                    } catch (Exception) {}
-
-                    if (!Directory.Exists(_configFolder))
-                        Directory.CreateDirectory(_configFolder);
-                }
+                    Directory.CreateDirectory(_configFolder);
 
                 _configFolder = _configFolder.AddSep();
             }

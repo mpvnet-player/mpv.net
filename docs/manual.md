@@ -22,7 +22,6 @@ Table of contents
 * [Extensions](#extensions)
 * [Color Theme](#color-theme)
 * [Advanced Features](#advanced-features)
-* [Hidden Features](#hidden-features)
 * [Differences compared to mpv](#differences-compared-to-mpv)
 * [Environment Variables](#environment-variables)
 * [user-data](#user-data)
@@ -582,14 +581,6 @@ demuxer-lavf-format = vapoursynth
 ```
 
 Python and VapourSynth must be in the path environment variable.
-
-
-Hidden Features
----------------
-
-Selecting multiple files in File Explorer and pressing enter will
-open the files in mpv.net. Explorer restricts this to maximum 15 files
-and the order will be random.
 
 
 Differences compared to mpv

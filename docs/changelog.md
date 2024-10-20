@@ -1,5 +1,5 @@
 
-# v7.1.1.3 Beta (????-??-??)
+# v7.1.1.3 Beta (2024-10-20)
 
 - Support for autocreate-playlist, video-exts, audio-exts, image-exts.
   Windows 7 support should still work, but needs auto-load-folder to be enabled
@@ -9,6 +9,11 @@
   are shown in the menu under 'View > Command Palette'.
 - New command to select the stream quality `Video > Stream Quality (Alt+q)`,
   this calls the Stream Quality feature of the command palette.
+- The Command Palette interacts with mpv.net to enable the Recent Files
+  feature in the Command Palette.
+- New zhongfly libmpv x64 build.
+- New Andarwinux libmpv ARM64 build.
+
 
 # v7.1.1.2 Beta (2024-10-10)
 
