@@ -277,7 +277,7 @@ public class GuiCommand
 
         try
         {
-            Environment.SetEnvironmentVariable("MPVNET_HOME", Player.ConfigFolder);
+            Environment.SetEnvironmentVariable("MPV_CONFIG_DIR", Player.ConfigFolder);
             using Process proc = new Process();
             proc.StartInfo.FileName = "powershell";
             proc.StartInfo.Arguments = "-executionpolicy bypass -nologo -noexit -noprofile -command \"irm https://raw.githubusercontent.com/stax76/mpv-scripts/refs/heads/main/powershell/command_palette_installer.ps1 | iex\"";
