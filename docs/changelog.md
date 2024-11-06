@@ -1,4 +1,9 @@
 
+# v7.1.1.4 Beta (????-??-??)
+
+- The mpv.net manual was updated.
+
+
 # v7.1.1.3 Beta (2024-10-20)
 
 - Support for autocreate-playlist, video-exts, audio-exts, image-exts.

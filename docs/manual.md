@@ -11,7 +11,7 @@ Table of contents
 * [Download](#download)
 * [Installation](#installation)
 * [Support](#support)
-* [Settings](#settings)
+* [Config Folder](#config-folder)
 * [Input and context menu](#input-and-context-menu)
 * [Command Line Interface](#command-line-interface)
 * [Terminal](#terminal)
@@ -52,6 +52,8 @@ Download
 Installation
 ------------
 
+#### Requirements
+
 1. Windows 10 or higher.
 2. [.NET Desktop Runtime 6.0](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
 
@@ -59,30 +61,43 @@ Internet streaming requires:
 
 - Downloading [yt-dlp](https://github.com/yt-dlp/yt-dlp) and adding its folder
   to the [user environment variable PATH](https://www.google.com/search?q=user+environment+variable+PATH).
+  Alternativly the yt-dlp executable can be saved in the mpv.net executable folder.
 - In case of proxy server usage, [manual configuration](https://github.com/mpvnet-player/mpv.net/issues/401).
 
 #### File Associations
 
-File Associations can be registered using the context menu under 'Settings > Setup'.
+File Associations can be registered using the context menu under `Config > Setup`.
 
 After the file associations were registered, it might still be necessary to change the
 default app in the Windows settings.
 
 Another way to register file associations is using Windows File Explorer,
-select a media file and select 'Open with > Choose another app' in the context menu.
+select a media file and select `Open with > Choose another app` in the context menu.
 
 [Open with++](#open-with) can be used to extend the File Explorer context menu
 to get menu items for [Play with mpv.net](https://github.com/stax76/OpenWithPlusPlus#play-with-mpvnet) and
 [Add to mpv.net playlist](https://github.com/stax76/OpenWithPlusPlus#add-to-mpvnet-playlist).
-
-When multiple files are selected in File Explorer and enter is pressed then
-the files are opened in mpv.net in random order, this works with maximum 15 files.
+Alternativly the `Send To` feature of Windows File Explorer can be used.
 
 #### Path environment variable
 
 In order to use mpv.net in a terminal for advanced use cases,
-mpv.net must be added to the Path environment variable,
-this can be achieved with the context menu (Settings/Setup).
+mpv.net can be added to the Path environment variable, it allows
+to run mpv.net in a terminal by typing `mpvnet`. The easiest way
+to add mpv.net to path is:
+
+`Context Menu > Config > Setup > Add mpv.net to Path environment variable`
+
+For more information see the [terminal section](#terminal).
+
+#### Command Palette user script
+
+It's recommended to install the
+[Command Palette user script](https://github.com/stax76/mpv-scripts?tab=readme-ov-file#command_palette),
+the installer script can be invoked from:
+
+`Context Menu > Config > Setup > Install Command Palette`
+
 
 Support
 -------
@@ -103,9 +118,11 @@ Advanced mpv questions:
 
 https://github.com/mpv-player/mpv/issues
 
+https://github.com/mpv-player/mpv/discussions
 
-Settings
---------
+
+Config Folder
+-------------
 
 mpv.net searches the config folder at:
 
@@ -113,9 +130,17 @@ mpv.net searches the config folder at:
 2. startup\portable_config (startup means the directory containing mpvnet.exe)
 3. `%APPDATA%\mpv.net` (`C:\Users\Username\AppData\Roaming\mpv.net`)
 
-mpv options are stored in the file mpv.conf,
-mpv.net options are stored in the file mpvnet.conf,
-mpv.net options are documented [here](#mpvnet-specific-options).
+The config folder can be easily opened with:
+
+`Context Menu > Config > Open Config Folder`
+
+The most important files and folders in the config folder are:
+
+- `mpv.conf` file containing the mpv configuration.
+- `mpvnet.conf` file containing the mpv.net configuration.
+- `input.conf` file containing mpv key and mouse input bindings.
+- `scripts` folder containing mpv user scripts.
+- `script-opts` folder containing user scripts configuration files.
 
 
 Input and context menu
@@ -123,13 +148,13 @@ Input and context menu
 
 Global keyboard shortcuts are supported via `global-input.conf` file.
 
-The config folder can be opened from the context menu: `Settings > Open Config Folder`
+The config folder can be opened from the context menu: `Config > Open Config Folder`
 
-A input and config editor can be found in the context menu under 'Settings'.
+A input and config editor can be found in the context menu under `Config`.
 
-The input test mode can be started via command line: --input-test
+The input test mode can be started via command line: `--input-test`
 
-The input key list can be printed with --input-keylist
+The input key list can be printed with `--input-keylist`.
 
 mpv input.conf defaults:  
 https://github.com/mpv-player/mpv/blob/master/etc/input.conf
@@ -201,13 +226,10 @@ Terminal
 When mpv.net is started from a terminal it will output status,
 error and debug messages to the terminal and accept input keys from the terminal.
 
-
 mpv.net specific commands
 -------------------------
 
 `script-message-to mpvnet <command> <arguments>`
-
-mpv.net commands are used when mpv commands don't exist or lack a feature.
 
 ### add-to-path
 Adds mpv.net to the Path environment variable.
@@ -221,8 +243,18 @@ Opens mpv.conf or input.conf in a text editor.
 ### load-audio
 Shows a file browser dialog to open external audio files.
 
+For automatic detection of external audio files based on the file name,
+use the mpv option `audio-file-auto`, it can be found it the config dialog:
+
+`Context Menu > Config > Show Config Editor > Audio > audio-file-auto`
+
 ### load-sub
 Shows a file browser dialog to open external subtitle files.
+
+For automatic detection of external subtitle files based on the file name,
+use the mpv option `sub-auto`, it can be found it the config dialog:
+
+`Context Menu > Config > Show Config Editor > Subtitles > sub-auto`
 
 ### move-window [left|top|right|bottom|center]
 Moves the Window to the screen edge (Alt+Arrow) or center (Alt+BS).
@@ -236,7 +268,9 @@ Appends files to the playlist.
 
 Opens a file browser dialog in order to select files to be opened.
 The file browser dialog supports multiselect to load multiple files
-at once. Pressing CTRL appends the files to the playlist.
+at once.
+
+Supported are media files and Blu-ray and DVD ISO image files.
 
 ### open-optical-media
 Shows a folder browser dialog to open a DVD or BD folder.
@@ -244,8 +278,8 @@ ISO images don't have to be mounted, but instead can be
 opened directly with the open-files command.
 
 ### open-clipboard [\<flags\>]
-Opens a single URL or filepath from the clipboard,
-or multiple files in the file clipboard format.
+Opens URLs or filepaths from the clipboard,
+or files in the file clipboard format.
 
 **append**  
 Appends files/URLs to the playlist.
@@ -514,14 +548,15 @@ Alternatively the Chrome/Firefox extension [Open With](../../../issues/119) can 
 [Open with++](https://github.com/stax76/OpenWithPlusPlus) can be used to extend the File Explorer context menu to get menu items for [Play with mpv.net](https://github.com/stax76/OpenWithPlusPlus#play-with-mpvnet) and [Add to mpv.net playlist](https://github.com/stax76/OpenWithPlusPlus#add-to-mpvnet-playlist).
 
 
-### External Application Button
+### External Application Launcher
 
 Videos can be streamed or downloaded easily with the Chrome extension
-External Application Button, for download (recommended):
+[External Application Launcher](https://chromewebstore.google.com/detail/external-application-laun/bifmfjgpgndemajpeeoiopbeilbaifdo),
+for download (recommended):
 
 path: `wt`
 
-args: `-- pwsh -NoLogo -Command "yt-dlp --ignore-errors --download-archive 'C:\External Application Button.txt' --output 'C:\YouTube\%(channel)s - %(title)s.%(ext)s' ('[HREF]' -replace '&list=.+','')"`
+args: `-- powershell -NoLogo -Command "yt-dlp --ignore-errors --download-archive 'C:\External Application Button.txt' --output 'C:\YouTube\%(channel)s - %(title)s.%(ext)s' ('[HREF]' -replace '&list=.+','')"`
 
 
 Scripting
@@ -562,9 +597,9 @@ Custom themes can be saved at:
 
 `<conf folder>\theme.conf`
 
-The theme.conf file may contain an unlimited amount of themes.
+The theme.conf file may contain multiple themes.
 
-In the config editor under UI there are the settings dark-theme and
+In the config editor under UI there are the options dark-theme and
 light-theme to define the themes used in dark and in light mode.
 
 
@@ -589,7 +624,7 @@ Differences compared to mpv
 mpv.net is designed to work exactly like mpv, there are a few
 differences and limitations:
 
-The settings folder is named `mpv.net` instead of `mpv`:
+The configuration folder is named `mpv.net` instead of `mpv`:
 
 `C:\Users\username\AppData\Roaming\mpv.net`
 
@@ -707,7 +742,7 @@ Environment Variables
 
 ### MPVNET_HOME
 
-Directory where mpv.net looks for user settings.
+Directory where mpv.net looks for the user configuration.
 
 
 user-data
@@ -729,700 +764,6 @@ Work on the translation is done with transifex, translators have to create a tra
 
 https://app.transifex.com/stax76/teams/
 
-For questions visit:
+For translation questions visit:
 
 https://github.com/mpvnet-player/mpv.net/issues/576
-
-Context Menu Commands
----------------------
-
-### Open > Open Files
-
-The Open Files menu entry is one way to open files in mpv.net, it supports multi selection.
-
-Another way to open files is the command line which is used by
-File Explorer for existing associations.
-
-A third way is to drag and drop files on the main window.
-
-Blu-ray and DVD ISO image files are supported.
-
-
-### Open > Open URL or file path from clipboard
-
-Opens files and URLs from the clipboard. Shift key appends to the playlist.
-How to open URLs directly from the browser from sites like YouTube is described in the
-[External Tools section](#external-tools).
-
-
-### Open > Open DVD/Blu-ray Drive/Folder
-
-Opens a DVD/Blu-ray Drive/Folder.
-
-
-### Open > Load external audio files
-
-Allows to load an external audio file. It's also possible to auto detect
-external audio files based on the file name, the option for this can be
-found in the settings under 'Settings > Show Config Editor > Audio > audio-file-auto'.
-
-
-### Open > Load external subtitle files
-
-Allows to load an external subtitle file. It's also possible to auto detect
-external subtitle files based on the file name, the option for this can be
-found in the settings under 'Settings > Show Config Editor > Subtitles > sub-auto'.
-
-
-### Play/Pause
-
-Play/Pause using the command:
-
-`cycle pause`
-
-[cycle command](https://mpv.io/manual/master/#command-interface-cycle-%3Cname%3E-[%3Cvalue%3E])
-
-[pause property](https://mpv.io/manual/master/#options-pause)
-
-
-### Stop
-
-Stops the player and unloads the playlist using the command:
-
-`stop`
-
-[stop command](https://mpv.io/manual/master/#command-interface-stop)
-
-
-### Toggle Fullscreen
-
-Toggles fullscreen using the command:
-
-`cycle fullscreen`
-
-[cycle command](https://mpv.io/manual/master/#command-interface-cycle-%3Cname%3E-[%3Cvalue%3E])
-
-[fullscreen property](https://mpv.io/manual/master/#options-fs)
-
-
-### Navigate > Previous File
-
-Navigates to the previous file in the playlist using the command:
-
-`playlist-prev`
-
-[playlist-prev command](https://mpv.io/manual/master/#command-interface-playlist-prev)
-
-
-### Navigate > Next File
-
-Navigates to the next file in the playlist using the command:
-
-`playlist-next`
-
-[playlist-next command](https://mpv.io/manual/master/#command-interface-playlist-next)
-
-
-### Navigate > Next Chapter
-
-Navigates to the next chapter using the command:
-
-`add chapter 1`
-
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
-
-[chapter property](https://mpv.io/manual/master/#command-interface-chapter)
-
-
-### Navigate > Previous Chapter
-
-Navigates to the previous chapter using the command:
-
-`add chapter -1`
-
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
-
-[chapter property](https://mpv.io/manual/master/#command-interface-chapter)
-
-
-### Navigate > Jump Next Frame
-
-Jumps to the next frame using the command:
-
-`frame-step`
-
-[frame-step command](https://mpv.io/manual/master/#command-interface-frame-step)
-
-
-### Navigate > Jump Previous Frame
-
-Jumps to the previous frame using the command:
-
-`frame-back-step`
-
-[frame-back-step command](https://mpv.io/manual/master/#command-interface-frame-back-step)
-
-
-### Navigate > Jump
-
-Seeking using the command:
-
-`no-osd seek sec`
-
-sec is the relative amount of seconds to jump, the no-osd prefix
-is used because mpv.net includes a script that shows the position
-when a seek operation is performed, the script uses a more simple
-time format.
-
-[no-osd command prefix](https://mpv.io/manual/master/#command-interface-no-osd)
-
-[seek command](https://mpv.io/manual/master/#command-interface-seek-%3Ctarget%3E-[%3Cflags%3E])
-
-
-### Pan & Scan > Increase Size
-
-Adds video zoom using the command:
-
-`add video-zoom  0.1`
-
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
-
-[video-zoom property](https://mpv.io/manual/master/#options-video-zoom)
-
-
-### Pan & Scan > Decrease Size
-
-Adds negative video zoom using the command:
-
-`add video-zoom  -0.1`
-
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
-
-[video-zoom property](https://mpv.io/manual/master/#options-video-zoom)
-
-
-### Pan & Scan > Move Left
-
-`add video-pan-x -0.01`
-
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
-
-[video-pan-x, video-pan-y property](https://mpv.io/manual/master/#options-video-pan-y)
-
-
-### Pan & Scan > Move Right
-
-`add video-pan-x 0.01`
-
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
-
-[video-pan-x, video-pan-y property](https://mpv.io/manual/master/#options-video-pan-y)
-
-
-### Pan & Scan > Move Up
-
-`add video-pan-y -0.01`
-
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
-
-[video-pan-x, video-pan-y property](https://mpv.io/manual/master/#options-video-pan-y)
-
-
-### Pan & Scan > Move Down
-
-`add video-pan-y 0.01`
-
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
-
-[video-pan-x, video-pan-y property](https://mpv.io/manual/master/#options-video-pan-y)
-
-
-### Pan & Scan > Decrease Height
-
-`add panscan -0.1`
-
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
-
-[panscan property](https://mpv.io/manual/master/#options-panscan)
-
-
-### Pan & Scan > Increase Height
-
-`add panscan  0.1`
-
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
-
-[panscan property](https://mpv.io/manual/master/#options-panscan)
-
-
-### Pan & Scan > Reset
-
-Resets Pan & Scan, multiple commands in the same line are separated with semicolon.
-
-`set video-zoom 0; set video-pan-x 0; set video-pan-y 0`
-
-[video-zoom property](https://mpv.io/manual/master/#options-video-zoom)
-
-[video-pan-x, video-pan-y property](https://mpv.io/manual/master/#options-video-pan-y)
-
-
-### Video > Decrease Contrast
-
-Decreases contrast with the following command:
-
-`add contrast -1`
-
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
-
-[contrast property](https://mpv.io/manual/master/#options-contrast)
-
-
-### Video > Increase Contrast
-
-Increases contrast with the following command:
-
-`add contrast 1`
-
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
-
-[contrast property](https://mpv.io/manual/master/#options-contrast)
-
-
-### Video > Decrease Brightness
-
-Decreases brightness using the following command:
-
-`add brightness -1`
-
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
-
-[brightness property](https://mpv.io/manual/master/#options-brightness)
-
-
-### Video > Increase Brightness
-
-Increases brightness using the following command:
-
-`add brightness 1`
-
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
-
-[brightness property](https://mpv.io/manual/master/#options-brightness)
-
-
-### Video > Decrease Gamma
-
-Decreases gamma using the following command:
-
-`add gamma -1`
-
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
-
-[gamma property](https://mpv.io/manual/master/#options-gamma)
-
-
-### Video > Increase Gamma
-
-Increases gamma using the following command:
-
-`add gamma 1`
-
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
-
-[gamma property](https://mpv.io/manual/master/#options-gamma)
-
-
-### Video > Decrease Saturation
-
-Decreases saturation using the following command:
-
-`add saturation -1`
-
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
-
-[saturation property](https://mpv.io/manual/master/#options-saturation)
-
-
-### Video > Increase Saturation
-
-Increases saturation using the following command:
-
-`add saturation 1`
-
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
-
-[saturation property](https://mpv.io/manual/master/#options-saturation)
-
-
-### Video > Take Screenshot
-
-`async screenshot`
-
-[async command prefix](https://mpv.io/manual/master/#command-interface-async)
-
-[screenshot command](https://mpv.io/manual/master/#command-interface-screenshot-%3Cflags%3E)
-
-
-### Video > Toggle Deinterlace
-
-Cycles the deinterlace property using the following command:
-
-`cycle deinterlace`
-
-[cycle command](https://mpv.io/manual/master/#command-interface-cycle-%3Cname%3E-[%3Cvalue%3E])
-
-[deinterlace property](https://mpv.io/manual/master/#options-deinterlace)
-
-
-### Video > Cycle Aspect Ratio
-
-Cycles the aspect ratio using the following command:
-
-`cycle-values video-aspect-override 16:9 4:3 2.35:1 0 -1`
-
-[cycle-values command](https://mpv.io/manual/master/#command-interface-cycle-values)
-
-[video-aspect property](https://mpv.io/manual/master/#options-video-aspect-override)
-
-
-### Audio > Next
-
-This uses a mpv.net command that shows better info then the mpv preset
-and also has the advantage of not showing no audio.
-
-
-### Audio > Delay +0.1
-
-Adds a audio delay using the following command:
-
-`add audio-delay 0.1`
-
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
-
-[audio-delay property](https://mpv.io/manual/master/#options-audio-delay)
-
-
-### Audio > Delay -0.1
-
-Adds a negative audio delay using the following command:
-
-`add audio-delay -0.1`
-
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
-
-[audio-delay property](https://mpv.io/manual/master/#options-audio-delay)
-
-
-### Subtitle > Toggle Visibility
-
-Cycles the subtitle visibility using the following command:
-
-`cycle sub-visibility`
-
-[cycle command](https://mpv.io/manual/master/#command-interface-cycle-%3Cname%3E-[%3Cvalue%3E])
-
-[sub-visibility property](https://mpv.io/manual/master/#options-no-sub-visibility)
-
-
-### Subtitle > Delay -0.1
-
-Adds a negative subtitle delay using the following command:
-
-`add sub-delay -0.1`
-
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
-
-[sub-delay property](https://mpv.io/manual/master/#options-sub-delay)
-
-
-### Subtitle > Delay 0.1
-
-Adds a positive subtitle delay using the following command:
-
-`add sub-delay 0.1`
-
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
-
-[sub-delay property](https://mpv.io/manual/master/#options-sub-delay)
-
-
-### Subtitle > Move Up
-
-Moves the subtitle up using the following command:
-
-`add sub-pos -1`
-
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
-
-[sub-pos property](https://mpv.io/manual/master/#options-sub-pos)
-
-
-### Subtitle > Move Down
-
-Moves the subtitle down using the following command:
-
-`add sub-pos 1`
-
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
-
-[sub-pos property](https://mpv.io/manual/master/#options-sub-pos)
-
-
-### Subtitle > Decrease Subtitle Font Size
-
-Decreases the subtitle font size using the following command:
-
-`add sub-scale -0.1`
-
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
-
-[sub-scale property](https://mpv.io/manual/master/#options-sub-scale)
-
-
-### Subtitle > Increase Subtitle Font Size
-
-Increases the subtitle font size using the following command:
-
-`add sub-scale 0.1`
-
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
-
-[sub-scale property](https://mpv.io/manual/master/#options-sub-scale)
-
-
-### Volume > Up
-
-Increases the volume using the following command:
-
-`add volume 2`
-
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
-
-[volume property](https://mpv.io/manual/master/#options-volume)
-
-
-### Volume > Down
-
-Decreases the volume using the following command:
-
-`add volume -2`
-
-[add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
-
-[volume property](https://mpv.io/manual/master/#options-volume)
-
-
-### Volume > Mute
-
-Cycles the mute property using the following command:
-
-`cycle mute`
-
-[cycle command](https://mpv.io/manual/master/#command-interface-cycle-%3Cname%3E-[%3Cvalue%3E])
-
-[mute property](https://mpv.io/manual/master/#options-mute)
-
-
-### Speed > -10%
-
-Decreases the speed by 10% using the following command:
-
-`multiply speed 1/1.1`
-
-[multiply command](https://mpv.io/manual/master/#command-interface-multiply-%3Cname%3E-%3Cvalue%3E)
-
-[speed property](https://mpv.io/manual/master/#options-speed)
-
-
-### Speed > 10%
-
-Increases the speed by 10% using the following command:
-
-`multiply speed 1.1`
-
-[multiply command](https://mpv.io/manual/master/#command-interface-multiply-%3Cname%3E-%3Cvalue%3E)
-
-[speed property](https://mpv.io/manual/master/#options-speed)
-
-
-### Speed > Half
-
-Halfs the speed using the following command:
-
-`multiply speed 0.5`
-
-[multiply command](https://mpv.io/manual/master/#command-interface-multiply-%3Cname%3E-%3Cvalue%3E)
-
-[speed property](https://mpv.io/manual/master/#options-speed)
-
-
-### Speed > Double
-
-Doubles the speed using the following command:
-
-`multiply speed 2`
-
-[multiply command](https://mpv.io/manual/master/#command-interface-multiply-%3Cname%3E-%3Cvalue%3E)
-
-[speed property](https://mpv.io/manual/master/#options-speed)
-
-
-### Speed > Reset
-
-Resets the speed using the following command:
-
-`set speed 1`
-
-[set command](https://mpv.io/manual/master/#command-interface-set-%3Cname%3E-%3Cvalue%3E)
-
-[speed property](https://mpv.io/manual/master/#options-speed)
-
-
-### View > On Top > Enable
-
-Forces the player to stay on top of other windows using the following command:
-
-`set ontop yes`
-
-[set command](https://mpv.io/manual/master/#command-interface-set-%3Cname%3E-%3Cvalue%3E)
-
-[ontop property](https://mpv.io/manual/master/#options-ontop)
-
-
-### View > On Top > Disable
-
-Disables the player to stay on top of other windows using the following command:
-
-`set ontop no`
-
-[set command](https://mpv.io/manual/master/#command-interface-set-%3Cname%3E-%3Cvalue%3E)
-
-[ontop property](https://mpv.io/manual/master/#options-ontop)
-
-
-### View > File Info
-
-Shows info using a mpv.net command about the current file, shows length, position, formats, size and filename.
-
-
-### View > Show Statistics
-
-Show statistics using the following command:
-
-`script-binding stats/display-stats`
-
-[script-binding command](https://mpv.io/manual/master/#command-interface-script-binding)
-
-
-### View > Toggle Statistics
-
-Toggles statistics using the following command:
-
-`script-binding stats/display-stats-toggle`
-
-[script-binding command](https://mpv.io/manual/master/#command-interface-script-binding)
-
-
-### View > Toggle OSC Visibility
-
-Toggles OSC Visibility using the following command:
-
-`script-binding osc/visibility`
-
-[script-binding command](https://mpv.io/manual/master/#command-interface-script-binding)
-
-
-### Settings > Show Config Editor
-
-Shows mpv.net's config editor.
-
-
-### Settings > Show Input Editor
-
-Shows mpv.net's key binding editor.
-
-
-### Settings > Open Config Folder
-
-Opens the config folder which contains:
-
-mpv.conf file containing mpv settings
-
-mpvnet.conf file containing mpv.net settings
-
-input.conf containing mpv key and mouse bindings
-
-User scripts and user extensions
-
-### Tools > Set/clear A-B loop points
-
-Enables to set loop start and end points using the following command:
-
-`ab-loop`
-
-[ab-loop command](https://mpv.io/manual/master/#command-interface-ab-loop)
-
-
-### Tools > Toggle infinite file looping
-
-Loops the current file infinitely using the following command:
-
-`cycle-values loop-file "inf" "no"`
-
-[cycle-values command](https://mpv.io/manual/master/#command-interface-cycle-values)
-
-[loop-file command](https://mpv.io/manual/master/#options-loop)
-
-
-### Tools > Toggle Hardware Decoding
-
-Cycles the hwdec property to enable/disable hardware decoding using the following command:
-
-`cycle-values hwdec "auto" "no"`
-
-[cycle-values command](https://mpv.io/manual/master/#command-interface-cycle-values)
-
-[hwdec property](https://mpv.io/manual/master/#options-hwdec)
-
-
-### Tools > Setup
-
-Allows to manage file associations.
-
-
-### Help > Show mpv manual
-
-Shows the [mpv manual](https://mpv.io/manual/stable/).
-
-
-### Help > Show mpv.net web site
-
-Shows the [mpv.net web site](https://github.com/mpvnet-player/mpv.net).
-
-
-### Help > Show mpv.net manual
-
-Shows the [mpv.net manual](https://github.com/mpvnet-player/mpv.net/blob/main/docs/manual.md).
-
-
-### Help > About mpv.net
-
-Shows the mpv.net about dialog which shows a copyright notice, the versions of mpv.net and libmpv and a license notice (GPL v2).
-
-
-### Exit
-
-Exits mpv.net using the following command:
-
-`quit`
-
-[quit command](https://mpv.io/manual/master/#command-interface-quit-[%3Ccode%3E])
-
-
-### Exit Watch Later
-
-Exits mpv.net and remembers the position in the file using the following command:
-
-`quit-watch-later`
-
-[quit-watch-later command](https://mpv.io/manual/master/#command-interface-quit-watch-later)

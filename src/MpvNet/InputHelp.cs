@@ -185,22 +185,22 @@ public static class InputHelp
 
         Add(b, new ("", _("Profile")));
 
-        Add(b, new (_("Settings"), _("Show Config Editor"), "script-message-to mpvnet show-conf-editor", "Ctrl+,"));
-        Add(b, new (_("Settings"), _("Show Input Editor"), "script-message-to mpvnet show-input-editor", "Ctrl+i"));
-        Add(b, new (_("Settings"), "-"));
-        Add(b, new (_("Settings"), _("Edit mpv.conf"), "script-message-to mpvnet edit-conf-file mpv.conf", "c"));
-        Add(b, new (_("Settings"), _("Edit input.conf"), "script-message-to mpvnet edit-conf-file input.conf", "k"));
-        Add(b, new (_("Settings"), "-"));
-        Add(b, new (_("Settings"), _("Open Config Folder"), "script-message-to mpvnet open-conf-folder", "Ctrl+f"));
-        Add(b, new (_("Settings") + " > " + _("Setup"), _("Register video file associations"), "script-message-to mpvnet reg-file-assoc video"));
-        Add(b, new (_("Settings") + " > " + _("Setup"), _("Register audio file associations"), "script-message-to mpvnet reg-file-assoc audio"));
-        Add(b, new (_("Settings") + " > " + _("Setup"), _("Register image file associations"), "script-message-to mpvnet reg-file-assoc image"));
-        Add(b, new (_("Settings") + " > " + _("Setup"), _("Unregister file associations"), "script-message-to mpvnet reg-file-assoc unreg"));
-        Add(b, new (_("Settings") + " > " + _("Setup"), "-"));
-        Add(b, new (_("Settings") + " > " + _("Setup"), _("Add mpv.net to Path environment variable"), "script-message-to mpvnet add-to-path"));
-        Add(b, new (_("Settings") + " > " + _("Setup"), _("Remove mpv.net from Path environment variable"), "script-message-to mpvnet remove-from-path"));
-        Add(b, new (_("Settings") + " > " + _("Setup"), "-"));
-        Add(b, new (_("Settings") + " > " + _("Setup"), _("Install Command Palette"), "script-message-to mpvnet install-command-palette"));
+        Add(b, new (_("Config"), _("Show Config Editor"), "script-message-to mpvnet show-conf-editor", "Ctrl+,"));
+        Add(b, new (_("Config"), _("Show Input Editor"), "script-message-to mpvnet show-input-editor", "Ctrl+i"));
+        Add(b, new (_("Config"), "-"));
+        Add(b, new (_("Config"), _("Edit mpv.conf"), "script-message-to mpvnet edit-conf-file mpv.conf", "c"));
+        Add(b, new (_("Config"), _("Edit input.conf"), "script-message-to mpvnet edit-conf-file input.conf", "k"));
+        Add(b, new (_("Config"), "-"));
+        Add(b, new (_("Config"), _("Open Config Folder"), "script-message-to mpvnet open-conf-folder", "Ctrl+f"));
+        Add(b, new (_("Config") + " > " + _("Setup"), _("Register video file associations"), "script-message-to mpvnet reg-file-assoc video"));
+        Add(b, new (_("Config") + " > " + _("Setup"), _("Register audio file associations"), "script-message-to mpvnet reg-file-assoc audio"));
+        Add(b, new (_("Config") + " > " + _("Setup"), _("Register image file associations"), "script-message-to mpvnet reg-file-assoc image"));
+        Add(b, new (_("Config") + " > " + _("Setup"), _("Unregister file associations"), "script-message-to mpvnet reg-file-assoc unreg"));
+        Add(b, new (_("Config") + " > " + _("Setup"), "-"));
+        Add(b, new (_("Config") + " > " + _("Setup"), _("Add mpv.net to Path environment variable"), "script-message-to mpvnet add-to-path"));
+        Add(b, new (_("Config") + " > " + _("Setup"), _("Remove mpv.net from Path environment variable"), "script-message-to mpvnet remove-from-path"));
+        Add(b, new (_("Config") + " > " + _("Setup"), "-"));
+        Add(b, new (_("Config") + " > " + _("Setup"), _("Install Command Palette"), "script-message-to mpvnet install-command-palette"));
 
         Add(b, new (_("Tools"), _("Set/clear A-B loop points"), "ab-loop", "l"));
         Add(b, new (_("Tools"), _("Toggle infinite file looping"), "cycle-values loop-file inf no", "L"));
