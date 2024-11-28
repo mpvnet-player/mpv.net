@@ -6,15 +6,16 @@
 # Translators:
 # Frank Skare, 2024
 # ERCAN KOÇAK, 2024
+# Dogancan YILMAZER, 2024
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-25 10:31+0200\n"
+"POT-Creation-Date: 2024-11-28 12:31+0200\n"
 "PO-Revision-Date: 2023-12-08 00:34+0000\n"
-"Last-Translator: ERCAN KOÇAK, 2024\n"
+"Last-Translator: Dogancan YILMAZER, 2024\n"
 "Language-Team: Turkish (https://app.transifex.com/stax76/teams/179964/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -79,7 +80,7 @@ msgstr "Çıkış"
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:25
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:26
 msgid "Playback"
-msgstr "Kayıttan yürütme"
+msgstr "Kayıttan yürüt"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:25
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:198
@@ -164,7 +165,7 @@ msgstr "5 saniye ileri"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:42
 msgid "Jump 5 sec backward"
-msgstr "5 saniye geriye"
+msgstr "5 saniye geri"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:44
 msgid "Jump 30 sec forward"
@@ -214,25 +215,25 @@ msgstr "Boyutu Küçült"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:54
 msgid "Increase Size"
-msgstr "Boyutunu Büyüt"
+msgstr "Boyutu Büyüt"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:56
 msgid "Move Left"
-msgstr "Sola Taşı"
+msgstr "Sola Kaydır"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:57
 msgid "Move Right"
-msgstr "Sağa Taşı"
+msgstr "Sağa Kaydır"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:59
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:97
 msgid "Move Up"
-msgstr "Yukarı Taşı"
+msgstr "Yukarı Kaydır"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:60
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:98
 msgid "Move Down"
-msgstr "Aşağı Taşı"
+msgstr "Aşağı Kaydır"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:62
 msgid "Decrease Height"
@@ -281,7 +282,7 @@ msgstr "Parlaklığı Azalt"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:71
 msgid "Increase Brightness"
-msgstr "Parlaklığını Artır"
+msgstr "Parlaklığı Artır"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:73
 msgid "Decrease Gamma"
@@ -309,7 +310,7 @@ msgstr "Ekran görüntüsünü altyazısız al"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:81
 msgid "Toggle Deinterlace"
-msgstr "Taramasızlaştırmayı göster"
+msgstr "Taramasızlaştırmayı Göster"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:82
 msgid "Change Aspect Ratio"
@@ -365,7 +366,7 @@ msgstr "Altyazı"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:92
 msgid "Toggle Visibility"
-msgstr "Görünürlüğü Göster"
+msgstr "Göster/Gizle"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:100
 msgid "Decrease Font Size"
@@ -400,17 +401,17 @@ msgstr "Ses Parçası"
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:109
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:110
 msgid "Volume"
-msgstr "Sayı"
+msgstr "Ses"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:107
 msgctxt "Volume"
 msgid "Up"
-msgstr "Yukarı"
+msgstr "Arttır"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:108
 msgctxt "Volume"
 msgid "Down"
-msgstr "Aşağı"
+msgstr "Azalt"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:110
 msgid "Mute"
@@ -436,11 +437,11 @@ msgstr "+10%"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:115
 msgid "Half"
-msgstr "Yarım"
+msgstr "0.5x"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:116
 msgid "Double"
-msgstr "İkile"
+msgstr "2x"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:120
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:121
@@ -508,7 +509,7 @@ msgstr "Çalma listesi"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:127
 msgid "Bindings"
-msgstr "Bağlamalar"
+msgstr "Atamalar"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:128
 msgid "Properties"
@@ -556,7 +557,7 @@ msgstr "Komutları Göster"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:140
 msgid "Show Bindings"
-msgstr "Bağlamaları Göster"
+msgstr "Atamaları Göster"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:141
 msgid "Show Keys"
@@ -568,11 +569,11 @@ msgstr "Protokolleri Göster"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:143
 msgid "Show Decoders"
-msgstr "Kod Çözücüleri Göster"
+msgstr "Decoderi Göster"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:144
 msgid "Show Demuxers"
-msgstr "Kod Çözücüleri Göster"
+msgstr "Demuxeri Göster"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:146
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:147
@@ -663,7 +664,7 @@ msgstr "Aşağı"
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:158
 msgctxt "Move"
 msgid "Center"
-msgstr "Merkez"
+msgstr "Ortala"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:159
 msgid "Toggle Border"
@@ -697,11 +698,11 @@ msgstr "Ayarlar"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:164
 msgid "Show Config Editor"
-msgstr "Yapılandırma Düzenleyiciyi Göster"
+msgstr "Yapılandırma Düzenleyicisini Göster"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:165
 msgid "Show Input Editor"
-msgstr "Giriş Düzenleyicisini Göster"
+msgstr "Tuş Düzenleyicisini Göster"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:167
 msgid "Edit mpv.conf"
@@ -795,23 +796,23 @@ msgstr "Yardım"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:187
 msgid "Website mpv"
-msgstr "İnternet sayfası mpv"
+msgstr "Mpv internet sayfası"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:188
 msgid "Website mpv.net"
-msgstr "İnternet sayfası mpv.net"
+msgstr "Mpv.net internet sayfası"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:190
 msgid "Manual mpv"
-msgstr "Manuel mpv"
+msgstr "Mpv kullanım kılavuzu"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:191
 msgid "Manual mpv.net"
-msgstr "Manuel mpv.net"
+msgstr "Mpv.net kullanım kılavuzu"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:193
 msgid "awesome-mpv"
-msgstr "müthiş-mpv"
+msgstr "Mpv ek kaynakları"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:194
 msgid "About mpv.net"
@@ -882,8 +883,7 @@ msgstr "Pano geçerli bir URL veya dosya içermiyor."
 
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:257
 msgid "File Explorer icons will refresh after process restart."
-msgstr ""
-"İşlem yeniden başlatıldıktan sonra Dosya Gezgini simgeleri yenilenecektir."
+msgstr "Dosya Gezgini simgeleri, işlem yeniden başlatıldıktan sonra yenilenecektir."
 
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:260
 msgid "File associations were successfully removed."
@@ -899,11 +899,11 @@ msgstr "Dosya ilişkilendirmeleri oluşturulurken hata oluştu."
 
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:362
 msgid "mpv.net is already in the Path environment variable."
-msgstr "mpv.net zaten Path ortam değişkeninde."
+msgstr "Mpv.net zaten Path ortam değişkeninde."
 
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:370
 msgid "mpv.net was successfully added to the Path environment variable."
-msgstr "mpv.net Path ortam değişkenine başarıyla eklendi."
+msgstr "Mpv.net Path ortam değişkenine başarıyla eklendi."
 
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:379
 msgid "mpv.net was not found in the Path environment variable."
@@ -911,7 +911,7 @@ msgstr "Path ortam değişkeninde mpv.net bulunamadı."
 
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:388
 msgid "mpv.net was successfully removed from the Path environment variable."
-msgstr "mpv.net Path ortam değişkeninden başarıyla kaldırıldı."
+msgstr "Mpv.net Path ortam değişkeninden başarıyla kaldırıldı."
 
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:393
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:398
