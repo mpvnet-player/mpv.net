@@ -1,18 +1,156 @@
 
-# v7.0.0.0 Beta (2023-??-??)
+# v7.1.1.3 Beta (2024-10-20)
+
+- Support for autocreate-playlist, video-exts, audio-exts, image-exts.
+  Windows 7 support should still work, but needs auto-load-folder to be enabled
+  or autoload.lua.
+- The command palette user script is installable from the context menu under
+  `Settings > Setup > Install Command Palette`. The command palette features
+  are shown in the menu under 'View > Command Palette'.
+- New command to select the stream quality `Video > Stream Quality (Alt+q)`,
+  this calls the Stream Quality feature of the command palette.
+- The Command Palette interacts with mpv.net to enable the Recent Files
+  feature in the Command Palette.
+- New zhongfly libmpv x64 build.
+- New Andarwinux libmpv ARM64 build.
+
+
+# v7.1.1.2 Beta (2024-10-10)
+
+- Polish translation fixed. German, Turkish and Japanese translation updated.
+  French translation added! Thanks to the translation team!
+- Support of relative folders from command line.
+- Support for the mpv option `cursor-autohide`.
+- A issue with the support of the mpv property `title-bar` has been fixed,
+  at the moment this is most useful for users of the popular uosc user script,
+  the mpv built-in OSC doesn't fully support it yet.
+- `media-controls=yes` is now enabled by default, this enables play controls
+  in the `KDE Connect` android app.
+- The mpv.net option `auto-load-folder` by default is now disabled and the
+  option is deprecated. The reason for this is mpv has new native support
+  for it using `autocreate-playlist`, which mpv.net uses now instead by default.
+- New zhongfly libmpv x64 build.
+- New Andarwinux libmpv ARM64 build.
+
+
+# v7.1.1.1 Beta (2024-07-20)
+
+- Korean, Russian and Turkish translation added, Japanese translation fixed. Thanks to the translation team!
+- Action/Workflow/Auto build fix and update.
+- New default bindings and menu items for select.lua which is a new simple mpv built-in command palette script.  
+  In the context menu select.lua features can be found under `View > On Screen Menu`.  
+  https://github.com/mpv-player/mpv/blob/master/player/lua/select.lua
+- New PowerShell script 'Tools\release-mpv.net.ps1' used to releases mpv.net on GitHub.
+- Fix DVD ISO file support.
+- MediaInfo updated to version v24.6.
+- New ARM64 support.
+- New zhongfly libmpv x64 build.
+- New Andarwinux libmpv ARM64 build.
+
+
+# v7.1.1.0 (2024-02-03)
+
+- Chinese and Japanese translation updated. Thanks to the translation team!
+- Fix command line arguments being ignored in some situations.
+
+
+# v7.1.0.0 (2024-01-12)
+
+- The menu item that shows profiles was moved into the menu item that lists profiles.
+- Fix geometry not working when used from mpv.conf and the conf editor.
+- GitHub Auto/Action/Workflow builds use a newer libmpv build.
+- German and Chinese translation updated. Japanese translation added. Thanks to our translation team!
+- New PowerShell script Tools/update-mpv-and-libmpv.ps1 to update mpv and libmpv.
+- Context menu supports audio device selection (Audio > Audio Device)
+- New option `remember-audio-device` to save and restore the audio device chosen in the context menu.
+- New zhongfly libmpv build.
+
+
+# v7.0.0.6 Beta (2024-01-02)
+
+- Improved backward compatibility with input.conf files created by old versions.
+
+
+# v7.0.0.5 Beta (2023-12-28)
+
+- Fix mpv.net option `language` not working from command line.
+- Chinese and German translation updated.
+- More libplacebo options added.
+- Support of the mpv option `title-bar`.
+- Video being less often rendered with black line at the bottom.
+- The conf file reader/writer detects if the user prefers space before and after the equal sign.
+- The portable download includes like the installer debug symbols.
+- Setup questions on startup removed.
+- Pressing shift while drag and drop appends instead of replaces
+  files in the playlist. mpv supports this as well.
+- New menu item and binding: `File > Add files to playlist from clipboard` `Ctrl+Shift+v`.
+- All list operation suffixes are available on the command line.
+- Improved layout in conf editor.
+- New zhongfly libmpv build.
+
+
+# v7.0.0.4 Beta (2023-12-19)
+
+- When mpv.net is started for the first time from a new startup location,
+  it asks if file associations should be registered.
+- Setup supports installing per user in non admin mode.
+- Command line parser supports list options with `-add` suffix.
+- Fix window sometimes shown with wrong size.
+- Limited support for the mpv option `geometry`, it supports location in percent,
+  for size use `autofit`. Read the instructions in the mpv.net manual or in the conf editor.
+- Improved manual.
+- Improved bindings.
+- Conf editor reorganized according to options categories used in mpv manual.
+- mpv.net is available via command line package manager winget.
+- New libplacebo config editor options added.
+- The conf editor uses a newly developed combo box control (dropdown menu)
+  instead of radio buttons whenever an option has more than 3 items,
+  this improves the look and feel, usability and performance.
+  The navigation tree view was improved.
+- New zhongfly libmpv build.
+
+
+# v7.0.0.3 Beta (2023-12-15)
+
+- New conf editor option `Video/libplacebo/preset`.
+- New conf editor option `Video/libplacebo/Scaling/upscaler`.
+- New menu item `Settings/Setup/Add mpv.net to Path environment variable' added.
+- New menu item `Settings/Edit mpv.conf` added for opening mpv.conf with a text editor. Default binding `c`.
+- New menu item `Settings/Edit input.conf` added for opening input.conf with a text editor. Default binding `k`.
+- mpv.net can no longer be downloaded from the Microsoft store due
+  to a general very poor experience with the package creation and submission.
+  I've submitted mpv.net to the winget package repository, it's not yet processed.
+- Improved conf file reader/writer.
+- Conf editor support added for the mpv options:
+  `reset-on-next-file`, `input-ipc-server`, `background`, `title`
+- Conf editor crash fixed.
+- When mpv.net is started for the first time from a new startup location,
+  it asks if mpv.net should be added to the Path environment variable.
+
+# v7.0.0.2 Beta (2023-12-13)
+
+- Besides a portable download there is now again a setup installer.
+- Fix dynamic menu items missing in context menu.
+- Fix certain binding setups shown poorly or incorrectly in the main menu.
+- Fix conf editor not remembering the search text.
+- Fix quit-watch-later not working.
+- New option `menu-syntax`. Default: `#menu:`
+- New zhongfly libmpv build.
+
+# v7.0.0.1 Beta (2023-12-11)
 
 - [.NET 6 is a new requirement](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
   (Windows 7 is still supported)
 - The command palette was removed because of a compatibility problem with
-  the .NET 6 platform. There are user scripts as replacement:
-  [command_palette](https://github.com/stax76/mpv-scripts#command_palette) or
-  [search_menu](https://github.com/stax76/mpv-scripts#search_menu).
-  Unfortunately the user scripts don't support IME mode which is a problem for asian users.
-- The blue mpv.net logo was removed for better mpv compatibility.
+  the .NET 6 platform. There are user scripts with similar functionality:  
+  - [command_palette](https://github.com/stax76/mpv-scripts#command_palette)
+  - [search_menu](https://github.com/stax76/mpv-scripts#search_menu)
+  - [uosc](https://github.com/tomasklaen/uosc)
+- The blue mpv.net logo was removed for better OSC compatibility.
 - Fix message box exceding working area size.
 - C# and PowerShell scripting was removed because of a compatibility problem
   with the .NET 6 platform. .NET extensions are supported with a new host
-  (not backward compatible). A example extension is available under \src\MpvNet.Extension\ExampleExtension
+  (not backward compatible). An example extension is available under \src\MpvNet.Extension\ExampleExtension
 - Redesigned bindings and context menu.
 - auto-play option removed, mpv supports it with the option reset-on-next-file.
 - Dark mode title bar enabled on Windows 10.0.18985 or higher.
@@ -23,10 +161,17 @@
 - Improved support for third party osc scripts like uosc.
 - Support of the mpv property `focused`.
 - Various improvements and fixes in the input bindings editor.
-- Automated nightly portable builds (thx to dyphire)
-- Various new or changed default bindings
-- libmpv zhongfly 2023-11-03
-
+- Automated nightly portable builds (thx to dyphire).
+- Various new or changed default bindings.
+- Context menu and message boxes are available in the languages Chinese and German.  
+  Interested joining our translation team?: https://app.transifex.com/stax76/teams/
+- Support for encoding mode and thumbfast.
+- For script authors, the following info is available in user-data:  
+  user-data/frontend/name=mpv.net  
+  user-data/frontend/version=version name  
+  user-data/frontend/process-path=the process path
+- MediaInfo 23.11
+- libmpv zhongfly 2023-11-03.
 
 # v6.0.3.2 Beta (2022-10-14)
 

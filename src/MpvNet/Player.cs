@@ -36,6 +36,7 @@ public class MainPlayer : MpvClient
     public bool Paused { get; set; }
     public bool SnapWindow { get; set; }
     public bool TaskbarProgress { get; set; } = true;
+    public bool TitleBar { get; set; } = true;
     public bool WasInitialSizeSet;
     public bool WindowMaximized { get; set; }
     public bool WindowMinimized { get; set; }
@@ -50,7 +51,6 @@ public class MainPlayer : MpvClient
     public float AutofitLarger { get; set; } = 0.8f;
 
     public AutoResetEvent ShutdownAutoResetEvent { get; } = new AutoResetEvent(false);
-    public AutoResetEvent VideoSizeAutoResetEvent { get; } = new AutoResetEvent(false);
     public nint MainHandle { get; set; }
     public List<MediaTrack> MediaTracks { get; set; } = new List<MediaTrack>();
     public List<TimeSpan> BluRayTitles { get; } = new List<TimeSpan>();
@@ -59,12 +59,14 @@ public class MainPlayer : MpvClient
     public TimeSpan Duration;
     public List<MpvClient> Clients { get; } = new List<MpvClient>();
 
+    List<StringPair>? _audioDevices;
+
     public event Action? Initialized;
     public event Action? Pause;
     public event Action<int>? PlaylistPosChanged;
     public event Action<Size>? VideoSizeChanged;
 
-    public void Init(IntPtr formHandle)
+    public void Init(IntPtr formHandle, bool processCommandLine)
     {
         App.ApplyShowMenuFix();
 
@@ -78,7 +80,8 @@ public class MainPlayer : MpvClient
 
         mpv_request_log_messages(MainHandle, "no");
 
-        TaskHelp.Run(MainEventLoop);
+        if (formHandle != IntPtr.Zero)
+            TaskHelp.Run(MainEventLoop);
 
         if (MainHandle == IntPtr.Zero)
             throw new Exception("error mpv_create");
@@ -89,24 +92,47 @@ public class MainPlayer : MpvClient
             SetPropertyString("input-terminal", "yes");
         }
 
-        SetPropertyLong("wid", formHandle.ToInt64());
+        if (formHandle != IntPtr.Zero)
+        {
+            SetPropertyString("force-window", "yes");
+            SetPropertyLong("wid", formHandle.ToInt64());
+        }
+
         SetPropertyInt("osd-duration", 2000);
 
         SetPropertyBool("input-default-bindings", true);
         SetPropertyBool("input-builtin-bindings", false);
+        SetPropertyBool("input-media-keys", true);
 
-        SetPropertyString("watch-later-options", "mute");
+        SetPropertyString("autocreate-playlist", "filter");
+        SetPropertyString("media-controls", "yes");
+        SetPropertyString("idle", "yes");
         SetPropertyString("screenshot-directory", "~~desktop/");
         SetPropertyString("osd-playing-msg", "${media-title}");
         SetPropertyString("osc", "yes");
-        SetPropertyString("force-window", "yes");
         SetPropertyString("config-dir", ConfigFolder);
-        SetPropertyString("config", "yes"); 
-        SetPropertyString("input-conf", @"memory://" + (UsedInputConfContent = App.InputConf.GetContent()));
+        SetPropertyString("config", "yes");
+        
+        UsedInputConfContent = App.InputConf.GetContent();
 
-        ProcessCommandLine(true);
+        if (!string.IsNullOrEmpty(UsedInputConfContent))
+            SetPropertyString("input-conf", @"memory://" + UsedInputConfContent);
 
-        Environment.SetEnvironmentVariable("MPVNET_VERSION", AppInfo.Version.ToString());
+        if (processCommandLine)
+            CommandLine.ProcessCommandLineArgsPreInit();
+
+        if (CommandLine.Contains("config-dir"))
+        {
+            string configDir = CommandLine.GetValue("config-dir");
+            string fullPath = System.IO.Path.GetFullPath(configDir);
+            App.InputConf.Path = fullPath.AddSep() + "input.conf";
+            string content = App.InputConf.GetContent();
+
+            if (!string.IsNullOrEmpty(content))
+                SetPropertyString("input-conf", @"memory://" + content);
+        }
+
+        Environment.SetEnvironmentVariable("MPVNET_VERSION", AppInfo.Version.ToString());  // deprecated
 
         mpv_error err = mpv_initialize(MainHandle);
 
@@ -123,22 +149,31 @@ public class MainPlayer : MpvClient
 
         mpv_request_log_messages(Handle, "info");
 
-        TaskHelp.Run(EventLoop);
+        if (formHandle != IntPtr.Zero)
+            TaskHelp.Run(EventLoop);
 
         // otherwise shutdown is raised before media files are loaded,
         // this means Lua scripts that use idle might not work correctly
         SetPropertyString("idle", "yes");
 
-        ObservePropertyString("path", value => Path = value);
+        SetPropertyString("user-data/frontend/name", "mpv.net");
+        SetPropertyString("user-data/frontend/version", AppInfo.Version.ToString());
+        SetPropertyString("user-data/frontend/process-path", Environment.ProcessPath!);
 
         ObservePropertyBool("pause", value => {
             Paused = value;
             Pause?.Invoke();
         });
 
-        ObservePropertyInt("video-rotate", value => {
-            VideoRotate = value;
-            UpdateVideoSize("dwidth", "dheight");
+        VideoRotate = GetPropertyInt("video-rotate");
+
+        ObservePropertyInt("video-rotate", value =>
+        {
+            if (VideoRotate != value)
+            {
+                VideoRotate = value;
+                UpdateVideoSize("dwidth", "dheight");
+            }
         });
 
         ObservePropertyInt("playlist-pos", value => {
@@ -149,9 +184,6 @@ public class MainPlayer : MpvClient
                 if (GetPropertyString("keep-open") == "no" && App.Exit)
                     CommandV("quit");
         });
-
-        if (!GetPropertyBool("osd-scale-by-window"))
-            App.StartThreshold = 0;
 
         Initialized?.Invoke();
     }
@@ -198,6 +230,7 @@ public class MainPlayer : MpvClient
             case "vo": VO = value!; break;
             case "window-maximized": WindowMaximized = value == "yes"; break;
             case "window-minimized": WindowMinimized = value == "yes"; break;
+            case "title-bar": TitleBar = value == "yes"; break;
         }
 
         if (AutofitLarger > 1)
@@ -221,20 +254,7 @@ public class MainPlayer : MpvClient
                     _configFolder = Folder.AppData + "mpv.net";
 
                 if (!Directory.Exists(_configFolder))
-                {
-                    try {
-                        using Process proc = new Process();
-                        proc.StartInfo.UseShellExecute = false;
-                        proc.StartInfo.CreateNoWindow = true;
-                        proc.StartInfo.FileName = "powershell.exe";
-                        proc.StartInfo.Arguments = $@"-Command New-Item -Path '{_configFolder}' -ItemType Directory";
-                        proc.Start();
-                        proc.WaitForExit();
-                    } catch (Exception) {}
-
-                    if (!Directory.Exists(_configFolder))
-                        Directory.CreateDirectory(_configFolder);
-                }
+                    Directory.CreateDirectory(_configFolder);
 
                 _configFolder = _configFolder.AddSep();
             }
@@ -246,34 +266,46 @@ public class MainPlayer : MpvClient
     Dictionary<string, string>? _Conf;
 
     public Dictionary<string, string> Conf {
-        get {
-            if (_Conf == null)
+        get
+        {
+            if (_Conf != null)
+                return _Conf;
+
+            App.ApplyInputDefaultBindingsFix();
+
+            _Conf = new Dictionary<string, string>();
+
+            if (File.Exists(ConfPath))
             {
-                App.ApplyInputDefaultBindingsFix();
+                foreach (string? it in File.ReadAllLines(ConfPath))
+                {
+                    string line = it.TrimStart(' ', '-').TrimEnd();
 
-                _Conf = new Dictionary<string, string>();
+                    if (line.StartsWith("#"))
+                        continue;
 
-                if (File.Exists(ConfPath))
-                    foreach (var i in File.ReadAllLines(ConfPath))
-                        if (i.Contains('=') && !i.TrimStart().StartsWith("#"))
-                        {
-                            string key = i[..i.IndexOf("=")].Trim();
-                            string value = i[(i.IndexOf("=") + 1)..].Trim();
+                    if (!line.Contains('='))
+                    {
+                        if (Regex.Match(line, "^[\\w-]+$").Success)
+                            line += "=yes";
+                        else
+                            continue;
+                    }
 
-                            if (key.StartsWith("-"))
-                                key = key.TrimStart('-');
+                    string key = line[..line.IndexOf("=")].Trim();
+                    string value = line[(line.IndexOf("=") + 1)..].Trim();
 
-                            if (value.Contains('#') && !value.StartsWith("#") &&
-                                !value.StartsWith("'#") && !value.StartsWith("\"#"))
+                    if (value.Contains('#') && !value.StartsWith("#") &&
+                        !value.StartsWith("'#") && !value.StartsWith("\"#"))
 
-                                value = value[..value.IndexOf("#")].Trim();
+                        value = value[..value.IndexOf("#")].Trim();
 
-                            _Conf[key] = value;
-                        }
-
-                foreach (var i in _Conf)
-                    ProcessProperty(i.Key, i.Value);
+                    _Conf[key] = value;
+                }
             }
+
+            foreach (var i in _Conf)
+                ProcessProperty(i.Key, i.Value);
 
             return _Conf;
         }
@@ -281,19 +313,18 @@ public class MainPlayer : MpvClient
 
     void UpdateVideoSize(string w, string h)
     {
-        Size size = new Size(GetPropertyInt(w), GetPropertyInt(h));
-
-        if (size.Width == 0 || size.Height == 0)
+        if (string.IsNullOrEmpty(Path))
             return;
+
+        Size size = new Size(GetPropertyInt(w), GetPropertyInt(h));
 
         if (VideoRotate == 90 || VideoRotate == 270)
             size = new Size(size.Height, size.Width);
 
-        if (VideoSize != size)
+        if (size != VideoSize && size != Size.Empty)
         {
             VideoSize = size;
             VideoSizeChanged?.Invoke(size);
-            VideoSizeAutoResetEvent.Set();
         }
     }
 
@@ -323,38 +354,33 @@ public class MainPlayer : MpvClient
         base.OnLogMessage(data);
     }
 
-    protected override void OnVideoReconfig()
-    {
-        UpdateVideoSize("dwidth", "dheight");
-        base.OnVideoReconfig();
-    }
-
     protected override void OnEndFile(mpv_event_end_file data)
     {
         base.OnEndFile(data);
         FileEnded = true;
     }
 
+    protected override void OnVideoReconfig()
+    {
+        UpdateVideoSize("dwidth", "dheight");
+        base.OnVideoReconfig();
+    }
+
+    // executed before OnFileLoaded
     protected override void OnStartFile()
     {
+        Path = GetPropertyString("path");
         base.OnStartFile();
         TaskHelp.Run(LoadFolder);
     }
 
+    // executed after OnStartFile
     protected override void OnFileLoaded()
     {
         Duration = TimeSpan.FromSeconds(GetPropertyDouble("duration"));
 
         if (App.StartSize == "video")
             WasInitialSizeSet = false;
-
-        string path = GetPropertyString("path");
-
-        if (!FileTypes.Video.Contains(path.Ext()) || FileTypes.Audio.Contains(path.Ext()))
-        {
-            UpdateVideoSize("width", "height");
-            VideoSizeAutoResetEvent.Set();
-        }
 
         TaskHelp.Run(UpdateTracks);
 
@@ -380,129 +406,6 @@ public class MainPlayer : MpvClient
     }
 
     public void SetBluRayTitle(int id) => LoadFiles(new[] { @"bd://" + id }, false, false);
-
-    public void ProcessCommandLine(bool preInit)
-    {
-        bool shuffle = false;
-        var args = Environment.GetCommandLineArgs().Skip(1);
-
-        //string[] preInitProperties = { "input-terminal", "terminal", "input-file", "config",
-        //    "config-dir", "input-conf", "load-scripts", "scripts", "player-operation-mode",
-        //    "idle", "log-file", "msg-color", "dump-stats", "msg-level", "really-quiet" };
-
-        //string[] preInitProperties = Array.Empty<string>();
-        string[] postInitProperties = Array.Empty<string>();
-
-        foreach (string i in args)
-        {
-            string arg = i;
-
-            if (arg.StartsWith("-") && arg.Length > 1)
-            {
-                if (!preInit)
-                {
-                    if (arg == "--profile=help")
-                    {
-                        Console.WriteLine(GetProfiles());
-                        continue;
-                    }
-                    else if (arg == "--vd=help" || arg == "--ad=help")
-                    {
-                        Console.WriteLine(GetDecoders());
-                        continue;
-                    }
-                    else if (arg == "--audio-device=help")
-                    {
-                        Console.WriteLine(GetPropertyOsdString("audio-device-list"));
-                        continue;
-                    }
-                    else if (arg == "--version")
-                    {
-                        Console.WriteLine(AppClass.About);
-                        continue;
-                    }
-                    else if (arg == "--input-keylist")
-                    {
-                        Console.WriteLine(GetPropertyString("input-key-list").Replace(",", BR));
-                        continue;
-                    }
-                    else if (arg.StartsWith("--command="))
-                    {
-                        Command(arg[10..]);
-                        continue;
-                    }
-                }
-
-                if (!arg.StartsWith("--"))
-                    arg = "-" + arg;
-
-                if (!arg.Contains('='))
-                {
-                    if (arg.Contains("--no-"))
-                    {
-                        arg = arg.Replace("--no-", "--");
-                        arg += "=no";
-                    }
-                    else
-                        arg += "=yes";
-                }
-
-                string left = arg[2..arg.IndexOf("=")];
-                string right = arg[(left.Length + 3)..];
-
-                switch (left)
-                {
-                    case "script":        left = "scripts";        break;
-                    case "audio-file":    left = "audio-files";    break;
-                    case "sub-file":      left = "sub-files";      break;
-                    case "external-file": left = "external-files"; break;
-                }
-
-                if (left == "shuffle" && right == "yes")
-                    shuffle = true;
-
-                if (preInit && !postInitProperties.Contains(left))
-                {
-                    ProcessProperty(left, right);
-
-                    if (!App.ProcessProperty(left, right))
-                        SetPropertyString(left, right);
-                }
-                else if (!preInit && postInitProperties.Contains(left))
-                {
-                    ProcessProperty(left, right);
-
-                    if (!App.ProcessProperty(left, right))
-                        SetPropertyString(left, right);
-                }
-            }
-        }
-
-        if (!preInit)
-        {
-            List<string> files = new List<string>();
-
-            foreach (string arg in args)
-                if (!arg.StartsWith("--") && (arg == "-" || arg.Contains("://") ||
-                    arg.Contains(":\\") || arg.StartsWith("\\\\") || File.Exists(arg)))
-
-                    files.Add(arg);
-
-            LoadFiles(files.ToArray(), !App.Queue, false || App.Queue);
-
-            if (shuffle)
-            {
-                Command("playlist-shuffle");
-                SetPropertyInt("playlist-pos", 0);
-            }
-
-            if (files.Count == 0 || files[0].Contains("://"))
-            {
-                VideoSizeChanged?.Invoke(VideoSize);
-                VideoSizeAutoResetEvent.Set();
-            }
-        }
-    }
 
     public DateTime LastLoad;
 
@@ -540,17 +443,9 @@ public class MainPlayer : MpvClient
             }
 
             if (ext == "iso")
-                LoadBluRayISO(file);
+                LoadISO(file);
             else if(FileTypes.Subtitle.Contains(ext))
                 CommandV("sub-add", file);
-            else if (!FileTypes.IsMedia(ext) && !file.Contains("://") && Directory.Exists(file) &&
-                File.Exists(System.IO.Path.Combine(file, "BDMV\\index.bdmv")))
-            {
-                Command("stop");
-                Thread.Sleep(500);
-                SetPropertyString("bluray-device", file);
-                CommandV("loadfile", @"bd://");
-            }
             else
             {
                 if (i == 0 && !append)
@@ -575,12 +470,24 @@ public class MainPlayer : MpvClient
         return path;
     }
 
-    public void LoadBluRayISO(string path)
+    public void LoadISO(string path)
     {
-        Command("stop");
-        Thread.Sleep(500);
-        SetPropertyString("bluray-device", path);
-        LoadFiles(new[] { @"bd://" }, false, false);
+        using var mi = new MediaInfo(path);
+        
+        if (mi.GetGeneral("Format") == "ISO 9660 / DVD Video")
+        {
+            Command("stop");
+            Thread.Sleep(500);
+            SetPropertyString("dvd-device", path);
+            LoadFiles(new[] { @"dvd://" }, false, false);
+        }
+        else
+        {
+            Command("stop");
+            Thread.Sleep(500);
+            SetPropertyString("bluray-device", path);
+            LoadFiles(new[] { @"bd://" }, false, false);
+        }
     }
 
     public void LoadDiskFolder(string path)
@@ -625,7 +532,7 @@ public class MainPlayer : MpvClient
                 dir = System.IO.Path.GetDirectoryName(path)!;
 
             List<string> files = FileTypes.GetMediaFiles(Directory.GetFiles(dir)).ToList();
-          
+
             if (OperatingSystem.IsWindows())
                 files.Sort(new StringLogicalComparer());
 
@@ -714,6 +621,26 @@ public class MainPlayer : MpvClient
                 MediaTracks = GetMediaInfoTracks(path);
             else
                 MediaTracks = GetTracks();
+        }
+    }
+
+    public List<StringPair> AudioDevices {
+        get {
+            if (_audioDevices != null)
+                return _audioDevices;
+
+            _audioDevices = new();
+            string json = GetPropertyString("audio-device-list");
+            var enumerator = JsonDocument.Parse(json).RootElement.EnumerateArray();
+
+            foreach (var element in enumerator)
+            {
+                string name = element.GetProperty("name").GetString()!;
+                string description = element.GetProperty("description").GetString()!;
+                _audioDevices.Add(new StringPair(name, description));
+            }
+
+            return _audioDevices;
         }
     }
 

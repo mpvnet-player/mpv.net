@@ -48,18 +48,26 @@ jobs:
           nuget restore
           msbuild -restore
           msbuild MpvNet.sln /m /p:Configuration=Debug
+      - name: Create .mo files for localization
+        shell: pwsh
+        run: Install-Package Gettext.Tools -Force; $env:Path = ((Get-Package Gettext.Tools).Source | Split-Path) + '\tools\bin;' + $env:Path; .\lang\create-mo-files.ps1
       - name: Download libmpv # In principle, only update this binary file when significant feature changes occur in mpv/mpv.net
         shell: msys2 {0}
         run: |
-          wget -nv -O libmpv.7z https://downloads.sourceforge.net/mpv-player-windows/mpv-dev-x86_64-v3-20231022-git-6e428c2.7z
+          wget -nv -O libmpv.7z https://github.com/zhongfly/mpv-winbuild/releases/download/2024-10-09-e09278c/mpv-dev-x86_64-20241009-git-e09278c.7z
           7z x -y libmpv.7z -olibmpv
           cp -f libmpv/libmpv-2.dll src/MpvNet.Windows/bin/Debug/ || true
       - name: Download MediaInfo
         shell: msys2 {0}
         run: |
-          wget -nv -O MediaInfo.7z https://mediaarea.net/download/binary/libmediainfo0/23.10/MediaInfo_DLL_23.10_Windows_x64_WithoutInstaller.7z
+          wget -nv -O MediaInfo.7z https://mediaarea.net/download/binary/libmediainfo0/24.03/MediaInfo_DLL_24.03_Windows_x64_WithoutInstaller.7z
           7z x -y MediaInfo.7z -oMediaInfo
           cp -f MediaInfo/MediaInfo.dll src/MpvNet.Windows/bin/Debug/ || true
+      - name: Download mpvnet.com file
+        shell: msys2 {0}
+        run: |
+          wget -nv -O mpvnet.com https://github.com/mpvnet-player/file-host/releases/download/tag/mpvnet.com.txt
+          cp -f mpvnet.com src/MpvNet.Windows/bin/Debug/ || true
       - name: Upload
         uses: actions/upload-artifact@v3
         with:

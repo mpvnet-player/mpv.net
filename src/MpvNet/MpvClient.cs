@@ -64,7 +64,7 @@ public class MpvClient
                             OnEndFile(data);
                         }
                         break;
-                    case mpv_event_id.MPV_EVENT_FILE_LOADED:
+                    case mpv_event_id.MPV_EVENT_FILE_LOADED:  // triggered after MPV_EVENT_START_FILE
                         OnFileLoaded();
                         break;
                     case mpv_event_id.MPV_EVENT_PROPERTY_CHANGE:
@@ -82,7 +82,7 @@ public class MpvClient
                     case mpv_event_id.MPV_EVENT_COMMAND_REPLY:
                         OnCommandReply();
                         break;
-                    case mpv_event_id.MPV_EVENT_START_FILE:
+                    case mpv_event_id.MPV_EVENT_START_FILE:  // triggered before MPV_EVENT_FILE_LOADED
                         OnStartFile();
                         break;
                     case mpv_event_id.MPV_EVENT_AUDIO_RECONFIG:
@@ -346,6 +346,9 @@ public class MpvClient
 
     public string GetPropertyString(string name)
     {
+        if (Handle == IntPtr.Zero)
+            return "";
+
         mpv_error err = mpv_get_property(Handle, GetUtf8Bytes(name),
             mpv_format.MPV_FORMAT_STRING, out IntPtr lpBuffer);
 
@@ -364,6 +367,12 @@ public class MpvClient
 
     public void SetPropertyString(string name, string value)
     {
+        if (Handle == IntPtr.Zero)
+        {
+            Terminal.WriteError($"error setting property: {name} = {value}");
+            return;
+        }
+
         byte[] bytes = GetUtf8Bytes(value);
         mpv_error err = mpv_set_property(Handle, GetUtf8Bytes(name), mpv_format.MPV_FORMAT_STRING, ref bytes);
 

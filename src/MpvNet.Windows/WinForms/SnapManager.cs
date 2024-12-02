@@ -2,9 +2,8 @@
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using MpvNet.Windows.Help;
 using MpvNet.Windows.Native;
-
-using static MpvNet.Windows.Native.WinApi;
 
 namespace MpvNet.Windows.WinForms;
 
@@ -35,7 +34,7 @@ public class SnapManager
     void FindSnap(ref Rectangle effectiveBounds)
     {
         Screen currentScreen = Screen.FromPoint(effectiveBounds.Location);
-        Rectangle workingArea = GetWorkingArea(Handle, currentScreen.WorkingArea);
+        Rectangle workingArea = WinApiHelp.GetWorkingArea(Handle, currentScreen.WorkingArea);
 
         if (InSnapRange(effectiveBounds.Left, workingArea.Left + AnchorDistance))
             effectiveBounds.X = workingArea.Left + AnchorDistance;
@@ -52,7 +51,7 @@ public class SnapManager
         if (Handle == IntPtr.Zero)
             return;
 
-        WinApi.Rect boundsLtrb = Marshal.PtrToStructure<WinApi.Rect>(m.LParam);
+        WinApi.RECT boundsLtrb = Marshal.PtrToStructure<WinApi.RECT>(m.LParam);
         Rectangle bounds = boundsLtrb.ToRectangle();
         // This is where the window _would_ be located if snapping
         // had not occurred. This prevents the cursor from sliding
@@ -63,7 +62,7 @@ public class SnapManager
             bounds.Width,
             bounds.Height);
         FindSnap(ref effectiveBounds);
-        WinApi.Rect newLtrb = WinApi.Rect.FromRectangle(effectiveBounds);
+        WinApi.RECT newLtrb = WinApi.RECT.FromRectangle(effectiveBounds);
         Marshal.StructureToPtr(newLtrb, m.LParam, false);
         m.Result = new IntPtr(1);
     }

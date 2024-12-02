@@ -5,15 +5,24 @@
         <TargetFramework>net6.0-windows</TargetFramework>
         <RootNamespace>MpvNet.Windows</RootNamespace>
 		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<PublishSingleFile>true</PublishSingleFile>
         <AssemblyName>mpvnet</AssemblyName>
         <UseWPF>true</UseWPF>
         <UseWindowsForms>true</UseWindowsForms>
         <ApplicationIcon>mpv-icon.ico</ApplicationIcon>
         <Product>mpv.net</Product>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
-        <FileVersion>7.0.0.0</FileVersion>
+        <FileVersion>7.1.1.3</FileVersion>
+        <AssemblyVersion>7.1.1.3</AssemblyVersion>
+		<InformationalVersion>7.1.1.3</InformationalVersion>
 		<Nullable>enable</Nullable>
     </PropertyGroup>
+
+    <ItemGroup>
+      <Compile Remove="Misc\**" />
+      <EmbeddedResource Remove="Misc\**" />
+      <None Remove="Misc\**" />
+      <Page Remove="Misc\**" />
+    </ItemGroup>
 
     <ItemGroup>
       <Content Include="mpv-icon.ico" />
@@ -21,6 +30,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\MpvNet\MpvNet.csproj" />
+      <ProjectReference Include="..\NGettext.Wpf\NGettext.Wpf.csproj" />
     </ItemGroup>
 
     <ItemGroup>
@@ -32,12 +42,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
-      <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Misc\" />
+      <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+      <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.77" />
     </ItemGroup>
 
 </Project>

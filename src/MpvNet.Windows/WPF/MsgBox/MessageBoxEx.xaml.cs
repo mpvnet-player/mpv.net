@@ -350,7 +350,7 @@ public partial class MessageBoxEx : Window, INotifyPropertyChanged
         }
     }
 
-    private void InitBottom(MessageBoxImage image)
+    void InitBottom(MessageBoxImage image)
     {
         MessageBackground = (MessageBackground == null) ? new SolidColorBrush(Colors.White) : MessageBackground;
         MessageForeground = (MessageForeground == null) ? new SolidColorBrush(Colors.Black) : MessageForeground;
@@ -498,7 +498,7 @@ public partial class MessageBoxEx : Window, INotifyPropertyChanged
         }
     }
 
-    private void FindDefaultButtonEx(MessageBoxButtonDefault buttonDefault)
+    void FindDefaultButtonEx(MessageBoxButtonDefault buttonDefault)
     {
         // determine default button
         IsDefaultOK = false;
@@ -634,7 +634,7 @@ public partial class MessageBoxEx : Window, INotifyPropertyChanged
         }
     }
 
-    private void FindDefaultButton(MessageBoxButtonDefault buttonDefault)
+    void FindDefaultButton(MessageBoxButtonDefault buttonDefault)
     {
         // determine default button
         IsDefaultOK = false;
@@ -735,7 +735,7 @@ public partial class MessageBoxEx : Window, INotifyPropertyChanged
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void BtnOK_Click(object sender, RoutedEventArgs e)
+    void BtnOK_Click(object sender, RoutedEventArgs e)
     {
         this.MessageResult = MessageBoxResult.OK;
         this.MessageResultEx = MessageBoxResultEx.OK;
@@ -747,7 +747,7 @@ public partial class MessageBoxEx : Window, INotifyPropertyChanged
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void BtnYes_Click(object sender, RoutedEventArgs e)
+    void BtnYes_Click(object sender, RoutedEventArgs e)
     {
         this.MessageResult = MessageBoxResult.Yes;
         this.MessageResultEx = MessageBoxResultEx.Yes;
@@ -759,28 +759,28 @@ public partial class MessageBoxEx : Window, INotifyPropertyChanged
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void BtnNo_Click(object sender, RoutedEventArgs e)
+    void BtnNo_Click(object sender, RoutedEventArgs e)
     {
         this.MessageResult = MessageBoxResult.No;
         this.MessageResultEx = MessageBoxResultEx.No;
         this.DialogResult = true;
     }
 
-    private void BtnAbort_Click(object sender, RoutedEventArgs e)
+    void BtnAbort_Click(object sender, RoutedEventArgs e)
     {
         this.MessageResult = MessageBoxResult.None;
         this.MessageResultEx = MessageBoxResultEx.Abort;
         this.DialogResult = true;
     }
 
-    private void BtnRetry_Click(object sender, RoutedEventArgs e)
+    void BtnRetry_Click(object sender, RoutedEventArgs e)
     {
         this.MessageResult = MessageBoxResult.None;
         this.MessageResultEx = MessageBoxResultEx.Retry;
         this.DialogResult = true;
     }
 
-    private void BtnIgnore_Click(object sender, RoutedEventArgs e)
+    void BtnIgnore_Click(object sender, RoutedEventArgs e)
     {
         this.MessageResult = MessageBoxResult.None;
         this.MessageResultEx = MessageBoxResultEx.Ignore;
@@ -792,7 +792,7 @@ public partial class MessageBoxEx : Window, INotifyPropertyChanged
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void BtnCancel_Click(object sender, RoutedEventArgs e)
+    void BtnCancel_Click(object sender, RoutedEventArgs e)
     {
         this.MessageResult = MessageBoxResult.Cancel;
         this.MessageResultEx = MessageBoxResultEx.Cancel;

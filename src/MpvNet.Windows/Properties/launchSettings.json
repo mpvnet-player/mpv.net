@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "MpvNet.Windows": {
+      "commandName": "Project"
+    }
+  }
+}

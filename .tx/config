@@ -1,0 +1,9 @@
+
+[main]
+host = https://app.transifex.com
+
+[o:stax76:p:mpvnet:r:mpvnet]
+file_filter = lang/po/<lang>.po
+source_file = lang/source.pot
+source_lang = en
+type        = PO

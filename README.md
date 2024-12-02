@@ -6,14 +6,12 @@
 🎞 mpv.net
 ==========
 
-mpv.net is a modern desktop media player for Windows based on the popular [mpv](https://mpv.io) player.
+mpv.net is a media player for Windows with a modern GUI.
 
+The player is based on the popular [mpv](https://mpv.io) media player.
 mpv.net is designed to be mpv compatible, almost all mpv features are available,
-this means the official [mpv manual](https://mpv.io/manual/master/) applies to mpv.net.
-
-mpv focuses on the usage of the command line and the terminal,
-mpv.net retains the ability to be used from the command line and
-the terminal and adds a modern Windows GUI on top of it.
+this means the official [mpv manual](https://mpv.io/manual/master/) applies to mpv.net,
+differences are documented in the [mpv.net manual](docs/manual.md#differences-compared-to-mpv).
 
 #### Graphical User Interface
 
@@ -58,17 +56,18 @@ Table of contents
 - [Download](#download)
 - [Manual](#manual)
 - [Screenshots](#screenshots)
+- [Contributing](#contributing)
 
 
 Features that mpv and mpv.net have in common
 --------------------------------------------
 
-- Lua and JavaScript Scripting ([awesome-mpv lists available user scripts](https://github.com/stax76/awesome-mpv))
+- Lua and JavaScript Scripting ([awesome-mpv lists a large collection of available user scripts](https://github.com/stax76/awesome-mpv))
 - Simple config files that are easy to read and edit
 - JSON IPC to control the player with a external programs
 - On Screen Controller (OSC, play control buttons) with modern flat design
 - Command Line Interface
-- Started from a terminal status, error and debug output is printed on the terminal
+- Started from a terminal, status, error and debug output is printed on the terminal
 - DXVA2 video decoding acceleration
 - Video output capable of features loved by videophiles, such as video scaling with popular high quality algorithms, color management, frame timing, interpolation, HDR, and more
 - Browser extensions to start mpv.net from the browser
@@ -79,7 +78,7 @@ Features that mpv and mpv.net have in common
 - Build-in media streaming (requires yt-dlp being installed)
 - External audio and subtitle files can be loaded manually or automatically
 - Screenshot feature
-- Watch later feature to save the video position
+- Internationalization using gettext and transifex
 
 
 Features exclusive to mpv.net
@@ -87,14 +86,11 @@ Features exclusive to mpv.net
 
 - Very high degree of mpv compatibility, almost all mpv features are available
 - Modern graphical user interface with customizable color themes
-- Customizable context menu defined in the same file as the key bindings
+- Customizable context menu
 - Searchable config editor
 - Searchable input (shorcut keys) editor
-- C# and PowerShell Scripting
 - Global keyboard shortcuts
 - Extension API for .NET languages (C#, VB.NET and F#)
-- Portable, MS Store or WinGet download and installation
-- File history feature to log time and filename
 - Files can be enqueued from File Explorer
 
 
@@ -113,6 +109,11 @@ Features exclusive to mpv.net
 [The mpv.net documentation.](docs/manual.md)
 
 
+## [Contributing](docs/contributing.md)
+
+[Contributing section of the manual.](docs/manual.md#contributing)
+
+
 Screenshots
 -----------
 
@@ -123,27 +124,16 @@ Screenshots
 
 #### Context Menu
 
-Context menu using dark mode.
-
-![Context Menu](docs/img/Menu.jpg)
+![Context Menu](docs/img/Menu.webp)
 
 
 #### Config Editor
 
 Searchable config editor as alternative to edit the conf file manually.
 
-![](docs/img/ConfEditor.png)
+![](docs/img/ConfEditor.webp)
 
 
 #### Terminal
 
-OSD console and status printed on the terminal.
-
-![](docs/img/Terminal.png)
-
-
-#### Input Editor
-
-Searchable key and mouse binding editor.
-
-![Input Editor](docs/img/InputEditor.webp)
+![](docs/img/Terminal.webp)

@@ -11,13 +11,16 @@ public class AppSettings
 {
     public bool InputDefaultBindingsFixApplied;
     public bool ShowMenuFixApplied;
+    public int MenuUpdateVersion;
     public int Volume = 70;
     public List<string> RecentFiles = new List<string>();
     public Point WindowLocation;
     public Point WindowPosition;
     public Size WindowSize;
+    public string AudioDevice = "";
     public string ConfigEditorSearch = "Video:";
     public string Mute = "no";
+    public string StartupFolder = "";
 }
 
 class SettingsManager

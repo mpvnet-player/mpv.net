@@ -22,36 +22,29 @@ Table of contents
 * [Extensions](#extensions)
 * [Color Theme](#color-theme)
 * [Advanced Features](#advanced-features)
-* [Hidden Features](#hidden-features)
 * [Differences compared to mpv](#differences-compared-to-mpv)
 * [Environment Variables](#environment-variables)
+* [user-data](#user-data)
+* [Contributing](#contributing)
 * [Context Menu Commands](#context-menu)
-
 
 About
 -----
 
-mpv.net is a modern desktop media player for Windows based on the popular mpv player.
+mpv.net is a media player for Windows that has a modern GUI.
 
-mpv.net is designed to be mpv compatible, almost all mpv features are available
-because they are all contained in libmpv, this means the official
-[mpv manual](https://mpv.io/manual/master/) applies to mpv.net.
-
-mpv focuses on the usage of the command line and the terminal,
-mpv.net retains the ability to be used from the command line and
-the terminal and adds a modern Windows GUI on top of it.
+The player is based on the popular [mpv](https://mpv.io) media player.
+mpv.net is designed to be mpv compatible, almost all mpv features are available,
+this means the official [mpv manual](https://mpv.io/manual/master/) applies to mpv.net,
+differences are documented in this manual under [Differences compared to mpv](#differences-compared-to-mpv).
 
 
 Download
 --------
 
-1. [Stable via Microsoft Store](https://www.microsoft.com/store/productId/9N64SQZTB3LM)
-
-2. [Stable and beta portable via GitHub download](../../../releases)
-
-3. Stable via command line from Microsoft Store: `winget install mpv.net`
-
-4. [Automated nightly portable builds](https://github.com/mpvnet-player/mpv.net/actions)
+1. [Stable and beta portable and setup via GitHub download](../../../releases)
+2. Stable via command line with winget: `winget install mpv.net`
+3. [Automated nightly portable builds](https://github.com/mpvnet-player/mpv.net/actions)
 
 [Changelog](changelog.md)
 
@@ -59,10 +52,8 @@ Download
 Installation
 ------------
 
-1. Windows 7 or higher is required (Windows 10 or higher is recommended).
-2. mpv.net since version 7.0 requires the
-   [.NET Desktop Runtime 6.0](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
-   being installed. mpv.net before version 7.0 requires .NET Framework 4.8.
+1. Windows 10 or higher.
+2. [.NET Desktop Runtime 6.0](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
 
 Internet streaming requires:
 
@@ -74,8 +65,8 @@ Internet streaming requires:
 
 File Associations can be registered using the context menu under 'Settings > Setup'.
 
-After the file associations were registered, it might be necessary to change the
-default app in the Windows settings (Win+I, ms-settings:defaultapps).
+After the file associations were registered, it might still be necessary to change the
+default app in the Windows settings.
 
 Another way to register file associations is using Windows File Explorer,
 select a media file and select 'Open with > Choose another app' in the context menu.
@@ -87,6 +78,11 @@ to get menu items for [Play with mpv.net](https://github.com/stax76/OpenWithPlus
 When multiple files are selected in File Explorer and enter is pressed then
 the files are opened in mpv.net in random order, this works with maximum 15 files.
 
+#### Path environment variable
+
+In order to use mpv.net in a terminal for advanced use cases,
+mpv.net must be added to the Path environment variable,
+this can be achieved with the context menu (Settings/Setup).
 
 Support
 -------
@@ -95,13 +91,13 @@ Before making a support request, please try the newest [beta version](../../../r
 
 Support can be requested here:
 
-Beginner questions:
-
-https://www.reddit.com/r/mpv
-
 mpv.net bug reports, feature requests and advanced questions:
 
 https://github.com/mpvnet-player/mpv.net/issues
+
+Beginner mpv questions:
+
+https://www.reddit.com/r/mpv
 
 Advanced mpv questions:
 
@@ -113,8 +109,9 @@ Settings
 
 mpv.net searches the config folder at:
 
-1. startup\portable_config
-2. %APPDATA%\mpv.net (`C:\Users\%USERNAME%\AppData\Roaming\mpv.net`)
+1. Folder defined via MPVNET_HOME environment variable.
+2. startup\portable_config (startup means the directory containing mpvnet.exe)
+3. `%APPDATA%\mpv.net` (`C:\Users\Username\AppData\Roaming\mpv.net`)
 
 mpv options are stored in the file mpv.conf,
 mpv.net options are stored in the file mpvnet.conf,
@@ -124,7 +121,7 @@ mpv.net options are documented [here](#mpvnet-specific-options).
 Input and context menu
 ----------------------
 
-Global keyboard shortcuts are supported via global-input.conf file.
+Global keyboard shortcuts are supported via `global-input.conf` file.
 
 The config folder can be opened from the context menu: `Settings > Open Config Folder`
 
@@ -144,23 +141,30 @@ mpv input options:
 https://mpv.io/manual/master/#input
 
 Before version v7 all bindings and the context menu definition
-was contained in the input.conf file, which mpv.net created
+were defined in the input.conf file, which mpv.net created
 in case it didn't exist. This had the disadvantage that mpv.net
-lost control over all default bindings and the context menu
-defaults. This was unfortunate, v7 introduces a new design
-fixing it.
+lost control over all default bindings and context menu
+defaults. This was unfortunate, v7 introduces a new bindings
+and context menu design fixing it.
 
 In v7 no input.conf file is created, the default bindings and
 context menu is defined internally. input.conf only contains
 what is different from the internally defined defaults,
-so it's the same how mpv is used.
+so it works the same as it works in mpv.
 
-For backward compatibility the old input.conf format with the
-menu definition using `#menu: ` is still supported. The new
-design also allows for a menu customization, in a sub section
-called `Custom`. In input.conf it can be defined like so:
+For backward compatibility the old input.conf context menu
+format with the menu definition using `#menu: ` is still
+supported. The new design also allows for a menu customization,
+in a sub section called `Custom`. In input.conf it can be
+defined like so:
 
 `Ctrl+a  show-text Test  #custom-menu: Test > Test`
+
+Users that have their bindings and context menu customized
+before v7 can easily migrate to the new design by deleting
+bindings they don't use and remember the shortcut and remove
+`#menu:` everywhere, it's important to remove `#menu:`
+everywhere in order to enable the new mode/design.
 
 
 Command Line Interface
@@ -197,8 +201,6 @@ Terminal
 When mpv.net is started from a terminal it will output status,
 error and debug messages to the terminal and accept input keys from the terminal.
 
-A common task for the terminal is debugging scripts.
-
 
 mpv.net specific commands
 -------------------------
@@ -206,6 +208,15 @@ mpv.net specific commands
 `script-message-to mpvnet <command> <arguments>`
 
 mpv.net commands are used when mpv commands don't exist or lack a feature.
+
+### add-to-path
+Adds mpv.net to the Path environment variable.
+
+### remove-from-path
+Removes mpv.net from the Path environment variable.
+
+### edit-conf-file [mpv.conf|input.conf]
+Opens mpv.conf or input.conf in a text editor.
 
 ### load-audio
 Shows a file browser dialog to open external audio files.
@@ -232,9 +243,12 @@ Shows a folder browser dialog to open a DVD or BD folder.
 ISO images don't have to be mounted, but instead can be
 opened directly with the open-files command.
 
-### open-clipboard
+### open-clipboard [\<flags\>]
 Opens a single URL or filepath from the clipboard,
 or multiple files in the file clipboard format.
+
+**append**  
+Appends files/URLs to the playlist.
 
 ### play-pause
 Cycles the pause property. In case the playlist is empty,
@@ -256,16 +270,25 @@ Shows the about dialog.
 Shows available audio devices in a message box.
 
 ### show-commands
-Shows available mpv input commands.
+Shows available [mpv input commands](https://mpv.io/manual/master/#list-of-input-commands).
 
-### show-conf-editor
-Shows the conf editor.
+### show-properties
+Shows available [properties](https://mpv.io/manual/master/#properties).
+
+### show-keys
+Shows available [input keys](https://mpv.io/manual/master/#options-input-keylist).
+
+### show-protocols
+Shows available [protocols](https://mpv.io/manual/master/#options-list-protocols).
 
 ### show-decoders
 Shows available decoders.
 
 ### show-demuxers
 Shows available demuxers.
+
+### show-conf-editor
+Shows the conf editor.
 
 ### show-input-editor
 Shows the input editor.
@@ -295,6 +318,9 @@ Shows available profiles with a message box.
 ### show-text \<text\> \<duration\> \<font-size\>
 Shows a OSD message with given text, duration and font size.
 
+### stream-quality
+Shows a menu to select the stream quality.
+
 ### window-scale \<factor\>
 Works similar as the [window-scale](https://mpv.io/manual/master/#command-interface-window-scale) mpv property.
 
@@ -323,6 +349,10 @@ Sends a input command to a running mpv.net instance via command line, for instan
 to create global keyboard shortcuts with AutoHotkey. Requires [process-instance=single](#--process-instancevalue).
 
 ### Audio
+
+#### --remember-audio-device=\<yes|no\>
+
+Save and restore the audio device chosen in the context menu. Default: yes
 
 #### --remember-volume=\<yes|no\>
 
@@ -379,10 +409,19 @@ are used as defined by autofit and start-size. Default: 1500
 
 #### --auto-load-folder=\<yes|no\>
 
-For single files automatically load the entire directory into the playlist.
+For single files automatically load the entire directory
+into the playlist. This option by default is disabled.
+The option is deprecated because mpv now has native
+support for it using `autocreate-playlist`,
+which by default mpv.net sets to `autocreate-playlist=filter`.
 
 
 ### General
+
+#### --menu-syntax=\<value\>
+
+Used menu syntax for defining the context menu in input.conf.
+mpv.net by default uses `#menu:`, uosc uses `#!` by default.
 
 #### --process-instance=\<value\>
 
@@ -411,24 +450,20 @@ Amount of recent files to be remembered. Default: 15
 
 Usage of the media info library instead of mpv to access media information. Default: yes (mpv.net specific option)
 
-#### --video-file-extensions=\<string\>
-
-Video file extensions used to create file associations and used by the auto-load-folder feature.
-
-#### --audio-file-extensions=\<string\>
-
-Audio file extensions used to create file associations and used by the auto-load-folder feature.
-
-#### --image-file-extensions=\<string\>
-
-Image file extensions used to create file associations and used by the auto-load-folder feature.
-
 #### --debug-mode=\<yes|no\>
 
 Enable this only when a developer asks for it. Default: no
 
 
 ### UI
+
+#### --language=\<value\>
+
+User interface display language.
+mpv.net must be restarted after a change.
+
+Work on the translation is done with transifex:  
+https://app.transifex.com/stax76/teams/
 
 #### --dark-mode=\<value\>
 
@@ -494,7 +529,8 @@ Scripting
 
 #### Lua
 
-A very large collection of Lua user scripts can be found in the mpv wiki [here](https://github.com/mpv-player/mpv/wiki/User-Scripts).
+A very large collection of user scripts can be found in the GitHub repository
+[awesome-mpv](https://github.com/stax76/awesome-mpv). 
 
 Lua scripting is documented in the mpv.net wiki [here](https://github.com/mpvnet-player/mpv.net/wiki/Extending-mpv-and-mpv.net-via-Lua-scripting).
 
@@ -503,10 +539,10 @@ Lua scripting is documented in the mpv.net wiki [here](https://github.com/mpvnet
 [mpv JavaScript documentation](https://mpv.io/manual/master/#javascript)
 
 
-Extensions
-----------
+.NET Extensions
+---------------
 
-Extensions are located in a subfolder _extensions_ in the config folder,
+.NET Extensions are located in a subfolder _extensions_ in the config folder,
 the filename must have the same name as the directory:
 
 ```Text
@@ -547,21 +583,15 @@ demuxer-lavf-format = vapoursynth
 Python and VapourSynth must be in the path environment variable.
 
 
-Hidden Features
----------------
-
-Selecting multiple files in File Explorer and pressing enter will
-open the files in mpv.net. Explorer restricts this to maximum 15 files
-and the order will be random.
-
-In fullscreen mode clicking the top right corner closes the player.
-
-
 Differences compared to mpv
 ---------------------------
 
-mpv.net is designed to work exactly like mpv, there are a few limitations:
+mpv.net is designed to work exactly like mpv, there are a few
+differences and limitations:
 
+The settings folder is named `mpv.net` instead of `mpv`:
+
+`C:\Users\username\AppData\Roaming\mpv.net`
 
 ### Window Limitations
 
@@ -574,7 +604,7 @@ visible, even when mpv.net is started from the terminal and music is played.
 For mpv.net it's currently not possible to find out where OSC menus are located,
 but there are 3 features that require this information, therefore mpv.net
 makes the assumption that near the window borders might be OSC menus. As a result
-the following three features, work only when invokes from the center of the window:
+the following three features, work only when invoked from the center of the window:
 
 1. Window dragging (moving the window with the mouse).
 2. Showing the context menu.
@@ -591,25 +621,50 @@ https://mpv.io/manual/master/#window
 **mpv.net has currently implemented the following window properties:**
 
 - [border](https://mpv.io/manual/master/#options-border)
+- [cursor-autohide](https://mpv.io/manual/master/#options-cursor-autohide)
 - [fullscreen](https://mpv.io/manual/master/#options-fullscreen)
 - [keepaspect-window](https://mpv.io/manual/master/#options-keepaspect-window)
 - [ontop](https://mpv.io/manual/master/#options-ontop)
 - [screen](https://mpv.io/manual/master/#options-screen)
 - [snap-window](https://mpv.io/manual/master/#options-snap-window)
+- [title-bar](https://mpv.io/manual/master/#options-title-bar)
 - [title](https://mpv.io/manual/master/#options-title)
 - [window-maximized](https://mpv.io/manual/master/#options-window-maximized)
 - [window-minimized](https://mpv.io/manual/master/#options-window-minimized)
 - [window-scale](https://mpv.io/manual/master/#options-window-scale)
 
 
-**Partly implemented are:**
+**Partly implemented or modified:**
 
-- [autofit-larger](https://mpv.io/manual/master/#options-autofit-larger)  
-  Supported is a single integer value in the range 0-100.
-- [autofit-smaller](https://mpv.io/manual/master/#options-autofit-smaller)  
-  Supported is a single integer value in the range 0-100.
-- [autofit](https://mpv.io/manual/master/#options-autofit)  
-  Supported is a single integer value in the range 0-100.
+#### --autofit=\<int\>
+
+\<int\> Initial window height in percent. Default: 60
+
+#### --autofit-smaller=\<int\>
+
+\<int\> Minimum window height in percent. Default: 10
+
+#### --autofit-larger=\<int\>
+
+\<int\> Maximum window height in percent. Default: 80
+
+#### --geometry\<x:y\>
+
+Initial window location in percent. Default: 50:50 (centered)
+
+Requires Windows 11, on Windows 10 it works slightly incorrect due to invisible borders.
+
+x=0 docks the window to the left side.  
+x=100 docks the window to the right side.  
+
+y=0 docks the window to the top side.  
+y=100 docks the window to the bottom side.
+
+#### --title-bar=\<yes|no\>
+
+Shows the window title bar. Default: yes
+
+**mpv.net specific window features:**
 
 mpv.net specific window features are documented in the [screen section](#screen).
 
@@ -654,10 +709,29 @@ Environment Variables
 
 Directory where mpv.net looks for user settings.
 
-### MPVNET_VERSION
 
-Returns the version of mpv.net.
+user-data
+---------
 
+Script authors can access the following
+[user-data](https://mpv.io/manual/master/#command-interface-user-data) properties:
+
+```
+user-data/frontend/name
+user-data/frontend/version
+user-data/frontend/process-path
+```
+
+Contributing
+------------
+
+Work on the translation is done with transifex, translators have to create a transifex account:
+
+https://app.transifex.com/stax76/teams/
+
+For questions visit:
+
+https://github.com/mpvnet-player/mpv.net/issues/576
 
 Context Menu Commands
 ---------------------
@@ -676,8 +750,8 @@ Blu-ray and DVD ISO image files are supported.
 
 ### Open > Open URL or file path from clipboard
 
-Opens files and URLs from the clipboard. How to open URLs directly
-from the browser from sites like YouTube is described in the
+Opens files and URLs from the clipboard. Shift key appends to the playlist.
+How to open URLs directly from the browser from sites like YouTube is described in the
 [External Tools section](#external-tools).
 
 
@@ -1004,14 +1078,14 @@ Cycles the deinterlace property using the following command:
 
 Cycles the aspect ratio using the following command:
 
-`cycle-values video-aspect 16:9 4:3 2.35:1 -1`
+`cycle-values video-aspect-override 16:9 4:3 2.35:1 0 -1`
 
 [cycle-values command](https://mpv.io/manual/master/#command-interface-cycle-values)
 
-[video-aspect property](https://mpv.io/manual/master/#command-interface-video-aspect)
+[video-aspect property](https://mpv.io/manual/master/#options-video-aspect-override)
 
 
-### Audio > Cycle/Next
+### Audio > Next
 
 This uses a mpv.net command that shows better info then the mpv preset
 and also has the advantage of not showing no audio.
@@ -1120,7 +1194,7 @@ Increases the subtitle font size using the following command:
 
 Increases the volume using the following command:
 
-`add volume 10`
+`add volume 2`
 
 [add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
 
@@ -1131,7 +1205,7 @@ Increases the volume using the following command:
 
 Decreases the volume using the following command:
 
-`add volume -10`
+`add volume -2`
 
 [add command](https://mpv.io/manual/master/#command-interface-add-%3Cname%3E-[%3Cvalue%3E])
 
@@ -1328,7 +1402,7 @@ Shows the [mpv.net web site](https://github.com/mpvnet-player/mpv.net).
 
 ### Help > Show mpv.net manual
 
-Shows the [mpv.net manual](https://github.com/mpvnet-player/mpv.net/blob/main/manual.md).
+Shows the [mpv.net manual](https://github.com/mpvnet-player/mpv.net/blob/main/docs/manual.md).
 
 
 ### Help > About mpv.net

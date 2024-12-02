@@ -4,15 +4,12 @@ using System.Windows.Navigation;
 
 using MpvNet.Help;
 
-// TODO: change namespace to MpvNet.Windows.WPF.Controls
 namespace MpvNet.Windows.WPF;
 
 public class HyperlinkEx : Hyperlink
 {
-    void HyperLinkEx_RequestNavigate(object sender, RequestNavigateEventArgs e)
-    {
+    void HyperLinkEx_RequestNavigate(object sender, RequestNavigateEventArgs e) =>
         ProcessHelp.ShellExecute(e.Uri.AbsoluteUri);
-    }
 
     public void SetURL(string? url)
     {
@@ -22,6 +19,6 @@ public class HyperlinkEx : Hyperlink
         NavigateUri = new Uri(url);
         RequestNavigate += HyperLinkEx_RequestNavigate;
         Inlines.Clear();
-        Inlines.Add(url);
+        Inlines.Add("Manual");
     }
 }

@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>NGettext.Wpf</id>
+    <version>1.2.6-alpha</version>
+    <title>WPF support for NGettext</title>
+    <authors>Robert Jørgensgaard Engdahl</authors>
+    <owners>Robert Jørgensgaard Engdahl</owners>
+    <license type="expression">LGPL-3.0-or-later</license>
+    <projectUrl>https://github.com/robert-j-engdahl/ngettext-wpf</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Proper internationalization support for WPF (via NGettext).  In particular a GetTextMarkupExtension is included, which is what everyone uses anyway.</description>
+    <copyright>Copyright 2017, 2018, 2019 Accuratech ApS</copyright>
+    <tags>gettext wpf ngettext gettextmarkupextension xgettext-xaml</tags>
+    <dependencies>
+      <dependency id="NGettext" version="0.6.3" />
+      <dependency id="Expression.Blend.Sdk" version="1.0.2" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="../XGetText.Xaml/XGetText-Xaml.ps1" target="tools" />
+    <file src="../XGetText.Xaml/Init.ps1" target="tools" />
+  </files>
+</package>

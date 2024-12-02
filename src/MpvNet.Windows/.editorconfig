@@ -23,3 +23,12 @@ dotnet_diagnostic.IDE0044.severity = silent
 
 # Member does not access instance data and can be marked as static
 dotnet_diagnostic.CA1822.severity = none
+
+# IDE0057: Use range operator
+csharp_style_prefer_range_operator = false
+
+# CA1401: P/Invokes should not be visible
+dotnet_diagnostic.CA1401.severity = none
+
+# IDE0017: Simplify object initialization
+dotnet_style_object_initializer = false

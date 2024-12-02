@@ -1,6 +1,5 @@
 ﻿
 using System.Globalization;
-
 using MpvNet.Help;
 
 namespace MpvNet;
@@ -17,21 +16,21 @@ public class Command
         ["play-pause"] = PlayPause,
         ["shell-execute"] = args => ProcessHelp.ShellExecute(args[0]),
         ["show-text"] = args => ShowText(args[0], Convert.ToInt32(args[1]), Convert.ToInt32(args[2])),
+        ["cycle-audio"] = args => CycleAudio(),
+        ["cycle-subtitles"] = args => CycleSubtitles(),
+        ["playlist-first"] = args => PlaylistFirst(),
+        ["playlist-last"] = args => PlaylistLast(),
 
 
         // deprecated
         ["playlist-add"] = args => PlaylistAdd(Convert.ToInt32(args[0])), // deprecated
-        ["show-progress"] = args => ShowProgress(), // deprecated
-        ["cycle-audio"] = args => CycleAudio(), // deprecated
-        ["cycle-subtitles"] = args => CycleSubtitles(), // deprecated
-        ["playlist-first"] = args => PlaylistFirst(), // deprecated
-        ["playlist-last"] = args => PlaylistLast(), // deprecated
+        ["show-progress"] = args => Player.Command("show-progress"), // deprecated
         ["playlist-random"] = args => PlaylistRandom(), // deprecated
     };
 
-    public string FormatTime(double value) => ((int)value).ToString("00");
+    string FormatTime(double value) => ((int)value).ToString("00");
 
-    public static void PlayPause(IList<string> args)
+    void PlayPause(IList<string> args)
     {
         int count = Player.GetPropertyInt("playlist-count");
 
@@ -64,44 +63,8 @@ public class Command
         Player.Command("show-text \"${osd-ass-cc/0}{\\\\fs" + fontSize +
             "}${osd-ass-cc/1}" + text + "\" " + duration);
     }
-    
-    // deprecated
-    public static void PlaylistAdd(int value)
-    {
-        int pos = Player.PlaylistPos;
-        int count = Player.GetPropertyInt("playlist-count");
 
-        if (count < 2)
-            return;
-
-        pos += value;
-
-        if (pos < 0)
-            pos = count - 1;
-
-        if (pos > count - 1)
-            pos = 0;
-
-        Player.SetPropertyInt("playlist-pos", pos);
-    }
-
-    // deprecated
-    public void ShowProgress()
-    {
-        TimeSpan position = TimeSpan.FromSeconds(Player.GetPropertyDouble("time-pos"));
-        TimeSpan duration = TimeSpan.FromSeconds(Player.GetPropertyDouble("duration"));
-
-        string text = FormatTime(position.TotalMinutes) + ":" +
-                      FormatTime(position.Seconds) + " / " +
-                      FormatTime(duration.TotalMinutes) + ":" +
-                      FormatTime(duration.Seconds) + "    " +
-                      DateTime.Now.ToString("H:mm dddd d MMMM", CultureInfo.InvariantCulture);
-
-        Player.CommandV("show-text", text, "5000");
-    }
-
-    // deprecated
-    public static void CycleAudio()
+    void CycleAudio()
     {
         Player.UpdateExternalTracks();
 
@@ -129,8 +92,7 @@ public class Command
         }
     }
 
-    // deprecated
-    public static void CycleSubtitles()
+    void CycleSubtitles()
     {
         Player.UpdateExternalTracks();
 
@@ -162,14 +124,32 @@ public class Command
     }
 
     // deprecated
-    public static void PlaylistFirst()
+    void PlaylistAdd(int value)
+    {
+        int pos = Player.PlaylistPos;
+        int count = Player.GetPropertyInt("playlist-count");
+
+        if (count < 2)
+            return;
+
+        pos += value;
+
+        if (pos < 0)
+            pos = count - 1;
+
+        if (pos > count - 1)
+            pos = 0;
+
+        Player.SetPropertyInt("playlist-pos", pos);
+    }
+
+    void PlaylistFirst()
     {
         if (Player.PlaylistPos != 0)
             Player.SetPropertyInt("playlist-pos", 0);
     }
 
-    // deprecated
-    public static void PlaylistLast()
+    void PlaylistLast()
     {
         int count = Player.GetPropertyInt("playlist-count");
 
@@ -178,9 +158,24 @@ public class Command
     }
 
     // deprecated
-    public static void PlaylistRandom()
+    void PlaylistRandom()
     {
         int count = Player.GetPropertyInt("playlist-count");
         Player.SetPropertyInt("playlist-pos", new Random().Next(count));
+    }
+
+    // deprecated
+    void ShowProgress()
+    {
+        TimeSpan position = TimeSpan.FromSeconds(Player.GetPropertyDouble("time-pos"));
+        TimeSpan duration = TimeSpan.FromSeconds(Player.GetPropertyDouble("duration"));
+
+        string text = FormatTime(position.TotalMinutes) + ":" +
+                      FormatTime(position.Seconds) + " / " +
+                      FormatTime(duration.TotalMinutes) + ":" +
+                      FormatTime(duration.Seconds) + "    " +
+                      DateTime.Now.ToString("H:mm dddd d MMMM", CultureInfo.InvariantCulture);
+
+        Player.CommandV("show-text", text, "5000");
     }
 }

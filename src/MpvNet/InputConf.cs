@@ -1,24 +1,28 @@
 ﻿
-using MpvNet.ExtensionMethod;
 using MpvNet.Help;
 
 namespace MpvNet;
 
 public class InputConf
 {
-    string? _content;
+    string? _path;
 
     public InputConf(string path) { Path = path; }
 
-    public string Path { get; }
+    public string Content { get; set; } = "";
 
-    public string Content
-    {
-        get => _content ??= FileHelp.ReadTextFile(Path);
-        set => _content = value;
+    public string Path {
+        get => _path ?? "";
+        set {
+            if (_path != value)
+            {
+                _path = value;
+                Content = File.Exists(_path) ? FileHelp.ReadTextFile(_path) : "";
+            }
+        }
     }
 
-    public bool HasMenu => Content.Contains("#menu:") || Content.Contains("#! ");
+    public bool HasMenu => Content.Contains(App.MenuSyntax + " ");
 
     public (List<Binding> menuBindings, List<Binding>? confBindings) GetBindings()
     {
@@ -48,7 +52,29 @@ public class InputConf
     public string GetContent()
     {
         if (HasMenu)
+        {
+            try
+            {
+                if (App.Settings.MenuUpdateVersion != 1)
+                {
+                    string updatedContent = UpdateContent(Content);
+
+                    if (updatedContent != Content)
+                    {
+                        File.Copy(Path, Path + ".backup", true);
+                        File.WriteAllText(Path, Content = updatedContent);
+                    }
+
+                    App.Settings.MenuUpdateVersion = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                Terminal.WriteError("Failed to update menu." + BR + ex.Message);
+            }
+
             return Content;
+        }
         else
         {
             var defaults = InputHelp.GetDefaults();
@@ -72,14 +98,8 @@ public class InputConf
         }
     }
 
-    public void CreateBackup()
-    {
-        if (!File.Exists(Path))
-            return;
-
-        string targetPath = System.IO.Path.GetTempPath().AddSep() +
-            "mpv.net input.conf backup " + Guid.NewGuid() + ".conf";
-
-        File.Copy(Path, targetPath);
-    }
+    static string UpdateContent(string content) => content
+        .Replace("script-message mpv.net", "script-message-to mpvnet")
+        .Replace("/docs/Manual.md", "/docs/manual.md")
+        .Replace("https://github.com/stax76/mpv.net", "https://github.com/mpvnet-player/mpv.net");
 }
