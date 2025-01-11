@@ -17,7 +17,7 @@ public class CommandLine
             if (_arguments != null)
                 return _arguments;
 
-            _arguments = new();
+            _arguments = [];
 
             foreach (string i in Environment.GetCommandLineArgs().Skip(1))
             {
@@ -37,7 +37,7 @@ public class CommandLine
                         arg += "=yes";
                 }
 
-                string left = arg[2..arg.IndexOf("=")];
+                string left = arg[2..arg.IndexOf('=')];
                 string right = arg[(left.Length + 3)..];
 
                 if (string.IsNullOrEmpty(left))
@@ -113,16 +113,19 @@ public class CommandLine
 
     public static void ProcessCommandLineFiles()
     {
-        List<string> files = new List<string>();
+        List<string> files = [];
 
         foreach (string arg in Environment.GetCommandLineArgs().Skip(1))
+        {
             if (!arg.StartsWith("--") && (arg == "-" || arg.Contains("://") ||
-                arg.Contains(":\\") || arg.StartsWith("\\\\") || arg.StartsWith(".") ||
+                arg.Contains(":\\") || arg.StartsWith("\\\\") || arg.StartsWith('.') ||
                 File.Exists(arg)))
-
+            {
                 files.Add(arg);
+            }
+        }
 
-        Player.LoadFiles(files.ToArray(), !App.Queue, App.Queue);
+        Player.LoadFiles([.. files], !App.Queue, App.Queue);
 
         if (App.CommandLine.Contains("--shuffle"))
         {
@@ -134,8 +137,10 @@ public class CommandLine
     public static bool Contains(string name)
     {
         foreach (StringPair pair in Arguments)
+        {
             if (pair.Name == name)
                 return true;
+        }
 
         return false;
     }
@@ -143,8 +148,10 @@ public class CommandLine
     public static string GetValue(string name)
     {
         foreach (StringPair pair in Arguments)
+        {
             if (pair.Name == name)
                 return pair.Value;
+        }
 
         return "";
     }

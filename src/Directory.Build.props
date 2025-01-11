@@ -1,0 +1,6 @@
+﻿<Project>
+	<PropertyGroup>
+		<Product>mpv.net</Product>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+</Project>

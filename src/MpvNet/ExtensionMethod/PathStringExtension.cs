@@ -32,12 +32,12 @@ public static class PathStringExtension
         int index = instance.LastIndexOf('\\');
 
         if (index > -1)
-            return instance.Substring(index + 1);
+            return instance[(index + 1)..];
 
         index = instance.LastIndexOf('/');
 
         if (index > -1)
-            return instance.Substring(index + 1);
+            return instance[(index + 1)..];
 
         return instance;
     }
