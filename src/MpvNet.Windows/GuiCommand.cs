@@ -198,11 +198,13 @@ public class GuiCommand
         else
         {
             string clipboard = System.Windows.Forms.Clipboard.GetText();
-            List<string> files = new List<string>();
+            List<string> files = [];
 
             foreach (string i in clipboard.Split(BR.ToCharArray(), StringSplitOptions.RemoveEmptyEntries))
+            {
                 if (i.Contains("://") || File.Exists(i))
                     files.Add(i);
+            }
 
             if (files.Count == 0)
             {
@@ -227,9 +229,13 @@ public class GuiCommand
 
         dialog.Multiselect = true;
 
-        if (dialog.ShowDialog() == DialogResult.OK)
-            foreach (string i in dialog.FileNames)
-                Player.CommandV("audio-add", i);
+        if (dialog.ShowDialog() != DialogResult.OK)
+            return;
+
+        foreach (string i in dialog.FileNames)
+        {
+            Player.CommandV("audio-add", i);
+        }
     }
 
     void RegisterFileAssociations(IList<string> args)
@@ -313,9 +319,11 @@ public class GuiCommand
         var items = new List<Item>();
 
         foreach (string file in App.Settings.RecentFiles)
+        {
             items.Add(new Item() { title = Path.GetFileName(file),
-                                   value = new string []{ "loadfile", file },
-                                   hint = file});
+                        value = ["loadfile", file],
+                        hint = file});
+        }
 
         o.items = items.ToArray();
         string json = JsonSerializer.Serialize(o);
@@ -326,12 +334,12 @@ public class GuiCommand
     {
         public string title { get; set; } = "";
         public int selected_index { get; set; } = 0;
-        public Item[] items { get; set; } = Array.Empty<Item>();
+        public Item[] items { get; set; } = [];
     }
 
     class Item
     {
-        public string[] value  { get; set; } = Array.Empty<string>();
+        public string[] value  { get; set; } = [];
         public string title { get; set; } = "";
         public string hint { get; set; } = "";
     }
@@ -393,15 +401,21 @@ public class GuiCommand
         }
 
         if (App.MediaInfo && !osd && File.Exists(path) && !path.Contains(@"\\.\pipe\"))
-            using (MediaInfo mediaInfo = new MediaInfo(path))
-                text = Regex.Replace(mediaInfo.GetSummary(full, raw), "Unique ID.+", "");
+        {
+            using MediaInfo mediaInfo = new MediaInfo(path);
+            text = Regex.Replace(mediaInfo.GetSummary(full, raw), "Unique ID.+", "");
+        }
         else
         {
             Player.UpdateExternalTracks();
             text = "N: " + Player.GetPropertyString("filename") + BR;
             lock (Player.MediaTracksLock)
+            {
                 foreach (MediaTrack track in Player.MediaTracks)
+                {
                     text += track.Text + BR;
+                }
+            }
         }
 
         text = text.TrimEx();
@@ -426,7 +440,7 @@ public class GuiCommand
     {
         string path = Environment.GetEnvironmentVariable("Path", EnvironmentVariableTarget.User)!;
 
-        if (path.ToLower().Contains(Folder.Startup.TrimEnd(Path.DirectorySeparatorChar).ToLower()))
+        if (path.Contains(Folder.Startup.TrimEnd(Path.DirectorySeparatorChar), StringComparison.CurrentCultureIgnoreCase))
         {
             Msg.ShowWarning(_("mpv.net is already in the Path environment variable."));
             return;

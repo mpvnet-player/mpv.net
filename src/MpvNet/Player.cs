@@ -73,10 +73,12 @@ public class MainPlayer : MpvClient
         MainHandle = mpv_create();
         Handle = MainHandle;
 
-        var events = Enum.GetValues(typeof(mpv_event_id)).Cast<mpv_event_id>();
+        var events = Enum.GetValues<mpv_event_id>().Cast<mpv_event_id>();
 
         foreach (mpv_event_id i in events)
+        {
             mpv_request_event(MainHandle, i, 0);
+        }
 
         mpv_request_log_messages(MainHandle, "no");
 
@@ -194,7 +196,9 @@ public class MainPlayer : MpvClient
         mpv_destroy(Handle);
 
         foreach (var client in Clients)
+        {
             mpv_destroy(client.Handle);
+        }
     }
 
     public void ProcessProperty(string? name, string? value)
@@ -263,6 +267,8 @@ public class MainPlayer : MpvClient
         }
     }
 
+    private readonly Regex ConfRegex = new Regex("^[\\w-]+$", RegexOptions.Compiled);
+
     Dictionary<string, string>? _Conf;
 
     public Dictionary<string, string> Conf {
@@ -273,7 +279,7 @@ public class MainPlayer : MpvClient
 
             App.ApplyInputDefaultBindingsFix();
 
-            _Conf = new Dictionary<string, string>();
+            _Conf = [];
 
             if (File.Exists(ConfPath))
             {
@@ -281,12 +287,12 @@ public class MainPlayer : MpvClient
                 {
                     string line = it.TrimStart(' ', '-').TrimEnd();
 
-                    if (line.StartsWith("#"))
+                    if (line.StartsWith('#'))
                         continue;
 
                     if (!line.Contains('='))
                     {
-                        if (Regex.Match(line, "^[\\w-]+$").Success)
+                        if (ConfRegex.Match(line).Success)
                             line += "=yes";
                         else
                             continue;
@@ -305,7 +311,9 @@ public class MainPlayer : MpvClient
             }
 
             foreach (var i in _Conf)
+            {
                 ProcessProperty(i.Key, i.Value);
+            }
 
             return _Conf;
         }
@@ -331,7 +339,9 @@ public class MainPlayer : MpvClient
     public void MainEventLoop()
     {
         while (true)
+        {
             mpv_wait_event(MainHandle, -1);
+        }
     }
 
     protected override void OnShutdown()
@@ -479,14 +489,14 @@ public class MainPlayer : MpvClient
             Command("stop");
             Thread.Sleep(500);
             SetPropertyString("dvd-device", path);
-            LoadFiles(new[] { @"dvd://" }, false, false);
+            LoadFiles([@"dvd://"], false, false);
         }
         else
         {
             Command("stop");
             Thread.Sleep(500);
             SetPropertyString("bluray-device", path);
-            LoadFiles(new[] { @"bd://" }, false, false);
+            LoadFiles([@"bd://"], false, false);
         }
     }
 
@@ -498,12 +508,12 @@ public class MainPlayer : MpvClient
         if (Directory.Exists(path + "\\BDMV"))
         {
             SetPropertyString("bluray-device", path);
-            LoadFiles(new[] { @"bd://" }, false, false);
+            LoadFiles([@"bd://"], false, false);
         }
         else
         {
             SetPropertyString("dvd-device", path);
-            LoadFiles(new[] { @"dvd://" }, false, false);
+            LoadFiles([@"dvd://"], false, false);
         }
     }
 
@@ -601,8 +611,10 @@ public class MainPlayer : MpvClient
     static string GetNativeLanguage(string name)
     {
         foreach (CultureInfo ci in CultureInfo.GetCultures(CultureTypes.NeutralCultures))
+        {
             if (ci.EnglishName == name)
                 return ci.NativeName;
+        }
 
         return name;
     }
@@ -629,7 +641,7 @@ public class MainPlayer : MpvClient
             if (_audioDevices != null)
                 return _audioDevices;
 
-            _audioDevices = new();
+            _audioDevices = [];
             string json = GetPropertyString("audio-device-list");
             var enumerator = JsonDocument.Parse(json).RootElement.EnumerateArray();
 
@@ -680,6 +692,8 @@ public class MainPlayer : MpvClient
         }
     }
 
+    private readonly Regex TitleRegex = new Regex(@"^[\._\-]", RegexOptions.Compiled);
+
     public List<MediaTrack> GetTracks(bool includeInternal = true, bool includeExternal = true)
     {
         List<MediaTrack> tracks = new List<MediaTrack>();
@@ -697,7 +711,7 @@ public class MainPlayer : MpvClient
             string filename = GetPropertyString($"filename/no-ext");
             string title = GetPropertyString($"track-list/{i}/title").Replace(filename, "");
 
-            title = Regex.Replace(title, @"^[\._\-]", "");
+            title = TitleRegex.Replace(title, "");
 
             if (type == "video")
             {
@@ -1043,7 +1057,7 @@ public class MainPlayer : MpvClient
             if (_profileNames != null)
                 return _profileNames;
 
-            string[] ignore = { "builtin-pseudo-gui", "encoding", "libmpv", "pseudo-gui", "default" };
+            string[] ignore = ["builtin-pseudo-gui", "encoding", "libmpv", "pseudo-gui", "default"];
             string json = GetPropertyString("profile-list");
             return _profileNames = JsonDocument.Parse(json).RootElement.EnumerateArray()
                 .Select(it => it.GetProperty("name").GetString())

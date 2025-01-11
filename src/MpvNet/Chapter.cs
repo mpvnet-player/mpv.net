@@ -19,7 +19,7 @@ public class Chapter
                 _timeDisplay = TimeSpan.FromSeconds(Time).ToString();
 
                 if (_timeDisplay.ContainsEx("."))
-                    _timeDisplay = _timeDisplay[.._timeDisplay.LastIndexOf(".")];
+                    _timeDisplay = _timeDisplay[.._timeDisplay.LastIndexOf('.')];
             }
 
             return _timeDisplay;

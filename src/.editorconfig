@@ -5,3 +5,6 @@ csharp_style_implicit_object_creation_when_type_is_apparent = true
 
 # IDE0090: Use 'new(...)'
 dotnet_diagnostic.IDE0090.severity = silent
+
+# WFO1000: A property should determine its property content serialization with the DesignerSerializationVisibilityAttribute, DefaultValueAttribute or the ShouldSerializeProperty method
+dotnet_diagnostic.WFO1000.severity = silent

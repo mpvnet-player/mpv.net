@@ -21,11 +21,11 @@ public class MpvClient
     public event Action? Seek;                               // seek                MPV_EVENT_SEEK
     public event Action? PlaybackRestart;                    // playback-restart    MPV_EVENT_PLAYBACK_RESTART
 
-    public Dictionary<string, List<Action>> PropChangeActions { get; set; } = new Dictionary<string, List<Action>>();
-    public Dictionary<string, List<Action<int>>> IntPropChangeActions { get; set; } = new Dictionary<string, List<Action<int>>>();
-    public Dictionary<string, List<Action<bool>>> BoolPropChangeActions { get; set; } = new Dictionary<string, List<Action<bool>>>();
-    public Dictionary<string, List<Action<double>>> DoublePropChangeActions { get; set; } = new Dictionary<string, List<Action<double>>>();
-    public Dictionary<string, List<Action<string>>> StringPropChangeActions { get; set; } = new Dictionary<string, List<Action<string>>>();
+    public Dictionary<string, List<Action>> PropChangeActions { get; set; } = [];
+    public Dictionary<string, List<Action<int>>> IntPropChangeActions { get; set; } = [];
+    public Dictionary<string, List<Action<bool>>> BoolPropChangeActions { get; set; } = [];
+    public Dictionary<string, List<Action<double>>> DoublePropChangeActions { get; set; } = [];
+    public Dictionary<string, List<Action<string>>> StringPropChangeActions { get; set; } = [];
 
     public nint Handle { get; set; }
 
@@ -132,46 +132,72 @@ public class MpvClient
         else if (data.format == mpv_format.MPV_FORMAT_STRING)
         {
             lock (StringPropChangeActions)
+            {
                 foreach (var pair in StringPropChangeActions)
+                {
                     if (pair.Key == data.name)
                     {
                         string value = ConvertFromUtf8(Marshal.PtrToStructure<IntPtr>(data.data));
 
                         foreach (var action in pair.Value)
+                        {
                             action.Invoke(value);
+                        }
                     }
+                }
+            }
         }
         else if (data.format == mpv_format.MPV_FORMAT_INT64)
         {
             lock (IntPropChangeActions)
+            {
                 foreach (var pair in IntPropChangeActions)
+                {
                     if (pair.Key == data.name)
                     {
                         int value = Marshal.PtrToStructure<int>(data.data);
 
                         foreach (var action in pair.Value)
+                        {
                             action.Invoke(value);
+                        }
                     }
+                }
+            }
         }
         else if (data.format == mpv_format.MPV_FORMAT_NONE)
         {
             lock (PropChangeActions)
+            {
                 foreach (var pair in PropChangeActions)
+                {
                     if (pair.Key == data.name)
+                    {
                         foreach (var action in pair.Value)
+                        {
                             action.Invoke();
+                        }
+                    }
+                }
+            }
         }
         else if (data.format == mpv_format.MPV_FORMAT_DOUBLE)
         {
             lock (DoublePropChangeActions)
+            {
                 foreach (var pair in DoublePropChangeActions)
+                {
                     if (pair.Key == data.name)
                     {
                         double value = Marshal.PtrToStructure<double>(data.data);
 
                         foreach (var action in pair.Value)
+                        {
                             action.Invoke(value);
+                        }
                     }
+                }
+            }
         }
     }
 
@@ -247,7 +273,9 @@ public class MpvClient
         mpv_error err = mpv_command_ret(Handle, rootPtr, resultNodePtr);
 
         foreach (IntPtr ptr in pointers)
+        {
             Marshal.FreeHGlobal(ptr);
+        }
 
         Marshal.FreeHGlobal(rootPtr);
 
@@ -409,7 +437,7 @@ public class MpvClient
                 if (err < 0)
                     HandleError(err, "error observing property: " + name);
                 else
-                    IntPropChangeActions[name] = new List<Action<int>>();
+                    IntPropChangeActions[name] = [];
             }
 
             if (IntPropChangeActions.ContainsKey(name))
@@ -428,7 +456,7 @@ public class MpvClient
                 if (err < 0)
                     HandleError(err, "error observing property: " + name);
                 else
-                    DoublePropChangeActions[name] = new List<Action<double>>();
+                    DoublePropChangeActions[name] = [];
             }
 
             if (DoublePropChangeActions.ContainsKey(name))
@@ -447,7 +475,7 @@ public class MpvClient
                 if (err < 0)
                     HandleError(err, "error observing property: " + name);
                 else
-                    BoolPropChangeActions[name] = new List<Action<bool>>();
+                    BoolPropChangeActions[name] = [];
             }
 
             if (BoolPropChangeActions.ContainsKey(name))
@@ -466,7 +494,7 @@ public class MpvClient
                 if (err < 0)
                     HandleError(err, "error observing property: " + name);
                 else
-                    StringPropChangeActions[name] = new List<Action<string>>();
+                    StringPropChangeActions[name] = [];
             }
 
             if (StringPropChangeActions.ContainsKey(name))
@@ -485,7 +513,7 @@ public class MpvClient
                 if (err < 0)
                     HandleError(err, "error observing property: " + name);
                 else
-                    PropChangeActions[name] = new List<Action>();
+                    PropChangeActions[name] = [];
             }
 
             if (PropChangeActions.ContainsKey(name))

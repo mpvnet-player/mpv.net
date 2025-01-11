@@ -101,8 +101,8 @@ public class ConfParser
             }
             else if (line.Contains('='))
             {
-                string name = line[..line.IndexOf("=")].Trim();
-                string value = line[(line.IndexOf("=") + 1)..].Trim();
+                string name = line[..line.IndexOf('=')].Trim();
+                string value = line[(line.IndexOf('=') + 1)..].Trim();
 
                 currentGroup?.Items.Add(new StringPair(name, value));
             }

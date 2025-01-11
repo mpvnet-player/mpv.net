@@ -34,17 +34,25 @@ public class InputConf
         var defaultBindings = InputHelp.GetDefaults();
 
         foreach (Binding defaultBinding in defaultBindings)
+        {
             foreach (Binding confBinding in confbindings)
+            {
                 if (defaultBinding.Input == confBinding.Input &&
                     defaultBinding.Command != confBinding.Command)
                 {
                     defaultBinding.Input = "";
                 }
+            }
+        }
 
         foreach (Binding defaultBinding in defaultBindings)
+        {
             foreach (Binding confBinding in confbindings)
+            {
                 if (defaultBinding.Command == confBinding.Command)
                     defaultBinding.Input = confBinding.Input;
+            }
+        }
 
         return (defaultBindings, confbindings);
     }
@@ -82,16 +90,22 @@ public class InputConf
             var conf = InputHelp.Parse(Content);
 
             foreach (Binding defaultBinding in defaults)
+            {
                 foreach (Binding confBinding in conf)
+                {
                     if (defaultBinding.Command == confBinding.Command &&
                         defaultBinding.Comment == confBinding.Comment)
                     {
                         defaultBinding.Input = confBinding.Input;
                         removed.Add(confBinding);
                     }
+                }
+            }
 
             foreach (Binding binding in removed)
+            {
                 conf.Remove(binding);
+            }
 
             defaults.AddRange(conf);
             return InputHelp.ConvertToString(defaults);

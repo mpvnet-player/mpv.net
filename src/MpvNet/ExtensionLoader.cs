@@ -9,7 +9,7 @@ public class ExtensionLoader
 {
     public event Action<Exception>? UnhandledException;
 
-    readonly List<object?> _refs = new();
+    readonly List<object?> _refs = [];
 
     void LoadDll(string path)
     {
@@ -31,8 +31,12 @@ public class ExtensionLoader
     public void LoadFolder(string path)
     {
         if (Directory.Exists(path))
+        {
             foreach (string dir in Directory.GetDirectories(path))
+            {
                 LoadDll(dir.AddSep() + Path.GetFileName(dir) + ".dll");
+            }
+        }
     }
 }
 

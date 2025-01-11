@@ -13,7 +13,7 @@ public static class FileAssociation
         string exeFilename = Path.GetFileName(exePath);
         string exeFilenameNoExt = Path.GetFileNameWithoutExtension(exePath);
 
-        string[] protocols = { "ytdl", "rtsp", "srt", "srtp" };
+        string[] protocols = ["ytdl", "rtsp", "srt", "srtp"];
 
         if (perceivedType != "unreg")
         {

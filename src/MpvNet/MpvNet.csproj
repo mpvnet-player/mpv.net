@@ -1,27 +1,25 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
 		<AssemblyName>libmpvnet</AssemblyName>
-		<Product>mpv.net</Product>
-		<Nullable>enable</Nullable>
 		<RootNamespace>MpvNet</RootNamespace>
 		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    </PropertyGroup>
+	</PropertyGroup>
 
-    <ItemGroup>
-      <None Include="..\..\docs\changelog.md" Link="Docs\changelog.md" />
-      <None Include="..\..\docs\manual.md" Link="Docs\manual.md" />
-      <None Include="..\..\README.md" Link="Docs\README.md" />
-    </ItemGroup>
+	<ItemGroup>
+		<None Include="..\..\docs\changelog.md" Link="Docs\changelog.md" />
+		<None Include="..\..\docs\manual.md" Link="Docs\manual.md" />
+		<None Include="..\..\README.md" Link="Docs\README.md" />
+	</ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Docs\" />
-    </ItemGroup>
+	<ItemGroup>
+		<Folder Include="Docs\" />
+	</ItemGroup>
 
-    <ItemGroup>
-      <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
-      <PackageReference Include="NGettext" Version="0.6.7" />
-    </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Mvvm" />
+		<PackageReference Include="NGettext" />
+	</ItemGroup>
 
 </Project>

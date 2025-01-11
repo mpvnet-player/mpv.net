@@ -40,7 +40,7 @@ Test (Join-Path $SourceDir 'MpvNet.sln')
 $7zFile            = Test 'C:\Program Files\7-Zip\7z.exe'
 $InnoSetupCompiler = Test 'C:\Program Files (x86)\Inno Setup 6\ISCC.exe'
 
-$ReleaseNotes = "- [.NET Desktop Runtime 6.0](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)`n- [Changelog](https://github.com/mpvnet-player/mpv.net/blob/main/docs/changelog.md)"
+$ReleaseNotes = "- [.NET Desktop Runtime 9.0](https://dotnet.microsoft.com/en-us/download/dotnet/9.0)`n- [Changelog](https://github.com/mpvnet-player/mpv.net/blob/main/docs/changelog.md)"
 $Repo = 'github.com/mpvnet-player/mpv.net'
 
 # Dotnet Publish
