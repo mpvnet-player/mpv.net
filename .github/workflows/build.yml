@@ -69,7 +69,7 @@ jobs:
           wget -nv -O mpvnet.com https://github.com/mpvnet-player/file-host/releases/download/tag/mpvnet.com.txt
           cp -f mpvnet.com src/MpvNet.Windows/bin/Debug/ || true
       - name: Upload
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: "mpv.net-win64"
           path: src/MpvNet.Windows/bin/Debug/
