@@ -2,7 +2,8 @@
 # v7.1.1.4 Beta (????-??-??)
 
 - The mpv.net manual was updated.
-- The Turkish translation was updated.
+- The Turkish translation was updated. A Bulgarian translation was added.
+  Thanks to the translators!
 
 
 # v7.1.1.3 Beta (2024-10-20)

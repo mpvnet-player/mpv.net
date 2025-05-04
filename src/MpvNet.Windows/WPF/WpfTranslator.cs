@@ -10,8 +10,9 @@ public class WpfTranslator : ITranslator
     string _localizerLangauge = "";
 
     static Language[] Languages { get; } = new Language[] {
-        new("english", "en", "en"),
+        new("bulgarian", "bg", "bg"),
         new("chinese-china", "zh-CN", "zh"),  // Chinese (Simplified)
+        new("english", "en", "en"),
         new("french", "fr", "fr"),
         new("german", "de", "de"),
         new("japanese", "ja", "ja"),
