@@ -4,6 +4,7 @@
 - The mpv.net manual was updated.
 - The Turkish translation was updated. A Bulgarian translation was added.
   Thanks to the translators!
+- The auto build (Actions/Workflows) was fixed.
 
 
 # v7.1.1.3 Beta (2024-10-20)
