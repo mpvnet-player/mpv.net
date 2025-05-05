@@ -42,7 +42,7 @@ public class Command
             {
                 if (i.Contains("://") || File.Exists(i))
                 {
-                    Player.LoadFiles(new[] { i }, true, false);
+                    Player.LoadFiles([i], true, false);
                     break;
                 }
             }
