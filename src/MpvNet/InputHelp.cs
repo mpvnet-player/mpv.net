@@ -9,12 +9,30 @@ public static class InputHelp
     {
         List<Binding> b = new();
 
+        Add(b, new("", "", "script-binding select/select-playlist", "g-p", _("Playlist")));
+        Add(b, new("", "", "script-binding select/select-sid", "g-s", _("Subtitles")));
+        Add(b, new("", "", "script-binding select/select-secondary-sid", "g-S", _("Secondary Subtitles")));
+        Add(b, new("", "", "script-binding select/select-aid", "g-a", _("Audio Tracks")));
+        Add(b, new("", "", "script-binding select/select-vid", "g-v", _("Video Tracks")));
+        Add(b, new("", "", "script-binding select/select-track", "g-t", _("Tracks")));
+        Add(b, new("", "", "script-binding select/select-chapter", "g-c", _("Chapters")));
+        Add(b, new("", "", "script-binding select/select-edition", "g-e", _("Editions")));
+        Add(b, new("", "", "script-binding select/select-subtitle-line", "g-l", _("Subtitle Lines")));
+        Add(b, new("", "", "script-binding select/select-audio-device", "g-d", _("Audio Devices")));
+        Add(b, new("", "", "script-binding select/select-watch-history", "g-h", _("Watch History")));
+        Add(b, new("", "", "script-binding select/select-watch-later", "g-w", _("Watch Later")));
+        Add(b, new("", "", "script-binding select/select-binding", "g-b", _("Bindings")));
+        Add(b, new("", "", "script-binding select/show-properties", "g-r", _("Properties")));
+        Add(b, new("", "", "script-binding select/menu", "g-m", _("Select Menu")));
+        Add(b, new("", "", "script-binding select/menu", "MENU", _("Select Menu")));
+        Add(b, new("", "", "script-binding select/menu", "Ctrl+p", _("Select Menu")));
+
         Add(b, new (_("File"), _("Open Files..."), "script-message-to mpvnet open-files", "o"));
         Add(b, new (_("File"), _("Open URL or file from clipboard"), "script-message-to mpvnet open-clipboard", "Ctrl+v"));
         Add(b, new (_("File"), _("Open DVD/Blu-ray Drive/Folder..."), "script-message-to mpvnet open-optical-media"));
         Add(b, new (_("File"), "-"));
-        Add(b, new (_("File"), _("Add external audio files..."), "script-message-to mpvnet load-audio", "Alt+a"));
-        Add(b, new (_("File"), _("Add external subtitle files..."), "script-message-to mpvnet load-sub", "Alt+s"));
+        Add(b, new (_("File"), _("Add external audio files..."), "script-message-to mpvnet load-audio"));
+        Add(b, new (_("File"), _("Add external subtitle files..."), "script-message-to mpvnet load-sub"));
         Add(b, new (_("File"), "-"));
         Add(b, new (_("File"), _("Add files to playlist..."), "script-message-to mpvnet open-files append"));
         Add(b, new (_("File"), _("Add files/URLs to playlist from clipboard"), "script-message-to mpvnet open-clipboard append", "Ctrl+Shift+v"));
@@ -118,23 +136,26 @@ public static class InputHelp
         Add(b, new (_("Speed"), "-"));
         Add(b, new (_("Speed"), _("Reset"), "set speed 1", "BS"));
 
+        Add(b, new (_("View"), _("Playlist"), "script-binding select/select-playlist", "F8"));
         Add(b, new (_("View"), _("Toggle Statistics"), "script-binding stats/display-stats-toggle", "t"));
         Add(b, new (_("View"), _("Toggle OSC Visibility"), "script-binding osc/visibility", "Del"));
-        Add(b, new (_("View"), _("Show Media Info On-Screen"), "script-message-to mpvnet show-media-info osd", "i"));
-        Add(b, new (_("View"), _("Show Media Info Message Box"), "script-message-to mpvnet show-media-info msgbox", "Ctrl+m"));
-        Add(b, new (_("View"), _("Show Progress"), "show-progress", "p"));
-
-        Add(b, new (_("View") + " > " + _("On Screen Menu"), _("Playlist"), "script-binding select/select-playlist", "F8"));
-        Add(b, new (_("View") + " > " + _("On Screen Menu"), _("Bindings"), "script-binding select/select-binding", "F1"));
-        Add(b, new (_("View") + " > " + _("On Screen Menu"), _("Properties"), "script-binding select/show-properties", "F3"));
-        Add(b, new (_("View") + " > " + _("On Screen Menu"), _("Chapters"), "script-binding select/select-chapter", "Alt+c"));
-        Add(b, new (_("View") + " > " + _("On Screen Menu"), _("Tracks"), "script-binding select/select-track", "F9"));
-        Add(b, new (_("View") + " > " + _("On Screen Menu"), _("Audio Tracks"), "script-binding select/select-aid"));
-        Add(b, new (_("View") + " > " + _("On Screen Menu"), _("Subtitle Tracks"), "script-binding select/select-sid"));
-        Add(b, new (_("View") + " > " + _("On Screen Menu"), _("Secondary Subtitle"), "script-binding select/select-secondary-sid", "Alt+b"));
-        Add(b, new (_("View") + " > " + _("On Screen Menu"), _("Video Tracks"), "script-binding select/select-vid", "Alt+v"));
-        Add(b, new (_("View") + " > " + _("On Screen Menu"), _("Subtitle Lines"), "script-binding select/select-subtitle-line", "Alt+l"));
-        Add(b, new (_("View") + " > " + _("On Screen Menu"), _("Audio Devices"), "script-binding select/select-audio-device", "Alt+d"));
+        Add(b, new (_("View"), _("Media Info On-Screen"), "script-message-to mpvnet show-media-info osd", "i"));
+        Add(b, new (_("View"), _("Media Info Message Box"), "script-message-to mpvnet show-media-info msgbox", "Ctrl+m"));
+        Add(b, new (_("View"), _("Progress"), "show-progress", "p"));
+        Add(b, new (_("View") + " > " + _("Select Menu"), _("Playlist"), "script-binding select/select-playlist", "F8"));
+        Add(b, new (_("View") + " > " + _("Select Menu"), _("Bindings"), "script-binding select/select-binding", "F1"));
+        Add(b, new (_("View") + " > " + _("Select Menu"), _("Properties"), "script-binding select/show-properties", "F2"));
+        Add(b, new (_("View") + " > " + _("Select Menu"), _("Chapters"), "script-binding select/select-chapter", "Alt+c"));
+        Add(b, new (_("View") + " > " + _("Select Menu"), _("Tracks"), "script-binding select/select-track", "F9"));
+        Add(b, new (_("View") + " > " + _("Select Menu"), _("Audio Tracks"), "script-binding select/select-aid", "Alt+a"));
+        Add(b, new (_("View") + " > " + _("Select Menu"), _("Subtitle Tracks"), "script-binding select/select-sid", "Alt+s"));
+        Add(b, new (_("View") + " > " + _("Select Menu"), _("Secondary Subtitle"), "script-binding select/select-secondary-sid", "Alt+b"));
+        Add(b, new (_("View") + " > " + _("Select Menu"), _("Video Tracks"), "script-binding select/select-vid", "Alt+v"));
+        Add(b, new (_("View") + " > " + _("Select Menu"), _("Editions"), "script-binding select/select-edition", "Alt+e"));
+        Add(b, new (_("View") + " > " + _("Select Menu"), _("Subtitle Lines"), "script-binding select/select-subtitle-line", "Alt+l"));
+        Add(b, new (_("View") + " > " + _("Select Menu"), _("Audio Devices"), "script-binding select/select-audio-device", "Alt+d"));
+        Add(b, new (_("View") + " > " + _("Select Menu"), _("Watch History"), "script-binding select/select-watch-history", "Alt+h"));
+        Add(b, new (_("View") + " > " + _("Select Menu"), _("Watch Later"), "script-binding select/select-watch-later"));
 
         if (File.Exists(Player.ConfigFolder + "/scripts/command_palette.lua"))
         {
@@ -159,6 +180,7 @@ public static class InputHelp
             Add(b, new(_("View") + " > " + _("Command Palette"), _("Recent Files"), "script-message-to mpvnet show-recent-in-command-palette", "Alt+f"));
         }
 
+        Add(b, new (_("View"), "-"));
         Add(b, new (_("View") + " > " + _("More"), _("Show Console"), "script-binding console/enable", "`"));
         Add(b, new (_("View") + " > " + _("More"), _("Show Commands"), "script-message-to mpvnet show-commands", "F2"));
         Add(b, new (_("View") + " > " + _("More"), _("Show Bindings"), "script-message-to mpvnet show-bindings"));
