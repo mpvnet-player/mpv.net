@@ -5,6 +5,9 @@
 - The Turkish translation was updated. A Bulgarian translation was added.
   Thanks to the translators!
 - The auto build (Actions/Workflows) was fixed.
+- The required Dotnet version changed from 6.0 to 9.0. This drops Win 7 support
+  unfortunately. It was done to use new C# language features and make
+  the mpv.net project more attractive for new developers to contribute.
 
 
 # v7.1.1.3 Beta (2024-10-20)
