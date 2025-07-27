@@ -477,8 +477,18 @@ public class MainPlayer : MpvClient
         if (!path.Contains(':') && !path.StartsWith("\\\\") && File.Exists(path))
             path = System.IO.Path.GetFullPath(path);
 
+        path = System.IO.Path.GetFullPath(path);
+
+        if (path.Length >= 260 &&
+            !path.StartsWith(@"\\?\") &&
+            System.Text.RegularExpressions.Regex.IsMatch(path, @"^[a-zA-Z]:\\"))
+        {
+            path = @"\\?\" + path;
+        }
+
         return path;
     }
+
 
     public void LoadISO(string path)
     {
