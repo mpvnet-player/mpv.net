@@ -4,8 +4,7 @@
 Updates mpv (x64) and libmpv (x64 , ARM64).
 
 Files are downloaded from:
-    x64:   github.com/zhongfly/mpv-winbuild
-    ARM64: github.com/Andarwinux/mpv-winbuild
+    https://github.com/shinchiro/mpv-winbuild-cmake/releases
 
 Requires 7zip being installed at 'C:\Program Files\7-Zip\7z.exe'.
 
@@ -54,8 +53,8 @@ function Unpack($archieveFile, $outputRootDir) {
 # Update mpv x64
 
 if (Test-Path (Join-Path $MpvDirX64 'mpv.exe')) {
-    $apiURL = "https://api.github.com/repos/zhongfly/mpv-winbuild/releases/latest"
-    $archiveFile = Get-Item (Download $apiURL "mpv-x86_64-[0-9]{8}")
+    $apiURL = "https://api.github.com/repos/shinchiro/mpv-winbuild-cmake/releases/latest"
+    $archiveFile = Get-Item (Download $apiURL "mpv-x86_64-[0-9]{8}-git-[0-9a-z]+\.7z")
     $archiveDir = Unpack $archiveFile $env:TEMP
     Remove-Item "$MpvDirX64\*" -Force -Recurse
     Copy-Item "$archiveDir\*" $MpvDirX64 -Force -Recurse
@@ -68,8 +67,8 @@ if (Test-Path (Join-Path $MpvDirX64 'mpv.exe')) {
 # Update libmpv x64
 
 if (Test-Path (Join-Path $LibmpvDirX64 'libmpv-2.dll')) {
-    $apiURL = "https://api.github.com/repos/zhongfly/mpv-winbuild/releases/latest"
-    $archiveFile = Get-Item (Download $apiURL "mpv-dev-x86_64-[0-9]{8}")
+    $apiURL = "https://api.github.com/repos/shinchiro/mpv-winbuild-cmake/releases/latest"
+    $archiveFile = Get-Item (Download $apiURL "mpv-dev-x86_64-[0-9]{8}-git-[0-9a-z]+\.7z")
     $archiveDir = Unpack $archiveFile $env:TEMP
     Copy-Item $archiveDir\libmpv-2.dll $LibmpvDirX64 -Force
     Remove-Item $archiveFile.FullName
@@ -81,8 +80,8 @@ if (Test-Path (Join-Path $LibmpvDirX64 'libmpv-2.dll')) {
 # Update libmpv ARM64
 
 if (Test-Path (Join-Path $LibmpvDirARM64 'libmpv-2.dll')) {
-    $apiURL = "https://api.github.com/repos/Andarwinux/mpv-winbuild/releases/latest"
-    $archiveFile = Get-Item (Download $apiURL "mpv-dev-aarch64-[0-9]{8}")
+    $apiURL = "https://api.github.com/repos/shinchiro/mpv-winbuild-cmake/releases/latest"
+    $archiveFile = Get-Item (Download $apiURL "mpv-dev-aarch64-[0-9]{8}-git-[0-9a-z]+\.7z")
     $archiveDir = Unpack $archiveFile $env:TEMP
     Copy-Item $archiveDir\libmpv-2.dll $LibmpvDirARM64 -Force
     Remove-Item $archiveFile.FullName

@@ -42,9 +42,7 @@ differences are documented in this manual under [Differences compared to mpv](#d
 Download
 --------
 
-1. [Stable and beta portable and setup via GitHub download](../../../releases)
-2. Stable via command line with winget: `winget install mpv.net`
-3. [Automated nightly portable builds](https://github.com/mpvnet-player/mpv.net/actions)
+[Stable and beta portable and setup via GitHub download](../../../releases)
 
 [Changelog](changelog.md)
 
@@ -89,15 +87,6 @@ to add mpv.net to path is:
 `Context Menu > Config > Setup > Add mpv.net to Path environment variable`
 
 For more information see the [terminal section](#terminal).
-
-#### Command Palette user script
-
-It's recommended to install the
-[Command Palette user script](https://github.com/stax76/mpv-scripts?tab=readme-ov-file#command_palette),
-the installer script can be invoked from:
-
-`Context Menu > Config > Setup > Install Command Palette`
-
 
 Support
 -------

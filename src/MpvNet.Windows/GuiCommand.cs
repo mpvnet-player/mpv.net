@@ -32,7 +32,6 @@ public class GuiCommand
     {
         ["add-to-path"] = args => AddToPath(),
         ["edit-conf-file"] = EditCongFile,
-        ["install-command-palette"] = args => InstallCommandPalette(),
         ["load-audio"] = LoadAudio,
         ["load-sub"] = LoadSubtitle,
         ["move-window"] = args => MoveWindow?.Invoke(args[0]),
@@ -165,8 +164,7 @@ public class GuiCommand
         }
 
         string header = BR +
-            "https://mpv.io/manual/master/#list-of-input-commands" + BR2 +
-            "https://github.com/stax76/mpv-scripts#command_palette" + BR;
+            "https://mpv.io/manual/master/#list-of-input-commands" + BR;
 
         ShowTextWithEditor("Input Commands", header + sb.ToString());
     }
@@ -274,24 +272,6 @@ public class GuiCommand
                 Msg.ShowError(_("Error creating file associations."));
         }
         catch { }
-    }
-
-    void InstallCommandPalette()
-    {
-        if (Msg.ShowQuestion("Install command palette?") != MessageBoxResult.OK)
-            return;
-
-        try
-        {
-            Environment.SetEnvironmentVariable("MPV_CONFIG_DIR", Player.ConfigFolder);
-            using Process proc = new Process();
-            proc.StartInfo.FileName = "powershell";
-            proc.StartInfo.Arguments = "-executionpolicy bypass -nologo -noexit -noprofile -command \"irm https://raw.githubusercontent.com/stax76/mpv-scripts/refs/heads/main/powershell/command_palette_installer.ps1 | iex\"";
-            proc.Start();
-        }
-        catch
-        {
-        }
     }
 
     void StreamQuality()

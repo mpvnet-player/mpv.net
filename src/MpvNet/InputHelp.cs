@@ -99,7 +99,7 @@ public static class InputHelp
         Add(b, new (_("Video"), _("Toggle Deinterlace"), "cycle deinterlace", "d"));
         Add(b, new (_("Video"), _("Change Aspect Ratio"), "cycle-values video-aspect-override 16:9 4:3 2.35:1 0 -1", "a"));
         Add(b, new (_("Video"), _("Rotate Video"), "cycle-values video-rotate 90 180 270 0", "Ctrl+r"));
-        Add(b, new (_("Video"), _("Stream Quality"), "script-message-to mpvnet stream-quality", "Alt+q"));
+        Add(b, new (_("Video"), _("Stream Quality"), "script-message-to mpvnet stream-quality"));
 
         Add(b, new (_("Audio"), _("Audio Device")));
         Add(b, new (_("Audio"), _("Next Track"), "script-message-to mpvnet cycle-audio", "KP7"));
@@ -157,29 +157,6 @@ public static class InputHelp
         Add(b, new (_("View") + " > " + _("Select Menu"), _("Watch History"), "script-binding select/select-watch-history", "Alt+h"));
         Add(b, new (_("View") + " > " + _("Select Menu"), _("Watch Later"), "script-binding select/select-watch-later"));
 
-        if (File.Exists(Player.ConfigFolder + "/scripts/command_palette.lua"))
-        {
-            Add(b, new(_("View") + " > " + _("Command Palette"), _("Command Palette"), "script-message-to command_palette show-command-palette \"Command Palette\"", "Ctrl+p"));
-            Add(b, new(_("View") + " > " + _("Command Palette"), _("Bindings"), "script-message-to command_palette show-command-palette \"Bindings\"", "F1"));
-            Add(b, new(_("View") + " > " + _("Command Palette"), _("Properties"), "script-message-to command_palette show-command-palette \"Properties\"", "F2"));
-            Add(b, new(_("View") + " > " + _("Command Palette"), _("Commands"), "script-message-to command_palette show-command-palette \"Commands\"", "F3"));
-            Add(b, new(_("View") + " > " + _("Command Palette"), _("Options"), "script-message-to command_palette show-command-palette \"Options\"", "F4"));
-            Add(b, new(_("View") + " > " + _("Command Palette"), _("Playlist"), "script-message-to command_palette show-command-palette \"Playlist\"", "F8"));
-            Add(b, new(_("View") + " > " + _("Command Palette"), _("Tracks"), "script-message-to command_palette show-command-palette \"Tracks\"", "F9"));
-            Add(b, new(_("View") + " > " + _("Command Palette"), _("Audio Tracks"), "script-message-to command_palette show-command-palette \"Audio Tracks\"", "Alt+a"));
-            Add(b, new(_("View") + " > " + _("Command Palette"), _("Subtitle Tracks"), "script-message-to command_palette show-command-palette \"Subtitle Tracks\"", "Alt+s"));
-            Add(b, new(_("View") + " > " + _("Command Palette"), _("Secondary Subtitle"), "script-message-to command_palette show-command-palette \"Secondary Subtitle\"", "Alt+b"));
-            Add(b, new(_("View") + " > " + _("Command Palette"), _("Video Tracks"), "script-message-to command_palette show-command-palette \"Video Tracks\"", "Alt+v"));
-            Add(b, new(_("View") + " > " + _("Command Palette"), _("Chapters"), "script-message-to command_palette show-command-palette \"Chapters\"", "Alt+c"));
-            Add(b, new(_("View") + " > " + _("Command Palette"), _("Profiles"), "script-message-to command_palette show-command-palette \"Profiles\"", "Alt+p"));
-            Add(b, new(_("View") + " > " + _("Command Palette"), _("Audio Devices"), "script-message-to command_palette show-command-palette \"Audio Devices\"", "Alt+d"));
-            Add(b, new(_("View") + " > " + _("Command Palette"), _("Subtitle Line"), "script-message-to command_palette show-command-palette \"Subtitle Line\"", "Alt+l"));
-            Add(b, new(_("View") + " > " + _("Command Palette"), _("Blu-ray Titles"), "script-message-to command_palette show-command-palette \"Blu-ray Titles\"", "Alt+t"));
-            Add(b, new(_("View") + " > " + _("Command Palette"), _("Stream Quality"), "script-message-to command_palette show-command-palette \"Stream Quality\"", "Alt+q"));
-            Add(b, new(_("View") + " > " + _("Command Palette"), _("Aspect Ratio"), "script-message-to command_palette show-command-palette \"Aspect Ratio\"", "Alt+r"));
-            Add(b, new(_("View") + " > " + _("Command Palette"), _("Recent Files"), "script-message-to mpvnet show-recent-in-command-palette", "Alt+f"));
-        }
-
         Add(b, new (_("View"), "-"));
         Add(b, new (_("View") + " > " + _("More"), _("Show Console"), "script-binding console/enable", "`"));
         Add(b, new (_("View") + " > " + _("More"), _("Show Commands"), "script-message-to mpvnet show-commands", "F2"));
@@ -221,8 +198,6 @@ public static class InputHelp
         Add(b, new (_("Config") + " > " + _("Setup"), "-"));
         Add(b, new (_("Config") + " > " + _("Setup"), _("Add mpv.net to Path environment variable"), "script-message-to mpvnet add-to-path"));
         Add(b, new (_("Config") + " > " + _("Setup"), _("Remove mpv.net from Path environment variable"), "script-message-to mpvnet remove-from-path"));
-        Add(b, new (_("Config") + " > " + _("Setup"), "-"));
-        Add(b, new (_("Config") + " > " + _("Setup"), _("Install Command Palette"), "script-message-to mpvnet install-command-palette"));
 
         Add(b, new (_("Tools"), _("Set/clear A-B loop points"), "ab-loop", "l"));
         Add(b, new (_("Tools"), _("Toggle infinite file looping"), "cycle-values loop-file inf no", "L"));
