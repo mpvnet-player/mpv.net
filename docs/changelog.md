@@ -1,21 +1,22 @@
 
-# v7.1.1.4 Beta (2025-09-12)
+# v7.1.1.4 Beta (2025-10-05)
 
+- Support for select.lua has been added. It's a new Lua script built
+  directly into mpv like the osc console script. It's similar to command_palete.lua. 
 - Fix --script-opt not working.
 - The mpv.net manual was updated.
 - The Turkish translation was updated. A Bulgarian translation was added.
   Thanks to the translators!
-- The auto build (Actions/Workflows) was fixed.
 - The required Dotnet version changed from 6.0 to 9.0. This drops Win 7 support
   unfortunately. It was done to use new C# language features and make
   the mpv.net project more attractive for new developers to contribute.
   Also most users prefer having the newest runtime.
+- auto build has been disabled because it requires updating libmpv and
+  mediainfo all the time which is too much manual work.
 - The script src/Tools/update-mpv.ps1 has been improved. It's the easiest way
   update mpv and libmpv (x64 and ARM64). Shinshiro has a update script too,
   but it's a lot longer and more complex.
 - mediainfo and libmpv have been updated.
-- auto build has been disabled because it requires updating libmpv and
-  mediainfo all the time which is too much manual work.
 
 # v7.1.1.3 Beta (2024-10-20)
 
