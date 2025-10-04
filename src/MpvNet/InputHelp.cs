@@ -159,7 +159,7 @@ public static class InputHelp
 
         Add(b, new (_("View"), "-"));
         Add(b, new (_("View") + " > " + _("More"), _("Show Console"), "script-binding console/enable", "`"));
-        Add(b, new (_("View") + " > " + _("More"), _("Show Commands"), "script-message-to mpvnet show-commands", "F2"));
+        Add(b, new (_("View") + " > " + _("More"), _("Show Commands"), "script-message-to mpvnet show-commands", "F3"));
         Add(b, new (_("View") + " > " + _("More"), _("Show Bindings"), "script-message-to mpvnet show-bindings"));
         Add(b, new (_("View") + " > " + _("More"), _("Show Keys"), "script-message-to mpvnet show-keys", "Alt+k"));
         Add(b, new (_("View") + " > " + _("More"), _("Show Protocols"), "script-message-to mpvnet show-protocols", "Alt+p"));

@@ -1,6 +1,7 @@
 
 # v7.1.1.4 Beta (2025-09-12)
 
+- Fix --script-opt not working.
 - The mpv.net manual was updated.
 - The Turkish translation was updated. A Bulgarian translation was added.
   Thanks to the translators!

@@ -6,9 +6,9 @@ public class CommandLine
     static List<StringPair>? _arguments;
 
     static string[] _preInitProperties { get; } = {
-        "input-terminal", "terminal", "input-file", "config", "o",
-        "config-dir", "input-conf", "load-scripts", "scripts", "player-operation-mode",
-        "idle", "log-file", "msg-color", "dump-stats", "msg-level", "really-quiet" };
+        "input-terminal", "terminal", "input-file", "config", "o", "config-dir", "input-conf",
+        "load-scripts", "scripts", "script-opts", "player-operation-mode", "idle", "log-file",
+        "msg-color", "dump-stats", "msg-level", "really-quiet" };
 
     public static List<StringPair> Arguments
     {
@@ -46,6 +46,7 @@ public class CommandLine
                 switch (left)
                 {
                     case "script": left = "scripts"; break;
+                    case "script-opt": left = "script-opts"; break;
                     case "audio-file": left = "audio-files"; break;
                     case "sub-file": left = "sub-files"; break;
                     case "external-file": left = "external-files"; break;

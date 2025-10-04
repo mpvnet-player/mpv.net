@@ -55,8 +55,6 @@ public class GuiCommand
         ["show-profiles"] = args => Msg.ShowInfo(Player.GetProfiles()),
         ["show-properties"] = args => Player.Command("script-binding select/show-properties"),
         ["show-protocols"] = args => ShowProtocols(),
-        ["show-recent-in-command-palette"] = args => ShowRecentFilesInCommandPalette(),
-        ["stream-quality"] = args => StreamQuality(),
         ["window-scale"] = args => WindowScaleNet?.Invoke(float.Parse(args[0], CultureInfo.InvariantCulture)),
 
 
@@ -272,42 +270,6 @@ public class GuiCommand
                 Msg.ShowError(_("Error creating file associations."));
         }
         catch { }
-    }
-
-    void StreamQuality()
-    {
-        int version = Player.GetPropertyInt("user-data/command-palette/version");
-
-        if (version >= 2)
-            Player.Command("script-message-to command_palette show-command-palette \"Stream Quality\"");
-        else
-        {
-            var r = Msg.ShowQuestion("The Stream Quality feature requires the command palette to be installed." + BR2 +
-                                     "Would you like to install the command palette now?");
-
-            if (r == MessageBoxResult.OK)
-                Player.Command("script-message-to mpvnet install-command-palette");
-        }
-    }
-
-    void ShowRecentFilesInCommandPalette()
-    {
-        Obj o = new();
-        o.title = "Recent Files";
-        o.selected_index = 0;
-
-        var items = new List<Item>();
-
-        foreach (string file in App.Settings.RecentFiles)
-        {
-            items.Add(new Item() { title = Path.GetFileName(file),
-                        value = ["loadfile", file],
-                        hint = file});
-        }
-
-        o.items = items.ToArray();
-        string json = JsonSerializer.Serialize(o);
-        Player.CommandV("script-message", "show-command-palette-json", json);
     }
 
     class Obj
