@@ -10,6 +10,7 @@
   `F2` Bindings  
   `F3` Properties  
   `F4` Commands  
+- The German translation was updated.
 
 # v7.1.1.4 Beta (2025-10-05)
 

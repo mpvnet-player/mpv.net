@@ -4,16 +4,16 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Frank Skare, 2024
+# Frank Skare, 2025
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-25 10:31+0200\n"
+"POT-Creation-Date: 2025-10-06 00:24+0200\n"
 "PO-Revision-Date: 2023-12-08 00:34+0000\n"
-"Last-Translator: Frank Skare, 2024\n"
+"Last-Translator: Frank Skare, 2025\n"
 "Language-Team: German (https://app.transifex.com/stax76/teams/179964/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -65,13 +65,13 @@ msgid "Add files/URLs to playlist from clipboard"
 msgstr "Dateien/URLs zur Wiedergabeliste aus der Zwischenablage hinzufügen"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:22
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:370
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:372
 msgid "Recent Files"
 msgstr "Zuletzt geöffnete Dateien"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:23
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:196
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:228
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:201
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:233
 msgid "Exit"
 msgstr "Beenden"
 
@@ -81,15 +81,15 @@ msgid "Playback"
 msgstr "Wiedergabe"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:25
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:198
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:199
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:200
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:201
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:203
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:204
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:205
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:206
 msgid "Play/Pause"
 msgstr "Wiedergabe/Pause"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:26
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:202
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:207
 msgid "Stop"
 msgstr "Stopp"
 
@@ -120,16 +120,16 @@ msgid "Navigate"
 msgstr "Navigieren"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:28
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:209
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:211
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:213
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:214
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:216
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:218
 msgid "Previous File"
 msgstr "Vorherige Datei"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:29
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:210
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:212
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:214
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:215
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:217
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:219
 msgid "Next File"
 msgstr "Nächste Datei"
 
@@ -182,12 +182,12 @@ msgid "Jump 5 min backward"
 msgstr "5 Minuten rückwärts springen"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:50
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:391
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:393
 msgid "Title"
 msgstr "Titel"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:51
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:349
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:351
 msgid "Chapter"
 msgstr "Kapitel"
 
@@ -327,7 +327,7 @@ msgid "Audio"
 msgstr "Audio"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:85
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:451
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:453
 msgid "Audio Device"
 msgstr "Audiogerät"
 
@@ -375,13 +375,14 @@ msgid "Increase Font Size"
 msgstr "Schriftgröße erhöhen"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:103
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:138
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:139
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:140
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:141
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:142
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:143
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:144
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:145
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:146
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:147
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:148
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:149
 msgid "More"
 msgstr "Mehr"
 
@@ -390,7 +391,7 @@ msgid "Toggle overriding SSA/ASS styles with normal styles"
 msgstr "Überschreiben von SSA/ASS-Stilen mit normalen Stilen umschalten"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:105
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:287
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:289
 msgid "Track"
 msgstr "Spur"
 
@@ -446,6 +447,7 @@ msgstr "Doppelt"
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:122
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:123
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:124
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:125
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:126
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:127
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:128
@@ -457,6 +459,7 @@ msgstr "Doppelt"
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:134
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:135
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:136
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:137
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:138
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:139
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:140
@@ -464,120 +467,156 @@ msgstr "Doppelt"
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:142
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:143
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:144
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:145
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:146
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:147
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:148
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:149
 msgid "View"
 msgstr "Ansicht"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:120
-msgid "Toggle Statistics"
-msgstr "Statistiken umschalten"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:121
-msgid "Toggle OSC Visibility"
-msgstr "Bildschirmschaltflächen-Sichtbarkeit umschalten"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:122
-msgid "Show Media Info On-Screen"
-msgstr "Medieninformationen auf dem Bildschirm anzeigen"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:123
-msgid "Show Media Info Message Box"
-msgstr "Medieninformation in Nachrichtenbox anzeigen"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:124
-msgid "Show Progress"
-msgstr "Fortschritt anzeigen"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:126
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:127
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:128
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:129
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:130
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:131
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:132
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:133
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:134
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:135
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:136
-msgid "On Screen Menu"
-msgstr "Bildschirmmenü"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:126
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:234
 msgid "Playlist"
 msgstr "Wiedergabeliste"
 
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:121
+msgid "Toggle Statistics"
+msgstr "Statistiken umschalten"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:122
+msgid "Toggle OSC Visibility"
+msgstr "Bildschirmschaltflächen-Sichtbarkeit umschalten"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:123
+msgid "Media Info On-Screen"
+msgstr "Media Info Bildschirm"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:124
+msgid "Media Info Message Box"
+msgstr "Media Info Message Box"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:125
+msgid "Progress"
+msgstr "Fortschritt"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:126
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:127
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:128
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:129
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:130
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:131
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:132
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:133
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:134
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:135
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:136
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:137
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:138
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:139
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:140
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:248
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:249
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:250
+msgid "On-Screen Menu"
+msgstr "Bildschirmmenü"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:128
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:246
 msgid "Bindings"
 msgstr "Tastaturkurzbefehle"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:128
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:129
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:247
 msgid "Properties"
 msgstr "Eigenschaften"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:129
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:130
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:240
 msgid "Chapters"
 msgstr "Kapitel"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:130
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:131
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:239
 msgid "Tracks"
 msgstr "Spuren"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:131
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:132
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:237
 msgid "Audio Tracks"
 msgstr "Audiospuren"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:132
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:133
 msgid "Subtitle Tracks"
 msgstr "Untertitelspuren"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:133
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:134
 msgid "Secondary Subtitle"
 msgstr "Sekundärer Untertitel"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:134
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:135
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:238
 msgid "Video Tracks"
 msgstr "Videospuren"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:135
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:136
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:241
+msgid "Editions"
+msgstr "Editionen"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:137
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:242
 msgid "Subtitle Lines"
 msgstr "Untertitellinien"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:136
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:138
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:243
 msgid "Audio Devices"
 msgstr "Audiogeräte"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:138
-msgid "Show Console"
-msgstr "Konsole anzeigen"
-
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:139
-msgid "Show Commands"
-msgstr "Befehle anzeigen"
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:244
+msgid "Watch History"
+msgstr "Anschauverlauf"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:140
-msgid "Show Bindings"
-msgstr "Tastenkombinationen anzeigen"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:141
-msgid "Show Keys"
-msgstr "Tastenkombinationen anzeigen"
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:245
+msgid "Watch Later"
+msgstr "Später Anschauen"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:142
-msgid "Show Protocols"
-msgstr "Protokolle anzeigen"
+msgid "Console"
+msgstr "Konsole"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:143
-msgid "Show Decoders"
-msgstr "Decoder anzeigen"
+msgid "Commands"
+msgstr "Befehle"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:144
-msgid "Show Demuxers"
-msgstr "Demuxer anzeigen"
+msgid "Active Bindings In Text Editor"
+msgstr "Aktive Tastaturkombinationen Im Texteditor"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:145
+msgid "Active Bindings On-Screen"
+msgstr "Aktive Tastaturkombinationen Auf Bildschirm"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:146
+msgid "Keys"
+msgstr "Tastaturkombinationen"
+
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:147
+msgid "Protocols"
+msgstr "Protokolle"
+
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:148
+msgid "Decoders"
+msgstr "Dekoder"
+
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:149
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:150
+msgid "Demuxers"
+msgstr "Demuxer"
+
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:151
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:152
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:153
@@ -588,100 +627,100 @@ msgstr "Demuxer anzeigen"
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:158
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:159
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:160
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:161
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:162
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:163
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:164
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:165
 msgid "Window"
 msgstr "Fenster"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:146
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:216
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:217
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:151
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:221
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:222
 msgid "Fullscreen"
 msgstr "Vollbild"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:147
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:148
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:149
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:150
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:151
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:152
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:153
-msgid "Zoom"
-msgstr "Zoom"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:147
-msgid "Enlarge"
-msgstr "Vergrößern"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:148
-msgid "Shrink"
-msgstr "Verkleinern"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:150
-msgid "50 %"
-msgstr "50 %"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:151
-msgid "100 %"
-msgstr "100 %"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:152
-msgid "200 %"
-msgstr "200 %"
-
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:153
-msgid "300 %"
-msgstr "300 %"
-
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:154
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:155
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:156
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:157
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:158
+msgid "Zoom"
+msgstr "Zoom"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:152
+msgid "Enlarge"
+msgstr "Vergrößern"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:153
+msgid "Shrink"
+msgstr "Verkleinern"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:155
+msgid "50 %"
+msgstr "50 %"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:156
+msgid "100 %"
+msgstr "100 %"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:157
+msgid "200 %"
+msgstr "200 %"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:158
+msgid "300 %"
+msgstr "300 %"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:159
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:160
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:161
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:162
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:163
 msgid "Move"
 msgstr "Verschieben"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:154
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:159
 msgctxt "Move"
 msgid "Left"
 msgstr "Links"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:155
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:160
 msgctxt "Move"
 msgid "Right"
 msgstr "Rechts"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:156
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:161
 msgctxt "Move"
 msgid "Up"
 msgstr "Hoch"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:157
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:162
 msgctxt "Move"
 msgid "Down"
 msgstr "Runter"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:158
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:163
 msgctxt "Move"
 msgid "Center"
 msgstr "Mitte"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:159
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:164
 msgid "Toggle Border"
 msgstr "Rahmen umschalten"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:160
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:165
 msgid "Toggle On Top"
 msgstr "Fenster im Vordergrund umschalten"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:162
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:424
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:167
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:426
 msgid "Profile"
 msgstr "Profil"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:164
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:165
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:166
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:167
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:168
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:169
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:170
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:171
@@ -691,233 +730,246 @@ msgstr "Profil"
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:175
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:176
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:177
-msgid "Settings"
-msgstr "Einstellungen"
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:178
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:179
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:180
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:181
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:182
+msgid "Config"
+msgstr "Konfiguration"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:164
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:169
 msgid "Show Config Editor"
 msgstr "Konfigurationseditor anzeigen"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:165
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:170
 msgid "Show Input Editor"
 msgstr "Tastenkombinationeneditor anzeigen"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:167
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:172
 msgid "Edit mpv.conf"
 msgstr "mpv.conf bearbeiten"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:168
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:173
 msgid "Edit input.conf"
 msgstr "input.conf bearbeiten"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:170
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:175
 msgid "Open Config Folder"
 msgstr "Konfigurationsordner öffnen"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:171
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:172
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:173
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:174
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:175
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:176
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:177
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:178
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:179
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:180
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:181
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:182
 msgid "Setup"
 msgstr "Einrichten"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:171
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:176
 msgid "Register video file associations"
 msgstr "Video-Dateizuordnungen registrieren"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:172
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:177
 msgid "Register audio file associations"
 msgstr "Audio-Dateizuordnungen registrieren"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:173
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:178
 msgid "Register image file associations"
 msgstr "Bild-Dateizuordnungen registrieren"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:174
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:179
 msgid "Unregister file associations"
 msgstr "Dateizuordnungen entfernen"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:176
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:181
 msgid "Add mpv.net to Path environment variable"
 msgstr "mpv.net zur Umgebungsvariable Path hinzufügen"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:177
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:182
 msgid "Remove mpv.net from Path environment variable"
 msgstr "mpv.net aus der Umgebungsvariablen 'Path' entfernen"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:179
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:180
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:181
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:182
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:183
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:184
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:185
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:186
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:187
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:188
 msgid "Tools"
 msgstr "Werkzeuge"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:179
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:184
 msgid "Set/clear A-B loop points"
 msgstr "Setzen/Löschen von A-B Schleifenpunkten"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:180
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:185
 msgid "Toggle infinite file looping"
 msgstr "Unendliche Dateischleife umschalten"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:181
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:186
 msgid "Shuffle Playlist"
 msgstr "Wiedergabeliste mischen"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:182
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:187
 msgid "Toggle Hardware Decoding"
 msgstr "Hardware-Decodierung umschalten"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:183
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:188
 msgid "Exit Watch Later"
 msgstr "Beenden und später anschauen"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:185
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:475
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:190
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:477
 msgid "Custom"
 msgstr "Benutzerdefiniert"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:187
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:188
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:189
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:190
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:191
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:192
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:193
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:194
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:195
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:196
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:197
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:198
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:199
 msgid "Help"
 msgstr "Hilfe"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:187
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:192
 msgid "Website mpv"
 msgstr "Webseite mpv"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:188
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:193
 msgid "Website mpv.net"
 msgstr "Webseite mpv.net"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:190
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:195
 msgid "Manual mpv"
 msgstr "Handbuch mpv"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:191
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:196
 msgid "Manual mpv.net"
 msgstr "Handbuch mpv.net"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:193
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:198
 msgid "awesome-mpv"
 msgstr "awesome-mpv"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:194
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:199
 msgid "About mpv.net"
 msgstr "Über mpv.net"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:197
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:202
 msgid "Show Menu"
 msgstr "Menü anzeigen"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:203
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:208
 msgid "Forward"
 msgstr "Vorwärts"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:204
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:209
 msgid "Backward"
 msgstr "Rückwärts"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:205
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:207
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:210
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:212
 msgid "Volume Up"
 msgstr "Lautstärke erhöhen"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:206
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:208
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:211
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:213
 msgid "Volume Down"
 msgstr "Lautstärke verringern"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:215
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:220
 msgid "Ignore left mouse butten"
 msgstr "Ignoriere die linke Maustaste"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:218
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:220
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:226
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:223
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:225
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:231
 msgid "Seek Forward"
 msgstr "Suchen vorwärts"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:219
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:221
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:227
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:224
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:226
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:232
 msgid "Seek Backward"
 msgstr "Suchen rückwärts"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:222
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:227
 msgid "Undo previous (or marked) seek"
 msgstr "Rückgängig machen vorherige (oder markierte) Suche"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:223
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:228
 msgid "Mark position for revert-seek"
 msgstr "Markieren der Position für die Rückwärtssuche"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:224
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:229
 msgid "Seek to previous subtitle"
 msgstr "Zum vorherigen Untertitel springen"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:225
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:230
 msgid "Seek to next subtitle"
 msgstr "Zum nächsten Untertitel springen"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:193
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:213
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:235
+msgid "Subtitles"
+msgstr "Untertitel"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:236
+msgid "Secondary Subtitles"
+msgstr "Zweite Untertitel"
+
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:192
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:214
 msgid "Files/URLs were added to the playlist"
 msgstr "Dateien/URLs wurden zur Wiedergabeliste hinzugefügt"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:206
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:207
 msgid "The clipboard does not contain a valid URL or file."
 msgstr "Die Zwischenablage enthält keine gültige URL oder Datei."
 
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:257
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:262
 msgid "File Explorer icons will refresh after process restart."
 msgstr ""
 "Datei-Explorer-Symbole werden nach dem Neustart des Prozesses aktualisiert."
 
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:260
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:265
 msgid "File associations were successfully removed."
 msgstr "Dateizuordnungen wurden erfolgreich entfernt."
 
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:262
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:267
 msgid "File associations were successfully created."
 msgstr "Dateizuordnungen wurden erfolgreich erstellt."
 
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:265
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:270
 msgid "Error creating file associations."
 msgstr "Fehler beim Erstellen von Dateizuordnungen."
 
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:362
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:387
 msgid "mpv.net is already in the Path environment variable."
 msgstr "mpv.net ist bereits in der 'Path' Umgebungsvariable enthalten."
 
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:370
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:395
 msgid "mpv.net was successfully added to the Path environment variable."
 msgstr "mpv.net wurde erfolgreich zur 'Path' Umgebungsvariable hinzugefügt."
 
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:379
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:404
 msgid "mpv.net was not found in the Path environment variable."
 msgstr "mpv.net wurde nicht in der 'Path' Umgebungsvariable gefunden."
 
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:388
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:413
 msgid "mpv.net was successfully removed from the Path environment variable."
 msgstr "mpv.net wurde erfolgreich aus der 'Path' Umgebungsvariable entfernt."
 
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:393
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:398
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:418
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:423
 msgid "This feature was removed, but there are user scripts:"
 msgstr "Diese Funktion wurde entfernt, aber es gibt Benutzerskripte:"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:402
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:427
 msgid "This feature was removed."
 msgstr "Diese Funktion wurde entfernt."
 
@@ -929,15 +981,15 @@ msgstr "editor_conf"
 msgid "theme"
 msgstr "theme"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:386
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:388
 msgid "Clear List"
 msgstr "Liste löschen"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:446
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:448
 msgid "Show Profiles"
 msgstr "Profile anzeigen"
 
-#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:1414
+#: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:1432
 msgid "Shutdown thread failed to complete within 10 seconds."
 msgstr ""
 "Shutdown-Thread konnte nicht innerhalb von 10 Sekunden abgeschlossen werden."
