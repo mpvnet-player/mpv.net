@@ -1,8 +1,20 @@
 
+# v7.1.1.5 Beta (????-??-??)
+
+- Same as in mpv the `?` and `t-4` keys can be used to show the active
+  key bindings on-screen, it supports scrolling and searching.
+  In the context menu it's located at:  
+  `View > More > Show Active Bindings On-Screen`
+- Some bindings have changed:  
+  `F1` On-Screen menu  
+  `F2` Bindings  
+  `F3` Properties  
+  `F4` Commands  
+
 # v7.1.1.4 Beta (2025-10-05)
 
 - Support for select.lua has been added. It's a new Lua script built
-  directly into mpv like the osc console script. It's similar to command_palete.lua. 
+  directly into mpv like the osc or console script. It's similar to command_palete.lua. 
 - Fix --script-opt not working.
 - The mpv.net manual was updated.
 - The Turkish translation was updated. A Bulgarian translation was added.
