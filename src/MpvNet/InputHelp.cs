@@ -200,10 +200,10 @@ public static class InputHelp
 
         Add(b, new ("", "", "quit", "q", _("Exit")));
         Add(b, new ("", "", "script-message-to mpvnet show-menu", "MBTN_Right", _("Show Menu")));
-        Add(b, new ("", "", "script-message-to mpvnet play-pause", "Play", _("Play/Pause")));
-        Add(b, new ("", "", "script-message-to mpvnet play-pause", "Pause", _("Play/Pause")));
-        Add(b, new ("", "", "script-message-to mpvnet play-pause", "PlayPause", _("Play/Pause")));
-        Add(b, new ("", "", "script-message-to mpvnet play-pause", "MBTN_Mid", _("Play/Pause")));
+        Add(b, new("", "", "script-message-to mpvnet play-pause", "Play", _("Play/Pause")));
+        Add(b, new("", "", "script-message-to mpvnet play-pause", "Pause", _("Play/Pause")));
+        Add(b, new("", "", "script-message-to mpvnet play-pause", "PlayPause", _("Play/Pause")));
+        Add(b, new("", "", "script-message-to mpvnet play-pause", "MBTN_Mid", _("Play/Pause")));
         Add(b, new ("", "", "stop", "Stop", _("Stop")));
         Add(b, new ("", "", "seek  60", "Forward", _("Forward")));
         Add(b, new ("", "", "seek -60", "Rewind", _("Backward")));
@@ -363,7 +363,7 @@ public static class InputHelp
             if (binding.Input.Contains("alt+"))
                 binding.Input = binding.Input.Replace("alt+", "Alt+");
 
-            line = line[(line.IndexOf(" ") + 1)..];
+            line = line[(line.IndexOf(' ') + 1)..];
 
             if (line.Contains(App.MenuSyntax))
             {
@@ -379,8 +379,8 @@ public static class InputHelp
             }
             else if (line.Contains('#'))
             {
-                binding.Comment = line[(line.IndexOf("#") + 1)..].Trim();
-                line = line[..line.IndexOf("#")];
+                binding.Comment = line[(line.IndexOf('#') + 1)..].Trim();
+                line = line[..line.IndexOf('#')];
             }
 
             binding.Command = line.Trim();
@@ -446,7 +446,7 @@ public static class InputHelp
 
     public static Dictionary<string, Binding> GetActiveBindings(List<Binding> bindings)
     {
-        Dictionary<string, Binding> ret = new();
+        Dictionary<string, Binding> ret = [];
 
         foreach (Binding binding in bindings)
         {
@@ -471,7 +471,7 @@ public static class InputHelp
 
             Binding binding = it.Value;
 
-            if (!keys.Contains(binding.Input) && (charCount + binding.Input.Length) < 15)
+            if (!keys.Contains(binding.Input) && (charCount + binding.Input.Length) < 30)
             {
                 keys.Add(binding.Input);
                 charCount += binding.Input.Length;
