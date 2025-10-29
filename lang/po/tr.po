@@ -53,11 +53,11 @@ msgstr "Mpv.net hakkında"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:144
 msgid "Active Bindings In Text Editor"
-msgstr ""
+msgstr "Metin Düzenleyicide Aktif Kısayol Atamaları"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:145
 msgid "Active Bindings On-Screen"
-msgstr ""
+msgstr "Ekrandaki Aktif Kısayol Atamaları"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:16
 msgid "Add external audio files..."
@@ -109,7 +109,7 @@ msgstr "Geri"
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:128
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:246
 msgid "Bindings"
-msgstr "Atamalar"
+msgstr "Kısayollar"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:163
 msgctxt "Move"
@@ -158,7 +158,7 @@ msgstr "Komutları Göster"
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:181
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:182
 msgid "Config"
-msgstr ""
+msgstr "Yapılandırma"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:142
 #, fuzzy
@@ -244,7 +244,7 @@ msgstr "Mpv.conf dosyasını düzenle"
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:241
 #, fuzzy
 msgid "Editions"
-msgstr "Input.conf dosyasını düzenle"
+msgstr "Sürümler"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:152
 msgid "Enlarge"
@@ -612,7 +612,7 @@ msgstr "Özellikler"
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:147
 #, fuzzy
 msgid "Protocols"
-msgstr "Protokolleri Göster"
+msgstr "Protokoller"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:22
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:372
@@ -931,17 +931,17 @@ msgstr "Ses"
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:211
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:213
 msgid "Volume Down"
-msgstr "Sesi Kıs"
+msgstr "Sesi Azalt"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:210
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:212
 msgid "Volume Up"
-msgstr "Sesi Aç"
+msgstr "Sesi Arttır"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:139
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:244
 msgid "Watch History"
-msgstr ""
+msgstr "İzleme Geçmişi"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:140
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:245
@@ -1015,10 +1015,10 @@ msgstr "tema"
 
 #, fuzzy
 #~ msgid "Select Menu"
-#~ msgstr "Ekran Menüsü"
+#~ msgstr "Menü Seç"
 
 #~ msgid "Settings"
 #~ msgstr "Ayarlar"
 
 #~ msgid "Show Bindings"
-#~ msgstr "Atamaları Göster"
+#~ msgstr "Kısayolları Göster"
