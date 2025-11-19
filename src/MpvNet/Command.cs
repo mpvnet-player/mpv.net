@@ -28,7 +28,7 @@ public class Command
         ["playlist-random"] = args => PlaylistRandom(), // deprecated
     };
 
-    string FormatTime(double value) => ((int)value).ToString("00");
+    static string FormatTime(double value) => ((int)value).ToString("00");
 
     void PlayPause(IList<string> args)
     {
