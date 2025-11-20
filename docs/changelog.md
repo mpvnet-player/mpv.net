@@ -1,5 +1,5 @@
 
-# v7.1.1.5 Beta (????-??-??)
+# v7.1.1.5 Beta (2025-11-20)
 
 - Same as in mpv the `?` and `t-4` keys can be used to show the active
   key bindings on-screen, it supports scrolling and searching.
