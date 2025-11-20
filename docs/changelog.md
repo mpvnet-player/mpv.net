@@ -10,7 +10,7 @@
   `F2` Bindings  
   `F3` Properties  
   `F4` Commands  
-- The German, Chinese and Japanese translations were updated. Thanks to the translators!
+- The German, Chinese, Japanese and Turkish translations were updated. Thanks to the translators!
 - Users need to install .NET 10 LTS (Long Term Support), it should run on Windows 10. 
 
 # v7.1.1.4 Beta (2025-10-05)
