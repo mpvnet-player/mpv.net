@@ -5,13 +5,14 @@
   key bindings on-screen, it supports scrolling and searching.
   In the context menu it's located at:  
   `View > More > Show Active Bindings On-Screen`
-- Some bindings have changed:  
+- Bindings of select.lua menus have changed:  
   `F1` On-Screen menu  
   `F2` Bindings  
   `F3` Properties  
   `F4` Commands  
 - The German, Chinese, Japanese and Turkish translations were updated. Thanks to the translators!
-- Users need to install .NET 10 LTS (Long Term Support), it should run on Windows 10. 
+- Users need to install .NET 10 LTS (Long Term Support), it should run on Windows 10.  
+  It was requested by users to prefer LTS over STS (Short Term Support).
 
 # v7.1.1.4 Beta (2025-10-05)
 
