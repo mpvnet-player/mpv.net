@@ -217,7 +217,7 @@ public static class InputHelp
         Add(b, new ("", "", "playlist-next", "MBTN_Forward", _("Next File")));
         Add(b, new ("", "", "playlist-prev", "<", _("Previous File")));
         Add(b, new ("", "", "playlist-next", ">", _("Next File")));
-        Add(b, new ("", "", "ignore", "MBTN_Left", _("Ignore left mouse butten")));
+        Add(b, new ("", "", "ignore", "MBTN_Left", _("Ignore left mouse button")));
         Add(b, new ("", "", "cycle fullscreen", "f", _("Fullscreen")));
         Add(b, new ("", "", "cycle fullscreen", "MBTN_Left_DBL", _("Fullscreen")));
         Add(b, new ("", "", "no-osd seek  1 exact", "Shift+Right", _("Seek Forward")));
