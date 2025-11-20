@@ -13,6 +13,7 @@
 - The German, Chinese, Japanese and Turkish translations were updated. Thanks to the translators!
 - Users need to install .NET 10 LTS (Long Term Support), it should run on Windows 10.  
   It was requested by users to prefer LTS over STS (Short Term Support).
+- libmpv and MediaInfo was updated.
 
 # v7.1.1.4 Beta (2025-10-05)
 
