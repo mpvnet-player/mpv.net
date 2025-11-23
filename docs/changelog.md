@@ -1,4 +1,8 @@
 
+# v7.1.1.6 Beta (20??-??-??)
+
+- The Japanese and Turkish translations were updated. Thanks to the translators!
+
 # v7.1.1.5 Beta (2025-11-20)
 
 - Same as in mpv the `?` and `t-4` keys can be used to show the active
