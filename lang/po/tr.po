@@ -53,11 +53,11 @@ msgstr "Mpv.net hakkında"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:144
 msgid "Active Bindings In Text Editor"
-msgstr "Metin Düzenleyicide Aktif Kısayol Atamaları"
+msgstr "Metin Düzenleyicide Aktif Kısayol Atamalarını Göster"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:145
 msgid "Active Bindings On-Screen"
-msgstr "Ekrandaki Aktif Kısayol Atamaları"
+msgstr "Ekranda Aktif Kısayol Atamalarını Göster"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:16
 msgid "Add external audio files..."
@@ -139,7 +139,6 @@ msgid "Clear List"
 msgstr "Listeyi Temizle"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:143
-#, fuzzy
 msgid "Commands"
 msgstr "Komutları Göster"
 
@@ -161,7 +160,6 @@ msgid "Config"
 msgstr "Yapılandırma"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:142
-#, fuzzy
 msgid "Console"
 msgstr "Konsolu Göster"
 
@@ -171,9 +169,8 @@ msgid "Custom"
 msgstr "Özel"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:148
-#, fuzzy
 msgid "Decoders"
-msgstr "Decoderi Göster"
+msgstr "Kod Çözücüleri Göster"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:70
 msgid "Decrease Brightness"
@@ -214,7 +211,6 @@ msgid "Delay -0.1"
 msgstr "Gecikme -0.1"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:149
-#, fuzzy
 msgid "Demuxers"
 msgstr "Demuxeri Göster"
 
@@ -242,7 +238,6 @@ msgstr "Mpv.conf dosyasını düzenle"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:136
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:241
-#, fuzzy
 msgid "Editions"
 msgstr "Sürümler"
 
@@ -391,7 +386,6 @@ msgid "Jump To Previous Frame"
 msgstr "Önceki Kare"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:146
-#, fuzzy
 msgid "Keys"
 msgstr "Kısayol Tuşlarını Göster"
 
@@ -417,12 +411,10 @@ msgid "Mark position for revert-seek"
 msgstr "Geri arama için konumu işaretle"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:124
-#, fuzzy
 msgid "Media Info Message Box"
 msgstr "Medya Bilgisi Mesaj Kutusunu Göster"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:123
-#, fuzzy
 msgid "Media Info On-Screen"
 msgstr "Medya Bilgilerini Ekranda Göster"
 
@@ -528,9 +520,8 @@ msgstr "Sonraki Ses Parçası"
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:248
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:249
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:250
-#, fuzzy
 msgid "On-Screen Menu"
-msgstr "Ekran Menüsü"
+msgstr "Ekran Üzeri Menüsü"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:175
 msgid "Open Config Folder"
@@ -575,7 +566,7 @@ msgstr "Oynat/Duraklat"
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:25
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:26
 msgid "Playback"
-msgstr "Kayıttan yürüt"
+msgstr "Kayıttan Yürüt"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:120
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:127
@@ -600,7 +591,6 @@ msgid "Profile"
 msgstr "Profil"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:125
-#, fuzzy
 msgid "Progress"
 msgstr "İlerlemeyi Göster"
 
@@ -610,7 +600,6 @@ msgid "Properties"
 msgstr "Özellikler"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:147
-#, fuzzy
 msgid "Protocols"
 msgstr "Protokoller"
 
@@ -654,7 +643,6 @@ msgid "Secondary Subtitle"
 msgstr "İkincil Altyazı"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:236
-#, fuzzy
 msgid "Secondary Subtitles"
 msgstr "İkincil Altyazı"
 
@@ -761,7 +749,6 @@ msgid "Subtitle Tracks"
 msgstr "Altyazı Parçaları"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:235
-#, fuzzy
 msgid "Subtitles"
 msgstr "Altyazı"
 
@@ -771,7 +758,7 @@ msgstr "Ekran Görüntüsü Al"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:80
 msgid "Take Screenshot without subtitles"
-msgstr "Ekran görüntüsünü altyazısız al"
+msgstr "Ekran Görüntüsünü Altyazısız Al"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\GuiCommand.cs:207
 msgid "The clipboard does not contain a valid URL or file."
@@ -945,9 +932,8 @@ msgstr "İzleme Geçmişi"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:140
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:245
-#, fuzzy
 msgid "Watch Later"
-msgstr "Daha Sonra İzle'den Çık"
+msgstr "Daha Sonra İzle"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:192
 msgid "Website mpv"
@@ -1013,7 +999,6 @@ msgstr "Mpv.net Path ortam değişkeninden başarıyla kaldırıldı."
 msgid "theme"
 msgstr "tema"
 
-#, fuzzy
 #~ msgid "Select Menu"
 #~ msgstr "Menü Seç"
 
