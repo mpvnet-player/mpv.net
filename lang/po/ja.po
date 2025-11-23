@@ -384,7 +384,7 @@ msgstr "フォントサイズを拡大"
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:148
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:149
 msgid "More"
-msgstr "詳細"
+msgstr "その他"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:103
 msgid "Toggle overriding SSA/ASS styles with normal styles"
