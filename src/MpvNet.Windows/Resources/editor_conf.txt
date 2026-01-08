@@ -60,7 +60,8 @@ file = mpv
 directory = Video
 help = Video output drivers to be used.\n\nFor more information visit:
 url = https://mpv.io/manual/master/#video-output-drivers-vo
-default = gpu
+default = info
+option = info      Choose the best mode automatically.
 option = gpu       General purpose, customizable, GPU-accelerated video output driver. It supports extended scaling methods, dithering, color management, custom shaders, HDR, and more.
 option = gpu-next  Experimental video renderer based on libplacebo. This supports almost the same set of features as --vo=gpu.
 option = direct3d  Video output driver that uses the Direct3D interface.
@@ -88,9 +89,9 @@ option = nvdec-copy    copies video back to system RAM
 name = gpu-api
 file = mpv
 directory = Video/Render Options
-help = Controls which type of graphics APIs will be accepted. On Windows this defaults to d3d11 and should not be changed without a good reason.
+help = Controls which type of graphics APIs will be accepted.
 default = auto
-option = auto    Use any available API
+option = auto    Use any available API. Note that the default GPU API used for this value is subject to change, and must not be relied upon. If a certain GPU API needs to be used, it must be explicitly specified
 option = d3d11   Allow only gpu-context=d3d11
 option = opengl  Allow only OpenGL (requires OpenGL 2.1+ or GLES 2.0+)
 option = vulkan  Allow only Vulkan

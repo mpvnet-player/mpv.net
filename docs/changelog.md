@@ -1,6 +1,8 @@
 
 # v7.1.1.6 Beta (20??-??-??)
 
+- libmpv updated to v0.41.
+
 - The Japanese and Turkish translations were updated. Thanks to the translators!
 
 # v7.1.1.5 Beta (2025-11-20)
