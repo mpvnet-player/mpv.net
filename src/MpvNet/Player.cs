@@ -441,7 +441,7 @@ public class MainPlayer : MpvClient
 
             file = ConvertFilePath(file);
 
-            string ext = file.Ext();
+            string ext = file.Ext;
 
             if (OperatingSystem.IsWindows())
             {

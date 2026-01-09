@@ -1,27 +1,30 @@
 ﻿
 namespace MpvNet.ExtensionMethod;
 
-public static class PathStringExtension
+public static class PathStringExtensions
 {
-    public static string Ext(this string filepath) => filepath.Ext(false);
-
-    public static string Ext(this string filepath, bool includeDot)
+    extension(string filepath)
     {
-        if (string.IsNullOrEmpty(filepath))
-            return "";
+        public string Ext => GetExt(filepath, false);
 
-        char[] chars = filepath.ToCharArray();
-
-        for (int x = filepath.Length - 1; x >= 0; x--)
+        static string GetExt(string path, bool includeDot)
         {
-            if (chars[x] == Path.DirectorySeparatorChar)
+            if (string.IsNullOrEmpty(path))
                 return "";
 
-            if (chars[x] == '.')
-                return filepath.Substring(x + (includeDot ? 0 : 1)).ToLowerInvariant();
-        }
+            char[] chars = path.ToCharArray();
 
-        return "";
+            for (int x = path.Length - 1; x >= 0; x--)
+            {
+                if (chars[x] == Path.DirectorySeparatorChar)
+                    return "";
+
+                if (chars[x] == '.')
+                    return path[(x + (includeDot ? 0 : 1))..].ToLowerInvariant();
+            }
+
+            return "";
+        }
     }
 
     public static string FileName(this string instance)

@@ -49,5 +49,5 @@ public static class FileTypes
         IsVideo(exts, ext) || IsAudio(exts, ext) || IsImage(exts, ext);
 
     public static IEnumerable<string> GetMediaFiles(string[] files) =>
-        files.Where(i => IsMedia(files, i.Ext()));
+        files.Where(i => IsMedia(files, i.Ext));
 }

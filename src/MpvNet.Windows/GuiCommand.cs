@@ -303,20 +303,20 @@ public class GuiCommand
 
         if (File.Exists(path) && osd)
         {
-            if (FileTypes.IsAudio(path.Ext()))
+            if (FileTypes.IsAudio(path.Ext))
             {
                 text = Player.GetPropertyOsdString("filtered-metadata");
                 Player.CommandV("show-text", text, "5000");
                 return;
             }
-            else if (FileTypes.IsImage(path.Ext()))
+            else if (FileTypes.IsImage(path.Ext))
             {
                 fileSize = new FileInfo(path).Length;
 
                 text = "Width: " + Player.GetPropertyInt("width") + "\n" +
                        "Height: " + Player.GetPropertyInt("height") + "\n" +
                        "Size: " + Convert.ToInt32(fileSize / 1024.0) + " KB\n" +
-                       "Type: " + path.Ext().ToUpper();
+                       "Type: " + path.Ext.ToUpper();
 
                 Player.CommandV("show-text", text, "5000");
                 return;
