@@ -1,5 +1,5 @@
 ﻿
-using MpvNet.ExtensionMethod;
+using MpvNet.Extensions;
 
 namespace MpvNet.Windows;
 

@@ -1,10 +1,10 @@
 ﻿
-using MpvNet.ExtensionMethod;
+using MpvNet.Extensions;
 
 namespace MpvNet;
 
 public class Folder
 {
-    public static string Startup { get; } = Path.GetDirectoryName(Environment.ProcessPath)!.AddSep();
-    public static string AppData { get; } = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData).AddSep();
+    public static string Startup { get; } = Path.GetDirectoryName(Environment.ProcessPath)!.Separator;
+    public static string AppData { get; } = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData).Separator;
 }

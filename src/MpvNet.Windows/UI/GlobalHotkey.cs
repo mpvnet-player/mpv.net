@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 
-using MpvNet.ExtensionMethod;
+using MpvNet.Extensions;
 
 namespace MpvNet.Windows.UI;
 

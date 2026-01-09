@@ -1,15 +1,15 @@
 ﻿
 using System.Globalization;
 
-namespace MpvNet.ExtensionMethod;
+namespace MpvNet.Extensions;
 
-public static class StringExtension
+public static class StringExtensions
 {
-    public static string ToUpperEx(this string instance) => (instance != null) ? instance.ToUpperInvariant() : "";
+    public static string ToUpperEx(this string instance) => instance?.ToUpperInvariant() ?? "";
 
-    public static string ToLowerEx(this string instance) => (instance != null) ? instance.ToLowerInvariant() : "";
+    public static string ToLowerEx(this string instance) => instance?.ToLowerInvariant() ?? "";
 
-    public static string TrimEx(this string? instance) => (instance == null) ? "" : instance.Trim();
+    public static string TrimEx(this string? instance) => instance?.Trim() ?? "";
 
     public static int ToInt(this string instance, int defaultValue = 0)
     {

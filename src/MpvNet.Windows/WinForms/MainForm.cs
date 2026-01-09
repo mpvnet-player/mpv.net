@@ -10,7 +10,7 @@ using System.Text.RegularExpressions;
 using MpvNet.Windows.WPF;
 using MpvNet.Windows.UI;
 using MpvNet.Help;
-using MpvNet.ExtensionMethod;
+using MpvNet.Extensions;
 using MpvNet.MVVM;
 using MpvNet.Windows.WPF.MsgBox;
 

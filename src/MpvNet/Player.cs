@@ -8,7 +8,7 @@ using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading;
 
-using MpvNet.ExtensionMethod;
+using MpvNet.Extensions;
 using MpvNet.Help;
 using MpvNet.Native;
 
@@ -127,7 +127,7 @@ public class MainPlayer : MpvClient
         {
             string configDir = CommandLine.GetValue("config-dir");
             string fullPath = System.IO.Path.GetFullPath(configDir);
-            App.InputConf.Path = fullPath.AddSep() + "input.conf";
+            App.InputConf.Path = fullPath.Separator + "input.conf";
             string content = App.InputConf.GetContent();
 
             if (!string.IsNullOrEmpty(content))
@@ -250,7 +250,7 @@ public class MainPlayer : MpvClient
                 string? mpvnet_home = Environment.GetEnvironmentVariable("MPVNET_HOME");
 
                 if (Directory.Exists(mpvnet_home))
-                    return _configFolder = mpvnet_home.AddSep();
+                    return _configFolder = mpvnet_home.Separator;
 
                 _configFolder = Folder.Startup + "portable_config";
 
@@ -260,7 +260,7 @@ public class MainPlayer : MpvClient
                 if (!Directory.Exists(_configFolder))
                     Directory.CreateDirectory(_configFolder);
 
-                _configFolder = _configFolder.AddSep();
+                _configFolder = _configFolder.Separator;
             }
 
             return _configFolder;

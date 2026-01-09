@@ -7,7 +7,7 @@ using System.Windows.Forms;
 using System.Windows.Interop;
 using System.Windows;
 
-using MpvNet.ExtensionMethod;
+using MpvNet.Extensions;
 using MpvNet.Windows.WinForms;
 using MpvNet.Windows.WPF.Views;
 using MpvNet.Windows.WPF;
@@ -332,7 +332,7 @@ public class GuiCommand
             int width = Player.GetPropertyInt("video-params/w");
             int height = Player.GetPropertyInt("video-params/h");
             TimeSpan len = TimeSpan.FromSeconds(Player.GetPropertyDouble("duration"));
-            text = path.FileName() + "\n";
+            text = path.FileName + "\n";
             text += FormatTime(len.TotalMinutes) + ":" + FormatTime(len.Seconds) + "\n";
             if (fileSize > 0)
                 text += Convert.ToInt32(fileSize / 1024.0 / 1024.0) + " MB\n";

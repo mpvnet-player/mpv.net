@@ -1,7 +1,7 @@
 ﻿
 using CommunityToolkit.Mvvm.Messaging;
 
-using MpvNet.ExtensionMethod;
+using MpvNet.Extensions;
 using MpvNet.Help;
 using MpvNet.MVVM;
 

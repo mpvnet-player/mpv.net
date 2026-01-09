@@ -1,7 +1,7 @@
 ﻿
 using System.Reflection;
 
-using MpvNet.ExtensionMethod;
+using MpvNet.Extensions;
 
 namespace MpvNet;
 
@@ -34,7 +34,7 @@ public class ExtensionLoader
         {
             foreach (string dir in Directory.GetDirectories(path))
             {
-                LoadDll(dir.AddSep() + Path.GetFileName(dir) + ".dll");
+                LoadDll(dir.Separator + Path.GetFileName(dir) + ".dll");
             }
         }
     }
