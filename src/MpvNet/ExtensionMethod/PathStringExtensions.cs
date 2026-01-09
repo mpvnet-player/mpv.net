@@ -16,7 +16,10 @@ public static class PathStringExtensions
 
             for (int x = path.Length - 1; x >= 0; x--)
             {
-                if (chars[x] == Path.DirectorySeparatorChar)
+                if (chars[x] == '/')
+                    return "";
+
+                if (chars[x] == '\\')
                     return "";
 
                 if (chars[x] == '.')
