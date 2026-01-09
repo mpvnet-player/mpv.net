@@ -14,6 +14,9 @@ Dependencies:
     Inno Setup compiler installation found at: 'C:\Program Files (x86)\Inno Setup 6\ISCC.exe'.
     GitHub CLI https://cli.github.com, the env var GH_TOKEN must be defined.
 
+Notes:
+    Before you run the script you need to update the versions found in the file:
+        \mpv.net\src\MpvNet.Windows\MpvNet.Windows.csproj
 #>
 
 # Stop when the first error occurs
