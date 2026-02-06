@@ -818,7 +818,7 @@ msgstr "ハードウェアデコードの切り替え"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:188
 msgid "Exit Watch Later"
-msgstr "後で再生を解除"
+msgstr "再生位置を保存して終了"
 
 #: D:\Projects\CS\mpv.net\src\MpvNet\InputHelp.cs:190
 #: D:\Projects\CS\mpv.net\src\MpvNet.Windows\WinForms\MainForm.cs:477
