@@ -933,7 +933,7 @@ public class MainPlayer : MpvClient
                     track.Text = track.Text.Replace("MPEG Audio, Layer 2", "MP2");
 
                 if (track.Text.Contains("MPEG Audio, Layer 3"))
-                    track.Text = track.Text.Replace("MPEG Audio, Layer 2", "MP3");
+                    track.Text = track.Text.Replace("MPEG Audio, Layer 3", "MP3");
 
                 track.Text = "A: " + track.Text.Trim(' ', ',');
                 track.Type = "a";
