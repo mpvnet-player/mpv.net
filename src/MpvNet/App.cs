@@ -203,10 +203,10 @@ public class AppClass
             string content = File.ReadAllText(Player.ConfPath);
 
             if (content.Contains("input-default-bindings = no"))
-                File.WriteAllText(ConfPath, content.Replace("input-default-bindings = no", ""));
+                File.WriteAllText(Player.ConfPath, content.Replace("input-default-bindings = no", ""));
 
             if (content.Contains("input-default-bindings=no"))
-                File.WriteAllText(ConfPath, content.Replace("input-default-bindings=no", ""));
+                File.WriteAllText(Player.ConfPath, content.Replace("input-default-bindings=no", ""));
         }
 
         Settings.InputDefaultBindingsFixApplied = true;
