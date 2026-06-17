@@ -155,7 +155,7 @@ public class MpvClient
                 {
                     if (pair.Key == data.name)
                     {
-                        int value = Marshal.PtrToStructure<int>(data.data);
+                        int value = (int)Marshal.PtrToStructure<long>(data.data);
 
                         foreach (var action in pair.Value)
                         {
@@ -321,7 +321,7 @@ public class MpvClient
         if (err < 0 && App.DebugMode)
             HandleError(err, "error getting property: " + name);
 
-        return lpBuffer.ToInt32();
+        return (int)lpBuffer.ToInt64();
     }
 
     public void SetPropertyInt(string name, int value)
