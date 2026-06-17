@@ -60,8 +60,8 @@ public class Command
         if (fontSize == 0)
             fontSize = Player.GetPropertyInt("osd-font-size");
 
-        Player.Command("show-text \"${osd-ass-cc/0}{\\\\fs" + fontSize +
-            "}${osd-ass-cc/1}" + text + "\" " + duration);
+        Player.CommandV("show-text", "${osd-ass-cc/0}{\\fs" + fontSize +
+            "}${osd-ass-cc/1}" + text, duration.ToString());
     }
 
     void CycleAudio()
@@ -87,6 +87,9 @@ public class Command
 
                 Player.SetPropertyInt("aid", aid);
             }
+
+            if (aid < 1 || aid > tracks.Length)
+                return;
 
             Player.CommandV("show-text", aid + "/" + tracks.Length + ": " + tracks[aid - 1].Text[3..], "5000");
         }
