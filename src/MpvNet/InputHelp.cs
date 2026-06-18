@@ -343,7 +343,12 @@ public static class InputHelp
                 continue;
             }
 
-            binding.Input = line[..line.IndexOf(" ")];
+            int spaceIndex = line.IndexOf(' ');
+
+            if (spaceIndex < 0)
+                continue;
+
+            binding.Input = line[..spaceIndex];
 
             if (binding.Input == "_")
                 binding.Input = "";
