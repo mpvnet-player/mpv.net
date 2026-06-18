@@ -179,16 +179,16 @@ public class AppClass
         if (Settings.ShowMenuFixApplied)
             return;
 
-        if (File.Exists(InputConf.Path))
-        {
-            string content = File.ReadAllText(InputConf.Path);
+        if (!File.Exists(InputConf.Path))
+            return;
 
-            if (!content.Contains("script-message mpvnet show-menu") &&
-                !content.Contains("script-message-to mpvnet show-menu"))
+        string content = File.ReadAllText(InputConf.Path);
 
-                File.WriteAllText(InputConf.Path, BR + content.Trim() + BR +
-                    "MBTN_Right script-message-to mpvnet show-menu" + BR);
-        }
+        if (!content.Contains("script-message mpvnet show-menu") &&
+            !content.Contains("script-message-to mpvnet show-menu"))
+
+            File.WriteAllText(InputConf.Path, BR + content.Trim() + BR +
+                "MBTN_Right script-message-to mpvnet show-menu" + BR);
 
         Settings.ShowMenuFixApplied = true;
     }
