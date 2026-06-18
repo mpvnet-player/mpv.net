@@ -93,8 +93,7 @@ public class InputConf
             {
                 foreach (Binding confBinding in conf)
                 {
-                    if (defaultBinding.Command == confBinding.Command &&
-                        defaultBinding.Comment == confBinding.Comment)
+                    if (defaultBinding.Command == confBinding.Command)
                     {
                         defaultBinding.Input = confBinding.Input;
                         removed.Add(confBinding);
