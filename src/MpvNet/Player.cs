@@ -228,7 +228,7 @@ public class MainPlayer : MpvClient
             case "fullscreen": Fullscreen = value == "yes"; break;
             case "gpu-api": GPUAPI = value!; break;
             case "keepaspect-window": KeepaspectWindow = value == "yes"; break;
-            case "screen": Screen = Convert.ToInt32(value); break;
+            case "screen": if (int.TryParse(value, out var s)) Screen = s; break;
             case "snap-window": SnapWindow = value == "yes"; break;
             case "taskbar-progress": TaskbarProgress = value == "yes"; break;
             case "vo": VO = value!; break;
