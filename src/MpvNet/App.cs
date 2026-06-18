@@ -141,8 +141,8 @@ public class AppClass
             case "light-theme": LightTheme = value.Trim('\'', '"'); return true;
             case "media-info": MediaInfo = value == "yes"; return true;
             case "menu-syntax": MenuSyntax = value; return true;
-            case "minimum-aspect-ratio-audio": MinimumAspectRatioAudio = value.ToFloat(); return true;
-            case "minimum-aspect-ratio": MinimumAspectRatio = value.ToFloat(); return true;
+            case "minimum-aspect-ratio-audio": if (float.TryParse(value.Replace(",", "."), System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var mar2)) MinimumAspectRatioAudio = mar2; return true;
+            case "minimum-aspect-ratio": if (float.TryParse(value.Replace(",", "."), System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var mar)) MinimumAspectRatio = mar; return true;
             case "process-instance": ProcessInstance = value; return true;
             case "queue": Queue = value == "yes"; return true;
             case "recent-count": RecentCount = value.ToInt(15); return true;
@@ -163,7 +163,7 @@ public class AppClass
     {
         if (input.Contains('|'))
         {
-            var a = input.Split('|');
+            var a = input.Split('|', 2);
             return (a[1], a[0]);
         }
 
