@@ -221,17 +221,17 @@ public partial class MainForm : Form
                     Left = workingArea.Left;
                     break;
                 case "top":
-                    Top = 0;
+                    Top = workingArea.Top;
                     break;
                 case "right":
                     Left = workingArea.Width - Width + workingArea.Left;
                     break;
                 case "bottom":
-                    Top = workingArea.Height - Height;
+                    Top = workingArea.Bottom - Height;
                     break;
                 case "center":
-                    Left = (screen.Bounds.Width - Width) / 2;
-                    Top = (screen.Bounds.Height - Height) / 2;
+                    Left = workingArea.Left + (workingArea.Width - Width) / 2;
+                    Top = workingArea.Top + (workingArea.Height - Height) / 2;
                     break;
             }
         });
