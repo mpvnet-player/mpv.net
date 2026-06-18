@@ -227,24 +227,30 @@ public class MpvClient
         IntPtr[] pointers = new IntPtr[count];
         IntPtr rootPtr = Marshal.AllocHGlobal(IntPtr.Size * count);
 
-        for (int index = 0; index < args.Length; index++)
+        try
         {
-            var bytes = GetUtf8Bytes(args[index]);
-            IntPtr ptr = Marshal.AllocHGlobal(bytes.Length);
-            Marshal.Copy(bytes, 0, ptr, bytes.Length);
-            pointers[index] = ptr;
+            for (int index = 0; index < args.Length; index++)
+            {
+                var bytes = GetUtf8Bytes(args[index]);
+                IntPtr ptr = Marshal.AllocHGlobal(bytes.Length);
+                Marshal.Copy(bytes, 0, ptr, bytes.Length);
+                pointers[index] = ptr;
+            }
+
+            Marshal.Copy(pointers, 0, rootPtr, count);
+            mpv_error err = mpv_command(Handle, rootPtr);
+
+            if (err < 0)
+                HandleError(err, "error executing command: " + string.Join("\n", args));
         }
+        finally
+        {
+            foreach (IntPtr ptr in pointers)
+                if (ptr != IntPtr.Zero)
+                    Marshal.FreeHGlobal(ptr);
 
-        Marshal.Copy(pointers, 0, rootPtr, count);
-        mpv_error err = mpv_command(Handle, rootPtr);
-
-        foreach (IntPtr ptr in pointers)
-            Marshal.FreeHGlobal(ptr);
-
-        Marshal.FreeHGlobal(rootPtr);
-
-        if (err < 0)
-            HandleError(err, "error executing command: " + string.Join("\n", args));
+            Marshal.FreeHGlobal(rootPtr);
+        }
     }
 
     public string Expand(string? value)
