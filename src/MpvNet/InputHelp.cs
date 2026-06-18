@@ -371,6 +371,14 @@ public static class InputHelp
                 binding.IsMenu = true;
                 line = line[..line.IndexOf(App.MenuSyntax)];
             }
+            else if (line.Contains("#! ") || line.TrimEnd().EndsWith("#!"))
+            {
+                int prefixIndex = line.Contains("#! ") ? line.IndexOf("#! ") : line.IndexOf("#!");
+                binding.Comment = line[(prefixIndex + 2)..].Trim();
+                binding.IsMenu = true;
+                binding.IsShortMenuSyntax = true;
+                line = line[..prefixIndex];
+            }
             else if (line.Contains("#custom-menu:"))
             {
                 binding.Comment = line[(line.IndexOf("#custom-menu:") + 13)..].Trim();
