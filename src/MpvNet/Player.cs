@@ -643,14 +643,14 @@ public class MainPlayer : MpvClient
 
             _audioDevices = [];
             string json = GetPropertyString("audio-device-list");
-            var enumerator = JsonDocument.Parse(json).RootElement.EnumerateArray();
 
-            foreach (var element in enumerator)
-            {
-                string name = element.GetProperty("name").GetString()!;
-                string description = element.GetProperty("description").GetString()!;
-                _audioDevices.Add(new StringPair(name, description));
-            }
+            using (var doc = JsonDocument.Parse(json))
+                foreach (var element in doc.RootElement.EnumerateArray())
+                {
+                    string name = element.GetProperty("name").GetString()!;
+                    string description = element.GetProperty("description").GetString()!;
+                    _audioDevices.Add(new StringPair(name, description));
+                }
 
             return _audioDevices;
         }
@@ -1059,7 +1059,9 @@ public class MainPlayer : MpvClient
 
             string[] ignore = ["builtin-pseudo-gui", "encoding", "libmpv", "pseudo-gui", "default"];
             string json = GetPropertyString("profile-list");
-            return _profileNames = JsonDocument.Parse(json).RootElement.EnumerateArray()
+
+            using var doc = JsonDocument.Parse(json);
+            return _profileNames = doc.RootElement.EnumerateArray()
                 .Select(it => it.GetProperty("name").GetString())
                 .Where(it => !ignore.Contains(it)).ToArray()!;
         }
@@ -1070,22 +1072,24 @@ public class MainPlayer : MpvClient
         string json = GetPropertyString("profile-list");
         StringBuilder sb = new StringBuilder();
 
-        foreach (var profile in JsonDocument.Parse(json).RootElement.EnumerateArray())
-        {
-            sb.Append(profile.GetProperty("name").GetString() + BR2);
+        using (var doc = JsonDocument.Parse(json))
+            foreach (var profile in doc.RootElement.EnumerateArray())
+            {
+                sb.Append(profile.GetProperty("name").GetString() + BR2);
 
-            foreach (var it in profile.GetProperty("options").EnumerateArray())
-                sb.AppendLine($"    {it.GetProperty("key").GetString()} = {it.GetProperty("value").GetString()}");
+                foreach (var it in profile.GetProperty("options").EnumerateArray())
+                    sb.AppendLine($"    {it.GetProperty("key").GetString()} = {it.GetProperty("value").GetString()}");
 
-            sb.Append(BR);
-        }
+                sb.Append(BR);
+            }
 
         return sb.ToString();
     }
 
     public string GetDecoders()
     {
-        var list = JsonDocument.Parse(GetPropertyString("decoder-list")).RootElement.EnumerateArray()
+        using var doc = JsonDocument.Parse(GetPropertyString("decoder-list"));
+        var list = doc.RootElement.EnumerateArray()
             .Select(it => $"{it.GetProperty("codec").GetString()} - {it.GetProperty("description").GetString()}")
             .OrderBy(it => it);
 
