@@ -407,10 +407,11 @@ public class MainPlayer : MpvClient
             if (msg.Contains(" duration: "))
             {
                 int start = msg.IndexOf(" duration: ") + 11;
-                BluRayTitles.Add(new TimeSpan(
-                    msg.Substring(start, 2).ToInt(),
-                    msg.Substring(start + 3, 2).ToInt(),
-                    msg.Substring(start + 6, 2).ToInt()));
+                if (msg.Length >= start + 8)
+                    BluRayTitles.Add(new TimeSpan(
+                        msg.Substring(start, 2).ToInt(),
+                        msg.Substring(start + 3, 2).ToInt(),
+                        msg.Substring(start + 6, 2).ToInt()));
             }
         }
     }
