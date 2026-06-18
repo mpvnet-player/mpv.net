@@ -192,13 +192,16 @@ public class MainPlayer : MpvClient
 
     public void Destroy()
     {
-        mpv_destroy(MainHandle);
+        // Destroy client handles before the core; destroying the core first
+        // leaves the client handle pointing at freed memory (use-after-destroy).
         mpv_destroy(Handle);
 
         foreach (var client in Clients)
         {
             mpv_destroy(client.Handle);
         }
+
+        mpv_destroy(MainHandle);
     }
 
     public void ProcessProperty(string? name, string? value)
