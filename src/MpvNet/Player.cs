@@ -73,6 +73,9 @@ public class MainPlayer : MpvClient
         MainHandle = mpv_create();
         Handle = MainHandle;
 
+        if (MainHandle == IntPtr.Zero)
+            throw new Exception("error mpv_create");
+
         var events = Enum.GetValues<mpv_event_id>().Cast<mpv_event_id>();
 
         foreach (mpv_event_id i in events)
@@ -84,9 +87,6 @@ public class MainPlayer : MpvClient
 
         if (formHandle != IntPtr.Zero)
             TaskHelp.Run(MainEventLoop);
-
-        if (MainHandle == IntPtr.Zero)
-            throw new Exception("error mpv_create");
 
         if (App.IsTerminalAttached)
         {
