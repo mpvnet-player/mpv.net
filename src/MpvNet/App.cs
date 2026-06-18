@@ -163,7 +163,7 @@ public class AppClass
     {
         if (input.Contains('|'))
         {
-            var a = input.Split('|');
+            var a = input.Split('|', 2);
             return (a[1], a[0]);
         }
 
