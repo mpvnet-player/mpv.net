@@ -301,10 +301,12 @@ public class MainPlayer : MpvClient
                     string key = line[..line.IndexOf("=")].Trim();
                     string value = line[(line.IndexOf("=") + 1)..].Trim();
 
-                    if (value.Contains('#') && !value.StartsWith("#") &&
+                    int hashIndex = value.IndexOf(" #");
+
+                    if (hashIndex >= 0 && !value.StartsWith("#") &&
                         !value.StartsWith("'#") && !value.StartsWith("\"#"))
 
-                        value = value[..value.IndexOf("#")].Trim();
+                        value = value[..hashIndex].Trim();
 
                     _Conf[key] = value;
                 }
