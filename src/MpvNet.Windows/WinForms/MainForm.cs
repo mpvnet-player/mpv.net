@@ -58,7 +58,8 @@ public partial class MainForm : Form
             Player.FileLoaded += Player_FileLoaded;
             Player.Pause += Player_Pause;
             Player.PlaylistPosChanged += Player_PlaylistPosChanged;
-            Player.Seek += UpdateProgressBar;
+            Player.Seek += () => BeginInvoke(UpdateProgressBar);
+            Player.DoublePropertyReply += Player_DoublePropertyReply;
             Player.Shutdown += Player_Shutdown;
             Player.VideoSizeChanged += Player_VideoSizeChanged;
             Player.ClientMessage += Player_ClientMessage;
@@ -1066,7 +1067,7 @@ public partial class MainForm : Form
                 if (Environment.TickCount - _lastCycleFullscreen > 500)
                 {
                     Point pos = PointToClient(Cursor.Position);
-                    Player.Command($"mouse {pos.X} {pos.Y}");
+                    Player.CommandVAsync("mouse", pos.X.ToString(CultureInfo.InvariantCulture), pos.Y.ToString(CultureInfo.InvariantCulture));
                 }
 
                 if (IsCursorPosDifferent(_lastCursorPosition))
@@ -1075,18 +1076,14 @@ public partial class MainForm : Form
             case 0x203: // WM_LBUTTONDBLCLK
                 {
                     Point pos = PointToClient(Cursor.Position);
-                    Player.Command($"mouse {pos.X} {pos.Y} 0 double");
+                    Player.CommandVAsync("mouse", pos.X.ToString(CultureInfo.InvariantCulture), pos.Y.ToString(CultureInfo.InvariantCulture), "0", "double");
                 }
                 break;
-            case 0x2E0: // WM_DPICHANGED
-                {
-                    if (!WasShown)
-                        break;
-
-                    RECT rect = Marshal.PtrToStructure<RECT>(m.LParam);
-                    SetWindowPos(Handle, IntPtr.Zero, rect.Left, rect.Top, rect.Width, rect.Height, 0);
-                }
-                break;
+            case 0x007E: // WM_DISPLAYCHANGE
+                base.WndProc(ref m);
+                if (WasShown && Player.Fullscreen)
+                    FitFullscreenToScreen(Screen.FromHandle(Handle));
+                return;
             case 0x0112: // WM_SYSCOMMAND
                 {
                     // with title-bar=no when the window is restored from minimizing the height is too high  
@@ -1263,10 +1260,29 @@ public partial class MainForm : Form
 
     void ProgressTimer_Tick(object sender, EventArgs e) => UpdateProgressBar();
 
+    bool _progressUpdatePending;
+
     void UpdateProgressBar()
     {
-        if (Player.TaskbarProgress && _taskbar != null)
-            _taskbar.SetValue(Player.GetPropertyDouble("time-pos", false), Player.Duration.TotalSeconds);
+        if (!Player.TaskbarProgress || _taskbar == null || _progressUpdatePending)
+            return;
+
+        // Use the existing polling interval without blocking the window thread
+        // or observing every decoded frame. At most one request is in flight.
+        _progressUpdatePending = Player.RequestPropertyDouble("time-pos");
+    }
+
+    void Player_DoublePropertyReply(string name, double value)
+    {
+        if (name != "time-pos" || IsDisposed || Disposing)
+            return;
+
+        BeginInvoke(() =>
+        {
+            _progressUpdatePending = false;
+            if (!IsDisposed && !Disposing)
+                _taskbar?.SetValue(value, Player.Duration.TotalSeconds);
+        });
     }
 
     void PropChangeOnTop(bool value) => BeginInvoke(() => TopMost = value);
@@ -1286,10 +1302,11 @@ public partial class MainForm : Form
         if (!WasShown)
             return;
 
+        // Read on the player event thread, not the window message thread. The
+        // renderer can need Win32 messages while a synchronous API call waits.
+        Player.WindowMaximized = Player.GetPropertyBool("window-maximized");
         BeginInvoke(() =>
         {
-            Player.WindowMaximized = Player.GetPropertyBool("window-maximized");
-
             if (Player.WindowMaximized && WindowState != FormWindowState.Maximized)
                 WindowState = FormWindowState.Maximized;
             else if (!Player.WindowMaximized && WindowState == FormWindowState.Maximized)
@@ -1302,10 +1319,9 @@ public partial class MainForm : Form
         if (!WasShown)
             return;
 
+        Player.WindowMinimized = Player.GetPropertyBool("window-minimized");
         BeginInvoke(() =>
         {
-            Player.WindowMinimized = Player.GetPropertyBool("window-minimized");
-
             if (Player.WindowMinimized && WindowState != FormWindowState.Minimized)
                 WindowState = FormWindowState.Minimized;
             else if (!Player.WindowMinimized && WindowState == FormWindowState.Minimized)
@@ -1378,7 +1394,7 @@ public partial class MainForm : Form
         base.OnShown(e);
 
         if (WindowState == FormWindowState.Maximized)
-            Player.SetPropertyBool("window-maximized", true);
+            Player.SetPropertyBoolAsync("window-maximized", true);
 
         WpfApplication.Init();
         Theme.UpdateWpfColors();
@@ -1393,6 +1409,28 @@ public partial class MainForm : Form
     }
 
     void ContextMenu_Closed(object sender, System.Windows.RoutedEventArgs e) => MenuAutoResetEvent.Set();
+
+    void FitFullscreenToScreen(Screen screen)
+    {
+        Rectangle bounds = screen.Bounds;
+        const uint SWP_NOZORDER = 0x0004, SWP_NOACTIVATE = 0x0010;
+        SetWindowPos(Handle, IntPtr.Zero, bounds.X, bounds.Y, bounds.Width, bounds.Height,
+            SWP_NOZORDER | SWP_NOACTIVATE);
+    }
+
+    protected override void OnDpiChanged(DpiChangedEventArgs e)
+    {
+        if (WasShown && Player.Fullscreen)
+        {
+            // The DPI-scaled restore rectangle is for a normal window. A
+            // fullscreen video must cover the new monitor's physical bounds.
+            e.Cancel = true;
+            base.OnDpiChanged(e);
+            FitFullscreenToScreen(Screen.FromRectangle(e.SuggestedRectangle));
+        }
+        else
+            base.OnDpiChanged(e);
+    }
 
     protected override void OnResize(EventArgs e)
     {
@@ -1410,14 +1448,14 @@ public partial class MainForm : Form
         if (WasShown)
         {
             if (WindowState == FormWindowState.Minimized)
-                Player.SetPropertyBool("window-minimized", true);
+                Player.SetPropertyBoolAsync("window-minimized", true);
             else if (WindowState == FormWindowState.Normal)
             {
-                Player.SetPropertyBool("window-maximized", false);
-                Player.SetPropertyBool("window-minimized", false);
+                Player.SetPropertyBoolAsync("window-maximized", false);
+                Player.SetPropertyBoolAsync("window-minimized", false);
             }
             else if (WindowState == FormWindowState.Maximized)
-                Player.SetPropertyBool("window-maximized", true);
+                Player.SetPropertyBoolAsync("window-maximized", true);
         }
     }
 
