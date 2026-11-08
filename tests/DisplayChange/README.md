@@ -145,7 +145,58 @@ fix does not modify that native creation call, so this dump does not establish
 that the latest EXE resolves the freeze. It is a frozen snapshot, not a replay
 test of the modified code. No new display-switch stress runs were performed
 after the reporter stopped testing because of two watchdog bugchecks; their
-kernel dumps are not in this bundle.
+kernel dumps were supplied separately afterward.
+
+### Kernel crash dumps, 2026-11-08
+
+Both separately supplied kernel minidumps were analyzed with Microsoft KD
+10.0.29680.1004 and matching Microsoft public symbols. To recover the complete
+NVIDIA stack, `nvlddmkm.sys` was extracted from NVIDIA's official 621.01 package
+without installing it. Its version is 32.0.16.2101; timestamp 0x6ad5ebde, image
+size 0x06211000 and PE checksum 0x06183823 match both dumps. Without that binary,
+the stack unwinder produced incomplete frames after the first NVIDIA return.
+
+| Dump | Wrapper used, per reporter | Bugcheck | NVIDIA frame selected by KD |
+| --- | --- | --- | --- |
+| 110726-28781-01.dmp | First display-fix EXE | 0x133, arguments 1 / 0x1e00 | `nvlddmkm+0x1122f7` |
+| 110826-62734-01.dmp | Original EXE | 0x133, arguments 1 / 0x1e00 | `nvlddmkm+0xef823` |
+
+Both analyses identify `DPC_QUEUE_EXECUTION_TIMEOUT_EXCEEDED` and the failure
+bucket `0x133_ISR_nvlddmkm!unknown_function`. Despite that bucket's ISR label,
+the restored stacks show NVIDIA work entered through `nt!KiExecuteAllDpcs`.
+Both share this call chain, listed from older caller to newer callee:
+
+```text
+nt!KiExecuteAllDpcs
+nvlddmkm+0xefbba
+nvlddmkm+0x134fe7
+nvlddmkm+0x133f4c
+nvlddmkm+0x132918
+nvlddmkm+0x703b0f
+nvlddmkm+0x72af75
+nvlddmkm+0x72ab16
+nvlddmkm+0x72d8fb
+nvlddmkm+0x72a414
+```
+
+The first capture is deeper in a stack-backtrace operation requested by the
+driver; the second is in another internal NVIDIA routine. This is stronger
+evidence of the same driver-side DPC path in both crashes, not a new managed
+window-thread exception. It does not prove the precise driver defect or rule
+out an application/driver/GPU interaction as its trigger. The original EXE in
+the second run still used the preview-6 native DLLs and lighting addon.
+
+These are limited kernel triage dumps: the debugger cannot read most processor
+state, the complete watchdog profile is unavailable, and NVIDIA private symbols
+are absent. With parameter 1 equal to 1, the watchdog measures cumulative high
+IRQL time, so the instruction where it interrupts need not be the entire cause.
+See Microsoft's [0x133 documentation](https://learn.microsoft.com/en-us/windows-hardware/drivers/debugger/bug-check-0x133-dpc-watchdog-violation).
+
+Combined with the earlier `vkCreateSwapchainKHR` GPU wait, the evidence points
+toward NVIDIA's presentation/mode-switch path. It does not prove the user-mode
+freeze and kernel crashes are identical failures, or establish that this DPI
+patch fixes either. No driver installation, live display changes or additional
+native-code changes were made during this offline analysis.
 
 The intermittent RTX 5090 / 8K23.976 to 4K119.88 freeze reported in AJN issue 242
 remains unresolved. The local test disables AJN upscaling, addon sampling and subtitles.
