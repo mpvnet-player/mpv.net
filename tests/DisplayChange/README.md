@@ -109,10 +109,46 @@ back. Restore the original settings afterward. Do not restore/unmaximize the
 player while bringing it to the foreground: that changes the tested geometry.
 The synthetic message test does not replace this check.
 
+### Supplied frozen-process dump, 2026-11-08
+
+The later field report withdrew the frame-rate regression attribution: the
+original EXE also presented at about 38 Hz in the same PC state. Do not attribute
+that result to the wrapper change.
+
+The supplied dump is from the first display-fix EXE, before the manifest
+correction. Its libmpv and libplacebo module timestamps, image sizes and PE
+checksums match the saved preview-6 binaries. Resolving the supplied stack return
+addresses against their DWARF data (return address minus one) gives:
+
+| Module-relative return address | Function and source line |
+| --- | --- |
+| libplacebo + 0xe827c | `vk_sw_recreate`, `src/vulkan/swapchain.c:800`, `vkCreateSwapchainKHR` |
+| libplacebo + 0xe960d | `vk_sw_start_frame`, `src/vulkan/swapchain.c:926`, recreation after `VK_ERROR_OUT_OF_DATE_KHR` |
+| libmpv + 0x15fcce | `draw_frame`, `video/out/vo_gpu_next.c:7582` |
+| libmpv + 0x1313c4 | `vo_thread` / `render_frame`, `video/out/vo.c:1145/1013` |
+| libmpv + 0x760c3 | `mp_dispatch_queue_process`, `misc/dispatch.c:285` |
+| libmpv + 0xc9be6 | `run_playloop` / `mp_wait_events`, `player/playloop.c:1449/66` |
+| libmpv + 0x1c9e97 | Optional sample worker `readback`, `video/filter/vf_ajn_sample.c:235` |
+
+The rendering thread is inside a driver CPU synchronization wait during
+swapchain creation. Both window threads are idle in message waits. Unlike the
+earlier local original-player capture, the core is in its ordinary event wait,
+not `vo_control(handle_cursor_autohide)`. The optional sampling worker has a
+500 ms timeout in its wait, matching its detached/no-pending-work branch; it is
+not blocked inside CUDA inference at capture time. The addon status replies
+continue after video progress stops and report a ready sample with no analysis
+error. These observations do not rule out earlier GPU interactions, or prove
+the driver alone caused the freeze.
+
+The final log requests a valid 7680x4320 swapchain when returning to 8K. The DPI
+fix does not modify that native creation call, so this dump does not establish
+that the latest EXE resolves the freeze. It is a frozen snapshot, not a replay
+test of the modified code. No new display-switch stress runs were performed
+after the reporter stopped testing because of two watchdog bugchecks; their
+kernel dumps are not in this bundle.
+
 The intermittent RTX 5090 / 8K23.976 to 4K119.88 freeze reported in AJN issue 242
-still needs confirmation on the affected setup. In particular, the reported
-38 Hz presentation and lighting-enabled freezes have not been reproduced in
-this isolated test. It disables AJN upscaling, addon sampling and subtitles.
+remains unresolved. The local test disables AJN upscaling, addon sampling and subtitles.
 The wrapper removes synchronous
 mouse, resize and periodic progress calls from the window message thread, where
 they could block Vulkan WSI message processing. There is no native inference,
