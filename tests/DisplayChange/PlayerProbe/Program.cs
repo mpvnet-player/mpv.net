@@ -22,6 +22,8 @@ try {
     using(var process=Process.GetProcessById(player.Id)) {
         process.Refresh();
         var initial=JsonNode.Parse(await Tool(modeTool,"window",process.MainWindowHandle.ToString()))!;
+        if(args.Contains("--expect-fit") && initial["perMonitorV2"]?.GetValue<bool>() != true)
+            throw new Exception("The player must run as PerMonitorV2; check the embedded application manifest");
         int dpi=initial["dpi"]!.GetValue<int>();
         await Tool(modeTool,"dpi",process.MainWindowHandle.ToString(),(dpi+48).ToString(),"6827","3840");
         await Task.Delay(1500);

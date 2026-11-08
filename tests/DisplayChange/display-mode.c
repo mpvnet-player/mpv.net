@@ -23,10 +23,12 @@ int main(int argc, char **argv)
         RECT client, rect; MONITORINFO monitor = {.cbSize = sizeof(monitor)};
         if (!GetClientRect(window, &client) || !GetWindowRect(window, &rect) ||
             !GetMonitorInfoW(MonitorFromWindow(window, MONITOR_DEFAULTTONEAREST), &monitor)) return 3;
-        printf("{\"client\":[%ld,%ld],\"window\":[%ld,%ld,%ld,%ld],\"monitor\":[%ld,%ld,%ld,%ld],\"dpi\":%u}\n",
+        DPI_AWARENESS_CONTEXT awareness = GetWindowDpiAwarenessContext(window);
+        printf("{\"client\":[%ld,%ld],\"window\":[%ld,%ld,%ld,%ld],\"monitor\":[%ld,%ld,%ld,%ld],\"dpi\":%u,\"perMonitorV2\":%s}\n",
             client.right, client.bottom, rect.left, rect.top, rect.right, rect.bottom,
             monitor.rcMonitor.left, monitor.rcMonitor.top, monitor.rcMonitor.right, monitor.rcMonitor.bottom,
-            GetDpiForWindow(window));
+            GetDpiForWindow(window),
+            AreDpiAwarenessContextsEqual(awareness, DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2) ? "true" : "false");
         return 0;
     }
     if (argc == 6 && !strcmp(argv[1], "dpi")) {
